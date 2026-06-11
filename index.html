@@ -824,9 +824,9 @@ function renderBand3(p) {
   if (!p.fpComment && !p.scComment) {
     // no comments — still show note bubbles and save button
     if (p.yourNotes) {
-      html += `<div style="margin-bottom:10px"><div class="cb-lbl">First pass comment</div><div class="note-bubble"><span class="note-lbl">First pass notes</span>${p.yourNotes}</div></div>`;
+      html += `<div style="margin-bottom:10px"><div class="cb-lbl">FIRST PASS COMMENT</div><div class="note-bubble"><span class="note-lbl">First pass notes</span>${p.yourNotes}</div></div>`;
     }
-    html += `<div><div class="fc-hdr-row"><div class="cb-lbl sc-lbl-c">Final comment</div>${saveBtn}</div><div class="cb-na">N/A</div>`;
+    html += `<div><div class="fc-hdr-row"><div class="cb-lbl sc-lbl-c">FINAL COMMENT</div>${saveBtn}</div><div class="cb-na">N/A</div>`;
     if (p.managerNotes) {
       html += `<div class="note-bubble note-sc"><span class="note-lbl">Second pass notes</span>${p.managerNotes}</div>`;
     }
@@ -834,15 +834,15 @@ function renderBand3(p) {
     return html;
   }
 
-  // First pass comment block
+  // FIRST PASS COMMENT block
   if (p.fpComment) {
-    html += `<div style="margin-bottom:10px"><div class="cb-lbl">First pass comment</div><div class="cb-fp"><div class="cb-text muted">${p.fpComment}</div></div>`;
+    html += `<div style="margin-bottom:10px"><div class="cb-lbl">FIRST PASS COMMENT</div><div class="cb-fp"><div class="cb-text muted">${p.fpComment}</div></div>`;
     if (p.yourNotes) {
       html += `<div class="note-bubble"><span class="note-lbl">First pass notes</span>${p.yourNotes}</div>`;
     }
     html += '</div>';
   } else if (p.yourNotes) {
-    html += `<div style="margin-bottom:10px"><div class="cb-lbl">First pass comment</div><div class="note-bubble"><span class="note-lbl">First pass notes</span>${p.yourNotes}</div></div>`;
+    html += `<div style="margin-bottom:10px"><div class="cb-lbl">FIRST PASS COMMENT</div><div class="note-bubble"><span class="note-lbl">First pass notes</span>${p.yourNotes}</div></div>`;
   }
 
   // connector
@@ -855,8 +855,8 @@ function renderBand3(p) {
     html += `<div class="rev-connector"><i class="ti ti-check" style="font-size:12px"></i> comment unchanged</div>`;
   }
 
-  // Final comment block
-  html += `<div><div class="fc-hdr-row"><div class="cb-lbl sc-lbl-c">Final comment</div>${saveBtn}</div>`;
+  // FINAL COMMENT block
+  html += `<div><div class="fc-hdr-row"><div class="cb-lbl sc-lbl-c">FINAL COMMENT</div>${saveBtn}</div>`;
   if (p.commentChanged && p.scComment) {
     html += `<div class="cb-sc"><div class="cb-text">${p.scComment}</div></div>`;
   } else if (!p.fpComment && p.scComment) {
