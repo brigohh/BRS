@@ -294,7 +294,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       <span class="vtime" id="v-time">0:00</span>
       <button class="vcb"><i class="ti ti-maximize"></i></button>
     </div>
-    <div class="clip-bar" id="clip-bar"></div>
     <div class="rp-box"><div class="rp-lbl"><i class="ti ti-bell" style="color:#f59e0b"></i> PTIW comment</div><div class="rp-val" id="rp-ptiw">No PTIW comment</div></div>
     <div class="rp-box"><div class="rp-lbl"><i class="ti ti-message-circle" style="color:#f97316"></i> OIW comment</div><div class="rp-val" id="rp-oiw">No OIW comment</div></div>
   </div>
@@ -673,10 +672,11 @@ const ABBR = {
 function abbr(val) { return ABBR[val] || val; }
 
 function sbLabel(p) {
-  if (p.changes.length === 0) return 'Comment revised';
+  if (p.changes.length === 0) return 'Comment';
   return p.changes.map(c => {
     if (c.f === 'Rating') return abbr(c.old) + ' → ' + abbr(c.nw);
-    return c.f + ' changed';
+    if (c.f === 'Official') return 'Ref';
+    return c.f;
   }).join(' · ');
 }
 
@@ -800,8 +800,6 @@ function renderCenter(p) {
     (p.yourNotes ? '<div><div class="in-lbl">Your notes</div><div class="in-text">'+p.yourNotes+'</div></div>' : '') +
     (p.managerNotes ? '<div><div class="in-lbl sp">Second Check notes</div><div class="in-text">'+p.managerNotes+'</div></div>' : '');
   document.getElementById('v-time').textContent = p.vt;
-  const clipCls = ['ct-b','ct-a','ct-r','ct-b','ct-g'];
-  document.getElementById('clip-bar').innerHTML = p.clip.map((t,i)=>'<span class="ctag '+clipCls[i]+'">'+t+'</span>').join('');
   document.getElementById('rp-ptiw').textContent = p.ptiw;
   document.getElementById('rp-oiw').textContent = p.oiw;
   const fb = document.getElementById('flag-btn');
