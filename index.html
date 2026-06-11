@@ -7,20 +7,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{
---color-background-primary:#fff;
---color-background-secondary:#f9fafb;
---color-background-tertiary:#f3f4f6;
---color-text-primary:#111827;
---color-text-secondary:#6b7280;
---color-text-tertiary:#9ca3af;
---color-border-tertiary:rgba(0,0,0,.08);
---color-border-secondary:rgba(0,0,0,.13);
---border-radius-md:8px;
---border-radius-lg:12px;
-}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;color:#111827;background:#f3f4f6;height:100vh;overflow:hidden}
-.page{height:100vh;display:flex;flex-direction:column;overflow:hidden;position:relative}
+.page{height:100vh;display:flex;flex-direction:column;overflow:hidden}
+/* NAV */
 .nav{background:#1a3a6b;height:48px;display:flex;align-items:center;padding:0 20px;flex-shrink:0}
 .nav-logo{display:flex;align-items:center;gap:9px;padding-right:16px;border-right:1px solid rgba(255,255,255,.15)}
 .nav-logo svg{width:30px;height:30px}
@@ -29,10 +18,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .nl{color:rgba(255,255,255,.55);font-size:11px;padding:0 10px;cursor:pointer;font-weight:500}
 .nl:hover{color:#fff}
 .nav-av{width:30px;height:30px;border-radius:50%;background:#2d5aa0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;margin-left:auto}
+/* SUBNAV */
 .subnav{background:#fff;border-bottom:1px solid #e5e7eb;height:40px;display:flex;padding:0 20px;flex-shrink:0}
 .st{padding:0 14px;font-size:12px;font-weight:500;color:#6b7280;cursor:pointer;display:flex;align-items:center;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
 .st.on{color:#1a3a6b;border-bottom-color:#1a3a6b;font-weight:600}
 .st:hover:not(.on){color:#111827}
+/* GAME HEADER */
 .game-hdr{background:#fff;border-bottom:1px solid #e5e7eb;padding:10px 20px;display:flex;align-items:center;gap:14px;flex-shrink:0}
 .gh-title{font-size:13px;font-weight:600}
 .gh-date{font-size:11px;color:#6b7280;margin-top:2px}
@@ -51,15 +42,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .hbtn:hover{background:#f9fafb}
 .flag-count{padding:4px 10px;border-radius:8px;font-size:12px;font-weight:500;background:#fef9c3;color:#854d0e;border:1px solid #fde68a;display:none;align-items:center;gap:4px}
 .flag-count.show{display:flex}
+/* TOOLBAR */
 .toolbar{padding:8px 20px;display:flex;align-items:center;gap:6px;flex-shrink:0;background:#f3f4f6;border-bottom:1px solid #e5e7eb}
-.qb{padding:4px 11px;border:1px solid #d1d5db;border-radius:8px;font-size:11px;font-weight:500;background:#fff;color:#6b7280;cursor:pointer}
-.qb:hover{background:#f9fafb}
-.qb.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
+.qb,.tb{padding:4px 11px;border:1px solid #d1d5db;border-radius:8px;font-size:11px;font-weight:500;background:#fff;color:#6b7280;cursor:pointer}
+.qb:hover,.tb:hover{background:#f9fafb}
+.qb.on,.tb.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
 .tsep{width:1px;height:20px;background:#e5e7eb}
-.tb{padding:4px 11px;border:1px solid #d1d5db;border-radius:8px;font-size:11px;font-weight:500;background:#fff;color:#6b7280;cursor:pointer}
-.tb:hover{background:#f9fafb}
-.tb.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
+/* MAIN LAYOUT */
 .main{flex:1;display:grid;grid-template-columns:224px 1fr 290px;min-height:0;overflow:hidden}
+/* SIDEBAR */
 .sb{background:#fff;border-right:1px solid #e5e7eb;display:flex;flex-direction:column;overflow:hidden}
 .sb-prog{padding:10px 12px 9px;border-bottom:1px solid #f3f4f6;flex-shrink:0}
 .prog-label{font-size:11px;color:#6b7280;margin-bottom:5px;display:flex;justify-content:space-between}
@@ -71,14 +62,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .sb-row{padding:8px 12px;display:flex;align-items:center;gap:7px;cursor:pointer;border-left:3px solid transparent;border-bottom:1px solid #f9fafb}
 .sb-row:hover{background:#f9fafb}
 .sb-row.sel{background:#eff6ff;border-left-color:#1a3a6b}
+.sb-row.hidden{display:none}
 .sb-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 .sb-info{flex:1;min-width:0}
 .sb-time{font-size:10px;color:#9ca3af}
 .sb-label{font-size:12px;color:#111827;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
 .sb-flag{font-size:13px;color:#f59e0b;flex-shrink:0;opacity:0}
 .sb-flag.on{opacity:1}
-.conf-row{padding:9px 12px;display:flex;align-items:center;gap:7px;cursor:pointer;border-top:1px solid #e5e7eb;margin-top:4px}
-.conf-row:hover{background:#f9fafb}
+.tier-hdr.hidden{display:none}
+/* CENTER */
 .center{display:flex;flex-direction:column;overflow:hidden;background:#f3f4f6}
 .band1{background:#fff;border-bottom:1px solid #e5e7eb;padding:12px 16px;flex-shrink:0}
 .b1-r1{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:5px}
@@ -96,6 +88,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .lp-trail{background:#f0fdf4;border-color:#bbf7d0;color:#166534}
 .lp-slot{background:#faf5ff;border-color:#e9d5ff;color:#7e22ce}
 .b1-sub{font-size:12px;color:#9ca3af;font-style:italic}
+/* BAND2 */
 .band2{background:#f9fafb;border-bottom:1px solid #e5e7eb;padding:10px 16px;flex-shrink:0}
 .b2-lbl{font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.5px;margin-bottom:8px}
 .ch-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;font-size:12px}
@@ -103,13 +96,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .ch-col-hdr.sc-hdr{color:#1a3a6b;border-left:1px solid #e5e7eb}
 .ch-row-fp{padding:7px 12px;background:#fff;border-top:1px solid #f3f4f6;display:flex;align-items:center;gap:6px}
 .ch-row-sc{padding:7px 12px;background:#fff;border-top:1px solid #f3f4f6;border-left:1px solid #e5e7eb;display:flex;align-items:center;gap:6px}
+.ch-row-unch .ch-field{font-size:10px;font-weight:600;color:#c4c9d4;letter-spacing:.2px;margin-right:2px}
+.ch-row-unch .ch-fp-val{color:#9ca3af}
+.ch-row-unch .ch-sc-same{font-size:12px;color:#c4c9d4}
 .ch-field{font-size:10px;font-weight:600;color:#d1d5db;letter-spacing:.2px;margin-right:2px}
-.ch-fp-val{color:#9ca3af}
+.ch-fp-val{color:#374151}
 .ch-sc-pill{font-size:12px;font-weight:600;padding:2px 9px;border-radius:6px}
-.unch-note{font-size:10px;color:#9ca3af;margin-top:7px;font-style:italic}
-.ch-row-unch{opacity:.4}
-.ch-field-unch{color:#e5e7eb}
-.ch-unch-val{font-size:12px;color:#c4c9d4}
+/* BAND3 */
 .band3{background:#fff;border-bottom:1px solid #e5e7eb;padding:12px 16px;flex:1;overflow-y:auto}
 .cb-lbl{font-size:10px;font-weight:700;letter-spacing:.4px;color:#9ca3af;margin-bottom:4px}
 .cb-lbl.sc-lbl-c{color:#1a3a6b}
@@ -120,52 +113,51 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .cb-text.muted{color:#6b7280}
 .rev-connector{display:flex;align-items:center;gap:7px;font-size:11px;color:#9ca3af;margin:8px 0}
 .rev-connector::before{content:'';height:1px;background:#f3f4f6;flex:1}
-.int-tog{padding:8px 16px;display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:#9ca3af;flex-shrink:0;background:#fff;border-bottom:1px solid #e5e7eb}
-.int-tog:hover{color:#6b7280}
-.int-tog i.chev{font-size:13px;transition:transform .18s}
-.int-tog.open i.chev{transform:rotate(90deg)}
-.int-body{display:none;padding:10px 16px 12px;flex-direction:column;gap:8px;background:#fff;border-bottom:1px solid #e5e7eb;flex-shrink:0}
-.int-body.open{display:flex}
-.int-body--always{display:flex}
+/* INTERNAL NOTES */
+.int-body{display:flex;padding:10px 16px 12px;flex-direction:column;gap:8px;background:#fff;border-bottom:1px solid #e5e7eb;flex-shrink:0}
 .in-lbl{font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;margin-bottom:3px}
 .in-lbl.sp{color:#1a3a6b}
 .in-text{font-size:12px;color:#6b7280;font-style:italic;line-height:1.55}
+/* FOOTER */
 .footer{padding:8px 16px;display:flex;align-items:center;gap:6px;background:#fff;flex-shrink:0}
 .fbtn{padding:5px 11px;border:1px solid #e5e7eb;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;background:#fff;color:#6b7280;display:inline-flex;align-items:center;gap:5px}
 .fbtn:hover{background:#f9fafb;color:#111827}
 .fbtn.slack-btn{color:#1d4ed8;border-color:#bfdbfe;background:#eff6ff}
 .fbtn.slack-btn:hover{background:#dbeafe}
 .fbtn.flag-on{color:#d97706;border-color:#fde68a;background:#fef9c3}
+.fbtn.playlist-on{color:#7c3aed;border-color:#e9d5ff;background:#faf5ff}
 .fsep{width:1px;height:18px;background:#e5e7eb}
 .slack-dd{padding:5px 8px;border:1px solid #bfdbfe;border-radius:8px;background:#eff6ff;color:#6b7280;cursor:pointer;font-size:12px;margin-left:-4px}
 .slack-dd:hover{background:#dbeafe}
-.rp{background:#111827;display:flex;flex-direction:column;border-left:1px solid #0f172a;overflow:hidden}
-.vid-area{flex:1;background:#0f172a;padding:10px;display:flex;flex-direction:column;justify-content:center;min-height:0}
-.vid-frame{width:100%;aspect-ratio:16/9;background:#1e293b;border-radius:8px;border:1px solid #1f2937;display:flex;align-items:center;justify-content:center}
+/* VIDEO PANEL — clean/seamless */
+.rp{background:#fff;display:flex;flex-direction:column;border-left:1px solid #e5e7eb;overflow:hidden}
+.vid-area{flex:1;background:#0f1117;display:flex;flex-direction:column;justify-content:center;min-height:0;padding:8px}
+.vid-frame{width:100%;aspect-ratio:16/9;background:#1a1f2e;border-radius:6px;display:flex;align-items:center;justify-content:center}
 .vid-ph{display:flex;flex-direction:column;align-items:center;gap:6px}
 .vid-ph i{font-size:28px;color:#374151}
 .vid-ph span{font-size:11px;color:#4b5563}
-.ang-row{display:flex;gap:3px;padding:5px 8px;background:#0d1117;border-top:1px solid #1f2937;overflow-x:auto;flex-shrink:0}
-.ang{padding:2px 7px;font-size:10px;border:1px solid #1f2937;background:#111827;color:#4b5563;cursor:pointer;border-radius:4px;white-space:nowrap;flex-shrink:0;font-weight:500}
-.ang:hover{color:#9ca3af;border-color:#374151}
-.ang.on{background:#1d4ed8;border-color:#2563eb;color:#fff}
-.vid-ctrl{background:#0d1117;padding:6px 10px;border-top:1px solid #1f2937;display:flex;align-items:center;gap:6px;flex-shrink:0}
-.vcb{background:none;border:none;color:#6b7280;cursor:pointer;font-size:15px;display:flex;align-items:center}
-.vcb:hover{color:#fff}
-.vtrack{flex:1;height:3px;background:#1f2937;border-radius:2px;position:relative}
-.vfill{width:38%;height:100%;background:#2563eb;border-radius:2px}
-.vhead{width:10px;height:10px;background:#fff;border-radius:50%;position:absolute;right:-5px;top:-3.5px}
-.vtime{color:#4b5563;font-size:11px;min-width:56px;text-align:right}
-.clip-bar{background:#0d1117;padding:5px 10px;border-top:1px solid #1f2937;display:flex;gap:3px;flex-wrap:wrap;flex-shrink:0}
+.ang-row{display:flex;gap:3px;padding:6px 10px;background:#fff;border-bottom:1px solid #f3f4f6;overflow-x:auto;flex-shrink:0}
+.ang{padding:2px 7px;font-size:10px;border:1px solid #e5e7eb;background:#f9fafb;color:#6b7280;cursor:pointer;border-radius:4px;white-space:nowrap;flex-shrink:0;font-weight:500}
+.ang:hover{color:#374151;border-color:#d1d5db;background:#f3f4f6}
+.ang.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
+.vid-ctrl{padding:6px 10px;border-bottom:1px solid #f3f4f6;display:flex;align-items:center;gap:6px;flex-shrink:0;background:#fff}
+.vcb{background:none;border:none;color:#9ca3af;cursor:pointer;font-size:15px;display:flex;align-items:center}
+.vcb:hover{color:#111827}
+.vtrack{flex:1;height:3px;background:#e5e7eb;border-radius:2px;position:relative}
+.vfill{width:38%;height:100%;background:#1a3a6b;border-radius:2px}
+.vhead{width:10px;height:10px;background:#1a3a6b;border-radius:50%;position:absolute;right:-5px;top:-3.5px;border:2px solid #fff;box-shadow:0 0 0 1px #1a3a6b}
+.vtime{color:#9ca3af;font-size:11px;min-width:56px;text-align:right}
+.clip-bar{padding:5px 10px;border-bottom:1px solid #f3f4f6;display:flex;gap:3px;flex-wrap:wrap;flex-shrink:0;background:#f9fafb}
 .ctag{padding:2px 6px;border-radius:4px;font-size:10px;font-weight:500}
-.ct-b{background:#1e3a5f;border:1px solid #2563eb;color:#60a5fa}
-.ct-r{background:#3b0f0f;border:1px solid #dc2626;color:#f87171}
-.ct-g{background:#052e16;border:1px solid #16a34a;color:#4ade80}
-.ct-a{background:#3d1a00;border:1px solid #d97706;color:#fbbf24}
-.rp-box{background:#111827;padding:8px 10px;border-top:1px solid #1f2937;flex-shrink:0}
-.rp-lbl{font-size:10px;color:#4b5563;font-weight:700;margin-bottom:3px;display:flex;align-items:center;gap:5px}
+.ct-b{background:#dbeafe;border:1px solid #bfdbfe;color:#1e40af}
+.ct-r{background:#fee2e2;border:1px solid #fca5a5;color:#991b1b}
+.ct-g{background:#dcfce7;border:1px solid #86efac;color:#166534}
+.ct-a{background:#fef9c3;border:1px solid #fde68a;color:#854d0e}
+.rp-box{padding:8px 10px;border-bottom:1px solid #f3f4f6;flex-shrink:0;background:#fff}
+.rp-lbl{font-size:10px;color:#9ca3af;font-weight:700;margin-bottom:3px;display:flex;align-items:center;gap:5px}
 .rp-lbl i{font-size:13px}
-.rp-val{font-size:11px;color:#4b5563;font-style:italic;line-height:1.5}
+.rp-val{font-size:11px;color:#6b7280;font-style:italic;line-height:1.5}
+/* MODAL */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:40;display:none}
 .overlay.open{display:block}
 .slack-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:500px;background:#fff;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden;z-index:50;display:none;box-shadow:0 20px 60px rgba(0,0,0,.2)}
@@ -212,16 +204,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 
 <div class="game-hdr">
   <div>
-    <div class="gh-title">Los Angeles Sparks (97) @ Phoenix Mercury (88)</div>
-    <div class="gh-date">Thursday, May 21, 2026 &nbsp;·&nbsp; 10:00 PM &nbsp;·&nbsp; #1022600037</div>
+    <div class="gh-title">Toronto Tempo (111) @ Chicago Sky (104)</div>
+    <div class="gh-date">Wednesday, May 27, 2026 &nbsp;·&nbsp; 8:00 PM &nbsp;·&nbsp; #1022600050</div>
   </div>
   <div class="gh-sep"></div>
   <div class="stats">
-    <div class="stat s-d"><div class="sn">17</div><div class="sl">total</div></div>
-    <div class="stat s-r"><div class="sn">4</div><div class="sl">critical</div></div>
-    <div class="stat s-b"><div class="sn">6</div><div class="sl">rating</div></div>
-    <div class="stat s-g"><div class="sn">2</div><div class="sl">play type</div></div>
-    <div class="stat s-a"><div class="sn">6</div><div class="sl">confirmed</div></div>
+    <div class="stat s-d"><div class="sn">18</div><div class="sl">total</div></div>
+    <div class="stat s-r"><div class="sn">5</div><div class="sl">critical</div></div>
+    <div class="stat s-b"><div class="sn">8</div><div class="sl">rating</div></div>
+    <div class="stat s-g"><div class="sn">3</div><div class="sl">notable</div></div>
+    <div class="stat s-a"><div class="sn">5</div><div class="sl">comment</div></div>
   </div>
   <div class="gh-right">
     <div class="flag-count" id="flag-count"><i class="ti ti-flag"></i><span id="flag-num">0</span> flagged</div>
@@ -230,76 +222,55 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 </div>
 
 <div class="toolbar">
-  <div class="qb on" onclick="qf(this)">All</div>
-  <div class="qb" onclick="qf(this)">Q1</div>
-  <div class="qb" onclick="qf(this)">Q2</div>
-  <div class="qb" onclick="qf(this)">Q3</div>
-  <div class="qb" onclick="qf(this)">Q4</div>
+  <div class="qb on" data-q="all" onclick="qf(this)">All</div>
+  <div class="qb" data-q="Q1" onclick="qf(this)">Q1</div>
+  <div class="qb" data-q="Q2" onclick="qf(this)">Q2</div>
+  <div class="qb" data-q="Q3" onclick="qf(this)">Q3</div>
+  <div class="qb" data-q="Q4" onclick="qf(this)">Q4</div>
   <div class="tsep"></div>
-  <div class="tb on" onclick="tf(this)">All changes</div>
-  <div class="tb" onclick="tf(this)">Rating</div>
-  <div class="tb" onclick="tf(this)">Play type</div>
-  <div class="tb" onclick="tf(this)">Official</div>
+  <div class="tb on" data-t="all" onclick="tf(this)">All changes</div>
+  <div class="tb" data-t="rating" onclick="tf(this)">Rating</div>
+  <div class="tb" data-t="playtype" onclick="tf(this)">Play type</div>
+  <div class="tb" data-t="official" onclick="tf(this)">Official</div>
 </div>
 
 <div class="main">
   <div class="sb">
     <div class="sb-prog">
-      <div class="prog-label"><span>Progress</span><span id="prog-txt">1 / 5 reviewed</span></div>
-      <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:20%"></div></div>
+      <div class="prog-label"><span>Progress</span><span id="prog-txt">0 / 18 reviewed</span></div>
+      <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
     </div>
-    <div class="sb-list">
-      <div class="tier-hdr" style="color:#dc2626"><span class="tier-dot" style="background:#dc2626"></span>Critical <span style="color:#9ca3af;font-weight:400;margin-left:2px">(2)</span></div>
-      <div class="sb-row sel" onclick="selectPlay(0,this)"><span class="sb-dot" style="background:#dc2626"></span><div class="sb-info"><div class="sb-time">Q1 00:44.6 · Seg 35</div><div class="sb-label">Lean NI → Infraction</div></div><i class="ti ti-flag sb-flag" id="flag-sb-0"></i></div>
-      <div class="sb-row" onclick="selectPlay(1,this)"><span class="sb-dot" style="background:#dc2626"></span><div class="sb-info"><div class="sb-time">Q1 02:56.8 · Seg 28</div><div class="sb-label">Lean NI → Infraction</div></div><i class="ti ti-flag sb-flag" id="flag-sb-1"></i></div>
-      <div class="tier-hdr" style="color:#7c3aed;margin-top:2px"><span class="tier-dot" style="background:#7c3aed"></span>Notable <span style="color:#9ca3af;font-weight:400;margin-left:2px">(1)</span></div>
-      <div class="sb-row" onclick="selectPlay(2,this)"><span class="sb-dot" style="background:#7c3aed"></span><div class="sb-info"><div class="sb-time">Q1 01:07.3 · Seg 33</div><div class="sb-label">Official + Location</div></div><i class="ti ti-flag sb-flag" id="flag-sb-2"></i></div>
-      <div class="tier-hdr" style="color:#1d4ed8;margin-top:2px"><span class="tier-dot" style="background:#1d4ed8"></span>Standard <span style="color:#9ca3af;font-weight:400;margin-left:2px">(2)</span></div>
-      <div class="sb-row" onclick="selectPlay(3,this)"><span class="sb-dot" style="background:#1d4ed8"></span><div class="sb-info"><div class="sb-time">Q1 06:26.6 · Seg 15</div><div class="sb-label">Rating changed</div></div><i class="ti ti-flag sb-flag" id="flag-sb-3"></i></div>
-      <div class="sb-row" onclick="selectPlay(4,this)"><span class="sb-dot" style="background:#166534"></span><div class="sb-info"><div class="sb-time">Q2 03:55.9 · Seg 529</div><div class="sb-label">Rating + Location</div></div><i class="ti ti-flag sb-flag" id="flag-sb-4"></i></div>
-      <div class="conf-row" onclick="toggleConf()">
-        <i class="ti ti-circle-check" style="font-size:14px;color:#16a34a"></i>
-        <span style="font-size:12px;font-weight:500;color:#6b7280">6 confirmed</span>
-        <i class="ti ti-chevron-right" style="font-size:12px;color:#9ca3af;margin-left:auto" id="conf-chev"></i>
-      </div>
-      <div id="conf-items" style="display:none">
-        <div class="sb-row" style="padding-left:22px"><span class="sb-dot" style="background:#9ca3af"></span><div class="sb-info"><div class="sb-time">Q1 03:55.5 · Seg 24</div><div class="sb-label" style="color:#6b7280">Confirmed</div></div></div>
-        <div class="sb-row" style="padding-left:22px"><span class="sb-dot" style="background:#9ca3af"></span><div class="sb-info"><div class="sb-time">Q2 05:12.8 · Seg 520</div><div class="sb-label" style="color:#6b7280">Confirmed</div></div></div>
-        <div class="sb-row" style="padding-left:22px"><span class="sb-dot" style="background:#9ca3af"></span><div class="sb-info"><div class="sb-time">Q3 06:50.5 · Seg 1012</div><div class="sb-label" style="color:#6b7280">Confirmed</div></div></div>
-        <div class="sb-row" style="padding-left:22px"><span class="sb-dot" style="background:#9ca3af"></span><div class="sb-info"><div class="sb-time">Q3 04:09.3 · Seg 1023</div><div class="sb-label" style="color:#6b7280">Confirmed</div></div></div>
-        <div class="sb-row" style="padding-left:22px"><span class="sb-dot" style="background:#9ca3af"></span><div class="sb-info"><div class="sb-time">Q3 00:35.6 · Seg 1038</div><div class="sb-label" style="color:#6b7280">Confirmed</div></div></div>
-        <div class="sb-row" style="padding-left:22px"><span class="sb-dot" style="background:#9ca3af"></span><div class="sb-info"><div class="sb-time">Q4 07:53.6 · Seg 1507</div><div class="sb-label" style="color:#6b7280">Confirmed</div></div></div>
-      </div>
-    </div>
+    <div class="sb-list" id="sb-list"></div>
   </div>
 
   <div class="center">
     <div class="band1">
       <div class="b1-r1">
-        <span class="ev-badge" id="b1-event">CONTACT</span>
-        <span class="b1-time" id="b1-time">Q1 00:44.6</span>
-        <span class="b1-seg" id="b1-seg">· Segment 35</span>
+        <span class="ev-badge" id="b1-event"></span>
+        <span class="b1-time" id="b1-time"></span>
+        <span class="b1-seg" id="b1-seg"></span>
       </div>
-      <div class="b1-desc" id="b1-desc">Contact involving N. Mack and D. Hamby</div>
+      <div class="b1-desc" id="b1-desc"></div>
       <div class="b1-r2">
-        <div class="b1-players" id="b1-players"><b>D. Hamby</b> <span style="color:#9ca3af;font-size:10px">vs</span> <b>N. Mack</b></div>
+        <div class="b1-players" id="b1-players"></div>
         <div class="vsep"></div>
-        <div class="b1-off"><i class="ti ti-user" style="font-size:12px"></i><span id="b1-official">Catherine Chang</span><span class="loc-p lp-trail" id="b1-loc">Trail</span></div>
+        <div class="b1-off"><i class="ti ti-user" style="font-size:12px"></i><span id="b1-official"></span><span class="loc-p" id="b1-loc"></span></div>
         <div class="vsep"></div>
-        <span class="b1-sub" id="b1-sub">Foul: Personal · On-Ball</span>
+        <span class="b1-sub" id="b1-sub"></span>
       </div>
     </div>
     <div class="band2" id="band2"></div>
     <div class="band3" id="band3"></div>
-    <div class="int-body int-body--always" id="int-body"></div>
+    <div class="int-body" id="int-body"></div>
     <div class="footer">
       <button class="fbtn" onclick="simLink('clip')"><i class="ti ti-player-play" style="font-size:13px"></i> Watch clip</button>
       <button class="fbtn" onclick="simLink('grs')"><i class="ti ti-external-link" style="font-size:13px"></i> Open in GRS</button>
       <div class="fsep"></div>
       <button class="fbtn" id="flag-btn" onclick="toggleFlag()"><i class="ti ti-flag" style="font-size:13px"></i> Flag</button>
+      <button class="fbtn" id="playlist-btn" onclick="togglePlaylist()"><i class="ti ti-playlist" style="font-size:13px"></i> Add to playlist</button>
       <div class="fsep"></div>
       <button class="fbtn slack-btn" onclick="openSlack('share')">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M5.042 15.165a2.528 2.528 0 01-2.52 2.52 2.528 2.528 0 01-2.522-2.52 2.528 2.528 0 012.522-2.52h2.52v2.52zm1.271 0a2.528 2.528 0 012.52-2.52 2.528 2.528 0 012.52 2.52v6.313A2.528 2.528 0 018.833 24a2.528 2.528 0 01-2.52-2.522v-6.313zM8.833 5.042a2.528 2.528 0 01-2.52-2.52A2.528 2.528 0 018.833 0a2.528 2.528 0 012.52 2.522v2.52H8.833zm0 1.271a2.528 2.528 0 012.52 2.52 2.528 2.528 0 01-2.52 2.52H2.522A2.528 2.528 0 010 8.833a2.528 2.528 0 012.522-2.52h6.311zm10.122 2.52a2.528 2.528 0 012.522-2.52A2.528 2.528 0 0124 8.833a2.528 2.528 0 01-2.522 2.52h-2.522V8.833zm-1.268 0a2.528 2.528 0 01-2.52 2.52 2.528 2.528 0 01-2.522-2.52V2.522A2.528 2.528 0 0115.167 0a2.528 2.528 0 012.52 2.522v6.311zm-2.52 10.122a2.528 2.528 0 012.52 2.522A2.528 2.528 0 0115.167 24a2.528 2.528 0 01-2.522-2.522v-2.52h2.522zm0-1.268a2.528 2.528 0 01-2.522-2.52 2.528 2.522h6.313A2.528 2.528 0 0124 15.167a2.528 2.528 0 01-2.522 2.52h-6.311z"/></svg>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M5.042 15.165a2.528 2.528 0 01-2.52 2.52 2.528 2.528 0 01-2.522-2.52 2.528 2.528 0 012.522-2.52h2.52v2.52zm1.271 0a2.528 2.528 0 012.52-2.52 2.528 2.528 0 012.52 2.52v6.313A2.528 2.528 0 018.833 24a2.528 2.528 0 01-2.52-2.522v-6.313zM8.833 5.042a2.528 2.528 0 01-2.52-2.52A2.528 2.528 0 018.833 0a2.528 2.528 0 012.52 2.522v2.52H8.833zm0 1.271a2.528 2.528 0 012.52 2.52 2.528 2.528 0 01-2.52 2.52H2.522A2.528 2.528 0 010 8.833a2.528 2.528 0 012.522-2.52h6.311zm10.122 2.52a2.528 2.528 0 012.522-2.52A2.528 2.528 0 0124 8.833a2.528 2.528 0 01-2.522 2.52h-2.522V8.833zm-1.268 0a2.528 2.528 0 01-2.52 2.52 2.528 2.528 0 01-2.522-2.52V2.522A2.528 2.528 0 0115.167 0a2.528 2.528 0 012.52 2.522v6.311zm-2.52 10.122a2.528 2.528 0 012.52 2.522A2.528 2.528 0 0115.167 24a2.528 2.528 0 01-2.522-2.522v-2.52h2.522zm0-1.268a2.528 2.528 0 01-2.522-2.52 2.528 2.528 0 012.522-2.522h6.313A2.528 2.528 0 0124 15.167a2.528 2.528 0 01-2.522 2.52h-6.311z"/></svg>
         Share
       </button>
       <button class="slack-dd" onclick="openSlack('question')"><i class="ti ti-chevron-down" style="font-size:12px"></i></button>
@@ -316,12 +287,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       <button class="vcb"><i class="ti ti-player-play"></i></button>
       <button class="vcb"><i class="ti ti-fast-forward"></i></button>
       <div class="vtrack"><div class="vfill"><div class="vhead"></div></div></div>
-      <span class="vtime" id="v-time">0:44 / 2:18</span>
+      <span class="vtime" id="v-time">0:00</span>
       <button class="vcb"><i class="ti ti-maximize"></i></button>
     </div>
-    <div class="clip-bar" id="clip-bar">
-      <span class="ctag ct-b">Q1</span><span class="ctag ct-a">Contact</span><span class="ctag ct-r">D. Hamby</span><span class="ctag ct-b">N. Mack</span><span class="ctag ct-g">Qualified</span>
-    </div>
+    <div class="clip-bar" id="clip-bar"></div>
     <div class="rp-box"><div class="rp-lbl"><i class="ti ti-bell" style="color:#f59e0b"></i> PTIW comment</div><div class="rp-val" id="rp-ptiw">No PTIW comment</div></div>
     <div class="rp-box"><div class="rp-lbl"><i class="ti ti-message-circle" style="color:#f97316"></i> OIW comment</div><div class="rp-val" id="rp-oiw">No OIW comment</div></div>
   </div>
@@ -370,104 +339,384 @@ const COL = {
 
 const ALL_FIELDS = ['Rating','Infraction type','Play type','Official','Location','Observability'];
 
+// tier: 'critical' | 'notable' | 'standard' | 'comment'
+// changeTags: array of tag strings for filter matching
 const PLAYS = [
   {
-    id:0, event:'CONTACT', time:'Q1 00:44.6', seg:'Segment 35',
-    desc:'Contact involving N. Mack and D. Hamby',
-    player:'D. Hamby', opp:'N. Mack',
+    id:0, tier:'critical', quarter:'Q1',
+    event:'FOUL: LOOSE BALL', time:'Q1 09:33.7', seg:'Segment 1',
+    desc:'M. Mabrey rebounds the missed attempt',
+    player:'N. Sabally', opp:'K. Cardoso',
+    official:'Genesis Perrymond', loc:'Lead', locC:'lp-lead',
+    sub:'Foul: Loose Ball · Rebound',
+    changes:[{f:'Rating', old:'Infraction', nw:'Judgment — Lean No Infraction', tag:'rating'}],
+    unchanged:{'Infraction type':'Foul: Loose Ball','Play type':'Rebound','Official':'Genesis Perrymond','Location':'Lead','Observability':'Observable'},
+    changeTags:['rating'],
+    fpComment:'Sabally (TOR) moves underneath Cardoso (CHI) and initiates body contact that impedes their ability to pursue the rebound.',
+    scComment:'', commentChanged:false,
+    yourNotes:'the tempo bench wanted a foul? but I don\'t think Cardoso did anything illegal here',
+    managerNotes:'I dont think Sabally does anything illegal here either and I think Cardoso going through her back a bit on the way to the ball so good with PIN but would also be fine with CNC tbh',
+    clip:['Q1','Loose Ball','N. Sabally (TOR)','K. Cardoso (CHI)','Qualified'], vt:'9:33 / 11:00', ptiw:'No PTIW comment', oiw:'No OIW comment'
+  },
+  {
+    id:1, tier:'critical', quarter:'Q1',
+    event:'FOUL: OFFENSIVE', time:'Q1 06:46', seg:'Segment 13',
+    desc:'S. Diggins drives toward the basket defended by M. Conde',
+    player:'S. Diggins', opp:'M. Conde',
+    official:'Catherine Chang', loc:'Lead', locC:'lp-lead',
+    sub:'Foul: Offensive · End Of Drive',
+    changes:[
+      {f:'Rating', old:'Judgment — Lean No Infraction', nw:'Infraction', tag:'rating'},
+      {f:'Official', old:'Kevin Fahy', nw:'Catherine Chang', tag:'official'}
+    ],
+    unchanged:{'Infraction type':'Foul: Offensive','Play type':'End Of Drive','Location':'Lead','Observability':'Observable'},
+    changeTags:['rating','official'],
+    fpComment:'', scComment:'Diggins (CHI) initiates contact with Conde (TOR), who has established a legal guarding position in Diggins\' path and outside the restricted area prior to Diggins\' upward motion.', commentChanged:true,
+    yourNotes:'Conde ends up getting dislodged so I put PIN but I think Diggins still is considered to be "going to" Conde\'s space?',
+    managerNotes:'PTIW, I was leaning more PIL but find it kind of hard to defend a PI with a team asking for an INC',
+    clip:['Q1','Offensive','S. Diggins (CHI)','M. Conde (TOR)','Qualified'], vt:'6:46 / 8:20', ptiw:'PTIW comment available', oiw:'No OIW comment'
+  },
+  {
+    id:2, tier:'standard', quarter:'Q1',
+    event:'FOUL: PERSONAL', time:'Q1 04:46.1', seg:'Segment 22',
+    desc:'B. Sykes drives toward the basket defended by K. Cardoso',
+    player:'K. Cardoso', opp:'B. Sykes',
+    official:'Kevin Fahy', loc:'Slot', locC:'lp-slot',
+    sub:'Foul: Personal · During Drive',
+    changes:[{f:'Rating', old:'Judgment — Lean No Infraction', nw:'No Infraction', tag:'rating'}],
+    unchanged:{'Infraction type':'Foul: Personal','Play type':'During Drive','Official':'Kevin Fahy','Location':'Slot','Observability':'Observable'},
+    changeTags:['rating'],
+    fpComment:'', scComment:'', commentChanged:false,
+    yourNotes:'mutual engage/hook? contact/effect looks quite marginal either way',
+    managerNotes:'I actually think Sykes reaches out and initiates the contact',
+    clip:['Q1','Personal','K. Cardoso (CHI)','B. Sykes (CHI)','Qualified'], vt:'4:46 / 6:10', ptiw:'No PTIW comment', oiw:'No OIW comment'
+  },
+  {
+    id:3, tier:'standard', quarter:'Q1',
+    event:'FOUL: SHOOTING', time:'Q1 03:57.5', seg:'Segment 25',
+    desc:'K. Cardoso attempts a shot and is defended by T. Key',
+    player:'T. Key', opp:'K. Cardoso',
+    official:'Catherine Chang', loc:'Lead', locC:'lp-lead',
+    sub:'Foul: Shooting · Floater → Post Shot',
+    changes:[{f:'Play type', old:'Floater', nw:'Post Shot', tag:'playtype'}],
+    unchanged:{'Rating':'No Infraction','Infraction type':'Foul: Shooting','Official':'Catherine Chang','Location':'Lead','Observability':'Observable'},
+    changeTags:['playtype'],
+    fpComment:'', scComment:'There is no clear or conclusive video evidence to determine if Key (TOR) makes contact with Cardoso\'s (CHI) arm as Key contests the shot attempt.', commentChanged:true,
+    yourNotes:'think there might have been some A-B / blocking action here but no angles, so just CC?',
+    managerNotes:'',
+    clip:['Q1','Shooting','T. Key (TOR)','K. Cardoso (CHI)','Qualified'], vt:'3:57 / 5:30', ptiw:'No PTIW comment', oiw:'No OIW comment'
+  },
+  {
+    id:4, tier:'critical', quarter:'Q1',
+    event:'FOUL: OFFENSIVE', time:'Q1 03:03.5', seg:'Segment 28',
+    desc:'K. Rice attempts a shot and is defended by E. Williams',
+    player:'K. Rice', opp:'E. Williams',
+    official:'Catherine Chang', loc:'Lead', locC:'lp-lead',
+    sub:'Foul: Offensive · Layup Or Dunk',
+    changes:[{f:'Rating', old:'Judgment — Lean No Infraction', nw:'Infraction', tag:'rating'}],
+    unchanged:{'Infraction type':'Foul: Offensive','Play type':'Layup Or Dunk','Official':'Catherine Chang','Location':'Lead','Observability':'Observable'},
+    changeTags:['rating'],
+    fpComment:'After releasing the shot, Rice\'s (TOR) right arm comes down and some contact occurs with Williams\' (CHI) head/face. Contact to an opponent\'s head/face can be deemed marginal when the result of a natural basketball move, provided the contact is not disproportionate or uncontrolled.',
+    scComment:'After releasing the shot, Rice\'s (TOR) left arm comes down and grabs Williams\' (CHI) shoulder. Subsequently, Rice\'s right arm initiates contact with Williams\' head.', commentChanged:true,
+    yourNotes:'',
+    managerNotes:'I think the combination of the shoulder grab into the head contact is enough for an INC under the POEs of not wanting to promote rough play',
+    clip:['Q1','Offensive','K. Rice (TOR)','E. Williams (CHI)','Qualified'], vt:'3:03 / 4:45', ptiw:'No PTIW comment', oiw:'No OIW comment'
+  },
+  {
+    id:5, tier:'standard', quarter:'Q1',
+    event:'FOUL: SHOOTING', time:'Q1 02:21.4', seg:'Segment 30',
+    desc:'R. Banham is called for fouling M. Conde',
+    player:'R. Banham', opp:'M. Conde',
+    official:'Catherine Chang', loc:'Lead', locC:'lp-lead',
+    sub:'Foul: Shooting · Driving Shot Attempt',
+    changes:[{f:'Rating', old:'Judgment — Lean Infraction', nw:'Judgment — Lean No Infraction', tag:'rating'}],
+    unchanged:{'Infraction type':'Foul: Shooting','Play type':'Driving Shot Attempt','Official':'Catherine Chang','Location':'Lead','Observability':'Observable'},
+    changeTags:['rating'],
+    fpComment:'Banham (CHI) lowers their arm slightly and some contact occurs with Conde\'s (TOR) non-shooting arm during their shooting motion. Conde is able to move through the contact to finish at the rim, and there is judgement regarding the degree and effect of the contact.',
+    scComment:'Banham (CHI) lowers their arm slightly and some contact occurs with Conde\'s (TOR) off-arm during their shooting motion. Conde is able to move through the contact to finish at the rim, and there is judgement regarding the degree and effect of the contact.', commentChanged:true,
+    yourNotes:'replay at 49:17 on HBP, Banham doesn\'t get Conde\'s shooting arm, feel like this could\'ve been a PIN in the NBA?',
+    managerNotes:'Agree',
+    clip:['Q1','Shooting','R. Banham (CHI)','M. Conde (TOR)','Qualified'], vt:'2:21 / 3:55', ptiw:'No PTIW comment', oiw:'No OIW comment'
+  },
+  {
+    id:6, tier:'notable', quarter:'Q1',
+    event:'FOUL: PERSONAL', time:'Q1 00:53.5', seg:'Segment 37',
+    desc:'S. Taylor attempts a shot and is defended by L. Held',
+    player:'L. Held', opp:'S. Taylor',
+    official:'Kevin Fahy', loc:'Slot', locC:'lp-slot',
+    sub:'Foul: Shooting · Driving Shot Attempt',
+    changes:[
+      {f:'Infraction type', old:'Foul: Personal', nw:'Foul: Shooting', tag:'infractiontype'},
+      {f:'Play type', old:'During Drive', nw:'Driving Shot Attempt', tag:'playtype'}
+    ],
+    unchanged:{'Rating':'Judgment — Lean Infraction','Official':'Kevin Fahy','Location':'Slot','Observability':'Observable'},
+    changeTags:['infractiontype','playtype'],
+    fpComment:'Held (TOR) briefly places their arm on Taylor\'s (CHI) front and some contact occurs during the drive. There is judgement in determining if the contact is more than marginal.',
+    scComment:'Held (TOR) briefly places their arm on Taylor\'s (CHI) front and some contact occurs during the drive. There is judgement in determining if the contact is more than marginal.', commentChanged:true,
+    yourNotes:'replay at 52:51 on HBP, contact/effect doesn\'t look more than marginal?',
+    managerNotes:'agree with rating but she is gathered when the contact occurs so going shooting',
+    clip:['Q1','Shooting','L. Held (TOR)','S. Taylor (CHI)','Qualified'], vt:'0:53 / 2:20', ptiw:'No PTIW comment', oiw:'No OIW comment'
+  },
+  {
+    id:7, tier:'standard', quarter:'Q1',
+    event:'FOUL: SHOOTING', time:'Q1 00:04.7', seg:'Segment 40',
+    desc:'B. Sykes attempts a shot and is defended by N. Cloud',
+    player:'N. Cloud', opp:'B. Sykes',
+    official:'Genesis Perrymond', loc:'Trail', locC:'lp-trail',
+    sub:'Foul: Shooting · Jump Shot',
+    changes:[{f:'Rating', old:'Judgment — Lean No Infraction', nw:'No Infraction', tag:'rating'}],
+    unchanged:{'Infraction type':'Foul: Shooting','Play type':'Jump Shot','Official':'Genesis Perrymond','Location':'Trail','Observability':'Observable'},
+    changeTags:['rating'],
+    fpComment:'',scComment:'', commentChanged:false,
+    yourNotes:'Sykes wanted a foul for this one but Cloud has her hand on Sykes\' back right before the gather and retracts it pretty quickly, I think Cloud sells it by jumping forward.',
+    managerNotes:'this one I have nothing on the shot and going PIN on the contact coming over the pick. I think she feels that contact and tries to immediately shoot thinking she is going to get a shooting foul that would clearly be on the floor',
+    clip:['Q1','Shooting','N. Cloud (CHI)','B. Sykes (CHI)','Qualified'], vt:'0:04 / 1:30', ptiw:'No PTIW comment', oiw:'No OIW comment'
+  },
+  {
+    id:8, tier:'notable', quarter:'Q2',
+    event:'CONTACT', time:'Q2 09:20.7', seg:'Segment 503',
+    desc:'Contact involving M. Mabrey and K. Cardoso',
+    player:'K. Cardoso', opp:'M. Mabrey',
     official:'Catherine Chang', loc:'Trail', locC:'lp-trail',
     sub:'Foul: Personal · On-Ball',
     changes:[
-      {f:'Rating',   old:'Lean No Infraction', nw:'Infraction', tag:'rating'},
-      {f:'Location', old:'Lead',               nw:'Trail',      tag:'location'}
+      {f:'Play type', old:'Secondary Defender', nw:'On-Ball', tag:'playtype'},
+      {f:'Rating', old:'Judgment — Lean No Infraction', nw:'Judgment — Lean Infraction', tag:'rating'}
     ],
-    unchanged:{'Infraction type':'Foul: Personal','Play type':'Fouls','Official':'Catherine Chang','Observability':'Observable'},
-    fpComment:'Hamby (LAS) brings their arm toward the ball and some contact occurs with Mack\'s (PHX) head/face. Contact to an opponent\'s head/face can be deemed marginal when the result of a natural basketball move, provided the contact is not disproportionate or uncontrolled.',
-    scComment:'RLS shows Hamby (LAS) initiates more-than-marginal contact with Mack\'s (PHX) head/face during the steal attempt.',
-    commentChanged:true,
-    yourNotes:'RLB — I think Hamby gets to the ball first? not sure',
-    managerNotes:'If there is no pick, I would add a contact event for plays like this off-ball... RLS gets her pretty flush in the face',
-    clip:['Q1','Contact','D. Hamby (LAS)','N. Mack (PHX)','Qualified'],
-    vt:'0:44 / 2:18', ptiw:'No PTIW comment', oiw:'No OIW comment'
+    unchanged:{'Infraction type':'Foul: Personal','Official':'Catherine Chang','Location':'Trail','Observability':'Observable'},
+    changeTags:['playtype','rating'],
+    fpComment:'', scComment:'', commentChanged:false,
+    yourNotes:'some arm contact but Mabrey makes the pass',
+    managerNotes:'To me a lot of contact but I like the no whistle as it leads to an open 3. I think refs are right for letting this play out.',
+    clip:['Q2','Contact','K. Cardoso (CHI)','M. Mabrey (TOR)','Qualified'], vt:'9:20 / 11:00', ptiw:'No PTIW comment', oiw:'No OIW comment'
   },
   {
-    id:1, event:'FOUL: LOOSE BALL', time:'Q1 02:56.8', seg:'Segment 28',
-    desc:'M. Suarez is called for fouling C. Brink',
-    player:'M. Suarez', opp:'C. Brink',
-    official:'Catherine Chang', loc:'Lead', locC:'lp-lead',
-    sub:'Foul: Loose Ball · Rebound',
+    id:9, tier:'standard', quarter:'Q2',
+    event:'FOUL: PERSONAL', time:'Q2 06:30.4', seg:'Segment 514',
+    desc:'K. Nurse is called for fouling N. Cloud',
+    player:'K. Nurse', opp:'N. Cloud',
+    official:'Kevin Fahy', loc:'Slot', locC:'lp-slot',
+    sub:'Foul: Personal · Contact - Off-Ball',
+    changes:[],
+    unchanged:{'Rating':'Judgment — Lean No Infraction','Infraction type':'Foul: Personal','Play type':'Contact - Off-Ball','Official':'Kevin Fahy','Location':'Slot','Observability':'Observable'},
+    changeTags:[],
+    fpComment:'Nurse (TOR) and Cloud (CHI) come together at the same spot off-ball and some foot-to-foot contact occurs. The contact appears incidental.',
+    scComment:'Nurse (TOR) and Cloud (CHI) come together at the same spot off-ball and some foot-to-foot contact occurs. There is judgement by the referee if the contact is marginal or incidental. Although a whistle is not technically incorrect, not having a whistle would not be incorrect either.', commentChanged:true,
+    yourNotes:'sent in slack/foley',
+    managerNotes:'PTIW',
+    clip:['Q2','Personal','K. Nurse (TOR)','N. Cloud (CHI)','Qualified'], vt:'6:30 / 8:00', ptiw:'PTIW comment available', oiw:'No OIW comment'
+  },
+  {
+    id:10, tier:'standard', quarter:'Q2',
+    event:'FOUL: SHOOTING', time:'Q2 01:50.6', seg:'Segment 532',
+    desc:'K. Rice is called for fouling A. Coulibaly',
+    player:'K. Rice', opp:'A. Coulibaly',
+    official:'Kevin Fahy', loc:'Lead', locC:'lp-lead',
+    sub:'Foul: Shooting · Layup Or Dunk',
+    changes:[{f:'Rating', old:'Judgment — Lean No Infraction', nw:'Judgment — Lean Infraction', tag:'rating'}],
+    unchanged:{'Infraction type':'Foul: Shooting','Play type':'Layup Or Dunk','Official':'Kevin Fahy','Location':'Lead','Observability':'Observable'},
+    changeTags:['rating'],
+    fpComment:'Rice (TOR) gets to the ball and some contact occurs with Coulibaly (CHI) hand as Rice is sliding their hand off the ball. The contact is considered incidental.',
+    scComment:'Broadcast replay shows Rice\'s (TOR) right hand initially makes clean contact with the ball. As Rice\'s hand slides off the ball, some arm-to-arm contact occurs with Coulibaly (CHI).', commentChanged:true,
+    yourNotes:'replay at 1:20:33, Coulibaly also makes the shot',
+    managerNotes:'cant be incidental since she doesnt dislodge it, looks like some forearm to forearm so going PIL',
+    clip:['Q2','Shooting','K. Rice (TOR)','A. Coulibaly (CHI)','Qualified'], vt:'1:50 / 3:20', ptiw:'No PTIW comment', oiw:'No OIW comment'
+  },
+  {
+    id:11, tier:'standard', quarter:'Q2',
+    event:'FOUL: OFFENSIVE', time:'Q2 01:06.7', seg:'Segment 535',
+    desc:'N. Sabally sets a screen for M. Conde defended by A. Coulibaly',
+    player:'N. Sabally', opp:'A. Coulibaly',
+    official:'Catherine Chang', loc:'Trail', locC:'lp-trail',
+    sub:'Foul: Offensive · Screener',
+    changes:[],
+    unchanged:{'Rating':'No Infraction','Infraction type':'Foul: Offensive','Play type':'Screener','Official':'Catherine Chang','Location':'Trail','Observability':'Observable'},
+    changeTags:[],
+    fpComment:'Sabally (TOR) is firming up on their left foot and absorbs the body contact that occurs as they set the pick on Coulibaly (CHI).',
+    scComment:'Sabally (TOR) firms up on their left foot and absorbs the body contact that occurs while setting the pick on Coulibaly (CHI). Additionally, Coulibaly does not go through Sabally\'s space, therefore, the contact as the players come together is considered incidental.', commentChanged:true,
+    yourNotes:'CNC? huge bench reaction',
+    managerNotes:'',
+    clip:['Q2','Offensive','N. Sabally (TOR)','A. Coulibaly (CHI)','Qualified'], vt:'1:06 / 2:40', ptiw:'No PTIW comment', oiw:'No OIW comment'
+  },
+  {
+    id:12, tier:'critical', quarter:'Q2',
+    event:'TURNOVER: TRAVELING', time:'Q2 01:04', seg:'Segment 535',
+    desc:'M. Conde starts her dribble defended by E. Williams',
+    player:'M. Conde', opp:'Sky',
+    official:'Genesis Perrymond', loc:'Slot', locC:'lp-slot',
+    sub:'Turnover: Traveling · Stationary Movement',
     changes:[
-      {f:'Rating', old:'Lean No Infraction', nw:'Infraction', tag:'rating'}
+      {f:'Rating', old:'Infraction', nw:'No Infraction', tag:'rating'},
+      {f:'Official', old:'Kevin Fahy', nw:'Genesis Perrymond', tag:'official'},
+      {f:'Location', old:'Lead', nw:'Slot', tag:'location'}
     ],
-    unchanged:{'Infraction type':'Foul: Loose Ball','Play type':'Fouls','Official':'Catherine Chang','Location':'Lead','Observability':'Observable'},
-    fpComment:'Suarez (PHX) momentarily applies their forearms to Brink (LAS) front and Brink also briefly engages in arm contact. The contact from both players appear marginal.',
-    scComment:'',
-    commentChanged:false,
-    yourNotes:'the rebound bounces sooo far away from them, feel like maybe the ref called it based on Brink\'s reaction.',
-    managerNotes:'I think you have the perfect thought process for NBA on this play. I just think this is the "physical" play they want called before it turns rough.',
-    clip:['Q1','Loose Ball','M. Suarez (PHX)','C. Brink (LAS)','Qualified'],
-    vt:'2:56 / 4:10', ptiw:'No PTIW comment', oiw:'No OIW comment'
+    unchanged:{'Infraction type':'Turnover: Traveling','Play type':'Stationary Movement','Observability':'Observable'},
+    changeTags:['rating','official','location'],
+    fpComment:'Conde (TOR) establishes their right foot as her pivot, which they move from heel to toe to create distance.',
+    scComment:'Conde (TOR) gathers the ball on their left foot and establishes their right foot as the pivot foot, which Conde maintains prior to passing.', commentChanged:true,
+    yourNotes:'I see the bench reaction but I think this is ugly but legal',
+    managerNotes:'',
+    clip:['Q2','Traveling','M. Conde (TOR)','—','Qualified'], vt:'1:04 / 2:38', ptiw:'No PTIW comment', oiw:'No OIW comment'
   },
   {
-    id:2, event:'SHOT', time:'Q1 01:07.3', seg:'Segment 33',
-    desc:'K. Copper attempts a shot defended by R. Burrell',
-    player:'R. Burrell', opp:'K. Copper',
-    official:'Gina Cross', loc:'Lead', locC:'lp-lead',
-    sub:'Foul: Shooting · Jump Shot',
-    changes:[
-      {f:'Official', old:'Catherine Chang', nw:'Gina Cross', tag:'official'},
-      {f:'Location', old:'Trail',           nw:'Lead',       tag:'location'}
-    ],
-    unchanged:{'Rating':'Infraction','Infraction type':'Foul: Shooting','Play type':'Fouls','Observability':'Observable'},
-    fpComment:'LLB shows Burrell (LAS) reaches in and makes illegal contact with Copper\'s (PHX) wrist/arm. The contact is more than marginal and a shooting foul should have been assessed.',
-    scComment:'LLB and RAR show Burrell (LAS) reaches in and makes illegal contact with Copper\'s (PHX) wrist/arm during the jump shot attempt.',
-    commentChanged:true,
-    yourNotes:'i think lead should\'ve gotten this maybe',
-    managerNotes:'Yea I think I am good with Lead here.',
-    clip:['Q1','Shot','R. Burrell (LAS)','K. Copper (PHX)','Qualified'],
-    vt:'1:07 / 3:45', ptiw:'No PTIW comment', oiw:'No OIW comment'
-  },
-  {
-    id:3, event:'SHOT', time:'Q1 06:26.6', seg:'Segment 15',
-    desc:'A. Thomas attempts a shot defended by A. Atkins',
-    player:'A. Atkins', opp:'A. Thomas',
+    id:13, tier:'standard', quarter:'Q3',
+    event:'FOUL: SHOOTING', time:'Q3 04:32.4', seg:'Segment 1022',
+    desc:'S. Taylor attempts a shot and is defended by T. Key',
+    player:'T. Key', opp:'S. Taylor',
     official:'Catherine Chang', loc:'Lead', locC:'lp-lead',
     sub:'Foul: Shooting · Driving Shot Attempt',
-    changes:[
-      {f:'Rating', old:'Infraction', nw:'Lean No Infraction', tag:'rating'}
-    ],
-    unchanged:{'Infraction type':'Foul: Shooting','Play type':'Fouls','Official':'Catherine Chang','Location':'Lead','Observability':'Observable'},
-    fpComment:'RLB shows while Atkins (LAS) gets to the ball, they do not immediately dislodge it and follow through to make illegal contact with Thomas\' (PHX) arm, which affects their driving shot attempt.',
-    scComment:'RLB shows that Atkins\' (LAS) right hand initially makes clean contact with the ball before Atkins brings the other hand onto the ball as well. Thomas (PHX) attempts to bring the ball up to shoot and begins to lose control as Atkins\' hands slide off the ball and onto Thomas\' arm. There is judgment involved in determining whether the ball was already coming loose.',
-    commentChanged:true,
-    yourNotes:'OIW says "Calibration play: PHX Thomas drives to the basket and LAS Atkins gets to the ball." the arm contact occurs prior to Thomas losing control of the ball',
-    managerNotes:'just wish they called a jump ball, she is on the ball forever',
-    clip:['Q1','Shot','A. Atkins (LAS)','A. Thomas (PHX)','Qualified'],
-    vt:'6:26 / 9:12', ptiw:'No PTIW comment',
-    oiw:'"Calibration play — contact occurs after ball is loose. Lead correctly no-calls."'
+    changes:[],
+    unchanged:{'Rating':'No Infraction','Infraction type':'Foul: Shooting','Play type':'Driving Shot Attempt','Official':'Catherine Chang','Location':'Lead','Observability':'Observable'},
+    changeTags:[],
+    fpComment:'Key (TOR) establishes a legal guarding position in Taylor\'s (CHI) path prior to the contact during the driving shot attempt.',
+    scComment:'Key (TOR) appears to legally contest Taylor\'s (CHI) driving shot attempt, and the follow-through contact after the release is considered incidental.', commentChanged:true,
+    yourNotes:'angry bench',
+    managerNotes:'',
+    clip:['Q3','Shooting','T. Key (TOR)','S. Taylor (CHI)','Qualified'], vt:'4:32 / 6:05', ptiw:'No PTIW comment', oiw:'No OIW comment'
   },
   {
-    id:4, event:'FOUL: PERSONAL', time:'Q2 03:55.9', seg:'Segment 529',
-    desc:'M. Suarez is called for fouling C. Brink',
-    player:'M. Suarez', opp:'C. Brink',
-    official:'Gina Cross', loc:'Trail', locC:'lp-trail',
-    sub:'Foul: Personal · Contact On-Ball',
-    changes:[
-      {f:'Rating',   old:'Lean No Infraction', nw:'Infraction', tag:'rating'},
-      {f:'Location', old:'Lead',               nw:'Trail',      tag:'location'}
-    ],
-    unchanged:{'Infraction type':'Foul: Personal','Play type':'Fouls','Official':'Gina Cross','Observability':'Observable'},
-    fpComment:'Suarez (PHX) gets to the ball and there is some ensuing arm contact with Brink (LAS). The contact appears marginal.',
-    scComment:'',
-    commentChanged:false,
-    yourNotes:'RAR, LLB — looks quite marginal',
-    managerNotes:'ball going the other way now so referee positions change. Also with her getting both arms I am fine with CC',
-    clip:['Q2','Personal','M. Suarez (PHX)','C. Brink (LAS)','Qualified'],
-    vt:'3:55 / 6:02', ptiw:'No PTIW comment', oiw:'No OIW comment'
+    id:14, tier:'standard', quarter:'Q3',
+    event:'FOUL: SHOOTING', time:'Q3 02:03.0', seg:'Segment 1034',
+    desc:'K. Rice is called for fouling E. Williams',
+    player:'K. Rice', opp:'E. Williams',
+    official:'Catherine Chang', loc:'Lead', locC:'lp-lead',
+    sub:'Foul: Shooting · Layup Or Dunk',
+    changes:[],
+    unchanged:{'Rating':'No Infraction','Infraction type':'Foul: Shooting','Play type':'Layup Or Dunk','Official':'Catherine Chang','Location':'Lead','Observability':'Observable'},
+    changeTags:[],
+    fpComment:'Rice (TOR) makes clean contact with the ball and dislodges it from Williams\' (CHI) control during their shot attempt near the rim. Any ensuing arm contact is considered incidental.',
+    scComment:'Broadcast replay shows Rice (TOR) makes clean contact with the ball and dislodges it from Williams\' (CHI) control during their shot attempt near the rim. Any ensuing arm contact is considered incidental.', commentChanged:true,
+    yourNotes:'replay at 2:02:55',
+    managerNotes:'',
+    clip:['Q3','Shooting','K. Rice (TOR)','E. Williams (CHI)','Qualified'], vt:'2:03 / 3:35', ptiw:'No PTIW comment', oiw:'No OIW comment'
+  },
+  {
+    id:15, tier:'critical', quarter:'Q3',
+    event:'FOUL: SHOOTING', time:'Q3 01:51.9', seg:'Segment 1035',
+    desc:'K. Rice attempts a shot and is defended by S. Taylor',
+    player:'S. Taylor', opp:'K. Rice',
+    official:'Catherine Chang', loc:'Lead', locC:'lp-lead',
+    sub:'Foul: Shooting · Layup Or Dunk',
+    changes:[{f:'Rating', old:'Infraction', nw:'Judgment — Lean No Infraction', tag:'rating'}],
+    unchanged:{'Infraction type':'Foul: Shooting','Play type':'Layup Or Dunk','Official':'Catherine Chang','Location':'Lead','Observability':'Observable'},
+    changeTags:['rating'],
+    fpComment:'Taylor (CHI) lowers their arms and initiates illegal contact with Rice\'s (TOR) arm, which affects their shot attempt near the rim.',
+    scComment:'', commentChanged:false,
+    yourNotes:'point of contact, replay at 2:05:29 on HBP',
+    managerNotes:'I think she is pretty vertical and absorbs, arms arent perfect so going PIN but I think it is a good no call and good defense',
+    clip:['Q3','Shooting','S. Taylor (CHI)','K. Rice (TOR)','Qualified'], vt:'1:51 / 3:25', ptiw:'No PTIW comment', oiw:'No OIW comment'
+  },
+  {
+    id:16, tier:'notable', quarter:'Q4',
+    event:'FOUL: OFFENSIVE', time:'Q4 04:56.2', seg:'Segment 1521',
+    desc:'E. Williams sets a screen for S. Diggins defended by M. Conde',
+    player:'E. Williams', opp:'M. Conde',
+    official:'Catherine Chang', loc:'Trail', locC:'lp-trail',
+    sub:'Foul: Offensive · Screener',
+    changes:[],
+    unchanged:{'Rating':'No Infraction','Infraction type':'Foul: Offensive','Play type':'Screener','Official':'Catherine Chang','Location':'Trail','Observability':'Observable'},
+    changeTags:[],
+    fpComment:'Williams (CHI) is firmed up in their stance and absorbs the marginal body contact that occurs as they set the pick on Conde (TOR).',
+    scComment:'', commentChanged:false,
+    yourNotes:'flop? lol replay at 2:26:10 on HBP',
+    managerNotes:'',
+    clip:['Q4','Offensive','E. Williams (CHI)','M. Conde (TOR)','Qualified'], vt:'4:56 / 6:30', ptiw:'No PTIW comment', oiw:'No OIW comment'
+  },
+  {
+    id:17, tier:'standard', quarter:'Q4',
+    event:'TURNOVER: LOST BALL OOB', time:'Q4 03:50.8', seg:'Segment 1524',
+    desc:'Turnover: Lost Ball Out of Bounds',
+    player:'K. Rice', opp:'S. Taylor',
+    official:'Genesis Perrymond', loc:'Slot', locC:'lp-slot',
+    sub:'Out-of-Bounds · Ball Out of Bounds',
+    changes:[{f:'Location', old:'Lead', nw:'Slot', tag:'location'}],
+    unchanged:{'Rating':'Infraction','Infraction type':'Turnover: Lost Ball OOB','Play type':'Ball Out of Bounds','Official':'Genesis Perrymond','Observability':'Observable'},
+    changeTags:['location'],
+    fpComment:'Replay review of the out of bounds called on Rice (TOR) pursuant to a coach\'s challenge was deemed unsuccessful. Replay shows Rice is the last to touch the ball before it goes out of bounds.',
+    scComment:'Replay review of the out of bounds called on Rice (TOR) pursuant to a coach\'s challenge was deemed unsuccessful. Replay did not show clear and conclusive video evidence to overturn the on court ruling that Rice is the last to touch the ball before it goes out of bounds.', commentChanged:true,
+    yourNotes:'',
+    managerNotes:'PTIW',
+    clip:['Q4','OOB','K. Rice (TOR)','S. Taylor (CHI)','Qualified'], vt:'3:50 / 5:25', ptiw:'PTIW comment available', oiw:'No OIW comment'
   }
 ];
 
-let cur=0, flagged=new Set(), viewed=new Set([0]), slackType='share';
+const TIER_ORDER = ['critical','notable','standard'];
+const TIER_META = {
+  critical: {label:'Critical', color:'#dc2626'},
+  notable:  {label:'Notable',  color:'#7c3aed'},
+  standard: {label:'Standard', color:'#1d4ed8'}
+};
+
+function sbLabel(p) {
+  if (p.changes.length === 0) return 'Comment revised';
+  return p.changes.map(c => {
+    if (c.f === 'Rating') return c.old.replace('Judgment — ','') + ' → ' + c.nw.replace('Judgment — ','');
+    return c.f + ' changed';
+  }).join(' · ');
+}
+
+let cur = 0, flagged = new Set(), playlist = new Set(), viewed = new Set(), activeQ = 'all', activeT = 'all';
+
+function buildSidebar() {
+  const list = document.getElementById('sb-list');
+  list.innerHTML = '';
+  TIER_ORDER.forEach(tier => {
+    const plays = PLAYS.filter(p => p.tier === tier);
+    if (!plays.length) return;
+    const hdr = document.createElement('div');
+    hdr.className = 'tier-hdr';
+    hdr.dataset.tier = tier;
+    hdr.style.color = TIER_META[tier].color;
+    hdr.innerHTML = `<span class="tier-dot" style="background:${TIER_META[tier].color}"></span>${TIER_META[tier].label} <span style="color:#9ca3af;font-weight:400;margin-left:2px">(${plays.length})</span>`;
+    list.appendChild(hdr);
+    plays.forEach(p => {
+      const row = document.createElement('div');
+      row.className = 'sb-row' + (p.id === cur ? ' sel' : '');
+      row.dataset.id = p.id;
+      row.dataset.quarter = p.quarter;
+      row.dataset.tags = p.changeTags.join(',');
+      row.innerHTML = `<span class="sb-dot" style="background:${TIER_META[tier].color}"></span><div class="sb-info"><div class="sb-time">${p.time} · ${p.seg}</div><div class="sb-label">${sbLabel(p)}</div></div><i class="ti ti-flag sb-flag${flagged.has(p.id)?' on':''}" id="flag-sb-${p.id}"></i>`;
+      row.addEventListener('click', () => selectPlay(p.id, row));
+      list.appendChild(row);
+    });
+  });
+  applyFilters();
+}
+
+function applyFilters() {
+  const rows = document.querySelectorAll('.sb-row');
+  rows.forEach(row => {
+    const q = row.dataset.quarter;
+    const tags = (row.dataset.tags || '').split(',').filter(Boolean);
+    const qMatch = activeQ === 'all' || q === activeQ;
+    let tMatch = true;
+    if (activeT === 'rating') tMatch = tags.includes('rating');
+    else if (activeT === 'playtype') tMatch = tags.some(t => t === 'playtype' || t === 'infractiontype');
+    else if (activeT === 'official') tMatch = tags.some(t => t === 'official' || t === 'location');
+    row.classList.toggle('hidden', !(qMatch && tMatch));
+  });
+  // hide tier headers if all rows hidden
+  document.querySelectorAll('.tier-hdr').forEach(hdr => {
+    const tier = hdr.dataset.tier;
+    const visibleRows = document.querySelectorAll(`.sb-row:not(.hidden)[data-id]`);
+    const tierRows = document.querySelectorAll(`.sb-row[data-id]`);
+    // find rows in this tier
+    const plays = PLAYS.filter(p => p.tier === tier);
+    const anyVisible = plays.some(p => {
+      const row = document.querySelector(`.sb-row[data-id="${p.id}"]`);
+      return row && !row.classList.contains('hidden');
+    });
+    hdr.classList.toggle('hidden', !anyVisible);
+  });
+  updateProgress();
+}
+
+function updateProgress() {
+  const total = PLAYS.length;
+  const n = viewed.size;
+  document.getElementById('prog-txt').textContent = n + ' / ' + total + ' reviewed';
+  document.getElementById('prog-fill').style.width = Math.round(n / total * 100) + '%';
+}
 
 function renderBand2(p) {
   const changeMap = {};
@@ -481,9 +730,9 @@ function renderBand2(p) {
       html += `<div class="ch-row-fp"><span class="ch-field">${c.f}</span><span class="ch-fp-val">${c.old}</span></div>`;
       html += `<div class="ch-row-sc"><span class="ch-sc-pill" style="background:${col.bg};color:${col.txt}">${c.nw}</span></div>`;
     } else {
-      const val = p.unchanged ? p.unchanged[f] : '—';
-      html += `<div class="ch-row-fp ch-row-unch"><span class="ch-field ch-field-unch">${f}</span><span class="ch-unch-val">${val || '—'}</span></div>`;
-      html += `<div class="ch-row-sc ch-row-unch"><span class="ch-unch-val">—</span></div>`;
+      const val = (p.unchanged && p.unchanged[f]) ? p.unchanged[f] : '—';
+      html += `<div class="ch-row-fp ch-row-unch"><span class="ch-field">${f}</span><span class="ch-fp-val">${val}</span></div>`;
+      html += `<div class="ch-row-sc ch-row-unch"><span class="ch-sc-same">—</span></div>`;
     }
   });
   html += '</div>';
@@ -491,11 +740,17 @@ function renderBand2(p) {
 }
 
 function renderBand3(p) {
-  let html = `<div style="margin-bottom:10px"><div class="cb-lbl">First pass</div><div class="cb-fp"><div class="cb-text muted">${p.fpComment}</div></div></div>`;
-  if (p.commentChanged) {
+  if (!p.fpComment && !p.scComment) return '<div style="color:#9ca3af;font-size:12px;font-style:italic">No comments.</div>';
+  let html = '';
+  if (p.fpComment) {
+    html += `<div style="margin-bottom:10px"><div class="cb-lbl">First pass</div><div class="cb-fp"><div class="cb-text muted">${p.fpComment}</div></div></div>`;
+  }
+  if (p.commentChanged && p.scComment) {
     html += `<div class="rev-connector"><i class="ti ti-arrow-down" style="font-size:12px"></i> revised by second check</div><div><div class="cb-lbl sc-lbl-c">Second check</div><div class="cb-sc"><div class="cb-text">${p.scComment}</div></div></div>`;
-  } else {
-    html += `<div class="rev-connector"><i class="ti ti-check" style="font-size:12px"></i> comment unchanged — second check kept yours</div><div><div class="cb-unch"><div class="cb-text" style="color:#6b7280">${p.fpComment}</div></div></div>`;
+  } else if (p.fpComment) {
+    html += `<div class="rev-connector"><i class="ti ti-check" style="font-size:12px"></i> comment unchanged — second check kept yours</div>`;
+  } else if (p.scComment) {
+    html += `<div><div class="cb-lbl sc-lbl-c">Second check</div><div class="cb-sc"><div class="cb-text">${p.scComment}</div></div></div>`;
   }
   return html;
 }
@@ -516,72 +771,84 @@ function renderCenter(p) {
     (p.yourNotes ? '<div><div class="in-lbl">Your notes</div><div class="in-text">'+p.yourNotes+'</div></div>' : '') +
     (p.managerNotes ? '<div><div class="in-lbl sp">Manager notes</div><div class="in-text">'+p.managerNotes+'</div></div>' : '');
   document.getElementById('v-time').textContent = p.vt;
-  document.getElementById('clip-bar').innerHTML = p.clip.map((t,i) =>
-    '<span class="ctag '+['ct-b','ct-a','ct-r','ct-b','ct-g'][i]+'">'+t+'</span>').join('');
+  const clipCls = ['ct-b','ct-a','ct-r','ct-b','ct-g'];
+  document.getElementById('clip-bar').innerHTML = p.clip.map((t,i)=>'<span class="ctag '+clipCls[i]+'">'+t+'</span>').join('');
   document.getElementById('rp-ptiw').textContent = p.ptiw;
   document.getElementById('rp-oiw').textContent = p.oiw;
   const fb = document.getElementById('flag-btn');
-  if (flagged.has(p.id)) { fb.className='fbtn flag-on'; fb.innerHTML='<i class="ti ti-flag" style="font-size:13px"></i> Flagged'; }
-  else { fb.className='fbtn'; fb.innerHTML='<i class="ti ti-flag" style="font-size:13px"></i> Flag'; }
+  fb.className = flagged.has(p.id) ? 'fbtn flag-on' : 'fbtn';
+  fb.innerHTML = '<i class="ti ti-flag" style="font-size:13px"></i> ' + (flagged.has(p.id) ? 'Flagged' : 'Flag');
+  const pb = document.getElementById('playlist-btn');
+  pb.className = playlist.has(p.id) ? 'fbtn playlist-on' : 'fbtn';
+  pb.innerHTML = '<i class="ti ti-playlist" style="font-size:13px"></i> ' + (playlist.has(p.id) ? 'In playlist' : 'Add to playlist');
 }
 
 function selectPlay(idx, row) {
-  cur=idx; viewed.add(idx);
+  cur = idx;
+  viewed.add(idx);
   document.querySelectorAll('.sb-row').forEach(r => r.classList.remove('sel'));
   row.classList.add('sel');
   renderCenter(PLAYS[idx]);
-  const n=viewed.size;
-  document.getElementById('prog-txt').textContent = n+' / 5 reviewed';
-  document.getElementById('prog-fill').style.width = Math.round(n/5*100)+'%';
-}
-
-function toggleInt() {
-  document.getElementById('int-tog').classList.toggle('open');
-  document.getElementById('int-body').classList.toggle('open');
+  updateProgress();
 }
 
 function toggleFlag() {
-  const p=PLAYS[cur];
+  const p = PLAYS[cur];
   if (flagged.has(p.id)) flagged.delete(p.id); else flagged.add(p.id);
-  const sf=document.getElementById('flag-sb-'+cur);
-  if (sf) sf.className='ti ti-flag sb-flag'+(flagged.has(p.id)?' on':'');
-  const fc=document.getElementById('flag-count');
-  document.getElementById('flag-num').textContent=flagged.size;
-  flagged.size>0 ? fc.classList.add('show') : fc.classList.remove('show');
+  const sf = document.getElementById('flag-sb-'+p.id);
+  if (sf) sf.className = 'ti ti-flag sb-flag' + (flagged.has(p.id) ? ' on' : '');
+  const fc = document.getElementById('flag-count');
+  document.getElementById('flag-num').textContent = flagged.size;
+  flagged.size > 0 ? fc.classList.add('show') : fc.classList.remove('show');
   renderCenter(p);
 }
 
-function toggleConf() {
-  const i=document.getElementById('conf-items'), c=document.getElementById('conf-chev');
-  const open=i.style.display==='block';
-  i.style.display=open?'none':'block';
-  c.style.transform=open?'':'rotate(90deg)';
+function togglePlaylist() {
+  const p = PLAYS[cur];
+  if (playlist.has(p.id)) { playlist.delete(p.id); toast('Removed from playlist'); }
+  else { playlist.add(p.id); toast('Added to playlist'); }
+  renderCenter(p);
+}
+
+function qf(el) {
+  document.querySelectorAll('.qb').forEach(b => b.classList.remove('on'));
+  el.classList.add('on');
+  activeQ = el.dataset.q;
+  applyFilters();
+}
+
+function tf(el) {
+  document.querySelectorAll('.tb').forEach(b => b.classList.remove('on'));
+  el.classList.add('on');
+  activeT = el.dataset.t;
+  applyFilters();
 }
 
 function openSlack(t) {
-  slackType=t;
-  document.getElementById('st-share').className='sm-type'+(t==='share'?' sel':'');
-  document.getElementById('st-q').className='sm-type'+(t==='question'?' sel':'');
+  slackType = t;
+  document.getElementById('st-share').className = 'sm-type' + (t==='share'?' sel':'');
+  document.getElementById('st-q').className = 'sm-type' + (t==='question'?' sel':'');
   buildPreview();
   document.getElementById('overlay').classList.add('open');
   document.getElementById('slack-modal').classList.add('open');
 }
 
+let slackType = 'share';
 function sType(t) {
-  slackType=t;
-  document.getElementById('st-share').className='sm-type'+(t==='share'?' sel':'');
-  document.getElementById('st-q').className='sm-type'+(t==='question'?' sel':'');
+  slackType = t;
+  document.getElementById('st-share').className = 'sm-type' + (t==='share'?' sel':'');
+  document.getElementById('st-q').className = 'sm-type' + (t==='question'?' sel':'');
   buildPreview();
 }
 
 function buildPreview() {
-  const p=PLAYS[cur];
-  const link='grs.nba.com/game/1022600037/event/'+Math.floor(Math.random()*9000+1000);
-  const ch=p.changes.map(c=>c.f+': '+c.old+' → '+c.nw).join(', ');
-  const msg=slackType==='share'
-    ?'🏀 <b>Second Check — '+p.time+'</b>\n<b>Game:</b> LAS (97) @ PHX (88)\n<b>Play:</b> '+p.desc+'\n<b>Change:</b> '+ch+'\n<b>Official:</b> '+p.official+' ('+p.loc+')\n\n🔗 <span class="sp-l">View in GRS → '+link+'</span>'
-    :'🏀 <b>Question — '+p.time+'</b>\n<b>Game:</b> LAS (97) @ PHX (88)\n<b>Play:</b> '+p.desc+'\n<b>Change:</b> '+ch+'\n\nCan you walk me through your thinking on this one?\n\n🔗 <span class="sp-l">View in GRS → '+link+'</span>';
-  document.getElementById('sm-prev').innerHTML=msg;
+  const p = PLAYS[cur];
+  const link = 'grs.nba.com/game/1022600050/event/' + Math.floor(Math.random()*9000+1000);
+  const ch = p.changes.length ? p.changes.map(c=>c.f+': '+c.old+' → '+c.nw).join(', ') : 'Comment revised';
+  const msg = slackType==='share'
+    ? '🏀 <b>Second Check — '+p.time+'</b>\n<b>Game:</b> TOR (111) @ CHI (104)\n<b>Play:</b> '+p.desc+'\n<b>Change:</b> '+ch+'\n<b>Official:</b> '+p.official+' ('+p.loc+')\n\n🔗 <span class="sp-l">View in GRS → '+link+'</span>'
+    : '🏀 <b>Question — '+p.time+'</b>\n<b>Game:</b> TOR (111) @ CHI (104)\n<b>Play:</b> '+p.desc+'\n<b>Change:</b> '+ch+'\n\nCan you walk me through your thinking on this one?\n\n🔗 <span class="sp-l">View in GRS → '+link+'</span>';
+  document.getElementById('sm-prev').innerHTML = msg;
 }
 
 function closeModal() {
@@ -589,20 +856,21 @@ function closeModal() {
   document.getElementById('slack-modal').classList.remove('open');
 }
 function sendSlack() { closeModal(); toast('Sent to Slack'); }
-function simLink(t) { toast(t==='clip'?'Opening video clip…':'Opening event in GRS…'); }
+function simLink(t) { toast(t==='clip' ? 'Opening video clip…' : 'Opening event in GRS…'); }
 function toast(msg) {
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2200);
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
 }
-function qf(el) { document.querySelectorAll('.qb').forEach(b=>b.classList.remove('on')); el.classList.add('on'); }
-function tf(el) { document.querySelectorAll('.tb').forEach(b=>b.classList.remove('on')); el.classList.add('on'); }
 function selAng(el) { document.querySelectorAll('.ang').forEach(a=>a.classList.remove('on')); el.classList.add('on'); }
 document.querySelectorAll('.st').forEach(t => t.addEventListener('click', function() {
   document.querySelectorAll('.st').forEach(x => x.classList.remove('on')); this.classList.add('on');
 }));
 
-renderCenter(PLAYS[0]);
+buildSidebar();
+// select first play
+const firstRow = document.querySelector('.sb-row');
+if (firstRow) selectPlay(0, firstRow);
 </script>
 </body>
 </html>
