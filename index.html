@@ -49,7 +49,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .qb.on,.tb.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
 .tsep{width:1px;height:20px;background:#e5e7eb}
 /* MAIN LAYOUT */
-.main{flex:1;display:grid;grid-template-columns:224px 1fr 290px;min-height:0;overflow:hidden}
+.main{flex:1;display:grid;grid-template-columns:224px 1fr 420px;min-height:0;overflow:hidden}
 /* SIDEBAR */
 .sb{background:#fff;border-right:1px solid #e5e7eb;display:flex;flex-direction:column;overflow:hidden}
 .sb-prog{padding:10px 12px 9px;border-bottom:1px solid #f3f4f6;flex-shrink:0}
@@ -116,11 +116,27 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .cb-text.muted{color:#6b7280}
 .rev-connector{display:flex;align-items:center;gap:7px;font-size:11px;color:#9ca3af;margin:8px 0}
 .rev-connector::before{content:'';height:1px;background:#f3f4f6;flex:1}
-/* INTERNAL NOTES */
-.int-body{display:flex;padding:10px 16px 12px;flex-direction:column;gap:8px;background:#fff;border-bottom:1px solid #e5e7eb;flex-shrink:0}
-.in-lbl{font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;margin-bottom:3px}
-.in-lbl.sp{color:#1a3a6b}
-.in-text{font-size:12px;color:#6b7280;font-style:italic;line-height:1.55}
+/* NOTE BUBBLES */
+.note-bubble{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:8px 12px;margin-top:6px;margin-left:16px;font-size:11px;color:#64748b;line-height:1.55;font-style:italic}
+/* ADD TO COLLECTION */
+.add-col-btn{padding:2px 8px;border:1px solid #e5e7eb;border-radius:6px;font-size:10px;font-weight:500;cursor:pointer;background:#f9fafb;color:#6b7280;display:inline-flex;align-items:center;gap:3px}
+.add-col-btn:hover{background:#eff6ff;border-color:#bfdbfe;color:#1d4ed8}
+.add-col-btn.saved{background:#dcfce7;border-color:#86efac;color:#166534}
+.fc-hdr-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+/* OVERVIEW PANEL */
+#overview-panel{flex:1;overflow-y:auto;background:#fff}
+.ov-table{width:100%;border-collapse:collapse;font-size:12px}
+.ov-table th{padding:8px 12px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.4px;color:#9ca3af;background:#f9fafb;border-bottom:2px solid #e5e7eb;white-space:nowrap}
+.ov-table td{padding:8px 12px;border-bottom:1px solid #f3f4f6;vertical-align:top}
+.ov-table tr:nth-child(even) td{background:#fafafa}
+.ov-table tr:hover td{background:#eff6ff;cursor:pointer}
+.ov-num{font-weight:700;color:#9ca3af;font-size:11px}
+.ov-time{color:#6b7280;white-space:nowrap;font-size:11px}
+.ov-seg{color:#9ca3af;font-size:11px}
+.ov-called-c{display:inline-block;padding:1px 6px;border-radius:10px;font-size:10px;font-weight:700;background:#dcfce7;border:1px solid #86efac;color:#166534}
+.ov-called-nc{display:inline-block;padding:1px 6px;border-radius:10px;font-size:10px;font-weight:700;background:#f3f4f6;border:1px solid #d1d5db;color:#6b7280}
+.ov-rating-arrow{color:#9ca3af;font-size:10px;margin:0 3px}
+.ov-notes-icon{font-size:13px;color:#f59e0b}
 /* FOOTER */
 .footer{padding:8px 16px;display:flex;align-items:center;gap:6px;background:#fff;flex-shrink:0}
 .fbtn{padding:5px 11px;border:1px solid #e5e7eb;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;background:#fff;color:#6b7280;display:inline-flex;align-items:center;gap:5px}
@@ -202,12 +218,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 </div>
 
 <div class="subnav">
-  <span class="st">Review</span><span class="st">OCR</span><span class="st">Important Calls</span><span class="st on">Second Check</span><span class="st">PTIW</span><span class="st">OIW</span>
+  <span class="st" data-tab="overview">Overview</span><span class="st">Review</span><span class="st">OCR</span><span class="st">Important Calls</span><span class="st on" data-tab="secondcheck">Second Check</span><span class="st">PTIW</span><span class="st">OIW</span>
 </div>
 
 <div class="game-hdr">
   <div>
-    <div class="gh-title">Toronto Tempo (111) @ Chicago Sky (104)</div>
+    <div class="gh-title">
+      <span style="display:inline-flex;align-items:center;gap:5px"><img src="tor-logo.png" style="width:20px;height:20px;object-fit:contain" onerror="this.style.display='none'"> Toronto Tempo (111)</span>
+      <span style="color:#9ca3af;margin:0 6px">@</span>
+      <span style="display:inline-flex;align-items:center;gap:5px"><img src="chi-logo.png" style="width:20px;height:20px;object-fit:contain" onerror="this.style.display='none'"> Chicago Sky (104)</span>
+    </div>
     <div class="gh-date">Wednesday, May 27, 2026 &nbsp;·&nbsp; 8:00 PM &nbsp;·&nbsp; #1022600050</div>
   </div>
   <div class="gh-sep"></div>
@@ -221,6 +241,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   <div class="gh-right">
     <div class="flag-count" id="flag-count"><i class="ti ti-flag"></i><span id="flag-num">0</span> flagged</div>
     <button class="hbtn"><i class="ti ti-table-export"></i> Export</button>
+    <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:6px 12px;font-size:11px;color:#0369a1;display:flex;gap:8px;align-items:center">
+      <span style="font-weight:700">SC:</span>
+      <span>Daniel Foley</span>
+      <span style="color:#7dd3fc">·</span>
+      <span style="font-style:italic;color:#0284c7">"Great job on this review. Sue downgraded some of the Alabanza errors to PIL that we initially went INC on due to last task force call."</span>
+    </div>
   </div>
 </div>
 
@@ -234,7 +260,27 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   <div class="tb on" data-t="all" onclick="tf(this)">All changes</div>
   <div class="tb" data-t="rating" onclick="tf(this)">Rating</div>
   <div class="tb" data-t="playtype" onclick="tf(this)">Play type</div>
-  <div class="tb" data-t="official" onclick="tf(this)">Official</div>
+  <div class="tb" data-t="official" onclick="tf(this)">Coverage</div>
+  <div class="tb" data-t="comment" onclick="tf(this)">Comment</div>
+</div>
+
+<div id="overview-panel" style="display:none;flex:1;overflow-y:auto;background:#fff">
+  <table class="ov-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Time</th>
+        <th>Seg</th>
+        <th>Called</th>
+        <th>Description</th>
+        <th>Rating (FP → SC)</th>
+        <th>Play type change</th>
+        <th>Official</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody id="ov-tbody"></tbody>
+  </table>
 </div>
 
 <div class="main">
@@ -265,7 +311,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
     </div>
     <div class="band2" id="band2"></div>
     <div class="band3" id="band3"></div>
-    <div class="int-body" id="int-body"></div>
     <div class="footer">
       <button class="fbtn" onclick="simLink('clip')"><i class="ti ti-player-play" style="font-size:13px"></i> Watch clip</button>
       <button class="fbtn" onclick="simLink('grs')"><i class="ti ti-external-link" style="font-size:13px"></i> Open in GRS</button>
@@ -680,7 +725,7 @@ function sbLabel(p) {
   }).join(' · ');
 }
 
-let cur = 0, flagged = new Set(), playlist = new Set(), viewed = new Set(), activeQ = 'all', activeT = 'all';
+let cur = 0, flagged = new Set(), playlist = new Set(), viewed = new Set(), collection = new Set(), activeQ = 'all', activeT = 'all';
 
 function buildSidebar() {
   const list = document.getElementById('sb-list');
@@ -699,7 +744,8 @@ function buildSidebar() {
       row.className = 'sb-row' + (p.id === cur ? ' sel' : '');
       row.dataset.id = p.id;
       row.dataset.quarter = p.quarter;
-      row.dataset.tags = p.changeTags.join(',');
+      // comment-only plays (no changeTags) get 'comment' tag so the Comment filter shows them
+      row.dataset.tags = p.changeTags.length === 0 ? 'comment' : p.changeTags.join(',');
       row.innerHTML = `<span class="sb-dot" style="background:${TIER_META[tier].color}"></span><div class="sb-info"><div class="sb-time">${p.time} · ${p.seg}</div><div class="sb-label">${sbLabel(p)}</div></div><i class="ti ti-flag sb-flag${flagged.has(p.id)?' on':''}" id="flag-sb-${p.id}"></i>`;
       row.addEventListener('click', () => selectPlay(p.id, row));
       list.appendChild(row);
@@ -718,6 +764,7 @@ function applyFilters() {
     if (activeT === 'rating') tMatch = tags.includes('rating');
     else if (activeT === 'playtype') tMatch = tags.some(t => t === 'playtype' || t === 'infractiontype');
     else if (activeT === 'official') tMatch = tags.some(t => t === 'official' || t === 'location');
+    else if (activeT === 'comment') tMatch = tags.includes('comment');
     row.classList.toggle('hidden', !(qMatch && tMatch));
   });
   // hide tier headers if all rows hidden
@@ -766,19 +813,79 @@ function renderBand2(p) {
 }
 
 function renderBand3(p) {
-  if (!p.fpComment && !p.scComment) return '<div style="color:#9ca3af;font-size:12px;font-style:italic">No comments.</div>';
+  const isSaved = [...collection].some(x => x.id === p.id);
+  const saveBtn = `<button class="add-col-btn${isSaved?' saved':''}" id="add-col-btn-${p.id}" onclick="addToCollection(${p.id})"><i class="ti ti-bookmark"></i> ${isSaved?'Saved':'Save'}</button>`;
+
   let html = '';
+
+  if (!p.fpComment && !p.scComment) {
+    // no comments — still show note bubbles and save button
+    if (p.yourNotes) {
+      html += `<div style="margin-bottom:10px"><div class="cb-lbl">First pass comment</div><div class="note-bubble">${p.yourNotes}</div></div>`;
+    }
+    html += `<div><div class="fc-hdr-row"><div class="cb-lbl sc-lbl-c">Final comment</div>${saveBtn}</div>`;
+    if (p.managerNotes) {
+      html += `<div class="note-bubble">${p.managerNotes}</div>`;
+    }
+    html += '</div>';
+    return html;
+  }
+
+  // First pass comment block
   if (p.fpComment) {
-    html += `<div style="margin-bottom:10px"><div class="cb-lbl">First pass</div><div class="cb-fp"><div class="cb-text muted">${p.fpComment}</div></div></div>`;
+    html += `<div style="margin-bottom:10px"><div class="cb-lbl">First pass comment</div><div class="cb-fp"><div class="cb-text muted">${p.fpComment}</div></div>`;
+    if (p.yourNotes) {
+      html += `<div class="note-bubble">${p.yourNotes}</div>`;
+    }
+    html += '</div>';
+  } else if (p.yourNotes) {
+    html += `<div style="margin-bottom:10px"><div class="cb-lbl">First pass comment</div><div class="note-bubble">${p.yourNotes}</div></div>`;
   }
+
+  // connector
   if (p.commentChanged && p.scComment) {
-    html += `<div class="rev-connector"><i class="ti ti-arrow-down" style="font-size:12px"></i> revised by second check</div><div><div class="cb-lbl sc-lbl-c">Second check</div><div class="cb-sc"><div class="cb-text">${p.scComment}</div></div></div>`;
+    html += `<div class="rev-connector"><i class="ti ti-arrow-down" style="font-size:12px"></i> revised by final check</div>`;
   } else if (p.fpComment) {
-    html += `<div class="rev-connector"><i class="ti ti-check" style="font-size:12px"></i> comment unchanged — second check kept yours</div>`;
-  } else if (p.scComment) {
-    html += `<div><div class="cb-lbl sc-lbl-c">Second check</div><div class="cb-sc"><div class="cb-text">${p.scComment}</div></div></div>`;
+    html += `<div class="rev-connector"><i class="ti ti-check" style="font-size:12px"></i> comment unchanged</div>`;
   }
+
+  // Final comment block
+  html += `<div><div class="fc-hdr-row"><div class="cb-lbl sc-lbl-c">Final comment</div>${saveBtn}</div>`;
+  if (p.commentChanged && p.scComment) {
+    html += `<div class="cb-sc"><div class="cb-text">${p.scComment}</div></div>`;
+  } else if (!p.fpComment && p.scComment) {
+    html += `<div class="cb-sc"><div class="cb-text">${p.scComment}</div></div>`;
+  }
+  if (p.managerNotes) {
+    html += `<div class="note-bubble">${p.managerNotes}</div>`;
+  }
+  html += '</div>';
+
   return html;
+}
+
+function redactComment(text, p) {
+  let t = text;
+  [p.player, p.opp].forEach(name => {
+    name.split(' ').forEach(part => {
+      if (part.length > 1) t = t.replace(new RegExp('\\b' + part + '\\b', 'gi'), '[PLAYER]');
+    });
+  });
+  t = t.replace(/\b(TOR|CHI)\b/g, '[TEAM]');
+  return t;
+}
+
+function addToCollection(id) {
+  const p = PLAYS.find(x => x.id === id);
+  if (!p) return;
+  const text = redactComment(p.scComment || p.fpComment || '', p);
+  collection.add({id, text});
+  const btn = document.getElementById('add-col-btn-' + id);
+  if (btn) {
+    btn.className = 'add-col-btn saved';
+    btn.innerHTML = '<i class="ti ti-bookmark"></i> Saved';
+  }
+  toast('Saved to collection');
 }
 
 function renderCenter(p) {
@@ -796,9 +903,6 @@ function renderCenter(p) {
   document.getElementById('b1-sub').textContent = p.sub;
   document.getElementById('band2').innerHTML = renderBand2(p);
   document.getElementById('band3').innerHTML = renderBand3(p);
-  document.getElementById('int-body').innerHTML =
-    (p.yourNotes ? '<div><div class="in-lbl">Your notes</div><div class="in-text">'+p.yourNotes+'</div></div>' : '') +
-    (p.managerNotes ? '<div><div class="in-lbl sp">Second Check notes</div><div class="in-text">'+p.managerNotes+'</div></div>' : '');
   document.getElementById('v-time').textContent = p.vt;
   document.getElementById('rp-ptiw').textContent = p.ptiw;
   document.getElementById('rp-oiw').textContent = p.oiw;
@@ -890,11 +994,70 @@ function toast(msg) {
   setTimeout(() => t.classList.remove('show'), 2200);
 }
 function selAng(el) { document.querySelectorAll('.ang').forEach(a=>a.classList.remove('on')); el.classList.add('on'); }
+
+function buildOverview() {
+  const tbody = document.getElementById('ov-tbody');
+  tbody.innerHTML = '';
+  PLAYS.forEach((p, i) => {
+    const ratingChange = p.changes.find(c => c.f === 'Rating');
+    const ptChange = p.changes.find(c => c.f === 'Play type' || c.f === 'Infraction type');
+    const offChange = p.changes.find(c => c.f === 'Official' || c.f === 'Location');
+    const ratingCell = ratingChange
+      ? `<span style="font-size:11px;color:#374151">${abbr(ratingChange.old)}<span class="ov-rating-arrow">→</span>${abbr(ratingChange.nw)}</span>`
+      : '<span style="color:#d1d5db;font-size:11px">—</span>';
+    const ptCell = ptChange
+      ? `<span style="font-size:11px;color:#374151">${ptChange.old} → ${ptChange.nw}</span>`
+      : '<span style="color:#d1d5db;font-size:11px">—</span>';
+    const offCell = offChange
+      ? `<span style="font-size:11px;color:#374151">${offChange.f}: ${offChange.old} → ${offChange.nw}</span>`
+      : '<span style="color:#d1d5db;font-size:11px">—</span>';
+    const hasNotes = (p.yourNotes || p.managerNotes) ? '<i class="ti ti-note ov-notes-icon"></i>' : '';
+    const calledHtml = p.called === 'C'
+      ? `<span class="ov-called-c">C</span>`
+      : `<span class="ov-called-nc">NC</span>`;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="ov-num">${i+1}</td>
+      <td class="ov-time">${p.time}</td>
+      <td class="ov-seg">${p.seg}</td>
+      <td>${calledHtml}</td>
+      <td style="max-width:200px;font-size:11px;color:#374151">${p.desc}</td>
+      <td>${ratingCell}</td>
+      <td>${ptCell}</td>
+      <td>${offCell}</td>
+      <td>${hasNotes}</td>
+    `;
+    tr.addEventListener('click', () => {
+      switchToSecondCheck();
+      const row = document.querySelector(`.sb-row[data-id="${p.id}"]`);
+      if (row) selectPlay(p.id, row);
+    });
+    tbody.appendChild(tr);
+  });
+}
+
+function switchToSecondCheck() {
+  document.getElementById('overview-panel').style.display = 'none';
+  document.querySelector('.main').style.display = 'grid';
+  document.querySelectorAll('.st').forEach(x => x.classList.remove('on'));
+  document.querySelector('.st[data-tab="secondcheck"]').classList.add('on');
+}
+
 document.querySelectorAll('.st').forEach(t => t.addEventListener('click', function() {
-  document.querySelectorAll('.st').forEach(x => x.classList.remove('on')); this.classList.add('on');
+  document.querySelectorAll('.st').forEach(x => x.classList.remove('on'));
+  this.classList.add('on');
+  const tab = this.dataset.tab;
+  if (tab === 'overview') {
+    document.getElementById('overview-panel').style.display = 'block';
+    document.querySelector('.main').style.display = 'none';
+  } else {
+    document.getElementById('overview-panel').style.display = 'none';
+    document.querySelector('.main').style.display = 'grid';
+  }
 }));
 
 buildSidebar();
+buildOverview();
 // select first play
 const firstRow = document.querySelector('.sb-row');
 if (firstRow) selectPlay(0, firstRow);
