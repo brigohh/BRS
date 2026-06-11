@@ -854,7 +854,7 @@ function renderBand3(p) {
   // connector
   const scDeleted = p.fpComment && !p.scComment && p.commentChanged;
   if (p.commentChanged && p.scComment) {
-    html += `<div class="rev-connector"><i class="ti ti-arrow-down" style="font-size:12px"></i> revised by final check</div>`;
+    html += `<div class="rev-connector"><i class="ti ti-arrow-down" style="font-size:12px"></i> revised by second check</div>`;
   } else if (scDeleted) {
     html += `<div class="rev-connector"><i class="ti ti-x" style="font-size:12px"></i> removed by final check</div>`;
   } else if (p.fpComment) {
