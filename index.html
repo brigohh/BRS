@@ -94,15 +94,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 /* BAND2 */
 .band2{background:#f9fafb;border-bottom:1px solid #e5e7eb;padding:10px 16px;flex-shrink:0}
 .b2-lbl{font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.5px;margin-bottom:8px}
-.ch-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;font-size:12px}
+.ch-grid{display:grid;grid-template-columns:100px 1fr 1fr;gap:0;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;font-size:12px}
 .ch-col-hdr{padding:5px 12px;font-size:10px;font-weight:700;letter-spacing:.4px;color:#9ca3af;background:#f3f4f6;border-bottom:1px solid #e5e7eb}
 .ch-col-hdr.sc-hdr{color:#1a3a6b;border-left:1px solid #e5e7eb}
-.ch-row-fp{padding:7px 12px;background:#fff;border-top:1px solid #f3f4f6;display:flex;align-items:center;gap:6px}
+.ch-col-hdr.lbl-hdr{color:#9ca3af}
+.ch-row-lbl{padding:7px 12px;background:#f9fafb;border-top:1px solid #f3f4f6;display:flex;align-items:center}
+.ch-row-fp{padding:7px 12px;background:#fff;border-top:1px solid #f3f4f6;border-left:1px solid #e5e7eb;display:flex;align-items:center;gap:6px}
 .ch-row-sc{padding:7px 12px;background:#fff;border-top:1px solid #f3f4f6;border-left:1px solid #e5e7eb;display:flex;align-items:center;gap:6px}
-.ch-row-unch .ch-field{font-size:10px;font-weight:600;color:#9ca3af;letter-spacing:.2px;margin-right:2px}
+.ch-row-unch .ch-field{font-size:10px;font-weight:600;color:#6b7280;letter-spacing:.2px}
 .ch-row-unch .ch-fp-val{color:#374151}
-.ch-row-unch .ch-sc-same{font-size:12px;color:#9ca3af}
-.ch-field{font-size:10px;font-weight:600;color:#6b7280;letter-spacing:.2px;margin-right:2px}
+.ch-row-unch .ch-sc-val{color:#374151;font-size:12px}
+.ch-field{font-size:10px;font-weight:600;color:#6b7280;letter-spacing:.2px}
 .ch-fp-val{color:#111827}
 .ch-sc-pill{font-size:12px;font-weight:600;padding:2px 9px;border-radius:6px}
 /* BAND3 */
@@ -797,18 +799,21 @@ function renderBand2(p) {
   const changeMap = {};
   p.changes.forEach(c => { changeMap[c.f] = c; });
   let html = '<div class="b2-lbl">CHANGES</div><div class="ch-grid">';
-  html += '<div class="ch-col-hdr">First pass</div><div class="ch-col-hdr sc-hdr">Second check</div>';
+  html += '<div class="ch-col-hdr lbl-hdr"></div><div class="ch-col-hdr">First pass</div><div class="ch-col-hdr sc-hdr">Second check</div>';
   ALL_FIELDS.forEach(f => {
     const c = changeMap[f];
     if (c) {
       const col = COL[c.tag] || COL.rating;
       const fpVal = c.tag === 'rating' ? ratingPill(c.old) : `<span class="ch-fp-val">${c.old}</span>`;
-      html += `<div class="ch-row-fp"><span class="ch-field">${c.f}</span>${fpVal}</div>`;
-      html += `<div class="ch-row-sc">${c.tag === 'rating' ? ratingPill(c.nw) : `<span class="ch-sc-pill" style="background:${col.bg};color:${col.txt}">${c.nw}</span>`}</div>`;
+      const scVal = c.tag === 'rating' ? ratingPill(c.nw) : `<span class="ch-sc-pill" style="background:${col.bg};color:${col.txt}">${c.nw}</span>`;
+      html += `<div class="ch-row-lbl"><span class="ch-field">${f}</span></div>`;
+      html += `<div class="ch-row-fp">${fpVal}</div>`;
+      html += `<div class="ch-row-sc">${scVal}</div>`;
     } else {
       const val = (p.unchanged && p.unchanged[f]) ? p.unchanged[f] : '—';
-      html += `<div class="ch-row-fp ch-row-unch"><span class="ch-field">${f}</span><span class="ch-fp-val">${val}</span></div>`;
-      html += `<div class="ch-row-sc ch-row-unch"><span class="ch-sc-same">—</span></div>`;
+      html += `<div class="ch-row-lbl ch-row-unch"><span class="ch-field">${f}</span></div>`;
+      html += `<div class="ch-row-fp ch-row-unch"><span class="ch-fp-val">${val}</span></div>`;
+      html += `<div class="ch-row-sc ch-row-unch"><span class="ch-sc-val">${val}</span></div>`;
     }
   });
   html += '</div>';
@@ -817,7 +822,8 @@ function renderBand2(p) {
 
 function renderBand3(p) {
   const isSaved = [...collection].some(x => x.id === p.id);
-  const saveBtn = `<button class="add-col-btn${isSaved?' saved':''}" id="add-col-btn-${p.id}" onclick="addToCollection(${p.id})"><i class="ti ti-bookmark"></i> ${isSaved?'Saved':'Save'}</button>`;
+  const hasFinalComment = !!(p.scComment || (p.fpComment && !p.commentChanged));
+  const saveBtn = hasFinalComment ? `<button class="add-col-btn${isSaved?' saved':''}" id="add-col-btn-${p.id}" onclick="addToCollection(${p.id})"><i class="ti ti-bookmark"></i> ${isSaved?'Saved':'Save'}</button>` : '';
 
   let html = '';
 
