@@ -113,8 +113,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .cb-sc{border-left:3px solid #1a3a6b;padding-left:10px}
 .cb-unch{border-left:3px solid #f3f4f6;padding-left:10px}
 .cb-na{font-size:11px;color:#9ca3af;font-style:italic;background:#f9fafb;border:1px dashed #e5e7eb;border-radius:6px;padding:5px 10px;display:inline-block;margin-top:2px}
-.cb-text{font-size:13px;color:#1a3a6b;line-height:1.6}
-.cb-text.muted{color:#111827}
+.cb-text{font-size:13px;color:#1a3a6b;line-height:1.6;font-weight:600}
+.cb-text.muted{color:#111827;font-weight:400}
 .rev-connector{display:flex;align-items:center;gap:7px;font-size:11px;color:#9ca3af;margin:8px 0}
 .rev-connector::before{content:'';height:1px;background:#f3f4f6;flex:1}
 /* NOTE BUBBLES */
@@ -823,9 +823,11 @@ function renderBand3(p) {
 
   if (!p.fpComment && !p.scComment) {
     // no comments — still show note bubbles and save button
+    html += `<div style="margin-bottom:10px"><div class="cb-lbl">FIRST PASS COMMENT</div><div class="cb-na">N/A</div>`;
     if (p.yourNotes) {
-      html += `<div style="margin-bottom:10px"><div class="cb-lbl">FIRST PASS COMMENT</div><div class="note-bubble"><span class="note-lbl">First pass notes</span>${p.yourNotes}</div></div>`;
+      html += `<div class="note-bubble"><span class="note-lbl">First pass notes</span>${p.yourNotes}</div>`;
     }
+    html += '</div>';
     html += `<div><div class="fc-hdr-row"><div class="cb-lbl sc-lbl-c">FINAL COMMENT</div>${saveBtn}</div><div class="cb-na">N/A</div>`;
     if (p.managerNotes) {
       html += `<div class="note-bubble note-sc"><span class="note-lbl">Second pass notes</span>${p.managerNotes}</div>`;
@@ -841,8 +843,12 @@ function renderBand3(p) {
       html += `<div class="note-bubble"><span class="note-lbl">First pass notes</span>${p.yourNotes}</div>`;
     }
     html += '</div>';
-  } else if (p.yourNotes) {
-    html += `<div style="margin-bottom:10px"><div class="cb-lbl">FIRST PASS COMMENT</div><div class="note-bubble"><span class="note-lbl">First pass notes</span>${p.yourNotes}</div></div>`;
+  } else {
+    html += `<div style="margin-bottom:10px"><div class="cb-lbl">FIRST PASS COMMENT</div><div class="cb-na">N/A</div>`;
+    if (p.yourNotes) {
+      html += `<div class="note-bubble"><span class="note-lbl">First pass notes</span>${p.yourNotes}</div>`;
+    }
+    html += '</div>';
   }
 
   // connector
