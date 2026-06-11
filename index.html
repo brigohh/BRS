@@ -99,11 +99,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .ch-col-hdr.sc-hdr{color:#1a3a6b;border-left:1px solid #e5e7eb}
 .ch-row-fp{padding:7px 12px;background:#fff;border-top:1px solid #f3f4f6;display:flex;align-items:center;gap:6px}
 .ch-row-sc{padding:7px 12px;background:#fff;border-top:1px solid #f3f4f6;border-left:1px solid #e5e7eb;display:flex;align-items:center;gap:6px}
-.ch-row-unch .ch-field{font-size:10px;font-weight:600;color:#c4c9d4;letter-spacing:.2px;margin-right:2px}
-.ch-row-unch .ch-fp-val{color:#6b7280}
-.ch-row-unch .ch-sc-same{font-size:12px;color:#c4c9d4}
-.ch-field{font-size:10px;font-weight:600;color:#d1d5db;letter-spacing:.2px;margin-right:2px}
-.ch-fp-val{color:#374151}
+.ch-row-unch .ch-field{font-size:10px;font-weight:600;color:#9ca3af;letter-spacing:.2px;margin-right:2px}
+.ch-row-unch .ch-fp-val{color:#374151}
+.ch-row-unch .ch-sc-same{font-size:12px;color:#9ca3af}
+.ch-field{font-size:10px;font-weight:600;color:#6b7280;letter-spacing:.2px;margin-right:2px}
+.ch-fp-val{color:#111827}
 .ch-sc-pill{font-size:12px;font-weight:600;padding:2px 9px;border-radius:6px}
 /* BAND3 */
 .band3{background:#fff;border-bottom:1px solid #e5e7eb;padding:12px 16px;flex:1;overflow-y:auto}
@@ -112,13 +112,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .cb-fp{border-left:3px solid #e5e7eb;padding-left:10px}
 .cb-sc{border-left:3px solid #1a3a6b;padding-left:10px}
 .cb-unch{border-left:3px solid #f3f4f6;padding-left:10px}
-.cb-text{font-size:13px;color:#111827;line-height:1.6}
-.cb-text.muted{color:#6b7280}
+.cb-text{font-size:13px;color:#1a3a6b;line-height:1.6}
+.cb-text.muted{color:#111827}
 .rev-connector{display:flex;align-items:center;gap:7px;font-size:11px;color:#9ca3af;margin:8px 0}
 .rev-connector::before{content:'';height:1px;background:#f3f4f6;flex:1}
 /* NOTE BUBBLES */
-.note-bubble{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:8px 12px;margin-top:6px;margin-left:16px;font-size:11px;color:#64748b;line-height:1.55;font-style:italic}
+.note-bubble{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:8px 12px;margin-top:6px;margin-left:16px;font-size:11px;color:#111827;line-height:1.55;font-style:italic}
+.note-bubble.note-sc{background:#eff6ff;border-color:#bfdbfe;color:#1a3a6b}
 .note-lbl{display:block;font-size:9px;font-weight:700;letter-spacing:.5px;color:#94a3b8;font-style:normal;margin-bottom:3px;text-transform:uppercase}
+.note-bubble.note-sc .note-lbl{color:#93c5fd}
 /* ADD TO COLLECTION */
 .add-col-btn{padding:2px 8px;border:1px solid #e5e7eb;border-radius:6px;font-size:10px;font-weight:500;cursor:pointer;background:#f9fafb;color:#6b7280;display:inline-flex;align-items:center;gap:3px}
 .add-col-btn:hover{background:#eff6ff;border-color:#bfdbfe;color:#1d4ed8}
@@ -826,7 +828,7 @@ function renderBand3(p) {
     }
     html += `<div><div class="fc-hdr-row"><div class="cb-lbl sc-lbl-c">Final comment</div>${saveBtn}</div>`;
     if (p.managerNotes) {
-      html += `<div class="note-bubble"><span class="note-lbl">Second pass notes</span>${p.managerNotes}</div>`;
+      html += `<div class="note-bubble note-sc"><span class="note-lbl">Second pass notes</span>${p.managerNotes}</div>`;
     }
     html += '</div>';
     return html;
@@ -858,7 +860,7 @@ function renderBand3(p) {
     html += `<div class="cb-sc"><div class="cb-text">${p.scComment}</div></div>`;
   }
   if (p.managerNotes) {
-    html += `<div class="note-bubble"><span class="note-lbl">Second pass notes</span>${p.managerNotes}</div>`;
+    html += `<div class="note-bubble note-sc"><span class="note-lbl">Second pass notes</span>${p.managerNotes}</div>`;
   }
   html += '</div>';
 
