@@ -664,10 +664,18 @@ const TIER_META = {
   standard: {label:'Standard', color:'#1d4ed8'}
 };
 
+const ABBR = {
+  'Infraction':                    'INC',
+  'Judgment — Lean Infraction':    'PIL',
+  'Judgment — Lean No Infraction': 'PIN',
+  'No Infraction':                 'CNC',
+};
+function abbr(val) { return ABBR[val] || val; }
+
 function sbLabel(p) {
   if (p.changes.length === 0) return 'Comment revised';
   return p.changes.map(c => {
-    if (c.f === 'Rating') return c.old.replace('Judgment — ','') + ' → ' + c.nw.replace('Judgment — ','');
+    if (c.f === 'Rating') return abbr(c.old) + ' → ' + abbr(c.nw);
     return c.f + ' changed';
   }).join(' · ');
 }
