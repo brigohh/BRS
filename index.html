@@ -769,7 +769,7 @@ function renderCenter(p) {
   document.getElementById('band3').innerHTML = renderBand3(p);
   document.getElementById('int-body').innerHTML =
     (p.yourNotes ? '<div><div class="in-lbl">Your notes</div><div class="in-text">'+p.yourNotes+'</div></div>' : '') +
-    (p.managerNotes ? '<div><div class="in-lbl sp">Manager notes</div><div class="in-text">'+p.managerNotes+'</div></div>' : '');
+    (p.managerNotes ? '<div><div class="in-lbl sp">Second Check notes</div><div class="in-text">'+p.managerNotes+'</div></div>' : '');
   document.getElementById('v-time').textContent = p.vt;
   const clipCls = ['ct-b','ct-a','ct-r','ct-b','ct-g'];
   document.getElementById('clip-bar').innerHTML = p.clip.map((t,i)=>'<span class="ctag '+clipCls[i]+'">'+t+'</span>').join('');
