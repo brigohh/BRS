@@ -107,11 +107,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .ch-sc-pill{font-size:12px;font-weight:600;padding:2px 9px;border-radius:6px}
 /* BAND3 */
 .band3{background:#fff;border-bottom:1px solid #e5e7eb;padding:12px 16px;flex:1;overflow-y:auto}
-.cb-lbl{font-size:10px;font-weight:700;letter-spacing:.4px;color:#9ca3af;margin-bottom:4px}
+.cb-lbl{font-size:10px;font-weight:700;letter-spacing:.4px;color:#374151;margin-bottom:4px}
 .cb-lbl.sc-lbl-c{color:#1a3a6b}
-.cb-fp{border-left:3px solid #e5e7eb;padding-left:10px}
+.cb-fp{border-left:3px solid #374151;padding-left:10px}
 .cb-sc{border-left:3px solid #1a3a6b;padding-left:10px}
 .cb-unch{border-left:3px solid #f3f4f6;padding-left:10px}
+.cb-na{font-size:11px;color:#9ca3af;font-style:italic;background:#f9fafb;border:1px dashed #e5e7eb;border-radius:6px;padding:5px 10px;display:inline-block;margin-top:2px}
 .cb-text{font-size:13px;color:#1a3a6b;line-height:1.6}
 .cb-text.muted{color:#111827}
 .rev-connector{display:flex;align-items:center;gap:7px;font-size:11px;color:#9ca3af;margin:8px 0}
@@ -826,7 +827,7 @@ function renderBand3(p) {
     if (p.yourNotes) {
       html += `<div style="margin-bottom:10px"><div class="cb-lbl">First pass comment</div><div class="note-bubble"><span class="note-lbl">First pass notes</span>${p.yourNotes}</div></div>`;
     }
-    html += `<div><div class="fc-hdr-row"><div class="cb-lbl sc-lbl-c">Final comment</div>${saveBtn}</div>`;
+    html += `<div><div class="fc-hdr-row"><div class="cb-lbl sc-lbl-c">Final comment</div>${saveBtn}</div><div class="cb-na">N/A</div>`;
     if (p.managerNotes) {
       html += `<div class="note-bubble note-sc"><span class="note-lbl">Second pass notes</span>${p.managerNotes}</div>`;
     }
@@ -846,8 +847,11 @@ function renderBand3(p) {
   }
 
   // connector
+  const scDeleted = p.fpComment && !p.scComment && p.commentChanged;
   if (p.commentChanged && p.scComment) {
     html += `<div class="rev-connector"><i class="ti ti-arrow-down" style="font-size:12px"></i> revised by final check</div>`;
+  } else if (scDeleted) {
+    html += `<div class="rev-connector"><i class="ti ti-x" style="font-size:12px"></i> removed by final check</div>`;
   } else if (p.fpComment) {
     html += `<div class="rev-connector"><i class="ti ti-check" style="font-size:12px"></i> comment unchanged</div>`;
   }
@@ -858,6 +862,8 @@ function renderBand3(p) {
     html += `<div class="cb-sc"><div class="cb-text">${p.scComment}</div></div>`;
   } else if (!p.fpComment && p.scComment) {
     html += `<div class="cb-sc"><div class="cb-text">${p.scComment}</div></div>`;
+  } else if (scDeleted || (!p.fpComment && !p.scComment)) {
+    html += `<div class="cb-na">N/A</div>`;
   }
   if (p.managerNotes) {
     html += `<div class="note-bubble note-sc"><span class="note-lbl">Second pass notes</span>${p.managerNotes}</div>`;
