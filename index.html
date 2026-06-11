@@ -88,6 +88,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .lp-trail{background:#f0fdf4;border-color:#bbf7d0;color:#166534}
 .lp-slot{background:#faf5ff;border-color:#e9d5ff;color:#7e22ce}
 .b1-sub{font-size:12px;color:#9ca3af;font-style:italic}
+.called-pill{padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.3px;border:1px solid}
+.called-c{background:#dcfce7;border-color:#86efac;color:#166534}
+.called-nc{background:#f3f4f6;border-color:#d1d5db;color:#6b7280}
 /* BAND2 */
 .band2{background:#f9fafb;border-bottom:1px solid #e5e7eb;padding:10px 16px;flex-shrink:0}
 .b2-lbl{font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.5px;margin-bottom:8px}
@@ -249,6 +252,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
         <span class="ev-badge" id="b1-event"></span>
         <span class="b1-time" id="b1-time"></span>
         <span class="b1-seg" id="b1-seg"></span>
+        <span class="called-pill" id="b1-called"></span>
       </div>
       <div class="b1-desc" id="b1-desc"></div>
       <div class="b1-r2">
@@ -328,6 +332,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 </div>
 
 <script>
+const RATING_COL = {
+  'Infraction':                     {bg:'#FEE2E2', txt:'#991B1B'},
+  'Judgment — Lean Infraction':     {bg:'#FEF9C3', txt:'#854D0E'},
+  'Judgment — Lean No Infraction':  {bg:'#FEF3CD', txt:'#92400E'},
+  'No Infraction':                  {bg:'#DCFCE7', txt:'#166534'},
+  'Enhanced Review':                {bg:'#E0E7FF', txt:'#3730A3'},
+};
+function ratingPill(val) {
+  const r = RATING_COL[val];
+  if (!r) return `<span style="font-size:12px;font-weight:600;color:#374151">${val}</span>`;
+  return `<span class="ch-sc-pill" style="background:${r.bg};color:${r.txt}">${val}</span>`;
+}
+
 const COL = {
   rating:        {bg:'#DBEAFE', txt:'#1E40AF', dot:'#2563EB'},
   location:      {bg:'#F3E8FF', txt:'#7C3AED', dot:'#7C3AED'},
@@ -343,7 +360,7 @@ const ALL_FIELDS = ['Rating','Infraction type','Play type','Official','Location'
 // changeTags: array of tag strings for filter matching
 const PLAYS = [
   {
-    id:0, tier:'critical', quarter:'Q1',
+    id:0, called:'NC', tier:'critical', quarter:'Q1',
     event:'FOUL: LOOSE BALL', time:'Q1 09:33.7', seg:'Segment 1',
     desc:'M. Mabrey rebounds the missed attempt',
     player:'N. Sabally', opp:'K. Cardoso',
@@ -359,7 +376,7 @@ const PLAYS = [
     clip:['Q1','Loose Ball','N. Sabally (TOR)','K. Cardoso (CHI)','Qualified'], vt:'9:33 / 11:00', ptiw:'No PTIW comment', oiw:'No OIW comment'
   },
   {
-    id:1, tier:'critical', quarter:'Q1',
+    id:1, called:'NC', tier:'critical', quarter:'Q1',
     event:'FOUL: OFFENSIVE', time:'Q1 06:46', seg:'Segment 13',
     desc:'S. Diggins drives toward the basket defended by M. Conde',
     player:'S. Diggins', opp:'M. Conde',
@@ -377,7 +394,7 @@ const PLAYS = [
     clip:['Q1','Offensive','S. Diggins (CHI)','M. Conde (TOR)','Qualified'], vt:'6:46 / 8:20', ptiw:'PTIW comment available', oiw:'No OIW comment'
   },
   {
-    id:2, tier:'standard', quarter:'Q1',
+    id:2, called:'NC', tier:'standard', quarter:'Q1',
     event:'FOUL: PERSONAL', time:'Q1 04:46.1', seg:'Segment 22',
     desc:'B. Sykes drives toward the basket defended by K. Cardoso',
     player:'K. Cardoso', opp:'B. Sykes',
@@ -392,7 +409,7 @@ const PLAYS = [
     clip:['Q1','Personal','K. Cardoso (CHI)','B. Sykes (CHI)','Qualified'], vt:'4:46 / 6:10', ptiw:'No PTIW comment', oiw:'No OIW comment'
   },
   {
-    id:3, tier:'standard', quarter:'Q1',
+    id:3, called:'NC', tier:'standard', quarter:'Q1',
     event:'FOUL: SHOOTING', time:'Q1 03:57.5', seg:'Segment 25',
     desc:'K. Cardoso attempts a shot and is defended by T. Key',
     player:'T. Key', opp:'K. Cardoso',
@@ -407,7 +424,7 @@ const PLAYS = [
     clip:['Q1','Shooting','T. Key (TOR)','K. Cardoso (CHI)','Qualified'], vt:'3:57 / 5:30', ptiw:'No PTIW comment', oiw:'No OIW comment'
   },
   {
-    id:4, tier:'critical', quarter:'Q1',
+    id:4, called:'NC', tier:'critical', quarter:'Q1',
     event:'FOUL: OFFENSIVE', time:'Q1 03:03.5', seg:'Segment 28',
     desc:'K. Rice attempts a shot and is defended by E. Williams',
     player:'K. Rice', opp:'E. Williams',
@@ -423,7 +440,7 @@ const PLAYS = [
     clip:['Q1','Offensive','K. Rice (TOR)','E. Williams (CHI)','Qualified'], vt:'3:03 / 4:45', ptiw:'No PTIW comment', oiw:'No OIW comment'
   },
   {
-    id:5, tier:'standard', quarter:'Q1',
+    id:5, called:'C', tier:'standard', quarter:'Q1',
     event:'FOUL: SHOOTING', time:'Q1 02:21.4', seg:'Segment 30',
     desc:'R. Banham is called for fouling M. Conde',
     player:'R. Banham', opp:'M. Conde',
@@ -439,7 +456,7 @@ const PLAYS = [
     clip:['Q1','Shooting','R. Banham (CHI)','M. Conde (TOR)','Qualified'], vt:'2:21 / 3:55', ptiw:'No PTIW comment', oiw:'No OIW comment'
   },
   {
-    id:6, tier:'notable', quarter:'Q1',
+    id:6, called:'NC', tier:'notable', quarter:'Q1',
     event:'FOUL: PERSONAL', time:'Q1 00:53.5', seg:'Segment 37',
     desc:'S. Taylor attempts a shot and is defended by L. Held',
     player:'L. Held', opp:'S. Taylor',
@@ -458,7 +475,7 @@ const PLAYS = [
     clip:['Q1','Shooting','L. Held (TOR)','S. Taylor (CHI)','Qualified'], vt:'0:53 / 2:20', ptiw:'No PTIW comment', oiw:'No OIW comment'
   },
   {
-    id:7, tier:'standard', quarter:'Q1',
+    id:7, called:'NC', tier:'standard', quarter:'Q1',
     event:'FOUL: SHOOTING', time:'Q1 00:04.7', seg:'Segment 40',
     desc:'B. Sykes attempts a shot and is defended by N. Cloud',
     player:'N. Cloud', opp:'B. Sykes',
@@ -473,7 +490,7 @@ const PLAYS = [
     clip:['Q1','Shooting','N. Cloud (CHI)','B. Sykes (CHI)','Qualified'], vt:'0:04 / 1:30', ptiw:'No PTIW comment', oiw:'No OIW comment'
   },
   {
-    id:8, tier:'notable', quarter:'Q2',
+    id:8, called:'NC', tier:'notable', quarter:'Q2',
     event:'CONTACT', time:'Q2 09:20.7', seg:'Segment 503',
     desc:'Contact involving M. Mabrey and K. Cardoso',
     player:'K. Cardoso', opp:'M. Mabrey',
@@ -491,7 +508,7 @@ const PLAYS = [
     clip:['Q2','Contact','K. Cardoso (CHI)','M. Mabrey (TOR)','Qualified'], vt:'9:20 / 11:00', ptiw:'No PTIW comment', oiw:'No OIW comment'
   },
   {
-    id:9, tier:'standard', quarter:'Q2',
+    id:9, called:'C', tier:'standard', quarter:'Q2',
     event:'FOUL: PERSONAL', time:'Q2 06:30.4', seg:'Segment 514',
     desc:'K. Nurse is called for fouling N. Cloud',
     player:'K. Nurse', opp:'N. Cloud',
@@ -507,7 +524,7 @@ const PLAYS = [
     clip:['Q2','Personal','K. Nurse (TOR)','N. Cloud (CHI)','Qualified'], vt:'6:30 / 8:00', ptiw:'PTIW comment available', oiw:'No OIW comment'
   },
   {
-    id:10, tier:'standard', quarter:'Q2',
+    id:10, called:'C', tier:'standard', quarter:'Q2',
     event:'FOUL: SHOOTING', time:'Q2 01:50.6', seg:'Segment 532',
     desc:'K. Rice is called for fouling A. Coulibaly',
     player:'K. Rice', opp:'A. Coulibaly',
@@ -523,7 +540,7 @@ const PLAYS = [
     clip:['Q2','Shooting','K. Rice (TOR)','A. Coulibaly (CHI)','Qualified'], vt:'1:50 / 3:20', ptiw:'No PTIW comment', oiw:'No OIW comment'
   },
   {
-    id:11, tier:'standard', quarter:'Q2',
+    id:11, called:'NC', tier:'standard', quarter:'Q2',
     event:'FOUL: OFFENSIVE', time:'Q2 01:06.7', seg:'Segment 535',
     desc:'N. Sabally sets a screen for M. Conde defended by A. Coulibaly',
     player:'N. Sabally', opp:'A. Coulibaly',
@@ -539,7 +556,7 @@ const PLAYS = [
     clip:['Q2','Offensive','N. Sabally (TOR)','A. Coulibaly (CHI)','Qualified'], vt:'1:06 / 2:40', ptiw:'No PTIW comment', oiw:'No OIW comment'
   },
   {
-    id:12, tier:'critical', quarter:'Q2',
+    id:12, called:'NC', tier:'critical', quarter:'Q2',
     event:'TURNOVER: TRAVELING', time:'Q2 01:04', seg:'Segment 535',
     desc:'M. Conde starts her dribble defended by E. Williams',
     player:'M. Conde', opp:'Sky',
@@ -559,7 +576,7 @@ const PLAYS = [
     clip:['Q2','Traveling','M. Conde (TOR)','—','Qualified'], vt:'1:04 / 2:38', ptiw:'No PTIW comment', oiw:'No OIW comment'
   },
   {
-    id:13, tier:'standard', quarter:'Q3',
+    id:13, called:'NC', tier:'standard', quarter:'Q3',
     event:'FOUL: SHOOTING', time:'Q3 04:32.4', seg:'Segment 1022',
     desc:'S. Taylor attempts a shot and is defended by T. Key',
     player:'T. Key', opp:'S. Taylor',
@@ -575,7 +592,7 @@ const PLAYS = [
     clip:['Q3','Shooting','T. Key (TOR)','S. Taylor (CHI)','Qualified'], vt:'4:32 / 6:05', ptiw:'No PTIW comment', oiw:'No OIW comment'
   },
   {
-    id:14, tier:'standard', quarter:'Q3',
+    id:14, called:'C', tier:'standard', quarter:'Q3',
     event:'FOUL: SHOOTING', time:'Q3 02:03.0', seg:'Segment 1034',
     desc:'K. Rice is called for fouling E. Williams',
     player:'K. Rice', opp:'E. Williams',
@@ -591,7 +608,7 @@ const PLAYS = [
     clip:['Q3','Shooting','K. Rice (TOR)','E. Williams (CHI)','Qualified'], vt:'2:03 / 3:35', ptiw:'No PTIW comment', oiw:'No OIW comment'
   },
   {
-    id:15, tier:'critical', quarter:'Q3',
+    id:15, called:'NC', tier:'critical', quarter:'Q3',
     event:'FOUL: SHOOTING', time:'Q3 01:51.9', seg:'Segment 1035',
     desc:'K. Rice attempts a shot and is defended by S. Taylor',
     player:'S. Taylor', opp:'K. Rice',
@@ -607,7 +624,7 @@ const PLAYS = [
     clip:['Q3','Shooting','S. Taylor (CHI)','K. Rice (TOR)','Qualified'], vt:'1:51 / 3:25', ptiw:'No PTIW comment', oiw:'No OIW comment'
   },
   {
-    id:16, tier:'notable', quarter:'Q4',
+    id:16, called:'NC', tier:'notable', quarter:'Q4',
     event:'FOUL: OFFENSIVE', time:'Q4 04:56.2', seg:'Segment 1521',
     desc:'E. Williams sets a screen for S. Diggins defended by M. Conde',
     player:'E. Williams', opp:'M. Conde',
@@ -623,7 +640,7 @@ const PLAYS = [
     clip:['Q4','Offensive','E. Williams (CHI)','M. Conde (TOR)','Qualified'], vt:'4:56 / 6:30', ptiw:'No PTIW comment', oiw:'No OIW comment'
   },
   {
-    id:17, tier:'standard', quarter:'Q4',
+    id:17, called:'C', tier:'standard', quarter:'Q4',
     event:'TURNOVER: LOST BALL OOB', time:'Q4 03:50.8', seg:'Segment 1524',
     desc:'Turnover: Lost Ball Out of Bounds',
     player:'K. Rice', opp:'S. Taylor',
@@ -727,8 +744,9 @@ function renderBand2(p) {
     const c = changeMap[f];
     if (c) {
       const col = COL[c.tag] || COL.rating;
-      html += `<div class="ch-row-fp"><span class="ch-field">${c.f}</span><span class="ch-fp-val">${c.old}</span></div>`;
-      html += `<div class="ch-row-sc"><span class="ch-sc-pill" style="background:${col.bg};color:${col.txt}">${c.nw}</span></div>`;
+      const fpVal = c.tag === 'rating' ? ratingPill(c.old) : `<span class="ch-fp-val">${c.old}</span>`;
+      html += `<div class="ch-row-fp"><span class="ch-field">${c.f}</span>${fpVal}</div>`;
+      html += `<div class="ch-row-sc">${c.tag === 'rating' ? ratingPill(c.nw) : `<span class="ch-sc-pill" style="background:${col.bg};color:${col.txt}">${c.nw}</span>`}</div>`;
     } else {
       const val = (p.unchanged && p.unchanged[f]) ? p.unchanged[f] : '—';
       html += `<div class="ch-row-fp ch-row-unch"><span class="ch-field">${f}</span><span class="ch-fp-val">${val}</span></div>`;
@@ -759,6 +777,9 @@ function renderCenter(p) {
   document.getElementById('b1-event').textContent = p.event;
   document.getElementById('b1-time').textContent = p.time;
   document.getElementById('b1-seg').textContent = '· ' + p.seg;
+  const cp = document.getElementById('b1-called');
+  cp.textContent = p.called === 'C' ? 'Called' : 'No Call';
+  cp.className = 'called-pill ' + (p.called === 'C' ? 'called-c' : 'called-nc');
   document.getElementById('b1-desc').textContent = p.desc;
   document.getElementById('b1-players').innerHTML = '<b>'+p.player+'</b> <span style="color:#9ca3af;font-size:10px">vs</span> <b>'+p.opp+'</b>';
   document.getElementById('b1-official').textContent = p.official;
