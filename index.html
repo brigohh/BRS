@@ -107,6 +107,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .ch-fp-val{color:#9ca3af}
 .ch-sc-pill{font-size:12px;font-weight:600;padding:2px 9px;border-radius:6px}
 .unch-note{font-size:10px;color:#9ca3af;margin-top:7px;font-style:italic}
+.ch-row-unch{opacity:.4}
+.ch-field-unch{color:#e5e7eb}
+.ch-unch-val{font-size:12px;color:#c4c9d4}
 .band3{background:#fff;border-bottom:1px solid #e5e7eb;padding:12px 16px;flex:1;overflow-y:auto}
 .cb-lbl{font-size:10px;font-weight:700;letter-spacing:.4px;color:#9ca3af;margin-bottom:4px}
 .cb-lbl.sc-lbl-c{color:#1a3a6b}
@@ -378,6 +381,7 @@ const PLAYS = [
       {f:'Rating',   old:'Lean No Infraction', nw:'Infraction', tag:'rating'},
       {f:'Location', old:'Lead',               nw:'Trail',      tag:'location'}
     ],
+    unchanged:{'Infraction type':'Foul: Personal','Play type':'Fouls','Official':'Catherine Chang','Observability':'Observable'},
     fpComment:'Hamby (LAS) brings their arm toward the ball and some contact occurs with Mack\'s (PHX) head/face. Contact to an opponent\'s head/face can be deemed marginal when the result of a natural basketball move, provided the contact is not disproportionate or uncontrolled.',
     scComment:'RLS shows Hamby (LAS) initiates more-than-marginal contact with Mack\'s (PHX) head/face during the steal attempt.',
     commentChanged:true,
@@ -395,6 +399,7 @@ const PLAYS = [
     changes:[
       {f:'Rating', old:'Lean No Infraction', nw:'Infraction', tag:'rating'}
     ],
+    unchanged:{'Infraction type':'Foul: Loose Ball','Play type':'Fouls','Official':'Catherine Chang','Location':'Lead','Observability':'Observable'},
     fpComment:'Suarez (PHX) momentarily applies their forearms to Brink (LAS) front and Brink also briefly engages in arm contact. The contact from both players appear marginal.',
     scComment:'',
     commentChanged:false,
@@ -413,6 +418,7 @@ const PLAYS = [
       {f:'Official', old:'Catherine Chang', nw:'Gina Cross', tag:'official'},
       {f:'Location', old:'Trail',           nw:'Lead',       tag:'location'}
     ],
+    unchanged:{'Rating':'Infraction','Infraction type':'Foul: Shooting','Play type':'Fouls','Observability':'Observable'},
     fpComment:'LLB shows Burrell (LAS) reaches in and makes illegal contact with Copper\'s (PHX) wrist/arm. The contact is more than marginal and a shooting foul should have been assessed.',
     scComment:'LLB and RAR show Burrell (LAS) reaches in and makes illegal contact with Copper\'s (PHX) wrist/arm during the jump shot attempt.',
     commentChanged:true,
@@ -430,6 +436,7 @@ const PLAYS = [
     changes:[
       {f:'Rating', old:'Infraction', nw:'Lean No Infraction', tag:'rating'}
     ],
+    unchanged:{'Infraction type':'Foul: Shooting','Play type':'Fouls','Official':'Catherine Chang','Location':'Lead','Observability':'Observable'},
     fpComment:'RLB shows while Atkins (LAS) gets to the ball, they do not immediately dislodge it and follow through to make illegal contact with Thomas\' (PHX) arm, which affects their driving shot attempt.',
     scComment:'RLB shows that Atkins\' (LAS) right hand initially makes clean contact with the ball before Atkins brings the other hand onto the ball as well. Thomas (PHX) attempts to bring the ball up to shoot and begins to lose control as Atkins\' hands slide off the ball and onto Thomas\' arm. There is judgment involved in determining whether the ball was already coming loose.',
     commentChanged:true,
@@ -449,6 +456,7 @@ const PLAYS = [
       {f:'Rating',   old:'Lean No Infraction', nw:'Infraction', tag:'rating'},
       {f:'Location', old:'Lead',               nw:'Trail',      tag:'location'}
     ],
+    unchanged:{'Infraction type':'Foul: Personal','Play type':'Fouls','Official':'Gina Cross','Observability':'Observable'},
     fpComment:'Suarez (PHX) gets to the ball and there is some ensuing arm contact with Brink (LAS). The contact appears marginal.',
     scComment:'',
     commentChanged:false,
@@ -462,19 +470,23 @@ const PLAYS = [
 let cur=0, flagged=new Set(), viewed=new Set([0]), slackType='share';
 
 function renderBand2(p) {
-  const changedNames = p.changes.map(c => c.f);
-  const unchanged = ALL_FIELDS.filter(f => !changedNames.includes(f));
+  const changeMap = {};
+  p.changes.forEach(c => { changeMap[c.f] = c; });
   let html = '<div class="b2-lbl">CHANGES</div><div class="ch-grid">';
   html += '<div class="ch-col-hdr">First pass</div><div class="ch-col-hdr sc-hdr">Second check</div>';
-  p.changes.forEach(c => {
-    const col = COL[c.tag] || COL.rating;
-    html += `<div class="ch-row-fp"><span class="ch-field">${c.f}</span><span class="ch-fp-val">${c.old}</span></div>`;
-    html += `<div class="ch-row-sc"><span class="ch-sc-pill" style="background:${col.bg};color:${col.txt}">${c.nw}</span></div>`;
+  ALL_FIELDS.forEach(f => {
+    const c = changeMap[f];
+    if (c) {
+      const col = COL[c.tag] || COL.rating;
+      html += `<div class="ch-row-fp"><span class="ch-field">${c.f}</span><span class="ch-fp-val">${c.old}</span></div>`;
+      html += `<div class="ch-row-sc"><span class="ch-sc-pill" style="background:${col.bg};color:${col.txt}">${c.nw}</span></div>`;
+    } else {
+      const val = p.unchanged ? p.unchanged[f] : '—';
+      html += `<div class="ch-row-fp ch-row-unch"><span class="ch-field ch-field-unch">${f}</span><span class="ch-unch-val">${val || '—'}</span></div>`;
+      html += `<div class="ch-row-sc ch-row-unch"><span class="ch-unch-val">—</span></div>`;
+    }
   });
   html += '</div>';
-  if (unchanged.length > 0) {
-    html += `<div class="unch-note">${unchanged.join(' · ')} · unchanged</div>`;
-  }
   return html;
 }
 
