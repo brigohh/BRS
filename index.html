@@ -205,6 +205,27 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .sm-send{flex:1;padding:9px;background:#4A154B;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
 .sm-send:hover{background:#3D1140}
 .sm-can{padding:9px 16px;border:1px solid #e5e7eb;border-radius:8px;background:#f9fafb;font-size:13px;cursor:pointer;color:#6b7280}
+/* PLAYLIST MODAL */
+.pl-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:320px;background:#fff;border-radius:12px;border:1px solid #e5e7eb;z-index:50;display:none;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.pl-modal.open{display:block}
+.pl-hd{padding:14px 16px;border-bottom:1px solid #f3f4f6;display:flex;align-items:center;justify-content:space-between}
+.pl-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px}
+.pl-lbl{font-size:11px;font-weight:600;color:#6b7280;letter-spacing:.3px;text-transform:uppercase}
+.pl-opt{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;border:1px solid #e5e7eb;border-radius:8px;cursor:pointer;font-size:13px;color:#111827;font-weight:500;transition:background .1s}
+.pl-opt:hover{background:#f9fafb}
+.pl-opt.selected{background:#eff6ff;border-color:#bfdbfe;color:#1a3a6b}
+.pl-opt-check{font-size:14px;color:#1a3a6b;display:none}
+.pl-opt.selected .pl-opt-check{display:block}
+.pl-new{display:none;gap:6px;flex-direction:row}
+.pl-new.show{display:flex}
+.pl-input{flex:1;padding:7px 10px;border:1px solid #d1d5db;border-radius:8px;font-size:13px;outline:none}
+.pl-input:focus{border-color:#1a3a6b}
+.pl-create-btn{padding:7px 12px;background:#1a3a6b;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer}
+.pl-add-new-btn{background:none;border:1px dashed #d1d5db;border-radius:8px;padding:7px 12px;font-size:12px;color:#6b7280;cursor:pointer;display:flex;align-items:center;gap:5px;justify-content:center}
+.pl-add-new-btn:hover{border-color:#9ca3af;color:#374151}
+.pl-footer{padding:12px 16px;border-top:1px solid #f3f4f6;display:flex;justify-content:flex-end;gap:8px}
+.pl-done{padding:8px 18px;background:#1a3a6b;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer}
+.pl-done:hover{background:#15306e}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:7px;opacity:0;transition:opacity .18s;z-index:60;white-space:nowrap;pointer-events:none;background:#166534;color:#dcfce7;box-shadow:0 4px 20px rgba(0,0,0,.2)}
 .toast.show{opacity:1}
 </style>
@@ -351,6 +372,27 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 </div>
 
 <div class="overlay" id="overlay" onclick="closeModal()"></div>
+
+<div class="pl-modal" id="pl-modal">
+  <div class="pl-hd">
+    <span style="font-size:14px;font-weight:600;color:#111827">Add to playlist</span>
+    <button class="sm-x" style="color:#6b7280" onclick="closePlModal()">✕</button>
+  </div>
+  <div class="pl-body">
+    <div class="pl-lbl">Select a playlist</div>
+    <div id="pl-options"></div>
+    <div class="pl-new" id="pl-new-row">
+      <input class="pl-input" id="pl-input" placeholder="New playlist name…" onkeydown="if(event.key==='Enter')createPlaylist()">
+      <button class="pl-create-btn" onclick="createPlaylist()">Create</button>
+    </div>
+    <button class="pl-add-new-btn" id="pl-add-new-btn" onclick="toggleNewPlaylist()"><i class="ti ti-plus" style="font-size:11px"></i> New playlist</button>
+  </div>
+  <div class="pl-footer">
+    <button class="sm-can" onclick="closePlModal()">Cancel</button>
+    <button class="pl-done" onclick="confirmPlaylist()">Add to playlist</button>
+  </div>
+</div>
+
 <div class="slack-modal" id="slack-modal">
   <div class="sm-hd">
     <div class="sm-title">
@@ -955,10 +997,75 @@ function toggleFlag() {
   renderCenter(p);
 }
 
+let playlists = ['Drives', 'Ref Assignment', 'Travels'];
+let playlistMap = {}; // id -> playlist name
+
 function togglePlaylist() {
   const p = PLAYS[cur];
-  if (playlist.has(p.id)) { playlist.delete(p.id); toast('Removed from playlist'); }
-  else { playlist.add(p.id); toast('Added to playlist'); }
+  if (playlistMap[p.id]) {
+    delete playlistMap[p.id];
+    playlist.delete(p.id);
+    toast('Removed from playlist');
+    renderCenter(p);
+  } else {
+    openPlModal();
+  }
+}
+
+function openPlModal() {
+  const p = PLAYS[cur];
+  const sel = playlistMap[p.id] || null;
+  const container = document.getElementById('pl-options');
+  container.innerHTML = '';
+  playlists.forEach(name => {
+    const d = document.createElement('div');
+    d.className = 'pl-opt' + (sel === name ? ' selected' : '');
+    d.innerHTML = `<span>${name}</span><i class="ti ti-check pl-opt-check"></i>`;
+    d.onclick = () => {
+      document.querySelectorAll('.pl-opt').forEach(x => x.classList.remove('selected'));
+      d.classList.add('selected');
+    };
+    container.appendChild(d);
+  });
+  document.getElementById('pl-new-row').classList.remove('show');
+  document.getElementById('pl-input').value = '';
+  document.getElementById('pl-modal').classList.add('open');
+  document.getElementById('overlay').classList.add('open');
+}
+
+function closePlModal() {
+  document.getElementById('pl-modal').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+function toggleNewPlaylist() {
+  document.getElementById('pl-new-row').classList.toggle('show');
+  if (document.getElementById('pl-new-row').classList.contains('show')) {
+    document.getElementById('pl-input').focus();
+  }
+}
+
+function createPlaylist() {
+  const val = document.getElementById('pl-input').value.trim();
+  if (!val) return;
+  if (!playlists.includes(val)) playlists.push(val);
+  document.getElementById('pl-input').value = '';
+  document.getElementById('pl-new-row').classList.remove('show');
+  openPlModal();
+  setTimeout(() => {
+    const opts = document.querySelectorAll('.pl-opt');
+    opts[opts.length - 1].click();
+  }, 10);
+}
+
+function confirmPlaylist() {
+  const sel = document.querySelector('.pl-opt.selected');
+  if (!sel) { toast('Select a playlist first'); return; }
+  const p = PLAYS[cur];
+  playlistMap[p.id] = sel.querySelector('span').textContent;
+  playlist.add(p.id);
+  closePlModal();
+  toast('Added to ' + playlistMap[p.id]);
   renderCenter(p);
 }
 
@@ -1006,6 +1113,7 @@ function buildPreview() {
 function closeModal() {
   document.getElementById('overlay').classList.remove('open');
   document.getElementById('slack-modal').classList.remove('open');
+  document.getElementById('pl-modal').classList.remove('open');
 }
 function sendSlack() { closeModal(); toast('Sent to Slack'); }
 function simLink(t) { toast(t==='clip' ? 'Opening video clip…' : 'Opening event in GRS…'); }
