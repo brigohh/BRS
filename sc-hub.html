@@ -124,7 +124,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   <div class="section-title">Season overview · 2025–26 WNBA</div>
   <div class="hero-stats">
     <div class="stat-card primary">
-      <div class="stat-label">SC Agreement Rate</div>
+      <div class="stat-label">First Pass Accuracy</div>
       <div class="stat-val">82<span style="font-size:18px;font-weight:600">%</span></div>
       <div class="stat-sub">
         <span class="trend-badge tb-up"><i class="ti ti-trending-up" style="font-size:9px"></i> +4.1%</span>
@@ -137,15 +137,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       <div class="stat-sub">9 published · 1 in progress</div>
     </div>
     <div class="stat-card">
-      <div class="stat-label">Total Plays Checked</div>
-      <div class="stat-val">97</div>
-      <div class="stat-sub">avg 9.7 per game</div>
+      <div class="stat-label">Total Important Calls</div>
+      <div class="stat-val">290</div>
+      <div class="stat-sub">avg 29 per game</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">Avg Changes / Game</div>
-      <div class="stat-val">1.8</div>
+      <div class="stat-val">9.4</div>
       <div class="stat-sub">
-        <span class="trend-badge tb-up"><i class="ti ti-trending-down" style="font-size:9px"></i> –0.3</span>
+        <span class="trend-badge tb-up"><i class="ti ti-trending-down" style="font-size:9px"></i> –1.2</span>
         fewer edits trending
       </div>
     </div>
@@ -157,15 +157,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
     <div class="chart-card">
       <div class="chart-header">
         <div>
-          <div class="chart-title">SC Agreement Rate — Game by Game</div>
+          <div class="chart-title">First Pass Accuracy — Game by Game</div>
           <div class="chart-desc">Percentage of first-pass calls upheld after second check</div>
         </div>
         <div class="chart-legend">
-          <div class="leg-item"><div class="leg-dot" style="background:#1a3a6b"></div>Agreement %</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#1a3a6b"></div>Accuracy %</div>
           <div class="leg-item"><div class="leg-dot" style="background:#d1d5db;border-radius:0;width:18px;height:2px"></div>Average (82%)</div>
         </div>
       </div>
-      <svg id="trend-chart" class="chart-svg" height="200" viewBox="0 0 800 200" preserveAspectRatio="none"></svg>
+      <svg id="trend-chart" class="chart-svg" height="180" viewBox="0 0 800 180" preserveAspectRatio="none"></svg>
     </div>
 
     <!-- SIDEBAR -->
@@ -205,48 +205,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
         </div>
       </div>
 
-      <!-- RECENT GAME SNAPSHOTS -->
-      <div class="side-card">
-        <div class="section-title" style="margin-bottom:12px">Recent Games</div>
-        <div class="game-list" id="recent-games-list"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- MILESTONES ROW -->
-  <div class="section-title">Personal bests</div>
-  <div class="milestone-grid">
-    <div class="milestone-card">
-      <div class="milestone-icon mi-gold">🏆</div>
-      <div class="milestone-body">
-        <div class="milestone-label">Best 5-Game Stretch</div>
-        <div class="milestone-val">91%</div>
-        <div class="milestone-sub">Games 4–8 · GSV@IND through TOR@CHI</div>
-      </div>
-    </div>
-    <div class="milestone-card">
-      <div class="milestone-icon mi-blue">📉</div>
-      <div class="milestone-body">
-        <div class="milestone-label">Lowest Discrepancy Rate</div>
-        <div class="milestone-val">4%</div>
-        <div class="milestone-sub">CHI@MIN · 05/17/2026 · 1 change in 25 plays</div>
-      </div>
-    </div>
-    <div class="milestone-card">
-      <div class="milestone-icon mi-gold">🔥</div>
-      <div class="milestone-body">
-        <div class="milestone-label">Longest Agreement Streak</div>
-        <div class="milestone-val">17 plays</div>
-        <div class="milestone-sub">No changes across 3 consecutive games</div>
-      </div>
-    </div>
-    <div class="milestone-card">
-      <div class="milestone-icon mi-blue">📈</div>
-      <div class="milestone-body">
-        <div class="milestone-label">Season Improvement</div>
-        <div class="milestone-val">+9 pts</div>
-        <div class="milestone-sub">From 73% (Game 1) → 82% current average</div>
-      </div>
     </div>
   </div>
 
@@ -259,9 +217,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
           <th>Game</th>
           <th>Date</th>
           <th>SC Reviewer</th>
-          <th style="text-align:center">Plays</th>
+          <th style="text-align:center">Important Calls</th>
           <th style="text-align:center">Changes</th>
-          <th style="text-align:center">Agreement</th>
+          <th style="text-align:center">First Pass Accuracy</th>
           <th>Status</th>
           <th style="text-align:center">Actions</th>
         </tr>
@@ -290,23 +248,23 @@ function logo(abbr, size=16) {
 }
 
 const SC_GAMES = [
-  {away:'IND',home:'NYL',date:'06/06/2026',sc:'Daniel Foley',plays:18,changes:3,agree:83,published:false,link:''},
-  {away:'CON',home:'CHI',date:'06/05/2026',sc:'Michael Abdenour',plays:8,changes:1,agree:88,published:true,link:''},
-  {away:'LVA',home:'LAS',date:'06/02/2026',sc:'Curtis Oakley Jr.',plays:23,changes:4,agree:83,published:true,link:''},
-  {away:'ATL',home:'PDX',date:'05/29/2026',sc:'Tucker Grady',plays:4,changes:0,agree:100,published:true,link:''},
-  {away:'PHX',home:'NYL',date:'05/29/2026',sc:'Curtis Oakley Jr.',plays:7,changes:2,agree:71,published:true,link:''},
-  {away:'TOR',home:'CHI',date:'05/27/2026',sc:'Daniel Foley',plays:18,changes:3,agree:83,published:true,link:'index.html'},
-  {away:'DAL',home:'NYL',date:'05/24/2026',sc:'Tucker Grady',plays:10,changes:1,agree:90,published:true,link:''},
-  {away:'GSV',home:'IND',date:'05/22/2026',sc:'Curtis Oakley Jr.',plays:17,changes:3,agree:82,published:true,link:''},
-  {away:'LAS',home:'PHX',date:'05/21/2026',sc:'Tucker Grady',plays:7,changes:2,agree:71,published:true,link:''},
-  {away:'CHI',home:'MIN',date:'05/17/2026',sc:'Daniel Foley',plays:4,changes:0,agree:100,published:true,link:''},
+  {away:'IND',home:'NYL',date:'06/06/2026',sc:'Daniel Foley',plays:31,changes:11,agree:83,published:false,link:''},
+  {away:'CON',home:'CHI',date:'06/05/2026',sc:'Michael Abdenour',plays:27,changes:8,agree:88,published:true,link:''},
+  {away:'LVA',home:'LAS',date:'06/02/2026',sc:'Curtis Oakley Jr.',plays:34,changes:12,agree:83,published:true,link:''},
+  {away:'ATL',home:'PDX',date:'05/29/2026',sc:'Tucker Grady',plays:25,changes:7,agree:80,published:true,link:''},
+  {away:'PHX',home:'NYL',date:'05/29/2026',sc:'Curtis Oakley Jr.',plays:29,changes:11,agree:71,published:true,link:''},
+  {away:'TOR',home:'CHI',date:'05/27/2026',sc:'Daniel Foley',plays:33,changes:10,agree:83,published:true,link:'index.html'},
+  {away:'DAL',home:'NYL',date:'05/24/2026',sc:'Tucker Grady',plays:28,changes:9,agree:90,published:true,link:''},
+  {away:'GSV',home:'IND',date:'05/22/2026',sc:'Curtis Oakley Jr.',plays:32,changes:10,agree:82,published:true,link:''},
+  {away:'LAS',home:'PHX',date:'05/21/2026',sc:'Tucker Grady',plays:26,changes:11,agree:71,published:true,link:''},
+  {away:'CHI',home:'MIN',date:'05/17/2026',sc:'Daniel Foley',plays:25,changes:7,agree:80,published:true,link:''},
 ];
 
 // TREND CHART
 function drawChart() {
   const data = [...SC_GAMES].reverse().map(g => g.agree);
   const svg = document.getElementById('trend-chart');
-  const W = 800, H = 200, padL = 36, padR = 16, padT = 16, padB = 28;
+  const W = 800, H = 180, padL = 36, padR = 16, padT = 12, padB = 26;
   const cW = W - padL - padR, cH = H - padT - padB;
   const n = data.length;
   const minV = 60, maxV = 105;
@@ -383,7 +341,6 @@ function renderTable() {
 }
 
 drawChart();
-renderRecent();
 renderTable();
 </script>
 </body>
