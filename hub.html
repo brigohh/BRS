@@ -40,25 +40,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .qh-progress{color:#854d0e;background:#fef9c3;border-color:#fde68a}
 .qh-sep{color:rgba(255,255,255,.25);font-size:10px}
 /* RECENT SC CARDS */
-.recent-col{display:flex;flex-direction:column}
-.recent-sc{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px}
-.rc-card{background:#fff;border-radius:10px;border-left:4px solid #3b82f6;padding:16px 18px;cursor:pointer;transition:box-shadow .15s;box-shadow:0 2px 8px rgba(0,0,0,.1);display:flex;flex-direction:column;gap:4px}
+.recent-col{display:flex;flex-direction:column;width:100%}
+.recent-sc{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+.rc-card{background:#fff;border-radius:10px;border-left:4px solid #fbcfe8;padding:13px 15px;cursor:pointer;transition:box-shadow .15s;box-shadow:0 2px 8px rgba(0,0,0,.1);display:flex;flex-direction:column;gap:5px}
 .rc-card:hover{box-shadow:0 4px 14px rgba(0,0,0,.18)}
-.rc-teams{display:flex;flex-direction:column;gap:4px;margin-bottom:2px}
-.rc-team-row{display:flex;align-items:center;gap:7px}
-.rc-logo{width:20px;height:20px;object-fit:contain;flex-shrink:0;vertical-align:middle}
-.rc-team-name{font-size:13px;font-weight:700;color:#111827}
-.rc-at{font-size:10px;color:#9ca3af;margin-left:27px}
-.rc-game-date{font-size:11px;color:#9ca3af;margin-bottom:4px}
-.rc-pills{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:2px}
+.rc-matchup{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#111827;flex-wrap:wrap}
+.rc-logo{width:18px;height:18px;object-fit:contain;flex-shrink:0;vertical-align:middle}
+.rc-at{color:#d1d5db;font-size:10px;font-weight:400}
+.rc-meta{font-size:11px;color:#9ca3af}
+.rc-pills{display:flex;gap:4px;flex-wrap:wrap}
 .rc-pill{padding:2px 7px;border-radius:20px;font-size:10px;font-weight:600;border:1px solid}
 .rp-total{background:#f3f4f6;border-color:#e5e7eb;color:#374151}
 .rp-crit{background:#fee2e2;border-color:#fca5a5;color:#991b1b}
-.rc-sc-info{display:flex;flex-direction:column;gap:1px;margin-top:2px}
-.rc-sc-by{font-size:11px;color:#374151;font-weight:600}
-.rc-sc-by span{font-weight:400;color:#6b7280}
-.rc-sc-date{font-size:11px;color:#6b7280}
-.rc-done{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:700;color:#166534;margin-top:4px}
+.rc-sc-info{font-size:11px;color:#6b7280}
+.rc-sc-info b{color:#374151;font-weight:600}
+.rc-done{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:700;color:#166534}
 .view-all-link{display:inline-flex;align-items:center;gap:5px;color:rgba(255,255,255,.55);font-size:12px;font-weight:600;cursor:pointer;transition:color .15s}
 .view-all-link:hover{color:#fff}
 /* SEARCH */
@@ -162,55 +158,46 @@ tr:hover td{background:#fafbff}
         <div class="sec-lbl">Recently second checked</div>
         <div class="recent-sc">
           <div class="rc-card" onclick="location='index.html'">
-            <div class="rc-teams">
-              <div class="rc-team-row"><img src="toronto tempo logo.jpg" class="rc-logo" onerror="this.style.display='none'"><span class="rc-team-name">Toronto Tempo</span></div>
-              <div class="rc-at">@</div>
-              <div class="rc-team-row"><img src="chicago sky logo.png" class="rc-logo" onerror="this.style.display='none'"><span class="rc-team-name">Chicago Sky</span></div>
+            <div class="rc-matchup">
+              <img src="toronto tempo logo.jpg" class="rc-logo" onerror="this.style.display='none'"> Toronto Tempo
+              <span class="rc-at">@</span>
+              <img src="chicago sky logo.png" class="rc-logo" onerror="this.style.display='none'"> Chicago Sky
             </div>
-            <div class="rc-game-date">05/27/2026</div>
+            <div class="rc-meta">05/27/2026</div>
             <div class="rc-pills">
               <span class="rc-pill rp-total">18 plays</span>
               <span class="rc-pill rp-crit">5 critical</span>
             </div>
-            <div class="rc-sc-info">
-              <div class="rc-sc-by">Second checked by: <span>Daniel Foley</span></div>
-              <div class="rc-sc-date">06/01/2026</div>
-            </div>
-            <div class="rc-done"><i class="ti ti-circle-check" style="font-size:10px"></i> Complete</div>
+            <div class="rc-sc-info">Second checked by <b>Daniel Foley</b> &nbsp;·&nbsp; 06/01/2026</div>
+            <div class="rc-done"><i class="ti ti-circle-check" style="font-size:10px"></i> Published</div>
           </div>
           <div class="rc-card" onclick="void(0)">
-            <div class="rc-teams">
-              <div class="rc-team-row"><img src="New_Las_Vegas_Aces_WNBA_logo_2024.svg.png" class="rc-logo" onerror="this.style.display='none'"><span class="rc-team-name">Las Vegas Aces</span></div>
-              <div class="rc-at">@</div>
-              <div class="rc-team-row"><img src="Los_Angeles_Sparks_logo.svg.png" class="rc-logo" onerror="this.style.display='none'"><span class="rc-team-name">Los Angeles Sparks</span></div>
+            <div class="rc-matchup">
+              <img src="New_Las_Vegas_Aces_WNBA_logo_2024.svg.png" class="rc-logo" onerror="this.style.display='none'"> Las Vegas Aces
+              <span class="rc-at">@</span>
+              <img src="Los_Angeles_Sparks_logo.svg.png" class="rc-logo" onerror="this.style.display='none'"> Los Angeles Sparks
             </div>
-            <div class="rc-game-date">06/02/2026</div>
+            <div class="rc-meta">06/02/2026</div>
             <div class="rc-pills">
               <span class="rc-pill rp-total">23 plays</span>
               <span class="rc-pill rp-crit">7 critical</span>
             </div>
-            <div class="rc-sc-info">
-              <div class="rc-sc-by">Second checked by: <span>Curtis Oakley Jr.</span></div>
-              <div class="rc-sc-date">06/09/2026</div>
-            </div>
-            <div class="rc-done"><i class="ti ti-circle-check" style="font-size:10px"></i> Complete</div>
+            <div class="rc-sc-info">Second checked by <b>Curtis Oakley Jr.</b> &nbsp;·&nbsp; 06/09/2026</div>
+            <div class="rc-done"><i class="ti ti-circle-check" style="font-size:10px"></i> Published</div>
           </div>
           <div class="rc-card" onclick="void(0)">
-            <div class="rc-teams">
-              <div class="rc-team-row"><img src="Connecticut_Sun_logo.svg.png" class="rc-logo" onerror="this.style.display='none'"><span class="rc-team-name">Connecticut Sun</span></div>
-              <div class="rc-at">@</div>
-              <div class="rc-team-row"><img src="chicago sky logo.png" class="rc-logo" onerror="this.style.display='none'"><span class="rc-team-name">Chicago Sky</span></div>
+            <div class="rc-matchup">
+              <img src="Connecticut_Sun_logo.svg.png" class="rc-logo" onerror="this.style.display='none'"> Connecticut Sun
+              <span class="rc-at">@</span>
+              <img src="chicago sky logo.png" class="rc-logo" onerror="this.style.display='none'"> Chicago Sky
             </div>
-            <div class="rc-game-date">06/05/2026</div>
+            <div class="rc-meta">06/05/2026</div>
             <div class="rc-pills">
               <span class="rc-pill rp-total">8 plays</span>
               <span class="rc-pill rp-crit">2 critical</span>
             </div>
-            <div class="rc-sc-info">
-              <div class="rc-sc-by">Second checked by: <span>Michael Abdenour</span></div>
-              <div class="rc-sc-date">06/08/2026</div>
-            </div>
-            <div class="rc-done"><i class="ti ti-circle-check" style="font-size:10px"></i> Complete</div>
+            <div class="rc-sc-info">Second checked by <b>Michael Abdenour</b> &nbsp;·&nbsp; 06/08/2026</div>
+            <div class="rc-done"><i class="ti ti-circle-check" style="font-size:10px"></i> Published</div>
           </div>
         </div>
         <div class="view-all-link" onclick="document.getElementById('all-section').scrollIntoView({behavior:'smooth'})">
@@ -244,9 +231,12 @@ tr:hover td{background:#fafbff}
       <input type="date" class="sb-input" value="2026-06-12">
     </div>
     <div class="sb-sep"></div>
-    <div class="sb-checks">
-      <label class="sb-check"><input type="checkbox" checked> My games</label>
-      <label class="sb-check"><input type="checkbox"> PTIW</label>
+    <div class="sb-field">
+      <div class="sb-lbl">&nbsp;</div>
+      <div class="sb-checks">
+        <label class="sb-check"><input type="checkbox" checked> My games</label>
+        <label class="sb-check"><input type="checkbox"> PTIW</label>
+      </div>
     </div>
     <div class="sb-sep"></div>
     <button class="search-btn"><i class="ti ti-search" style="font-size:12px"></i> Search</button>
@@ -321,7 +311,7 @@ function qTextRow(quarters) {
 const GAMES = [
   {id:'1022600087',date:'06/09/2026',away:'DAL',home:'MIN',plays:14,crit:3,status:'progress',lastBy:'Bridget Ng',lastDate:'6/11/2026 8:03 AM',firstBy:'Bridget Ng',firstDate:'6/10/2026 8:04 AM',published:'',sc:'',
    quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'progress'},{q:'Q4',by:'BN',status:'pending'}]},
-  {id:'1022600080',date:'06/06/2026',away:'IND',home:'NYL',plays:18,crit:5,status:'progress',lastBy:'Daniel Foley',lastDate:'6/10/2026 9:08 AM',firstBy:'Bridget Ng',firstDate:'6/8/2026 8:47 AM',published:'',sc:'Daniel Foley',
+  {id:'1022600080',date:'06/06/2026',away:'IND',home:'NYL',plays:18,crit:5,status:'done',lastBy:'Daniel Foley',lastDate:'6/10/2026 9:08 AM',firstBy:'Bridget Ng',firstDate:'6/8/2026 8:47 AM',published:'',sc:'Daniel Foley',
    quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'done'},{q:'Q4',by:'BN',status:'done'}]},
   {id:'1022600074',date:'06/05/2026',away:'CON',home:'CHI',plays:8,crit:2,status:'done',lastBy:'Michael Abdenour',lastDate:'6/8/2026 11:02 AM',firstBy:'Bridget Ng',firstDate:'6/6/2026 6:51 AM',published:'6/8/2026 11:03 AM',sc:'Michael Abdenour',
    quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'done'},{q:'Q4',by:'BN',status:'done'}]},
@@ -347,7 +337,9 @@ function renderTable(games) {
   const tbody = document.getElementById('game-tbody');
   tbody.innerHTML = '';
   games.forEach(g => {
-    const statusPill = g.status === 'done'
+    const statusPill = g.published
+      ? '<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;background:#e0e7ff;color:#3730a3;border:1px solid #a5b4fc"><span style="width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.7;flex-shrink:0"></span>Published</span>'
+      : g.status === 'done'
       ? '<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;background:#dcfce7;color:#166534;border:1px solid #86efac"><span style="width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.7;flex-shrink:0"></span>Complete</span>'
       : g.status === 'progress'
       ? '<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;background:#fef9c3;color:#854d0e;border:1px solid #fde68a"><span style="width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.7;flex-shrink:0"></span>In progress</span>'
