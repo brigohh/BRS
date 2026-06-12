@@ -9,69 +9,112 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;color:#111827;background:#f3f4f6;min-height:100vh}
 /* NAV */
-.nav{background:#1a3a6b;height:48px;display:flex;align-items:center;padding:0 20px;flex-shrink:0}
-.nav-logo{display:flex;align-items:center;gap:9px;padding-right:12px;border-right:1px solid rgba(255,255,255,.15)}
+.nav{background:#1a3a6b;height:48px;display:flex;align-items:center;padding:0 20px;gap:0;flex-shrink:0}
+.nav-logo{display:flex;align-items:center;gap:9px;padding-right:12px;border-right:1px solid rgba(255,255,255,.15);margin-right:4px}
 .nav-brand{color:#fff;font-size:11px;font-weight:500;line-height:1.3;opacity:.85}
-.nav-links{display:flex;margin-left:16px}
-.nl{color:rgba(255,255,255,.55);font-size:11px;padding:0 10px;cursor:pointer;font-weight:500}
+.nl{color:rgba(255,255,255,.55);font-size:11px;padding:0 10px;cursor:pointer;font-weight:500;height:48px;display:flex;align-items:center;border-bottom:2px solid transparent}
 .nl:hover{color:#fff}
-.nav-av{width:30px;height:30px;border-radius:50%;background:#2d5aa0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;margin-left:auto}
-/* SUBNAV */
-.subnav{background:#fff;border-bottom:1px solid #e5e7eb;height:40px;display:flex;padding:0 20px}
-.st{padding:0 14px;font-size:12px;font-weight:500;color:#6b7280;cursor:pointer;display:flex;align-items:center;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
-.st.on{color:#1a3a6b;border-bottom-color:#1a3a6b;font-weight:600}
-.st:hover:not(.on){color:#111827}
-/* PAGE */
-.hub-wrap{max-width:1100px;margin:0 auto;padding:28px 24px}
-.hub-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
-.hub-title{font-size:18px;font-weight:700;color:#111827}
-.hub-sub{font-size:12px;color:#6b7280;margin-top:3px}
-.hbtn{padding:6px 14px;border:1px solid #d1d5db;border-radius:8px;font-size:12px;font-weight:500;background:#fff;color:#374151;cursor:pointer;display:flex;align-items:center;gap:5px}
-.hbtn:hover{background:#f9fafb}
-/* FILTER ROW */
-.hub-filters{display:flex;gap:6px;margin-bottom:18px;align-items:center}
-.hfb{padding:4px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:11px;font-weight:500;background:#fff;color:#6b7280;cursor:pointer}
-.hfb:hover{background:#f9fafb}
-.hfb.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
-.hfsep{width:1px;height:18px;background:#e5e7eb;margin:0 2px}
-/* SECTION HEADER */
-.sec-hdr{font-size:10px;font-weight:700;letter-spacing:.6px;color:#9ca3af;text-transform:uppercase;margin-bottom:8px;margin-top:22px}
-.sec-hdr:first-of-type{margin-top:0}
-/* GAME CARD */
-.game-card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:16px;cursor:pointer;transition:box-shadow .15s,border-color .15s;margin-bottom:8px}
-.game-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.08);border-color:#c7d2fe}
-.game-card.active-game{border-left:4px solid #1a3a6b}
-/* TEAMS */
-.gc-teams{display:flex;align-items:center;gap:10px;min-width:280px}
-.gc-team{display:flex;align-items:center;gap:6px}
-.gc-logo{width:28px;height:28px;object-fit:contain;flex-shrink:0}
-.gc-logo-ph{width:28px;height:28px;border-radius:50%;background:#f3f4f6;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#6b7280;flex-shrink:0}
-.gc-tname{font-size:13px;font-weight:600;color:#111827}
-.gc-score{font-size:13px;color:#6b7280;font-weight:500}
-.gc-vs{font-size:11px;color:#d1d5db;font-weight:500;padding:0 4px}
-/* DATE / META */
-.gc-meta{display:flex;flex-direction:column;gap:3px;min-width:160px}
-.gc-date{font-size:12px;color:#374151;font-weight:500}
-.gc-id{font-size:10px;color:#9ca3af}
-/* STATS */
-.gc-stats{display:flex;gap:6px;flex:1}
-.gc-stat{padding:4px 10px;border-radius:6px;text-align:center;min-width:48px}
-.gc-sn{font-size:14px;font-weight:700;line-height:1}
-.gc-sl{font-size:9px;line-height:1.4;margin-top:1px}
-.s-d{background:#f3f4f6;color:#374151}
-.s-r{background:#fee2e2;color:#991b1b}
-.s-b{background:#dbeafe;color:#1e40af}
-.s-g{background:#dcfce7;color:#166534}
-/* STATUS */
-.gc-right{margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
-.status-pill{padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.3px}
+.nl.on{color:#fff;border-bottom-color:rgba(255,255,255,.7);font-weight:600}
+.nav-av{width:30px;height:30px;border-radius:50%;background:#2d5aa0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;margin-left:auto;flex-shrink:0}
+/* HERO */
+.hero{background:#1a3a6b;padding:20px 28px 24px;border-bottom:1px solid #152f58}
+.hero-inner{max-width:1200px;margin:0 auto}
+.hero-label{font-size:10px;font-weight:700;letter-spacing:.8px;color:rgba(255,255,255,.45);text-transform:uppercase;margin-bottom:12px}
+.hero-row{display:grid;grid-template-columns:320px 1fr auto;gap:16px;align-items:start}
+/* LAST MODIFIED CARD */
+.lm-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:14px 16px;cursor:pointer;transition:background .15s}
+.lm-card:hover{background:rgba(255,255,255,.11)}
+.lm-section-lbl{font-size:9px;font-weight:700;letter-spacing:.7px;color:rgba(255,255,255,.4);text-transform:uppercase;margin-bottom:10px}
+.lm-matchup{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.lm-logo{width:26px;height:26px;object-fit:contain;flex-shrink:0}
+.lm-logo-ph{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:rgba(255,255,255,.6);flex-shrink:0}
+.lm-team{font-size:13px;font-weight:600;color:#fff}
+.lm-score{font-size:11px;color:rgba(255,255,255,.5);margin-top:1px}
+.lm-vs{font-size:10px;color:rgba(255,255,255,.3);padding:0 2px}
+.lm-meta{font-size:10px;color:rgba(255,255,255,.4);margin-bottom:10px}
+.lm-pills{display:flex;gap:5px;flex-wrap:wrap}
+.lm-pill{padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600;border:1px solid}
+.lm-total{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);color:rgba(255,255,255,.7)}
+.lm-crit{background:rgba(254,226,226,.15);border-color:rgba(252,165,165,.3);color:#fca5a5}
+.lm-rating{background:rgba(219,234,254,.1);border-color:rgba(147,197,253,.2);color:#93c5fd}
+.lm-sc{font-size:10px;color:rgba(255,255,255,.4);margin-top:8px}
+.lm-sc b{color:rgba(255,255,255,.65)}
+.lm-status{display:inline-flex;align-items:center;gap:5px;margin-top:6px}
+.lm-dot{width:6px;height:6px;border-radius:50%;background:#fbbf24;flex-shrink:0}
+.lm-dot.done{background:#34d399}
+.lm-status-txt{font-size:10px;font-weight:600;color:#fbbf24}
+.lm-status-txt.done{color:#34d399}
+/* RECENT SC */
+.recent-sc{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.rc-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:12px 14px;cursor:pointer;transition:background .15s}
+.rc-card:hover{background:rgba(255,255,255,.11)}
+.rc-matchup{font-size:12px;font-weight:600;color:#fff;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.rc-logo{width:18px;height:18px;object-fit:contain}
+.rc-logo-ph{width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:rgba(255,255,255,.5);flex-shrink:0}
+.rc-date{font-size:10px;color:rgba(255,255,255,.35);margin-bottom:8px}
+.rc-pills{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px}
+.rc-pill{padding:1px 6px;border-radius:10px;font-size:9px;font-weight:600;border:1px solid}
+.rc-reviewer{font-size:10px;color:rgba(255,255,255,.35)}
+.rc-reviewer b{color:rgba(255,255,255,.55)}
+.rc-status-done{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:700;color:#34d399}
+/* VIEW ALL BTN */
+.view-all-col{display:flex;align-items:flex-start;padding-top:20px}
+.view-all-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:14px 20px;border:1px solid rgba(255,255,255,.15);border-radius:10px;cursor:pointer;background:rgba(255,255,255,.05);color:rgba(255,255,255,.6);font-size:11px;font-weight:600;transition:background .15s;white-space:nowrap}
+.view-all-btn:hover{background:rgba(255,255,255,.1);color:#fff}
+.view-all-btn i{font-size:18px;margin-bottom:2px}
+/* SEARCH BAR */
+.search-bar{background:#fff;border-bottom:1px solid #e5e7eb;padding:10px 28px}
+.search-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:10px}
+.sb-field{display:flex;flex-direction:column;gap:3px}
+.sb-lbl{font-size:9px;font-weight:700;letter-spacing:.4px;color:#9ca3af;text-transform:uppercase}
+.sb-input{height:30px;padding:0 10px;border:1px solid #d1d5db;border-radius:7px;font-size:12px;color:#111827;background:#fff;outline:none;min-width:120px}
+.sb-input:focus{border-color:#1a3a6b}
+.sb-select{height:30px;padding:0 8px;border:1px solid #d1d5db;border-radius:7px;font-size:12px;color:#111827;background:#fff;outline:none;cursor:pointer}
+.sb-sep{width:1px;height:28px;background:#e5e7eb;margin:0 4px}
+.sb-check{display:flex;align-items:center;gap:6px;font-size:12px;color:#374151;cursor:pointer}
+.sb-check input{accent-color:#1a3a6b;width:14px;height:14px}
+.search-btn{height:30px;padding:0 18px;background:#1a3a6b;color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:5px}
+.search-btn:hover{background:#15326b}
+.clear-btn{height:30px;padding:0 12px;border:1px solid #d1d5db;border-radius:7px;font-size:12px;background:#fff;color:#6b7280;cursor:pointer}
+/* TABLE */
+.table-wrap{max-width:1200px;margin:0 auto;padding:20px 28px}
+.tbl-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.tbl-count{font-size:12px;color:#6b7280}
+.tbl-actions{display:flex;gap:6px}
+.tact{padding:5px 11px;border:1px solid #d1d5db;border-radius:7px;font-size:11px;font-weight:500;background:#fff;color:#374151;cursor:pointer;display:flex;align-items:center;gap:4px}
+.tact:hover{background:#f9fafb}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden}
+thead{background:#f8fafc}
+th{padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.4px;color:#6b7280;text-transform:uppercase;border-bottom:1px solid #e5e7eb;white-space:nowrap}
+th:first-child{border-radius:12px 0 0 0}
+th:last-child{border-radius:0 12px 0 0}
+td{padding:11px 14px;border-bottom:1px solid #f3f4f6;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#fafbff}
+.td-game{min-width:160px}
+.game-matchup{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:#111827}
+.t-logo{width:20px;height:20px;object-fit:contain;flex-shrink:0}
+.t-logo-ph{width:20px;height:20px;border-radius:50%;background:#f3f4f6;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:#6b7280;border:1px solid #e5e7eb;flex-shrink:0}
+.game-date{font-size:10px;color:#9ca3af;margin-top:2px}
+.game-id{font-size:9px;color:#d1d5db;margin-top:1px}
+.status-pill{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.2px;white-space:nowrap}
 .sp-done{background:#dcfce7;color:#166534;border:1px solid #86efac}
 .sp-progress{background:#fef9c3;color:#854d0e;border:1px solid #fde68a}
-.sp-pending{background:#f3f4f6;color:#6b7280;border:1px solid #e5e7eb}
-.gc-sc{font-size:11px;color:#6b7280}
-.gc-sc b{color:#374151;font-weight:600}
-.gc-arr{font-size:16px;color:#d1d5db;margin-left:8px}
-.game-card:hover .gc-arr{color:#1a3a6b}
+.sp-pending{background:#f3f4f6;color:#9ca3af;border:1px solid #e5e7eb}
+.sp-dot{width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.7}
+.td-num{font-size:13px;font-weight:600;color:#374151;text-align:center}
+.td-person{font-size:11px;color:#374151;font-weight:500;white-space:nowrap}
+.td-date{font-size:10px;color:#9ca3af;margin-top:2px}
+.td-dur{font-size:12px;font-weight:600;color:#374151;text-align:center}
+.td-dur span{font-size:10px;font-weight:400;color:#9ca3af}
+.td-actions{text-align:center}
+.open-btn{padding:4px 12px;border:1px solid #bfdbfe;border-radius:7px;font-size:11px;font-weight:600;background:#eff6ff;color:#1a3a6b;cursor:pointer;white-space:nowrap}
+.open-btn:hover{background:#dbeafe}
+.qb-row{display:flex;gap:5px;margin-bottom:14px;align-items:center}
+.qb{padding:4px 11px;border:1px solid #d1d5db;border-radius:8px;font-size:11px;font-weight:500;background:#fff;color:#6b7280;cursor:pointer}
+.qb:hover{background:#f9fafb}
+.qb.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
+.qb-sep{width:1px;height:18px;background:#e5e7eb;margin:0 2px}
 </style>
 </head>
 <body>
@@ -81,253 +124,240 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
     <img src="nba-logo.svg" style="width:20px;height:auto">
     <div class="nav-brand">Bridget Review<br>System 1.0</div>
   </div>
-  <div class="nav-links">
-    <span class="nl">HOME</span><span class="nl">RM REVIEW</span><span class="nl">FINAL L2M REVIEW</span><span class="nl">INDEPENDENT REVIEW</span><span class="nl">ADMINISTRATION</span><span class="nl">REVIEWER RESOURCE</span><span class="nl">MY SCHEDULE</span>
-  </div>
+  <span class="nl on">HOME</span>
+  <span class="nl" onclick="void(0)">RM REVIEW</span>
+  <span class="nl" onclick="location='index.html'">SECOND CHECK</span>
+  <span class="nl">FINAL L2M REVIEW</span>
+  <span class="nl">INDEPENDENT REVIEW</span>
+  <span class="nl">ADMINISTRATION</span>
+  <span class="nl">REVIEWER RESOURCE</span>
+  <span class="nl">MY SCHEDULE</span>
   <div class="nav-av">BN</div>
 </div>
 
-<div class="subnav">
-  <span class="st">Review</span><span class="st">OCR</span><span class="st">Important Calls</span><span class="st on">Second Check</span><span class="st">PTIW</span><span class="st">OIW</span>
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Second Check Hub &nbsp;·&nbsp; Week 4 &nbsp;·&nbsp; 2025–26 WNBA Season</div>
+    <div class="hero-row">
+
+      <!-- LAST MODIFIED -->
+      <div>
+        <div class="lm-section-lbl">Last modified</div>
+        <div class="lm-card" onclick="location='index.html'">
+          <div class="lm-matchup">
+            <img src="toronto tempo logo.jpg" class="lm-logo" onerror="this.outerHTML='<div class=\'lm-logo-ph\'>TOR</div>'">
+            <div><div class="lm-team">Toronto Tempo</div><div class="lm-score">111</div></div>
+            <div class="lm-vs">@</div>
+            <img src="chicago sky logo.png" class="lm-logo" onerror="this.outerHTML='<div class=\'lm-logo-ph\'>CHI</div>'">
+            <div><div class="lm-team">Chicago Sky</div><div class="lm-score">104</div></div>
+          </div>
+          <div class="lm-meta">Wed, May 27, 2026 &nbsp;·&nbsp; #1022600050</div>
+          <div class="lm-pills">
+            <span class="lm-pill lm-total">18 plays</span>
+            <span class="lm-pill lm-crit">5 critical</span>
+            <span class="lm-pill lm-rating">8 rating</span>
+          </div>
+          <div class="lm-sc" style="margin-top:8px">SC: <b>Daniel Foley</b></div>
+          <div class="lm-status">
+            <div class="lm-dot"></div>
+            <span class="lm-status-txt">In progress</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RECENTLY SECOND CHECKED -->
+      <div>
+        <div class="lm-section-lbl">Recently second checked</div>
+        <div class="recent-sc">
+          <div class="rc-card" onclick="void(0)">
+            <div class="rc-matchup">
+              <div class="rc-logo-ph">LV</div> LVA <span style="color:rgba(255,255,255,.25);font-size:10px">@</span>
+              <div class="rc-logo-ph">LAS</div> LAS
+            </div>
+            <div class="rc-date">06/02/2026 &nbsp;·&nbsp; #1022600069</div>
+            <div class="rc-pills">
+              <span class="rc-pill lm-total">23 plays</span>
+              <span class="rc-pill lm-crit">7 critical</span>
+            </div>
+            <div class="rc-reviewer">Reviewed by <b>Curtis Oakley Jr.</b></div>
+            <div class="rc-status-done" style="margin-top:6px"><i class="ti ti-circle-check" style="font-size:11px"></i> Complete</div>
+          </div>
+          <div class="rc-card" onclick="void(0)">
+            <div class="rc-matchup">
+              <div class="rc-logo-ph">CON</div> CON <span style="color:rgba(255,255,255,.25);font-size:10px">@</span>
+              <div class="rc-logo-ph">CHI</div> CHI
+            </div>
+            <div class="rc-date">06/05/2026 &nbsp;·&nbsp; #1022600074</div>
+            <div class="rc-pills">
+              <span class="rc-pill lm-total">8 plays</span>
+              <span class="rc-pill lm-crit">2 critical</span>
+            </div>
+            <div class="rc-reviewer">Reviewed by <b>Michael Abdenour</b></div>
+            <div class="rc-status-done" style="margin-top:6px"><i class="ti ti-circle-check" style="font-size:11px"></i> Complete</div>
+          </div>
+          <div class="rc-card" onclick="void(0)">
+            <div class="rc-matchup">
+              <div class="rc-logo-ph">PHX</div> PHX <span style="color:rgba(255,255,255,.25);font-size:10px">@</span>
+              <div class="rc-logo-ph">NYL</div> NYL
+            </div>
+            <div class="rc-date">05/29/2026 &nbsp;·&nbsp; #1022600056</div>
+            <div class="rc-pills">
+              <span class="rc-pill lm-total">7 plays</span>
+              <span class="rc-pill lm-crit">3 critical</span>
+            </div>
+            <div class="rc-reviewer">Reviewed by <b>Curtis Oakley Jr.</b></div>
+            <div class="rc-status-done" style="margin-top:6px"><i class="ti ti-circle-check" style="font-size:11px"></i> Complete</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW ALL -->
+      <div class="view-all-col">
+        <div class="view-all-btn" onclick="document.getElementById('all-section').scrollIntoView({behavior:'smooth'})">
+          <i class="ti ti-list"></i>
+          View all<br>second checks
+        </div>
+      </div>
+
+    </div>
+  </div>
 </div>
 
-<div class="hub-wrap">
-  <div class="hub-top">
+<!-- SEARCH -->
+<div class="search-bar">
+  <div class="search-inner">
+    <div class="sb-field">
+      <div class="sb-lbl">League</div>
+      <select class="sb-select"><option>WNBA</option><option>NBA</option><option>G League</option></select>
+    </div>
+    <div class="sb-field">
+      <div class="sb-lbl">Status</div>
+      <select class="sb-select"><option>— All —</option><option>Complete</option><option>In Progress</option><option>Pending</option></select>
+    </div>
+    <div class="sb-field">
+      <div class="sb-lbl">Date range from</div>
+      <input type="date" class="sb-input" value="2026-05-12">
+    </div>
+    <div class="sb-field">
+      <div class="sb-lbl">To</div>
+      <input type="date" class="sb-input" value="2026-06-12">
+    </div>
+    <div class="sb-sep"></div>
+    <label class="sb-check"><input type="checkbox" checked> My games</label>
+    <label class="sb-check"><input type="checkbox"> PTIW</label>
+    <div class="sb-sep"></div>
+    <button class="search-btn"><i class="ti ti-search" style="font-size:12px"></i> Search</button>
+    <button class="clear-btn">Clear</button>
+  </div>
+</div>
+
+<!-- TABLE -->
+<div class="table-wrap" id="all-section">
+  <div class="tbl-top">
     <div>
-      <div class="hub-title">Second Check Hub</div>
-      <div class="hub-sub">2025–26 WNBA Season &nbsp;·&nbsp; Week 4</div>
+      <div class="qb-row">
+        <div class="qb on">All</div>
+        <div class="qb">Complete</div>
+        <div class="qb">In progress</div>
+        <div class="qb">Pending</div>
+        <div class="qb-sep"></div>
+        <div class="qb">My assignments</div>
+      </div>
+      <div class="tbl-count">Showing 11 games</div>
     </div>
-    <div style="display:flex;gap:8px">
-      <button class="hbtn"><i class="ti ti-calendar"></i> Week 4</button>
-      <button class="hbtn"><i class="ti ti-table-export"></i> Export all</button>
+    <div class="tbl-actions">
+      <button class="tact"><i class="ti ti-printer" style="font-size:12px"></i> Print</button>
+      <button class="tact"><i class="ti ti-file-spreadsheet" style="font-size:12px"></i> Excel</button>
+      <button class="tact"><i class="ti ti-file-type-pdf" style="font-size:12px"></i> PDF</button>
     </div>
   </div>
 
-  <div class="hub-filters">
-    <div class="hfb on">All</div>
-    <div class="hfb">Complete</div>
-    <div class="hfb">In progress</div>
-    <div class="hfb">Pending</div>
-    <div class="hfsep"></div>
-    <div class="hfb">My assignments</div>
-  </div>
-
-  <div class="sec-hdr">In Progress</div>
-
-  <div class="game-card active-game" onclick="window.location='index.html'">
-    <div class="gc-teams">
-      <div class="gc-team">
-        <img src="toronto tempo logo.jpg" class="gc-logo" onerror="this.outerHTML='<div class=\'gc-logo-ph\'>TOR</div>'">
-        <div>
-          <div class="gc-tname">Toronto Tempo</div>
-          <div class="gc-score">111</div>
-        </div>
-      </div>
-      <div class="gc-vs">@</div>
-      <div class="gc-team">
-        <img src="chicago sky logo.png" class="gc-logo" onerror="this.outerHTML='<div class=\'gc-logo-ph\'>CHI</div>'">
-        <div>
-          <div class="gc-tname">Chicago Sky</div>
-          <div class="gc-score">104</div>
-        </div>
-      </div>
-    </div>
-    <div class="gc-meta">
-      <div class="gc-date">Wednesday, May 27, 2026</div>
-      <div class="gc-id">#1022600050 &nbsp;·&nbsp; 8:00 PM</div>
-    </div>
-    <div class="gc-stats">
-      <div class="gc-stat s-d"><div class="gc-sn">18</div><div class="gc-sl">total</div></div>
-      <div class="gc-stat s-r"><div class="gc-sn">5</div><div class="gc-sl">critical</div></div>
-      <div class="gc-stat s-b"><div class="gc-sn">8</div><div class="gc-sl">rating</div></div>
-      <div class="gc-stat s-g"><div class="gc-sn">5</div><div class="gc-sl">comment</div></div>
-    </div>
-    <div class="gc-right">
-      <span class="status-pill sp-progress">In progress</span>
-      <div class="gc-sc">SC: <b>Daniel Foley</b></div>
-    </div>
-    <i class="ti ti-chevron-right gc-arr"></i>
-  </div>
-
-  <div class="game-card" onclick="void(0)">
-    <div class="gc-teams">
-      <div class="gc-team">
-        <div class="gc-logo-ph">LV</div>
-        <div>
-          <div class="gc-tname">Las Vegas Aces</div>
-          <div class="gc-score">98</div>
-        </div>
-      </div>
-      <div class="gc-vs">@</div>
-      <div class="gc-team">
-        <div class="gc-logo-ph">NYL</div>
-        <div>
-          <div class="gc-tname">New York Liberty</div>
-          <div class="gc-score">107</div>
-        </div>
-      </div>
-    </div>
-    <div class="gc-meta">
-      <div class="gc-date">Wednesday, May 27, 2026</div>
-      <div class="gc-id">#1022600051 &nbsp;·&nbsp; 7:30 PM</div>
-    </div>
-    <div class="gc-stats">
-      <div class="gc-stat s-d"><div class="gc-sn">22</div><div class="gc-sl">total</div></div>
-      <div class="gc-stat s-r"><div class="gc-sn">7</div><div class="gc-sl">critical</div></div>
-      <div class="gc-stat s-b"><div class="gc-sn">11</div><div class="gc-sl">rating</div></div>
-      <div class="gc-stat s-g"><div class="gc-sn">4</div><div class="gc-sl">comment</div></div>
-    </div>
-    <div class="gc-right">
-      <span class="status-pill sp-progress">In progress</span>
-      <div class="gc-sc">SC: <b>Bridget Ng</b></div>
-    </div>
-    <i class="ti ti-chevron-right gc-arr"></i>
-  </div>
-
-  <div class="sec-hdr">Complete</div>
-
-  <div class="game-card" onclick="void(0)">
-    <div class="gc-teams">
-      <div class="gc-team">
-        <div class="gc-logo-ph">SEA</div>
-        <div>
-          <div class="gc-tname">Seattle Storm</div>
-          <div class="gc-score">89</div>
-        </div>
-      </div>
-      <div class="gc-vs">@</div>
-      <div class="gc-team">
-        <div class="gc-logo-ph">MIN</div>
-        <div>
-          <div class="gc-tname">Minnesota Lynx</div>
-          <div class="gc-score">95</div>
-        </div>
-      </div>
-    </div>
-    <div class="gc-meta">
-      <div class="gc-date">Tuesday, May 26, 2026</div>
-      <div class="gc-id">#1022600048 &nbsp;·&nbsp; 8:00 PM</div>
-    </div>
-    <div class="gc-stats">
-      <div class="gc-stat s-d"><div class="gc-sn">15</div><div class="gc-sl">total</div></div>
-      <div class="gc-stat s-r"><div class="gc-sn">3</div><div class="gc-sl">critical</div></div>
-      <div class="gc-stat s-b"><div class="gc-sn">6</div><div class="gc-sl">rating</div></div>
-      <div class="gc-stat s-g"><div class="gc-sn">6</div><div class="gc-sl">comment</div></div>
-    </div>
-    <div class="gc-right">
-      <span class="status-pill sp-done">Complete</span>
-      <div class="gc-sc">SC: <b>Sarah Chen</b></div>
-    </div>
-    <i class="ti ti-chevron-right gc-arr"></i>
-  </div>
-
-  <div class="game-card" onclick="void(0)">
-    <div class="gc-teams">
-      <div class="gc-team">
-        <div class="gc-logo-ph">PHX</div>
-        <div>
-          <div class="gc-tname">Phoenix Mercury</div>
-          <div class="gc-score">82</div>
-        </div>
-      </div>
-      <div class="gc-vs">@</div>
-      <div class="gc-team">
-        <div class="gc-logo-ph">ATL</div>
-        <div>
-          <div class="gc-tname">Atlanta Dream</div>
-          <div class="gc-score">79</div>
-        </div>
-      </div>
-    </div>
-    <div class="gc-meta">
-      <div class="gc-date">Tuesday, May 26, 2026</div>
-      <div class="gc-id">#1022600047 &nbsp;·&nbsp; 7:00 PM</div>
-    </div>
-    <div class="gc-stats">
-      <div class="gc-stat s-d"><div class="gc-sn">19</div><div class="gc-sl">total</div></div>
-      <div class="gc-stat s-r"><div class="gc-sn">4</div><div class="gc-sl">critical</div></div>
-      <div class="gc-stat s-b"><div class="gc-sn">9</div><div class="gc-sl">rating</div></div>
-      <div class="gc-stat s-g"><div class="gc-sn">6</div><div class="gc-sl">comment</div></div>
-    </div>
-    <div class="gc-right">
-      <span class="status-pill sp-done">Complete</span>
-      <div class="gc-sc">SC: <b>Daniel Foley</b></div>
-    </div>
-    <i class="ti ti-chevron-right gc-arr"></i>
-  </div>
-
-  <div class="game-card" onclick="void(0)">
-    <div class="gc-teams">
-      <div class="gc-team">
-        <div class="gc-logo-ph">WAS</div>
-        <div>
-          <div class="gc-tname">Washington Mystics</div>
-          <div class="gc-score">71</div>
-        </div>
-      </div>
-      <div class="gc-vs">@</div>
-      <div class="gc-team">
-        <div class="gc-logo-ph">CON</div>
-        <div>
-          <div class="gc-tname">Connecticut Sun</div>
-          <div class="gc-score">88</div>
-        </div>
-      </div>
-    </div>
-    <div class="gc-meta">
-      <div class="gc-date">Monday, May 25, 2026</div>
-      <div class="gc-id">#1022600045 &nbsp;·&nbsp; 6:00 PM</div>
-    </div>
-    <div class="gc-stats">
-      <div class="gc-stat s-d"><div class="gc-sn">12</div><div class="gc-sl">total</div></div>
-      <div class="gc-stat s-r"><div class="gc-sn">2</div><div class="gc-sl">critical</div></div>
-      <div class="gc-stat s-b"><div class="gc-sn">5</div><div class="gc-sl">rating</div></div>
-      <div class="gc-stat s-g"><div class="gc-sn">5</div><div class="gc-sl">comment</div></div>
-    </div>
-    <div class="gc-right">
-      <span class="status-pill sp-done">Complete</span>
-      <div class="gc-sc">SC: <b>Bridget Ng</b></div>
-    </div>
-    <i class="ti ti-chevron-right gc-arr"></i>
-  </div>
-
-  <div class="sec-hdr">Pending</div>
-
-  <div class="game-card" onclick="void(0)" style="opacity:0.6">
-    <div class="gc-teams">
-      <div class="gc-team">
-        <div class="gc-logo-ph">IND</div>
-        <div>
-          <div class="gc-tname">Indiana Fever</div>
-          <div class="gc-score">—</div>
-        </div>
-      </div>
-      <div class="gc-vs">@</div>
-      <div class="gc-team">
-        <div class="gc-logo-ph">DAL</div>
-        <div>
-          <div class="gc-tname">Dallas Wings</div>
-          <div class="gc-score">—</div>
-        </div>
-      </div>
-    </div>
-    <div class="gc-meta">
-      <div class="gc-date">Thursday, May 29, 2026</div>
-      <div class="gc-id">#1022600055 &nbsp;·&nbsp; 8:00 PM</div>
-    </div>
-    <div class="gc-stats">
-      <div class="gc-stat s-d"><div class="gc-sn">—</div><div class="gc-sl">total</div></div>
-      <div class="gc-stat s-r"><div class="gc-sn">—</div><div class="gc-sl">critical</div></div>
-      <div class="gc-stat s-b"><div class="gc-sn">—</div><div class="gc-sl">rating</div></div>
-      <div class="gc-stat s-g"><div class="gc-sn">—</div><div class="gc-sl">comment</div></div>
-    </div>
-    <div class="gc-right">
-      <span class="status-pill sp-pending">Pending</span>
-      <div class="gc-sc">SC: <b>Unassigned</b></div>
-    </div>
-    <i class="ti ti-chevron-right gc-arr"></i>
-  </div>
-
+  <table>
+    <thead>
+      <tr>
+        <th>Game</th>
+        <th>Status</th>
+        <th style="text-align:center">Plays</th>
+        <th>Last Modified By</th>
+        <th>First Modified By</th>
+        <th>Published Date</th>
+        <th style="text-align:center">Duration (min)</th>
+        <th>SC Reviewer</th>
+        <th style="text-align:center">Actions</th>
+      </tr>
+    </thead>
+    <tbody id="game-tbody"></tbody>
+  </table>
 </div>
+
+<script>
+const GAMES = [
+  {id:'1022600087',date:'06/09/2026',away:'DAL',home:'MIN',plays:14,crit:3,status:'progress',lastBy:'Bridget Ng',lastDate:'6/11/2026 8:03 AM',firstBy:'Bridget Ng',firstDate:'6/10/2026 8:04 AM',published:'',duration:'',sc:'Bridget Ng'},
+  {id:'1022600080',date:'06/06/2026',away:'IND',home:'NYL',plays:18,crit:5,status:'progress',lastBy:'Daniel Foley',lastDate:'6/10/2026 9:08 AM',firstBy:'Bridget Ng',firstDate:'6/8/2026 8:47 AM',published:'',duration:'',sc:'Daniel Foley'},
+  {id:'1022600074',date:'06/05/2026',away:'CON',home:'CHI',plays:8,crit:2,status:'done',lastBy:'Michael Abdenour',lastDate:'6/8/2026 11:02 AM',firstBy:'Bridget Ng',firstDate:'6/6/2026 6:51 AM',published:'6/8/2026 11:03 AM',duration:'52',sc:'Michael Abdenour'},
+  {id:'1022600069',date:'06/02/2026',away:'LVA',home:'LAS',plays:23,crit:7,status:'done',lastBy:'Curtis Oakley Jr.',lastDate:'6/9/2026 1:59 PM',firstBy:'Bridget Ng',firstDate:'6/3/2026 8:14 AM',published:'6/9/2026 1:59 PM',duration:'149',sc:'Curtis Oakley Jr.'},
+  {id:'1022600059',date:'05/29/2026',away:'ATL',home:'PDX',plays:4,crit:1,status:'done',lastBy:'Michael Gargin',lastDate:'6/2/2026 1:26 PM',firstBy:'Bridget Ng',firstDate:'6/1/2026 7:42 AM',published:'6/2/2026 1:32 PM',duration:'29',sc:'Michael Gargin'},
+  {id:'1022600056',date:'05/29/2026',away:'PHX',home:'NYL',plays:7,crit:3,status:'done',lastBy:'Curtis Oakley Jr.',lastDate:'6/4/2026 5:41 PM',firstBy:'Bridget Ng',firstDate:'5/30/2026 7:59 AM',published:'6/4/2026 5:51 PM',duration:'129',sc:'Curtis Oakley Jr.'},
+  {id:'1022600050',date:'05/27/2026',away:'TOR',home:'CHI',plays:18,crit:5,status:'progress',lastBy:'Daniel Foley',lastDate:'6/1/2026 10:43 AM',firstBy:'Bridget Ng',firstDate:'5/28/2026 8:09 AM',published:'',duration:'98',sc:'Daniel Foley',link:'index.html'},
+  {id:'1022600045',date:'05/24/2026',away:'DAL',home:'NYL',plays:10,crit:2,status:'done',lastBy:'Michael Gargin',lastDate:'5/29/2026 3:22 PM',firstBy:'Bridget Ng',firstDate:'5/26/2026 8:02 AM',published:'5/29/2026 3:23 PM',duration:'79',sc:'Michael Gargin'},
+  {id:'1022600039',date:'05/22/2026',away:'GSV',home:'IND',plays:17,crit:6,status:'done',lastBy:'Curtis Oakley Jr.',lastDate:'6/2/2026 11:54 AM',firstBy:'Bridget Ng',firstDate:'5/23/2026 6:49 AM',published:'6/2/2026 11:54 AM',duration:'245',sc:'Curtis Oakley Jr.'},
+  {id:'1022600037',date:'05/21/2026',away:'LAS',home:'PHX',plays:7,crit:2,status:'done',lastBy:'Daniel Foley',lastDate:'5/26/2026 10:35 PM',firstBy:'Bridget Ng',firstDate:'5/22/2026 7:33 AM',published:'5/26/2026 10:36 PM',duration:'111',sc:'Daniel Foley'},
+  {id:'1022600025',date:'05/17/2026',away:'CHI',home:'MIN',plays:4,crit:0,status:'done',lastBy:'Daniel Foley',lastDate:'5/19/2026 2:56 PM',firstBy:'Bridget Ng',firstDate:'5/18/2026 8:13 AM',published:'5/19/2026 4:58 PM',duration:'32',sc:'Daniel Foley'},
+];
+
+function renderTable(games) {
+  const tbody = document.getElementById('game-tbody');
+  tbody.innerHTML = '';
+  games.forEach(g => {
+    const statusHtml = g.status === 'done'
+      ? '<span class="status-pill sp-done"><span class="sp-dot"></span> Complete</span>'
+      : g.status === 'progress'
+      ? '<span class="status-pill sp-progress"><span class="sp-dot"></span> In progress</span>'
+      : '<span class="status-pill sp-pending"><span class="sp-dot"></span> Pending</span>';
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="td-game">
+        <div class="game-matchup">${g.away} <span style="color:#d1d5db;font-size:10px">@</span> ${g.home}</div>
+        <div class="game-date">${g.date}</div>
+        <div class="game-id">#${g.id}</div>
+      </td>
+      <td>${statusHtml}</td>
+      <td class="td-num">${g.plays}</td>
+      <td>
+        <div class="td-person">${g.lastBy}</div>
+        <div class="td-date">${g.lastDate}</div>
+      </td>
+      <td>
+        <div class="td-person">${g.firstBy}</div>
+        <div class="td-date">${g.firstDate}</div>
+      </td>
+      <td><div class="td-date" style="font-size:11px;color:#374151">${g.published || '—'}</div></td>
+      <td class="td-dur">${g.duration ? g.duration + ' <span>min</span>' : '—'}</td>
+      <td><div class="td-person">${g.sc}</div></td>
+      <td class="td-actions"><button class="open-btn" onclick="location='${g.link||'#'}'"><i class="ti ti-arrow-right" style="font-size:11px"></i> Open</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+// Filter tabs
+document.querySelectorAll('.qb').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.qb').forEach(b => b.classList.remove('on'));
+    this.classList.add('on');
+    const f = this.textContent.trim().toLowerCase();
+    let filtered = GAMES;
+    if (f === 'complete') filtered = GAMES.filter(g => g.status === 'done');
+    else if (f === 'in progress') filtered = GAMES.filter(g => g.status === 'progress');
+    else if (f === 'pending') filtered = GAMES.filter(g => g.status === 'pending');
+    else if (f === 'my assignments') filtered = GAMES.filter(g => g.sc === 'Bridget Ng');
+    document.querySelector('.tbl-count').textContent = 'Showing ' + filtered.length + ' games';
+    renderTable(filtered);
+  });
+});
+
+renderTable(GAMES);
+</script>
 </body>
 </html>
