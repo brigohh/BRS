@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BRS — Second Check Hub</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;color:#111827;background:#f3f4f6;min-height:100vh}
+/* NAV */
+.nav{background:#1a3a6b;height:48px;display:flex;align-items:center;padding:0 24px;gap:0;flex-shrink:0;overflow:hidden}
+.nav-logo{display:flex;align-items:center;gap:8px}
+.nav-brand{color:#fff;font-size:10.5px;font-weight:500;white-space:nowrap;opacity:.85}
+.nav-links{display:flex;align-items:center;margin-left:auto;gap:0;flex-shrink:0;flex-wrap:nowrap}
+.nl{color:rgba(255,255,255,.55);font-size:10.5px;padding:0 8px;cursor:pointer;font-weight:500;height:48px;display:flex;align-items:center;border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0}
+.nl:hover{color:#fff}
+.nl.on{color:#fff;border-bottom-color:rgba(255,255,255,.7);font-weight:600}
+.nav-av{width:30px;height:30px;border-radius:50%;background:#2d5aa0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;flex-shrink:0}
+/* PAGE WRAP */
+.page{max-width:1400px;margin:0 auto;padding:28px 32px}
+/* SECTION LABELS */
+.section-title{font-size:11px;font-weight:700;letter-spacing:.5px;color:#9ca3af;text-transform:uppercase;margin-bottom:14px}
+/* HERO STATS ROW */
+.hero-stats{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;margin-bottom:28px}
+.stat-card{background:#fff;border-radius:12px;padding:20px 22px;box-shadow:0 1px 4px rgba(0,0,0,.07);border:1px solid #e5e7eb}
+.stat-card.primary{background:#1a3a6b;border-color:#1a3a6b}
+.stat-label{font-size:10px;font-weight:700;letter-spacing:.4px;color:#9ca3af;text-transform:uppercase;margin-bottom:6px}
+.stat-card.primary .stat-label{color:rgba(255,255,255,.55)}
+.stat-val{font-size:32px;font-weight:800;color:#111827;line-height:1}
+.stat-card.primary .stat-val{color:#fff}
+.stat-sub{font-size:11px;color:#9ca3af;margin-top:5px;display:flex;align-items:center;gap:4px}
+.stat-card.primary .stat-sub{color:rgba(255,255,255,.5)}
+.trend-up{color:#16a34a;font-weight:700}
+.trend-down{color:#dc2626;font-weight:700}
+.trend-badge{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:700}
+.tb-up{background:#dcfce7;color:#166534}
+.tb-down{background:#fee2e2;color:#991b1b}
+/* MAIN GRID */
+.main-grid{display:grid;grid-template-columns:1fr 340px;gap:20px;margin-bottom:28px}
+/* CHART CARD */
+.chart-card{background:#fff;border-radius:12px;padding:22px 24px;box-shadow:0 1px 4px rgba(0,0,0,.07);border:1px solid #e5e7eb}
+.chart-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px}
+.chart-title{font-size:14px;font-weight:700;color:#111827}
+.chart-desc{font-size:11px;color:#9ca3af;margin-top:2px}
+.chart-legend{display:flex;gap:14px;align-items:center}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:#6b7280}
+.leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+/* SVG chart */
+.chart-svg{width:100%;overflow:visible}
+/* SIDEBAR CARDS */
+.side-stack{display:flex;flex-direction:column;gap:16px}
+.side-card{background:#fff;border-radius:12px;padding:18px 20px;box-shadow:0 1px 4px rgba(0,0,0,.07);border:1px solid #e5e7eb}
+/* PLAY TYPES */
+.play-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.play-row:last-child{margin-bottom:0}
+.play-name{font-size:12px;color:#374151;font-weight:500;width:130px;flex-shrink:0}
+.play-bar-wrap{flex:1;height:7px;background:#f3f4f6;border-radius:4px;overflow:hidden}
+.play-bar{height:100%;border-radius:4px;background:#1a3a6b}
+.play-pct{font-size:11px;font-weight:700;color:#374151;width:34px;text-align:right;flex-shrink:0}
+/* RECENT GAMES */
+.game-list{display:flex;flex-direction:column;gap:8px}
+.gl-row{display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:8px;background:#f8fafc;border:1px solid #e5e7eb;cursor:pointer;transition:background .12s}
+.gl-row:hover{background:#f0f4ff}
+.gl-logos{display:flex;align-items:center;gap:4px;flex-shrink:0}
+.gl-logo{width:16px;height:16px;object-fit:contain}
+.gl-teams{font-size:12px;font-weight:600;color:#111827;flex:1}
+.gl-date{font-size:10px;color:#9ca3af;flex-shrink:0}
+.gl-agree{font-size:12px;font-weight:700;flex-shrink:0;width:38px;text-align:right}
+.agree-hi{color:#16a34a}
+.agree-mid{color:#d97706}
+.agree-lo{color:#dc2626}
+/* MILESTONE CARDS */
+.milestone-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px}
+.milestone-card{background:#fff;border-radius:12px;padding:18px 20px;box-shadow:0 1px 4px rgba(0,0,0,.07);border:1px solid #e5e7eb;display:flex;align-items:flex-start;gap:14px}
+.milestone-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.mi-gold{background:#fef9c3}
+.mi-blue{background:#dbeafe}
+.milestone-body{}
+.milestone-label{font-size:10px;font-weight:700;letter-spacing:.4px;color:#9ca3af;text-transform:uppercase;margin-bottom:4px}
+.milestone-val{font-size:20px;font-weight:800;color:#111827;line-height:1.1}
+.milestone-sub{font-size:11px;color:#9ca3af;margin-top:3px}
+/* BOTTOM TABLE */
+.bottom-card{background:#fff;border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,.07);border:1px solid #e5e7eb;overflow:hidden}
+.bottom-card table{width:100%;border-collapse:collapse}
+.bottom-card thead{background:#f8fafc}
+.bottom-card th{padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.3px;color:#9ca3af;text-transform:uppercase;border-bottom:1px solid #e5e7eb;white-space:nowrap}
+.bottom-card td{padding:9px 14px;border-bottom:1px solid #f3f4f6;font-size:12px;color:#374151;vertical-align:middle}
+.bottom-card tr:last-child td{border-bottom:none}
+.bottom-card tr:hover td{background:#fafbff;cursor:pointer}
+.agree-pill{display:inline-flex;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;border:1px solid}
+.ap-hi{background:#dcfce7;color:#166534;border-color:#86efac}
+.ap-mid{background:#fef9c3;color:#854d0e;border-color:#fde68a}
+.ap-lo{background:#fee2e2;color:#991b1b;border-color:#fca5a5}
+.tl{display:flex;align-items:center;gap:6px}
+.tl img{width:16px;height:16px;object-fit:contain}
+.published-badge{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;background:#e0e7ff;color:#3730a3;border:1px solid #a5b4fc}
+.complete-badge{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;background:#dcfce7;color:#166534;border:1px solid #86efac}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-logo">
+    <img src="nba-logo.svg" style="width:16px;height:auto">
+    <div class="nav-brand">Bridget Review System 1.0</div>
+  </div>
+  <div class="nav-links">
+    <span class="nl" onclick="location='hub.html'">HOME</span>
+    <span class="nl on">SECOND CHECK</span>
+    <span class="nl">RM REVIEW</span>
+    <span class="nl">FINAL L2M REVIEW</span>
+    <span class="nl">INDEPENDENT REVIEW</span>
+    <span class="nl">ADMINISTRATION</span>
+    <span class="nl">REVIEWER RESOURCE</span>
+    <span class="nl">MY SCHEDULE</span>
+    <div class="nav-av" style="margin-left:12px">BN</div>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- HEADLINE STATS -->
+  <div class="section-title">Season overview · 2025–26 WNBA</div>
+  <div class="hero-stats">
+    <div class="stat-card primary">
+      <div class="stat-label">SC Agreement Rate</div>
+      <div class="stat-val">82<span style="font-size:18px;font-weight:600">%</span></div>
+      <div class="stat-sub">
+        <span class="trend-badge tb-up"><i class="ti ti-trending-up" style="font-size:9px"></i> +4.1%</span>
+        vs last 5 games
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Games Reviewed</div>
+      <div class="stat-val">10</div>
+      <div class="stat-sub">9 published · 1 in progress</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Total Plays Checked</div>
+      <div class="stat-val">97</div>
+      <div class="stat-sub">avg 9.7 per game</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Avg Changes / Game</div>
+      <div class="stat-val">1.8</div>
+      <div class="stat-sub">
+        <span class="trend-badge tb-up"><i class="ti ti-trending-down" style="font-size:9px"></i> –0.3</span>
+        fewer edits trending
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN: TREND CHART + SIDEBAR -->
+  <div class="main-grid">
+    <!-- TREND CHART -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">SC Agreement Rate — Game by Game</div>
+          <div class="chart-desc">Percentage of first-pass calls upheld after second check</div>
+        </div>
+        <div class="chart-legend">
+          <div class="leg-item"><div class="leg-dot" style="background:#1a3a6b"></div>Agreement %</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#d1d5db;border-radius:0;width:18px;height:2px"></div>Average (82%)</div>
+        </div>
+      </div>
+      <svg id="trend-chart" class="chart-svg" height="200" viewBox="0 0 800 200" preserveAspectRatio="none"></svg>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="side-stack">
+      <!-- MOST CHANGED PLAY TYPES -->
+      <div class="side-card">
+        <div class="section-title" style="margin-bottom:14px">Most Changed Play Types</div>
+        <div class="play-row">
+          <div class="play-name">Foul: Shooting</div>
+          <div class="play-bar-wrap"><div class="play-bar" style="width:78%"></div></div>
+          <div class="play-pct">78%</div>
+        </div>
+        <div class="play-row">
+          <div class="play-name">Out of Bounds</div>
+          <div class="play-bar-wrap"><div class="play-bar" style="width:61%"></div></div>
+          <div class="play-pct">61%</div>
+        </div>
+        <div class="play-row">
+          <div class="play-name">Foul: Loose Ball</div>
+          <div class="play-bar-wrap"><div class="play-bar" style="width:52%"></div></div>
+          <div class="play-pct">52%</div>
+        </div>
+        <div class="play-row">
+          <div class="play-name">Goaltending</div>
+          <div class="play-bar-wrap"><div class="play-bar" style="width:39%"></div></div>
+          <div class="play-pct">39%</div>
+        </div>
+        <div class="play-row">
+          <div class="play-name">Travel</div>
+          <div class="play-bar-wrap"><div class="play-bar" style="width:27%"></div></div>
+          <div class="play-pct">27%</div>
+        </div>
+        <div class="play-row">
+          <div class="play-name">Foul: Personal</div>
+          <div class="play-bar-wrap"><div class="play-bar" style="width:18%"></div></div>
+          <div class="play-pct">18%</div>
+        </div>
+      </div>
+
+      <!-- RECENT GAME SNAPSHOTS -->
+      <div class="side-card">
+        <div class="section-title" style="margin-bottom:12px">Recent Games</div>
+        <div class="game-list" id="recent-games-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MILESTONES ROW -->
+  <div class="section-title">Personal bests</div>
+  <div class="milestone-grid">
+    <div class="milestone-card">
+      <div class="milestone-icon mi-gold">🏆</div>
+      <div class="milestone-body">
+        <div class="milestone-label">Best 5-Game Stretch</div>
+        <div class="milestone-val">91%</div>
+        <div class="milestone-sub">Games 4–8 · GSV@IND through TOR@CHI</div>
+      </div>
+    </div>
+    <div class="milestone-card">
+      <div class="milestone-icon mi-blue">📉</div>
+      <div class="milestone-body">
+        <div class="milestone-label">Lowest Discrepancy Rate</div>
+        <div class="milestone-val">4%</div>
+        <div class="milestone-sub">CHI@MIN · 05/17/2026 · 1 change in 25 plays</div>
+      </div>
+    </div>
+    <div class="milestone-card">
+      <div class="milestone-icon mi-gold">🔥</div>
+      <div class="milestone-body">
+        <div class="milestone-label">Longest Agreement Streak</div>
+        <div class="milestone-val">17 plays</div>
+        <div class="milestone-sub">No changes across 3 consecutive games</div>
+      </div>
+    </div>
+    <div class="milestone-card">
+      <div class="milestone-icon mi-blue">📈</div>
+      <div class="milestone-body">
+        <div class="milestone-label">Season Improvement</div>
+        <div class="milestone-val">+9 pts</div>
+        <div class="milestone-sub">From 73% (Game 1) → 82% current average</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAME BY GAME TABLE -->
+  <div class="section-title">All second checked games</div>
+  <div class="bottom-card">
+    <table>
+      <thead>
+        <tr>
+          <th>Game</th>
+          <th>Date</th>
+          <th>SC Reviewer</th>
+          <th style="text-align:center">Plays</th>
+          <th style="text-align:center">Changes</th>
+          <th style="text-align:center">Agreement</th>
+          <th>Status</th>
+          <th style="text-align:center">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="sc-tbody"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<script>
+const LOGOS = {
+  ATL:'Atlanta_Dream_logo.svg.png', CON:'Connecticut_Sun_logo.svg.png',
+  DAL:'Dallas_Wings_logo.svg.png', GSV:'Golden_State_Valkyries_logo.svg.png',
+  IND:'Indiana_Fever_logo.svg.png', LAS:'Los_Angeles_Sparks_logo.svg.png',
+  LVA:'New_Las_Vegas_Aces_WNBA_logo_2024.svg.png', MIN:'Minnesota_Lynx_logo.svg.png',
+  NYL:'New_York_Liberty_logo.svg.png', PHX:'Phoenix_Mercury_logo_2025.svg.png',
+  PDX:'Portland_Fire_logo.svg.png', SEA:'Seattle_Storm_(2021)_logo.svg.png',
+  CHI:'chicago sky logo.png', TOR:'toronto tempo logo.jpg',
+};
+
+function logo(abbr, size=16) {
+  const src = LOGOS[abbr];
+  if (!src) return `<span style="display:inline-flex;width:${size}px;height:${size}px;border-radius:50%;background:#f3f4f6;border:1px solid #e5e7eb;align-items:center;justify-content:center;font-size:6px;font-weight:700;color:#6b7280">${abbr}</span>`;
+  return `<img src="${src}" style="width:${size}px;height:${size}px;object-fit:contain;vertical-align:middle" onerror="this.style.display='none'">`;
+}
+
+const SC_GAMES = [
+  {away:'IND',home:'NYL',date:'06/06/2026',sc:'Daniel Foley',plays:18,changes:3,agree:83,published:false,link:''},
+  {away:'CON',home:'CHI',date:'06/05/2026',sc:'Michael Abdenour',plays:8,changes:1,agree:88,published:true,link:''},
+  {away:'LVA',home:'LAS',date:'06/02/2026',sc:'Curtis Oakley Jr.',plays:23,changes:4,agree:83,published:true,link:''},
+  {away:'ATL',home:'PDX',date:'05/29/2026',sc:'Tucker Grady',plays:4,changes:0,agree:100,published:true,link:''},
+  {away:'PHX',home:'NYL',date:'05/29/2026',sc:'Curtis Oakley Jr.',plays:7,changes:2,agree:71,published:true,link:''},
+  {away:'TOR',home:'CHI',date:'05/27/2026',sc:'Daniel Foley',plays:18,changes:3,agree:83,published:true,link:'index.html'},
+  {away:'DAL',home:'NYL',date:'05/24/2026',sc:'Tucker Grady',plays:10,changes:1,agree:90,published:true,link:''},
+  {away:'GSV',home:'IND',date:'05/22/2026',sc:'Curtis Oakley Jr.',plays:17,changes:3,agree:82,published:true,link:''},
+  {away:'LAS',home:'PHX',date:'05/21/2026',sc:'Tucker Grady',plays:7,changes:2,agree:71,published:true,link:''},
+  {away:'CHI',home:'MIN',date:'05/17/2026',sc:'Daniel Foley',plays:4,changes:0,agree:100,published:true,link:''},
+];
+
+// TREND CHART
+function drawChart() {
+  const data = [...SC_GAMES].reverse().map(g => g.agree);
+  const svg = document.getElementById('trend-chart');
+  const W = 800, H = 200, padL = 36, padR = 16, padT = 16, padB = 28;
+  const cW = W - padL - padR, cH = H - padT - padB;
+  const n = data.length;
+  const minV = 60, maxV = 105;
+  const xStep = cW / (n - 1);
+  const yScale = v => padT + cH - ((v - minV) / (maxV - minV)) * cH;
+  const xScale = i => padL + i * xStep;
+
+  let html = '';
+
+  // Grid lines
+  [70,80,90,100].forEach(v => {
+    const y = yScale(v);
+    html += `<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" stroke="#f3f4f6" stroke-width="1"/>`;
+    html += `<text x="${padL-4}" y="${y+4}" text-anchor="end" font-size="9" fill="#d1d5db">${v}%</text>`;
+  });
+
+  // Average line (82%)
+  const avgY = yScale(82);
+  html += `<line x1="${padL}" y1="${avgY}" x2="${W-padR}" y2="${avgY}" stroke="#d1d5db" stroke-width="1" stroke-dasharray="4 3"/>`;
+
+  // Fill area
+  const pts = data.map((v,i) => `${xScale(i)},${yScale(v)}`).join(' ');
+  const firstX = xScale(0), lastX = xScale(n-1), bottom = padT + cH;
+  html += `<polygon points="${firstX},${bottom} ${pts} ${lastX},${bottom}" fill="#1a3a6b" opacity="0.08"/>`;
+
+  // Line
+  html += `<polyline points="${pts}" fill="none" stroke="#1a3a6b" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+
+  // Dots + labels
+  data.forEach((v, i) => {
+    const x = xScale(i), y = yScale(v);
+    const game = SC_GAMES[SC_GAMES.length - 1 - i];
+    html += `<circle cx="${x}" cy="${y}" r="4" fill="#1a3a6b"/>`;
+    html += `<text x="${x}" y="${bottom+14}" text-anchor="middle" font-size="8.5" fill="#9ca3af">${game.away}@${game.home}</text>`;
+  });
+
+  svg.innerHTML = html;
+}
+
+// RECENT GAMES
+function renderRecent() {
+  const list = document.getElementById('recent-games-list');
+  SC_GAMES.slice(0, 5).forEach(g => {
+    const agreeClass = g.agree >= 85 ? 'agree-hi' : g.agree >= 75 ? 'agree-mid' : 'agree-lo';
+    list.innerHTML += `
+      <div class="gl-row" onclick="location='${g.link||'#'}'">
+        <div class="gl-logos">${logo(g.away)} <span style="color:#d1d5db;font-size:9px;margin:0 1px">@</span> ${logo(g.home)}</div>
+        <div class="gl-teams">${g.away} @ ${g.home}</div>
+        <div class="gl-date">${g.date}</div>
+        <div class="gl-agree ${agreeClass}">${g.agree}%</div>
+      </div>`;
+  });
+}
+
+// BOTTOM TABLE
+function renderTable() {
+  const tbody = document.getElementById('sc-tbody');
+  SC_GAMES.forEach(g => {
+    const agreeClass = g.agree >= 85 ? 'ap-hi' : g.agree >= 75 ? 'ap-mid' : 'ap-lo';
+    const status = g.published
+      ? '<span class="published-badge"><i class="ti ti-circle-check" style="font-size:9px"></i> Published</span>'
+      : '<span class="complete-badge">Complete</span>';
+    tbody.innerHTML += `<tr onclick="location='${g.link||'#'}'">
+      <td><div class="tl">${logo(g.away)} ${g.away} <span style="color:#d1d5db;font-size:10px">@</span> ${logo(g.home)} ${g.home}</div></td>
+      <td style="color:#9ca3af">${g.date}</td>
+      <td style="font-weight:500">${g.sc}</td>
+      <td style="text-align:center;font-weight:600">${g.plays}</td>
+      <td style="text-align:center;color:${g.changes===0?'#16a34a':'#374151'};font-weight:600">${g.changes}</td>
+      <td style="text-align:center"><span class="agree-pill ${agreeClass}">${g.agree}%</span></td>
+      <td>${status}</td>
+      <td style="text-align:center"><button class="open-btn" onclick="event.stopPropagation();location='${g.link||'#'}'" style="padding:4px 12px;border:1px solid #bfdbfe;border-radius:7px;font-size:11px;font-weight:600;background:#eff6ff;color:#1a3a6b;cursor:pointer">Open</button></td>
+    </tr>`;
+  });
+}
+
+drawChart();
+renderRecent();
+renderTable();
+</script>
+</body>
+</html>
