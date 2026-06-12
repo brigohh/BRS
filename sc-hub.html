@@ -56,11 +56,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .side-card{background:#fff;border-radius:12px;padding:18px 20px;box-shadow:0 2px 8px rgba(0,0,0,.08);border:1px solid #e5e7eb;flex:1;display:flex;flex-direction:column}
 /* PLAY TYPES */
 .play-rows-wrap{display:flex;flex-direction:column;flex:1;justify-content:space-between}
-.play-row{display:flex;align-items:center;gap:10px}
-.play-name{font-size:12px;color:#374151;font-weight:500;width:130px;flex-shrink:0}
-.play-bar-wrap{flex:1;height:8px;background:#f3f4f6;border-radius:4px;overflow:hidden}
+.play-type-group{display:flex;flex-direction:column;gap:3px}
+.play-type-name{font-size:11px;font-weight:600;color:#374151;margin-bottom:2px}
+.play-row{display:flex;align-items:center;gap:8px}
+.play-bar-wrap{flex:1;height:7px;background:#f3f4f6;border-radius:4px;overflow:hidden}
 .play-bar{height:100%;border-radius:4px}
-.play-pct{font-size:11px;font-weight:700;color:#374151;width:34px;text-align:right;flex-shrink:0}
+.play-pct{font-size:10px;font-weight:700;color:#6b7280;width:30px;text-align:right;flex-shrink:0}
 /* RECENT GAMES */
 .game-list{display:flex;flex-direction:column;gap:8px}
 .gl-row{display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:8px;background:#f8fafc;border:1px solid #e5e7eb;cursor:pointer;transition:background .12s}
@@ -111,6 +112,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   <div class="nav-links">
     <span class="nl" onclick="location='hub.html'">HOME</span>
     <span class="nl on">SECOND CHECK</span>
+    <span class="nl" onclick="location='rim.html'">RIM</span>
     <span class="nl">RM REVIEW</span>
     <span class="nl">FINAL L2M REVIEW</span>
     <span class="nl">INDEPENDENT REVIEW</span>
@@ -164,8 +166,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
           <div class="chart-desc">Percentage of first-pass calls upheld after second check</div>
         </div>
         <div class="chart-legend">
-          <div class="leg-item"><div class="leg-dot" style="background:#1a3a6b"></div>Accuracy %</div>
-          <div class="leg-item"><div class="leg-dot" style="background:#d1d5db;border-radius:0;width:18px;height:2px"></div>Average (82%)</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#1a3a6b"></div>Called</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#f472b6"></div>Non-Call</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#d1d5db;border-radius:0;width:18px;height:2px"></div>Avg (82%)</div>
         </div>
       </div>
       <svg id="trend-chart" class="chart-svg" height="180" viewBox="0 0 800 180" preserveAspectRatio="none"></svg>
@@ -175,37 +178,43 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
     <div class="side-stack">
       <!-- MOST CHANGED PLAY TYPES -->
       <div class="side-card">
-        <div class="section-title" style="margin-bottom:14px">Most Changed Play Types</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <div class="section-title" style="margin-bottom:0">Most Changed Play Types</div>
+          <div style="display:flex;gap:10px;align-items:center;font-size:10px;color:#6b7280">
+            <span style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#1a3a6b;flex-shrink:0"></span>Called</span>
+            <span style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#f9a8d4;flex-shrink:0"></span>Non-Call</span>
+          </div>
+        </div>
         <div class="play-rows-wrap">
-          <div class="play-row">
-            <div class="play-name">Foul: Shooting</div>
-            <div class="play-bar-wrap"><div class="play-bar" style="width:78%;background:#f9a8d4"></div></div>
-            <div class="play-pct">78%</div>
+          <div class="play-type-group">
+            <div class="play-type-name">Foul: Shooting</div>
+            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:85%;background:#1a3a6b"></div></div><div class="play-pct">85%</div></div>
+            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:58%;background:#f9a8d4"></div></div><div class="play-pct">58%</div></div>
           </div>
-          <div class="play-row">
-            <div class="play-name">Out of Bounds</div>
-            <div class="play-bar-wrap"><div class="play-bar" style="width:61%;background:#f9a8d4"></div></div>
-            <div class="play-pct">61%</div>
+          <div class="play-type-group">
+            <div class="play-type-name">Out of Bounds</div>
+            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:72%;background:#1a3a6b"></div></div><div class="play-pct">72%</div></div>
+            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:48%;background:#f9a8d4"></div></div><div class="play-pct">48%</div></div>
           </div>
-          <div class="play-row">
-            <div class="play-name">Foul: Loose Ball</div>
-            <div class="play-bar-wrap"><div class="play-bar" style="width:52%;background:#f9a8d4"></div></div>
-            <div class="play-pct">52%</div>
+          <div class="play-type-group">
+            <div class="play-type-name">Foul: Loose Ball</div>
+            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:65%;background:#1a3a6b"></div></div><div class="play-pct">65%</div></div>
+            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:42%;background:#f9a8d4"></div></div><div class="play-pct">42%</div></div>
           </div>
-          <div class="play-row">
-            <div class="play-name">Goaltending</div>
-            <div class="play-bar-wrap"><div class="play-bar" style="width:39%;background:#f9a8d4"></div></div>
-            <div class="play-pct">39%</div>
+          <div class="play-type-group">
+            <div class="play-type-name">Goaltending</div>
+            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:55%;background:#1a3a6b"></div></div><div class="play-pct">55%</div></div>
+            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:28%;background:#f9a8d4"></div></div><div class="play-pct">28%</div></div>
           </div>
-          <div class="play-row">
-            <div class="play-name">Travel</div>
-            <div class="play-bar-wrap"><div class="play-bar" style="width:27%;background:#f9a8d4"></div></div>
-            <div class="play-pct">27%</div>
+          <div class="play-type-group">
+            <div class="play-type-name">Travel</div>
+            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:38%;background:#1a3a6b"></div></div><div class="play-pct">38%</div></div>
+            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:19%;background:#f9a8d4"></div></div><div class="play-pct">19%</div></div>
           </div>
-          <div class="play-row">
-            <div class="play-name">Foul: Personal</div>
-            <div class="play-bar-wrap"><div class="play-bar" style="width:18%;background:#f9a8d4"></div></div>
-            <div class="play-pct">18%</div>
+          <div class="play-type-group">
+            <div class="play-type-name">Foul: Personal</div>
+            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:28%;background:#1a3a6b"></div></div><div class="play-pct">28%</div></div>
+            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:11%;background:#f9a8d4"></div></div><div class="play-pct">11%</div></div>
           </div>
         </div>
       </div>
@@ -223,7 +232,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
           <th>Date</th>
           <th>Second Checked By</th>
           <th style="text-align:center">Important Calls</th>
-          <th style="text-align:center">Changes</th>
+          <th style="text-align:center">Edits</th>
           <th style="text-align:center">First Pass Accuracy</th>
           <th>Status</th>
           <th style="text-align:center">Actions</th>
@@ -253,34 +262,35 @@ function logo(abbr, size=16) {
 }
 
 const SC_GAMES = [
-  {away:'IND',home:'NYL',date:'06/06/2026',sc:'Daniel Foley',plays:31,changes:11,agree:83,published:false,link:''},
-  {away:'CON',home:'CHI',date:'06/05/2026',sc:'Michael Gargin',plays:27,changes:8,agree:88,published:true,link:''},
-  {away:'LVA',home:'LAS',date:'06/02/2026',sc:'Curtis Oakley Jr.',plays:34,changes:12,agree:83,published:true,link:''},
-  {away:'ATL',home:'PDX',date:'05/29/2026',sc:'Tucker Grady',plays:25,changes:7,agree:80,published:true,link:''},
-  {away:'PHX',home:'NYL',date:'05/29/2026',sc:'Michael Gargin',plays:29,changes:11,agree:71,published:true,link:''},
-  {away:'TOR',home:'CHI',date:'05/27/2026',sc:'Daniel Foley',plays:33,changes:10,agree:83,published:true,link:'index.html'},
-  {away:'DAL',home:'NYL',date:'05/24/2026',sc:'Tucker Grady',plays:28,changes:9,agree:90,published:true,link:''},
-  {away:'GSV',home:'IND',date:'05/22/2026',sc:'Michael Gargin',plays:32,changes:10,agree:82,published:true,link:''},
-  {away:'LAS',home:'PHX',date:'05/21/2026',sc:'Tucker Grady',plays:26,changes:11,agree:71,published:true,link:''},
-  {away:'CHI',home:'MIN',date:'05/17/2026',sc:'Daniel Foley',plays:25,changes:7,agree:80,published:true,link:''},
+  {away:'IND',home:'NYL',date:'06/06/2026',sc:'Daniel Foley',plays:31,changes:11,agree:83,called:87,nc:76,published:false,link:''},
+  {away:'CON',home:'CHI',date:'06/05/2026',sc:'Michael Gargin',plays:27,changes:8,agree:88,called:92,nc:81,published:true,link:''},
+  {away:'LVA',home:'LAS',date:'06/02/2026',sc:'Curtis Oakley Jr.',plays:34,changes:12,agree:83,called:88,nc:75,published:true,link:''},
+  {away:'ATL',home:'PDX',date:'05/29/2026',sc:'Tucker Grady',plays:25,changes:7,agree:80,called:85,nc:72,published:true,link:''},
+  {away:'PHX',home:'NYL',date:'05/29/2026',sc:'Michael Gargin',plays:29,changes:11,agree:71,called:76,nc:63,published:true,link:''},
+  {away:'TOR',home:'CHI',date:'05/27/2026',sc:'Daniel Foley',plays:33,changes:10,agree:83,called:87,nc:77,published:true,link:'index.html'},
+  {away:'DAL',home:'NYL',date:'05/24/2026',sc:'Tucker Grady',plays:28,changes:9,agree:90,called:93,nc:85,published:true,link:''},
+  {away:'GSV',home:'IND',date:'05/22/2026',sc:'Michael Gargin',plays:32,changes:10,agree:82,called:87,nc:74,published:true,link:''},
+  {away:'LAS',home:'PHX',date:'05/21/2026',sc:'Tucker Grady',plays:26,changes:11,agree:71,called:75,nc:64,published:true,link:''},
+  {away:'CHI',home:'MIN',date:'05/17/2026',sc:'Daniel Foley',plays:25,changes:7,agree:80,called:84,nc:73,published:true,link:''},
 ];
 
 // TREND CHART
 function drawChart() {
-  const data = [...SC_GAMES].reverse().map(g => g.agree);
+  const games = [...SC_GAMES].reverse();
   const svg = document.getElementById('trend-chart');
   const W = 800, H = 180, padL = 36, padR = 16, padT = 12, padB = 26;
   const cW = W - padL - padR, cH = H - padT - padB;
-  const n = data.length;
-  const minV = 60, maxV = 105;
+  const n = games.length;
+  const minV = 55, maxV = 105;
   const xStep = cW / (n - 1);
   const yScale = v => padT + cH - ((v - minV) / (maxV - minV)) * cH;
   const xScale = i => padL + i * xStep;
+  const bottom = padT + cH;
 
   let html = '';
 
   // Grid lines
-  [70,80,90,100].forEach(v => {
+  [60,70,80,90,100].forEach(v => {
     const y = yScale(v);
     html += `<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" stroke="#f3f4f6" stroke-width="1"/>`;
     html += `<text x="${padL-4}" y="${y+4}" text-anchor="end" font-size="9" fill="#d1d5db">${v}%</text>`;
@@ -290,20 +300,22 @@ function drawChart() {
   const avgY = yScale(82);
   html += `<line x1="${padL}" y1="${avgY}" x2="${W-padR}" y2="${avgY}" stroke="#d1d5db" stroke-width="1" stroke-dasharray="4 3"/>`;
 
-  // Fill area
-  const pts = data.map((v,i) => `${xScale(i)},${yScale(v)}`).join(' ');
-  const firstX = xScale(0), lastX = xScale(n-1), bottom = padT + cH;
-  html += `<polygon points="${firstX},${bottom} ${pts} ${lastX},${bottom}" fill="#1a3a6b" opacity="0.08"/>`;
+  // Called fill + line
+  const calledPts = games.map((g,i) => `${xScale(i)},${yScale(g.called)}`).join(' ');
+  html += `<polygon points="${xScale(0)},${bottom} ${calledPts} ${xScale(n-1)},${bottom}" fill="#1a3a6b" opacity="0.07"/>`;
+  html += `<polyline points="${calledPts}" fill="none" stroke="#1a3a6b" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`;
 
-  // Line
-  html += `<polyline points="${pts}" fill="none" stroke="#1a3a6b" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+  // Non-call fill + line
+  const ncPts = games.map((g,i) => `${xScale(i)},${yScale(g.nc)}`).join(' ');
+  html += `<polygon points="${xScale(0)},${bottom} ${ncPts} ${xScale(n-1)},${bottom}" fill="#f472b6" opacity="0.07"/>`;
+  html += `<polyline points="${ncPts}" fill="none" stroke="#f472b6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="5 3"/>`;
 
-  // Dots + labels
-  data.forEach((v, i) => {
-    const x = xScale(i), y = yScale(v);
-    const game = SC_GAMES[SC_GAMES.length - 1 - i];
-    html += `<circle cx="${x}" cy="${y}" r="4" fill="#1a3a6b"/>`;
-    html += `<text x="${x}" y="${bottom+14}" text-anchor="middle" font-size="8.5" fill="#9ca3af">${game.away}@${game.home}</text>`;
+  // Dots + game labels
+  games.forEach((g, i) => {
+    const x = xScale(i);
+    html += `<circle cx="${x}" cy="${yScale(g.called)}" r="3.5" fill="#1a3a6b"/>`;
+    html += `<circle cx="${x}" cy="${yScale(g.nc)}" r="3" fill="#f472b6"/>`;
+    html += `<text x="${x}" y="${bottom+14}" text-anchor="middle" font-size="8.5" fill="#9ca3af">${g.away}@${g.home}</text>`;
   });
 
   svg.innerHTML = html;

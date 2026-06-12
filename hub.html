@@ -123,6 +123,7 @@ tr:hover td{background:#fafbff}
   <div class="nav-links">
     <span class="nl on">HOME</span>
     <span class="nl" onclick="location='sc-hub.html'">SECOND CHECK</span>
+    <span class="nl" onclick="location='rim.html'">RIM</span>
     <span class="nl">RM REVIEW</span>
     <span class="nl">FINAL L2M REVIEW</span>
     <span class="nl">INDEPENDENT REVIEW</span>
@@ -253,7 +254,8 @@ tr:hover td{background:#fafbff}
   <div class="tbl-top">
     <div>
       <div class="qb-row">
-        <div class="qb on">In Progress</div>
+        <div class="qb on">All</div>
+        <div class="qb">In Progress</div>
         <div class="qb">Complete</div>
         <div class="qb">Published</div>
       </div>
@@ -376,6 +378,7 @@ document.querySelectorAll('.qb').forEach(btn => {
     else if (f==='complete') filtered = GAMES.filter(g=>g.status==='done'&&!g.published);
     else if (f==='published') filtered = GAMES.filter(g=>!!g.published);
     renderTable(filtered);
+    document.querySelector('.tbl-count').textContent = 'Showing ' + filtered.length + ' game' + (filtered.length!==1?'s':'');
   });
 });
 
@@ -386,7 +389,7 @@ document.querySelectorAll('.lg-btn').forEach(btn => {
   });
 });
 
-renderTable(GAMES.filter(g=>g.status==='progress'));
+renderTable(GAMES);
 </script>
 </body>
 </html>
