@@ -93,7 +93,7 @@ thead{background:#f8fafc}
 th{padding:9px 14px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.3px;color:#6b7280;text-transform:uppercase;border-bottom:1px solid #e5e7eb;white-space:nowrap}
 td{padding:8px 14px;border-bottom:1px solid #f3f4f6;vertical-align:middle}
 tr:last-child td{border-bottom:none}
-tr:hover td{background:#fafbff}
+tr:hover td{background:#eff6ff;cursor:pointer}
 /* Game cell */
 .game-matchup{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:#111827}
 .game-matchup .t-logo{width:18px;height:18px;object-fit:contain;flex-shrink:0;vertical-align:middle}
@@ -273,7 +273,6 @@ tr:hover td{background:#fafbff}
         <th>First Modified By</th>
         <th>Published Date</th>
         <th>Second Checked By</th>
-        <th style="text-align:center">Actions</th>
       </tr>
     </thead>
     <tbody id="game-tbody"></tbody>
@@ -350,6 +349,7 @@ function renderTable(games) {
       ? '<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;background:#fef9c3;color:#854d0e;border:1px solid #fde68a"><span style="width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.7;flex-shrink:0"></span>In progress</span>'
       : '<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;background:#f3f4f6;color:#9ca3af;border:1px solid #e5e7eb">Pending</span>';
     const tr = document.createElement('tr');
+    if (g.link) { tr.style.cursor = 'pointer'; tr.onclick = () => location = g.link; }
     tr.innerHTML = `
       <td>
         <div class="game-matchup">${teamLogo(g.away,'t-logo')} ${g.away} <span class="game-at">@</span> ${teamLogo(g.home,'t-logo')} ${g.home}</div>
@@ -361,7 +361,6 @@ function renderTable(games) {
       <td><div class="td-person">${g.firstBy}</div><div class="td-date-s">${g.firstDate}</div></td>
       <td><div class="td-date-s" style="font-size:12px;color:#374151">${g.published||'—'}</div></td>
       <td><div class="td-person">${g.sc||'—'}</div></td>
-      <td class="td-actions"><button class="open-btn" onclick="location='${g.link||'#'}'"><i class="ti ti-arrow-right" style="font-size:11px"></i> Open</button></td>
     `;
     tbody.appendChild(tr);
   });
