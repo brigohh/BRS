@@ -7,104 +7,103 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;color:#111827;background:#f3f4f6;min-height:100vh}
-.nav{background:#1a3a6b;height:48px;display:flex;align-items:center;padding:0 20px;gap:0;flex-shrink:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:14px;color:#111827;background:#f3f4f6;min-height:100vh}
+.nav{background:#1a3a6b;height:48px;display:flex;align-items:center;padding:0 24px;gap:0;flex-shrink:0}
 .nav-logo{display:flex;align-items:center;gap:8px;padding-right:12px;border-right:1px solid rgba(255,255,255,.15);margin-right:4px}
 .nav-brand{color:#fff;font-size:11px;font-weight:500;line-height:1.3;opacity:.85}
-.nl{color:rgba(255,255,255,.55);font-size:11px;padding:0 10px;cursor:pointer;font-weight:500;height:48px;display:flex;align-items:center;border-bottom:2px solid transparent}
+.nl{color:rgba(255,255,255,.55);font-size:11px;padding:0 11px;cursor:pointer;font-weight:500;height:48px;display:flex;align-items:center;border-bottom:2px solid transparent}
 .nl:hover{color:#fff}
 .nl.on{color:#fff;border-bottom-color:rgba(255,255,255,.7);font-weight:600}
 .nav-av{width:30px;height:30px;border-radius:50%;background:#2d5aa0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;margin-left:auto;flex-shrink:0}
 /* HERO */
 .hero{background:#1a3a6b;padding:22px 0 26px}
-.hero-inner{max-width:1160px;margin:0 auto;padding:0 24px}
-.hero-row{display:grid;grid-template-columns:280px 1fr;gap:20px;align-items:start}
+.hero-inner{max-width:1400px;margin:0 auto;padding:0 32px}
+.hero-row{display:grid;grid-template-columns:300px 1fr;gap:24px;align-items:start}
 .sec-lbl{font-size:9px;font-weight:700;letter-spacing:.7px;color:rgba(255,255,255,.4);text-transform:uppercase;margin-bottom:10px}
 /* LAST MODIFIED CARD */
-.lm-card{background:#fff;border-radius:12px;padding:16px 18px;cursor:pointer;transition:box-shadow .15s;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.lm-card{background:#fff;border-radius:12px;padding:18px 20px;cursor:pointer;transition:box-shadow .15s;box-shadow:0 2px 10px rgba(0,0,0,.15)}
 .lm-card:hover{box-shadow:0 4px 18px rgba(0,0,0,.22)}
-.lm-matchup{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.lm-logo{width:26px;height:26px;object-fit:contain;flex-shrink:0}
-.lm-logo-ph{width:26px;height:26px;border-radius:50%;background:#f3f4f6;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#6b7280;flex-shrink:0}
+.lm-matchup{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+.lm-logo{width:28px;height:28px;object-fit:contain;flex-shrink:0}
+.lm-logo-ph{width:28px;height:28px;border-radius:50%;background:#f3f4f6;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#6b7280;flex-shrink:0}
 .lm-team{font-size:13px;font-weight:700;color:#111827}
 .lm-score{font-size:11px;color:#6b7280;margin-top:1px}
 .lm-vs{font-size:10px;color:#d1d5db;padding:0 2px}
-.lm-meta{font-size:10px;color:#9ca3af;margin-bottom:10px}
-.lm-pills{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}
-.lm-pill{padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600;border:1px solid}
-.lm-total{background:#f3f4f6;border-color:#e5e7eb;color:#374151}
-.lm-crit{background:#fee2e2;border-color:#fca5a5;color:#991b1b}
-.lm-rating{background:#dbeafe;border-color:#93c5fd;color:#1e40af}
-.lm-status{display:inline-flex;align-items:center;gap:5px}
+.lm-meta{font-size:11px;color:#9ca3af;margin-bottom:10px}
+.lm-status{display:inline-flex;align-items:center;gap:5px;margin-top:4px}
 .lm-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.lm-status-txt{font-size:10px;font-weight:600}
+.lm-status-txt{font-size:11px;font-weight:600}
+/* HERO Q CHIPS (pills style) */
+.q-row-hero{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-bottom:10px}
+.q-chip-h{font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;white-space:nowrap;border:1px solid}
+.qh-done{color:#166534;background:#dcfce7;border-color:#86efac}
+.qh-progress{color:#854d0e;background:#fef9c3;border-color:#fde68a}
+.qh-sep{color:rgba(255,255,255,.25);font-size:10px}
 /* RECENT SC */
 .recent-col{display:flex;flex-direction:column}
-.recent-sc{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
-.rc-card{background:#fff;border-radius:10px;padding:13px 14px;cursor:pointer;transition:box-shadow .15s;box-shadow:0 2px 8px rgba(0,0,0,.1);display:flex;flex-direction:column;gap:0}
+.recent-sc{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+.rc-card{background:#fff;border-radius:10px;padding:15px 16px;cursor:pointer;transition:box-shadow .15s;box-shadow:0 2px 8px rgba(0,0,0,.1);display:flex;flex-direction:column}
 .rc-card:hover{box-shadow:0 4px 14px rgba(0,0,0,.16)}
-.rc-matchup{font-size:12px;font-weight:700;color:#111827;margin-bottom:3px;display:flex;align-items:center;gap:5px}
-.rc-logo{width:16px;height:16px;object-fit:contain;flex-shrink:0}
-.rc-logo-ph{width:16px;height:16px;border-radius:50%;background:#f3f4f6;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:6px;font-weight:700;color:#6b7280;flex-shrink:0}
-.rc-date{font-size:10px;color:#9ca3af;margin-bottom:8px}
-.rc-pills{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px}
-.rc-pill{padding:1px 6px;border-radius:10px;font-size:9px;font-weight:600;border:1px solid}
-.rc-reviewer{font-size:10px;color:#6b7280;margin-bottom:4px}
+.rc-matchup{font-size:13px;font-weight:700;color:#111827;margin-bottom:3px;display:flex;align-items:center;gap:6px}
+.rc-logo{width:18px;height:18px;object-fit:contain;flex-shrink:0}
+.rc-logo-ph{width:18px;height:18px;border-radius:50%;background:#f3f4f6;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:6px;font-weight:700;color:#6b7280;flex-shrink:0}
+.rc-date{font-size:11px;color:#9ca3af;margin-bottom:9px}
+.rc-pills{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:9px}
+.rc-pill{padding:2px 7px;border-radius:20px;font-size:10px;font-weight:600;border:1px solid}
+.rp-total{background:#f3f4f6;border-color:#e5e7eb;color:#374151}
+.rp-crit{background:#fee2e2;border-color:#fca5a5;color:#991b1b}
+.rc-reviewer{font-size:11px;color:#6b7280;margin-bottom:5px}
 .rc-reviewer b{color:#374151}
-.rc-done{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:700;color:#166534}
-.view-all-link{display:inline-flex;align-items:center;gap:5px;color:rgba(255,255,255,.55);font-size:11px;font-weight:600;cursor:pointer;transition:color .15s}
+.rc-done{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:700;color:#166534}
+.view-all-link{display:inline-flex;align-items:center;gap:5px;color:rgba(255,255,255,.55);font-size:12px;font-weight:600;cursor:pointer;transition:color .15s}
 .view-all-link:hover{color:#fff}
 /* SEARCH */
-.search-bar{background:#fff;border-bottom:1px solid #e5e7eb;padding:12px 0}
-.search-inner{max-width:1160px;margin:0 auto;padding:0 24px;display:flex;align-items:flex-end;gap:10px;justify-content:center}
-.sb-field{display:flex;flex-direction:column;gap:3px}
+.search-bar{background:#fff;border-bottom:1px solid #e5e7eb;padding:13px 0}
+.search-inner{max-width:1400px;margin:0 auto;padding:0 32px;display:flex;align-items:center;gap:12px;justify-content:center}
+.sb-field{display:flex;flex-direction:column;gap:4px}
 .sb-lbl{font-size:9px;font-weight:700;letter-spacing:.4px;color:#9ca3af;text-transform:uppercase}
-.sb-input{height:30px;padding:0 10px;border:1px solid #d1d5db;border-radius:7px;font-size:12px;color:#111827;background:#fff;outline:none;min-width:110px}
+.sb-input{height:32px;padding:0 10px;border:1px solid #d1d5db;border-radius:7px;font-size:12px;color:#111827;background:#fff;outline:none;min-width:120px}
 .sb-input:focus{border-color:#1a3a6b}
-.sb-sep{width:1px;height:28px;background:#e5e7eb;margin:0 4px;flex-shrink:0}
-.sb-check{display:flex;align-items:center;gap:6px;font-size:12px;color:#374151;cursor:pointer;padding-bottom:2px}
+.sb-sep{width:1px;height:32px;background:#e5e7eb;margin:0 4px;flex-shrink:0;align-self:center}
+.sb-checks{display:flex;align-items:center;gap:14px;align-self:center}
+.sb-check{display:flex;align-items:center;gap:6px;font-size:12px;color:#374151;cursor:pointer}
 .sb-check input{accent-color:#1a3a6b;width:14px;height:14px}
-.search-btn{height:30px;padding:0 18px;background:#1a3a6b;color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:5px}
+.search-btn{height:32px;padding:0 18px;background:#1a3a6b;color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:5px;align-self:flex-end}
 .search-btn:hover{background:#15326b}
-.clear-btn{height:30px;padding:0 12px;border:1px solid #d1d5db;border-radius:7px;font-size:12px;background:#fff;color:#6b7280;cursor:pointer}
+.clear-btn{height:32px;padding:0 12px;border:1px solid #d1d5db;border-radius:7px;font-size:12px;background:#fff;color:#6b7280;cursor:pointer;align-self:flex-end}
 /* LEAGUE BUTTONS */
 .league-btns{display:flex;gap:5px;align-items:center}
-.lg-btn{display:flex;align-items:center;gap:5px;padding:4px 10px;border:1px solid #d1d5db;border-radius:7px;font-size:11px;font-weight:500;background:#fff;color:#6b7280;cursor:pointer;height:30px}
+.lg-btn{display:flex;align-items:center;gap:5px;padding:4px 11px;border:1px solid #d1d5db;border-radius:7px;font-size:11px;font-weight:500;background:#fff;color:#6b7280;cursor:pointer;height:32px}
 .lg-btn:hover{background:#f9fafb}
 .lg-btn.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
-.lg-btn img{width:18px;height:18px;object-fit:contain}
+.lg-btn img{width:16px;height:16px;object-fit:contain}
 /* TABLE */
-.table-wrap{max-width:1160px;margin:0 auto;padding:20px 24px}
-.tbl-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.tbl-count{font-size:12px;color:#6b7280;margin-top:4px}
-.qb-row{display:flex;gap:5px;align-items:center}
-.qb{padding:4px 11px;border:1px solid #d1d5db;border-radius:8px;font-size:11px;font-weight:500;background:#fff;color:#6b7280;cursor:pointer}
+.table-wrap{max-width:1400px;margin:0 auto;padding:22px 32px}
+.tbl-top{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:14px}
+.tbl-count{font-size:12px;color:#6b7280;margin-top:5px}
+.qb-row{display:flex;gap:6px;align-items:center}
+.qb{padding:5px 13px;border:1px solid #d1d5db;border-radius:8px;font-size:12px;font-weight:500;background:#fff;color:#6b7280;cursor:pointer}
 .qb:hover{background:#f9fafb}
 .qb.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
 .qb-sep{width:1px;height:18px;background:#e5e7eb;margin:0 2px}
 table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden}
 thead{background:#f8fafc}
-th{padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.4px;color:#6b7280;text-transform:uppercase;border-bottom:1px solid #e5e7eb;white-space:nowrap}
-td{padding:11px 14px;border-bottom:1px solid #f3f4f6;vertical-align:middle}
+th{padding:10px 16px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.3px;color:#6b7280;text-transform:uppercase;border-bottom:1px solid #e5e7eb;white-space:nowrap}
+td{padding:12px 16px;border-bottom:1px solid #f3f4f6;vertical-align:middle}
 tr:last-child td{border-bottom:none}
 tr:hover td{background:#fafbff}
-.game-matchup{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:#111827}
-.t-logo{width:20px;height:20px;object-fit:contain;flex-shrink:0}
-.t-logo-ph{width:20px;height:20px;border-radius:50%;background:#f3f4f6;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:#6b7280;flex-shrink:0}
-.game-date{font-size:10px;color:#9ca3af;margin-top:2px}
-.game-id{font-size:9px;color:#d1d5db;margin-top:1px}
-/* QUARTER STATUS */
-.q-row{display:flex;align-items:center;gap:3px;flex-wrap:wrap;margin-top:5px}
-.q-chip{font-size:9px;font-weight:700;padding:1px 5px;border-radius:4px;white-space:nowrap}
-.q-done{color:#166534;background:#dcfce7}
-.q-progress{color:#854d0e;background:#fef9c3}
-.q-pending{color:#9ca3af;background:#f3f4f6}
-.q-sep{color:#d1d5db;font-size:9px}
-.td-num{font-size:13px;font-weight:600;color:#374151;text-align:center}
-.td-person{font-size:11px;color:#374151;font-weight:500;white-space:nowrap}
-.td-date-s{font-size:10px;color:#9ca3af;margin-top:2px}
+.game-matchup{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:#111827}
+.game-date{font-size:11px;color:#9ca3af;margin-top:3px}
+/* QUARTER STATUS — plain colored text for table */
+.q-txt-row{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:6px}
+.qt-done{font-size:11px;font-weight:600;color:#16a34a}
+.qt-progress{font-size:11px;font-weight:600;color:#d97706}
+.qt-sep{font-size:10px;color:#d1d5db}
+.td-num{font-size:14px;font-weight:600;color:#374151;text-align:center}
+.td-person{font-size:12px;color:#374151;font-weight:500;white-space:nowrap}
+.td-date-s{font-size:11px;color:#9ca3af;margin-top:2px}
 .td-actions{text-align:center}
-.open-btn{padding:4px 12px;border:1px solid #bfdbfe;border-radius:7px;font-size:11px;font-weight:600;background:#eff6ff;color:#1a3a6b;cursor:pointer;white-space:nowrap}
+.open-btn{padding:5px 14px;border:1px solid #bfdbfe;border-radius:7px;font-size:12px;font-weight:600;background:#eff6ff;color:#1a3a6b;cursor:pointer;white-space:nowrap}
 .open-btn:hover{background:#dbeafe}
 </style>
 </head>
@@ -130,7 +129,7 @@ tr:hover td{background:#fafbff}
   <div class="hero-inner">
     <div class="hero-row">
 
-      <!-- LAST MODIFIED: in-progress first pass game -->
+      <!-- LAST MODIFIED: first pass in-progress, no SC, no play count pills -->
       <div>
         <div class="sec-lbl">Last modified</div>
         <div class="lm-card" onclick="void(0)">
@@ -138,21 +137,14 @@ tr:hover td{background:#fafbff}
             <img src="Dallas_Wings_logo.svg.png" class="lm-logo" onerror="this.outerHTML='<div class=&quot;lm-logo-ph&quot;>DAL</div>'">
             <div><div class="lm-team">Dallas Wings</div><div class="lm-score">—</div></div>
             <div class="lm-vs">@</div>
-            <div class="lm-logo-ph">MIN</div>
+            <img src="Minnesota_Lynx_logo.svg.png" class="lm-logo" onerror="this.outerHTML='<div class=&quot;lm-logo-ph&quot;>MIN</div>'">
             <div><div class="lm-team">Minnesota Lynx</div><div class="lm-score">—</div></div>
           </div>
-          <div class="lm-meta">Mon, Jun 9, 2026 &nbsp;·&nbsp; #1022600087</div>
-          <div class="lm-pills">
-            <span class="lm-pill lm-total">14 plays</span>
-            <span class="lm-pill lm-crit">3 critical</span>
-          </div>
-          <div style="margin-bottom:8px">
-            <div class="q-row">
-              <span class="q-chip q-done">Q1 (BN)</span><span class="q-sep">,</span>
-              <span class="q-chip q-done">Q2 (BN)</span><span class="q-sep">,</span>
-              <span class="q-chip q-progress">Q3 (BN)</span><span class="q-sep">,</span>
-              <span class="q-chip q-pending">Q4 (BN)</span>
-            </div>
+          <div class="lm-meta">Mon, Jun 9, 2026 &nbsp;·&nbsp; 8:00 PM</div>
+          <div class="q-row-hero">
+            <span class="q-chip-h qh-done">Q1 (BN)</span><span class="qh-sep">,</span>
+            <span class="q-chip-h qh-done">Q2 (BN)</span><span class="qh-sep">,</span>
+            <span class="q-chip-h qh-progress">Q3 (BN)</span>
           </div>
           <div class="lm-status">
             <div class="lm-dot" style="background:#f59e0b"></div>
@@ -165,7 +157,6 @@ tr:hover td{background:#fafbff}
       <div class="recent-col">
         <div class="sec-lbl">Recently second checked</div>
         <div class="recent-sc">
-          <!-- TOR @ CHI moved to first -->
           <div class="rc-card" onclick="location='index.html'">
             <div class="rc-matchup">
               <img src="toronto tempo logo.jpg" class="rc-logo" onerror="this.outerHTML='<div class=&quot;rc-logo-ph&quot;>TOR</div>'">
@@ -174,10 +165,10 @@ tr:hover td{background:#fafbff}
               <img src="chicago sky logo.png" class="rc-logo" onerror="this.outerHTML='<div class=&quot;rc-logo-ph&quot;>CHI</div>'">
               CHI
             </div>
-            <div class="rc-date">05/27/2026 · #1022600050</div>
+            <div class="rc-date">05/27/2026</div>
             <div class="rc-pills">
-              <span class="rc-pill lm-total">18 plays</span>
-              <span class="rc-pill lm-crit">5 critical</span>
+              <span class="rc-pill rp-total">18 plays</span>
+              <span class="rc-pill rp-crit">5 critical</span>
             </div>
             <div class="rc-reviewer">SC: <b>Daniel Foley</b></div>
             <div class="rc-done"><i class="ti ti-circle-check" style="font-size:10px"></i> Complete</div>
@@ -190,10 +181,10 @@ tr:hover td{background:#fafbff}
               <img src="Los_Angeles_Sparks_logo.svg.png" class="rc-logo" onerror="this.outerHTML='<div class=&quot;rc-logo-ph&quot;>LAS</div>'">
               LAS
             </div>
-            <div class="rc-date">06/02/2026 · #1022600069</div>
+            <div class="rc-date">06/02/2026</div>
             <div class="rc-pills">
-              <span class="rc-pill lm-total">23 plays</span>
-              <span class="rc-pill lm-crit">7 critical</span>
+              <span class="rc-pill rp-total">23 plays</span>
+              <span class="rc-pill rp-crit">7 critical</span>
             </div>
             <div class="rc-reviewer">SC: <b>Curtis Oakley Jr.</b></div>
             <div class="rc-done"><i class="ti ti-circle-check" style="font-size:10px"></i> Complete</div>
@@ -206,17 +197,17 @@ tr:hover td{background:#fafbff}
               <img src="chicago sky logo.png" class="rc-logo" onerror="this.outerHTML='<div class=&quot;rc-logo-ph&quot;>CHI</div>'">
               CHI
             </div>
-            <div class="rc-date">06/05/2026 · #1022600074</div>
+            <div class="rc-date">06/05/2026</div>
             <div class="rc-pills">
-              <span class="rc-pill lm-total">8 plays</span>
-              <span class="rc-pill lm-crit">2 critical</span>
+              <span class="rc-pill rp-total">8 plays</span>
+              <span class="rc-pill rp-crit">2 critical</span>
             </div>
             <div class="rc-reviewer">SC: <b>Michael Abdenour</b></div>
             <div class="rc-done"><i class="ti ti-circle-check" style="font-size:10px"></i> Complete</div>
           </div>
         </div>
         <div class="view-all-link" onclick="document.getElementById('all-section').scrollIntoView({behavior:'smooth'})">
-          View all second checks <i class="ti ti-arrow-right" style="font-size:12px"></i>
+          View all second checks <i class="ti ti-arrow-right" style="font-size:13px"></i>
         </div>
       </div>
 
@@ -232,13 +223,13 @@ tr:hover td{background:#fafbff}
       <div class="league-btns">
         <button class="lg-btn on" data-lg="all">All</button>
         <button class="lg-btn" data-lg="WNBA"><img src="WNBA LOGO.png" onerror="this.style.display='none'"> WNBA</button>
-        <button class="lg-btn" data-lg="NBA">NBA</button>
+        <button class="lg-btn" data-lg="NBA"><img src="nba-logo.svg" style="width:14px;height:14px;object-fit:contain;filter:invert(0)"> NBA</button>
         <button class="lg-btn" data-lg="GL">G League</button>
       </div>
     </div>
     <div class="sb-sep"></div>
     <div class="sb-field">
-      <div class="sb-lbl">Date range from</div>
+      <div class="sb-lbl">Date from</div>
       <input type="date" class="sb-input" value="2026-05-12">
     </div>
     <div class="sb-field">
@@ -246,8 +237,10 @@ tr:hover td{background:#fafbff}
       <input type="date" class="sb-input" value="2026-06-12">
     </div>
     <div class="sb-sep"></div>
-    <label class="sb-check"><input type="checkbox" checked> My games</label>
-    <label class="sb-check"><input type="checkbox"> PTIW</label>
+    <div class="sb-checks">
+      <label class="sb-check"><input type="checkbox" checked> My games</label>
+      <label class="sb-check"><input type="checkbox"> PTIW</label>
+    </div>
     <div class="sb-sep"></div>
     <button class="search-btn"><i class="ti ti-search" style="font-size:12px"></i> Search</button>
     <button class="clear-btn">Clear</button>
@@ -275,7 +268,7 @@ tr:hover td{background:#fafbff}
       <tr>
         <th>Game</th>
         <th>Status</th>
-        <th style="text-align:center">Plays</th>
+        <th style="text-align:center">Look</th>
         <th>Last Modified By</th>
         <th>First Modified By</th>
         <th>Published Date</th>
@@ -296,6 +289,7 @@ const LOGOS = {
   'IND':'Indiana_Fever_logo.svg.png',
   'LAS':'Los_Angeles_Sparks_logo.svg.png',
   'LVA':'New_Las_Vegas_Aces_WNBA_logo_2024.svg.png',
+  'MIN':'Minnesota_Lynx_logo.svg.png',
   'NYL':'New_York_Liberty_logo.svg.png',
   'PHX':'Phoenix_Mercury_logo_2025.svg.png',
   'PDX':'Portland_Fire_logo.svg.png',
@@ -304,21 +298,24 @@ const LOGOS = {
   'TOR':'toronto tempo logo.jpg',
 };
 
-function teamLogo(abbr, size=20) {
+function teamLogo(abbr, size=22) {
   const src = LOGOS[abbr];
-  if (src) return `<img src="${src}" style="width:${size}px;height:${size}px;object-fit:contain;flex-shrink:0" onerror="this.outerHTML='<div style=\'width:${size}px;height:${size}px;border-radius:50%;background:#f3f4f6;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:#6b7280;flex-shrink:0\'>${abbr}</div>'">`;
-  return `<div style="width:${size}px;height:${size}px;border-radius:50%;background:#f3f4f6;border:1px solid #e5e7eb;display:inline-flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:#6b7280;flex-shrink:0">${abbr}</div>`;
+  const ph = `<div style="width:${size}px;height:${size}px;border-radius:50%;background:#f3f4f6;border:1px solid #e5e7eb;display:inline-flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:#6b7280;flex-shrink:0">${abbr}</div>`;
+  if (!src) return ph;
+  return `<img src="${src}" style="width:${size}px;height:${size}px;object-fit:contain;flex-shrink:0" onerror="this.outerHTML=\`${ph.replace(/`/g,"'")}\`">`;
 }
 
-function qChips(quarters) {
+function qTextRow(quarters) {
   if (!quarters) return '';
-  return '<div class="q-row">' + quarters.map((q,i) =>
-    `<span class="q-chip q-${q.status}">${q.q} (${q.by})</span>${i < quarters.length-1 ? '<span class="q-sep">,</span>' : ''}`
+  const visible = quarters.filter(q => q.status !== 'pending');
+  if (!visible.length) return '';
+  return '<div class="q-txt-row">' + visible.map((q, i) =>
+    `<span class="qt-${q.status}">${q.q} (${q.by})</span>${i < visible.length-1 ? '<span class="qt-sep">,</span>' : ''}`
   ).join('') + '</div>';
 }
 
 const GAMES = [
-  {id:'1022600087',date:'06/09/2026',away:'DAL',home:'MIN',plays:14,crit:3,status:'progress',lastBy:'Bridget Ng',lastDate:'6/11/2026 8:03 AM',firstBy:'Bridget Ng',firstDate:'6/10/2026 8:04 AM',published:'',sc:'Bridget Ng',
+  {id:'1022600087',date:'06/09/2026',away:'DAL',home:'MIN',plays:14,crit:3,status:'progress',lastBy:'Bridget Ng',lastDate:'6/11/2026 8:03 AM',firstBy:'Bridget Ng',firstDate:'6/10/2026 8:04 AM',published:'',sc:'',
    quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'progress'},{q:'Q4',by:'BN',status:'pending'}]},
   {id:'1022600080',date:'06/06/2026',away:'IND',home:'NYL',plays:18,crit:5,status:'progress',lastBy:'Daniel Foley',lastDate:'6/10/2026 9:08 AM',firstBy:'Bridget Ng',firstDate:'6/8/2026 8:47 AM',published:'',sc:'Daniel Foley',
    quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'DF',status:'progress'},{q:'Q4',by:'DF',status:'pending'}]},
@@ -347,23 +344,22 @@ function renderTable(games) {
   tbody.innerHTML = '';
   games.forEach(g => {
     const statusPill = g.status === 'done'
-      ? '<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;background:#dcfce7;color:#166534;border:1px solid #86efac"><span style="width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.7"></span>Complete</span>'
+      ? '<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;background:#dcfce7;color:#166534;border:1px solid #86efac"><span style="width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.7;flex-shrink:0"></span>Complete</span>'
       : g.status === 'progress'
-      ? '<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;background:#fef9c3;color:#854d0e;border:1px solid #fde68a"><span style="width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.7"></span>In progress</span>'
-      : '<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;background:#f3f4f6;color:#9ca3af;border:1px solid #e5e7eb">Pending</span>';
+      ? '<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;background:#fef9c3;color:#854d0e;border:1px solid #fde68a"><span style="width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.7;flex-shrink:0"></span>In progress</span>'
+      : '<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;background:#f3f4f6;color:#9ca3af;border:1px solid #e5e7eb">Pending</span>';
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>
-        <div class="game-matchup">${teamLogo(g.away)} ${g.away} <span style="color:#d1d5db;font-size:10px">@</span> ${teamLogo(g.home)} ${g.home}</div>
+        <div class="game-matchup">${teamLogo(g.away)} ${g.away} <span style="color:#d1d5db;font-size:11px">@</span> ${teamLogo(g.home)} ${g.home}</div>
         <div class="game-date">${g.date}</div>
-        <div class="game-id">#${g.id}</div>
       </td>
-      <td>${statusPill}${qChips(g.quarters)}</td>
+      <td>${statusPill}${qTextRow(g.quarters)}</td>
       <td class="td-num">${g.plays}</td>
       <td><div class="td-person">${g.lastBy}</div><div class="td-date-s">${g.lastDate}</div></td>
       <td><div class="td-person">${g.firstBy}</div><div class="td-date-s">${g.firstDate}</div></td>
-      <td><div class="td-date-s" style="font-size:11px;color:#374151">${g.published||'—'}</div></td>
-      <td><div class="td-person">${g.sc}</div></td>
+      <td><div class="td-date-s" style="font-size:12px;color:#374151">${g.published||'—'}</div></td>
+      <td><div class="td-person">${g.sc||'—'}</div></td>
       <td class="td-actions"><button class="open-btn" onclick="location='${g.link||'#'}'"><i class="ti ti-arrow-right" style="font-size:11px"></i> Open</button></td>
     `;
     tbody.appendChild(tr);
