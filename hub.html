@@ -8,19 +8,21 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;color:#111827;background:#f3f4f6;min-height:100vh}
-.nav{background:#1a3a6b;height:48px;display:flex;align-items:center;padding:0 24px;gap:0;flex-shrink:0}
-.nav-logo{display:flex;align-items:center;gap:8px;padding-right:12px;border-right:1px solid rgba(255,255,255,.15);margin-right:4px}
+.nav{background:#1a3a6b;height:48px;display:flex;align-items:center;padding:0 24px;gap:0;flex-shrink:0;overflow:hidden}
+.nav-logo{display:flex;align-items:center;gap:8px}
 .nav-brand{color:#fff;font-size:10.5px;font-weight:500;white-space:nowrap;opacity:.85}
-.nav-links{display:flex;align-items:center;margin-left:auto;gap:0}
-.nl{color:rgba(255,255,255,.55);font-size:11px;padding:0 11px;cursor:pointer;font-weight:500;height:48px;display:flex;align-items:center;border-bottom:2px solid transparent}
+.nav-links{display:flex;align-items:center;margin-left:auto;gap:0;flex-shrink:0;flex-wrap:nowrap}
+.nl{color:rgba(255,255,255,.55);font-size:10.5px;padding:0 8px;cursor:pointer;font-weight:500;height:48px;display:flex;align-items:center;border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0}
 .nl:hover{color:#fff}
 .nl.on{color:#fff;border-bottom-color:rgba(255,255,255,.7);font-weight:600}
 .nav-av{width:30px;height:30px;border-radius:50%;background:#2d5aa0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;flex-shrink:0}
 /* HERO */
-.hero{background:#cecece;padding:22px 0 26px}
+.hero{background:#0f2549;padding:22px 0 26px}
 .hero-inner{max-width:1400px;margin:0 auto;padding:0 32px}
 .hero-row{display:grid;grid-template-columns:300px 1fr;gap:24px;align-items:end}
-.sec-lbl{font-size:9px;font-weight:700;letter-spacing:.7px;color:rgba(255,255,255,.4);text-transform:uppercase;margin-bottom:10px}
+.hero-col{display:flex;flex-direction:column;height:100%}
+.hero-col-right{display:flex;flex-direction:column;justify-content:flex-end;height:100%}
+.sec-lbl{font-size:9px;font-weight:700;letter-spacing:.7px;color:rgba(255,255,255,.45);text-transform:uppercase;margin-bottom:10px}
 /* LAST MODIFIED CARD */
 .lm-card{background:#fff;border-radius:12px;padding:18px 20px;cursor:pointer;transition:box-shadow .15s;box-shadow:0 2px 10px rgba(0,0,0,.15)}
 .lm-card:hover{box-shadow:0 4px 18px rgba(0,0,0,.22)}
@@ -41,7 +43,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .qh-progress{color:#9a3412;background:#ffedd5;border-color:#fdba74}
 .qh-sep{color:rgba(255,255,255,.25);font-size:10px}
 /* RECENT SC CARDS */
-.recent-col{display:flex;flex-direction:column;width:100%;justify-content:flex-end}
 .recent-sc{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
 .rc-card{background:#fff;border-radius:10px;border-left:4px solid #e496bd;padding:13px 15px;cursor:pointer;transition:box-shadow .15s;box-shadow:0 2px 8px rgba(0,0,0,.1);display:flex;flex-direction:column;gap:5px}
 .rc-card:hover{box-shadow:0 4px 14px rgba(0,0,0,.18)}
@@ -137,7 +138,7 @@ tr:hover td{background:#fafbff}
     <div class="hero-row">
 
       <!-- LAST MODIFIED: first pass in-progress, no SC -->
-      <div>
+      <div class="hero-col">
         <div class="sec-lbl">Last modified</div>
         <div class="lm-card" onclick="void(0)">
           <div class="lm-matchup">
@@ -157,7 +158,7 @@ tr:hover td{background:#fafbff}
       </div>
 
       <!-- RECENTLY SECOND CHECKED -->
-      <div class="recent-col">
+      <div class="hero-col-right">
         <div class="sec-lbl">Recently second checked</div>
         <div class="recent-sc">
           <div class="rc-card" onclick="location='index.html'">
@@ -213,6 +214,7 @@ tr:hover td{background:#fafbff}
 </div>
 
 <!-- SEARCH -->
+
 <div class="search-bar">
   <div class="search-inner">
     <div class="sb-field">
