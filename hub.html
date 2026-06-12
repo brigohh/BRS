@@ -10,15 +10,15 @@
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;color:#111827;background:#f3f4f6;min-height:100vh}
 .nav{background:#1a3a6b;height:48px;display:flex;align-items:center;padding:0 24px;gap:0;flex-shrink:0}
 .nav-logo{display:flex;align-items:center;gap:8px;padding-right:12px;border-right:1px solid rgba(255,255,255,.15);margin-right:4px}
-.nav-brand{color:#fff;font-size:11px;font-weight:500;line-height:1.3;opacity:.85}
+.nav-brand{color:#fff;font-size:10.5px;font-weight:500;white-space:nowrap;opacity:.85}
 .nl{color:rgba(255,255,255,.55);font-size:11px;padding:0 11px;cursor:pointer;font-weight:500;height:48px;display:flex;align-items:center;border-bottom:2px solid transparent}
 .nl:hover{color:#fff}
 .nl.on{color:#fff;border-bottom-color:rgba(255,255,255,.7);font-weight:600}
 .nav-av{width:30px;height:30px;border-radius:50%;background:#2d5aa0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;margin-left:auto;flex-shrink:0}
 /* HERO */
-.hero{background:#1a3a6b;padding:22px 0 26px}
+.hero{background:#0f2549;padding:22px 0 26px}
 .hero-inner{max-width:1400px;margin:0 auto;padding:0 32px}
-.hero-row{display:grid;grid-template-columns:300px 1fr;gap:24px;align-items:start}
+.hero-row{display:grid;grid-template-columns:300px 1fr;gap:24px;align-items:end}
 .sec-lbl{font-size:9px;font-weight:700;letter-spacing:.7px;color:rgba(255,255,255,.4);text-transform:uppercase;margin-bottom:10px}
 /* LAST MODIFIED CARD */
 .lm-card{background:#fff;border-radius:12px;padding:18px 20px;cursor:pointer;transition:box-shadow .15s;box-shadow:0 2px 10px rgba(0,0,0,.15)}
@@ -37,12 +37,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .q-row-hero{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-bottom:10px}
 .q-chip-h{font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;white-space:nowrap;border:1px solid}
 .qh-done{color:#166534;background:#dcfce7;border-color:#86efac}
-.qh-progress{color:#854d0e;background:#fef9c3;border-color:#fde68a}
+.qh-progress{color:#9a3412;background:#ffedd5;border-color:#fdba74}
 .qh-sep{color:rgba(255,255,255,.25);font-size:10px}
 /* RECENT SC CARDS */
-.recent-col{display:flex;flex-direction:column;width:100%}
+.recent-col{display:flex;flex-direction:column;width:100%;justify-content:flex-end}
 .recent-sc{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
-.rc-card{background:#fff;border-radius:10px;border-left:4px solid #fbcfe8;padding:13px 15px;cursor:pointer;transition:box-shadow .15s;box-shadow:0 2px 8px rgba(0,0,0,.1);display:flex;flex-direction:column;gap:5px}
+.rc-card{background:#fff;border-radius:10px;border-left:4px solid #ec4899;padding:13px 15px;cursor:pointer;transition:box-shadow .15s;box-shadow:0 2px 8px rgba(0,0,0,.1);display:flex;flex-direction:column;gap:5px}
 .rc-card:hover{box-shadow:0 4px 14px rgba(0,0,0,.18)}
 .rc-matchup{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#111827;flex-wrap:wrap}
 .rc-logo{width:18px;height:18px;object-fit:contain;flex-shrink:0;vertical-align:middle}
@@ -116,7 +116,7 @@ tr:hover td{background:#fafbff}
 <div class="nav">
   <div class="nav-logo">
     <img src="nba-logo.svg" style="width:16px;height:auto">
-    <div class="nav-brand">Bridget Review<br>System 1.0</div>
+    <div class="nav-brand">Bridget Review System 1.0</div>
   </div>
   <span class="nl on">HOME</span>
   <span class="nl" onclick="location='index.html'">SECOND CHECK</span>
@@ -317,17 +317,17 @@ const GAMES = [
    quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'done'},{q:'Q4',by:'BN',status:'done'}]},
   {id:'1022600069',date:'06/02/2026',away:'LVA',home:'LAS',plays:23,crit:7,status:'done',lastBy:'Curtis Oakley Jr.',lastDate:'6/9/2026 1:59 PM',firstBy:'Bridget Ng',firstDate:'6/3/2026 8:14 AM',published:'6/9/2026 1:59 PM',sc:'Curtis Oakley Jr.',
    quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'done'},{q:'Q4',by:'BN',status:'done'}]},
-  {id:'1022600059',date:'05/29/2026',away:'ATL',home:'PDX',plays:4,crit:1,status:'done',lastBy:'Michael Gargin',lastDate:'6/2/2026 1:26 PM',firstBy:'Bridget Ng',firstDate:'6/1/2026 7:42 AM',published:'6/2/2026 1:32 PM',sc:'Michael Gargin',
+  {id:'1022600059',date:'05/29/2026',away:'ATL',home:'PDX',plays:4,crit:1,status:'done',lastBy:'Tucker Grady',lastDate:'6/2/2026 1:26 PM',firstBy:'Bridget Ng',firstDate:'6/1/2026 7:42 AM',published:'6/2/2026 1:32 PM',sc:'Tucker Grady',
    quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'done'},{q:'Q4',by:'BN',status:'done'}]},
   {id:'1022600056',date:'05/29/2026',away:'PHX',home:'NYL',plays:7,crit:3,status:'done',lastBy:'Curtis Oakley Jr.',lastDate:'6/4/2026 5:41 PM',firstBy:'Bridget Ng',firstDate:'5/30/2026 7:59 AM',published:'6/4/2026 5:51 PM',sc:'Curtis Oakley Jr.',
    quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'done'},{q:'Q4',by:'BN',status:'done'}]},
   {id:'1022600050',date:'05/27/2026',away:'TOR',home:'CHI',plays:18,crit:5,status:'done',lastBy:'Daniel Foley',lastDate:'6/1/2026 10:43 AM',firstBy:'Bridget Ng',firstDate:'5/28/2026 8:09 AM',published:'6/1/2026 10:44 AM',sc:'Daniel Foley',link:'index.html',
    quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'done'},{q:'Q4',by:'BN',status:'done'}]},
-  {id:'1022600045',date:'05/24/2026',away:'DAL',home:'NYL',plays:10,crit:2,status:'done',lastBy:'Michael Gargin',lastDate:'5/29/2026 3:22 PM',firstBy:'Bridget Ng',firstDate:'5/26/2026 8:02 AM',published:'5/29/2026 3:23 PM',sc:'Michael Gargin',
+  {id:'1022600045',date:'05/24/2026',away:'DAL',home:'NYL',plays:10,crit:2,status:'done',lastBy:'Tucker Grady',lastDate:'5/29/2026 3:22 PM',firstBy:'Bridget Ng',firstDate:'5/26/2026 8:02 AM',published:'5/29/2026 3:23 PM',sc:'Tucker Grady',
    quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'done'},{q:'Q4',by:'BN',status:'done'}]},
   {id:'1022600039',date:'05/22/2026',away:'GSV',home:'IND',plays:17,crit:6,status:'done',lastBy:'Curtis Oakley Jr.',lastDate:'6/2/2026 11:54 AM',firstBy:'Bridget Ng',firstDate:'5/23/2026 6:49 AM',published:'6/2/2026 11:54 AM',sc:'Curtis Oakley Jr.',
    quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'done'},{q:'Q4',by:'BN',status:'done'}]},
-  {id:'1022600037',date:'05/21/2026',away:'LAS',home:'PHX',plays:7,crit:2,status:'done',lastBy:'Daniel Foley',lastDate:'5/26/2026 10:35 PM',firstBy:'Bridget Ng',firstDate:'5/22/2026 7:33 AM',published:'5/26/2026 10:36 PM',sc:'Daniel Foley',
+  {id:'1022600037',date:'05/21/2026',away:'LAS',home:'PHX',plays:7,crit:2,status:'done',lastBy:'Tucker Grady',lastDate:'5/26/2026 10:35 PM',firstBy:'Bridget Ng',firstDate:'5/22/2026 7:33 AM',published:'5/26/2026 10:36 PM',sc:'Tucker Grady',
    quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'done'},{q:'Q4',by:'BN',status:'done'}]},
   {id:'1022600025',date:'05/17/2026',away:'CHI',home:'MIN',plays:4,crit:0,status:'done',lastBy:'Daniel Foley',lastDate:'5/19/2026 2:56 PM',firstBy:'Bridget Ng',firstDate:'5/18/2026 8:13 AM',published:'5/19/2026 4:58 PM',sc:'Daniel Foley',
    quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'done'},{q:'Q4',by:'BN',status:'done'}]},
