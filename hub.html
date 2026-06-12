@@ -253,10 +253,9 @@ tr:hover td{background:#fafbff}
   <div class="tbl-top">
     <div>
       <div class="qb-row">
-        <div class="qb on">All</div>
+        <div class="qb on">In Progress</div>
         <div class="qb">Complete</div>
-        <div class="qb">In progress</div>
-        <div class="qb">Pending</div>
+        <div class="qb">Published</div>
       </div>
       <div class="tbl-count">Showing 11 games</div>
     </div>
@@ -373,9 +372,9 @@ document.querySelectorAll('.qb').forEach(btn => {
     this.classList.add('on');
     const f = this.textContent.trim().toLowerCase();
     let filtered = GAMES;
-    if (f==='complete') filtered = GAMES.filter(g=>g.status==='done');
-    else if (f==='in progress') filtered = GAMES.filter(g=>g.status==='progress');
-    else if (f==='pending') filtered = GAMES.filter(g=>g.status==='pending');
+    if (f==='in progress') filtered = GAMES.filter(g=>g.status==='progress');
+    else if (f==='complete') filtered = GAMES.filter(g=>g.status==='done'&&!g.published);
+    else if (f==='published') filtered = GAMES.filter(g=>!!g.published);
     renderTable(filtered);
   });
 });
@@ -387,7 +386,7 @@ document.querySelectorAll('.lg-btn').forEach(btn => {
   });
 });
 
-renderTable(GAMES);
+renderTable(GAMES.filter(g=>g.status==='progress'));
 </script>
 </body>
 </html>
