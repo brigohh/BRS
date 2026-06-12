@@ -130,7 +130,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .add-col-btn.saved{background:#dcfce7;border-color:#86efac;color:#166534}
 .fc-hdr-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
 /* OVERVIEW PANEL */
-#overview-panel{flex:1;overflow-y:auto;background:#fff}
 .ov-table{width:100%;border-collapse:collapse;font-size:12px}
 .ov-table th{padding:8px 12px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.4px;color:#9ca3af;background:#f9fafb;border-bottom:2px solid #e5e7eb;white-space:nowrap}
 .ov-table td{padding:8px 12px;border-bottom:1px solid #f3f4f6;vertical-align:top}
@@ -224,7 +223,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 </div>
 
 <div class="subnav">
-  <span class="st" data-tab="overview">Overview</span><span class="st">Review</span><span class="st">OCR</span><span class="st">Important Calls</span><span class="st on" data-tab="secondcheck">Second Check</span><span class="st">PTIW</span><span class="st">OIW</span>
+  <span class="st">Review</span><span class="st">OCR</span><span class="st">Important Calls</span><span class="st on" data-tab="secondcheck">Second Check</span><span class="st">PTIW</span><span class="st">OIW</span>
 </div>
 
 <div class="game-hdr">
@@ -270,7 +269,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   <div class="tb" data-t="comment" onclick="tf(this)">Comment</div>
 </div>
 
-<div id="overview-panel" style="display:none;flex:1;overflow-y:auto;background:#fff">
+<div id="overview-panel" style="display:none">
   <table class="ov-table">
     <thead>
       <tr>
@@ -1015,69 +1014,12 @@ function toast(msg) {
 }
 function selAng(el) { document.querySelectorAll('.ang').forEach(a=>a.classList.remove('on')); el.classList.add('on'); }
 
-function buildOverview() {
-  const tbody = document.getElementById('ov-tbody');
-  tbody.innerHTML = '';
-  PLAYS.forEach((p, i) => {
-    const ratingChange = p.changes.find(c => c.f === 'Rating');
-    const ptChange = p.changes.find(c => c.f === 'Play type' || c.f === 'Infraction type');
-    const offChange = p.changes.find(c => c.f === 'Official' || c.f === 'Location');
-    const ratingCell = ratingChange
-      ? `<span style="font-size:11px;color:#374151">${abbr(ratingChange.old)}<span class="ov-rating-arrow">→</span>${abbr(ratingChange.nw)}</span>`
-      : '<span style="color:#d1d5db;font-size:11px">—</span>';
-    const ptCell = ptChange
-      ? `<span style="font-size:11px;color:#374151">${ptChange.old} → ${ptChange.nw}</span>`
-      : '<span style="color:#d1d5db;font-size:11px">—</span>';
-    const offCell = offChange
-      ? `<span style="font-size:11px;color:#374151">${offChange.f}: ${offChange.old} → ${offChange.nw}</span>`
-      : '<span style="color:#d1d5db;font-size:11px">—</span>';
-    const hasNotes = (p.yourNotes || p.managerNotes) ? '<i class="ti ti-note ov-notes-icon"></i>' : '';
-    const calledHtml = p.called === 'C'
-      ? `<span class="ov-called-c">C</span>`
-      : `<span class="ov-called-nc">NC</span>`;
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td class="ov-num">${i+1}</td>
-      <td class="ov-time">${p.time}</td>
-      <td class="ov-seg">${p.seg}</td>
-      <td>${calledHtml}</td>
-      <td style="max-width:200px;font-size:11px;color:#374151">${p.desc}</td>
-      <td>${ratingCell}</td>
-      <td>${ptCell}</td>
-      <td>${offCell}</td>
-      <td>${hasNotes}</td>
-    `;
-    tr.addEventListener('click', () => {
-      switchToSecondCheck();
-      const row = document.querySelector(`.sb-row[data-id="${p.id}"]`);
-      if (row) selectPlay(p.id, row);
-    });
-    tbody.appendChild(tr);
-  });
-}
-
-function switchToSecondCheck() {
-  document.getElementById('overview-panel').style.display = 'none';
-  document.querySelector('.main').style.display = 'grid';
-  document.querySelectorAll('.st').forEach(x => x.classList.remove('on'));
-  document.querySelector('.st[data-tab="secondcheck"]').classList.add('on');
-}
-
 document.querySelectorAll('.st').forEach(t => t.addEventListener('click', function() {
   document.querySelectorAll('.st').forEach(x => x.classList.remove('on'));
   this.classList.add('on');
-  const tab = this.dataset.tab;
-  if (tab === 'overview') {
-    document.getElementById('overview-panel').style.display = 'block';
-    document.querySelector('.main').style.display = 'none';
-  } else {
-    document.getElementById('overview-panel').style.display = 'none';
-    document.querySelector('.main').style.display = 'grid';
-  }
 }));
 
 buildSidebar();
-buildOverview();
 // select first play
 const firstRow = document.querySelector('.sb-row');
 if (firstRow) selectPlay(0, firstRow);
