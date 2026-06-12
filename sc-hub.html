@@ -24,7 +24,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 /* HERO STATS ROW */
 .hero-stats{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;margin-bottom:28px}
 .stat-card{background:#fff;border-radius:12px;padding:20px 22px;box-shadow:0 2px 8px rgba(0,0,0,.08);border:1px solid #e5e7eb;border-left:4px solid #e5e7eb}
-.stat-card.primary{background:linear-gradient(135deg,#1a3a6b,#2d5aa0);border-color:#1a3a6b;border-left-color:#f9a8d4}
+.stat-card.primary{background:#1a3a6b;border-color:#1a3a6b;border-left-color:#f9a8d4}
 .stat-card.accent-orange{border-left-color:#f9a8d4}
 .stat-card.accent-teal{border-left-color:#f9a8d4}
 .stat-card.accent-purple{border-left-color:#f9a8d4}
@@ -171,7 +171,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
           <div class="leg-item"><div class="leg-dot" style="background:#d1d5db;border-radius:0;width:18px;height:2px"></div>Avg (82%)</div>
         </div>
       </div>
-      <svg id="trend-chart" class="chart-svg" height="180" viewBox="0 0 800 180" preserveAspectRatio="none"></svg>
+      <svg id="trend-chart" class="chart-svg" height="260" viewBox="0 0 800 260" preserveAspectRatio="none"></svg>
     </div>
 
     <!-- SIDEBAR -->
@@ -278,7 +278,7 @@ const SC_GAMES = [
 function drawChart() {
   const games = [...SC_GAMES].reverse();
   const svg = document.getElementById('trend-chart');
-  const W = 800, H = 180, padL = 36, padR = 16, padT = 12, padB = 26;
+  const W = 800, H = 260, padL = 36, padR = 16, padT = 12, padB = 26;
   const cW = W - padL - padR, cH = H - padT - padB;
   const n = games.length;
   const minV = 55, maxV = 105;
