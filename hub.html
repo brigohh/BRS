@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:14px;color:#111827;background:#f3f4f6;min-height:100vh}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;color:#111827;background:#f3f4f6;min-height:100vh}
 .nav{background:#1a3a6b;height:48px;display:flex;align-items:center;padding:0 24px;gap:0;flex-shrink:0}
 .nav-logo{display:flex;align-items:center;gap:8px;padding-right:12px;border-right:1px solid rgba(255,255,255,.15);margin-right:4px}
 .nav-brand{color:#fff;font-size:11px;font-weight:500;line-height:1.3;opacity:.85}
@@ -25,7 +25,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .lm-card:hover{box-shadow:0 4px 18px rgba(0,0,0,.22)}
 .lm-matchup{display:flex;align-items:center;gap:9px;margin-bottom:9px}
 .lm-logo{width:28px;height:28px;object-fit:contain;flex-shrink:0}
-.lm-logo-ph{width:28px;height:28px;border-radius:50%;background:#f3f4f6;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#6b7280;flex-shrink:0}
+.lm-logo-ph{width:28px;height:28px;border-radius:50%;background:#f3f4f6;border:1px solid #e5e7eb;display:inline-flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#6b7280;flex-shrink:0}
 .lm-team{font-size:13px;font-weight:700;color:#111827}
 .lm-score{font-size:11px;color:#6b7280;margin-top:1px}
 .lm-vs{font-size:10px;color:#d1d5db;padding:0 2px}
@@ -39,22 +39,23 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .qh-done{color:#166534;background:#dcfce7;border-color:#86efac}
 .qh-progress{color:#854d0e;background:#fef9c3;border-color:#fde68a}
 .qh-sep{color:rgba(255,255,255,.25);font-size:10px}
-/* RECENT SC */
+/* RECENT SC CARDS */
 .recent-col{display:flex;flex-direction:column}
 .recent-sc{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
-.rc-card{background:#fff;border-radius:10px;padding:15px 16px;cursor:pointer;transition:box-shadow .15s;box-shadow:0 2px 8px rgba(0,0,0,.1);display:flex;flex-direction:column}
+.rc-card{background:#fff;border-radius:10px;border-left:4px solid #1a3a6b;padding:14px 16px;cursor:pointer;transition:box-shadow .15s;box-shadow:0 2px 8px rgba(0,0,0,.1);display:flex;flex-direction:column;gap:3px}
 .rc-card:hover{box-shadow:0 4px 14px rgba(0,0,0,.16)}
-.rc-matchup{font-size:13px;font-weight:700;color:#111827;margin-bottom:3px;display:flex;align-items:center;gap:6px}
-.rc-logo{width:18px;height:18px;object-fit:contain;flex-shrink:0}
-.rc-logo-ph{width:18px;height:18px;border-radius:50%;background:#f3f4f6;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:6px;font-weight:700;color:#6b7280;flex-shrink:0}
-.rc-date{font-size:11px;color:#9ca3af;margin-bottom:9px}
-.rc-pills{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:9px}
+.rc-matchup{font-size:13px;font-weight:700;color:#111827;display:flex;align-items:center;gap:6px;flex-wrap:nowrap}
+.rc-logo{width:18px;height:18px;object-fit:contain;flex-shrink:0;vertical-align:middle}
+.rc-logo-ph{width:18px;height:18px;border-radius:50%;background:#f3f4f6;border:1px solid #e5e7eb;display:inline-flex;align-items:center;justify-content:center;font-size:6px;font-weight:700;color:#6b7280;flex-shrink:0}
+.rc-date{font-size:11px;color:#9ca3af}
+.rc-sc-date{font-size:11px;color:#6b7280}
+.rc-pills{display:flex;gap:4px;flex-wrap:wrap;margin-top:5px;margin-bottom:2px}
 .rc-pill{padding:2px 7px;border-radius:20px;font-size:10px;font-weight:600;border:1px solid}
 .rp-total{background:#f3f4f6;border-color:#e5e7eb;color:#374151}
 .rp-crit{background:#fee2e2;border-color:#fca5a5;color:#991b1b}
-.rc-reviewer{font-size:11px;color:#6b7280;margin-bottom:5px}
+.rc-reviewer{font-size:11px;color:#6b7280}
 .rc-reviewer b{color:#374151}
-.rc-done{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:700;color:#166534}
+.rc-done{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:700;color:#166534;margin-top:4px}
 .view-all-link{display:inline-flex;align-items:center;gap:5px;color:rgba(255,255,255,.55);font-size:12px;font-weight:600;cursor:pointer;transition:color .15s}
 .view-all-link:hover{color:#fff}
 /* SEARCH */
@@ -88,22 +89,26 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .qb-sep{width:1px;height:18px;background:#e5e7eb;margin:0 2px}
 table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden}
 thead{background:#f8fafc}
-th{padding:10px 16px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.3px;color:#6b7280;text-transform:uppercase;border-bottom:1px solid #e5e7eb;white-space:nowrap}
-td{padding:12px 16px;border-bottom:1px solid #f3f4f6;vertical-align:middle}
+th{padding:9px 14px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.3px;color:#6b7280;text-transform:uppercase;border-bottom:1px solid #e5e7eb;white-space:nowrap}
+td{padding:8px 14px;border-bottom:1px solid #f3f4f6;vertical-align:middle}
 tr:last-child td{border-bottom:none}
 tr:hover td{background:#fafbff}
-.game-matchup{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:#111827}
-.game-date{font-size:11px;color:#9ca3af;margin-top:3px}
+/* Game cell */
+.game-matchup{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:#111827}
+.game-matchup .t-logo{width:18px;height:18px;object-fit:contain;flex-shrink:0;vertical-align:middle}
+.game-matchup .t-ph{width:18px;height:18px;border-radius:50%;background:#f3f4f6;border:1px solid #e5e7eb;display:inline-flex;align-items:center;justify-content:center;font-size:6px;font-weight:700;color:#6b7280;flex-shrink:0}
+.game-at{color:#d1d5db;font-size:10px;font-weight:400}
+.game-date{font-size:11px;color:#9ca3af;margin-top:2px}
 /* QUARTER STATUS — plain colored text for table */
-.q-txt-row{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:6px}
+.q-txt-row{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:5px}
 .qt-done{font-size:11px;font-weight:600;color:#16a34a}
 .qt-progress{font-size:11px;font-weight:600;color:#d97706}
 .qt-sep{font-size:10px;color:#d1d5db}
-.td-num{font-size:14px;font-weight:600;color:#374151;text-align:center}
+.td-num{font-size:13px;font-weight:600;color:#374151;text-align:center}
 .td-person{font-size:12px;color:#374151;font-weight:500;white-space:nowrap}
 .td-date-s{font-size:11px;color:#9ca3af;margin-top:2px}
 .td-actions{text-align:center}
-.open-btn{padding:5px 14px;border:1px solid #bfdbfe;border-radius:7px;font-size:12px;font-weight:600;background:#eff6ff;color:#1a3a6b;cursor:pointer;white-space:nowrap}
+.open-btn{padding:4px 12px;border:1px solid #bfdbfe;border-radius:7px;font-size:12px;font-weight:600;background:#eff6ff;color:#1a3a6b;cursor:pointer;white-space:nowrap}
 .open-btn:hover{background:#dbeafe}
 </style>
 </head>
@@ -129,16 +134,16 @@ tr:hover td{background:#fafbff}
   <div class="hero-inner">
     <div class="hero-row">
 
-      <!-- LAST MODIFIED: first pass in-progress, no SC, no play count pills -->
+      <!-- LAST MODIFIED: first pass in-progress, no SC -->
       <div>
         <div class="sec-lbl">Last modified</div>
         <div class="lm-card" onclick="void(0)">
           <div class="lm-matchup">
-            <img src="Dallas_Wings_logo.svg.png" class="lm-logo" onerror="this.outerHTML='<div class=&quot;lm-logo-ph&quot;>DAL</div>'">
-            <div><div class="lm-team">Dallas Wings</div><div class="lm-score">—</div></div>
+            <img src="Dallas_Wings_logo.svg.png" class="lm-logo" onerror="this.style.display='none'">
+            <div><div class="lm-team">Dallas Wings</div><div class="lm-score">76</div></div>
             <div class="lm-vs">@</div>
-            <img src="Minnesota_Lynx_logo.svg.png" class="lm-logo" onerror="this.outerHTML='<div class=&quot;lm-logo-ph&quot;>MIN</div>'">
-            <div><div class="lm-team">Minnesota Lynx</div><div class="lm-score">—</div></div>
+            <img src="Minnesota_Lynx_logo.svg.png" class="lm-logo" onerror="this.style.display='none'">
+            <div><div class="lm-team">Minnesota Lynx</div><div class="lm-score">100</div></div>
           </div>
           <div class="lm-meta">Mon, Jun 9, 2026 &nbsp;·&nbsp; 8:00 PM</div>
           <div class="q-row-hero">
@@ -159,50 +164,53 @@ tr:hover td{background:#fafbff}
         <div class="recent-sc">
           <div class="rc-card" onclick="location='index.html'">
             <div class="rc-matchup">
-              <img src="toronto tempo logo.jpg" class="rc-logo" onerror="this.outerHTML='<div class=&quot;rc-logo-ph&quot;>TOR</div>'">
+              <img src="toronto tempo logo.jpg" class="rc-logo" onerror="this.style.display='none'">
               TOR
-              <span style="color:#d1d5db;font-size:10px;font-weight:400">@</span>
-              <img src="chicago sky logo.png" class="rc-logo" onerror="this.outerHTML='<div class=&quot;rc-logo-ph&quot;>CHI</div>'">
+              <span class="game-at">@</span>
+              <img src="chicago sky logo.png" class="rc-logo" onerror="this.style.display='none'">
               CHI
             </div>
             <div class="rc-date">05/27/2026</div>
+            <div class="rc-sc-date">SC: 06/01/2026</div>
             <div class="rc-pills">
               <span class="rc-pill rp-total">18 plays</span>
               <span class="rc-pill rp-crit">5 critical</span>
             </div>
-            <div class="rc-reviewer">SC: <b>Daniel Foley</b></div>
+            <div class="rc-reviewer">Reviewer: <b>Daniel Foley</b></div>
             <div class="rc-done"><i class="ti ti-circle-check" style="font-size:10px"></i> Complete</div>
           </div>
           <div class="rc-card" onclick="void(0)">
             <div class="rc-matchup">
-              <img src="New_Las_Vegas_Aces_WNBA_logo_2024.svg.png" class="rc-logo" onerror="this.outerHTML='<div class=&quot;rc-logo-ph&quot;>LVA</div>'">
+              <img src="New_Las_Vegas_Aces_WNBA_logo_2024.svg.png" class="rc-logo" onerror="this.style.display='none'">
               LVA
-              <span style="color:#d1d5db;font-size:10px;font-weight:400">@</span>
-              <img src="Los_Angeles_Sparks_logo.svg.png" class="rc-logo" onerror="this.outerHTML='<div class=&quot;rc-logo-ph&quot;>LAS</div>'">
+              <span class="game-at">@</span>
+              <img src="Los_Angeles_Sparks_logo.svg.png" class="rc-logo" onerror="this.style.display='none'">
               LAS
             </div>
             <div class="rc-date">06/02/2026</div>
+            <div class="rc-sc-date">SC: 06/09/2026</div>
             <div class="rc-pills">
               <span class="rc-pill rp-total">23 plays</span>
               <span class="rc-pill rp-crit">7 critical</span>
             </div>
-            <div class="rc-reviewer">SC: <b>Curtis Oakley Jr.</b></div>
+            <div class="rc-reviewer">Reviewer: <b>Curtis Oakley Jr.</b></div>
             <div class="rc-done"><i class="ti ti-circle-check" style="font-size:10px"></i> Complete</div>
           </div>
           <div class="rc-card" onclick="void(0)">
             <div class="rc-matchup">
-              <img src="Connecticut_Sun_logo.svg.png" class="rc-logo" onerror="this.outerHTML='<div class=&quot;rc-logo-ph&quot;>CON</div>'">
+              <img src="Connecticut_Sun_logo.svg.png" class="rc-logo" onerror="this.style.display='none'">
               CON
-              <span style="color:#d1d5db;font-size:10px;font-weight:400">@</span>
-              <img src="chicago sky logo.png" class="rc-logo" onerror="this.outerHTML='<div class=&quot;rc-logo-ph&quot;>CHI</div>'">
+              <span class="game-at">@</span>
+              <img src="chicago sky logo.png" class="rc-logo" onerror="this.style.display='none'">
               CHI
             </div>
             <div class="rc-date">06/05/2026</div>
+            <div class="rc-sc-date">SC: 06/08/2026</div>
             <div class="rc-pills">
               <span class="rc-pill rp-total">8 plays</span>
               <span class="rc-pill rp-crit">2 critical</span>
             </div>
-            <div class="rc-reviewer">SC: <b>Michael Abdenour</b></div>
+            <div class="rc-reviewer">Reviewer: <b>Michael Abdenour</b></div>
             <div class="rc-done"><i class="ti ti-circle-check" style="font-size:10px"></i> Complete</div>
           </div>
         </div>
@@ -223,7 +231,7 @@ tr:hover td{background:#fafbff}
       <div class="league-btns">
         <button class="lg-btn on" data-lg="all">All</button>
         <button class="lg-btn" data-lg="WNBA"><img src="WNBA LOGO.png" onerror="this.style.display='none'"> WNBA</button>
-        <button class="lg-btn" data-lg="NBA"><img src="nba-logo.svg" style="width:14px;height:14px;object-fit:contain;filter:invert(0)"> NBA</button>
+        <button class="lg-btn" data-lg="NBA"><img src="nba-logo.svg" style="width:14px;height:14px;object-fit:contain"> NBA</button>
         <button class="lg-btn" data-lg="GL">G League</button>
       </div>
     </div>
@@ -256,8 +264,6 @@ tr:hover td{background:#fafbff}
         <div class="qb">Complete</div>
         <div class="qb">In progress</div>
         <div class="qb">Pending</div>
-        <div class="qb-sep"></div>
-        <div class="qb">My assignments</div>
       </div>
       <div class="tbl-count">Showing 11 games</div>
     </div>
@@ -282,27 +288,26 @@ tr:hover td{background:#fafbff}
 
 <script>
 const LOGOS = {
-  'ATL':'Atlanta_Dream_logo.svg.png',
-  'CON':'Connecticut_Sun_logo.svg.png',
-  'DAL':'Dallas_Wings_logo.svg.png',
-  'GSV':'Golden_State_Valkyries_logo.svg.png',
-  'IND':'Indiana_Fever_logo.svg.png',
-  'LAS':'Los_Angeles_Sparks_logo.svg.png',
-  'LVA':'New_Las_Vegas_Aces_WNBA_logo_2024.svg.png',
-  'MIN':'Minnesota_Lynx_logo.svg.png',
-  'NYL':'New_York_Liberty_logo.svg.png',
-  'PHX':'Phoenix_Mercury_logo_2025.svg.png',
-  'PDX':'Portland_Fire_logo.svg.png',
-  'SEA':'Seattle_Storm_(2021)_logo.svg.png',
-  'CHI':'chicago sky logo.png',
-  'TOR':'toronto tempo logo.jpg',
+  ATL:'Atlanta_Dream_logo.svg.png',
+  CON:'Connecticut_Sun_logo.svg.png',
+  DAL:'Dallas_Wings_logo.svg.png',
+  GSV:'Golden_State_Valkyries_logo.svg.png',
+  IND:'Indiana_Fever_logo.svg.png',
+  LAS:'Los_Angeles_Sparks_logo.svg.png',
+  LVA:'New_Las_Vegas_Aces_WNBA_logo_2024.svg.png',
+  MIN:'Minnesota_Lynx_logo.svg.png',
+  NYL:'New_York_Liberty_logo.svg.png',
+  PHX:'Phoenix_Mercury_logo_2025.svg.png',
+  PDX:'Portland_Fire_logo.svg.png',
+  SEA:'Seattle_Storm_(2021)_logo.svg.png',
+  CHI:'chicago sky logo.png',
+  TOR:'toronto tempo logo.jpg',
 };
 
-function teamLogo(abbr, size=22) {
+function teamLogo(abbr, cls) {
   const src = LOGOS[abbr];
-  const ph = `<div style="width:${size}px;height:${size}px;border-radius:50%;background:#f3f4f6;border:1px solid #e5e7eb;display:inline-flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:#6b7280;flex-shrink:0">${abbr}</div>`;
-  if (!src) return ph;
-  return `<img src="${src}" style="width:${size}px;height:${size}px;object-fit:contain;flex-shrink:0" onerror="this.outerHTML=\`${ph.replace(/`/g,"'")}\`">`;
+  if (!src) return `<span class="t-ph">${abbr}</span>`;
+  return `<img src="${src}" class="${cls}" onerror="this.style.display='none'">`;
 }
 
 function qTextRow(quarters) {
@@ -351,7 +356,7 @@ function renderTable(games) {
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>
-        <div class="game-matchup">${teamLogo(g.away)} ${g.away} <span style="color:#d1d5db;font-size:11px">@</span> ${teamLogo(g.home)} ${g.home}</div>
+        <div class="game-matchup">${teamLogo(g.away,'t-logo')} ${g.away} <span class="game-at">@</span> ${teamLogo(g.home,'t-logo')} ${g.home}</div>
         <div class="game-date">${g.date}</div>
       </td>
       <td>${statusPill}${qTextRow(g.quarters)}</td>
@@ -376,7 +381,6 @@ document.querySelectorAll('.qb').forEach(btn => {
     if (f==='complete') filtered = GAMES.filter(g=>g.status==='done');
     else if (f==='in progress') filtered = GAMES.filter(g=>g.status==='progress');
     else if (f==='pending') filtered = GAMES.filter(g=>g.status==='pending');
-    else if (f==='my assignments') filtered = GAMES.filter(g=>g.sc==='Bridget Ng');
     renderTable(filtered);
   });
 });
