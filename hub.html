@@ -8,7 +8,6 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;color:#111827;background:#f3f4f6;min-height:100vh}
-/* NAV */
 .nav{background:#1a3a6b;height:48px;display:flex;align-items:center;padding:0 20px;gap:0;flex-shrink:0}
 .nav-logo{display:flex;align-items:center;gap:8px;padding-right:12px;border-right:1px solid rgba(255,255,255,.15);margin-right:4px}
 .nav-brand{color:#fff;font-size:11px;font-weight:500;line-height:1.3;opacity:.85}
@@ -17,14 +16,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .nl.on{color:#fff;border-bottom-color:rgba(255,255,255,.7);font-weight:600}
 .nav-av{width:30px;height:30px;border-radius:50%;background:#2d5aa0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;margin-left:auto;flex-shrink:0}
 /* HERO */
-.hero{background:#1a3a6b;padding:22px 28px 26px}
-.hero-inner{max-width:1200px;margin:0 auto}
-.hero-row{display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start}
-/* SECTION LABEL */
+.hero{background:#1a3a6b;padding:22px 0 26px}
+.hero-inner{max-width:1160px;margin:0 auto;padding:0 24px}
+.hero-row{display:grid;grid-template-columns:280px 1fr;gap:20px;align-items:start}
 .sec-lbl{font-size:9px;font-weight:700;letter-spacing:.7px;color:rgba(255,255,255,.4);text-transform:uppercase;margin-bottom:10px}
-/* LAST MODIFIED CARD — white */
-.lm-card{background:#fff;border-radius:12px;padding:16px 18px;cursor:pointer;transition:box-shadow .15s;box-shadow:0 2px 8px rgba(0,0,0,.12)}
-.lm-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.18)}
+/* LAST MODIFIED CARD */
+.lm-card{background:#fff;border-radius:12px;padding:16px 18px;cursor:pointer;transition:box-shadow .15s;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.lm-card:hover{box-shadow:0 4px 18px rgba(0,0,0,.22)}
 .lm-matchup{display:flex;align-items:center;gap:8px;margin-bottom:8px}
 .lm-logo{width:26px;height:26px;object-fit:contain;flex-shrink:0}
 .lm-logo-ph{width:26px;height:26px;border-radius:50%;background:#f3f4f6;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#6b7280;flex-shrink:0}
@@ -40,12 +38,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .lm-status{display:inline-flex;align-items:center;gap:5px}
 .lm-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
 .lm-status-txt{font-size:10px;font-weight:600}
-/* RECENT SC — white cards */
-.recent-col{display:flex;flex-direction:column;gap:0}
+/* RECENT SC */
+.recent-col{display:flex;flex-direction:column}
 .recent-sc{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
 .rc-card{background:#fff;border-radius:10px;padding:13px 14px;cursor:pointer;transition:box-shadow .15s;box-shadow:0 2px 8px rgba(0,0,0,.1);display:flex;flex-direction:column;gap:0}
 .rc-card:hover{box-shadow:0 4px 14px rgba(0,0,0,.16)}
 .rc-matchup{font-size:12px;font-weight:700;color:#111827;margin-bottom:3px;display:flex;align-items:center;gap:5px}
+.rc-logo{width:16px;height:16px;object-fit:contain;flex-shrink:0}
 .rc-logo-ph{width:16px;height:16px;border-radius:50%;background:#f3f4f6;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:6px;font-weight:700;color:#6b7280;flex-shrink:0}
 .rc-date{font-size:10px;color:#9ca3af;margin-bottom:8px}
 .rc-pills{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px}
@@ -53,26 +52,29 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .rc-reviewer{font-size:10px;color:#6b7280;margin-bottom:4px}
 .rc-reviewer b{color:#374151}
 .rc-done{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:700;color:#166534}
-/* VIEW ALL LINK */
-.view-all-link{display:inline-flex;align-items:center;gap:5px;color:rgba(255,255,255,.6);font-size:11px;font-weight:600;cursor:pointer;transition:color .15s;margin-top:2px}
+.view-all-link{display:inline-flex;align-items:center;gap:5px;color:rgba(255,255,255,.55);font-size:11px;font-weight:600;cursor:pointer;transition:color .15s}
 .view-all-link:hover{color:#fff}
-.view-all-link i{font-size:13px}
-/* SEARCH BAR */
-.search-bar{background:#fff;border-bottom:1px solid #e5e7eb;padding:12px 28px}
-.search-inner{max-width:1200px;margin:0 auto;display:flex;align-items:flex-end;gap:10px;justify-content:center}
+/* SEARCH */
+.search-bar{background:#fff;border-bottom:1px solid #e5e7eb;padding:12px 0}
+.search-inner{max-width:1160px;margin:0 auto;padding:0 24px;display:flex;align-items:flex-end;gap:10px;justify-content:center}
 .sb-field{display:flex;flex-direction:column;gap:3px}
 .sb-lbl{font-size:9px;font-weight:700;letter-spacing:.4px;color:#9ca3af;text-transform:uppercase}
-.sb-input{height:30px;padding:0 10px;border:1px solid #d1d5db;border-radius:7px;font-size:12px;color:#111827;background:#fff;outline:none;min-width:120px}
+.sb-input{height:30px;padding:0 10px;border:1px solid #d1d5db;border-radius:7px;font-size:12px;color:#111827;background:#fff;outline:none;min-width:110px}
 .sb-input:focus{border-color:#1a3a6b}
-.sb-select{height:30px;padding:0 8px;border:1px solid #d1d5db;border-radius:7px;font-size:12px;color:#111827;background:#fff;outline:none;cursor:pointer}
 .sb-sep{width:1px;height:28px;background:#e5e7eb;margin:0 4px;flex-shrink:0}
 .sb-check{display:flex;align-items:center;gap:6px;font-size:12px;color:#374151;cursor:pointer;padding-bottom:2px}
 .sb-check input{accent-color:#1a3a6b;width:14px;height:14px}
 .search-btn{height:30px;padding:0 18px;background:#1a3a6b;color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:5px}
 .search-btn:hover{background:#15326b}
 .clear-btn{height:30px;padding:0 12px;border:1px solid #d1d5db;border-radius:7px;font-size:12px;background:#fff;color:#6b7280;cursor:pointer}
+/* LEAGUE BUTTONS */
+.league-btns{display:flex;gap:5px;align-items:center}
+.lg-btn{display:flex;align-items:center;gap:5px;padding:4px 10px;border:1px solid #d1d5db;border-radius:7px;font-size:11px;font-weight:500;background:#fff;color:#6b7280;cursor:pointer;height:30px}
+.lg-btn:hover{background:#f9fafb}
+.lg-btn.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
+.lg-btn img{width:18px;height:18px;object-fit:contain}
 /* TABLE */
-.table-wrap{max-width:1200px;margin:0 auto;padding:20px 28px}
+.table-wrap{max-width:1160px;margin:0 auto;padding:20px 24px}
 .tbl-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .tbl-count{font-size:12px;color:#6b7280;margin-top:4px}
 .qb-row{display:flex;gap:5px;align-items:center}
@@ -86,20 +88,21 @@ th{padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacin
 td{padding:11px 14px;border-bottom:1px solid #f3f4f6;vertical-align:middle}
 tr:last-child td{border-bottom:none}
 tr:hover td{background:#fafbff}
-.td-game{min-width:160px}
-.game-matchup{font-size:12px;font-weight:600;color:#111827}
+.game-matchup{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:#111827}
+.t-logo{width:20px;height:20px;object-fit:contain;flex-shrink:0}
+.t-logo-ph{width:20px;height:20px;border-radius:50%;background:#f3f4f6;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:#6b7280;flex-shrink:0}
 .game-date{font-size:10px;color:#9ca3af;margin-top:2px}
 .game-id{font-size:9px;color:#d1d5db;margin-top:1px}
-.status-pill{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;white-space:nowrap}
-.sp-done{background:#dcfce7;color:#166534;border:1px solid #86efac}
-.sp-progress{background:#fef9c3;color:#854d0e;border:1px solid #fde68a}
-.sp-pending{background:#f3f4f6;color:#9ca3af;border:1px solid #e5e7eb}
-.sp-dot{width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.7}
+/* QUARTER STATUS */
+.q-row{display:flex;align-items:center;gap:3px;flex-wrap:wrap;margin-top:5px}
+.q-chip{font-size:9px;font-weight:700;padding:1px 5px;border-radius:4px;white-space:nowrap}
+.q-done{color:#166534;background:#dcfce7}
+.q-progress{color:#854d0e;background:#fef9c3}
+.q-pending{color:#9ca3af;background:#f3f4f6}
+.q-sep{color:#d1d5db;font-size:9px}
 .td-num{font-size:13px;font-weight:600;color:#374151;text-align:center}
 .td-person{font-size:11px;color:#374151;font-weight:500;white-space:nowrap}
-.td-date{font-size:10px;color:#9ca3af;margin-top:2px}
-.td-dur{font-size:12px;font-weight:600;color:#374151;text-align:center}
-.td-dur span{font-size:10px;font-weight:400;color:#9ca3af}
+.td-date-s{font-size:10px;color:#9ca3af;margin-top:2px}
 .td-actions{text-align:center}
 .open-btn{padding:4px 12px;border:1px solid #bfdbfe;border-radius:7px;font-size:11px;font-weight:600;background:#eff6ff;color:#1a3a6b;cursor:pointer;white-space:nowrap}
 .open-btn:hover{background:#dbeafe}
@@ -113,7 +116,7 @@ tr:hover td{background:#fafbff}
     <div class="nav-brand">Bridget Review<br>System 1.0</div>
   </div>
   <span class="nl on">HOME</span>
-  <span class="nl" onclick="location='index.html'" style="color:#fff;border-bottom:2px solid rgba(255,255,255,.7);font-weight:600">SECOND CHECK</span>
+  <span class="nl" onclick="location='index.html'">SECOND CHECK</span>
   <span class="nl">RM REVIEW</span>
   <span class="nl">FINAL L2M REVIEW</span>
   <span class="nl">INDEPENDENT REVIEW</span>
@@ -123,31 +126,37 @@ tr:hover td{background:#fafbff}
   <div class="nav-av">BN</div>
 </div>
 
-<!-- HERO -->
 <div class="hero">
   <div class="hero-inner">
     <div class="hero-row">
 
-      <!-- LAST MODIFIED -->
+      <!-- LAST MODIFIED: in-progress first pass game -->
       <div>
         <div class="sec-lbl">Last modified</div>
-        <div class="lm-card" onclick="location='index.html'">
+        <div class="lm-card" onclick="void(0)">
           <div class="lm-matchup">
-            <img src="toronto tempo logo.jpg" class="lm-logo" onerror="this.outerHTML='<div class=&quot;lm-logo-ph&quot;>TOR</div>'">
-            <div><div class="lm-team">Toronto Tempo</div><div class="lm-score">111</div></div>
+            <img src="Dallas_Wings_logo.svg.png" class="lm-logo" onerror="this.outerHTML='<div class=&quot;lm-logo-ph&quot;>DAL</div>'">
+            <div><div class="lm-team">Dallas Wings</div><div class="lm-score">—</div></div>
             <div class="lm-vs">@</div>
-            <img src="chicago sky logo.png" class="lm-logo" onerror="this.outerHTML='<div class=&quot;lm-logo-ph&quot;>CHI</div>'">
-            <div><div class="lm-team">Chicago Sky</div><div class="lm-score">104</div></div>
+            <div class="lm-logo-ph">MIN</div>
+            <div><div class="lm-team">Minnesota Lynx</div><div class="lm-score">—</div></div>
           </div>
-          <div class="lm-meta">Wed, May 27, 2026 &nbsp;·&nbsp; #1022600050</div>
+          <div class="lm-meta">Mon, Jun 9, 2026 &nbsp;·&nbsp; #1022600087</div>
           <div class="lm-pills">
-            <span class="lm-pill lm-total">18 plays</span>
-            <span class="lm-pill lm-crit">5 critical</span>
-            <span class="lm-pill lm-rating">8 rating</span>
+            <span class="lm-pill lm-total">14 plays</span>
+            <span class="lm-pill lm-crit">3 critical</span>
+          </div>
+          <div style="margin-bottom:8px">
+            <div class="q-row">
+              <span class="q-chip q-done">Q1 (BN)</span><span class="q-sep">,</span>
+              <span class="q-chip q-done">Q2 (BN)</span><span class="q-sep">,</span>
+              <span class="q-chip q-progress">Q3 (BN)</span><span class="q-sep">,</span>
+              <span class="q-chip q-pending">Q4 (BN)</span>
+            </div>
           </div>
           <div class="lm-status">
             <div class="lm-dot" style="background:#f59e0b"></div>
-            <span class="lm-status-txt" style="color:#d97706">In progress</span>
+            <span class="lm-status-txt" style="color:#d97706">First pass in progress</span>
           </div>
         </div>
       </div>
@@ -156,11 +165,30 @@ tr:hover td{background:#fafbff}
       <div class="recent-col">
         <div class="sec-lbl">Recently second checked</div>
         <div class="recent-sc">
+          <!-- TOR @ CHI moved to first -->
+          <div class="rc-card" onclick="location='index.html'">
+            <div class="rc-matchup">
+              <img src="toronto tempo logo.jpg" class="rc-logo" onerror="this.outerHTML='<div class=&quot;rc-logo-ph&quot;>TOR</div>'">
+              TOR
+              <span style="color:#d1d5db;font-size:10px;font-weight:400">@</span>
+              <img src="chicago sky logo.png" class="rc-logo" onerror="this.outerHTML='<div class=&quot;rc-logo-ph&quot;>CHI</div>'">
+              CHI
+            </div>
+            <div class="rc-date">05/27/2026 · #1022600050</div>
+            <div class="rc-pills">
+              <span class="rc-pill lm-total">18 plays</span>
+              <span class="rc-pill lm-crit">5 critical</span>
+            </div>
+            <div class="rc-reviewer">SC: <b>Daniel Foley</b></div>
+            <div class="rc-done"><i class="ti ti-circle-check" style="font-size:10px"></i> Complete</div>
+          </div>
           <div class="rc-card" onclick="void(0)">
             <div class="rc-matchup">
-              <div class="rc-logo-ph">LV</div>LVA
+              <img src="New_Las_Vegas_Aces_WNBA_logo_2024.svg.png" class="rc-logo" onerror="this.outerHTML='<div class=&quot;rc-logo-ph&quot;>LVA</div>'">
+              LVA
               <span style="color:#d1d5db;font-size:10px;font-weight:400">@</span>
-              <div class="rc-logo-ph">LAS</div>LAS
+              <img src="Los_Angeles_Sparks_logo.svg.png" class="rc-logo" onerror="this.outerHTML='<div class=&quot;rc-logo-ph&quot;>LAS</div>'">
+              LAS
             </div>
             <div class="rc-date">06/02/2026 · #1022600069</div>
             <div class="rc-pills">
@@ -172,9 +200,11 @@ tr:hover td{background:#fafbff}
           </div>
           <div class="rc-card" onclick="void(0)">
             <div class="rc-matchup">
-              <div class="rc-logo-ph">CON</div>CON
+              <img src="Connecticut_Sun_logo.svg.png" class="rc-logo" onerror="this.outerHTML='<div class=&quot;rc-logo-ph&quot;>CON</div>'">
+              CON
               <span style="color:#d1d5db;font-size:10px;font-weight:400">@</span>
-              <div class="rc-logo-ph">CHI</div>CHI
+              <img src="chicago sky logo.png" class="rc-logo" onerror="this.outerHTML='<div class=&quot;rc-logo-ph&quot;>CHI</div>'">
+              CHI
             </div>
             <div class="rc-date">06/05/2026 · #1022600074</div>
             <div class="rc-pills">
@@ -184,23 +214,9 @@ tr:hover td{background:#fafbff}
             <div class="rc-reviewer">SC: <b>Michael Abdenour</b></div>
             <div class="rc-done"><i class="ti ti-circle-check" style="font-size:10px"></i> Complete</div>
           </div>
-          <div class="rc-card" onclick="void(0)">
-            <div class="rc-matchup">
-              <div class="rc-logo-ph">PHX</div>PHX
-              <span style="color:#d1d5db;font-size:10px;font-weight:400">@</span>
-              <div class="rc-logo-ph">NYL</div>NYL
-            </div>
-            <div class="rc-date">05/29/2026 · #1022600056</div>
-            <div class="rc-pills">
-              <span class="rc-pill lm-total">7 plays</span>
-              <span class="rc-pill lm-crit">3 critical</span>
-            </div>
-            <div class="rc-reviewer">SC: <b>Curtis Oakley Jr.</b></div>
-            <div class="rc-done"><i class="ti ti-circle-check" style="font-size:10px"></i> Complete</div>
-          </div>
         </div>
         <div class="view-all-link" onclick="document.getElementById('all-section').scrollIntoView({behavior:'smooth'})">
-          View all second checks <i class="ti ti-arrow-right"></i>
+          View all second checks <i class="ti ti-arrow-right" style="font-size:12px"></i>
         </div>
       </div>
 
@@ -213,12 +229,14 @@ tr:hover td{background:#fafbff}
   <div class="search-inner">
     <div class="sb-field">
       <div class="sb-lbl">League</div>
-      <select class="sb-select"><option>WNBA</option><option>NBA</option><option>G League</option></select>
+      <div class="league-btns">
+        <button class="lg-btn on" data-lg="all">All</button>
+        <button class="lg-btn" data-lg="WNBA"><img src="WNBA LOGO.png" onerror="this.style.display='none'"> WNBA</button>
+        <button class="lg-btn" data-lg="NBA">NBA</button>
+        <button class="lg-btn" data-lg="GL">G League</button>
+      </div>
     </div>
-    <div class="sb-field">
-      <div class="sb-lbl">Status</div>
-      <select class="sb-select"><option>— All —</option><option>Complete</option><option>In Progress</option><option>Pending</option></select>
-    </div>
+    <div class="sb-sep"></div>
     <div class="sb-field">
       <div class="sb-lbl">Date range from</div>
       <input type="date" class="sb-input" value="2026-05-12">
@@ -261,7 +279,6 @@ tr:hover td{background:#fafbff}
         <th>Last Modified By</th>
         <th>First Modified By</th>
         <th>Published Date</th>
-        <th style="text-align:center">Duration (min)</th>
         <th>SC Reviewer</th>
         <th style="text-align:center">Actions</th>
       </tr>
@@ -271,48 +288,87 @@ tr:hover td{background:#fafbff}
 </div>
 
 <script>
+const LOGOS = {
+  'ATL':'Atlanta_Dream_logo.svg.png',
+  'CON':'Connecticut_Sun_logo.svg.png',
+  'DAL':'Dallas_Wings_logo.svg.png',
+  'GSV':'Golden_State_Valkyries_logo.svg.png',
+  'IND':'Indiana_Fever_logo.svg.png',
+  'LAS':'Los_Angeles_Sparks_logo.svg.png',
+  'LVA':'New_Las_Vegas_Aces_WNBA_logo_2024.svg.png',
+  'NYL':'New_York_Liberty_logo.svg.png',
+  'PHX':'Phoenix_Mercury_logo_2025.svg.png',
+  'PDX':'Portland_Fire_logo.svg.png',
+  'SEA':'Seattle_Storm_(2021)_logo.svg.png',
+  'CHI':'chicago sky logo.png',
+  'TOR':'toronto tempo logo.jpg',
+};
+
+function teamLogo(abbr, size=20) {
+  const src = LOGOS[abbr];
+  if (src) return `<img src="${src}" style="width:${size}px;height:${size}px;object-fit:contain;flex-shrink:0" onerror="this.outerHTML='<div style=\'width:${size}px;height:${size}px;border-radius:50%;background:#f3f4f6;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:#6b7280;flex-shrink:0\'>${abbr}</div>'">`;
+  return `<div style="width:${size}px;height:${size}px;border-radius:50%;background:#f3f4f6;border:1px solid #e5e7eb;display:inline-flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:#6b7280;flex-shrink:0">${abbr}</div>`;
+}
+
+function qChips(quarters) {
+  if (!quarters) return '';
+  return '<div class="q-row">' + quarters.map((q,i) =>
+    `<span class="q-chip q-${q.status}">${q.q} (${q.by})</span>${i < quarters.length-1 ? '<span class="q-sep">,</span>' : ''}`
+  ).join('') + '</div>';
+}
+
 const GAMES = [
-  {id:'1022600087',date:'06/09/2026',away:'DAL',home:'MIN',plays:14,crit:3,status:'progress',lastBy:'Bridget Ng',lastDate:'6/11/2026 8:03 AM',firstBy:'Bridget Ng',firstDate:'6/10/2026 8:04 AM',published:'',duration:'',sc:'Bridget Ng'},
-  {id:'1022600080',date:'06/06/2026',away:'IND',home:'NYL',plays:18,crit:5,status:'progress',lastBy:'Daniel Foley',lastDate:'6/10/2026 9:08 AM',firstBy:'Bridget Ng',firstDate:'6/8/2026 8:47 AM',published:'',duration:'',sc:'Daniel Foley'},
-  {id:'1022600074',date:'06/05/2026',away:'CON',home:'CHI',plays:8,crit:2,status:'done',lastBy:'Michael Abdenour',lastDate:'6/8/2026 11:02 AM',firstBy:'Bridget Ng',firstDate:'6/6/2026 6:51 AM',published:'6/8/2026 11:03 AM',duration:'52',sc:'Michael Abdenour'},
-  {id:'1022600069',date:'06/02/2026',away:'LVA',home:'LAS',plays:23,crit:7,status:'done',lastBy:'Curtis Oakley Jr.',lastDate:'6/9/2026 1:59 PM',firstBy:'Bridget Ng',firstDate:'6/3/2026 8:14 AM',published:'6/9/2026 1:59 PM',duration:'149',sc:'Curtis Oakley Jr.'},
-  {id:'1022600059',date:'05/29/2026',away:'ATL',home:'PDX',plays:4,crit:1,status:'done',lastBy:'Michael Gargin',lastDate:'6/2/2026 1:26 PM',firstBy:'Bridget Ng',firstDate:'6/1/2026 7:42 AM',published:'6/2/2026 1:32 PM',duration:'29',sc:'Michael Gargin'},
-  {id:'1022600056',date:'05/29/2026',away:'PHX',home:'NYL',plays:7,crit:3,status:'done',lastBy:'Curtis Oakley Jr.',lastDate:'6/4/2026 5:41 PM',firstBy:'Bridget Ng',firstDate:'5/30/2026 7:59 AM',published:'6/4/2026 5:51 PM',duration:'129',sc:'Curtis Oakley Jr.'},
-  {id:'1022600050',date:'05/27/2026',away:'TOR',home:'CHI',plays:18,crit:5,status:'progress',lastBy:'Daniel Foley',lastDate:'6/1/2026 10:43 AM',firstBy:'Bridget Ng',firstDate:'5/28/2026 8:09 AM',published:'',duration:'98',sc:'Daniel Foley',link:'index.html'},
-  {id:'1022600045',date:'05/24/2026',away:'DAL',home:'NYL',plays:10,crit:2,status:'done',lastBy:'Michael Gargin',lastDate:'5/29/2026 3:22 PM',firstBy:'Bridget Ng',firstDate:'5/26/2026 8:02 AM',published:'5/29/2026 3:23 PM',duration:'79',sc:'Michael Gargin'},
-  {id:'1022600039',date:'05/22/2026',away:'GSV',home:'IND',plays:17,crit:6,status:'done',lastBy:'Curtis Oakley Jr.',lastDate:'6/2/2026 11:54 AM',firstBy:'Bridget Ng',firstDate:'5/23/2026 6:49 AM',published:'6/2/2026 11:54 AM',duration:'245',sc:'Curtis Oakley Jr.'},
-  {id:'1022600037',date:'05/21/2026',away:'LAS',home:'PHX',plays:7,crit:2,status:'done',lastBy:'Daniel Foley',lastDate:'5/26/2026 10:35 PM',firstBy:'Bridget Ng',firstDate:'5/22/2026 7:33 AM',published:'5/26/2026 10:36 PM',duration:'111',sc:'Daniel Foley'},
-  {id:'1022600025',date:'05/17/2026',away:'CHI',home:'MIN',plays:4,crit:0,status:'done',lastBy:'Daniel Foley',lastDate:'5/19/2026 2:56 PM',firstBy:'Bridget Ng',firstDate:'5/18/2026 8:13 AM',published:'5/19/2026 4:58 PM',duration:'32',sc:'Daniel Foley'},
+  {id:'1022600087',date:'06/09/2026',away:'DAL',home:'MIN',plays:14,crit:3,status:'progress',lastBy:'Bridget Ng',lastDate:'6/11/2026 8:03 AM',firstBy:'Bridget Ng',firstDate:'6/10/2026 8:04 AM',published:'',sc:'Bridget Ng',
+   quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'progress'},{q:'Q4',by:'BN',status:'pending'}]},
+  {id:'1022600080',date:'06/06/2026',away:'IND',home:'NYL',plays:18,crit:5,status:'progress',lastBy:'Daniel Foley',lastDate:'6/10/2026 9:08 AM',firstBy:'Bridget Ng',firstDate:'6/8/2026 8:47 AM',published:'',sc:'Daniel Foley',
+   quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'DF',status:'progress'},{q:'Q4',by:'DF',status:'pending'}]},
+  {id:'1022600074',date:'06/05/2026',away:'CON',home:'CHI',plays:8,crit:2,status:'done',lastBy:'Michael Abdenour',lastDate:'6/8/2026 11:02 AM',firstBy:'Bridget Ng',firstDate:'6/6/2026 6:51 AM',published:'6/8/2026 11:03 AM',sc:'Michael Abdenour',
+   quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'done'},{q:'Q4',by:'BN',status:'done'}]},
+  {id:'1022600069',date:'06/02/2026',away:'LVA',home:'LAS',plays:23,crit:7,status:'done',lastBy:'Curtis Oakley Jr.',lastDate:'6/9/2026 1:59 PM',firstBy:'Bridget Ng',firstDate:'6/3/2026 8:14 AM',published:'6/9/2026 1:59 PM',sc:'Curtis Oakley Jr.',
+   quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'done'},{q:'Q4',by:'BN',status:'done'}]},
+  {id:'1022600059',date:'05/29/2026',away:'ATL',home:'PDX',plays:4,crit:1,status:'done',lastBy:'Michael Gargin',lastDate:'6/2/2026 1:26 PM',firstBy:'Bridget Ng',firstDate:'6/1/2026 7:42 AM',published:'6/2/2026 1:32 PM',sc:'Michael Gargin',
+   quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'done'},{q:'Q4',by:'BN',status:'done'}]},
+  {id:'1022600056',date:'05/29/2026',away:'PHX',home:'NYL',plays:7,crit:3,status:'done',lastBy:'Curtis Oakley Jr.',lastDate:'6/4/2026 5:41 PM',firstBy:'Bridget Ng',firstDate:'5/30/2026 7:59 AM',published:'6/4/2026 5:51 PM',sc:'Curtis Oakley Jr.',
+   quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'done'},{q:'Q4',by:'BN',status:'done'}]},
+  {id:'1022600050',date:'05/27/2026',away:'TOR',home:'CHI',plays:18,crit:5,status:'done',lastBy:'Daniel Foley',lastDate:'6/1/2026 10:43 AM',firstBy:'Bridget Ng',firstDate:'5/28/2026 8:09 AM',published:'6/1/2026 10:44 AM',sc:'Daniel Foley',link:'index.html',
+   quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'done'},{q:'Q4',by:'BN',status:'done'}]},
+  {id:'1022600045',date:'05/24/2026',away:'DAL',home:'NYL',plays:10,crit:2,status:'done',lastBy:'Michael Gargin',lastDate:'5/29/2026 3:22 PM',firstBy:'Bridget Ng',firstDate:'5/26/2026 8:02 AM',published:'5/29/2026 3:23 PM',sc:'Michael Gargin',
+   quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'done'},{q:'Q4',by:'BN',status:'done'}]},
+  {id:'1022600039',date:'05/22/2026',away:'GSV',home:'IND',plays:17,crit:6,status:'done',lastBy:'Curtis Oakley Jr.',lastDate:'6/2/2026 11:54 AM',firstBy:'Bridget Ng',firstDate:'5/23/2026 6:49 AM',published:'6/2/2026 11:54 AM',sc:'Curtis Oakley Jr.',
+   quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'done'},{q:'Q4',by:'BN',status:'done'}]},
+  {id:'1022600037',date:'05/21/2026',away:'LAS',home:'PHX',plays:7,crit:2,status:'done',lastBy:'Daniel Foley',lastDate:'5/26/2026 10:35 PM',firstBy:'Bridget Ng',firstDate:'5/22/2026 7:33 AM',published:'5/26/2026 10:36 PM',sc:'Daniel Foley',
+   quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'done'},{q:'Q4',by:'BN',status:'done'}]},
+  {id:'1022600025',date:'05/17/2026',away:'CHI',home:'MIN',plays:4,crit:0,status:'done',lastBy:'Daniel Foley',lastDate:'5/19/2026 2:56 PM',firstBy:'Bridget Ng',firstDate:'5/18/2026 8:13 AM',published:'5/19/2026 4:58 PM',sc:'Daniel Foley',
+   quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'done'},{q:'Q4',by:'BN',status:'done'}]},
 ];
 
 function renderTable(games) {
   const tbody = document.getElementById('game-tbody');
   tbody.innerHTML = '';
   games.forEach(g => {
-    const statusHtml = g.status === 'done'
-      ? '<span class="status-pill sp-done"><span class="sp-dot"></span> Complete</span>'
+    const statusPill = g.status === 'done'
+      ? '<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;background:#dcfce7;color:#166534;border:1px solid #86efac"><span style="width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.7"></span>Complete</span>'
       : g.status === 'progress'
-      ? '<span class="status-pill sp-progress"><span class="sp-dot"></span> In progress</span>'
-      : '<span class="status-pill sp-pending"><span class="sp-dot"></span> Pending</span>';
+      ? '<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;background:#fef9c3;color:#854d0e;border:1px solid #fde68a"><span style="width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.7"></span>In progress</span>'
+      : '<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;background:#f3f4f6;color:#9ca3af;border:1px solid #e5e7eb">Pending</span>';
     const tr = document.createElement('tr');
     tr.innerHTML = `
-      <td class="td-game">
-        <div class="game-matchup">${g.away} <span style="color:#d1d5db;font-size:10px">@</span> ${g.home}</div>
+      <td>
+        <div class="game-matchup">${teamLogo(g.away)} ${g.away} <span style="color:#d1d5db;font-size:10px">@</span> ${teamLogo(g.home)} ${g.home}</div>
         <div class="game-date">${g.date}</div>
         <div class="game-id">#${g.id}</div>
       </td>
-      <td>${statusHtml}</td>
+      <td>${statusPill}${qChips(g.quarters)}</td>
       <td class="td-num">${g.plays}</td>
-      <td><div class="td-person">${g.lastBy}</div><div class="td-date">${g.lastDate}</div></td>
-      <td><div class="td-person">${g.firstBy}</div><div class="td-date">${g.firstDate}</div></td>
-      <td><div class="td-date" style="font-size:11px;color:#374151">${g.published || '—'}</div></td>
-      <td class="td-dur">${g.duration ? g.duration + ' <span>min</span>' : '—'}</td>
+      <td><div class="td-person">${g.lastBy}</div><div class="td-date-s">${g.lastDate}</div></td>
+      <td><div class="td-person">${g.firstBy}</div><div class="td-date-s">${g.firstDate}</div></td>
+      <td><div class="td-date-s" style="font-size:11px;color:#374151">${g.published||'—'}</div></td>
       <td><div class="td-person">${g.sc}</div></td>
       <td class="td-actions"><button class="open-btn" onclick="location='${g.link||'#'}'"><i class="ti ti-arrow-right" style="font-size:11px"></i> Open</button></td>
     `;
     tbody.appendChild(tr);
   });
-  document.querySelector('.tbl-count').textContent = 'Showing ' + games.length + ' game' + (games.length !== 1 ? 's' : '');
+  document.querySelector('.tbl-count').textContent = 'Showing ' + games.length + ' game' + (games.length!==1?'s':'');
 }
 
 document.querySelectorAll('.qb').forEach(btn => {
@@ -321,11 +377,18 @@ document.querySelectorAll('.qb').forEach(btn => {
     this.classList.add('on');
     const f = this.textContent.trim().toLowerCase();
     let filtered = GAMES;
-    if (f === 'complete') filtered = GAMES.filter(g => g.status === 'done');
-    else if (f === 'in progress') filtered = GAMES.filter(g => g.status === 'progress');
-    else if (f === 'pending') filtered = GAMES.filter(g => g.status === 'pending');
-    else if (f === 'my assignments') filtered = GAMES.filter(g => g.sc === 'Bridget Ng');
+    if (f==='complete') filtered = GAMES.filter(g=>g.status==='done');
+    else if (f==='in progress') filtered = GAMES.filter(g=>g.status==='progress');
+    else if (f==='pending') filtered = GAMES.filter(g=>g.status==='pending');
+    else if (f==='my assignments') filtered = GAMES.filter(g=>g.sc==='Bridget Ng');
     renderTable(filtered);
+  });
+});
+
+document.querySelectorAll('.lg-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.lg-btn').forEach(b => b.classList.remove('on'));
+    this.classList.add('on');
   });
 });
 
