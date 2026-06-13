@@ -303,6 +303,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .rp-clip-btn{padding:3px 10px;border:1px solid #bfdbfe;border-radius:5px;font-size:10px;font-weight:600;background:#eff6ff;color:#1d4ed8;cursor:pointer}
 .rp-clip-btn:hover{background:#dbeafe}
 .rp-hotkeys-btn{padding:3px 10px;border:1px solid #e5e7eb;border-radius:5px;font-size:10px;font-weight:500;background:#fff;color:#6b7280;cursor:pointer;margin-left:auto}
+/* POSSESSION QUEUE */
+.poss-row{padding:6px 10px 6px 12px;display:flex;align-items:center;gap:6px;cursor:pointer;border-bottom:1px solid #f3f4f6;border-left:3px solid transparent;background:#f9fafb}
+.poss-row:hover{background:#f3f4f6}
+.poss-row.sel{background:#edf2f7;border-left-color:#94a3b8}
+.poss-team{font-size:10px;font-weight:700;letter-spacing:.3px;min-width:28px;flex-shrink:0}
+.poss-time{font-size:10px;color:#9ca3af;flex:1}
+.poss-ev-count{font-size:9px;padding:1px 5px;background:#e5e7eb;border-radius:3px;color:#6b7280;font-weight:700;flex-shrink:0}
+.poss-chev{font-size:10px;color:#d1d5db;flex-shrink:0}
+.poss-events{background:#fff}
+.pq-ev-row{padding:6px 10px 6px 24px;display:flex;align-items:center;gap:7px;cursor:pointer;border-bottom:1px solid #f3f4f6;border-left:3px solid transparent}
+.pq-ev-row:hover{background:#eff6ff}
+.pq-ev-row.sel{background:#eff6ff;border-left-color:#1a3a6b}
+.pq-ev-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.pq-ev-info{flex:1;min-width:0}
+.pq-ev-type{font-size:11px;color:#111827;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pq-ev-players{font-size:10px;color:#9ca3af;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 /* GH REFS */
 .gh-refs{font-size:11px;color:#6b7280;margin-top:3px}
 .gh-refs span{margin:0 2px}
@@ -432,8 +448,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
     <div class="sb-hdr-rv" id="sb-hdr-rv">
       <div class="sb-filter-lbl">FILTER EVENTS</div>
       <div class="sb-q-row">
-        <span class="sb-q on" data-q="all" onclick="rvQf(this)">All</span>
-        <span class="sb-q" data-q="Q1" onclick="rvQf(this)">Q1</span>
+        <span class="sb-q on" data-q="Q1" onclick="rvQf(this)">Q1</span>
         <span class="sb-q" data-q="Q2" onclick="rvQf(this)">Q2</span>
         <span class="sb-q" data-q="Q3" onclick="rvQf(this)">Q3</span>
         <span class="sb-q" data-q="Q4" onclick="rvQf(this)">Q4</span>
@@ -461,10 +476,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
           <thead>
             <tr><th>Type</th><th>Player</th><th>Opponent</th><th>Official</th><th>Loc</th><th>Infraction Rating</th><th>Observability</th></tr>
           </thead>
-          <tbody id="rv-tbody"></tbody>
+          <tbody id="rv-tbody">
+            <tr id="rv-tbl-placeholder"><td colspan="7" style="text-align:center;padding:14px;color:#9ca3af;font-style:italic;font-size:12px">Select an event from the queue to review</td></tr>
+          </tbody>
         </table>
       </div>
-      <div class="rv-form-area">
+      <div class="rv-no-sel" id="rv-no-sel" style="flex:1;display:flex;align-items:center;justify-content:center;background:#f9fafb">
+        <div style="text-align:center">
+          <div style="font-size:32px;margin-bottom:10px">🏀</div>
+          <div style="font-size:13px;font-weight:600;color:#374151;margin-bottom:4px">No event selected</div>
+          <div style="font-size:11px;color:#9ca3af">Click an event in the queue to start rating</div>
+        </div>
+      </div>
+      <div class="rv-form-area" id="rv-form-area" style="display:none">
         <div class="rv-form-body">
           <div class="rv-form-main">
             <div class="rv-frow">
@@ -1046,6 +1070,146 @@ function sbLabel(p) {
 }
 
 let cur = 0, flagged = new Set(), playlist = new Set(), viewed = new Set(), collection = new Set(), activeQ = 'all', activeT = 'all';
+let activePoss = null, curRvEvent = null, activeQ_rv = 'Q1';
+
+// --- Possession queue data ---
+function parsePlaySec(t) {
+  const m = t.match(/(\d+):(\d+\.?\d*)/);
+  return m ? parseInt(m[1]) * 60 + parseFloat(m[2]) : 0;
+}
+function fmtSec(s) {
+  const m = Math.floor(s / 60);
+  const sec = Math.round(s % 60);
+  return m + ':' + String(sec).padStart(2, '0');
+}
+const DUR_SEQ = [14,13,16,12,15,10,17,13,14,11,16,15,12,13,14,11,15,13,14,12,17,11,15,14,13,15,12,16,14,11,13,15,14,12,16,13,11,15,14,12,13,16,14,15,12,13];
+const POSS_DATA = [];
+['Q1','Q2','Q3','Q4'].forEach(q => {
+  let sec = 600, idx = 0;
+  const teams = ['TOR','CHI'];
+  while (sec > 0 && idx < 50) {
+    const team = teams[idx % 2];
+    const dur = Math.min(DUR_SEQ[idx % DUR_SEQ.length], sec);
+    const start = sec;
+    sec = Math.max(0, sec - dur);
+    const events = PLAYS.filter(p => {
+      if (p.quarter !== q) return false;
+      const t2 = parsePlaySec(p.time);
+      return t2 <= start && t2 > sec;
+    });
+    POSS_DATA.push({ id: `${q}-${idx}`, quarter: q, team, start, end: sec, idx, events });
+    idx++;
+  }
+});
+
+// --- Review tab queue ---
+function buildRvSidebar() {
+  const list = document.getElementById('sb-list');
+  if (!list) return;
+  list.innerHTML = '';
+  const qPoss = POSS_DATA.filter(p => p.quarter === activeQ_rv);
+  qPoss.forEach(poss => {
+    const isExp = poss.id === activePoss;
+    const teamColor = poss.team === 'TOR' ? '#1a3a6b' : '#b91c1c';
+    const row = document.createElement('div');
+    row.className = 'poss-row' + (isExp ? ' sel' : '');
+    row.innerHTML =
+      `<span class="poss-team" style="color:${teamColor}">${poss.team}</span>` +
+      `<span class="poss-time">${poss.quarter} ${fmtSec(poss.start)}</span>` +
+      (poss.events.length ? `<span class="poss-ev-count">${poss.events.length}</span>` : '') +
+      `<i class="ti ti-chevron-${isExp?'down':'right'} poss-chev"></i>`;
+    row.onclick = () => {
+      activePoss = (activePoss === poss.id) ? null : poss.id;
+      buildRvSidebar();
+    };
+    list.appendChild(row);
+    if (isExp && poss.events.length > 0) {
+      poss.events.forEach(ev => {
+        const evRow = document.createElement('div');
+        const isSel = curRvEvent === ev.id;
+        evRow.className = 'pq-ev-row' + (isSel ? ' sel' : '');
+        const tierColor = (TIER_META[ev.tier] || {}).color || '#6b7280';
+        evRow.innerHTML =
+          `<span class="pq-ev-dot" style="background:${tierColor}"></span>` +
+          `<div class="pq-ev-info">` +
+          `<div class="pq-ev-type">${ev.event}</div>` +
+          `<div class="pq-ev-players">${ev.player} · ${ev.opp}</div>` +
+          `</div>`;
+        evRow.onclick = (e) => { e.stopPropagation(); selectRvEvent(ev.id); };
+        list.appendChild(evRow);
+      });
+    }
+  });
+}
+
+function selectRvEvent(evId) {
+  curRvEvent = evId;
+  const p = PLAYS.find(x => x.id === evId);
+  if (!p) return;
+  buildRvSidebar();
+  renderRvCenter(p);
+}
+
+function renderRvCenter(p) {
+  // Show the event in the table
+  const tbody = document.getElementById('rv-tbody');
+  if (tbody) {
+    tbody.innerHTML = '';
+    const tr = document.createElement('tr');
+    tr.classList.add('rv-sel');
+    tr.onclick = () => {
+      document.querySelectorAll('#rv-tbody tr').forEach(r => r.classList.remove('rv-sel'));
+      tr.classList.add('rv-sel');
+    };
+    tr.innerHTML =
+      `<td>${p.event}</td>` +
+      `<td>${p.player}</td>` +
+      `<td>${p.opp}</td>` +
+      `<td style="color:#6b7280">${p.official.split(' ').pop()}</td>` +
+      `<td>${p.loc}</td>` +
+      `<td>${rvRatingPill(p)}</td>` +
+      `<td style="color:#9ca3af;font-size:10px">${p.unchanged.Observability||'Observable'}</td>`;
+    tbody.appendChild(tr);
+  }
+  // Show form, hide placeholder
+  const fa = document.getElementById('rv-form-area');
+  const np = document.getElementById('rv-no-sel');
+  if (fa) fa.style.display = '';
+  if (np) np.style.display = 'none';
+  // Populate form fields
+  const clk = document.getElementById('rv-clock');
+  if (clk) clk.value = p.time.replace(/^Q\d+ /, '');
+  // Set rating
+  document.querySelectorAll('.rv-rtg-opt').forEach(o => o.className = 'rv-rtg-opt');
+  const rc2 = p.changes.find(c => c.f === 'Rating');
+  const rVal = rc2 ? rc2.nw : (p.unchanged['Rating'] || '');
+  const clsMap = {
+    'Infraction': 's-inf',
+    'Judgment — Lean Infraction': 's-jli',
+    'Judgment — Lean No Infraction': 's-jlni',
+    'No Infraction': 's-ni'
+  };
+  document.querySelectorAll('.rv-rtg-opt').forEach(o => {
+    const lbl = o.textContent.trim();
+    const full = Object.keys(clsMap).find(k => k.startsWith(lbl) || lbl.startsWith(k.split(' ')[0]));
+    if (rVal === 'Infraction' && lbl === 'Infraction') o.classList.add('s-inf');
+    if (rVal === 'Judgment — Lean Infraction' && lbl === 'Judgment — Lean Infraction') o.classList.add('s-jli');
+    if (rVal === 'Judgment — Lean No Infraction' && lbl === 'Judgment — Lean No') o.classList.add('s-jlni');
+    if (rVal === 'No Infraction' && lbl === 'No Infraction') o.classList.add('s-ni');
+  });
+  // Set ref/loc buttons
+  document.querySelectorAll('[data-ref]').forEach(b => {
+    const refLast = p.official.split(' ').pop().toLowerCase();
+    b.classList.toggle('on', b.dataset.ref === refLast);
+  });
+  document.querySelectorAll('[data-loc]').forEach(b => {
+    b.classList.toggle('on', b.dataset.loc === p.loc.toLowerCase());
+  });
+  const rc = document.getElementById('rv-comments');
+  if (rc) rc.value = '';
+  const rn = document.getElementById('rv-notes');
+  if (rn) rn.value = '';
+}
 
 function buildSidebar() {
   const list = document.getElementById('sb-list');
@@ -1429,39 +1593,15 @@ function appendTmpl(text) {
 function rvQf(el) {
   document.querySelectorAll('.sb-q').forEach(b => b.classList.remove('on'));
   el.classList.add('on');
-  activeQ = el.dataset.q === 'buf' ? 'all' : el.dataset.q;
-  applyFilters();
+  const q = el.dataset.q;
+  if (q !== 'buf') {
+    activeQ_rv = q;
+    activePoss = POSS_DATA.find(p => p.quarter === q)?.id || null;
+  }
+  buildRvSidebar();
 }
 function initRvTable() {
-  const tbody = document.getElementById('rv-tbody');
-  if (!tbody) return;
-  tbody.innerHTML = '';
-  PLAYS.forEach((p, idx) => {
-    const tr = document.createElement('tr');
-    if (idx === 0) tr.classList.add('rv-sel');
-    tr.onclick = () => {
-      document.querySelectorAll('#rv-tbody tr').forEach(r => r.classList.remove('rv-sel'));
-      tr.classList.add('rv-sel');
-      const clk = document.getElementById('rv-clock');
-      if (clk) clk.value = p.time.replace(/^Q\d+ /, '');
-      const rc = document.getElementById('rv-comments');
-      if (rc) rc.value = p.scComment || '';
-      const rn = document.getElementById('rv-notes');
-      if (rn) rn.value = p.yourNotes || '';
-    };
-    tr.innerHTML = `<td>${p.event}</td><td>${p.player}</td><td>${p.opp}</td><td style="color:#6b7280">${p.official.split(' ').slice(-1)[0]}</td><td>${p.loc}</td><td>${rvRatingPill(p)}</td><td style="color:#9ca3af;font-size:10px">${p.unchanged.Observability || 'Observable'}</td>`;
-    tbody.appendChild(tr);
-  });
-  // Init form with first play
-  if (PLAYS.length) {
-    const p = PLAYS[0];
-    const clk = document.getElementById('rv-clock');
-    if (clk) clk.value = p.time.replace(/^Q\d+ /, '');
-    const rc = document.getElementById('rv-comments');
-    if (rc) rc.value = p.scComment || '';
-    const rn = document.getElementById('rv-notes');
-    if (rn) rn.value = p.yourNotes || '';
-  }
+  // Table starts empty — populated when event selected from queue
 }
 function switchTab(tab) {
   document.querySelectorAll('.st[data-tab]').forEach(t => t.classList.remove('on'));
@@ -1484,15 +1624,19 @@ function switchTab(tab) {
   if (sbRv) sbRv.style.display = isRv ? '' : 'none';
   if (sbSc) sbSc.style.display = isRv ? 'none' : '';
   if (sbSubmit) sbSubmit.style.display = isRv ? '' : 'none';
+  if (isRv) {
+    buildRvSidebar();
+  } else {
+    buildSidebar();
+    const firstRow = document.querySelector('.sb-row');
+    if (firstRow) selectPlay(0, firstRow);
+  }
 }
 
-buildSidebar();
-initRvTable();
+// Auto-expand first Q1 possession
+activePoss = (POSS_DATA.find(p => p.quarter === 'Q1') || {}).id || null;
 // Start on Review tab
 switchTab('review');
-// select first play in SC list
-const firstRow = document.querySelector('.sb-row');
-if (firstRow) selectPlay(0, firstRow);
 </script>
 </body>
 </html>
