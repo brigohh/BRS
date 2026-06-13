@@ -229,6 +229,90 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .pl-done:hover{background:#15306e}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:7px;opacity:0;transition:opacity .18s;z-index:60;white-space:nowrap;pointer-events:none;background:#166534;color:#dcfce7;box-shadow:0 4px 20px rgba(0,0,0,.2)}
 .toast.show{opacity:1}
+/* REVIEW TAB */
+.sb-hdr-rv{padding:10px 12px 8px;border-bottom:1px solid #f3f4f6;flex-shrink:0}
+.sb-filter-lbl{font-size:10px;font-weight:700;letter-spacing:.5px;color:#9ca3af;margin-bottom:7px}
+.sb-q-row{display:flex;gap:4px;flex-wrap:wrap}
+.sb-q{padding:3px 9px;border:1px solid #d1d5db;border-radius:20px;font-size:10px;font-weight:600;background:#fff;color:#6b7280;cursor:pointer}
+.sb-q:hover{background:#f9fafb}
+.sb-q.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
+.sb-submit-rv{padding:10px 12px;border-top:1px solid #f3f4f6;flex-shrink:0}
+.sb-submit-btn{width:100%;padding:7px;background:#1a3a6b;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer}
+.sb-submit-btn:hover{background:#15306e}
+/* RV TABLE */
+.rv-tbl-area{border-bottom:1px solid #e5e7eb;flex-shrink:0;overflow-x:auto;background:#fff}
+.rv-tbl{width:100%;border-collapse:collapse;font-size:11px}
+.rv-tbl thead th{padding:6px 10px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.4px;color:#9ca3af;background:#f9fafb;border-bottom:1px solid #e5e7eb;white-space:nowrap}
+.rv-tbl tbody td{padding:6px 10px;border-bottom:1px solid #f3f4f6;white-space:nowrap;color:#374151}
+.rv-tbl tbody tr{cursor:pointer}
+.rv-tbl tbody tr:hover td{background:#f9fafb}
+.rv-tbl tbody tr.rv-sel td{background:#eff6ff}
+.rv-rpill{display:inline-block;padding:1px 7px;border-radius:10px;font-size:10px;font-weight:700}
+.rv-rpill-inf{background:#fee2e2;color:#991b1b}
+.rv-rpill-jli{background:#fef9c3;color:#854d0e}
+.rv-rpill-jlni{background:#f3f4f6;color:#6b7280}
+.rv-rpill-ni{background:#dcfce7;color:#166534}
+.rv-rpill-nc{color:#9ca3af}
+/* RV FORM */
+.rv-form-area{flex:1;overflow-y:auto;background:#f9fafb}
+.rv-form-body{display:grid;grid-template-columns:1fr 220px;min-height:100%}
+.rv-form-main{padding:12px 14px;border-right:1px solid #e5e7eb;display:flex;flex-direction:column;gap:8px}
+.rv-frow{display:flex;align-items:center;gap:8px}
+.rv-flbl{font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.3px;min-width:80px;flex-shrink:0}
+.rv-finput{flex:1;padding:5px 8px;border:1px solid #d1d5db;border-radius:6px;font-size:12px;background:#fff;color:#111827;outline:none}
+.rv-finput:focus{border-color:#1a3a6b}
+.rv-fsel{flex:1;padding:5px 8px;border:1px solid #d1d5db;border-radius:6px;font-size:12px;background:#fff;color:#111827;outline:none;cursor:pointer}
+.rv-fchecks{display:flex;gap:10px;flex-wrap:wrap}
+.rv-fchk{display:flex;align-items:center;gap:4px;font-size:11px;color:#374151;cursor:pointer}
+.rv-fchk input{cursor:pointer;accent-color:#1a3a6b}
+.rv-fbtns{display:flex;gap:4px;flex-wrap:wrap}
+.rv-fbtn{padding:4px 10px;border:1px solid #d1d5db;border-radius:6px;font-size:11px;font-weight:500;background:#fff;color:#6b7280;cursor:pointer}
+.rv-fbtn:hover{background:#f3f4f6}
+.rv-fbtn.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
+.rv-fsep{height:1px;background:#e5e7eb;margin:2px 0}
+.rv-save-row{display:flex;gap:6px;margin-top:4px}
+.rv-save-btn{padding:6px 16px;background:#1a3a6b;color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer}
+.rv-save-btn:hover{background:#15306e}
+.rv-cancel-btn{padding:6px 12px;border:1px solid #d1d5db;border-radius:7px;font-size:12px;background:#fff;color:#6b7280;cursor:pointer}
+.rv-tmpl-area{display:flex;flex-direction:column;gap:4px}
+.rv-tmpl-lbl{font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.3px}
+.rv-tmpl-row{display:flex;gap:4px;flex-wrap:wrap}
+.rv-tmpl{padding:2px 8px;border:1px solid #e5e7eb;border-radius:4px;font-size:10px;font-weight:500;background:#f9fafb;color:#6b7280;cursor:pointer}
+.rv-tmpl:hover{border-color:#bfdbfe;background:#eff6ff;color:#1d4ed8}
+.rv-tmpl.hl{border-color:#fde68a;background:#fef9c3;color:#854d0e}
+.rv-fta{width:100%;padding:7px 9px;border:1px solid #d1d5db;border-radius:6px;font-size:12px;background:#fff;color:#111827;outline:none;resize:vertical;min-height:52px;font-family:inherit}
+.rv-fta:focus{border-color:#1a3a6b}
+.rv-fslbl{font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.3px;margin-bottom:3px}
+/* RV RATING COL */
+.rv-rtg-col{padding:12px;display:flex;flex-direction:column;gap:10px;background:#fff;border-top:none}
+.rv-rtg-lbl{font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.3px;margin-bottom:4px}
+.rv-rtg-opts{display:flex;flex-direction:column;gap:5px}
+.rv-rtg-opt{padding:8px 11px;border:1px solid #e5e7eb;border-radius:7px;font-size:12px;font-weight:500;color:#374151;cursor:pointer;background:#fff}
+.rv-rtg-opt:hover{background:#f9fafb}
+.s-inf{background:#fee2e2!important;border-color:#fca5a5!important;color:#991b1b!important;font-weight:700!important}
+.s-jli{background:#fef9c3!important;border-color:#fde68a!important;color:#854d0e!important;font-weight:700!important}
+.s-jlni{background:#eff6ff!important;border-color:#bfdbfe!important;color:#1d4ed8!important;font-weight:700!important}
+.s-ni{background:#dcfce7!important;border-color:#86efac!important;color:#166534!important;font-weight:700!important}
+.rv-rtg-div{height:1px;background:#e5e7eb}
+/* RP ACT BAR */
+.rp-act-bar{display:flex;gap:6px;padding:8px 10px;border-bottom:1px solid #f3f4f6;background:#fff;flex-shrink:0}
+.rpa-inf{flex:1;padding:7px;background:#1a3a6b;color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;text-align:center}
+.rpa-ev{flex:1;padding:7px;background:#fff;color:#374151;border:1px solid #d1d5db;border-radius:7px;font-size:12px;font-weight:500;cursor:pointer;text-align:center}
+.rpa-ev:hover{background:#f9fafb}
+.rp-clip-bar{display:flex;gap:5px;padding:5px 10px;border-bottom:1px solid #f3f4f6;background:#f9fafb;flex-shrink:0}
+.rp-clip-btn{padding:3px 10px;border:1px solid #bfdbfe;border-radius:5px;font-size:10px;font-weight:600;background:#eff6ff;color:#1d4ed8;cursor:pointer}
+.rp-clip-btn:hover{background:#dbeafe}
+.rp-hotkeys-btn{padding:3px 10px;border:1px solid #e5e7eb;border-radius:5px;font-size:10px;font-weight:500;background:#fff;color:#6b7280;cursor:pointer;margin-left:auto}
+/* GH REFS */
+.gh-refs{font-size:11px;color:#6b7280;margin-top:3px}
+.gh-refs span{margin:0 2px}
+/* RV STATS */
+.rv-stat{display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:7px;font-size:12px;font-weight:600}
+.rv-stat-num{font-size:16px;font-weight:700;line-height:1}
+.rv-ncc{background:#f3f4f6;border:1px solid #e5e7eb;border-radius:8px;padding:5px 12px;font-size:11px;color:#374151}
+.rv-ncc-title{font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.3px;margin-bottom:2px}
+.rv-ncc-row{display:flex;gap:10px}
+.rv-ncc-item{font-size:11px;font-weight:500}
 </style>
 </head>
 <body>
@@ -254,7 +338,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 </div>
 
 <div class="subnav">
-  <span class="st">Review</span><span class="st">OCR</span><span class="st">Important Calls</span><span class="st on" data-tab="secondcheck">Second Check</span><span class="st">PTIW</span><span class="st">OIW</span>
+  <span class="st on" data-tab="review" onclick="switchTab('review')">Review</span>
+  <span class="st" data-tab="ogr">OGR</span>
+  <span class="st" data-tab="important">Important Calls</span>
+  <span class="st" data-tab="secondcheck" onclick="switchTab('secondcheck')">Review Edits</span>
+  <span class="st" data-tab="ptiw">PTIW</span>
+  <span class="st" data-tab="oiw">OIW</span>
 </div>
 
 <div class="game-hdr">
@@ -265,14 +354,32 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       <span style="display:inline-flex;align-items:center;gap:5px"><img src="chicago sky logo.png" style="width:20px;height:20px;object-fit:contain" onerror="this.style.display='none'"> Chicago Sky (104)</span>
     </div>
     <div class="gh-date">Wednesday, May 27, 2026 &nbsp;·&nbsp; 8:00 PM &nbsp;·&nbsp; #1022600050</div>
+    <div class="gh-refs">Genesis Perrymond &nbsp;·&nbsp; Catherine Chang &nbsp;·&nbsp; Kevin Fahy</div>
   </div>
   <div class="gh-sep"></div>
-  <div class="stats">
-    <div class="stat s-d"><div class="sn">18</div><div class="sl">total</div></div>
-    <div class="stat s-r"><div class="sn">5</div><div class="sl">critical</div></div>
-    <div class="stat s-b"><div class="sn">8</div><div class="sl">rating</div></div>
-    <div class="stat s-g"><div class="sn">3</div><div class="sl">notable</div></div>
-    <div class="stat s-a"><div class="sn">5</div><div class="sl">comment</div></div>
+  <!-- Review tab stats -->
+  <div id="gh-rv-stats" style="display:flex;align-items:center;gap:8px">
+    <div class="rv-stat" style="background:#f0fdf4;color:#166534"><div class="rv-stat-num">65</div><div style="font-size:10px;line-height:1.2">Whatsies</div></div>
+    <div class="rv-stat" style="background:#fff7ed;color:#c2410c"><div class="rv-stat-num">60</div><div style="font-size:10px;line-height:1.2">Infractions</div></div>
+    <div class="rv-stat" style="background:#eff6ff;color:#1d4ed8"><div class="rv-stat-num">4</div><div style="font-size:10px;line-height:1.2">PTIW</div></div>
+    <div class="rv-ncc">
+      <div class="rv-ncc-title">NON-CALLS COUNTER</div>
+      <div class="rv-ncc-row">
+        <span class="rv-ncc-item" style="color:#991b1b">4 Deemed Infractions</span>
+        <span style="color:#d1d5db">|</span>
+        <span class="rv-ncc-item" style="color:#374151">12 PI Calls</span>
+      </div>
+    </div>
+  </div>
+  <!-- SC tab stats (hidden on review) -->
+  <div id="gh-sc-wrap" style="display:none">
+    <div class="stats">
+      <div class="stat s-d"><div class="sn">18</div><div class="sl">total</div></div>
+      <div class="stat s-r"><div class="sn">5</div><div class="sl">critical</div></div>
+      <div class="stat s-b"><div class="sn">8</div><div class="sl">rating</div></div>
+      <div class="stat s-g"><div class="sn">3</div><div class="sl">notable</div></div>
+      <div class="stat s-a"><div class="sn">5</div><div class="sl">comment</div></div>
+    </div>
   </div>
   <div class="gh-right">
     <div class="flag-count" id="flag-count"><i class="ti ti-flag"></i><span id="flag-num">0</span> flagged</div>
@@ -286,7 +393,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   </div>
 </div>
 
-<div class="toolbar">
+<div class="toolbar" id="sc-toolbar" style="display:none">
   <div class="qb on" data-q="all" onclick="qf(this)">All</div>
   <div class="qb" data-q="Q1" onclick="qf(this)">Q1</div>
   <div class="qb" data-q="Q2" onclick="qf(this)">Q2</div>
@@ -321,14 +428,162 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 
 <div class="main">
   <div class="sb">
-    <div class="sb-prog">
+    <!-- Review tab sidebar header -->
+    <div class="sb-hdr-rv" id="sb-hdr-rv">
+      <div class="sb-filter-lbl">FILTER EVENTS</div>
+      <div class="sb-q-row">
+        <span class="sb-q on" data-q="all" onclick="rvQf(this)">All</span>
+        <span class="sb-q" data-q="Q1" onclick="rvQf(this)">Q1</span>
+        <span class="sb-q" data-q="Q2" onclick="rvQf(this)">Q2</span>
+        <span class="sb-q" data-q="Q3" onclick="rvQf(this)">Q3</span>
+        <span class="sb-q" data-q="Q4" onclick="rvQf(this)">Q4</span>
+        <span class="sb-q" data-q="buf" onclick="rvQf(this)">Buffer: 0</span>
+      </div>
+    </div>
+    <!-- SC tab sidebar header -->
+    <div class="sb-prog" id="sb-hdr-sc" style="display:none">
       <div class="prog-label"><span>Progress</span><span id="prog-txt">0 / 18 reviewed</span></div>
       <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
     </div>
     <div class="sb-list" id="sb-list"></div>
+    <!-- Review tab submit button -->
+    <div class="sb-submit-rv" id="sb-submit-rv">
+      <button class="sb-submit-btn" onclick="toast('QI submitted')">Submit QI</button>
+    </div>
   </div>
 
   <div class="center">
+
+    <!-- REVIEW TAB PANEL -->
+    <div id="rv-panel" style="display:flex;flex-direction:column;flex:1;overflow:hidden">
+      <div class="rv-tbl-area">
+        <table class="rv-tbl">
+          <thead>
+            <tr><th>Type</th><th>Player</th><th>Opponent</th><th>Official</th><th>Loc</th><th>Infraction Rating</th><th>Observability</th></tr>
+          </thead>
+          <tbody id="rv-tbody"></tbody>
+        </table>
+      </div>
+      <div class="rv-form-area">
+        <div class="rv-form-body">
+          <div class="rv-form-main">
+            <div class="rv-frow">
+              <span class="rv-flbl">Game Clock</span>
+              <input class="rv-finput" id="rv-clock" type="text" placeholder="Q1 09:33.7" style="max-width:130px">
+            </div>
+            <div class="rv-frow">
+              <span class="rv-flbl">Flags</span>
+              <div class="rv-fchecks">
+                <label class="rv-fchk"><input type="checkbox"> Called</label>
+                <label class="rv-fchk"><input type="checkbox"> PTIW</label>
+                <label class="rv-fchk"><input type="checkbox"> Look</label>
+                <label class="rv-fchk"><input type="checkbox"> OGR</label>
+                <label class="rv-fchk"><input type="checkbox"> POE</label>
+              </div>
+            </div>
+            <div class="rv-frow">
+              <span class="rv-flbl">Resp. Ref</span>
+              <div class="rv-fbtns">
+                <button class="rv-fbtn on" data-ref="perrymond" onclick="rvSelRef(this)">Perrymond</button>
+                <button class="rv-fbtn" data-ref="chang" onclick="rvSelRef(this)">Chang</button>
+                <button class="rv-fbtn" data-ref="fahy" onclick="rvSelRef(this)">Fahy</button>
+              </div>
+            </div>
+            <div class="rv-frow">
+              <span class="rv-flbl">Ref Location</span>
+              <div class="rv-fbtns">
+                <button class="rv-fbtn on" data-loc="lead" onclick="rvSelLoc(this)">Lead</button>
+                <button class="rv-fbtn" data-loc="trail" onclick="rvSelLoc(this)">Trail</button>
+                <button class="rv-fbtn" data-loc="slot" onclick="rvSelLoc(this)">Slot</button>
+              </div>
+            </div>
+            <div class="rv-frow">
+              <span class="rv-flbl">Infraction Type</span>
+              <select class="rv-fsel">
+                <option>Foul: Personal</option><option>Foul: Shooting</option><option>Foul: Offensive</option><option>Foul: Loose Ball</option><option>Turnover: Traveling</option><option>Turnover: Lost Ball OOB</option><option>Contact</option>
+              </select>
+            </div>
+            <div class="rv-frow">
+              <span class="rv-flbl">Play Type</span>
+              <select class="rv-fsel">
+                <option>Rebound</option><option>End Of Drive</option><option>During Drive</option><option>Driving Shot Attempt</option><option>Layup Or Dunk</option><option>Jump Shot</option><option>Screener</option><option>On-Ball</option><option>Contact - Off-Ball</option><option>Stationary Movement</option><option>Ball Out of Bounds</option>
+              </select>
+            </div>
+            <div class="rv-frow">
+              <span class="rv-flbl">Sub Play Type</span>
+              <select class="rv-fsel"><option>—</option><option>Floater</option><option>Post Shot</option></select>
+            </div>
+            <div class="rv-frow">
+              <span class="rv-flbl">Role</span>
+              <select class="rv-fsel"><option>Defender</option><option>Offensive Player</option><option>Screener</option></select>
+            </div>
+            <div class="rv-frow">
+              <span class="rv-flbl">Player</span>
+              <select class="rv-fsel" id="rv-player-sel">
+                <option>N. Sabally</option><option>S. Diggins</option><option>K. Cardoso</option><option>T. Key</option><option>K. Rice</option><option>R. Banham</option><option>L. Held</option><option>N. Cloud</option><option>B. Sykes</option><option>K. Nurse</option><option>A. Coulibaly</option><option>M. Conde</option><option>S. Taylor</option><option>E. Williams</option><option>M. Mabrey</option>
+              </select>
+            </div>
+            <div class="rv-frow">
+              <span class="rv-flbl">Opponent</span>
+              <select class="rv-fsel" id="rv-opp-sel">
+                <option>K. Cardoso</option><option>M. Conde</option><option>B. Sykes</option><option>T. Key</option><option>K. Rice</option><option>M. Mabrey</option><option>S. Taylor</option><option>E. Williams</option><option>A. Coulibaly</option><option>N. Cloud</option>
+              </select>
+            </div>
+            <div class="rv-fsep"></div>
+            <div class="rv-save-row">
+              <button class="rv-save-btn" onclick="toast('Ratings saved')">Save Ratings</button>
+              <button class="rv-cancel-btn">Cancel</button>
+            </div>
+            <div class="rv-fsep"></div>
+            <div class="rv-tmpl-area">
+              <div class="rv-tmpl-lbl">COMMENT TEMPLATES</div>
+              <div class="rv-tmpl-row">
+                <span class="rv-tmpl hl" onclick="appendTmpl('No clear/conclusive video evidence to determine contact.')">CCVE</span>
+                <span class="rv-tmpl" onclick="appendTmpl('Legal guarding position established prior to contact.')">LGP</span>
+                <span class="rv-tmpl" onclick="appendTmpl('Contact considered incidental.')">Incidental</span>
+                <span class="rv-tmpl" onclick="appendTmpl('Marginal contact.')">Marginal</span>
+                <span class="rv-tmpl" onclick="appendTmpl('Restricted area.')">RA</span>
+              </div>
+            </div>
+            <div>
+              <div class="rv-fslbl">COMMENTS</div>
+              <textarea class="rv-fta" id="rv-comments" placeholder="Add review comment…"></textarea>
+            </div>
+            <div>
+              <div class="rv-fslbl">INTERNAL NOTES</div>
+              <textarea class="rv-fta" id="rv-notes" placeholder="Internal notes (not published)…" style="min-height:40px"></textarea>
+            </div>
+          </div>
+          <div class="rv-rtg-col">
+            <div>
+              <div class="rv-rtg-lbl">INFRACTION RATING</div>
+              <div class="rv-rtg-opts">
+                <div class="rv-rtg-opt" data-cls="s-inf" onclick="rvSelRating(this)">Infraction</div>
+                <div class="rv-rtg-opt" data-cls="s-jli" onclick="rvSelRating(this)">Judgment — Lean Infraction</div>
+                <div class="rv-rtg-opt s-jlni" data-cls="s-jlni" onclick="rvSelRating(this)">Judgment — Lean No</div>
+                <div class="rv-rtg-opt" data-cls="s-ni" onclick="rvSelRating(this)">No Infraction</div>
+              </div>
+            </div>
+            <div class="rv-rtg-div"></div>
+            <div>
+              <div class="rv-rtg-lbl">ASSESSMENT RATING</div>
+              <select class="rv-fsel" style="width:100%">
+                <option>—</option><option>Correct</option><option>Incorrect</option><option>Judgment</option>
+              </select>
+            </div>
+            <div>
+              <div class="rv-rtg-lbl">OBSERVABILITY</div>
+              <select class="rv-fsel" style="width:100%">
+                <option>Observable</option><option>Difficult</option><option>Not Observable</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REVIEW EDITS (SC) TAB PANEL -->
+    <div id="sc-panel" style="display:none;flex-direction:column;flex:1;overflow:hidden">
     <div class="band1">
       <div class="b1-r1">
         <span class="ev-badge" id="b1-event"></span>
@@ -360,9 +615,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       </button>
       <button class="slack-dd" onclick="openSlack('question')"><i class="ti ti-chevron-down" style="font-size:12px"></i></button>
     </div>
-  </div>
+    </div><!-- /sc-panel -->
+  </div><!-- /center -->
 
   <div class="rp">
+    <div class="rp-act-bar">
+      <button class="rpa-inf">INFRACTION</button>
+      <button class="rpa-ev">EVENT</button>
+    </div>
     <div class="vid-area"><div class="vid-frame"><img src="video player placeholder.png" style="width:100%;height:100%;object-fit:cover;border-radius:6px;display:block"></div></div>
     <div class="ang-row">
       <span class="ang on" onclick="selAng(this)">LLB</span><span class="ang" onclick="selAng(this)">RLB</span><span class="ang" onclick="selAng(this)">LAR</span><span class="ang" onclick="selAng(this)">RAR</span><span class="ang" onclick="selAng(this)">RLS</span><span class="ang" onclick="selAng(this)">ABP</span><span class="ang" onclick="selAng(this)">HBP</span><span class="ang" onclick="selAng(this)">INA</span><span class="ang" onclick="selAng(this)">DF BCAST</span>
@@ -374,6 +634,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       <div class="vtrack"><div class="vfill"><div class="vhead"></div></div></div>
       <span class="vtime" id="v-time">0:00</span>
       <button class="vcb"><i class="ti ti-maximize"></i></button>
+    </div>
+    <div class="rp-clip-bar">
+      <button class="rp-clip-btn"><i class="ti ti-clipboard" style="font-size:10px"></i> CLIP VIDEO &nbsp;<span style="color:#93c5fd;font-size:9px">ctrl+v</span></button>
+      <button class="rp-hotkeys-btn"><i class="ti ti-keyboard" style="font-size:10px"></i> Video Hotkeys</button>
     </div>
     <div class="rp-box"><div class="rp-lbl"><i class="ti ti-bell" style="color:#f59e0b"></i> PTIW comment</div><div class="rp-val" id="rp-ptiw">No PTIW comment</div></div>
     <div class="rp-box"><div class="rp-lbl"><i class="ti ti-message-circle" style="color:#f97316"></i> OIW comment</div><div class="rp-val" id="rp-oiw">No OIW comment</div></div>
@@ -1133,13 +1397,100 @@ function toast(msg) {
 }
 function selAng(el) { document.querySelectorAll('.ang').forEach(a=>a.classList.remove('on')); el.classList.add('on'); }
 
-document.querySelectorAll('.st').forEach(t => t.addEventListener('click', function() {
-  document.querySelectorAll('.st').forEach(x => x.classList.remove('on'));
-  this.classList.add('on');
-}));
+function rvSelRef(el) {
+  document.querySelectorAll('[data-ref]').forEach(b => b.classList.remove('on'));
+  el.classList.add('on');
+}
+function rvSelLoc(el) {
+  document.querySelectorAll('[data-loc]').forEach(b => b.classList.remove('on'));
+  el.classList.add('on');
+}
+function rvSelRating(el) {
+  document.querySelectorAll('.rv-rtg-opt').forEach(o => {
+    o.className = 'rv-rtg-opt';
+  });
+  el.classList.add(el.dataset.cls);
+}
+function rvRatingPill(p) {
+  const rc = p.changes.find(c => c.f === 'Rating');
+  const r = rc ? rc.nw : (p.unchanged['Rating'] || '');
+  if (r === 'Infraction') return '<span class="rv-rpill rv-rpill-inf">Infraction</span>';
+  if (r === 'Judgment — Lean Infraction') return '<span class="rv-rpill rv-rpill-jli">Lean Infraction</span>';
+  if (r === 'Judgment — Lean No Infraction') return '<span class="rv-rpill rv-rpill-jlni">Lean No</span>';
+  if (r === 'No Infraction') return '<span class="rv-rpill rv-rpill-ni">No Infraction</span>';
+  return '<span class="rv-rpill rv-rpill-nc">—</span>';
+}
+function appendTmpl(text) {
+  const ta = document.getElementById('rv-comments');
+  if (!ta) return;
+  ta.value = (ta.value ? ta.value + ' ' : '') + text;
+  ta.focus();
+}
+function rvQf(el) {
+  document.querySelectorAll('.sb-q').forEach(b => b.classList.remove('on'));
+  el.classList.add('on');
+  activeQ = el.dataset.q === 'buf' ? 'all' : el.dataset.q;
+  applyFilters();
+}
+function initRvTable() {
+  const tbody = document.getElementById('rv-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  PLAYS.forEach((p, idx) => {
+    const tr = document.createElement('tr');
+    if (idx === 0) tr.classList.add('rv-sel');
+    tr.onclick = () => {
+      document.querySelectorAll('#rv-tbody tr').forEach(r => r.classList.remove('rv-sel'));
+      tr.classList.add('rv-sel');
+      const clk = document.getElementById('rv-clock');
+      if (clk) clk.value = p.time.replace(/^Q\d+ /, '');
+      const rc = document.getElementById('rv-comments');
+      if (rc) rc.value = p.scComment || '';
+      const rn = document.getElementById('rv-notes');
+      if (rn) rn.value = p.yourNotes || '';
+    };
+    tr.innerHTML = `<td>${p.event}</td><td>${p.player}</td><td>${p.opp}</td><td style="color:#6b7280">${p.official.split(' ').slice(-1)[0]}</td><td>${p.loc}</td><td>${rvRatingPill(p)}</td><td style="color:#9ca3af;font-size:10px">${p.unchanged.Observability || 'Observable'}</td>`;
+    tbody.appendChild(tr);
+  });
+  // Init form with first play
+  if (PLAYS.length) {
+    const p = PLAYS[0];
+    const clk = document.getElementById('rv-clock');
+    if (clk) clk.value = p.time.replace(/^Q\d+ /, '');
+    const rc = document.getElementById('rv-comments');
+    if (rc) rc.value = p.scComment || '';
+    const rn = document.getElementById('rv-notes');
+    if (rn) rn.value = p.yourNotes || '';
+  }
+}
+function switchTab(tab) {
+  document.querySelectorAll('.st[data-tab]').forEach(t => t.classList.remove('on'));
+  const activeTab = document.querySelector('.st[data-tab="' + tab + '"]');
+  if (activeTab) activeTab.classList.add('on');
+  const isRv = tab === 'review';
+  const rvPanel = document.getElementById('rv-panel');
+  const scPanel = document.getElementById('sc-panel');
+  if (rvPanel) rvPanel.style.display = isRv ? 'flex' : 'none';
+  if (scPanel) { scPanel.style.display = isRv ? 'none' : 'flex'; scPanel.style.flexDirection = 'column'; }
+  const scTb = document.getElementById('sc-toolbar');
+  if (scTb) scTb.style.display = isRv ? 'none' : '';
+  const ghRv = document.getElementById('gh-rv-stats');
+  const ghSc = document.getElementById('gh-sc-wrap');
+  if (ghRv) ghRv.style.display = isRv ? 'flex' : 'none';
+  if (ghSc) ghSc.style.display = isRv ? 'none' : 'flex';
+  const sbRv = document.getElementById('sb-hdr-rv');
+  const sbSc = document.getElementById('sb-hdr-sc');
+  const sbSubmit = document.getElementById('sb-submit-rv');
+  if (sbRv) sbRv.style.display = isRv ? '' : 'none';
+  if (sbSc) sbSc.style.display = isRv ? 'none' : '';
+  if (sbSubmit) sbSubmit.style.display = isRv ? '' : 'none';
+}
 
 buildSidebar();
-// select first play
+initRvTable();
+// Start on Review tab
+switchTab('review');
+// select first play in SC list
 const firstRow = document.querySelector('.sb-row');
 if (firstRow) selectPlay(0, firstRow);
 </script>
