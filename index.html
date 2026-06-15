@@ -277,7 +277,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   <span class="st">Review</span><span class="st">OCR</span><span class="st">Important Calls</span><span class="st on" data-tab="secondcheck" onclick="showTab('secondcheck',this)">Second Check</span><span class="st">PTIW</span><span class="st" onclick="showTab('oiw',this)">OIW</span>
 </div>
 
-<div class="game-hdr">
+<div class="game-hdr" id="game-hdr">
   <div>
     <div class="gh-title">
       <span style="display:inline-flex;align-items:center;gap:5px"><img src="toronto tempo logo.jpg" style="width:20px;height:20px;object-fit:contain" onerror="this.style.display='none'"> Toronto Tempo (111)</span>
@@ -306,7 +306,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   </div>
 </div>
 
-<div class="toolbar">
+<div class="toolbar" id="sc-toolbar">
   <div class="qb on" data-q="all" onclick="qf(this)">All</div>
   <div class="qb" data-q="Q1" onclick="qf(this)">Q1</div>
   <div class="qb" data-q="Q2" onclick="qf(this)">Q2</div>
@@ -340,6 +340,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 </div>
 
 <div id="oiw-panel" style="display:none;flex:1;overflow-y:auto;background:#f3f4f6;padding:24px 32px;flex-direction:column;gap:28px">
+
+  <div style="display:flex;justify-content:flex-end">
+    <button onclick="window.open(window.location.href.replace(/#.*/,'')+'oiw-standalone.html','_blank','width=1400,height=900')" style="padding:5px 13px;border:1px solid #d1d5db;border-radius:7px;font-size:12px;font-weight:500;background:#fff;color:#374151;cursor:pointer;display:flex;align-items:center;gap:5px"><i class="ti ti-external-link" style="font-size:13px"></i> Open in New Window</button>
+  </div>
 
   <!-- Critical Plays for Review -->
   <div class="oiw-section">
@@ -1350,9 +1354,10 @@ function showTab(tab, el) {
   document.querySelectorAll('.st').forEach(x => x.classList.remove('on'));
   if (el) el.classList.add('on');
   const isOiw = tab === 'oiw';
-  const isSc = tab === 'secondcheck';
   document.getElementById('oiw-panel').style.display = isOiw ? 'flex' : 'none';
   document.getElementById('main-panel').style.display = isOiw ? 'none' : '';
+  document.getElementById('game-hdr').style.display = isOiw ? 'none' : '';
+  document.getElementById('sc-toolbar').style.display = isOiw ? 'none' : '';
 }
 
 function oiwSelRow(tr) {
