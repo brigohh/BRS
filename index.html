@@ -244,7 +244,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .oiw-tbl tbody tr{cursor:pointer;transition:background .12s}
 .oiw-tbl tbody tr:hover td{background:#fdf2f8}
 .oiw-tbl tbody tr.oiw-sel td{background:#fce7f3 !important}
-.oiw-comm-wrap{width:100%;background:#fff;border:1px solid #d1d5db;border-radius:8px;overflow:hidden}
+.oiw-tbl tr.oiw-q-div td{padding:0;height:3px;background:#1a3a6b;border:none;cursor:default;pointer-events:none}
+.oiw-tbl tr.oiw-q-div:hover td{background:#1a3a6b}
 .oiw-comm-hdr{display:grid;grid-template-columns:1fr 80px;background:#1a3a6b;color:#fff;font-size:10px;font-weight:700;letter-spacing:.4px}
 .oiw-comm-hdr div{padding:7px 10px;border-right:1px solid rgba(255,255,255,.15)}
 .oiw-comm-hdr div:last-child{border-right:none}
@@ -489,7 +490,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
             <td style="font-size:10.5px;line-height:1.5">As Mabrey sets a screen and attempts to roll to the basket, she is held by Sheldon, which causes the pass to be fumbled by Mabrey. The defensive foul by Sheldon was correctly called by Trail with the open look.</td>
           </tr>
           <tr onclick="oiwSelRow(this)">
-            <td>2</td><td>09:54</td><td>Chicago Sky</td><td>Cloud, Natasha</td><td>Foul: Personal</td><td>Correct Call</td><td></td>
+          <tr class="oiw-q-div"><td colspan="8"></td></tr>
+            <tr onclick="oiwSelRow(this)"><td>2</td><td>09:54</td><td>Chicago Sky</td><td>Cloud, Natasha</td><td>Foul: Personal</td><td>Correct Call</td><td></td>
             <td style="font-size:10.5px;line-height:1.5">As the ball enters the front court, Cloud wraps Mabrey off ball causing a collision and multiple players falling to the floor. The illegal contact by Cloud was correctly called to prevent rough play.</td>
           </tr>
           <tr onclick="oiwSelRow(this)">
@@ -501,7 +503,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
             <td style="font-size:10.5px;line-height:1.5">POE. The Legal Screen set by Nyara Sabally on the defender Alisha Coulibaly who runs into said legal screen and falls to the floor in attempt to garner an offensive foul. This play was neither an offensive nor a defensive foul as the defender does not take the screener out of normal basketball play. No call correct.</td>
           </tr>
           <tr onclick="oiwSelRow(this)">
-            <td>3</td><td>07:13</td><td>Toronto Tempo</td><td>Sabally, Nyara</td><td>Turnaround Jump: Missed</td><td>NCI</td><td></td>
+          <tr class="oiw-q-div"><td colspan="8"></td></tr>
+            <tr onclick="oiwSelRow(this)"><td>3</td><td>07:13</td><td>Toronto Tempo</td><td>Sabally, Nyara</td><td>Turnaround Jump: Missed</td><td>NCI</td><td></td>
             <td style="font-size:10.5px;line-height:1.5">CHI #10 Cardoso turns and shoots a mid range jump shot, Cardoso is met by TOR defender #8 Nyara Sabally who is short of the ball. A POC foul is needed here.</td>
           </tr>
           <tr onclick="oiwSelRow(this)">
@@ -509,7 +512,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
             <td style="font-size:10.5px;line-height:1.5">Loose Ball Foul correctly assessed to Mabrey as Cloud is about to gain imminent possession of the loose ball, the illegal contact by Mabrey who's coming from a perpendicular angle when she fouls Cloud preventing Cloud from getting to the ball as they ball go crashing to the floor.</td>
           </tr>
           <tr onclick="oiwSelRow(this)">
-            <td>4</td><td>05:04</td><td>Toronto Tempo</td><td>Mabrey, Marina</td><td>Foul: Offensive Charge</td><td>Incorrect Call</td><td></td>
+          <tr class="oiw-q-div"><td colspan="8"></td></tr>
+            <tr onclick="oiwSelRow(this)"><td>4</td><td>05:04</td><td>Toronto Tempo</td><td>Mabrey, Marina</td><td>Foul: Offensive Charge</td><td>Incorrect Call</td><td></td>
             <td style="font-size:10.5px;line-height:1.5">The offensive foul was assessed to Marina Mabrey when it was deemed on the floor that during her shooting motion, Marina voluntarily launched to her right in attempt to veer into the oncoming defender and seek out the contact. However after post game video review the call on the floor should have been a defensive foul for the oncoming defender's momentum carries her into Marina from the side initiating the defensive foul, while Marina is merely bracing to absorb the contact by Sydney.</td>
           </tr>
           <tr onclick="oiwSelRow(this)">
