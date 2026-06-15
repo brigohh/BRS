@@ -229,6 +229,26 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .pl-done:hover{background:#15306e}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:7px;opacity:0;transition:opacity .18s;z-index:60;white-space:nowrap;pointer-events:none;background:#166534;color:#dcfce7;box-shadow:0 4px 20px rgba(0,0,0,.2)}
 .toast.show{opacity:1}
+/* OIW PANEL */
+#oiw-panel{display:none;flex:1;overflow-y:auto;background:#f3f4f6;padding:24px 32px;flex-direction:column;gap:28px}
+.oiw-section{display:flex;flex-direction:column;align-items:center;gap:10px}
+.oiw-section-title{font-size:15px;font-weight:700;color:#111827;letter-spacing:.3px;text-align:center}
+.oiw-title-rule{width:48px;height:2px;background:#1a3a6b;border-radius:2px;margin-top:-6px}
+.oiw-table-wrap{width:100%;background:#fff;border:1px solid #d1d5db;border-radius:8px;overflow:hidden}
+.oiw-tbl{width:100%;border-collapse:collapse;table-layout:fixed;font-size:11.5px}
+.oiw-tbl th{padding:7px 10px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.4px;color:#fff;background:#1a3a6b;border-right:1px solid rgba(255,255,255,.15);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.oiw-tbl th:last-child{border-right:none}
+.oiw-tbl td{padding:7px 10px;border-bottom:1px solid #e5e7eb;border-right:1px solid #f3f4f6;vertical-align:top;word-break:break-word;line-height:1.45}
+.oiw-tbl td:last-child{border-right:none}
+.oiw-tbl tr:last-child td{border-bottom:none}
+.oiw-tbl tbody tr{cursor:pointer;transition:background .12s}
+.oiw-tbl tbody tr:hover td{background:#fdf2f8}
+.oiw-tbl tbody tr.oiw-sel td{background:#fce7f3 !important}
+.oiw-comm-wrap{width:100%;background:#fff;border:1px solid #d1d5db;border-radius:8px;overflow:hidden}
+.oiw-comm-hdr{display:grid;grid-template-columns:1fr 80px;background:#1a3a6b;color:#fff;font-size:10px;font-weight:700;letter-spacing:.4px}
+.oiw-comm-hdr div{padding:7px 10px;border-right:1px solid rgba(255,255,255,.15)}
+.oiw-comm-hdr div:last-child{border-right:none}
+.oiw-comm-body{padding:12px;display:flex;align-items:center;justify-content:center;min-height:44px;font-size:11.5px;color:#9ca3af;font-style:italic}
 </style>
 </head>
 <body>
@@ -254,7 +274,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 </div>
 
 <div class="subnav">
-  <span class="st">Review</span><span class="st">OCR</span><span class="st">Important Calls</span><span class="st on" data-tab="secondcheck">Second Check</span><span class="st">PTIW</span><span class="st">OIW</span>
+  <span class="st">Review</span><span class="st">OCR</span><span class="st">Important Calls</span><span class="st on" data-tab="secondcheck" onclick="showTab('secondcheck',this)">Second Check</span><span class="st">PTIW</span><span class="st" onclick="showTab('oiw',this)">OIW</span>
 </div>
 
 <div class="game-hdr">
@@ -319,7 +339,200 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   </table>
 </div>
 
-<div class="main">
+<div id="oiw-panel" style="display:none;flex:1;overflow-y:auto;background:#f3f4f6;padding:24px 32px;flex-direction:column;gap:28px">
+
+  <!-- Critical Plays for Review -->
+  <div class="oiw-section">
+    <div class="oiw-section-title">CRITICAL PLAYS FOR REVIEW</div>
+    <div class="oiw-title-rule"></div>
+    <div class="oiw-table-wrap">
+      <table class="oiw-tbl" style="table-layout:fixed">
+        <colgroup>
+          <col style="width:52px">
+          <col style="width:52px">
+          <col style="width:150px">
+          <col style="width:130px">
+          <col style="width:140px">
+          <col style="width:90px">
+          <col style="width:130px">
+          <col style="width:70px">
+          <col style="width:55px">
+          <col>
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Period</th>
+            <th>Clock</th>
+            <th>Team</th>
+            <th>Player</th>
+            <th>Call Type</th>
+            <th>Concern</th>
+            <th>Official</th>
+            <th>Ejection</th>
+            <th>RPTG</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody id="oiw-critical-tbody">
+          <tr onclick="oiwSelRow(this)">
+            <td>3</td>
+            <td>06:16</td>
+            <td>Toronto Tempo</td>
+            <td>Mabrey, Marina</td>
+            <td>Foul: Flagrant Type 1 (Flagrant 1)</td>
+            <td></td>
+            <td>Fahy, Kevin</td>
+            <td></td>
+            <td></td>
+            <td style="font-size:10.5px;line-height:1.5">The flagrant foul was assessed to Marina Mabrey, when she did not allow the shooter, Sydney Taylor, to land following Sydney's unsuccessful 3 point field goal attempt. Upon review the officials deemed the reckless close out by Marina met the criteria for a Flagrant Foul Penalty 1. Sydney received 3 free throws and Chicago was awarded the ball at the FTLE and 24 on the Shot Clock.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Game Replays -->
+  <div class="oiw-section">
+    <div class="oiw-section-title">GAME REPLAYS</div>
+    <div class="oiw-title-rule"></div>
+    <div class="oiw-table-wrap">
+      <table class="oiw-tbl" style="table-layout:fixed">
+        <colgroup>
+          <col style="width:52px">
+          <col style="width:52px">
+          <col style="width:160px">
+          <col style="width:120px">
+          <col>
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Period</th>
+            <th>Clock</th>
+            <th>Trigger</th>
+            <th>Ruling</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody id="oiw-replays-tbody">
+          <tr onclick="oiwSelRow(this)">
+            <td>3</td>
+            <td>06:16</td>
+            <td>* Flagrants</td>
+            <td>Flagrant 1</td>
+            <td style="font-size:10.5px;line-height:1.5">Instant Replay: Overturn Ruling The defensive foul was assessed to Marina Mabrey, when she did not allow the shooter, Sydney Taylor, to land following Sydney's unsuccessful 3 point field goal attempt. Upon review the officials deemed the reckless close out by Marina met the criteria for a Flagrant Foul Penalty 1. Sydney received 3 free throws and Chicago was awarded the ball at the FTLE and 24 on the Shot Clock.</td>
+          </tr>
+          <tr onclick="oiwSelRow(this)">
+            <td>3</td>
+            <td>05:06</td>
+            <td>* * Coach's Challenge Foul</td>
+            <td>Successful</td>
+            <td style="font-size:10.5px;line-height:1.5">A defensive foul was assessed to Skylar Diggins. Chicago called the 2nd timeout of the 3rd period to challenge the called foul. After review of the left below the camera and left slash camera, the officials deem the defender makes contact with the ball and no illegal contact with the shooter. Therefore the call is overturned to a no call, at the timing of our whistle the ball was loose with no imminent possession which resulted in a jump ball center circle any 2 players in the game at the time of the called foul, shot clock 24. Chicago received their timeout back as well as the opportunity to challenge again.</td>
+          </tr>
+          <tr onclick="oiwSelRow(this)">
+            <td>4</td>
+            <td>03:51</td>
+            <td>* Coach's Challenge Out of Bounds</td>
+            <td>Unsuccessful</td>
+            <td style="font-size:10.5px;line-height:1.5">The out of bounds call on the floor was awarded to Chicago. Toronto called the 3rd timeout of the 4th period to challenge the out of bounds. Upon review of left handheld, left slam, and left slash, the crew deemed the contact from Sydney Taylor to Kiki to be marginal as her left forearm makes contact with the ball, causing it to come loose, bouncing off of Sydney's left knee then last touching Kiki's left hand prior to going out of bounds. The call in the floor stand, unsuccessful, loss of timeout and ability to challenge again.</td>
+          </tr>
+          <tr onclick="oiwSelRow(this)">
+            <td>4</td>
+            <td>02:53</td>
+            <td>* Coach's Challenge Out of Bounds</td>
+            <td>Unsuccessful</td>
+            <td style="font-size:10.5px;line-height:1.5">The out of bounds call on the floor was awarded to Toronto. Chicago called the 4th timeout of the 4th period to call timeout and challenge the out of bounds. After review of the game, left handheld held, left slash, and left slam, the crew determined that Skylar Diggins did in fact touch the ball last, resulting in Toronto basketball, unsuccessful challenge, charged a timeout and due to it being the 2nd Chicago Challenge, they will have no challenges remaining regardless.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Other Notable Plays -->
+  <div class="oiw-section">
+    <div class="oiw-section-title">OTHER NOTABLE PLAYS</div>
+    <div class="oiw-title-rule"></div>
+    <div class="oiw-table-wrap">
+      <table class="oiw-tbl" style="table-layout:fixed">
+        <colgroup>
+          <col style="width:42px">
+          <col style="width:52px">
+          <col style="width:140px">
+          <col style="width:130px">
+          <col style="width:140px">
+          <col style="width:100px">
+          <col style="width:50px">
+          <col>
+        </colgroup>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Clock</th>
+            <th>Team</th>
+            <th>Player</th>
+            <th>Call Type</th>
+            <th>Call Evaluation</th>
+            <th>RPTG</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody id="oiw-notable-tbody">
+          <tr onclick="oiwSelRow(this)">
+            <td>1</td><td>09:04</td><td>Toronto Tempo</td><td>Juskaite, Laura</td><td>Foul: Shooting</td><td>Correct Call</td><td></td>
+            <td style="font-size:10.5px;line-height:1.5">Pathway Play. The defender does not maintain her line and move A to B into the path of the dribbler/shooter. Trail has single whistle, good coverage play.</td>
+          </tr>
+          <tr onclick="oiwSelRow(this)">
+            <td>1</td><td>05:34</td><td>Chicago Sky</td><td>Sheldon, Jacy</td><td>Foul: Personal</td><td>Correct Call</td><td></td>
+            <td style="font-size:10.5px;line-height:1.5">As Mabrey sets a screen and attempts to roll to the basket, she is held by Sheldon, which causes the pass to be fumbled by Mabrey. The defensive foul by Sheldon was correctly called by Trail with the open look.</td>
+          </tr>
+          <tr onclick="oiwSelRow(this)">
+            <td>2</td><td>09:54</td><td>Chicago Sky</td><td>Cloud, Natasha</td><td>Foul: Personal</td><td>Correct Call</td><td></td>
+            <td style="font-size:10.5px;line-height:1.5">As the ball enters the front court, Cloud wraps Mabrey off ball causing a collision and multiple players falling to the floor. The illegal contact by Cloud was correctly called to prevent rough play.</td>
+          </tr>
+          <tr onclick="oiwSelRow(this)">
+            <td>2</td><td>06:26</td><td>Toronto Tempo</td><td>Juskaite, Laura</td><td>Foul: Personal</td><td>Correct Call</td><td></td>
+            <td style="font-size:10.5px;line-height:1.5">POE. Freedom of movement in the most, the defender delivers a blow when she does not beat the offensive player to the spot and get legally in her path in time prior to contact off ball. The defensive foul for chucking the cutter under the basket was properly called by Laura.</td>
+          </tr>
+          <tr onclick="oiwSelRow(this)">
+            <td>2</td><td>01:20</td><td>Toronto Tempo</td><td>Sabally, Nyara</td><td>Rebound</td><td>NCC</td><td></td>
+            <td style="font-size:10.5px;line-height:1.5">POE. The Legal Screen set by Nyara Sabally on the defender Alisha Coulibaly who runs into said legal screen and falls to the floor in attempt to garner an offensive foul. This play was neither an offensive nor a defensive foul as the defender does not take the screener out of normal basketball play. No call correct.</td>
+          </tr>
+          <tr onclick="oiwSelRow(this)">
+            <td>3</td><td>07:13</td><td>Toronto Tempo</td><td>Sabally, Nyara</td><td>Turnaround Jump: Missed</td><td>NCI</td><td></td>
+            <td style="font-size:10.5px;line-height:1.5">CHI #10 Cardoso turns and shoots a mid range jump shot, Cardoso is met by TOR defender #8 Nyara Sabally who is short of the ball. A POC foul is needed here.</td>
+          </tr>
+          <tr onclick="oiwSelRow(this)">
+            <td>3</td><td>06:27</td><td>Toronto Tempo</td><td>Mabrey, Marina</td><td>Foul: Loose Ball</td><td>Correct Call</td><td></td>
+            <td style="font-size:10.5px;line-height:1.5">Loose Ball Foul correctly assessed to Mabrey as Cloud is about to gain imminent possession of the loose ball, the illegal contact by Mabrey who's coming from a perpendicular angle when she fouls Cloud preventing Cloud from getting to the ball as they ball go crashing to the floor.</td>
+          </tr>
+          <tr onclick="oiwSelRow(this)">
+            <td>4</td><td>05:04</td><td>Toronto Tempo</td><td>Mabrey, Marina</td><td>Foul: Offensive Charge</td><td>Incorrect Call</td><td></td>
+            <td style="font-size:10.5px;line-height:1.5">The offensive foul was assessed to Marina Mabrey when it was deemed on the floor that during her shooting motion, Marina voluntarily launched to her right in attempt to veer into the oncoming defender and seek out the contact. However after post game video review the call on the floor should have been a defensive foul for the oncoming defender's momentum carries her into Marina from the side initiating the defensive foul, while Marina is merely bracing to absorb the contact by Sydney.</td>
+          </tr>
+          <tr onclick="oiwSelRow(this)">
+            <td>4</td><td>02:26</td><td>Toronto Tempo</td><td>Rice, Kiki</td><td>Driving Floating Bank Jump Shot: Made</td><td>NCC</td><td></td>
+            <td style="font-size:10.5px;line-height:1.5">On this drive to the basket by CHI #9 Natasha Cloud, defender TOR #1 Kiki Rice establishes and maintains her path on the drive to the basket. The contact on this play is deemed marginal and this is a no call correct.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Comments -->
+  <div class="oiw-section">
+    <div class="oiw-section-title">COMMENTS</div>
+    <div class="oiw-title-rule"></div>
+    <div class="oiw-comm-wrap">
+      <div class="oiw-comm-hdr">
+        <div>Comments</div>
+        <div>Urgent?</div>
+      </div>
+      <div class="oiw-comm-body">No Comments Found</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="main" id="main-panel">
   <div class="sb">
     <div class="sb-prog">
       <div class="prog-label"><span>Progress</span><span id="prog-txt">0 / 18 reviewed</span></div>
@@ -1133,10 +1346,30 @@ function toast(msg) {
 }
 function selAng(el) { document.querySelectorAll('.ang').forEach(a=>a.classList.remove('on')); el.classList.add('on'); }
 
-document.querySelectorAll('.st').forEach(t => t.addEventListener('click', function() {
+function showTab(tab, el) {
   document.querySelectorAll('.st').forEach(x => x.classList.remove('on'));
-  this.classList.add('on');
-}));
+  if (el) el.classList.add('on');
+  const isOiw = tab === 'oiw';
+  const isSc = tab === 'secondcheck';
+  document.getElementById('oiw-panel').style.display = isOiw ? 'flex' : 'none';
+  document.getElementById('main-panel').style.display = isOiw ? 'none' : '';
+}
+
+function oiwSelRow(tr) {
+  // deselect in same tbody
+  const tbody = tr.closest('tbody');
+  tbody.querySelectorAll('tr').forEach(r => r.classList.remove('oiw-sel'));
+  tr.classList.add('oiw-sel');
+}
+
+document.querySelectorAll('.st').forEach(t => {
+  if (!t.getAttribute('onclick')) {
+    t.addEventListener('click', function() {
+      document.querySelectorAll('.st').forEach(x => x.classList.remove('on'));
+      this.classList.add('on');
+    });
+  }
+});
 
 buildSidebar();
 // select first play
