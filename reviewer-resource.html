@@ -63,6 +63,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:6px}
 .card-top-left{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
 .pt-pill{font-size:9px;font-weight:700;background:#f3f4f6;color:#6b7280;padding:2px 8px;border-radius:20px;white-space:nowrap;letter-spacing:.2px;text-transform:uppercase}
+.pt-pill-sit{background:#eef2ff;color:#4338ca;text-transform:none;letter-spacing:0}
+.pt-pill-spt{background:#f0fdf4;color:#15803d;text-transform:none;letter-spacing:0}
 .ct-badge{font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap;letter-spacing:.2px}
 .ct-CC{background:#dcfce7;color:#166534}
 .ct-IC{background:#fee2e2;color:#991b1b}
@@ -777,6 +779,8 @@ function renderCard(c) {
     <div class="card-top">
       <div class="card-top-left">
         <span class="pt-pill">${c.playType}</span>
+        ${c.situation ? `<span class="pt-pill pt-pill-sit">${c.situation}</span>` : ''}
+        ${c.subPlayType ? `<span class="pt-pill pt-pill-spt">${c.subPlayType}</span>` : ''}
         ${ratingBadge(c.callType)}
       </div>
       <button class="card-action-btn" onclick="openEditModal('${c.id}')" title="Edit"><i class="ti ti-pencil"></i></button>
