@@ -40,8 +40,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .tb-up{background:#dcfce7;color:#166534}
 .tb-down{background:#fee2e2;color:#991b1b}
 /* MAIN GRID */
-.main-grid{display:grid;grid-template-columns:1fr 320px;gap:16px;margin-bottom:16px;align-items:stretch}
-.bottom-grid{display:grid;grid-template-columns:1fr 320px;gap:16px;margin-bottom:28px;align-items:stretch}
+.main-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;align-items:stretch}
+.bottom-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px;align-items:stretch}
 /* CHART CARD */
 .chart-card{background:#fff;border-radius:12px;padding:22px 24px;box-shadow:0 2px 8px rgba(0,0,0,.08);border:1px solid #e5e7eb}
 .chart-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px}
@@ -246,57 +246,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
           <div class="section-title" style="margin-bottom:0">Overturn Rate by Play Type</div>
         </div>
         <div style="font-size:10px;color:#9ca3af;margin-bottom:12px">% of included plays changed by SC · sorted by overturn rate</div>
-        <div class="play-rows-wrap">
-          <div class="play-type-group">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
-              <div class="play-type-name">Foul: Shooting</div>
-              <div style="font-size:10px;color:#ec4899;font-weight:700">44%</div>
-            </div>
-            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:44%;background:#ec4899"></div></div><div class="play-pct" style="color:#9d174d">20/45</div></div>
-          </div>
-          <div class="play-type-group">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
-              <div class="play-type-name">Foul: Offensive</div>
-              <div style="font-size:10px;color:#ec4899;font-weight:700">38%</div>
-            </div>
-            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:38%;background:#ec4899"></div></div><div class="play-pct" style="color:#9d174d">11/29</div></div>
-          </div>
-          <div class="play-type-group">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
-              <div class="play-type-name">Foul: Loose Ball</div>
-              <div style="font-size:10px;color:#fbb6ce;font-weight:700">31%</div>
-            </div>
-            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:31%;background:#fbb6ce"></div></div><div class="play-pct" style="color:#db2777">8/26</div></div>
-          </div>
-          <div class="play-type-group">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
-              <div class="play-type-name">Foul: Personal</div>
-              <div style="font-size:10px;color:#fbb6ce;font-weight:700">26%</div>
-            </div>
-            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:26%;background:#fbb6ce"></div></div><div class="play-pct" style="color:#db2777">10/38</div></div>
-          </div>
-          <div class="play-type-group">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
-              <div class="play-type-name">Out of Bounds</div>
-              <div style="font-size:10px;color:#fbb6ce;font-weight:700">25%</div>
-            </div>
-            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:25%;background:#fbb6ce"></div></div><div class="play-pct" style="color:#db2777">5/20</div></div>
-          </div>
-          <div class="play-type-group">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
-              <div class="play-type-name">Travel</div>
-              <div style="font-size:10px;color:#fbb6ce;font-weight:700">17%</div>
-            </div>
-            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:17%;background:#fbb6ce"></div></div><div class="play-pct" style="color:#f472b6">3/18</div></div>
-          </div>
-          <div class="play-type-group">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
-              <div class="play-type-name">Goaltending</div>
-              <div style="font-size:10px;color:#fbb6ce;font-weight:700">14%</div>
-            </div>
-            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:14%;background:#fbb6ce"></div></div><div class="play-pct" style="color:#f472b6">2/14</div></div>
-          </div>
-        </div>
+        <div class="play-rows-wrap" id="pt-sidebar"></div>
       </div>
 
     </div>
@@ -1149,10 +1099,73 @@ function renderPlayTypeTable() {
   });
 }
 
+// Per-play-type overturn rates for last 10 games (oldest→newest)
+const PT_TRENDS = {
+  'Foul: Shooting':   [38, 50, 40, 55, 42, 48, 36, 52, 45, 44],
+  'Foul: Offensive':  [30, 42, 35, 44, 38, 40, 33, 42, 36, 38],
+  'Foul: Loose Ball': [25, 36, 28, 38, 30, 33, 27, 35, 29, 31],
+  'Foul: Personal':   [20, 30, 22, 32, 26, 28, 21, 30, 24, 26],
+  'Out of Bounds':    [18, 28, 20, 30, 24, 27, 19, 29, 22, 25],
+  'Travel':           [12, 20, 14, 22, 16, 19, 11, 21, 15, 17],
+  'Goaltending':      [10, 18, 12, 20, 13, 17, 9, 18, 12, 14],
+};
+
+const PT_SIDEBAR = [
+  {name:'Foul: Shooting',   pct:44, frac:'20/45'},
+  {name:'Foul: Offensive',  pct:38, frac:'11/29'},
+  {name:'Foul: Loose Ball', pct:31, frac:'8/26'},
+  {name:'Foul: Personal',   pct:26, frac:'10/38'},
+  {name:'Out of Bounds',    pct:25, frac:'5/20'},
+  {name:'Travel',           pct:17, frac:'3/18'},
+  {name:'Goaltending',      pct:14, frac:'2/14'},
+];
+
+function sparkline(data, color) {
+  const W = 60, H = 24, pad = 2;
+  const mn = Math.min(...data), mx = Math.max(...data);
+  const range = mx - mn || 1;
+  const pts = data.map((v, i) => {
+    const x = pad + (i / (data.length - 1)) * (W - pad * 2);
+    const y = H - pad - ((v - mn) / range) * (H - pad * 2);
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(' ');
+  const last = data[data.length - 1], prev = data[data.length - 2];
+  const trend = last > prev ? '↑' : last < prev ? '↓' : '→';
+  const trendCol = last > prev ? '#ec4899' : last < prev ? '#16a34a' : '#9ca3af';
+  return `<div style="display:flex;align-items:center;gap:4px">
+    <svg width="${W}" height="${H}" style="overflow:visible">
+      <polyline points="${pts}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+      <circle cx="${pts.split(' ').pop().split(',')[0]}" cy="${pts.split(' ').pop().split(',')[1]}" r="2.5" fill="${color}"/>
+    </svg>
+    <span style="font-size:9px;font-weight:700;color:${trendCol}">${trend}</span>
+  </div>`;
+}
+
+function renderPtSidebar() {
+  const el = document.getElementById('pt-sidebar');
+  if (!el) return;
+  el.innerHTML = PT_SIDEBAR.map(pt => {
+    const col = pt.pct >= 40 ? '#ec4899' : pt.pct >= 25 ? '#f472b6' : '#fbb6ce';
+    const textCol = pt.pct >= 40 ? '#9d174d' : pt.pct >= 25 ? '#db2777' : '#f472b6';
+    const trend = PT_TRENDS[pt.name] || [];
+    return `<div class="play-type-group">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
+        <div class="play-type-name">${pt.name}</div>
+        <div style="display:flex;align-items:center;gap:8px">
+          ${trend.length ? sparkline(trend, col) : ''}
+          <div style="font-size:10px;color:${col};font-weight:700">${pt.pct}%</div>
+        </div>
+      </div>
+      <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:${pt.pct}%;background:${col}"></div></div><div class="play-pct" style="color:${textCol}">${pt.frac}</div></div>
+    </div>`;
+  }).join('');
+}
+
 renderPlayTypeTable();
 drawChart();
 drawRcChart();
 renderTable();
+renderPtSidebar();
 </script>
 </body>
 </html>
