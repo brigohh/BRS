@@ -90,6 +90,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .lg-chip:hover{background:#f3f4f6}
 .lg-chip.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
 .lg-chip img{width:14px;height:14px;object-fit:contain}
+.lg-filter-top{display:flex;align-items:center;gap:8px;margin-bottom:20px;padding-top:4px}
+.analytics-toggle{display:flex;align-items:center;gap:6px;padding:7px 14px;border:1px solid #e5e7eb;border-radius:8px;font-size:12px;font-weight:600;color:#6b7280;background:#fff;cursor:pointer;margin-bottom:16px;width:fit-content}
+.analytics-toggle:hover{background:#f9fafb}
+#analytics-section{transition:none}
 .bottom-card{background:#fff;border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,.07);border:1px solid #e5e7eb;overflow:hidden}
 .bottom-card table{width:100%;border-collapse:collapse}
 .bottom-card thead{background:#f8fafc}
@@ -142,36 +146,57 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 
 <div class="page">
 
-  <!-- HEADLINE STATS -->
-  <div class="section-title">Season overview · 2026 WNBA Season</div>
-  <div class="hero-stats">
-    <div class="stat-card primary">
-      <div class="stat-label">First Pass Accuracy</div>
-      <div class="stat-val">82<span style="font-size:18px;font-weight:600">%</span></div>
-      <div class="stat-sub">
-        <span class="trend-badge tb-up"><i class="ti ti-trending-up" style="font-size:9px"></i> +4.1%</span>
-        vs last 5 games
-      </div>
+  <!-- LEAGUE FILTER ROW -->
+  <div class="lg-filter-top">
+    <div class="lg-chip on" data-lg="" onclick="lgFilter(this)">All Leagues</div>
+    <div class="lg-chip" data-lg="WNBA" onclick="lgFilter(this)">
+      <img src="WNBA LOGO.png" onerror="this.style.display='none'"> WNBA
     </div>
-    <div class="stat-card accent-orange">
-      <div class="stat-label">Games Reviewed</div>
-      <div class="stat-val">10</div>
-      <div class="stat-sub">9 published · 1 in progress</div>
+    <div class="lg-chip" data-lg="NBA" onclick="lgFilter(this)">
+      <img src="nba-logo.svg" onerror="this.style.display='none'"> NBA
     </div>
-    <div class="stat-card accent-teal">
-      <div class="stat-label">Total Important Calls</div>
-      <div class="stat-val">290</div>
-      <div class="stat-sub">avg 29 per game</div>
-    </div>
-    <div class="stat-card accent-purple">
-      <div class="stat-label">Avg Overturn Rate</div>
-      <div class="stat-val">32<span style="font-size:18px;font-weight:600">%</span></div>
-      <div class="stat-sub">
-        <span class="trend-badge tb-up"><i class="ti ti-trending-down" style="font-size:9px"></i> –3.1%</span>
-        fewer overturns trending
-      </div>
-    </div>
+    <div class="lg-chip" data-lg="G-League" onclick="lgFilter(this)">G-League</div>
+    <div class="lg-chip" data-lg="BAL" onclick="lgFilter(this)">BAL</div>
   </div>
+
+  <!-- ANALYTICS TOGGLE -->
+  <button class="analytics-toggle" onclick="toggleAnalytics()" id="analytics-btn">
+    <i class="ti ti-chart-bar"></i> <span id="analytics-btn-txt">Hide Analytics</span>
+  </button>
+
+  <!-- COLLAPSIBLE ANALYTICS SECTION -->
+  <div id="analytics-section">
+
+    <!-- HEADLINE STATS -->
+    <div class="section-title" id="analytics-section-title">Season overview · 2026 · All Leagues</div>
+    <div class="hero-stats">
+      <div class="stat-card primary">
+        <div class="stat-label">First Pass Accuracy</div>
+        <div class="stat-val" id="stat-accuracy">82<span style="font-size:18px;font-weight:600">%</span></div>
+        <div class="stat-sub">
+          <span class="trend-badge tb-up"><i class="ti ti-trending-up" style="font-size:9px"></i> +4.1%</span>
+          vs last 5 games
+        </div>
+      </div>
+      <div class="stat-card accent-orange">
+        <div class="stat-label">Games Reviewed</div>
+        <div class="stat-val" id="stat-games">10</div>
+        <div class="stat-sub">9 published · 1 in progress</div>
+      </div>
+      <div class="stat-card accent-teal">
+        <div class="stat-label">Total Important Calls</div>
+        <div class="stat-val" id="stat-calls">290</div>
+        <div class="stat-sub">avg 29 per game</div>
+      </div>
+      <div class="stat-card accent-purple">
+        <div class="stat-label">Avg Overturn Rate</div>
+        <div class="stat-val" id="stat-overturn">32<span style="font-size:18px;font-weight:600">%</span></div>
+        <div class="stat-sub">
+          <span class="trend-badge tb-up"><i class="ti ti-trending-down" style="font-size:9px"></i> –3.1%</span>
+          fewer overturns trending
+        </div>
+      </div>
+    </div>
 
   <!-- MAIN: TREND CHART + SIDEBAR -->
   <div class="main-grid">
@@ -255,6 +280,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
     </div>
   </div>
 
+  </div><!-- /analytics-section -->
+
   <!-- OVERTURN RATE DETAIL TABLE -->
   <div class="section-title">Overturn rate by play type &amp; sub play type · season</div>
   <div class="bottom-card" style="margin-bottom:28px">
@@ -272,16 +299,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   </div>
 
   <!-- GAME BY GAME TABLE -->
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-    <div class="section-title" style="margin-bottom:0">All published games</div>
-    <div class="lg-filter-bar" style="margin-bottom:0">
-      <div class="lg-chip on" data-lg="" onclick="lgFilter(this)">All</div>
-      <div class="lg-chip" data-lg="NBA" onclick="lgFilter(this)"><img src="nba-logo.svg" onerror="this.style.display='none'"> NBA</div>
-      <div class="lg-chip" data-lg="WNBA" onclick="lgFilter(this)">WNBA</div>
-      <div class="lg-chip" data-lg="G-League" onclick="lgFilter(this)">G-League</div>
-      <div class="lg-chip" data-lg="BAL" onclick="lgFilter(this)">BAL</div>
-    </div>
-  </div>
+  <div class="section-title">All published games</div>
   <div class="bottom-card">
     <table>
       <thead>
@@ -394,11 +412,44 @@ function renderRecent() {
 }
 
 let activeLg = '';
+let analyticsOpen = true;
+
+function toggleAnalytics() {
+  analyticsOpen = !analyticsOpen;
+  document.getElementById('analytics-section').style.display = analyticsOpen ? '' : 'none';
+  document.getElementById('analytics-btn-txt').textContent = analyticsOpen ? 'Hide Analytics' : 'Show Analytics';
+}
+
+const LEAGUE_STATS = {
+  '':        { accuracy:82, games:10, calls:290, overturnRate:32, trend:'+4.1%', overturnTrend:'-3.1%' },
+  'WNBA':    { accuracy:82, games:10, calls:290, overturnRate:32, trend:'+4.1%', overturnTrend:'-3.1%' },
+  'NBA':     { accuracy:79, games:0,  calls:0,   overturnRate:35, trend:'+2.1%', overturnTrend:'-1.2%' },
+  'G-League':{ accuracy:85, games:0,  calls:0,   overturnRate:28, trend:'+6.2%', overturnTrend:'-4.0%' },
+  'BAL':     { accuracy:88, games:0,  calls:0,   overturnRate:22, trend:'+8.0%', overturnTrend:'-5.5%' },
+};
+
+function updateHeroStats(lg) {
+  const s = LEAGUE_STATS[lg] || LEAGUE_STATS[''];
+  const lgLabel = lg || 'All Leagues';
+  const st = document.getElementById('analytics-section-title');
+  if (st) st.textContent = `Season overview · 2026 · ${lgLabel}`;
+  const els = {
+    accuracy: document.getElementById('stat-accuracy'),
+    games: document.getElementById('stat-games'),
+    calls: document.getElementById('stat-calls'),
+    overturn: document.getElementById('stat-overturn'),
+  };
+  if (els.accuracy) els.accuracy.innerHTML = `${s.accuracy}<span style="font-size:18px;font-weight:600">%</span>`;
+  if (els.games) els.games.textContent = s.games;
+  if (els.calls) els.calls.textContent = s.calls;
+  if (els.overturn) els.overturn.innerHTML = `${s.overturnRate}<span style="font-size:18px;font-weight:600">%</span>`;
+}
 
 function lgFilter(el) {
   document.querySelectorAll('.lg-chip').forEach(c => c.classList.remove('on'));
   el.classList.add('on');
   activeLg = el.dataset.lg;
+  updateHeroStats(activeLg);
   renderTable();
 }
 
