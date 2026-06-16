@@ -1207,6 +1207,11 @@ drawChart();
 drawRcChart();
 renderTable();
 renderPtSidebar();
+// Lock sidebar height to season view so toggle doesn't reflow
+requestAnimationFrame(() => {
+  const el = document.getElementById('pt-sidebar');
+  if (el) el.style.minHeight = el.offsetHeight + 'px';
+});
 </script>
 </body>
 </html>
