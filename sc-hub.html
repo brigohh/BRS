@@ -98,6 +98,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .ap-lo{background:#fee2e2;color:#991b1b;border-color:#fca5a5}
 .tl{display:flex;align-items:center;gap:6px}
 .tl img{width:16px;height:16px;object-fit:contain}
+.pt-type-row td{background:#f8fafc;font-weight:700;font-size:12px;color:#111827;border-bottom:1px solid #e5e7eb;border-top:2px solid #e5e7eb}
+.pt-type-row td:first-child{padding-left:14px}
+.pt-sub-row td{background:#fff;font-size:11.5px;color:#374151;border-bottom:1px solid #f3f4f6}
+.pt-sub-row td:first-child{padding-left:30px;color:#6b7280}
+.pt-bar-wrap{flex:1;height:7px;background:#f3f4f6;border-radius:4px;overflow:hidden;max-width:200px}
+.pt-bar{height:100%;border-radius:4px}
+.pt-rate-cell{display:flex;align-items:center;gap:10px;padding:0}
+.pt-pct{font-size:11px;font-weight:700;min-width:34px}
 .published-badge{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;background:#e0e7ff;color:#3730a3;border:1px solid #a5b4fc}
 .complete-badge{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;background:#dcfce7;color:#166534;border:1px solid #86efac}
 </style>
@@ -111,7 +119,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   </div>
   <div class="nav-links">
     <span class="nl" onclick="location='hub.html'">HOME</span>
-    <span class="nl on">SECOND CHECK</span>
+    <span class="nl on">PUBLISHED GAMES</span>
     <span class="nl" onclick="location='rim.html'">RIM</span>
     <span class="nl">RM REVIEW</span>
     <span class="nl">FINAL L2M REVIEW</span>
@@ -147,11 +155,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       <div class="stat-sub">avg 29 per game</div>
     </div>
     <div class="stat-card accent-purple">
-      <div class="stat-label">Avg Changes / Game</div>
-      <div class="stat-val">9.4</div>
+      <div class="stat-label">Avg Overturn Rate</div>
+      <div class="stat-val">32<span style="font-size:18px;font-weight:600">%</span></div>
       <div class="stat-sub">
-        <span class="trend-badge tb-up"><i class="ti ti-trending-down" style="font-size:9px"></i> –1.2</span>
-        fewer edits trending
+        <span class="trend-badge tb-up"><i class="ti ti-trending-down" style="font-size:9px"></i> –3.1%</span>
+        fewer overturns trending
       </div>
     </div>
   </div>
@@ -176,50 +184,82 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 
     <!-- SIDEBAR -->
     <div class="side-stack">
-      <!-- MOST CHANGED PLAY TYPES -->
+      <!-- OVERTURN RATE BY PLAY TYPE -->
       <div class="side-card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-          <div class="section-title" style="margin-bottom:0">Most Changed Play Types</div>
-          <div style="display:flex;gap:10px;align-items:center;font-size:10px;color:#6b7280">
-            <span style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#1a3a6b;flex-shrink:0"></span>Called</span>
-            <span style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#f9a8d4;flex-shrink:0"></span>Non-Call</span>
-          </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+          <div class="section-title" style="margin-bottom:0">Overturn Rate by Play Type</div>
         </div>
+        <div style="font-size:10px;color:#9ca3af;margin-bottom:12px">% of included plays changed by SC · sorted by overturn rate</div>
         <div class="play-rows-wrap">
           <div class="play-type-group">
-            <div class="play-type-name">Foul: Shooting</div>
-            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:85%;background:#1a3a6b"></div></div><div class="play-pct">85%</div></div>
-            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:58%;background:#f9a8d4"></div></div><div class="play-pct">58%</div></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
+              <div class="play-type-name">Foul: Shooting</div>
+              <div style="font-size:10px;color:#dc2626;font-weight:700">44%</div>
+            </div>
+            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:44%;background:#dc2626"></div></div><div class="play-pct" style="color:#dc2626">20/45</div></div>
           </div>
           <div class="play-type-group">
-            <div class="play-type-name">Out of Bounds</div>
-            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:72%;background:#1a3a6b"></div></div><div class="play-pct">72%</div></div>
-            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:48%;background:#f9a8d4"></div></div><div class="play-pct">48%</div></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
+              <div class="play-type-name">Foul: Offensive</div>
+              <div style="font-size:10px;color:#dc2626;font-weight:700">38%</div>
+            </div>
+            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:38%;background:#dc2626"></div></div><div class="play-pct" style="color:#dc2626">11/29</div></div>
           </div>
           <div class="play-type-group">
-            <div class="play-type-name">Foul: Loose Ball</div>
-            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:65%;background:#1a3a6b"></div></div><div class="play-pct">65%</div></div>
-            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:42%;background:#f9a8d4"></div></div><div class="play-pct">42%</div></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
+              <div class="play-type-name">Foul: Loose Ball</div>
+              <div style="font-size:10px;color:#d97706;font-weight:700">31%</div>
+            </div>
+            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:31%;background:#d97706"></div></div><div class="play-pct" style="color:#d97706">8/26</div></div>
           </div>
           <div class="play-type-group">
-            <div class="play-type-name">Goaltending</div>
-            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:55%;background:#1a3a6b"></div></div><div class="play-pct">55%</div></div>
-            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:28%;background:#f9a8d4"></div></div><div class="play-pct">28%</div></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
+              <div class="play-type-name">Foul: Personal</div>
+              <div style="font-size:10px;color:#d97706;font-weight:700">26%</div>
+            </div>
+            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:26%;background:#d97706"></div></div><div class="play-pct" style="color:#d97706">10/38</div></div>
           </div>
           <div class="play-type-group">
-            <div class="play-type-name">Travel</div>
-            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:38%;background:#1a3a6b"></div></div><div class="play-pct">38%</div></div>
-            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:19%;background:#f9a8d4"></div></div><div class="play-pct">19%</div></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
+              <div class="play-type-name">Out of Bounds</div>
+              <div style="font-size:10px;color:#d97706;font-weight:700">25%</div>
+            </div>
+            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:25%;background:#d97706"></div></div><div class="play-pct" style="color:#d97706">5/20</div></div>
           </div>
           <div class="play-type-group">
-            <div class="play-type-name">Foul: Personal</div>
-            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:28%;background:#1a3a6b"></div></div><div class="play-pct">28%</div></div>
-            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:11%;background:#f9a8d4"></div></div><div class="play-pct">11%</div></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
+              <div class="play-type-name">Travel</div>
+              <div style="font-size:10px;color:#16a34a;font-weight:700">17%</div>
+            </div>
+            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:17%;background:#16a34a"></div></div><div class="play-pct" style="color:#16a34a">3/18</div></div>
+          </div>
+          <div class="play-type-group">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
+              <div class="play-type-name">Goaltending</div>
+              <div style="font-size:10px;color:#16a34a;font-weight:700">14%</div>
+            </div>
+            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:14%;background:#16a34a"></div></div><div class="play-pct" style="color:#16a34a">2/14</div></div>
           </div>
         </div>
       </div>
 
     </div>
+  </div>
+
+  <!-- OVERTURN RATE DETAIL TABLE -->
+  <div class="section-title">Overturn rate by play type &amp; sub play type · season</div>
+  <div class="bottom-card" style="margin-bottom:28px">
+    <table id="pt-table" style="width:100%;border-collapse:collapse">
+      <thead>
+        <tr>
+          <th style="padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.3px;color:#9ca3af;text-transform:uppercase;border-bottom:1px solid #e5e7eb;background:#f8fafc">Play Type / Sub Play Type</th>
+          <th style="padding:9px 14px;text-align:center;font-size:10px;font-weight:700;letter-spacing:.3px;color:#9ca3af;text-transform:uppercase;border-bottom:1px solid #e5e7eb;background:#f8fafc;white-space:nowrap">Included</th>
+          <th style="padding:9px 14px;text-align:center;font-size:10px;font-weight:700;letter-spacing:.3px;color:#9ca3af;text-transform:uppercase;border-bottom:1px solid #e5e7eb;background:#f8fafc;white-space:nowrap">Changed</th>
+          <th style="padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.3px;color:#9ca3af;text-transform:uppercase;border-bottom:1px solid #e5e7eb;background:#f8fafc;min-width:180px">Overturn Rate</th>
+        </tr>
+      </thead>
+      <tbody id="pt-tbody"></tbody>
+    </table>
   </div>
 
   <!-- GAME BY GAME TABLE -->
@@ -355,6 +395,86 @@ function renderTable() {
   });
 }
 
+const PLAY_TYPE_STATS = [
+  { type:'Foul: Shooting', included:45, changed:20, subs:[
+    { name:'Driving Shot Attempt', included:18, changed:9 },
+    { name:'Jump Shot',            included:14, changed:6 },
+    { name:'Layup or Dunk',        included:9,  changed:3 },
+    { name:'Floater',              included:4,  changed:2 },
+  ]},
+  { type:'Foul: Offensive', included:29, changed:11, subs:[
+    { name:'Dislodge from Position', included:10, changed:5 },
+    { name:'Hook',                   included:8,  changed:3 },
+    { name:'Pass & Crash',           included:6,  changed:2 },
+    { name:'Clamp-Lock-Hold',        included:5,  changed:1 },
+  ]},
+  { type:'Foul: Loose Ball', included:26, changed:8, subs:[
+    { name:'Clamp-Lock-Hold',        included:10, changed:4 },
+    { name:'Dislodge from Position', included:9,  changed:3 },
+    { name:'Contact to Arm',         included:7,  changed:1 },
+  ]},
+  { type:'Foul: Personal', included:38, changed:10, subs:[
+    { name:'Contact to Arm',         included:12, changed:4 },
+    { name:'Hand/Forearm to Front',  included:10, changed:3 },
+    { name:'Body Contact/Check',     included:8,  changed:2 },
+    { name:'Rip-Through',            included:5,  changed:1 },
+    { name:'Two Hands',              included:3,  changed:0 },
+  ]},
+  { type:'Out of Bounds', included:20, changed:5, subs:[
+    { name:'Dislodge from Position', included:9,  changed:3 },
+    { name:'Other',                  included:11, changed:2 },
+  ]},
+  { type:'Travel', included:18, changed:3, subs:[
+    { name:'Gather Step',            included:11, changed:2 },
+    { name:'Pivot Foot',             included:7,  changed:1 },
+  ]},
+  { type:'Goaltending', included:14, changed:2, subs:[
+    { name:'Defensive Goaltending',  included:9,  changed:1 },
+    { name:'Offensive Goaltending',  included:5,  changed:1 },
+  ]},
+];
+
+function ptColor(pct) {
+  if (pct >= 40) return '#dc2626';
+  if (pct >= 25) return '#d97706';
+  return '#16a34a';
+}
+
+function renderPlayTypeTable() {
+  const tbody = document.getElementById('pt-tbody');
+  PLAY_TYPE_STATS.forEach(pt => {
+    const pct = Math.round(pt.changed / pt.included * 100);
+    const col = ptColor(pct);
+    tbody.innerHTML += `<tr class="pt-type-row">
+      <td style="padding:9px 14px">${pt.type}</td>
+      <td style="padding:9px 14px;text-align:center;color:#6b7280">${pt.included}</td>
+      <td style="padding:9px 14px;text-align:center;font-weight:700;color:${col}">${pt.changed}</td>
+      <td style="padding:9px 14px">
+        <div class="pt-rate-cell">
+          <span class="pt-pct" style="color:${col}">${pct}%</span>
+          <div class="pt-bar-wrap"><div class="pt-bar" style="width:${pct}%;background:${col}"></div></div>
+        </div>
+      </td>
+    </tr>`;
+    pt.subs.forEach(sub => {
+      const spct = Math.round(sub.changed / sub.included * 100);
+      const scol = ptColor(spct);
+      tbody.innerHTML += `<tr class="pt-sub-row">
+        <td style="padding:7px 14px 7px 30px">${sub.name}</td>
+        <td style="padding:7px 14px;text-align:center;color:#9ca3af">${sub.included}</td>
+        <td style="padding:7px 14px;text-align:center;font-weight:600;color:${scol}">${sub.changed}</td>
+        <td style="padding:7px 14px">
+          <div class="pt-rate-cell">
+            <span class="pt-pct" style="color:${scol};font-size:10.5px">${spct}%</span>
+            <div class="pt-bar-wrap"><div class="pt-bar" style="width:${spct}%;background:${scol}"></div></div>
+          </div>
+        </td>
+      </tr>`;
+    });
+  });
+}
+
+renderPlayTypeTable();
 drawChart();
 renderTable();
 </script>
