@@ -225,7 +225,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
     <div class="chart-card">
       <div class="chart-header">
         <div>
-          <div class="chart-title" style="font-size:12px">First Pass Accuracy — Game by Game</div>
+          <div class="chart-title" style="font-size:12px">First Pass Accuracy — Last 10 Games</div>
           <div class="chart-desc">% of first-pass calls upheld after second check</div>
         </div>
         <div class="chart-legend">
@@ -241,12 +241,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
     <div class="chart-card">
       <div class="chart-header">
         <div>
-          <div class="chart-title" style="font-size:12px">Rating Changes — Last 15 Games</div>
-          <div class="chart-desc">Changes per game by type</div>
+          <div class="chart-title" style="font-size:12px">Rating Changes — Last 10 Games</div>
+          <div class="chart-desc">Total changes per rating type</div>
         </div>
-        <div id="rc-legend" style="display:flex;flex-wrap:wrap;gap:4px 10px"></div>
       </div>
-      <svg id="rc-chart" class="chart-svg" height="220" viewBox="0 0 600 220" preserveAspectRatio="none"></svg>
+      <div id="rc-chart" style="display:flex;flex-direction:column;gap:7px"></div>
     </div>
 
     <!-- SIDEBAR -->
@@ -731,7 +730,7 @@ const SC_GAMES = [
 
 // TREND CHART
 function drawChart() {
-  const games = [...SC_GAMES].reverse();
+  const games = SC_GAMES.slice(0, 10).reverse();
   const svg = document.getElementById('trend-chart');
   const W = 800, H = 220, padL = 36, padR = 16, padT = 12, padB = 8;
   const cW = W - padL - padR, cH = H - padT - padB;
@@ -778,11 +777,10 @@ function drawChart() {
 }
 
 function drawRcChart() {
-  const games = SC_GAMES.slice(0, 15).reverse();
-  const svg = document.getElementById('rc-chart');
-  if (!svg) return;
+  const games = SC_GAMES.slice(0, 10);
+  const el = document.getElementById('rc-chart');
+  if (!el) return;
 
-  // All possible change type colors (darker = more impactful)
   const TYPE_COLORS = {
     'CNC→INC': '#ec4899',
     'PII→INC': '#f06db3',
@@ -792,76 +790,34 @@ function drawRcChart() {
     'PIN→CNC': '#fbb6ce',
     'PII→CNC': '#fce7f3',
   };
-  // Ordered from most to least impactful for stacking
   const TYPE_ORDER = ['CNC→INC','PII→INC','PIN→INC','CC→IC','IC→CC','PIN→CNC','PII→CNC'];
 
-  // Collect which types actually appear
-  const usedTypes = new Set();
+  // Count totals per change type
+  const totals = {};
   games.forEach(g => (g.rc||[]).forEach(r => {
     const key = `${r.from}→${r.to}`;
-    usedTypes.add(TYPE_ORDER.includes(key) ? key : 'other');
+    totals[key] = (totals[key]||0) + 1;
   }));
-  if (usedTypes.has('other')) TYPE_COLORS['other'] = '#fdf2f8';
 
-  const orderedTypes = [...TYPE_ORDER, 'other'].filter(t => usedTypes.has(t));
+  // Sort by count desc, maintaining type order as tiebreak
+  const rows = Object.entries(totals)
+    .sort((a,b) => b[1] - a[1] || TYPE_ORDER.indexOf(a[0]) - TYPE_ORDER.indexOf(b[0]));
 
-  // Render dynamic legend
-  const legend = document.getElementById('rc-legend');
-  if (legend) {
-    legend.innerHTML = orderedTypes.map(t =>
-      `<div style="display:flex;align-items:center;gap:4px;font-size:10px;color:#6b7280">
-        <div style="width:8px;height:8px;border-radius:50%;background:${TYPE_COLORS[t]};flex-shrink:0"></div>${t}
-      </div>`
-    ).join('');
-  }
+  const maxCount = rows.length ? rows[0][1] : 1;
 
-  const W = 600, H = 195, padL = 28, padR = 8, padT = 12, padB = 8;
-  const cW = W - padL - padR, cH = H - padT - padB;
-  const n = games.length;
-  const barW = Math.floor(cW / n * 0.62);
-  const gap = cW / n;
-
-  // Count by type per game
-  const cats = games.map(g => {
-    const counts = {};
-    (g.rc||[]).forEach(r => {
-      const key = `${r.from}→${r.to}`;
-      const k = TYPE_ORDER.includes(key) ? key : 'other';
-      counts[k] = (counts[k]||0) + 1;
-    });
-    return counts;
-  });
-
-  const maxTotal = Math.max(...cats.map(c => Object.values(c).reduce((a,b)=>a+b,0)), 1);
-  const yScale = v => padT + cH - (v / maxTotal) * cH;
-  const bottom = padT + cH;
-
-  let html = '';
-  [Math.round(maxTotal/2), maxTotal].forEach(v => {
-    const y = yScale(v);
-    html += `<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" stroke="#f3f4f6" stroke-width="1"/>`;
-    html += `<text x="${padL-4}" y="${y+4}" text-anchor="end" font-size="9" fill="#d1d5db">${v}</text>`;
-  });
-
-  cats.forEach((c, i) => {
-    const x = padL + i * gap + gap / 2 - barW / 2;
-    let y = bottom;
-    const total = Object.values(c).reduce((a,b)=>a+b,0);
-    orderedTypes.forEach(t => {
-      const val = c[t] || 0;
-      if (!val) return;
-      const h = (val / maxTotal) * cH;
-      y -= h;
-      html += `<rect x="${x}" y="${y}" width="${barW}" height="${h}" fill="${TYPE_COLORS[t]}" rx="1"/>`;
-    });
-    if (total > 0) {
-      html += `<text x="${x+barW/2}" y="${y-3}" text-anchor="middle" font-size="8.5" fill="#9ca3af">${total}</text>`;
-    }
-  });
-
-  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
-  svg.setAttribute('height', H);
-  svg.innerHTML = html;
+  el.innerHTML = rows.map(([type, count]) => {
+    const col = TYPE_COLORS[type] || '#fce7f3';
+    const pct = Math.round(count / maxCount * 100);
+    return `<div style="display:flex;flex-direction:column;gap:2px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:11px;font-weight:600;color:#374151">${type}</span>
+        <span style="font-size:10px;font-weight:700;color:${col}">${count}</span>
+      </div>
+      <div style="height:7px;background:#f3f4f6;border-radius:4px;overflow:hidden">
+        <div style="height:100%;width:${pct}%;background:${col};border-radius:4px"></div>
+      </div>
+    </div>`;
+  }).join('');
 }
 
 // RECENT GAMES
