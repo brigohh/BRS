@@ -141,6 +141,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .rc-detail{flex:1;min-width:0}
 .rc-type{font-size:11.5px;font-weight:600;color:#111827}
 .rc-sub{font-size:10.5px;color:#9ca3af;margin-top:1px}
+#chart-tip{position:fixed;display:none;background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:10px 14px;box-shadow:0 4px 16px rgba(0,0,0,.12);font-size:11.5px;color:#374151;pointer-events:none;z-index:2000;min-width:160px}
 </style>
 </head>
 <body>
@@ -228,8 +229,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
           <div class="chart-desc">% of first-pass calls upheld after second check</div>
         </div>
         <div class="chart-legend">
-          <div class="leg-item"><div class="leg-dot" style="background:#db2777"></div>Called</div>
-          <div class="leg-item"><div class="leg-dot" style="background:#fbb6ce"></div>Non-Call</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#f472b6"></div>Called</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#fce7f3;border:1px solid #fbb6ce"></div>Non-Call</div>
           <div class="leg-item"><div class="leg-dot" style="background:#d1d5db;border-radius:0;width:18px;height:2px"></div>Avg (82%)</div>
         </div>
       </div>
@@ -243,11 +244,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
           <div class="chart-title" style="font-size:12px">Rating Changes — Last 15 Games</div>
           <div class="chart-desc">Changes per game by type</div>
         </div>
-        <div class="chart-legend">
-          <div class="leg-item"><div class="leg-dot" style="background:#9d174d"></div>Missed call</div>
-          <div class="leg-item"><div class="leg-dot" style="background:#db2777"></div>Call changed</div>
-          <div class="leg-item"><div class="leg-dot" style="background:#fbb6ce"></div>Other</div>
-        </div>
+        <div id="rc-legend" style="display:flex;flex-wrap:wrap;gap:4px 10px"></div>
       </div>
       <svg id="rc-chart" class="chart-svg" height="220" viewBox="0 0 600 220" preserveAspectRatio="none"></svg>
     </div>
@@ -264,51 +261,51 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
           <div class="play-type-group">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
               <div class="play-type-name">Foul: Shooting</div>
-              <div style="font-size:10px;color:#9d174d;font-weight:700">44%</div>
+              <div style="font-size:10px;color:#ec4899;font-weight:700">44%</div>
             </div>
-            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:44%;background:#9d174d"></div></div><div class="play-pct" style="color:#9d174d">20/45</div></div>
+            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:44%;background:#ec4899"></div></div><div class="play-pct" style="color:#9d174d">20/45</div></div>
           </div>
           <div class="play-type-group">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
               <div class="play-type-name">Foul: Offensive</div>
-              <div style="font-size:10px;color:#9d174d;font-weight:700">38%</div>
+              <div style="font-size:10px;color:#ec4899;font-weight:700">38%</div>
             </div>
-            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:38%;background:#9d174d"></div></div><div class="play-pct" style="color:#9d174d">11/29</div></div>
+            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:38%;background:#ec4899"></div></div><div class="play-pct" style="color:#9d174d">11/29</div></div>
           </div>
           <div class="play-type-group">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
               <div class="play-type-name">Foul: Loose Ball</div>
-              <div style="font-size:10px;color:#db2777;font-weight:700">31%</div>
+              <div style="font-size:10px;color:#fbb6ce;font-weight:700">31%</div>
             </div>
-            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:31%;background:#db2777"></div></div><div class="play-pct" style="color:#db2777">8/26</div></div>
+            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:31%;background:#fbb6ce"></div></div><div class="play-pct" style="color:#db2777">8/26</div></div>
           </div>
           <div class="play-type-group">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
               <div class="play-type-name">Foul: Personal</div>
-              <div style="font-size:10px;color:#db2777;font-weight:700">26%</div>
+              <div style="font-size:10px;color:#fbb6ce;font-weight:700">26%</div>
             </div>
-            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:26%;background:#db2777"></div></div><div class="play-pct" style="color:#db2777">10/38</div></div>
+            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:26%;background:#fbb6ce"></div></div><div class="play-pct" style="color:#db2777">10/38</div></div>
           </div>
           <div class="play-type-group">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
               <div class="play-type-name">Out of Bounds</div>
-              <div style="font-size:10px;color:#db2777;font-weight:700">25%</div>
+              <div style="font-size:10px;color:#fbb6ce;font-weight:700">25%</div>
             </div>
-            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:25%;background:#db2777"></div></div><div class="play-pct" style="color:#db2777">5/20</div></div>
+            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:25%;background:#fbb6ce"></div></div><div class="play-pct" style="color:#db2777">5/20</div></div>
           </div>
           <div class="play-type-group">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
               <div class="play-type-name">Travel</div>
-              <div style="font-size:10px;color:#f472b6;font-weight:700">17%</div>
+              <div style="font-size:10px;color:#fbb6ce;font-weight:700">17%</div>
             </div>
-            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:17%;background:#f472b6"></div></div><div class="play-pct" style="color:#f472b6">3/18</div></div>
+            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:17%;background:#fbb6ce"></div></div><div class="play-pct" style="color:#f472b6">3/18</div></div>
           </div>
           <div class="play-type-group">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
               <div class="play-type-name">Goaltending</div>
-              <div style="font-size:10px;color:#f472b6;font-weight:700">14%</div>
+              <div style="font-size:10px;color:#fbb6ce;font-weight:700">14%</div>
             </div>
-            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:14%;background:#f472b6"></div></div><div class="play-pct" style="color:#f472b6">2/14</div></div>
+            <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:14%;background:#fbb6ce"></div></div><div class="play-pct" style="color:#f472b6">2/14</div></div>
           </div>
         </div>
       </div>
@@ -356,6 +353,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 </div>
 
 <!-- RATING CHANGES PANEL -->
+<div id="chart-tip"></div>
 <div id="rc-overlay" class="rc-overlay" onclick="closePanel()"></div>
 <div id="rc-panel" class="rc-panel">
   <div class="rc-panel-hdr">
@@ -759,19 +757,21 @@ function drawChart() {
 
   // Called fill + line
   const calledPts = games.map((g,i) => `${xScale(i)},${yScale(g.called)}`).join(' ');
-  html += `<polygon points="${xScale(0)},${bottom} ${calledPts} ${xScale(n-1)},${bottom}" fill="#db2777" opacity="0.08"/>`;
-  html += `<polyline points="${calledPts}" fill="none" stroke="#db2777" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+  html += `<polygon points="${xScale(0)},${bottom} ${calledPts} ${xScale(n-1)},${bottom}" fill="#f472b6" opacity="0.08"/>`;
+  html += `<polyline points="${calledPts}" fill="none" stroke="#f472b6" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`;
 
   // Non-call fill + line
   const ncPts = games.map((g,i) => `${xScale(i)},${yScale(g.nc)}`).join(' ');
-  html += `<polygon points="${xScale(0)},${bottom} ${ncPts} ${xScale(n-1)},${bottom}" fill="#fbb6ce" opacity="0.12"/>`;
-  html += `<polyline points="${ncPts}" fill="none" stroke="#fbb6ce" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="5 3"/>`;
+  html += `<polygon points="${xScale(0)},${bottom} ${ncPts} ${xScale(n-1)},${bottom}" fill="#fce7f3" opacity="0.18"/>`;
+  html += `<polyline points="${ncPts}" fill="none" stroke="#fce7f3" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="5 3"/>`;
 
-  // Dots only (no game labels)
+  // Dots + invisible hit areas for hover tooltip
+  _chartGames = games;
   games.forEach((g, i) => {
     const x = xScale(i);
-    html += `<circle cx="${x}" cy="${yScale(g.called)}" r="3.5" fill="#db2777"/>`;
-    html += `<circle cx="${x}" cy="${yScale(g.nc)}" r="3" fill="#fbb6ce"/>`;
+    html += `<circle cx="${x}" cy="${yScale(g.called)}" r="3.5" fill="#f472b6"/>`;
+    html += `<circle cx="${x}" cy="${yScale(g.nc)}" r="3" fill="#fce7f3" stroke="#fbb6ce" stroke-width="1"/>`;
+    html += `<circle cx="${x}" cy="${yScale(g.called)}" r="12" fill="transparent" onmouseenter="showChartTip(event,${i})" onmouseleave="hideChartTip()"/>`;
   });
 
   svg.innerHTML = html;
@@ -781,30 +781,62 @@ function drawRcChart() {
   const games = SC_GAMES.slice(0, 15).reverse();
   const svg = document.getElementById('rc-chart');
   if (!svg) return;
-  const W = 600, H = 220, padL = 28, padR = 8, padT = 12, padB = 8;
+
+  // All possible change type colors (darker = more impactful)
+  const TYPE_COLORS = {
+    'CNC→INC': '#ec4899',
+    'PII→INC': '#f06db3',
+    'PIN→INC': '#f472b6',
+    'CC→IC':   '#f78fc3',
+    'IC→CC':   '#f9a8d4',
+    'PIN→CNC': '#fbb6ce',
+    'PII→CNC': '#fce7f3',
+  };
+  // Ordered from most to least impactful for stacking
+  const TYPE_ORDER = ['CNC→INC','PII→INC','PIN→INC','CC→IC','IC→CC','PIN→CNC','PII→CNC'];
+
+  // Collect which types actually appear
+  const usedTypes = new Set();
+  games.forEach(g => (g.rc||[]).forEach(r => {
+    const key = `${r.from}→${r.to}`;
+    usedTypes.add(TYPE_ORDER.includes(key) ? key : 'other');
+  }));
+  if (usedTypes.has('other')) TYPE_COLORS['other'] = '#fdf2f8';
+
+  const orderedTypes = [...TYPE_ORDER, 'other'].filter(t => usedTypes.has(t));
+
+  // Render dynamic legend
+  const legend = document.getElementById('rc-legend');
+  if (legend) {
+    legend.innerHTML = orderedTypes.map(t =>
+      `<div style="display:flex;align-items:center;gap:4px;font-size:10px;color:#6b7280">
+        <div style="width:8px;height:8px;border-radius:50%;background:${TYPE_COLORS[t]};flex-shrink:0"></div>${t}
+      </div>`
+    ).join('');
+  }
+
+  const W = 600, H = 195, padL = 28, padR = 8, padT = 12, padB = 8;
   const cW = W - padL - padR, cH = H - padT - padB;
   const n = games.length;
-  const barW = Math.floor(cW / n * 0.6);
+  const barW = Math.floor(cW / n * 0.62);
   const gap = cW / n;
 
-  // Categorise changes
+  // Count by type per game
   const cats = games.map(g => {
-    let missed = 0, callChange = 0, other = 0;
-    (g.rc || []).forEach(r => {
-      const key = `${r.from}->${r.to}`;
-      if (['CNC->INC','PIN->INC','PII->INC'].includes(key)) missed++;
-      else if (['CC->IC','IC->CC'].includes(key)) callChange++;
-      else other++;
+    const counts = {};
+    (g.rc||[]).forEach(r => {
+      const key = `${r.from}→${r.to}`;
+      const k = TYPE_ORDER.includes(key) ? key : 'other';
+      counts[k] = (counts[k]||0) + 1;
     });
-    return { missed, callChange, other, total: missed + callChange + other };
+    return counts;
   });
 
-  const maxTotal = Math.max(...cats.map(c => c.total), 1);
+  const maxTotal = Math.max(...cats.map(c => Object.values(c).reduce((a,b)=>a+b,0)), 1);
   const yScale = v => padT + cH - (v / maxTotal) * cH;
   const bottom = padT + cH;
 
   let html = '';
-  // Grid lines
   [Math.round(maxTotal/2), maxTotal].forEach(v => {
     const y = yScale(v);
     html += `<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" stroke="#f3f4f6" stroke-width="1"/>`;
@@ -814,23 +846,21 @@ function drawRcChart() {
   cats.forEach((c, i) => {
     const x = padL + i * gap + gap / 2 - barW / 2;
     let y = bottom;
-    const segs = [
-      { val: c.missed,     col: '#9d174d' },
-      { val: c.callChange, col: '#db2777' },
-      { val: c.other,      col: '#fbb6ce' },
-    ];
-    segs.forEach(s => {
-      if (!s.val) return;
-      const h = (s.val / maxTotal) * cH;
+    const total = Object.values(c).reduce((a,b)=>a+b,0);
+    orderedTypes.forEach(t => {
+      const val = c[t] || 0;
+      if (!val) return;
+      const h = (val / maxTotal) * cH;
       y -= h;
-      html += `<rect x="${x}" y="${y}" width="${barW}" height="${h}" fill="${s.col}" rx="2"/>`;
+      html += `<rect x="${x}" y="${y}" width="${barW}" height="${h}" fill="${TYPE_COLORS[t]}" rx="1"/>`;
     });
-    // total label on top
-    if (c.total > 0) {
-      html += `<text x="${x + barW/2}" y="${y - 3}" text-anchor="middle" font-size="8.5" fill="#9ca3af">${c.total}</text>`;
+    if (total > 0) {
+      html += `<text x="${x+barW/2}" y="${y-3}" text-anchor="middle" font-size="8.5" fill="#9ca3af">${total}</text>`;
     }
   });
 
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.setAttribute('height', H);
   svg.innerHTML = html;
 }
 
@@ -894,6 +924,26 @@ function closePanel() {
   document.getElementById('rc-panel').classList.remove('open');
   document.getElementById('rc-overlay').classList.remove('open');
 }
+
+let _chartGames = [];
+
+function showChartTip(e, idx) {
+  const g = _chartGames[idx];
+  if (!g) return;
+  const tip = document.getElementById('chart-tip');
+  tip.innerHTML = `
+    <div style="font-weight:700;margin-bottom:3px">${g.away} @ ${g.home}</div>
+    <div style="color:#9ca3af;font-size:10px;margin-bottom:6px">${g.date} · ${g.sc}</div>
+    <div style="display:flex;gap:12px">
+      <div><div style="font-size:9px;color:#9ca3af;margin-bottom:1px">CALLED</div><div style="font-weight:700;color:#f472b6">${g.called}%</div></div>
+      <div><div style="font-size:9px;color:#9ca3af;margin-bottom:1px">NON-CALL</div><div style="font-weight:700;color:#fbb6ce">${g.nc}%</div></div>
+      <div><div style="font-size:9px;color:#9ca3af;margin-bottom:1px">CHANGES</div><div style="font-weight:700;color:#374151">${g.changes}</div></div>
+    </div>`;
+  tip.style.display = 'block';
+  tip.style.left = (e.clientX + 14) + 'px';
+  tip.style.top = (e.clientY - 10) + 'px';
+}
+function hideChartTip() { document.getElementById('chart-tip').style.display = 'none'; }
 
 let activeLg = '';
 let analyticsOpen = true;
@@ -1086,9 +1136,9 @@ const PLAY_TYPE_STATS = [
 ];
 
 function ptColor(pct) {
-  if (pct >= 40) return '#9d174d';
-  if (pct >= 25) return '#db2777';
-  return '#f472b6';
+  if (pct >= 40) return '#ec4899';
+  if (pct >= 25) return '#f472b6';
+  return '#f9a8d4';
 }
 
 function renderPlayTypeTable() {
