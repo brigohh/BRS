@@ -801,7 +801,7 @@ function drawRcChart() {
 
   // Sort by count desc, maintaining type order as tiebreak
   const rows = Object.entries(totals)
-    .sort((a,b) => b[1] - a[1] || TYPE_ORDER.indexOf(a[0]) - TYPE_ORDER.indexOf(b[0]));
+    .sort((a,b) => TYPE_ORDER.indexOf(a[0]) - TYPE_ORDER.indexOf(b[0]));
 
   const maxCount = rows.length ? rows[0][1] : 1;
 
