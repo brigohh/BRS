@@ -28,30 +28,35 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .nav-dd-item:hover{background:#f0f2f5;color:#1a3a6b}
 .nav-dd-item.current{color:#1a3a6b;font-weight:600}
 
-.layout{display:flex;flex:1;overflow:hidden}
+.layout{display:flex;flex-direction:column;flex:1;overflow:hidden}
 
-/* SIDEBAR */
-.sidebar{width:210px;flex-shrink:0;background:#fff;border-right:1px solid #e5e7eb;display:flex;flex-direction:column;overflow:hidden}
-.sidebar-top{padding:14px 12px 10px}
-.sidebar-top-label{font-size:9.5px;font-weight:700;letter-spacing:.6px;color:#9ca3af;text-transform:uppercase;margin-bottom:8px}
-.sidebar-search{position:relative}
-.sidebar-search i{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:#9ca3af;font-size:13px;pointer-events:none}
-.sidebar-search input{width:100%;border:1px solid #e5e7eb;border-radius:8px;padding:7px 10px 7px 30px;font-size:11.5px;color:#374151;outline:none;background:#f9fafb}
-.sidebar-search input:focus{border-color:#1a3a6b;background:#fff}
-.sidebar-divider{height:1px;background:#f3f4f6}
-.sidebar-tabs{overflow-y:auto;padding:6px 0 12px}
-#tabs{flex:1}
-.sidebar-section-label{font-size:9.5px;font-weight:700;letter-spacing:.6px;color:#9ca3af;text-transform:uppercase;padding:8px 14px 4px}
-.tab-spt{font-size:11px}
-.tab{display:flex;align-items:center;justify-content:space-between;padding:7px 14px;cursor:pointer;font-size:11.5px;font-weight:500;color:#6b7280;transition:background .1s}
-.tab:hover{background:#f9fafb;color:#374151}
-.tab.on{background:#eef2ff;color:#1a3a6b;font-weight:600}
-.tab-count{font-size:9.5px;font-weight:700;background:#f3f4f6;color:#9ca3af;padding:1px 6px;border-radius:10px;min-width:22px;text-align:center}
-.tab.on .tab-count{background:#c7d2fe;color:#3730a3}
+.filter-bar{background:#fff;border-bottom:1px solid #e5e7eb;padding:10px 48px;display:flex;align-items:center;gap:12px;flex-shrink:0;flex-wrap:wrap;position:sticky;top:0;z-index:50}
+.filter-search{position:relative;flex-shrink:0}
+.filter-search i{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:#9ca3af;font-size:13px;pointer-events:none}
+.filter-search input{border:1px solid #e5e7eb;border-radius:8px;padding:6px 10px 6px 30px;font-size:11.5px;color:#374151;outline:none;background:#f9fafb;width:180px}
+.filter-search input:focus{border-color:#1a3a6b;background:#fff}
+.filter-dropdowns{display:flex;align-items:center;gap:8px;flex-wrap:wrap;flex:1}
+.fd-group{position:relative;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.fd-btn{display:flex;align-items:center;gap:5px;border:1px solid #e5e7eb;border-radius:8px;padding:5px 10px;font-size:11px;font-weight:600;color:#6b7280;background:#fff;cursor:pointer;white-space:nowrap;transition:border-color .1s,color .1s}
+.fd-btn:hover{border-color:#1a3a6b;color:#1a3a6b}
+.fd-group.has-value .fd-btn{border-color:#1a3a6b;color:#1a3a6b;background:#eef2ff}
+.fd-caret{font-size:8px;opacity:.6;transition:transform .15s}
+.fd-group.open .fd-caret{transform:rotate(180deg)}
+.fd-menu{display:none;position:absolute;top:calc(100% + 4px);left:0;background:#fff;border:1px solid #e5e7eb;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.12);min-width:200px;max-height:260px;overflow-y:auto;z-index:500;padding:4px 0}
+.fd-group.open .fd-menu{display:block}
+.fd-option{padding:8px 14px;font-size:11.5px;color:#374151;cursor:pointer;white-space:nowrap}
+.fd-option:hover{background:#f0f2f5;color:#1a3a6b}
+.fd-option.selected{background:#eef2ff;color:#1a3a6b;font-weight:600}
+.fd-pills{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.fd-pill{display:flex;align-items:center;gap:4px;background:#eef2ff;color:#1a3a6b;border:1px solid #c7d2fe;border-radius:20px;padding:2px 8px 2px 10px;font-size:10.5px;font-weight:600;white-space:nowrap}
+.fd-pill-x{background:none;border:none;color:#6366f1;cursor:pointer;font-size:11px;line-height:1;padding:0;margin-left:1px;display:flex;align-items:center}
+.fd-pill-x:hover{color:#ef4444}
+.fd-clear{background:none;border:none;font-size:11px;color:#9ca3af;cursor:pointer;text-decoration:underline;white-space:nowrap;flex-shrink:0}
+.fd-clear:hover{color:#374151}
 
 /* MAIN */
 .main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
-.main-header{padding:14px 48px 12px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;background:#f0f2f5;border-bottom:1px solid #e5e7eb;position:sticky;top:0;z-index:10}
+.main-header{padding:14px 48px 12px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;background:#f0f2f5;border-bottom:1px solid #e5e7eb}
 .main-header-left{display:flex;align-items:baseline;gap:10px}
 .main-title{font-size:14px;font-weight:700;color:#111827}
 .main-count{font-size:11px;color:#9ca3af;font-weight:500}
@@ -158,22 +163,41 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   </div>
 </div>
 
-<div class="layout">
-  <div class="sidebar">
-    <div class="sidebar-top">
-      <div class="sidebar-top-label">Filter</div>
-      <div class="sidebar-search">
-        <i class="ti ti-search"></i>
-        <input type="text" id="search-input" placeholder="Search comments..." oninput="onSearch()">
-      </div>
-    </div>
-    <div class="sidebar-divider"></div>
-    <div class="sidebar-tabs" id="tabs"></div>
-    <div class="sidebar-divider" id="spt-divider" style="display:none"></div>
-    <div class="sidebar-section-label" id="spt-label" style="display:none">Sub Play Type</div>
-    <div class="sidebar-tabs" id="spt-tabs" style="padding-top:2px"></div>
+<div class="filter-bar" id="filter-bar">
+  <div class="filter-search">
+    <i class="ti ti-search"></i>
+    <input type="text" id="search-input" placeholder="Search comments..." oninput="onSearch()">
   </div>
+  <div class="filter-dropdowns">
+    <!-- Play Type -->
+    <div class="fd-group" id="fd-pt">
+      <button class="fd-btn" onclick="toggleFd('fd-pt',event)">Play Type <span class="fd-caret">▾</span></button>
+      <div class="fd-menu" id="fd-pt-menu"></div>
+      <div class="fd-pills" id="fd-pt-pills"></div>
+    </div>
+    <!-- Situation -->
+    <div class="fd-group" id="fd-sit">
+      <button class="fd-btn" onclick="toggleFd('fd-sit',event)">Situation <span class="fd-caret">▾</span></button>
+      <div class="fd-menu" id="fd-sit-menu"></div>
+      <div class="fd-pills" id="fd-sit-pills"></div>
+    </div>
+    <!-- Sub Play Type -->
+    <div class="fd-group" id="fd-spt">
+      <button class="fd-btn" onclick="toggleFd('fd-spt',event)">Sub Play Type <span class="fd-caret">▾</span></button>
+      <div class="fd-menu" id="fd-spt-menu"></div>
+      <div class="fd-pills" id="fd-spt-pills"></div>
+    </div>
+    <!-- Infraction Rating -->
+    <div class="fd-group" id="fd-ir">
+      <button class="fd-btn" onclick="toggleFd('fd-ir',event)">Infraction Rating <span class="fd-caret">▾</span></button>
+      <div class="fd-menu" id="fd-ir-menu"></div>
+      <div class="fd-pills" id="fd-ir-pills"></div>
+    </div>
+  </div>
+  <button class="fd-clear" id="fd-clear" onclick="clearAllFilters()" style="display:none">Clear all</button>
+</div>
 
+<div class="layout">
   <div class="main">
     <div class="main-header">
       <div class="main-header-left">
@@ -772,8 +796,10 @@ function saveComments() {
 // ── State ─────────────────────────────────────────────────────────────────
 
 let allComments = loadComments();
-let activeTab = 'All';
-let activeSptTab = 'All';
+let filterPT = '';
+let filterSit = '';
+let filterSpt = '';
+let filterIR = '';
 let searchQuery = '';
 let editingId = null;
 
@@ -791,64 +817,52 @@ document.addEventListener('click', () => {
 
 function filteredComments() {
   return allComments.filter(c => {
-    const matchTab = activeTab === 'All' || c.playType === activeTab;
-    const matchSpt = activeSptTab === 'All' || c.subPlayType === activeSptTab;
-    const matchSearch = !searchQuery || c.text.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchTab && matchSpt && matchSearch;
+    if (filterPT && c.playType !== filterPT) return false;
+    if (filterSit && c.situation !== filterSit) return false;
+    if (filterSpt && c.subPlayType !== filterSpt) return false;
+    if (filterIR && c.callType !== filterIR) return false;
+    if (searchQuery && !c.text.toLowerCase().includes(searchQuery.toLowerCase())) return false;
+    return true;
   });
 }
 
-function countForTab(tab) {
-  return allComments.filter(c => {
-    const matchTab = tab === 'All' || c.playType === tab;
-    const matchSpt = activeSptTab === 'All' || c.subPlayType === activeSptTab;
-    return matchTab && matchSpt;
-  }).length;
+function renderFilterBar() {
+  // Play Type menu
+  renderFdMenu('fd-pt-menu', PLAY_TYPES.filter(p=>p!=='All'), filterPT, v => { filterPT = v; filterSit=''; filterSpt=''; renderFilterBar(); renderCards(); });
+  // Situation menu — depends on filterPT
+  const sits = filterPT && TAXONOMY[filterPT] ? TAXONOMY[filterPT].situations : [...new Set(allComments.map(c=>c.situation).filter(Boolean))].sort();
+  renderFdMenu('fd-sit-menu', sits, filterSit, v => { filterSit = v; renderFilterBar(); renderCards(); });
+  // Sub Play Type menu
+  const spts = filterPT && TAXONOMY[filterPT] ? TAXONOMY[filterPT].contacts : [...new Set(allComments.map(c=>c.subPlayType).filter(Boolean))].sort();
+  renderFdMenu('fd-spt-menu', spts, filterSpt, v => { filterSpt = v; renderFilterBar(); renderCards(); });
+  // Infraction Rating menu
+  renderFdMenu('fd-ir-menu', ['Infraction','PI - Lean','PI - No','No Infraction'], filterIR, v => { filterIR = v; renderFilterBar(); renderCards(); });
+
+  // Pills
+  renderFdPill('fd-pt-pills', 'fd-pt', filterPT, () => { filterPT=''; filterSit=''; filterSpt=''; renderFilterBar(); renderCards(); });
+  renderFdPill('fd-sit-pills', 'fd-sit', filterSit, () => { filterSit=''; renderFilterBar(); renderCards(); });
+  renderFdPill('fd-spt-pills', 'fd-spt', filterSpt, () => { filterSpt=''; renderFilterBar(); renderCards(); });
+  renderFdPill('fd-ir-pills', 'fd-ir', filterIR, () => { filterIR=''; renderFilterBar(); renderCards(); });
+
+  // Clear all button
+  const hasAny = filterPT || filterSit || filterSpt || filterIR || searchQuery;
+  document.getElementById('fd-clear').style.display = hasAny ? '' : 'none';
 }
 
-function sptCountForTab(spt) {
-  return allComments.filter(c => {
-    const matchTab = activeTab === 'All' || c.playType === activeTab;
-    return matchTab && (spt === 'All' || c.subPlayType === spt);
-  }).length;
+function renderFdMenu(menuId, options, currentVal, onSelect) {
+  const el = document.getElementById(menuId);
+  if (!options.length) { el.innerHTML = '<div class="fd-option" style="color:#9ca3af;cursor:default">—</div>'; return; }
+  el.innerHTML = options.map(o =>
+    `<div class="fd-option${o===currentVal?' selected':''}" onclick="(${onSelect.toString()})('${o.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}')">${o}</div>`
+  ).join('');
 }
 
-function renderTabs() {
-  const el = document.getElementById('tabs');
-  el.innerHTML = PLAY_TYPES.map(pt => `
-    <div class="tab${activeTab === pt ? ' on' : ''}" onclick="setTab('${pt.replace(/'/g,"\\'").replace(/\//g,'\\/')}')">
-      <span>${pt}</span>
-      <span class="tab-count">${countForTab(pt)}</span>
-    </div>`).join('');
-
-  // Sub play type secondary filter
-  // Collect unique subPlayTypes present in comments matching the active play type tab
-  const relevantSpts = [...new Set(
-    allComments
-      .filter(c => activeTab === 'All' || c.playType === activeTab)
-      .map(c => c.subPlayType)
-      .filter(Boolean)
-  )].sort();
-
-  const sptEl = document.getElementById('spt-tabs');
-  const sptDivider = document.getElementById('spt-divider');
-  const sptLabel = document.getElementById('spt-label');
-
-  if (!relevantSpts.length) {
-    sptEl.innerHTML = '';
-    sptDivider.style.display = 'none';
-    sptLabel.style.display = 'none';
-    return;
-  }
-
-  sptDivider.style.display = '';
-  sptLabel.style.display = '';
-  const allSpts = ['All', ...relevantSpts];
-  sptEl.innerHTML = allSpts.map(spt => `
-    <div class="tab tab-spt${activeSptTab === spt ? ' on' : ''}" onclick="setSptTab('${spt.replace(/'/g,"\\'").replace(/\//g,'\\/')}')">
-      <span>${spt}</span>
-      <span class="tab-count">${sptCountForTab(spt)}</span>
-    </div>`).join('');
+function renderFdPill(pillsId, groupId, value, onRemove) {
+  const el = document.getElementById(pillsId);
+  const grp = document.getElementById(groupId);
+  if (!value) { el.innerHTML=''; grp.classList.remove('has-value'); return; }
+  grp.classList.add('has-value');
+  el.innerHTML = `<span class="fd-pill">${value}<button class="fd-pill-x" onclick="(${onRemove.toString()})()" title="Remove">✕</button></span>`;
 }
 
 function ratingBadge(ct) {
@@ -887,13 +901,21 @@ function renderCards() {
   else { empty.style.display='none'; grid.innerHTML=fc.map(renderCard).join(''); }
 }
 
-function render() { renderTabs(); renderCards(); }
+function render() { renderFilterBar(); renderCards(); }
 
 // ── Actions ───────────────────────────────────────────────────────────────
 
-function setTab(tab) { activeTab = tab; activeSptTab = 'All'; render(); }
-function setSptTab(spt) { activeSptTab = spt; render(); }
-function onSearch() { searchQuery = document.getElementById('search-input').value; renderCards(); }
+function clearAllFilters() { filterPT=''; filterSit=''; filterSpt=''; filterIR=''; searchQuery=''; document.getElementById('search-input').value=''; renderFilterBar(); renderCards(); }
+
+function toggleFd(groupId, e) {
+  e.stopPropagation();
+  const isOpen = document.getElementById(groupId).classList.contains('open');
+  document.querySelectorAll('.fd-group.open').forEach(g => g.classList.remove('open'));
+  if (!isOpen) document.getElementById(groupId).classList.add('open');
+}
+document.addEventListener('click', () => document.querySelectorAll('.fd-group.open').forEach(g=>g.classList.remove('open')));
+
+function onSearch() { searchQuery = document.getElementById('search-input').value; renderFilterBar(); renderCards(); }
 
 function copyComment(id) {
   const c = allComments.find(x => x.id === id);
