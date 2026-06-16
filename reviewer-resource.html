@@ -59,6 +59,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .ct-INC{background:#fce7f3;color:#9d174d}
 .ct-PIL{background:#fef9c3;color:#854d0e}
 .ct-Unknown{background:#f3f4f6;color:#9ca3af}
+.ct-Infraction{background:#fee2e2;color:#991b1b}
+.ct-PI-Lean{background:#fff7ed;color:#c2410c}
+.ct-PI-No{background:#fef9c3;color:#854d0e}
+.ct-No-Infraction{background:#dcfce7;color:#166534}
 .card-body{font-size:12px;line-height:1.65;color:#4b5563;margin-bottom:12px}
 .card-body strong{background:#fce7f3;padding:1px 4px;border-radius:3px;font-weight:600;color:#374151}
 .card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid #f3f4f6}
@@ -173,7 +177,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       <div class="modal-row">
         <div class="modal-field">
           <div class="modal-label">Play Type</div>
-          <select class="modal-select" id="modal-pt">
+          <select class="modal-select" id="modal-pt" onchange="updateSubTypes()">
             <option value="Foul: Shooting">Foul: Shooting</option>
             <option value="Foul: Offensive">Foul: Offensive</option>
             <option value="Foul: Loose Ball">Foul: Loose Ball</option>
@@ -185,16 +189,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
           </select>
         </div>
         <div class="modal-field">
-          <div class="modal-label">Call Type</div>
-          <select class="modal-select" id="modal-ct">
-            <option value="CC">CC — Correct Call</option>
-            <option value="IC">IC — Incorrect Call</option>
-            <option value="CNC">CNC — Correct No Call</option>
-            <option value="INC">INC — Incorrect No Call</option>
-            <option value="PIL">PIL — Potential Infraction (lean No)</option>
-            <option value="Unknown">Unknown</option>
-          </select>
+          <div class="modal-label">Sub Play Type</div>
+          <select class="modal-select" id="modal-spt"></select>
         </div>
+      </div>
+      <div class="modal-field">
+        <div class="modal-label">Infraction Rating</div>
+        <select class="modal-select" id="modal-ct">
+          <option value="Infraction">Infraction</option>
+          <option value="PI - Lean">PI - Lean</option>
+          <option value="PI - No">PI - No</option>
+          <option value="No Infraction">No Infraction</option>
+        </select>
       </div>
     </div>
     <div class="modal-footer">
@@ -206,7 +212,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 
 <script>
 const PLAY_TYPES = ['All','Foul: Shooting','Foul: Offensive','Foul: Loose Ball','Foul: Personal','Out of Bounds','Travel','Goaltending','Uncategorized'];
-const STORAGE_KEY = 'brs_comments_v2';
+const STORAGE_KEY = 'brs_comments_v3';
 
 const SEED_COMMENTS = [
   "Brink (LAS) jumps slightly forward and marginal body contact occurs with Young (LVA) **following the release of the pass**.",
@@ -313,6 +319,17 @@ const SEED_COMMENTS = [
 
 // ── Detection ─────────────────────────────────────────────────────────────
 
+const SUB_PLAY_TYPES = {
+  'Foul: Shooting': ['Arm Follow-Through','Block-Charge','Legal Guarding Position','Landing Area','Vertical Plane','Secondary Action','Head/Face Contact','Hand on Ball','General'],
+  'Foul: Offensive': ['Moving Screen','Arm Extension','Body Contact (Charge)','Dislodge Defender','Hook','General'],
+  'Foul: Loose Ball': ['Arm/Forearm Contact','Body Contact','Clamp/Lock/Hold','Hand on Ball','General'],
+  'Foul: Personal': ['Hand/Forearm Contact','Body Contact','Reach In','SQBR Affected','Off-Ball','Hand on Ball','General'],
+  'Out of Bounds': ['Last Touch','Coach\'s Challenge','Possession Award'],
+  'Travel': ['Gather Step','Pivot Foot','Step-Back','Dribble Violation'],
+  'Goaltending': ['Defensive','Offensive'],
+  'Uncategorized': ['General'],
+};
+
 function detectPlayType(text) {
   const t = text.toLowerCase();
   const scores = {'Foul: Shooting':0,'Foul: Offensive':0,'Foul: Loose Ball':0,'Foul: Personal':0,'Out of Bounds':0,'Travel':0,'Goaltending':0};
@@ -332,48 +349,114 @@ function detectPlayType(text) {
   return best[1] > 0 ? best[0] : 'Uncategorized';
 }
 
-function detectCallType(text) {
+function detectSubPlayType(text, playType) {
   const t = text.toLowerCase();
-  if (t.includes('there is judgment') || t.includes('there is judgement')) return 'PIL';
-  if (t.includes('play should have continued without a whistle') || t.includes('play correctly continues') || t.includes('no violation on the play') || t.includes('is not a violation')) return 'CNC';
-  if (t.includes('should have been assessed') || t.includes('should have been called') || t.includes('incorrectly')) return 'IC';
-  if (t.includes('a foul should be assessed') || t.includes('foul should be assessed')) return 'INC';
-  if (t.includes('correctly called') || t.includes('correctly assessed') || t.includes('is correctly')) return 'CC';
-  return 'Unknown';
+  const map = {
+    'Foul: Shooting': [
+      [/head\/?face|head or face|head\/face/i, 'Head/Face Contact'],
+      [/secondary action/i, 'Secondary Action'],
+      [/block.{0,5}charge|charge/i, 'Block-Charge'],
+      [/legal guarding position/i, 'Legal Guarding Position'],
+      [/landing area/i, 'Landing Area'],
+      [/vertical/i, 'Vertical Plane'],
+      [/arm follow.through/i, 'Arm Follow-Through'],
+      [/hand on ball|hand-on-ball/i, 'Hand on Ball'],
+    ],
+    'Foul: Offensive': [
+      [/arm extended|arm extension|outside the frame/i, 'Arm Extension'],
+      [/charge|offensive foul/i, 'Body Contact (Charge)'],
+      [/dislodge|drives.*off.*position/i, 'Dislodge Defender'],
+      [/hook/i, 'Hook'],
+      [/moving screen|screen/i, 'Moving Screen'],
+    ],
+    'Foul: Loose Ball': [
+      [/clamp|lock|hold/i, 'Clamp/Lock/Hold'],
+      [/hand on ball|hand-on-ball/i, 'Hand on Ball'],
+      [/forearm/i, 'Arm/Forearm Contact'],
+      [/body contact/i, 'Body Contact'],
+    ],
+    'Foul: Personal': [
+      [/sqbr/i, 'SQBR Affected'],
+      [/off.ball/i, 'Off-Ball'],
+      [/reach in|reaches in/i, 'Reach In'],
+      [/hand on ball|hand-on-ball/i, 'Hand on Ball'],
+      [/forearm/i, 'Hand/Forearm Contact'],
+      [/body contact/i, 'Body Contact'],
+    ],
+    'Out of Bounds': [
+      [/coach.s challenge/i, 'Coach\'s Challenge'],
+      [/possession should|possession is awarded/i, 'Possession Award'],
+      [/last to touch/i, 'Last Touch'],
+    ],
+    'Travel': [
+      [/step.back/i, 'Step-Back'],
+      [/pivot foot/i, 'Pivot Foot'],
+      [/gather/i, 'Gather Step'],
+      [/dribble/i, 'Dribble Violation'],
+    ],
+    'Goaltending': [
+      [/offensive goaltending/i, 'Offensive'],
+      [/defensive goaltending|blocks the shot/i, 'Defensive'],
+    ],
+  };
+  const checks = map[playType] || [];
+  for (const [re, label] of checks) { if (re.test(text)) return label; }
+  const subs = SUB_PLAY_TYPES[playType];
+  return subs ? subs[subs.length - 1] : 'General';
 }
 
-// Auto-highlight the most physically specific clause in a comment
+function detectInfractionRating(text) {
+  const t = text.toLowerCase();
+  // Definite infraction
+  if (/illegal contact occurs|illegal contact to/.test(t)) return 'Infraction';
+  if (/\bdelivers contact\b|\binitiates contact\b|\binitiates illegal\b/.test(t)) return 'Infraction';
+  if (/affects (his|her|their|the) (sqbr|shot attempt|ability|play at|shooting motion|jump shot)/.test(t)) return 'Infraction';
+  if (/a foul should be assessed/.test(t) && !t.includes('correctly called')) return 'Infraction';
+  if (/should have been (assessed|called)/.test(t)) return 'Infraction';
+  if (/\bmore than marginal\b/.test(t) && !t.includes('there is judg')) return 'Infraction';
+  // No infraction
+  if (/play should have continued without a whistle|play correctly continues|no violation on the play|is not a violation/.test(t) && !t.includes('there is judg')) return 'No Infraction';
+  if (/considered incidental/.test(t) && !t.includes('there is judg')) return 'No Infraction';
+  if (/correctly called|correctly assessed/.test(t) && !t.includes('should have been') && !t.includes('there is judg')) return 'No Infraction';
+  // Judgment calls
+  if (t.includes('there is judgment') || t.includes('there is judgement')) {
+    if (/illegal|does not (give|establish)|not legal|\binitiates\b|\bdelivers\b|more than marginal/.test(t)) return 'PI - Lean';
+    return 'PI - No';
+  }
+  return 'No Infraction';
+}
+
+// Highlight short, specific action phrases (3–12 words)
 function detectKeyPhrase(text) {
-  if (/\*\*/.test(text)) return text; // already marked
-  const actionWords = [
-    'applies','places a hand','places their hand','places his hand','extends his','extends their','extends an arm',
-    'wraps his','wraps their','wraps an arm','reaches in','grabs','pulls','hooks','leans into',
-    'moves underneath','walks underneath','dislodges','initiates contact','makes contact to',
-    'momentarily','briefly places','firms up','maintains verticality','delivers contact',
-    'steps into','step backwards','lifts his','clasps','swipes down','does not establish',
-    'beats.*to the spot','reaches across','places his forearm','places their forearm'
+  if (/\*\*/.test(text)) return text;
+  const patterns = [
+    /(?:momentarily |briefly )?(?:applies|places) (?:his|her|their|a) (?:hand|forearm|arm|hands|elbow)[^,;.]{0,40}/i,
+    /extends (?:his|her|their|an?) (?:hand|forearm|arm|leg|elbow)[^,;.]{0,35}/i,
+    /wraps (?:his|her|their) (?:hand|forearm|arm|arms)[^,;.]{0,35}/i,
+    /(?:grabs|pulls|hooks|clasps|grasps) (?:his|her|their|the)[^,;.]{0,30}/i,
+    /initiates (?:some |illegal |further )?contact[^,;.]{0,35}/i,
+    /delivers (?:some |illegal |the )?contact[^,;.]{0,30}/i,
+    /illegal contact occurs[^,;.]{0,30}/i,
+    /affects (?:his|her|their) (?:sqbr|shot attempt|ability|play at|shooting motion)[^,;.]{0,30}/i,
+    /arms? (?:are|is) not in a vertical[^,;.]{0,30}/i,
+    /does not (?:give|establish|maintain)[^,;.]{0,40}/i,
+    /(?:firms up|leans into|moves underneath|walks underneath|swipes down)[^,;.]{0,35}/i,
+    /reaches across[^,;.]{0,30}/i,
+    /lifts (?:his|her|their) own arm[^,;.]{0,30}/i,
+    /steps? backwards[^,;.]{0,30}/i,
+    /is late to establish[^,;.]{0,40}/i,
   ];
-  // Split into clauses on ", " or "; " or " and " or " before " or " but "
-  const sentences = text.split(/(?<=\.)\s+(?=[A-Z])/);
-  let bestClause = null, bestScore = -1;
-  for (const sent of sentences) {
-    const parts = sent.split(/,\s*(?=[a-z])/);
-    for (const part of parts) {
-      const p = part.trim();
-      if (p.length < 25 || p.length > 180) continue;
-      let score = 0;
-      const pl = p.toLowerCase();
-      for (const w of actionWords) { if (new RegExp(w).test(pl)) score += 2; }
-      if (/\b(arm|forearm|hand|elbow|shoulder|leg|foot|wrist|back|side|waist|body)\b/.test(pl)) score++;
-      // Downgrade legal/conclusion language
-      if (/play should|a foul should|correctly|although|however|there is judg|there is no/.test(pl)) score -= 2;
-      if (score > bestScore) { bestScore = score; bestClause = p; }
+  for (const pat of patterns) {
+    const m = text.match(pat);
+    if (m) {
+      const phrase = m[0].trim().replace(/[,;]$/, '');
+      if (phrase.length >= 8 && phrase.length <= 110) {
+        const esc = phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        return text.replace(new RegExp(esc, 'i'), `**${phrase}**`);
+      }
     }
   }
-  if (!bestClause || bestScore < 1) return text;
-  // Escape special regex chars
-  const esc = bestClause.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  return text.replace(new RegExp(esc), `**${bestClause}**`);
+  return text;
 }
 
 // Redact player names → [Player]
@@ -403,11 +486,13 @@ function loadComments() {
   const seeded = SEED_COMMENTS.map((raw, i) => {
     const redacted = plainRedact(raw);
     const withKey = detectKeyPhrase(redacted);
+    const pt = detectPlayType(redacted);
     return {
       id: 'seed_' + i,
       text: withKey,
-      playType: detectPlayType(redacted),
-      callType: detectCallType(redacted),
+      playType: pt,
+      subPlayType: detectSubPlayType(redacted, pt),
+      callType: detectInfractionRating(redacted),
       source: 'seed'
     };
   });
@@ -448,9 +533,9 @@ function renderTabs() {
     </div>`).join('');
 }
 
-function ctBadge(ct) {
-  const labels = {CC:'CC',IC:'IC',CNC:'CNC',INC:'INC',PIL:'PIL',Unknown:'—'};
-  return `<span class="ct-badge ct-${ct}">${labels[ct]||ct}</span>`;
+function ratingBadge(ct) {
+  const cls = (ct||'').replace(/\s+/g,'-').replace(/[^A-Za-z0-9-]/g,'');
+  return `<span class="ct-badge ct-${cls}">${ct||'—'}</span>`;
 }
 
 function renderCard(c) {
@@ -458,11 +543,13 @@ function renderCard(c) {
   const deleteBtn = c.source === 'submitted'
     ? `<button class="delete-btn" onclick="deleteComment('${c.id}')" title="Delete"><i class="ti ti-x"></i></button>`
     : '';
+  const spt = c.subPlayType ? `<span class="pt-pill" style="background:#eff6ff;color:#3b82f6">${c.subPlayType}</span>` : '';
   return `<div class="comment-card" id="card-${c.id}">
     <div class="card-top">
       <div class="card-top-left">
         <span class="pt-pill">${c.playType}</span>
-        ${ctBadge(c.callType)}
+        ${spt}
+        ${ratingBadge(c.callType)}
       </div>
     </div>
     <div class="card-body">${bodyHtml}</div>
@@ -520,6 +607,7 @@ function openModal() {
   document.getElementById('modal-textarea').value = '';
   document.getElementById('preview-box').classList.remove('visible');
   document.getElementById('modal-submit').disabled = true;
+  updateSubTypes();
 }
 
 function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
@@ -535,9 +623,21 @@ function onTextareaInput() {
     preview.innerHTML = redactForPreview(val);
     preview.classList.add('visible');
     const redacted = plainRedact(val);
-    document.getElementById('modal-pt').value = detectPlayType(redacted);
-    document.getElementById('modal-ct').value = detectCallType(redacted);
+    const pt = detectPlayType(redacted);
+    document.getElementById('modal-pt').value = pt;
+    updateSubTypes();
+    const subs = SUB_PLAY_TYPES[pt] || ['General'];
+    const detectedSpt = detectSubPlayType(redacted, pt);
+    if (subs.includes(detectedSpt)) document.getElementById('modal-spt').value = detectedSpt;
+    document.getElementById('modal-ct').value = detectInfractionRating(redacted);
   }, 300);
+}
+
+function updateSubTypes() {
+  const pt = document.getElementById('modal-pt').value;
+  const sel = document.getElementById('modal-spt');
+  const subs = SUB_PLAY_TYPES[pt] || ['General'];
+  sel.innerHTML = subs.map(s => `<option value="${s}">${s}</option>`).join('');
 }
 
 function submitComment() {
@@ -545,10 +645,12 @@ function submitComment() {
   if (!raw) return;
   const redacted = plainRedact(raw);
   const withKey = detectKeyPhrase(redacted);
+  const pt = document.getElementById('modal-pt').value;
   const comment = {
     id: 'user_' + Date.now(),
     text: withKey,
-    playType: document.getElementById('modal-pt').value,
+    playType: pt,
+    subPlayType: document.getElementById('modal-spt').value,
     callType: document.getElementById('modal-ct').value,
     source: 'submitted'
   };
