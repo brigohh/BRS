@@ -92,8 +92,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .lg-chip.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
 .lg-chip img{width:20px;height:20px;object-fit:contain}
 .lg-filter-top{display:flex;align-items:center;gap:8px;margin-bottom:20px;padding-top:4px}
-.analytics-toggle{display:flex;align-items:center;gap:6px;padding:7px 14px;border:1px solid #e5e7eb;border-radius:8px;font-size:12px;font-weight:600;color:#6b7280;background:#fff;cursor:pointer;margin-bottom:16px;width:fit-content}
-.analytics-toggle:hover{background:#f9fafb}
+.analytics-toggle{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-radius:10px;font-size:11.5px;font-weight:600;color:#fff;background:#1a3a6b;cursor:pointer;margin-bottom:16px;user-select:none;letter-spacing:.2px}
+.analytics-toggle:hover{background:#15306080}
+.analytics-toggle .at-label{display:flex;align-items:center;gap:8px}
+.analytics-toggle .at-chevron{font-size:10px;transition:transform .2s;opacity:.8}
 #analytics-section{transition:none}
 .bottom-card{background:#fff;border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,.07);border:1px solid #e5e7eb;overflow:hidden}
 .bottom-card table{width:100%;border-collapse:collapse}
@@ -182,9 +184,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   </div>
 
   <!-- ANALYTICS TOGGLE -->
-  <button class="analytics-toggle" onclick="toggleAnalytics()" id="analytics-btn">
-    <i class="ti ti-chart-bar"></i> <span id="analytics-btn-txt">Hide Analytics</span>
-  </button>
+  <div class="analytics-toggle" onclick="toggleAnalytics()" id="analytics-btn">
+    <div class="at-label"><i class="ti ti-chart-bar"></i> <span id="analytics-btn-txt">Analytics</span></div>
+    <span class="at-chevron" id="analytics-chevron">▲</span>
+  </div>
 
   <!-- COLLAPSIBLE ANALYTICS SECTION -->
   <div id="analytics-section">
@@ -864,7 +867,7 @@ let analyticsOpen = true;
 function toggleAnalytics() {
   analyticsOpen = !analyticsOpen;
   document.getElementById('analytics-section').style.display = analyticsOpen ? '' : 'none';
-  document.getElementById('analytics-btn-txt').textContent = analyticsOpen ? 'Hide Analytics' : 'Show Analytics';
+  document.getElementById('analytics-chevron').textContent = analyticsOpen ? '▲' : '▼';
 }
 
 const LEAGUE_STATS = {
