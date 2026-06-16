@@ -8,7 +8,7 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;color:#111827;background:#f3f4f6;min-height:100vh}
-.nav{background:#1a3a6b;height:48px;display:flex;align-items:center;padding:0 24px;gap:0;flex-shrink:0;overflow:hidden}
+.nav{background:#1a3a6b;height:48px;display:flex;align-items:center;padding:0 24px;gap:0;flex-shrink:0;overflow:visible;position:relative;z-index:300}
 .nav-logo{display:flex;align-items:center;gap:8px}
 .nav-brand{color:rgba(255,255,255,.9);font-size:11.5px;font-weight:600;white-space:nowrap;letter-spacing:.5px}
 .nav-links{display:flex;align-items:center;margin-left:auto;gap:0;flex-shrink:0;flex-wrap:nowrap}
@@ -111,6 +111,14 @@ tr:hover td{background:#eff6ff;cursor:pointer}
 .td-actions{text-align:center}
 .open-btn{padding:4px 12px;border:1px solid #bfdbfe;border-radius:7px;font-size:12px;font-weight:600;background:#eff6ff;color:#1a3a6b;cursor:pointer;white-space:nowrap}
 .open-btn:hover{background:#dbeafe}
+.nav-dropdown{position:relative;display:flex;align-items:center;height:48px}
+.nav-dropdown .nl{gap:4px}
+.nav-dd-caret{font-size:8px;opacity:.7;transition:transform .15s}
+.nav-dropdown.open .nav-dd-caret{transform:rotate(180deg)}
+.nav-dd-menu{display:none;position:absolute;top:44px;right:0;background:#fff;border:1px solid #e5e7eb;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.14);min-width:170px;z-index:400;padding:4px 0}
+.nav-dropdown.open .nav-dd-menu{display:block}
+.nav-dd-item{display:block;padding:9px 16px;font-size:11px;font-weight:500;color:#374151;text-decoration:none;white-space:nowrap;cursor:pointer}
+.nav-dd-item:hover{background:#f0f2f5;color:#1a3a6b}
 </style>
 </head>
 <body>
@@ -128,7 +136,12 @@ tr:hover td{background:#eff6ff;cursor:pointer}
     <span class="nl">FINAL L2M REVIEW</span>
     <span class="nl">INDEPENDENT REVIEW</span>
     <span class="nl">ADMINISTRATION</span>
-    <span class="nl" onclick="location='reviewer-resource.html'">REVIEWER RESOURCE</span>
+    <div class="nav-dropdown" id="nav-dropdown">
+      <span class="nl" onclick="toggleNavDropdown(event)">REVIEWER RESOURCE <span class="nav-dd-caret">▾</span></span>
+      <div class="nav-dd-menu">
+        <span class="nav-dd-item" onclick="location='reviewer-resource.html'">Comment Library</span>
+      </div>
+    </div>
     <span class="nl">MY SCHEDULE</span>
     <div class="nav-av" style="margin-left:12px">BN</div>
   </div>
@@ -390,6 +403,8 @@ document.querySelectorAll('.lg-btn').forEach(btn => {
 });
 
 renderTable(GAMES);
+function toggleNavDropdown(e){e.stopPropagation();document.getElementById('nav-dropdown').classList.toggle('open')}
+document.addEventListener('click',()=>document.getElementById('nav-dropdown').classList.remove('open'));
 </script>
 </body>
 </html>
