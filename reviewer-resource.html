@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BRS — Reviewer Resource</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;color:#111827;background:#f3f4f6;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+.nav{background:#1a3a6b;height:48px;display:flex;align-items:center;padding:0 24px;flex-shrink:0;overflow:hidden}
+.nav-logo{display:flex;align-items:center;gap:8px;cursor:pointer}
+.nav-brand{color:rgba(255,255,255,.9);font-size:11.5px;font-weight:600;white-space:nowrap;letter-spacing:.5px}
+.nav-links{display:flex;align-items:center;margin-left:auto;flex-wrap:nowrap}
+.nl{color:rgba(255,255,255,.55);font-size:10.5px;padding:0 8px;cursor:pointer;font-weight:500;height:48px;display:flex;align-items:center;border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0}
+.nl:hover{color:#fff}
+.nl.on{color:#fff;border-bottom-color:rgba(255,255,255,.7);font-weight:600}
+.nav-av{width:30px;height:30px;border-radius:50%;background:#2d5aa0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;flex-shrink:0}
+
+.layout{display:flex;flex:1;overflow:hidden}
+
+/* SIDEBAR */
+.sidebar{width:220px;flex-shrink:0;background:#fff;border-right:1px solid #e5e7eb;display:flex;flex-direction:column;overflow:hidden}
+.sidebar-search{padding:12px}
+.sidebar-search input{width:100%;border:1px solid #e5e7eb;border-radius:8px;padding:7px 10px;font-size:12px;color:#374151;outline:none;background:#f9fafb}
+.sidebar-search input:focus{border-color:#1a3a6b;background:#fff}
+.sidebar-divider{height:1px;background:#f3f4f6;margin:0 12px}
+.sidebar-tabs{flex:1;overflow-y:auto;padding:8px 0}
+.tab{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;cursor:pointer;font-size:11.5px;font-weight:500;color:#6b7280;border-radius:0;transition:background .1s}
+.tab:hover{background:#f9fafb;color:#374151}
+.tab.on{background:#1a3a6b;color:#fff}
+.tab-count{font-size:10px;font-weight:600;background:rgba(0,0,0,.08);padding:1px 6px;border-radius:10px}
+.tab.on .tab-count{background:rgba(255,255,255,.2);color:#fff}
+
+/* MAIN */
+.main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+.main-header{padding:16px 20px 12px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;background:#f3f4f6;border-bottom:1px solid #e5e7eb;position:sticky;top:0;z-index:10}
+.main-header-left{display:flex;align-items:baseline;gap:10px}
+.main-title{font-size:14px;font-weight:700;color:#111827}
+.main-count{font-size:11px;color:#9ca3af;font-weight:500}
+.submit-btn{display:flex;align-items:center;gap:6px;background:#1a3a6b;color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:11.5px;font-weight:600;cursor:pointer;letter-spacing:.2px}
+.submit-btn:hover{background:#15326b}
+.cards-area{padding:16px 20px;flex:1}
+.cards-grid{columns:2;column-gap:12px}
+
+/* CARDS */
+.comment-card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:14px;margin-bottom:12px;break-inside:avoid;transition:box-shadow .15s}
+.comment-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:8px}
+.card-top-left{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.pt-pill{font-size:9.5px;font-weight:600;background:#f3f4f6;color:#6b7280;padding:2px 8px;border-radius:20px;white-space:nowrap}
+.ct-badge{font-size:9.5px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap}
+.ct-CC{background:#dcfce7;color:#166534}
+.ct-IC{background:#fee2e2;color:#991b1b}
+.ct-CNC{background:#f3f4f6;color:#374151}
+.ct-INC{background:#fce7f3;color:#9d174d}
+.ct-Judgment{background:#eff6ff;color:#1e40af}
+.ct-Unknown{background:#f3f4f6;color:#9ca3af}
+.card-body{font-size:12px;line-height:1.6;color:#374151;margin-bottom:10px}
+.card-body strong{background:#fce7f3;padding:1px 3px;border-radius:3px;font-weight:600}
+.card-footer{display:flex;align-items:center;justify-content:space-between}
+.copy-btn{display:flex;align-items:center;gap:4px;font-size:11px;color:#6b7280;background:none;border:1px solid #e5e7eb;border-radius:6px;padding:4px 8px;cursor:pointer}
+.copy-btn:hover{background:#f9fafb;color:#374151}
+.copy-btn.copied{color:#166534;border-color:#bbf7d0;background:#f0fdf4}
+.card-source{font-size:10px;color:#d1d5db;font-weight:500}
+.card-source.submitted{color:#9ca3af}
+.delete-btn{background:none;border:none;color:#d1d5db;cursor:pointer;font-size:11px;padding:2px 4px;margin-left:4px}
+.delete-btn:hover{color:#ef4444}
+
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:60px 20px;color:#9ca3af}
+.empty-state i{font-size:32px;margin-bottom:12px;display:block;color:#d1d5db}
+.empty-state p{font-size:13px}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:100;display:none;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:14px;width:680px;max-width:95vw;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.2);display:flex;flex-direction:column}
+.modal-header{padding:18px 20px 14px;border-bottom:1px solid #f3f4f6;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.modal-title{font-size:14px;font-weight:700;color:#111827}
+.modal-close{background:none;border:none;color:#9ca3af;cursor:pointer;font-size:18px;line-height:1;padding:2px}
+.modal-close:hover{color:#374151}
+.modal-body{padding:18px 20px;display:flex;flex-direction:column;gap:14px}
+.modal-textarea{width:100%;border:1px solid #e5e7eb;border-radius:8px;padding:10px 12px;font-size:12.5px;line-height:1.6;resize:vertical;min-height:100px;font-family:inherit;color:#374151;outline:none}
+.modal-textarea:focus{border-color:#1a3a6b}
+.preview-box{background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:12px;font-size:12px;line-height:1.6;color:#374151;min-height:60px;display:none}
+.preview-box.visible{display:block}
+.preview-box mark{background:#fef9c3;border-radius:2px;padding:0 2px}
+.modal-row{display:flex;gap:12px}
+.modal-field{flex:1;display:flex;flex-direction:column;gap:4px}
+.modal-label{font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.4px}
+.modal-select{border:1px solid #e5e7eb;border-radius:8px;padding:7px 10px;font-size:12px;color:#374151;background:#fff;outline:none;cursor:pointer;width:100%}
+.modal-select:focus{border-color:#1a3a6b}
+.modal-footer{padding:14px 20px 18px;border-top:1px solid #f3f4f6;display:flex;justify-content:flex-end;gap:10px;flex-shrink:0}
+.modal-cancel{background:none;border:1px solid #e5e7eb;border-radius:8px;padding:8px 16px;font-size:12px;font-weight:600;color:#6b7280;cursor:pointer}
+.modal-cancel:hover{background:#f9fafb}
+.modal-submit{background:#1a3a6b;color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:12px;font-weight:600;cursor:pointer}
+.modal-submit:hover{background:#15326b}
+.modal-submit:disabled{opacity:.4;cursor:default}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-logo" onclick="location='hub.html'">
+    <img src="nba-logo.svg" style="width:16px;height:auto">
+    <div class="nav-brand">BRIDGET REVIEW SYSTEM 1.0</div>
+  </div>
+  <div class="nav-links">
+    <span class="nl" onclick="location='hub.html'">HOME</span>
+    <span class="nl" onclick="location='sc-hub.html'">PUBLISHED GAMES</span>
+    <span class="nl">RIM</span>
+    <span class="nl">RM REVIEW</span>
+    <span class="nl">FINAL L2M REVIEW</span>
+    <span class="nl">INDEPENDENT REVIEW</span>
+    <span class="nl">ADMINISTRATION</span>
+    <span class="nl on">REVIEWER RESOURCE</span>
+    <span class="nl">MY SCHEDULE</span>
+    <div class="nav-av" style="margin-left:12px">BN</div>
+  </div>
+</div>
+
+<div class="layout">
+  <div class="sidebar">
+    <div class="sidebar-search">
+      <input type="text" id="search-input" placeholder="Search comments..." oninput="onSearch()">
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-tabs" id="tabs"></div>
+  </div>
+
+  <div class="main">
+    <div class="main-header">
+      <div class="main-header-left">
+        <div class="main-title">Comment Library</div>
+        <div class="main-count" id="main-count"></div>
+      </div>
+      <button class="submit-btn" onclick="openModal()"><i class="ti ti-plus"></i> Submit a Comment</button>
+    </div>
+    <div class="cards-area">
+      <div class="cards-grid" id="cards-grid"></div>
+      <div class="empty-state" id="empty-state" style="display:none">
+        <i class="ti ti-search"></i>
+        <p>No comments match your search.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="onOverlayClick(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Submit a Comment</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div>
+        <div class="modal-label" style="margin-bottom:6px">Raw Comment</div>
+        <textarea class="modal-textarea" id="modal-textarea" placeholder="Paste or type your comment here..." oninput="onTextareaInput()"></textarea>
+      </div>
+      <div>
+        <div class="modal-label" style="margin-bottom:6px">Preview (after redaction)</div>
+        <div class="preview-box" id="preview-box"></div>
+      </div>
+      <div class="modal-row">
+        <div class="modal-field">
+          <div class="modal-label">Play Type</div>
+          <select class="modal-select" id="modal-pt">
+            <option value="Foul: Shooting">Foul: Shooting</option>
+            <option value="Foul: Offensive">Foul: Offensive</option>
+            <option value="Foul: Loose Ball">Foul: Loose Ball</option>
+            <option value="Foul: Personal">Foul: Personal</option>
+            <option value="Out of Bounds">Out of Bounds</option>
+            <option value="Travel">Travel</option>
+            <option value="Goaltending">Goaltending</option>
+            <option value="Uncategorized">Uncategorized</option>
+          </select>
+        </div>
+        <div class="modal-field">
+          <div class="modal-label">Call Type</div>
+          <select class="modal-select" id="modal-ct">
+            <option value="CC">CC — Correct Call</option>
+            <option value="IC">IC — Incorrect Call</option>
+            <option value="CNC">CNC — Correct No Call</option>
+            <option value="INC">INC — Incorrect No Call</option>
+            <option value="Judgment">Judgment</option>
+            <option value="Unknown">Unknown</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-cancel" onclick="closeModal()">Cancel</button>
+      <button class="modal-submit" id="modal-submit" onclick="submitComment()" disabled>Submit</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const PLAY_TYPES = ['All','Foul: Shooting','Foul: Offensive','Foul: Loose Ball','Foul: Personal','Out of Bounds','Travel','Goaltending','Uncategorized'];
+const STORAGE_KEY = 'brs_comments_v1';
+
+const SEED_COMMENTS = [
+  "Brink (LAS) jumps slightly forward and marginal body contact occurs with Young (LVA) **following the release of the pass**.",
+  "LLB/LAR shows Ogwumike's (LAS) **arms are not in a vertical position when illegal contact occurs** with Wilson's (LVA) arm, which affects her play at the basket.",
+  "Wheeler (LAS) briefly places their arm around Smith's (LVA) upper body as they navigate the pick on the perimeter. **The contact appears marginal before Wheeler's arm slides off.**",
+  "Hamby (LAS) **firms up over their right leg** and appears to absorb the marginal body contact that occurs as they set the pick on Talbot (LVA).",
+  "Although Brink (LAS) briefly places an arm around Smith (LVA) during the rebound, **the ball bounces in the other direction**, and there is judgment regarding if [PLAYER] would have been able to reach the rebound without contact.",
+  "Burrell (LAS) legally closes out in front of Gray (LVA) while contesting the jump shot attempt. Burrell would miss Gray completely if not for Gray's overt forward movement following the release, in which incidental foot to foot contact occurs upon returning to the floor.",
+  "McBride (NYK) steps near the midcourt line, but maintains frontcourt positioning while dribbling the ball. There is no violation on the play.",
+  "Caruso (OKC) lowers his arm and makes some contact with Castle's (SAS) arm. There is judgment regarding the effect of the contact **as Castle maintains control of the ball while he pivots.**",
+  "Although Hartenstein (OKC) briefly clasps Kornet's (SAS) arm, the ball bounces in the other direction, and there is judgment regarding if Kornet would have been able to reach the rebound without contact.",
+  "Cunningham (IND) fumbles the ball during their gather and legally regains possession of the ball before passing.",
+  "Boston (IND) contests Chen's (GSV) shot attempt and some contact occurs after the release. There is judgement in determining if Boston's arm makes a secondary action during the contest.",
+  "Smith (LVA) wraps their arms around Salaun's (GSV) body in an attempt to tie up the ball. A foul should be assessed rather than a jump ball.",
+  "Wilson (LVA) is late to establish a screening position and delivers illegal contact to Williams (GSV) during the pick.",
+  "Taylor's (CHI) left thigh makes hand on ball contact prior to their left forearm making clean contact with the ball to dislodge it. The ensuing follow-through contact after the ball is dislodged is considered incidental.",
+  "There is no clear or conclusive video evidence to determine if Key (TOR) makes contact with Cardoso's (CH) arm as Key contests the shot attempt.",
+  "Cunningham (IND) establishes position in Hayes' (GSV) path prior to the marginal contact.",
+  "RLS shows Billings (IND) reaches in and makes incidental hand-on-ball contact with Burton (GSV) at the end of their drive.",
+  "RLB shows Billings (IND) makes incidental hand-on-ball contact with Charles (GSV) that dislodges the ball away.",
+  "Sabally (TOR) firms up on their left foot and absorbs the body contact that occurs while setting the pick on Coulibaly (CHI). Additionally, Coulibaly does not go through Sabally's space, therefore, the contact as the players come together is considered incidental.",
+  "Key (TOR) appears to legally contest Taylor's (CHI) driving shot attempt, and the follow-through contact after the release is considered incidental.",
+  "Atkins (LAS) is moving forward and late to establish a legal guarding position in Bonner's (PHX) path prior to contact. However, the contact with Bonner appears marginal as Bonner makes their intended pass. Although a whistle is not incorrect here, allowing play to continue would also not be incorrect.",
+  "Broadcast replay shows Rice's (TOR) right hand initially makes clean contact with the ball. As Rice's hand slides off the ball, some arm-to-arm contact occurs with Coulibaly (CHI).",
+  "Nurse (TOR) and Cloud (CHI) come together at the same spot off-ball and some foot-to-foot contact occurs. There is judgement by the referee if the contact is marginal or incidental. Although a whistle is not technically incorrect, not having a whistle would not be incorrect either.",
+  "Replay review of the out of bounds called pursuant to a coach's challenge was deemed unsuccessful. Replay shows the player is the last to touch the ball before it goes out of bounds.",
+  "RLB shows the player gathers the ball on their right foot and establishes their left foot as the pivot, which the player lifts and returns to the ground before releasing the shot attempt.",
+  "After releasing the pass, the defender's left arm comes down, and some inadvertent contact occurs with the offensive player's head/face. Contact to an opponent's head/face can be deemed marginal when the result of a natural basketball move, provided the contact is not disproportionate or uncontrolled.",
+  "The offensive player sets a screen on the perimeter and after the initial contact with the defender, the offensive player continues to step backwards and illegally impedes the defender's ability to get around the screen.",
+  "Although the defender reaches in and there appears to be some arm contact as the offensive player attempts to gather the ball, there is no clear and conclusive video evidence to determine whether a foul occurs or whether the ball is legally dislodged on the play.",
+  "RLB shows the defender bringing both hands toward the ball and making legal hand-on-ball contact with the offensive player as they pursue the rebound. Although the contact is incidental, the second defender extends their left forearm into the offensive player's back. Therefore, while a loose ball foul is correctly called, the foul should be assessed to the second defender.",
+  "Although the defender contacts the ball first, they follow through and make contact to the offensive player's wrist while they are still in control of the ball and it affects their shot attempt.",
+  "After the ball becomes loose, the defender makes some contact with the offensive player's shoulder as they release away to secure the loose ball.",
+  "The offensive player leans into the defender and initiates some contact as they complete the pass.",
+  "The defender briefly engages in some contact with the offensive player as the shot is imminent, before incidental foot to foot contact occurs during the loose ball. There is judgment in determining if the contact from the defender dislodges the offensive player, or if they fall to the floor as a result of the foot to foot contact.",
+  "LLB shows the defender briefly places a hand on the offensive player's side as they drive, and marginal contact occurs before the defender retracts their hand during the shooting motion.",
+  "Mobley (CLE) extends his left arm into Towns' (NYK) path and initiates contact with Towns' front that affects his SQBR during the drive.",
+  "The offensive player takes an additional step and does not give the defender the ability to avoid the contact during the pick.",
+  "The defender briefly places a hand on the offensive player's back and some contact occurs before the defender's hand slides off during the shooting motion. There is judgement regarding the degree and effect of the contact.",
+  "The offensive player is moving alongside the defender's path and absorbs the marginal contact that occurs at the start of the drive. The offensive player's SQBR appears unaffected.",
+  "Although the defender gets to the ball initially, it does not become dislodged, then the defender makes illegal contact with the inside of the offensive player's hand after the gather.",
+  "The defender wraps their arm around the offensive player's waist and initiates contact that is more than marginal. This contact occurs prior to, and causes, any potential traveling violation by the offensive player.",
+  "The offensive player hooks the defender's arm to create the illegal contact during the drive. A defensive foul is called on the defender, but an offensive foul should have been assessed to the offensive player instead.",
+  "The defensive player slightly extends their arms and some contact occurs with the offensive player as they navigate the screen. There is judgement regarding if the defensive player absorbs the contact and retracts their arms during the screen, or if contact is delivered with the arms.",
+  "The screener firms up in a screening position in the defender's path and there is judgment regarding if contact is delivered or if it is absorbed.",
+  "The screener establishes a wide screening position with their arm extended outside the frame of their shoulders in the defender's path, and the contact occurs to the extended arm.",
+  "The offensive player moves through the defender's space and delivers contact that drives the defender off their legally obtained screening position.",
+  "The defender extends their arm into the offensive player's front and some contact occurs as they navigate the pick. There is judgement regarding the effect of the contact as the offensive player's SQBR appears unaffected by the contact.",
+  "The offensive player is moving alongside the defender's path and appears to absorb the marginal body contact when the two players come together during the drive.",
+  "The defender momentarily applies their forearm to the offensive player's side and marginal contact occurs before the offensive player briefly grasps the defender's arm. There is judgement in determining if the contact by either player rises to the level of a foul.",
+  "The defender slightly extends their arm and some contact occurs with the offensive player's arm during the pick, before foot-to-foot contact occurs between the offensive player and their teammate. There is judgement regarding if the contact from the defender causes the offensive player to lose balance, or the ensuing foot contact.",
+  "The offensive player places their hand under the ball, allowing it to come to rest in their palm during the dribble.",
+  "LAR and RLS show the defender maintains verticality as they defend the shot attempt. The defender absorbs the contact and play should have continued without a whistle.",
+  "Both players briefly engage and disengage off-ball. Their arms get tangled as they position themselves off-ball, and the contact is marginal. Play correctly continues without a whistle.",
+  "Both players come together in the lane off-ball. As they engage for positioning, the offensive player momentarily applies their hand to the defender's side before removing their hand. While contact occurs, there is judgment in determining if the contact is more than marginal.",
+  "LAR and LLS show the defender makes contact with the part of the offensive player's hand that is on the ball as they defend the shot attempt. Contact which occurs on the hand of the offensive player, while that part of the hand is in contact with the ball, is legal. Play should have continued without a whistle.",
+  "The defender momentarily applies their hands to the offensive player's upper body and some contact occurs on the perimeter. Although contact does occur, there is judgment in determining if the contact is more than marginal. The whistle on this play is not incorrect, and allowing play to continue without a whistle would also not be incorrect.",
+  "The defender is in a legal guarding position in the offensive player's path when incidental lower body contact occurs, which appears to cause the offensive player to fall to the floor.",
+  "Both players mutually engage with one another and marginal contact occurs during the rebound.",
+  "The defender displaces the offensive player off their legally obtained position in the paint. This illegal contact causes them not to gain possession of the incoming post entry pass.",
+  "RAR/LAR shows the defender briefly places a forearm on the offensive player's back and releases away as the offensive player jumps forward to pursue the rebound. The contact appears marginal.",
+  "The offensive player controls the rebound and steps into the defender while they are on the floor. The offensive player appears to begin to lose their balance as a result of the contact, but the ball is immediately dislodged from their possession.",
+  "The defender extends an arm backwards as the offensive player elevates for the ball and appears to move through the contact unimpeded. Although the contact is technically illegal, play could have continued without a whistle.",
+  "The defender makes slight contact to the offensive player's wrist as they block the shot with their other hand. There is judgment regarding if the contact before the blocked shot is illegal.",
+  "The offensive player uses their lower body to deliver contact as they set the pick on the defender.",
+  "As the ball handler attempts a dribble hand-off, the defender grabs their shoulder and pulls them. An offensive foul is called on the ball handler, but a defensive foul should have been called on the defender instead.",
+  "The defensive player moves underneath the offensive player and although there is some lower body contact, there is judgment regarding if the offensive player falls to the floor as a result of the contact or if they were already off-balance.",
+  "The offensive player lifts their own arm upwards into the defender's arm as it is extended. The defender can be considered to be initiating contact, but it appears that they would have entirely avoided contact if not for the offensive player lifting their own arms upward.",
+  "LAR shows that the defender walks underneath the offensive player, affecting their jump shot attempt.",
+  "The defender wraps up the offensive player and makes illegal contact to their arm prior to the start of their upward shooting motion. Although a foul is correctly called, it should have been assessed as a non-shooting foul.",
+  "The defender moves laterally along with the offensive player, who falls to the floor after contact. Although the defender is not perfectly legal, there is judgment regarding if the contact by the defender causes the offensive player to fall.",
+  "The offensive player momentarily applies their hands to the defender's upper body as they move in the same direction off-ball. There is judgment on this play in determining if the contact is more than marginal. A whistle on this play would not be incorrect, and allowing play to continue without a whistle is also not incorrect.",
+  "LAR shows the defender does not establish a legal guarding position in the offensive player's path prior to the contact. The contact from the defender occurs prior to any potentially illegal contact from the offensive player, and a personal foul is correctly called on this play.",
+  "Although the defender's right arm makes contact with the offensive player's head, the offensive player loses control of the ball prior to the contact. There is judgment in determining if this contact is more than marginal. Contact to an opponent's head/face can be deemed marginal when the result of a natural basketball move, provided the contact is not disproportionate or uncontrolled.",
+  "The screener establishes themselves in the defender's path and absorbs the contact during the pick. The defender then loses their balance on their own and not as a result of any contact from the screener. Play should have continued without a whistle.",
+  "The defender cleanly ties up the offensive player and a jump ball is correctly called.",
+  "The defender re-adjusts alongside the offensive player's path and although they initiate some body contact, the offensive player moves through it to finish at the rim.",
+  "The defender reaches in and initiates contact with the offensive player's front during their drive to the basket, and then initiates further illegal contact to their arm as they attempt to gather. Since the illegal contact occurs prior to the gather, a non-shooting personal foul is correctly called.",
+  "The offensive player extends their leg during their shooting motion as the defender contests in front of them. There is judgment regarding if the defender would have otherwise avoided making contact with the offensive player.",
+  "The offensive player makes contact to the ball as both players pursue the rebound. While the ball is still loose, the offensive player reaches across the defender's shoulder and there is judgment regarding the degree and effect of the contact.",
+  "The defender initiates arm contact with the offensive player after they gather the ball during a moving shot. Although a foul is correctly called, a shooting foul should have been assessed instead.",
+  "The defender initiates contact with the offensive player's wrist, causing them to lose control of the ball. Since the illegal contact occurs prior to the offensive player's upward shooting motion, it is correctly assessed as a non-shooting foul.",
+  "HIT shows the defender deflects the ball away cleanly. Any ensuing contact that occurs after the deflection is considered incidental. Play should have continued without a whistle.",
+  "HIT shows the defender swipes down and initiates contact with the offensive player's arm that affects their ability to maintain control of the ball.",
+  "The defensive player momentarily applies their hands to the offensive player's upper body and some contact occurs during the drive. Although contact does occur, there is minimal effect on the offensive player's SQBR as they move through the contact and continues their drive.",
+  "The defender beats the offensive player to the spot, and establishes a legal guarding position outside of the RA, prior to contact occurring during the offensive player's play at the basket. A shooting foul is called on the defender, but an offensive foul should have been called on the offensive player instead.",
+  "The defender brings their hand toward the ball and some contact occurs with the offensive player's hand on the ball, which is considered part of the ball, prior to the shot release. The contact is considered incidental.",
+  "The defender makes clean contact with the ball and dislodges it away from the offensive player prior to incidental arm contact occurring at the end of the drive.",
+  "LAR shows the offensive player makes leg to leg contact with the defender after a step-back shot attempt. There is judgment in discerning if the leg contact is overtly extending the leg or if it is part of a natural shooting motion.",
+  "Although the defender first makes contact to the ball, they do not immediately dislodge it from the offensive player's possession and follow through to make illegal contact to their wrist.",
+  "The screener obtains a position in front of the offensive player, who jumps forward into them. The screener absorbs the incidental contact during the offensive player's shot attempt.",
+  "The offensive player jumps forward, but lands in front of the defender before jumping into them prior to the pass. The contact on the play is incidental.",
+  "The defender makes contact to the ball and appears to graze the offensive player's wrist as they follow through.",
+  "Possession is awarded incorrectly. Replay shows the defensive player is the last to touch the ball before it goes out of bounds. Possession should have been awarded to the other team.",
+  "A jump ball is called to determine possession, however the defensive player is the last to touch the ball before the ball goes out of bounds. Possession should have been awarded to the offensive team.",
+  "RLB shows the defender makes contact with the ball that dislodges it from the offensive player's control during the upward motion, prior to any ensuing incidental arm contact.",
+  "The defender briefly places a hand on the offensive player's back and some contact occurs as the offensive player leaves the floor to pursue the loose ball. There is judgment regarding the effect of the contact.",
+  "RLB shows the offensive player gathers the ball on their right foot and establishes their left foot as the pivot, which they lift and return to the ground before releasing the shot attempt.",
+  "Replay review of the foul called pursuant to a coach's challenge was deemed successful. Replay shows the defender makes clean contact with the ball and the ensuing arm contact is considered incidental.",
+  "Although the defender first makes contact to the ball, there is ensuing contact with the offensive player's arm/wrist as they attempt to finish at the rim. There is judgment regarding if the contact to the ball causes it to come loose, or if it is the contact to the arm/wrist.",
+  "The offensive player overtly extends their leg to create contact with the defender after returning to the floor. The offensive player falls to the floor as a result of the marginal contact.",
+  "HIT shows the defender deflects the ball away from the offensive player. Any ensuing contact that occurs after the deflection is considered incidental. Play should have continued without a whistle."
+];
+
+// ── Detection ─────────────────────────────────────────────────────────────
+
+function detectPlayType(text) {
+  const t = text.toLowerCase();
+  const scores = {
+    'Foul: Shooting': 0,
+    'Foul: Offensive': 0,
+    'Foul: Loose Ball': 0,
+    'Foul: Personal': 0,
+    'Out of Bounds': 0,
+    'Travel': 0,
+    'Goaltending': 0,
+  };
+  const kw = {
+    'Foul: Shooting': ['shooting motion','shot attempt','upward shooting','jump shot','contesting','contests the','release of','releases the','while in control of the ball','shot release','in control of the ball'],
+    'Foul: Offensive': ['screen','pick','screening position','set the pick','sets a screen','setting the pick'],
+    'Foul: Loose Ball': ['rebound','loose ball','pursue the rebound','pursues the rebound','tip'],
+    'Foul: Personal': ['sqbr','drive to the basket','drives toward','personal foul','hand-on-ball','dislodge','during the drive','during his drive'],
+    'Out of Bounds': ['out of bounds','goes out of bounds','last to touch','possession should','possession is awarded'],
+    'Travel': ['pivot foot','gathers the ball','gather the ball','travel','step-back','pivot'],
+    'Goaltending': ['goaltending','blocks the shot','blocked shot'],
+  };
+  for (const [type, words] of Object.entries(kw)) {
+    for (const w of words) { if (t.includes(w)) scores[type]++; }
+  }
+  const best = Object.entries(scores).sort((a,b) => b[1]-a[1])[0];
+  return best[1] > 0 ? best[0] : 'Uncategorized';
+}
+
+function detectCallType(text) {
+  const t = text.toLowerCase();
+  if (t.includes('there is judgment') || t.includes('there is judgement')) return 'Judgment';
+  if (t.includes('play should have continued without a whistle') || t.includes('play correctly continues') || t.includes('no violation on the play') || t.includes('is not a violation')) return 'CNC';
+  if (t.includes('should have been assessed') || t.includes('should have been called') || t.includes('incorrectly')) return 'IC';
+  if (t.includes('a foul should be assessed') || t.includes('foul should be assessed')) return 'INC';
+  if (t.includes('correctly called') || t.includes('correctly assessed')) return 'CC';
+  if (t.includes('is legal') || t.includes('is correctly')) return 'CC';
+  return 'Unknown';
+}
+
+// ── Redaction ─────────────────────────────────────────────────────────────
+
+function redactNames(text) {
+  let result = text;
+  // #N Name (TEAM)
+  result = result.replace(/#\d+\s+([A-Z][A-Za-zÀ-ž'-]+(?:\s+[A-Z][A-Za-zÀ-ž'-]+)?)\s+\(([A-Z]{2,4})\)/g,
+    '<mark>[PLAYER] ($2)</mark>');
+  // Name (TEAM) — preserve already-redacted [PLAYER]
+  result = result.replace(/(?<!\[)([A-Z][A-Za-zÀ-ž'-]+(?:'s)?(?:\s+[A-Z][A-Za-zÀ-ž'-]+)?)\s+\(([A-Z]{2,4})\)/g,
+    (m, name, team) => name.startsWith('[') ? m : `<mark>[PLAYER] (${team})</mark>`);
+  return result;
+}
+
+function plainRedact(text) {
+  let result = text;
+  result = result.replace(/#\d+\s+([A-Z][A-Za-zÀ-ž'-]+(?:\s+[A-Z][A-Za-zÀ-ž'-]+)?)\s+\(([A-Z]{2,4})\)/g, '[PLAYER] ($2)');
+  result = result.replace(/(?<!\[)([A-Z][A-Za-zÀ-ž'-]+(?:'s)?(?:\s+[A-Z][A-Za-zÀ-ž'-]+)?)\s+\(([A-Z]{2,4})\)/g,
+    (m, name, team) => name.startsWith('[') ? m : `[PLAYER] (${team})`);
+  return result;
+}
+
+function renderBold(text) {
+  return text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+}
+
+// ── Storage ───────────────────────────────────────────────────────────────
+
+function loadComments() {
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (stored) {
+    try { return JSON.parse(stored); } catch(e) {}
+  }
+  const seeded = SEED_COMMENTS.map((text, i) => ({
+    id: 'seed_' + i,
+    text,
+    playType: detectPlayType(text),
+    callType: detectCallType(text),
+    source: 'seed'
+  }));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(seeded));
+  return seeded;
+}
+
+function saveComments() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(allComments));
+}
+
+// ── State ─────────────────────────────────────────────────────────────────
+
+let allComments = loadComments();
+let activeTab = 'All';
+let searchQuery = '';
+
+// ── Render ────────────────────────────────────────────────────────────────
+
+function filteredComments() {
+  return allComments.filter(c => {
+    const matchTab = activeTab === 'All' || c.playType === activeTab;
+    const matchSearch = !searchQuery || c.text.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchTab && matchSearch;
+  });
+}
+
+function countForTab(tab) {
+  return allComments.filter(c => tab === 'All' || c.playType === tab).length;
+}
+
+function renderTabs() {
+  const el = document.getElementById('tabs');
+  el.innerHTML = PLAY_TYPES.map(pt => `
+    <div class="tab${activeTab === pt ? ' on' : ''}" onclick="setTab('${pt.replace(/'/g,"\\'")}')">
+      <span>${pt}</span>
+      <span class="tab-count">${countForTab(pt)}</span>
+    </div>`).join('');
+}
+
+function ctBadge(ct) {
+  return `<span class="ct-badge ct-${ct}">${ct}</span>`;
+}
+
+function renderCard(c) {
+  const bodyHtml = renderBold(c.text.replace(/</g,'&lt;').replace(/>/g,'&gt;'));
+  const deleteBtn = c.source === 'submitted'
+    ? `<button class="delete-btn" onclick="deleteComment('${c.id}')" title="Delete"><i class="ti ti-x"></i></button>`
+    : '';
+  return `<div class="comment-card" id="card-${c.id}">
+    <div class="card-top">
+      <div class="card-top-left">
+        <span class="pt-pill">${c.playType}</span>
+        ${ctBadge(c.callType)}
+      </div>
+    </div>
+    <div class="card-body">${bodyHtml}</div>
+    <div class="card-footer">
+      <button class="copy-btn" id="copy-${c.id}" onclick="copyComment('${c.id}')">
+        <i class="ti ti-copy"></i> Copy
+      </button>
+      <div style="display:flex;align-items:center;gap:4px">
+        <span class="card-source${c.source === 'submitted' ? ' submitted' : ''}">${c.source === 'submitted' ? 'Submitted' : 'Pre-loaded'}</span>
+        ${deleteBtn}
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderCards() {
+  const grid = document.getElementById('cards-grid');
+  const empty = document.getElementById('empty-state');
+  const fc = filteredComments();
+  document.getElementById('main-count').textContent = fc.length + ' comment' + (fc.length !== 1 ? 's' : '');
+  if (!fc.length) {
+    grid.innerHTML = '';
+    empty.style.display = 'block';
+  } else {
+    empty.style.display = 'none';
+    grid.innerHTML = fc.map(renderCard).join('');
+  }
+}
+
+function render() {
+  renderTabs();
+  renderCards();
+}
+
+// ── Actions ───────────────────────────────────────────────────────────────
+
+function setTab(tab) {
+  activeTab = tab;
+  render();
+}
+
+function onSearch() {
+  searchQuery = document.getElementById('search-input').value;
+  renderCards();
+}
+
+function copyComment(id) {
+  const c = allComments.find(x => x.id === id);
+  if (!c) return;
+  const plain = c.text.replace(/\*\*(.+?)\*\*/g, '$1');
+  navigator.clipboard.writeText(plain).then(() => {
+    const btn = document.getElementById('copy-' + id);
+    btn.classList.add('copied');
+    btn.innerHTML = '<i class="ti ti-check"></i> Copied!';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = '<i class="ti ti-copy"></i> Copy';
+    }, 1500);
+  });
+}
+
+function deleteComment(id) {
+  allComments = allComments.filter(c => c.id !== id);
+  saveComments();
+  render();
+}
+
+// ── Modal ─────────────────────────────────────────────────────────────────
+
+let debounceTimer;
+
+function openModal() {
+  document.getElementById('modal-overlay').classList.add('open');
+  document.getElementById('modal-textarea').value = '';
+  document.getElementById('preview-box').classList.remove('visible');
+  document.getElementById('preview-box').innerHTML = '';
+  document.getElementById('modal-submit').disabled = true;
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+
+function onOverlayClick(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+
+function onTextareaInput() {
+  const val = document.getElementById('modal-textarea').value.trim();
+  document.getElementById('modal-submit').disabled = !val;
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(() => {
+    if (!val) {
+      document.getElementById('preview-box').classList.remove('visible');
+      return;
+    }
+    const preview = document.getElementById('preview-box');
+    preview.innerHTML = redactNames(val.replace(/</g,'&lt;').replace(/>/g,'&gt;'));
+    preview.classList.add('visible');
+    document.getElementById('modal-pt').value = detectPlayType(val);
+    document.getElementById('modal-ct').value = detectCallType(val);
+  }, 300);
+}
+
+function submitComment() {
+  const raw = document.getElementById('modal-textarea').value.trim();
+  if (!raw) return;
+  const text = plainRedact(raw);
+  const pt = document.getElementById('modal-pt').value;
+  const ct = document.getElementById('modal-ct').value;
+  const comment = { id: 'user_' + Date.now(), text, playType: pt, callType: ct, source: 'submitted' };
+  allComments.unshift(comment);
+  saveComments();
+  closeModal();
+  render();
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────
+render();
+</script>
+</body>
+</html>
