@@ -832,11 +832,23 @@ function filteredComments() {
 function renderFilterBar() {
   // Play Type menu
   renderFdMenu('fd-pt-menu', PLAY_TYPES.filter(p=>p!=='All'), filterPT, v => { filterPT = v; filterSit=''; filterSpt=''; renderFilterBar(); renderCards(); });
-  // Situation menu — depends on filterPT
-  const sits = filterPT && TAXONOMY[filterPT] ? TAXONOMY[filterPT].situations : [...new Set(allComments.map(c=>c.situation).filter(Boolean))].sort();
-  renderFdMenu('fd-sit-menu', sits, filterSit, v => { filterSit = v; renderFilterBar(); renderCards(); });
-  // Sub Play Type menu
-  const spts = filterPT && TAXONOMY[filterPT] ? TAXONOMY[filterPT].contacts : [...new Set(allComments.map(c=>c.subPlayType).filter(Boolean))].sort();
+  // Play Type (situation) menu — scoped to selected infraction type
+  const sits = filterPT && TAXONOMY[filterPT]
+    ? TAXONOMY[filterPT].situations
+    : [...new Set(allComments.map(c=>c.situation).filter(Boolean))].sort();
+  renderFdMenu('fd-sit-menu', sits, filterSit, v => { filterSit = v; filterSpt=''; renderFilterBar(); renderCards(); });
+  // Sub Play Type menu — scoped to selected infraction type + situation
+  let spts;
+  if (filterSit) {
+    // Only contacts that appear on comments matching current PT + situation
+    spts = [...new Set(allComments.filter(c => (!filterPT || c.playType === filterPT) && c.situation === filterSit).map(c=>c.subPlayType).filter(Boolean))].sort();
+    // Fall back to taxonomy contacts for that PT if no seeded comments match yet
+    if (!spts.length && filterPT && TAXONOMY[filterPT]) spts = TAXONOMY[filterPT].contacts;
+  } else if (filterPT && TAXONOMY[filterPT]) {
+    spts = TAXONOMY[filterPT].contacts;
+  } else {
+    spts = [...new Set(allComments.map(c=>c.subPlayType).filter(Boolean))].sort();
+  }
   renderFdMenu('fd-spt-menu', spts, filterSpt, v => { filterSpt = v; renderFilterBar(); renderCards(); });
   // Infraction Rating menu
   renderFdMenu('fd-ir-menu', ['Infraction','PI - Lean','PI - No','No Infraction'], filterIR, v => { filterIR = v; renderFilterBar(); renderCards(); });
