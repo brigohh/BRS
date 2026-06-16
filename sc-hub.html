@@ -329,6 +329,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
           <th>Second Checked By</th>
           <th style="text-align:center">Important Calls</th>
           <th style="text-align:center">Edits</th>
+          <th>Rating Changes</th>
           <th style="text-align:center">First Pass Accuracy</th>
           <th>Status</th>
         </tr>
@@ -370,40 +371,349 @@ function logo(abbr, size=16) {
 }
 
 const SC_GAMES = [
-  {away:'IND',home:'NYL',date:'06/06/2026',sc:'Daniel Foley',plays:31,changes:11,agree:83,called:87,nc:76,published:false,link:'',league:'WNBA'},
-  {away:'CON',home:'CHI',date:'06/05/2026',sc:'Michael Gargin',plays:27,changes:8,agree:88,called:92,nc:81,published:true,link:'',league:'WNBA'},
-  {away:'LVA',home:'LAS',date:'06/02/2026',sc:'Curtis Oakley Jr.',plays:34,changes:12,agree:83,called:88,nc:75,published:true,link:'',league:'WNBA'},
-  {away:'ATL',home:'PDX',date:'05/29/2026',sc:'Tucker Grady',plays:25,changes:7,agree:80,called:85,nc:72,published:true,link:'',league:'WNBA'},
-  {away:'PHX',home:'NYL',date:'05/29/2026',sc:'Michael Gargin',plays:29,changes:11,agree:71,called:76,nc:63,published:true,link:'',league:'WNBA'},
-  {away:'TOR',home:'CHI',date:'05/27/2026',sc:'Daniel Foley',plays:33,changes:10,agree:83,called:87,nc:77,published:true,link:'index.html',league:'WNBA'},
-  {away:'DAL',home:'NYL',date:'05/24/2026',sc:'Tucker Grady',plays:28,changes:9,agree:90,called:93,nc:85,published:true,link:'',league:'WNBA'},
-  {away:'GSV',home:'IND',date:'05/22/2026',sc:'Michael Gargin',plays:32,changes:10,agree:82,called:87,nc:74,published:true,link:'',league:'WNBA'},
-  {away:'LAS',home:'PHX',date:'05/21/2026',sc:'Tucker Grady',plays:26,changes:11,agree:71,called:75,nc:64,published:true,link:'',league:'WNBA'},
-  {away:'CHI',home:'MIN',date:'05/17/2026',sc:'Daniel Foley',plays:25,changes:7,agree:80,called:84,nc:73,published:true,link:'',league:'WNBA'},
+  {away:'IND',home:'NYL',date:'06/06/2026',sc:'Daniel Foley',plays:31,changes:11,agree:83,called:87,nc:76,published:false,link:'',league:'WNBA',rc:[
+    {q:4,time:'1:24',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'3:08',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:3,time:'2:51',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:3,time:'5:17',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:3,time:'9:44',from:'CC',to:'IC',type:'Foul: Offensive',sub:'Hook'},
+    {q:2,time:'1:03',from:'PIN',to:'INC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:2,time:'4:38',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:2,time:'7:22',from:'IC',to:'CC',type:'Foul: Personal',sub:'Hand/Forearm to Front'},
+    {q:1,time:'2:19',from:'PII',to:'CNC',type:'Foul: Loose Ball',sub:'Clamp-Lock-Hold'},
+    {q:1,time:'6:45',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:1,time:'10:31',from:'CC',to:'IC',type:'Goaltending',sub:'Defensive Goaltending'},
+  ]},
+  {away:'CON',home:'CHI',date:'06/05/2026',sc:'Michael Gargin',plays:27,changes:8,agree:88,called:92,nc:81,published:true,link:'',league:'WNBA',rc:[
+    {q:4,time:'0:48',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'2:33',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Body Contact/Check'},
+    {q:3,time:'4:12',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Dislodge from Position'},
+    {q:3,time:'8:57',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Landing Area'},
+    {q:2,time:'1:44',from:'PIN',to:'CNC',type:'Foul: Loose Ball',sub:'Contact to Arm'},
+    {q:2,time:'6:20',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:1,time:'3:55',from:'IC',to:'CC',type:'Travel',sub:'Pivot Foot'},
+    {q:1,time:'9:10',from:'PII',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+  ]},
+  {away:'LVA',home:'LAS',date:'06/02/2026',sc:'Curtis Oakley Jr.',plays:34,changes:12,agree:83,called:88,nc:75,published:true,link:'',league:'WNBA',rc:[
+    {q:4,time:'0:31',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Shooting Motion'},
+    {q:4,time:'2:14',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:4,time:'4:47',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Pass & Crash'},
+    {q:3,time:'1:08',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Body Follow-Through'},
+    {q:3,time:'3:52',from:'CC',to:'IC',type:'Foul: Loose Ball',sub:'Clamp-Lock-Hold'},
+    {q:3,time:'7:19',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:2,time:'0:58',from:'PII',to:'INC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:2,time:'3:41',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+    {q:2,time:'6:25',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:1,time:'2:07',from:'PIN',to:'CNC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:1,time:'5:33',from:'CNC',to:'INC',type:'Foul: Offensive',sub:'Hook'},
+    {q:1,time:'9:48',from:'CC',to:'IC',type:'Goaltending',sub:'Offensive Goaltending'},
+  ]},
+  {away:'ATL',home:'PDX',date:'05/29/2026',sc:'Tucker Grady',plays:25,changes:7,agree:80,called:85,nc:72,published:true,link:'',league:'WNBA',rc:[
+    {q:4,time:'1:52',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:3,time:'3:28',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Hand/Forearm to Front'},
+    {q:3,time:'7:41',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Dislodge from Position'},
+    {q:2,time:'2:09',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:2,time:'5:54',from:'PIN',to:'INC',type:'Out of Bounds',sub:''},
+    {q:1,time:'4:17',from:'CNC',to:'INC',type:'Travel',sub:'Gather Step'},
+    {q:1,time:'8:33',from:'IC',to:'CC',type:'Foul: Loose Ball',sub:'Dislodge from Position'},
+  ]},
+  {away:'PHX',home:'NYL',date:'05/29/2026',sc:'Michael Gargin',plays:29,changes:11,agree:71,called:76,nc:63,published:true,link:'',league:'WNBA',rc:[
+    {q:4,time:'0:22',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'1:47',from:'CC',to:'IC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:4,time:'3:59',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:3,time:'2:14',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Hook'},
+    {q:3,time:'5:38',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:3,time:'8:52',from:'PII',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:2,time:'1:06',from:'CNC',to:'INC',type:'Foul: Loose Ball',sub:'Clamp-Lock-Hold'},
+    {q:2,time:'4:29',from:'PIN',to:'CNC',type:'Foul: Personal',sub:'Body Contact/Check'},
+    {q:2,time:'7:44',from:'IC',to:'CC',type:'Travel',sub:'Pivot Foot'},
+    {q:1,time:'3:11',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:1,time:'7:58',from:'CC',to:'IC',type:'Goaltending',sub:'Defensive Goaltending'},
+  ]},
+  {away:'TOR',home:'CHI',date:'05/27/2026',sc:'Daniel Foley',plays:33,changes:10,agree:83,called:87,nc:77,published:true,link:'index.html',league:'WNBA',rc:[
+    {q:4,time:'2:03',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Body Follow-Through'},
+    {q:4,time:'4:18',from:'IC',to:'CC',type:'Foul: Loose Ball',sub:'Contact to Arm'},
+    {q:3,time:'1:37',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+    {q:3,time:'6:52',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:2,time:'0:44',from:'CC',to:'IC',type:'Foul: Offensive',sub:'Dislodge from Position'},
+    {q:2,time:'3:19',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:2,time:'8:06',from:'PII',to:'CNC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:1,time:'2:28',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Landing Area'},
+    {q:1,time:'5:51',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:1,time:'9:14',from:'PIN',to:'INC',type:'Foul: Personal',sub:'Hand/Forearm to Front'},
+  ]},
+  {away:'DAL',home:'NYL',date:'05/24/2026',sc:'Tucker Grady',plays:28,changes:9,agree:90,called:93,nc:85,published:true,link:'',league:'WNBA',rc:[
+    {q:4,time:'1:18',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'3:44',from:'IC',to:'CC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:3,time:'2:57',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:3,time:'7:22',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Pass & Crash'},
+    {q:2,time:'1:09',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:2,time:'5:33',from:'PIN',to:'CNC',type:'Foul: Loose Ball',sub:'Clamp-Lock-Hold'},
+    {q:1,time:'3:48',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Body Contact/Check'},
+    {q:1,time:'6:17',from:'PII',to:'INC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:1,time:'10:02',from:'CC',to:'IC',type:'Travel',sub:'Gather Step'},
+  ]},
+  {away:'GSV',home:'IND',date:'05/22/2026',sc:'Michael Gargin',plays:32,changes:10,agree:82,called:87,nc:74,published:true,link:'',league:'WNBA',rc:[
+    {q:4,time:'0:55',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'2:41',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+    {q:3,time:'1:19',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Hook'},
+    {q:3,time:'4:38',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Body Follow-Through'},
+    {q:3,time:'8:13',from:'CC',to:'IC',type:'Out of Bounds',sub:''},
+    {q:2,time:'2:06',from:'PIN',to:'INC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:2,time:'5:49',from:'CNC',to:'INC',type:'Foul: Loose Ball',sub:'Dislodge from Position'},
+    {q:1,time:'1:33',from:'IC',to:'CC',type:'Travel',sub:'Pivot Foot'},
+    {q:1,time:'4:58',from:'PII',to:'CNC',type:'Foul: Shooting',sub:'NBP: Drawn Into Air/Closeout'},
+    {q:1,time:'8:27',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Contact to Arm'},
+  ]},
+  {away:'LAS',home:'PHX',date:'05/21/2026',sc:'Tucker Grady',plays:26,changes:11,agree:71,called:75,nc:64,published:true,link:'',league:'WNBA',rc:[
+    {q:4,time:'0:17',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:4,time:'1:52',from:'IC',to:'CC',type:'Foul: Personal',sub:'Hand/Forearm to Front'},
+    {q:4,time:'3:36',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:3,time:'2:44',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:3,time:'5:09',from:'CC',to:'IC',type:'Foul: Offensive',sub:'Dislodge from Position'},
+    {q:3,time:'9:31',from:'PII',to:'INC',type:'Foul: Shooting',sub:'Arm Shooting Motion'},
+    {q:2,time:'1:22',from:'CNC',to:'INC',type:'Foul: Loose Ball',sub:'Clamp-Lock-Hold'},
+    {q:2,time:'4:47',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:2,time:'7:58',from:'PIN',to:'CNC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:1,time:'3:14',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:1,time:'8:42',from:'CC',to:'IC',type:'Goaltending',sub:'Defensive Goaltending'},
+  ]},
+  {away:'CHI',home:'MIN',date:'05/17/2026',sc:'Daniel Foley',plays:25,changes:7,agree:80,called:84,nc:73,published:true,link:'',league:'WNBA',rc:[
+    {q:4,time:'2:28',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Body Follow-Through'},
+    {q:3,time:'4:11',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Hook'},
+    {q:3,time:'8:39',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Body Contact/Check'},
+    {q:2,time:'1:55',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:2,time:'6:07',from:'PIN',to:'INC',type:'Out of Bounds',sub:''},
+    {q:1,time:'3:42',from:'IC',to:'CC',type:'Travel',sub:'Pivot Foot'},
+    {q:1,time:'9:16',from:'PII',to:'CNC',type:'Foul: Loose Ball',sub:'Contact to Arm'},
+  ]},
   // NBA 2025-26 (2024-25 season data, years shifted +1)
-  // NBA Finals – OKC vs IND
-  {away:'OKC',home:'IND',date:'06/22/2026',sc:'Daniel Foley',plays:41,changes:14,agree:78,called:83,nc:70,published:true,link:'',league:'NBA'},
-  {away:'IND',home:'OKC',date:'06/19/2026',sc:'Michael Gargin',plays:38,changes:12,agree:80,called:85,nc:73,published:true,link:'',league:'NBA'},
-  {away:'OKC',home:'IND',date:'06/15/2026',sc:'Tucker Grady',plays:43,changes:16,agree:75,called:80,nc:68,published:true,link:'',league:'NBA'},
-  {away:'IND',home:'OKC',date:'06/12/2026',sc:'Curtis Oakley Jr.',plays:39,changes:13,agree:79,called:84,nc:72,published:true,link:'',league:'NBA'},
-  // West Conf Finals – OKC vs MIN
-  {away:'MIN',home:'OKC',date:'05/27/2026',sc:'Daniel Foley',plays:37,changes:11,agree:81,called:86,nc:74,published:true,link:'',league:'NBA'},
-  {away:'OKC',home:'MIN',date:'05/24/2026',sc:'Tucker Grady',plays:40,changes:15,agree:76,called:81,nc:69,published:true,link:'',league:'NBA'},
-  // East Conf Finals – IND vs NYK
-  {away:'NYK',home:'IND',date:'05/26/2026',sc:'Michael Gargin',plays:35,changes:10,agree:83,called:88,nc:76,published:true,link:'',league:'NBA'},
-  {away:'IND',home:'NYK',date:'05/22/2026',sc:'Curtis Oakley Jr.',plays:33,changes:9,agree:84,called:89,nc:77,published:true,link:'',league:'NBA'},
-  // West R2 – OKC vs DEN
-  {away:'DEN',home:'OKC',date:'05/10/2026',sc:'Daniel Foley',plays:42,changes:15,agree:77,called:82,nc:70,published:true,link:'',league:'NBA'},
-  // East R2 – IND vs CLE
-  {away:'CLE',home:'IND',date:'05/09/2026',sc:'Michael Gargin',plays:36,changes:11,agree:82,called:87,nc:75,published:true,link:'',league:'NBA'},
-  // West R1 – OKC vs MEM
-  {away:'MEM',home:'OKC',date:'04/20/2026',sc:'Tucker Grady',plays:34,changes:10,agree:83,called:88,nc:76,published:true,link:'',league:'NBA'},
-  // Regular season
-  {away:'CLE',home:'OKC',date:'01/14/2026',sc:'Curtis Oakley Jr.',plays:38,changes:12,agree:81,called:86,nc:74,published:true,link:'',league:'NBA'},
-  {away:'NYK',home:'BOS',date:'12/25/2025',sc:'Daniel Foley',plays:36,changes:11,agree:80,called:85,nc:73,published:true,link:'',league:'NBA'},
-  {away:'GSW',home:'LAL',date:'12/25/2025',sc:'Michael Gargin',plays:39,changes:14,agree:78,called:83,nc:71,published:true,link:'',league:'NBA'},
-  {away:'OKC',home:'SAS',date:'10/24/2025',sc:'Tucker Grady',plays:31,changes:8,agree:86,called:90,nc:80,published:true,link:'',league:'NBA'},
-  {away:'BOS',home:'NYK',date:'10/22/2025',sc:'Curtis Oakley Jr.',plays:37,changes:13,agree:79,called:84,nc:72,published:true,link:'',league:'NBA'},
+  {away:'OKC',home:'IND',date:'06/22/2026',sc:'Daniel Foley',plays:41,changes:14,agree:78,called:83,nc:70,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'0:38',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'1:54',from:'IC',to:'CC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:4,time:'3:22',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:4,time:'4:47',from:'CC',to:'IC',type:'Foul: Offensive',sub:'Dislodge from Position'},
+    {q:3,time:'1:09',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:3,time:'3:38',from:'PIN',to:'INC',type:'Foul: Personal',sub:'Hand/Forearm to Front'},
+    {q:3,time:'6:14',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:3,time:'9:52',from:'CNC',to:'INC',type:'Foul: Loose Ball',sub:'Clamp-Lock-Hold'},
+    {q:2,time:'0:44',from:'PII',to:'INC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:2,time:'2:19',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+    {q:2,time:'5:33',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Pass & Crash'},
+    {q:1,time:'1:27',from:'CC',to:'IC',type:'Goaltending',sub:'Defensive Goaltending'},
+    {q:1,time:'4:48',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:1,time:'8:17',from:'PIN',to:'CNC',type:'Foul: Loose Ball',sub:'Contact to Arm'},
+  ]},
+  {away:'IND',home:'OKC',date:'06/19/2026',sc:'Michael Gargin',plays:38,changes:12,agree:80,called:85,nc:73,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'1:12',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'2:48',from:'IC',to:'CC',type:'Foul: Personal',sub:'Body Contact/Check'},
+    {q:3,time:'0:57',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Landing Area'},
+    {q:3,time:'3:31',from:'CC',to:'IC',type:'Foul: Offensive',sub:'Hook'},
+    {q:3,time:'7:06',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:2,time:'1:43',from:'PII',to:'CNC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:2,time:'4:18',from:'CNC',to:'INC',type:'Foul: Loose Ball',sub:'Dislodge from Position'},
+    {q:2,time:'8:52',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:1,time:'2:24',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:1,time:'5:37',from:'PIN',to:'INC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:1,time:'7:59',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Dislodge from Position'},
+    {q:1,time:'10:14',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Shooting Motion'},
+  ]},
+  {away:'OKC',home:'IND',date:'06/15/2026',sc:'Tucker Grady',plays:43,changes:16,agree:75,called:80,nc:68,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'0:29',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'1:44',from:'IC',to:'CC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:4,time:'3:08',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:4,time:'4:53',from:'CC',to:'IC',type:'Out of Bounds',sub:''},
+    {q:3,time:'0:38',from:'PII',to:'INC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:3,time:'2:17',from:'CNC',to:'INC',type:'Foul: Loose Ball',sub:'Clamp-Lock-Hold'},
+    {q:3,time:'5:42',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Pass & Crash'},
+    {q:3,time:'9:19',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+    {q:2,time:'1:06',from:'PIN',to:'CNC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:2,time:'3:48',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Body Follow-Through'},
+    {q:2,time:'7:23',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:1,time:'1:54',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Hand/Forearm to Front'},
+    {q:1,time:'4:29',from:'CC',to:'IC',type:'Goaltending',sub:'Defensive Goaltending'},
+    {q:1,time:'6:51',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'NBP: Drawn Into Air/Closeout'},
+    {q:1,time:'8:37',from:'PII',to:'INC',type:'Foul: Offensive',sub:'Dislodge from Position'},
+    {q:1,time:'10:44',from:'CNC',to:'INC',type:'Foul: Loose Ball',sub:'Contact to Arm'},
+  ]},
+  {away:'IND',home:'OKC',date:'06/12/2026',sc:'Curtis Oakley Jr.',plays:39,changes:13,agree:79,called:84,nc:72,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'0:51',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'2:27',from:'IC',to:'CC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:4,time:'4:03',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:3,time:'1:38',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:3,time:'5:14',from:'CC',to:'IC',type:'Foul: Offensive',sub:'Hook'},
+    {q:2,time:'0:49',from:'PII',to:'CNC',type:'Foul: Shooting',sub:'Body Follow-Through'},
+    {q:2,time:'3:22',from:'CNC',to:'INC',type:'Foul: Loose Ball',sub:'Dislodge from Position'},
+    {q:2,time:'6:57',from:'IC',to:'CC',type:'Travel',sub:'Pivot Foot'},
+    {q:2,time:'9:33',from:'PIN',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+    {q:1,time:'2:08',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:1,time:'4:44',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Pass & Crash'},
+    {q:1,time:'7:19',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Body Contact/Check'},
+    {q:1,time:'10:06',from:'CC',to:'IC',type:'Goaltending',sub:'Offensive Goaltending'},
+  ]},
+  {away:'MIN',home:'OKC',date:'05/27/2026',sc:'Daniel Foley',plays:37,changes:11,agree:81,called:86,nc:74,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'1:33',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'3:47',from:'IC',to:'CC',type:'Foul: Personal',sub:'Hand/Forearm to Front'},
+    {q:3,time:'0:52',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:3,time:'4:18',from:'CC',to:'IC',type:'Out of Bounds',sub:''},
+    {q:3,time:'8:44',from:'CNC',to:'INC',type:'Foul: Loose Ball',sub:'Clamp-Lock-Hold'},
+    {q:2,time:'1:29',from:'PII',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:2,time:'5:03',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Dislodge from Position'},
+    {q:2,time:'8:37',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:1,time:'2:14',from:'PIN',to:'CNC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:1,time:'5:48',from:'CNC',to:'INC',type:'Travel',sub:'Gather Step'},
+    {q:1,time:'9:22',from:'IC',to:'CC',type:'Foul: Loose Ball',sub:'Contact to Arm'},
+  ]},
+  {away:'OKC',home:'MIN',date:'05/24/2026',sc:'Tucker Grady',plays:40,changes:15,agree:76,called:81,nc:69,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'0:24',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'1:58',from:'IC',to:'CC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:4,time:'3:33',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:4,time:'5:09',from:'CC',to:'IC',type:'Foul: Offensive',sub:'Hook'},
+    {q:3,time:'0:44',from:'PII',to:'INC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:3,time:'2:19',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:3,time:'5:53',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:3,time:'9:28',from:'CNC',to:'INC',type:'Foul: Loose Ball',sub:'Dislodge from Position'},
+    {q:2,time:'1:03',from:'PIN',to:'CNC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:2,time:'3:38',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+    {q:2,time:'7:12',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Pass & Crash'},
+    {q:1,time:'0:57',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Body Follow-Through'},
+    {q:1,time:'3:31',from:'CC',to:'IC',type:'Goaltending',sub:'Defensive Goaltending'},
+    {q:1,time:'6:48',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Hand/Forearm to Front'},
+    {q:1,time:'10:22',from:'PII',to:'INC',type:'Foul: Loose Ball',sub:'Clamp-Lock-Hold'},
+  ]},
+  {away:'NYK',home:'IND',date:'05/26/2026',sc:'Michael Gargin',plays:35,changes:10,agree:83,called:88,nc:76,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'2:16',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'4:52',from:'IC',to:'CC',type:'Foul: Personal',sub:'Body Contact/Check'},
+    {q:3,time:'1:07',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:3,time:'5:43',from:'CC',to:'IC',type:'Foul: Offensive',sub:'Dislodge from Position'},
+    {q:2,time:'0:38',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:2,time:'3:14',from:'PIN',to:'INC',type:'Foul: Loose Ball',sub:'Clamp-Lock-Hold'},
+    {q:2,time:'6:49',from:'IC',to:'CC',type:'Travel',sub:'Pivot Foot'},
+    {q:1,time:'1:24',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+    {q:1,time:'4:58',from:'PII',to:'CNC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:1,time:'8:33',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Pass & Crash'},
+  ]},
+  {away:'IND',home:'NYK',date:'05/22/2026',sc:'Curtis Oakley Jr.',plays:33,changes:9,agree:84,called:89,nc:77,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'1:09',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'3:44',from:'IC',to:'CC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:3,time:'2:28',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:3,time:'7:13',from:'CC',to:'IC',type:'Out of Bounds',sub:''},
+    {q:2,time:'0:53',from:'PII',to:'INC',type:'Foul: Loose Ball',sub:'Dislodge from Position'},
+    {q:2,time:'4:27',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Hand/Forearm to Front'},
+    {q:1,time:'1:38',from:'PIN',to:'CNC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:1,time:'5:02',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:1,time:'8:47',from:'CNC',to:'INC',type:'Foul: Offensive',sub:'Hook'},
+  ]},
+  {away:'DEN',home:'OKC',date:'05/10/2026',sc:'Daniel Foley',plays:42,changes:15,agree:77,called:82,nc:70,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'0:33',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'2:08',from:'IC',to:'CC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:4,time:'3:44',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:4,time:'5:19',from:'CC',to:'IC',type:'Foul: Offensive',sub:'Hook'},
+    {q:3,time:'1:03',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:3,time:'3:38',from:'PII',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+    {q:3,time:'6:14',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:3,time:'9:49',from:'CNC',to:'INC',type:'Foul: Loose Ball',sub:'Clamp-Lock-Hold'},
+    {q:2,time:'0:48',from:'PIN',to:'CNC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:2,time:'3:23',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Body Contact/Check'},
+    {q:2,time:'7:58',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Dislodge from Position'},
+    {q:1,time:'2:07',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:1,time:'4:42',from:'CC',to:'IC',type:'Goaltending',sub:'Defensive Goaltending'},
+    {q:1,time:'7:17',from:'CNC',to:'INC',type:'Foul: Loose Ball',sub:'Contact to Arm'},
+    {q:1,time:'9:52',from:'PII',to:'INC',type:'Foul: Shooting',sub:'Arm Shooting Motion'},
+  ]},
+  {away:'CLE',home:'IND',date:'05/09/2026',sc:'Michael Gargin',plays:36,changes:11,agree:82,called:87,nc:75,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'1:16',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'3:52',from:'IC',to:'CC',type:'Foul: Personal',sub:'Hand/Forearm to Front'},
+    {q:3,time:'0:41',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Landing Area'},
+    {q:3,time:'4:17',from:'CC',to:'IC',type:'Out of Bounds',sub:''},
+    {q:3,time:'8:52',from:'CNC',to:'INC',type:'Foul: Loose Ball',sub:'Dislodge from Position'},
+    {q:2,time:'1:26',from:'PII',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:2,time:'5:03',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:2,time:'8:38',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+    {q:1,time:'2:14',from:'PIN',to:'CNC',type:'Foul: Offensive',sub:'Pass & Crash'},
+    {q:1,time:'5:49',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:1,time:'9:23',from:'IC',to:'CC',type:'Foul: Loose Ball',sub:'Contact to Arm'},
+  ]},
+  {away:'MEM',home:'OKC',date:'04/20/2026',sc:'Tucker Grady',plays:34,changes:10,agree:83,called:88,nc:76,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'2:04',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'4:39',from:'IC',to:'CC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:3,time:'1:18',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:3,time:'5:54',from:'CC',to:'IC',type:'Foul: Offensive',sub:'Dislodge from Position'},
+    {q:2,time:'0:33',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:2,time:'3:07',from:'PII',to:'CNC',type:'Foul: Loose Ball',sub:'Clamp-Lock-Hold'},
+    {q:2,time:'7:42',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:1,time:'1:27',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+    {q:1,time:'4:53',from:'PIN',to:'INC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:1,time:'8:28',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Hook'},
+  ]},
+  {away:'CLE',home:'OKC',date:'01/14/2026',sc:'Curtis Oakley Jr.',plays:38,changes:12,agree:81,called:86,nc:74,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'1:47',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'3:22',from:'IC',to:'CC',type:'Foul: Personal',sub:'Body Contact/Check'},
+    {q:3,time:'2:08',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:3,time:'5:43',from:'CC',to:'IC',type:'Out of Bounds',sub:''},
+    {q:2,time:'0:58',from:'CNC',to:'INC',type:'Foul: Loose Ball',sub:'Dislodge from Position'},
+    {q:2,time:'4:33',from:'PII',to:'INC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:2,time:'8:09',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:1,time:'1:44',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+    {q:1,time:'4:18',from:'PIN',to:'CNC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:1,time:'6:53',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Pass & Crash'},
+    {q:1,time:'9:28',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Body Follow-Through'},
+    {q:1,time:'11:03',from:'CC',to:'IC',type:'Goaltending',sub:'Defensive Goaltending'},
+  ]},
+  {away:'NYK',home:'BOS',date:'12/25/2025',sc:'Daniel Foley',plays:36,changes:11,agree:80,called:85,nc:73,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'0:52',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'2:28',from:'IC',to:'CC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:3,time:'1:13',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:3,time:'4:49',from:'CC',to:'IC',type:'Foul: Offensive',sub:'Hook'},
+    {q:3,time:'8:24',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:2,time:'1:08',from:'PII',to:'INC',type:'Foul: Personal',sub:'Hand/Forearm to Front'},
+    {q:2,time:'4:43',from:'IC',to:'CC',type:'Foul: Loose Ball',sub:'Dislodge from Position'},
+    {q:2,time:'8:19',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:1,time:'2:54',from:'PIN',to:'CNC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:1,time:'6:28',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:1,time:'10:03',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+  ]},
+  {away:'GSW',home:'LAL',date:'12/25/2025',sc:'Michael Gargin',plays:39,changes:14,agree:78,called:83,nc:71,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'0:36',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'2:11',from:'IC',to:'CC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:4,time:'3:47',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:4,time:'5:22',from:'CC',to:'IC',type:'Out of Bounds',sub:''},
+    {q:3,time:'1:07',from:'PII',to:'INC',type:'Foul: Loose Ball',sub:'Clamp-Lock-Hold'},
+    {q:3,time:'3:42',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:3,time:'7:18',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Dislodge from Position'},
+    {q:2,time:'0:53',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Body Contact/Check'},
+    {q:2,time:'3:28',from:'PIN',to:'CNC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:2,time:'7:04',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:1,time:'1:39',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Shooting Motion'},
+    {q:1,time:'4:14',from:'CC',to:'IC',type:'Goaltending',sub:'Defensive Goaltending'},
+    {q:1,time:'6:49',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+    {q:1,time:'9:24',from:'PII',to:'INC',type:'Foul: Offensive',sub:'Hook'},
+  ]},
+  {away:'OKC',home:'SAS',date:'10/24/2025',sc:'Tucker Grady',plays:31,changes:8,agree:86,called:90,nc:80,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'2:17',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:3,time:'4:52',from:'IC',to:'CC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:3,time:'8:28',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:2,time:'1:03',from:'CC',to:'IC',type:'Foul: Offensive',sub:'Dislodge from Position'},
+    {q:2,time:'5:39',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:1,time:'2:14',from:'PII',to:'CNC',type:'Foul: Loose Ball',sub:'Clamp-Lock-Hold'},
+    {q:1,time:'6:48',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:1,time:'10:23',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+  ]},
+  {away:'BOS',home:'NYK',date:'10/22/2025',sc:'Curtis Oakley Jr.',plays:37,changes:13,agree:79,called:84,nc:72,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'0:44',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'2:19',from:'IC',to:'CC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:4,time:'3:55',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:3,time:'1:30',from:'CC',to:'IC',type:'Out of Bounds',sub:''},
+    {q:3,time:'5:06',from:'CNC',to:'INC',type:'Foul: Loose Ball',sub:'Dislodge from Position'},
+    {q:3,time:'8:41',from:'PII',to:'INC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:2,time:'1:16',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Hook'},
+    {q:2,time:'4:52',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+    {q:2,time:'8:27',from:'PIN',to:'CNC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:1,time:'2:02',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:1,time:'5:37',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Body Follow-Through'},
+    {q:1,time:'7:12',from:'CC',to:'IC',type:'Goaltending',sub:'Defensive Goaltending'},
+    {q:1,time:'9:48',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Hand/Forearm to Front'},
+  ]},
 ];
 
 // TREND CHART
@@ -468,6 +778,52 @@ function renderRecent() {
   });
 }
 
+const RATING_COLORS = {
+  CC:  {bg:'#dcfce7',color:'#166534'},
+  IC:  {bg:'#fee2e2',color:'#991b1b'},
+  CNC: {bg:'#f3f4f6',color:'#374151'},
+  INC: {bg:'#fce7f3',color:'#9d174d'},
+  PII: {bg:'#fef9c3',color:'#854d0e'},
+  PIN: {bg:'#fff7ed',color:'#92400e'},
+};
+
+function rcBadge(code) {
+  const c = RATING_COLORS[code] || {bg:'#f3f4f6',color:'#374151'};
+  return `<span style="background:${c.bg};color:${c.color};padding:2px 6px;border-radius:4px;font-size:9.5px;font-weight:700">${code}</span>`;
+}
+
+function rcSummary(rc) {
+  if (!rc || !rc.length) return '<span style="color:#d1d5db">—</span>';
+  const counts = {};
+  rc.forEach(r => { const k=`${r.from}|||${r.to}`; counts[k]=(counts[k]||0)+1; });
+  return Object.entries(counts).slice(0,3).map(([k,n]) => {
+    const [from,to] = k.split('|||');
+    return `<span style="display:inline-flex;align-items:center;gap:3px">${rcBadge(from)}<span style="color:#c4c4c4;font-size:9px">→</span>${rcBadge(to)}${n>1?`<span style="color:#9ca3af;font-size:9px"> ×${n}</span>`:''}</span>`;
+  }).join('<span style="color:#e5e7eb;margin:0 3px">·</span>');
+}
+
+function openPanel(g) {
+  document.getElementById('rc-panel-title').innerHTML = `${logo(g.away,14)} ${g.away} <span style="color:#d1d5db;font-size:11px">@</span> ${logo(g.home,14)} ${g.home}`;
+  document.getElementById('rc-panel-meta').textContent = `${g.date} · ${g.sc} · ${(g.rc||[]).length} rating changes`;
+  const body = document.getElementById('rc-panel-body');
+  body.innerHTML = (g.rc||[]).map(r => `
+    <div class="rc-row">
+      <div class="rc-time">Q${r.q} ${r.time}</div>
+      <div class="rc-change">${rcBadge(r.from)}<span class="rc-arr">→</span>${rcBadge(r.to)}</div>
+      <div class="rc-detail">
+        <div class="rc-type">${r.type}</div>
+        ${r.sub?`<div class="rc-sub">${r.sub}</div>`:''}
+      </div>
+    </div>`).join('') || '<div style="color:#9ca3af;font-size:12px;padding:20px 0">No rating changes recorded</div>';
+  document.getElementById('rc-panel').classList.add('open');
+  document.getElementById('rc-overlay').classList.add('open');
+}
+
+function closePanel() {
+  document.getElementById('rc-panel').classList.remove('open');
+  document.getElementById('rc-overlay').classList.remove('open');
+}
+
 let activeLg = '';
 let analyticsOpen = true;
 
@@ -521,17 +877,18 @@ function renderTable() {
       ? '<span class="published-badge"><i class="ti ti-circle-check" style="font-size:9px"></i> Published</span>'
       : '<span class="complete-badge">Complete</span>';
     const leagueBadge = `<span style="padding:1px 6px;border-radius:20px;font-size:9.5px;font-weight:700;background:#f3f4f6;color:#6b7280;border:1px solid #e5e7eb;margin-left:6px">${g.league}</span>`;
-    tbody.innerHTML += `<tr style="cursor:pointer" onclick="if('${g.link}') location='${g.link}'">
+    tbody.innerHTML += `<tr style="cursor:pointer" onclick="openPanel(${JSON.stringify(g).replace(/"/g,'&quot;')})">
       <td><div class="tl">${logo(g.away)} ${g.away} <span style="color:#d1d5db;font-size:10px">@</span> ${logo(g.home)} ${g.home}${leagueBadge}</div></td>
       <td style="color:#9ca3af">${g.date}</td>
       <td style="font-weight:500">${g.sc}</td>
       <td style="text-align:center;font-weight:600">${g.plays}</td>
       <td style="text-align:center;color:${g.changes===0?'#16a34a':'#374151'};font-weight:600">${g.changes}</td>
+      <td><div style="display:flex;flex-wrap:wrap;gap:4px;align-items:center">${rcSummary(g.rc)}</div></td>
       <td style="text-align:center"><span class="agree-pill ${agreeClass}">${g.agree}%</span></td>
       <td>${status}</td>
     </tr>`;
   });
-  if (!games.length) tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:24px;color:#9ca3af;font-size:12px">No games found for this league</td></tr>`;
+  if (!games.length) tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:24px;color:#9ca3af;font-size:12px">No games found for this league</td></tr>`;
 }
 
 const PLAY_TYPE_STATS = [
