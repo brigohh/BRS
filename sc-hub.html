@@ -502,12 +502,97 @@ function renderTable() {
 }
 
 const PLAY_TYPE_STATS = [
-  { type:'Foul: Shooting', included:45, changed:20, subs:[
-    { name:'Driving Shot Attempt', included:18, changed:9 },
-    { name:'Jump Shot',            included:14, changed:6 },
-    { name:'Layup or Dunk',        included:9,  changed:3 },
-    { name:'Floater',              included:4,  changed:2 },
+  // ── Foul: Shooting ─────────────────────────────────────────
+  { section: 'Foul: Shooting' },
+  { type:'Driving Shot Attempt', included:18, changed:9, subs:[
+    { name:'Arm Follow-Through',           included:4, changed:3 },
+    { name:'Block-Charge Situation',       included:3, changed:2 },
+    { name:'Arm Shooting Motion',          included:3, changed:1 },
+    { name:'Legal Guarding Position',      included:2, changed:1 },
+    { name:'NBP: Drawn Into Air/Closeout', included:2, changed:1 },
+    { name:'Body Follow-Through',          included:2, changed:1 },
+    { name:'Vertical',                     included:1, changed:0 },
+    { name:'NBP: Kick-Out',               included:1, changed:0 },
+    { name:'A → B Movement',              included:0, changed:0 },
+    { name:'Body Shooting Motion',         included:0, changed:0 },
+    { name:'Head Contact',                 included:0, changed:0 },
+    { name:'High-Five',                    included:0, changed:0 },
+    { name:'NBP: Off-Arm Contact',         included:0, changed:0 },
+    { name:'NBP: Veer Into Defender',      included:0, changed:0 },
+    { name:'Other',                        included:0, changed:0 },
+    { name:'Restricted Area',              included:0, changed:0 },
   ]},
+  { type:'Jump Shot', included:14, changed:6, subs:[
+    { name:'Arm Follow-Through',           included:4, changed:2 },
+    { name:'Landing Area',                 included:3, changed:2 },
+    { name:'Legal Guarding Position',      included:2, changed:1 },
+    { name:'NBP: Rip-Through',            included:2, changed:1 },
+    { name:'Body Follow-Through',          included:2, changed:0 },
+    { name:'NBP: Kick-Out',               included:1, changed:0 },
+    { name:'Arm Shooting Motion',          included:0, changed:0 },
+    { name:'Body Shooting Motion',         included:0, changed:0 },
+    { name:'Head Contact',                 included:0, changed:0 },
+    { name:'High-Five',                    included:0, changed:0 },
+    { name:'NBP: Drawn Into Air/Closeout', included:0, changed:0 },
+    { name:'NBP: Launch Angle',           included:0, changed:0 },
+    { name:'Other',                        included:0, changed:0 },
+    { name:'Vertical',                     included:0, changed:0 },
+  ]},
+  { type:'Layup or Dunk', included:9, changed:3, subs:[
+    { name:'Block-Charge Situation',       included:3, changed:1 },
+    { name:'Arm Follow-Through',           included:2, changed:1 },
+    { name:'Restricted Area',              included:2, changed:1 },
+    { name:'Body Follow-Through',          included:1, changed:0 },
+    { name:'Legal Guarding Position',      included:1, changed:0 },
+    { name:'A → B Movement',              included:0, changed:0 },
+    { name:'Arm Shooting Motion',          included:0, changed:0 },
+    { name:'Body Shooting Motion',         included:0, changed:0 },
+    { name:'Head Contact',                 included:0, changed:0 },
+    { name:'High-Five',                    included:0, changed:0 },
+    { name:'NBP: Drawn Into Air/Closeout', included:0, changed:0 },
+    { name:'NBP: Kick-Out',               included:0, changed:0 },
+    { name:'NBP: Off-Arm Contact',         included:0, changed:0 },
+    { name:'NBP: Veer Into Defender',      included:0, changed:0 },
+    { name:'Other',                        included:0, changed:0 },
+    { name:'Vertical',                     included:0, changed:0 },
+  ]},
+  { type:'Floater', included:4, changed:2, subs:[
+    { name:'Arm Follow-Through',           included:2, changed:1 },
+    { name:'Block-Charge Situation',       included:1, changed:1 },
+    { name:'NBP: Drawn Into Air/Closeout', included:1, changed:0 },
+    { name:'A → B Movement',              included:0, changed:0 },
+    { name:'Arm Shooting Motion',          included:0, changed:0 },
+    { name:'Body Follow-Through',          included:0, changed:0 },
+    { name:'Body Shooting Motion',         included:0, changed:0 },
+    { name:'Head Contact',                 included:0, changed:0 },
+    { name:'High-Five',                    included:0, changed:0 },
+    { name:'Legal Guarding Position',      included:0, changed:0 },
+    { name:'NBP: Kick-Out',               included:0, changed:0 },
+    { name:'NBP: Off-Arm Contact',         included:0, changed:0 },
+    { name:'NBP: Veer Into Defender',      included:0, changed:0 },
+    { name:'Other',                        included:0, changed:0 },
+    { name:'Restricted Area',              included:0, changed:0 },
+    { name:'Vertical',                     included:0, changed:0 },
+  ]},
+  { type:'Post Shot', included:3, changed:1, subs:[
+    { name:'Body Shooting Motion',         included:1, changed:1 },
+    { name:'Legal Guarding Position',      included:1, changed:0 },
+    { name:'Body Follow-Through',          included:1, changed:0 },
+    { name:'A → B Movement',              included:0, changed:0 },
+    { name:'Arm Follow-Through',           included:0, changed:0 },
+    { name:'Arm Shooting Motion',          included:0, changed:0 },
+    { name:'Block-Charge Situation',       included:0, changed:0 },
+    { name:'Head Contact',                 included:0, changed:0 },
+    { name:'High-Five',                    included:0, changed:0 },
+    { name:'NBP: Drawn Into Air/Closeout', included:0, changed:0 },
+    { name:'NBP: Kick-Out',               included:0, changed:0 },
+    { name:'NBP: Off-Arm Contact',         included:0, changed:0 },
+    { name:'NBP: Veer Into Defender',      included:0, changed:0 },
+    { name:'Other',                        included:0, changed:0 },
+    { name:'Restricted Area',              included:0, changed:0 },
+    { name:'Vertical',                     included:0, changed:0 },
+  ]},
+  // ── Other play types ───────────────────────────────────────
   { type:'Foul: Offensive', included:29, changed:11, subs:[
     { name:'Dislodge from Position', included:10, changed:5 },
     { name:'Hook',                   included:8,  changed:3 },
@@ -548,10 +633,17 @@ function ptColor(pct) {
 
 function renderPlayTypeTable() {
   const tbody = document.getElementById('pt-tbody');
-  PLAY_TYPE_STATS.forEach((pt, ptIdx) => {
-    const pct = Math.round(pt.changed / pt.included * 100);
+  let ptIdx = 0;
+  PLAY_TYPE_STATS.forEach(pt => {
+    if (pt.section) {
+      const hr = document.createElement('tr');
+      hr.innerHTML = `<td colspan="4" style="padding:10px 14px 4px;font-size:9.5px;font-weight:700;letter-spacing:.6px;color:#9ca3af;text-transform:uppercase;background:#f8fafc;border-top:1px solid #e5e7eb">${pt.section}</td>`;
+      tbody.appendChild(hr);
+      return;
+    }
+    const pct = pt.included > 0 ? Math.round(pt.changed / pt.included * 100) : 0;
     const col = ptColor(pct);
-    const groupId = `ptg-${ptIdx}`;
+    const groupId = `ptg-${ptIdx++}`;
     const tr = document.createElement('tr');
     tr.className = 'pt-type-row';
     tr.innerHTML = `
@@ -570,19 +662,19 @@ function renderPlayTypeTable() {
     };
     tbody.appendChild(tr);
     pt.subs.forEach(sub => {
-      const spct = Math.round(sub.changed / sub.included * 100);
-      const scol = ptColor(spct);
+      const spct = sub.included > 0 ? Math.round(sub.changed / sub.included * 100) : 0;
+      const scol = sub.included > 0 ? ptColor(spct) : '#d1d5db';
       const sr = document.createElement('tr');
       sr.className = `pt-sub-row ${groupId} hidden`;
       sr.innerHTML = `
-        <td style="padding:7px 14px 7px 30px">${sub.name}</td>
-        <td style="padding:7px 14px;text-align:center;color:#9ca3af">${sub.included}</td>
-        <td style="padding:7px 14px;text-align:center;font-weight:600;color:${scol}">${sub.changed}</td>
-        <td style="padding:7px 14px">
-          <div class="pt-rate-cell">
+        <td style="padding:6px 14px 6px 30px;color:${sub.included===0?'#9ca3af':'inherit'}">${sub.name}</td>
+        <td style="padding:6px 14px;text-align:center;color:#9ca3af">${sub.included || '—'}</td>
+        <td style="padding:6px 14px;text-align:center;font-weight:600;color:${scol}">${sub.included > 0 ? sub.changed : '—'}</td>
+        <td style="padding:6px 14px">
+          ${sub.included > 0 ? `<div class="pt-rate-cell">
             <span class="pt-pct" style="color:${scol};font-size:10.5px">${spct}%</span>
             <div class="pt-bar-wrap"><div class="pt-bar" style="width:${spct}%;background:${scol}"></div></div>
-          </div>
+          </div>` : '<span style="color:#d1d5db;font-size:10px">—</span>'}
         </td>`;
       tbody.appendChild(sr);
     });
