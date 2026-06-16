@@ -727,6 +727,7 @@ function drawChart() {
     html += `<circle cx="${x}" cy="${yScale(g.called)}" r="3.5" fill="#f472b6"/>`;
     html += `<circle cx="${x}" cy="${yScale(g.nc)}" r="3" fill="#fce7f3" stroke="#fbb6ce" stroke-width="1"/>`;
     html += `<circle cx="${x}" cy="${yScale(g.called)}" r="12" fill="transparent" onmouseenter="showChartTip(event,${i})" onmouseleave="hideChartTip()"/>`;
+    html += `<circle cx="${x}" cy="${yScale(g.nc)}" r="12" fill="transparent" onmouseenter="showChartTip(event,${i})" onmouseleave="hideChartTip()"/>`;
   });
 
   svg.innerHTML = html;
@@ -1115,13 +1116,13 @@ const PT_TRENDS = {
 };
 
 const PT_SIDEBAR = [
-  {name:'Foul: Shooting',   pct:44, frac:'20/45'},
-  {name:'Foul: Offensive',  pct:38, frac:'11/29'},
-  {name:'Foul: Loose Ball', pct:31, frac:'8/26'},
-  {name:'Foul: Personal',   pct:26, frac:'10/38'},
-  {name:'Out of Bounds',    pct:25, frac:'5/20'},
-  {name:'Travel',           pct:17, frac:'3/18'},
-  {name:'Goaltending',      pct:14, frac:'2/14'},
+  {name:'Foul: Shooting',   pct:44, frac:'20/45', frac10:'9/21'},
+  {name:'Foul: Offensive',  pct:38, frac:'11/29', frac10:'5/13'},
+  {name:'Foul: Loose Ball', pct:31, frac:'8/26',  frac10:'4/12'},
+  {name:'Foul: Personal',   pct:26, frac:'10/38', frac10:'4/17'},
+  {name:'Out of Bounds',    pct:25, frac:'5/20',  frac10:'2/9'},
+  {name:'Travel',           pct:17, frac:'3/18',  frac10:'1/8'},
+  {name:'Goaltending',      pct:14, frac:'2/14',  frac10:'1/6'},
 ];
 
 function sparkline(data, color) {
@@ -1185,13 +1186,14 @@ function renderPtSidebar() {
       </div>`;
     } else {
       return `<div class="play-type-group">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
           <div class="play-type-name">${pt.name}</div>
           <div style="display:flex;align-items:center;gap:8px">
             ${sparkline(trend, col10)}
             <div style="font-size:10px;color:${col10};font-weight:700">${avg10}%</div>
           </div>
         </div>
+        <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:${avg10}%;background:${col10}"></div></div><div class="play-pct" style="color:${textCol10}">${pt.frac10}</div></div>
       </div>`;
     }
   }).join('');
