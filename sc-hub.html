@@ -85,6 +85,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .milestone-val{font-size:20px;font-weight:800;color:#111827;line-height:1.1}
 .milestone-sub{font-size:11px;color:#9ca3af;margin-top:3px}
 /* BOTTOM TABLE */
+.lg-filter-bar{display:flex;align-items:center;gap:6px;margin-bottom:12px}
+.lg-chip{padding:5px 14px;border:1px solid #d1d5db;border-radius:20px;font-size:11.5px;font-weight:600;background:#fff;color:#6b7280;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .12s}
+.lg-chip:hover{background:#f3f4f6}
+.lg-chip.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
+.lg-chip img{width:14px;height:14px;object-fit:contain}
 .bottom-card{background:#fff;border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,.07);border:1px solid #e5e7eb;overflow:hidden}
 .bottom-card table{width:100%;border-collapse:collapse}
 .bottom-card thead{background:#f8fafc}
@@ -267,7 +272,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   </div>
 
   <!-- GAME BY GAME TABLE -->
-  <div class="section-title">All second checked games</div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+    <div class="section-title" style="margin-bottom:0">All published games</div>
+    <div class="lg-filter-bar" style="margin-bottom:0">
+      <div class="lg-chip on" data-lg="" onclick="lgFilter(this)">All</div>
+      <div class="lg-chip" data-lg="NBA" onclick="lgFilter(this)"><img src="nba-logo.svg" onerror="this.style.display='none'"> NBA</div>
+      <div class="lg-chip" data-lg="WNBA" onclick="lgFilter(this)">WNBA</div>
+      <div class="lg-chip" data-lg="G-League" onclick="lgFilter(this)">G-League</div>
+      <div class="lg-chip" data-lg="BAL" onclick="lgFilter(this)">BAL</div>
+    </div>
+  </div>
   <div class="bottom-card">
     <table>
       <thead>
@@ -305,16 +319,16 @@ function logo(abbr, size=16) {
 }
 
 const SC_GAMES = [
-  {away:'IND',home:'NYL',date:'06/06/2026',sc:'Daniel Foley',plays:31,changes:11,agree:83,called:87,nc:76,published:false,link:''},
-  {away:'CON',home:'CHI',date:'06/05/2026',sc:'Michael Gargin',plays:27,changes:8,agree:88,called:92,nc:81,published:true,link:''},
-  {away:'LVA',home:'LAS',date:'06/02/2026',sc:'Curtis Oakley Jr.',plays:34,changes:12,agree:83,called:88,nc:75,published:true,link:''},
-  {away:'ATL',home:'PDX',date:'05/29/2026',sc:'Tucker Grady',plays:25,changes:7,agree:80,called:85,nc:72,published:true,link:''},
-  {away:'PHX',home:'NYL',date:'05/29/2026',sc:'Michael Gargin',plays:29,changes:11,agree:71,called:76,nc:63,published:true,link:''},
-  {away:'TOR',home:'CHI',date:'05/27/2026',sc:'Daniel Foley',plays:33,changes:10,agree:83,called:87,nc:77,published:true,link:'index.html'},
-  {away:'DAL',home:'NYL',date:'05/24/2026',sc:'Tucker Grady',plays:28,changes:9,agree:90,called:93,nc:85,published:true,link:''},
-  {away:'GSV',home:'IND',date:'05/22/2026',sc:'Michael Gargin',plays:32,changes:10,agree:82,called:87,nc:74,published:true,link:''},
-  {away:'LAS',home:'PHX',date:'05/21/2026',sc:'Tucker Grady',plays:26,changes:11,agree:71,called:75,nc:64,published:true,link:''},
-  {away:'CHI',home:'MIN',date:'05/17/2026',sc:'Daniel Foley',plays:25,changes:7,agree:80,called:84,nc:73,published:true,link:''},
+  {away:'IND',home:'NYL',date:'06/06/2026',sc:'Daniel Foley',plays:31,changes:11,agree:83,called:87,nc:76,published:false,link:'',league:'WNBA'},
+  {away:'CON',home:'CHI',date:'06/05/2026',sc:'Michael Gargin',plays:27,changes:8,agree:88,called:92,nc:81,published:true,link:'',league:'WNBA'},
+  {away:'LVA',home:'LAS',date:'06/02/2026',sc:'Curtis Oakley Jr.',plays:34,changes:12,agree:83,called:88,nc:75,published:true,link:'',league:'WNBA'},
+  {away:'ATL',home:'PDX',date:'05/29/2026',sc:'Tucker Grady',plays:25,changes:7,agree:80,called:85,nc:72,published:true,link:'',league:'WNBA'},
+  {away:'PHX',home:'NYL',date:'05/29/2026',sc:'Michael Gargin',plays:29,changes:11,agree:71,called:76,nc:63,published:true,link:'',league:'WNBA'},
+  {away:'TOR',home:'CHI',date:'05/27/2026',sc:'Daniel Foley',plays:33,changes:10,agree:83,called:87,nc:77,published:true,link:'index.html',league:'WNBA'},
+  {away:'DAL',home:'NYL',date:'05/24/2026',sc:'Tucker Grady',plays:28,changes:9,agree:90,called:93,nc:85,published:true,link:'',league:'WNBA'},
+  {away:'GSV',home:'IND',date:'05/22/2026',sc:'Michael Gargin',plays:32,changes:10,agree:82,called:87,nc:74,published:true,link:'',league:'WNBA'},
+  {away:'LAS',home:'PHX',date:'05/21/2026',sc:'Tucker Grady',plays:26,changes:11,agree:71,called:75,nc:64,published:true,link:'',league:'WNBA'},
+  {away:'CHI',home:'MIN',date:'05/17/2026',sc:'Daniel Foley',plays:25,changes:7,agree:80,called:84,nc:73,published:true,link:'',league:'WNBA'},
 ];
 
 // TREND CHART
@@ -379,16 +393,28 @@ function renderRecent() {
   });
 }
 
+let activeLg = '';
+
+function lgFilter(el) {
+  document.querySelectorAll('.lg-chip').forEach(c => c.classList.remove('on'));
+  el.classList.add('on');
+  activeLg = el.dataset.lg;
+  renderTable();
+}
+
 // BOTTOM TABLE
 function renderTable() {
   const tbody = document.getElementById('sc-tbody');
-  SC_GAMES.forEach(g => {
+  tbody.innerHTML = '';
+  const games = activeLg ? SC_GAMES.filter(g => g.league === activeLg) : SC_GAMES;
+  games.forEach(g => {
     const agreeClass = g.agree >= 85 ? 'ap-hi' : g.agree >= 75 ? 'ap-mid' : 'ap-lo';
     const status = g.published
       ? '<span class="published-badge"><i class="ti ti-circle-check" style="font-size:9px"></i> Published</span>'
       : '<span class="complete-badge">Complete</span>';
+    const leagueBadge = `<span style="padding:1px 6px;border-radius:20px;font-size:9.5px;font-weight:700;background:#f3f4f6;color:#6b7280;border:1px solid #e5e7eb;margin-left:6px">${g.league}</span>`;
     tbody.innerHTML += `<tr style="cursor:pointer" onclick="if('${g.link}') location='${g.link}'">
-      <td><div class="tl">${logo(g.away)} ${g.away} <span style="color:#d1d5db;font-size:10px">@</span> ${logo(g.home)} ${g.home}</div></td>
+      <td><div class="tl">${logo(g.away)} ${g.away} <span style="color:#d1d5db;font-size:10px">@</span> ${logo(g.home)} ${g.home}${leagueBadge}</div></td>
       <td style="color:#9ca3af">${g.date}</td>
       <td style="font-weight:500">${g.sc}</td>
       <td style="text-align:center;font-weight:600">${g.plays}</td>
@@ -397,6 +423,7 @@ function renderTable() {
       <td>${status}</td>
     </tr>`;
   });
+  if (!games.length) tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:24px;color:#9ca3af;font-size:12px">No games found for this league</td></tr>`;
 }
 
 const PLAY_TYPE_STATS = [
