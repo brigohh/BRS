@@ -86,10 +86,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .milestone-sub{font-size:11px;color:#9ca3af;margin-top:3px}
 /* BOTTOM TABLE */
 .lg-filter-bar{display:flex;align-items:center;gap:6px;margin-bottom:12px}
-.lg-chip{padding:5px 14px;border:1px solid #d1d5db;border-radius:20px;font-size:11.5px;font-weight:600;background:#fff;color:#6b7280;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .12s}
-.lg-chip:hover{background:#f3f4f6}
+.lg-chip{padding:6px 16px;border:1px solid #d1d5db;border-radius:20px;font-size:11.5px;font-weight:600;background:#fff;color:#6b7280;cursor:pointer;display:flex;align-items:center;gap:8px;transition:all .12s;height:36px}
+.lg-chip:hover{background:#f3f4f6;border-color:#c0c8d4}
 .lg-chip.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
-.lg-chip img{width:14px;height:14px;object-fit:contain}
+.lg-chip img{width:20px;height:20px;object-fit:contain}
 .lg-filter-top{display:flex;align-items:center;gap:8px;margin-bottom:20px;padding-top:4px}
 .analytics-toggle{display:flex;align-items:center;gap:6px;padding:7px 14px;border:1px solid #e5e7eb;border-radius:8px;font-size:12px;font-weight:600;color:#6b7280;background:#fff;cursor:pointer;margin-bottom:16px;width:fit-content}
 .analytics-toggle:hover{background:#f9fafb}
@@ -155,8 +155,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
     <div class="lg-chip" data-lg="NBA" onclick="lgFilter(this)">
       <img src="nba-logo.svg" onerror="this.style.display='none'"> NBA
     </div>
-    <div class="lg-chip" data-lg="G-League" onclick="lgFilter(this)"><img src="g league logo.png" onerror="this.style.display='none'" style="width:14px;height:14px;object-fit:contain"> G-League</div>
-    <div class="lg-chip" data-lg="BAL" onclick="lgFilter(this)"><img src="basketball-africa-league-logo-png_seeklogo-510470.png" onerror="this.style.display='none'" style="width:14px;height:14px;object-fit:contain"> BAL</div>
+    <div class="lg-chip" data-lg="G-League" onclick="lgFilter(this)"><img src="g league logo.png" onerror="this.style.display='none'"> G-League</div>
+    <div class="lg-chip" data-lg="BAL" onclick="lgFilter(this)"><img src="basketball-africa-league-logo-png_seeklogo-510470.png" onerror="this.style.display='none'"> BAL</div>
   </div>
 
   <!-- ANALYTICS TOGGLE -->
