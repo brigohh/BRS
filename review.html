@@ -28,139 +28,121 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .nav-dd-item{display:block;padding:9px 16px;font-size:11px;font-weight:500;color:#374151;text-decoration:none;white-space:nowrap;cursor:pointer}
 .nav-dd-item:hover{background:#f0f2f5;color:#1a3a6b}
 
+/* SUBNAV */
+.subnav{background:#fff;border-bottom:1px solid #e5e7eb;height:40px;display:flex;padding:0 20px;flex-shrink:0}
+.st{padding:0 14px;font-size:12px;font-weight:500;color:#6b7280;cursor:pointer;display:flex;align-items:center;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.st.on{color:#1a3a6b;border-bottom-color:#1a3a6b;font-weight:600}
+.st:hover:not(.on){color:#111827}
+
 /* GAME HEADER */
 .game-hdr{background:#fff;border-bottom:1px solid #e5e7eb;padding:10px 20px;display:flex;align-items:center;gap:14px;flex-shrink:0}
 .gh-title{font-size:13px;font-weight:600;display:flex;align-items:center;gap:4px;flex-wrap:nowrap;white-space:nowrap}
 .gh-date{font-size:11px;color:#6b7280;margin-top:2px}
 .gh-sep{width:1px;height:28px;background:#e5e7eb}
+.stats{display:flex;gap:7px}
+.stat{padding:5px 12px;border-radius:8px;text-align:center;min-width:52px}
+.sn{font-size:17px;font-weight:600;line-height:1}
+.sl{font-size:10px;line-height:1.3;margin-top:2px}
+.s-g{background:#dcfce7;color:#166534}
+.s-r{background:#fee2e2;color:#991b1b}
+.s-t{background:#ccfbf1;color:#0f766e}
 .gh-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.ncc-badge{background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:5px 12px;font-size:11px;color:#0369a1;display:flex;gap:6px;align-items:center}
 
 /* MAIN LAYOUT */
 .main{flex:1;display:flex;min-height:0;overflow:hidden;padding:14px 18px;gap:14px;background:#f3f4f6}
 
-/* LEFT PANEL — SMART QUEUE */
-.sq-panel{width:260px;flex-shrink:0;background:#fff;border:1px solid #e5e7eb;border-radius:10px;display:flex;flex-direction:column;overflow:hidden}
-.sq-header{padding:10px 12px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.sq-header-label{font-size:10px;font-weight:700;letter-spacing:.6px;color:#6b7280}
-.sq-play-btn{padding:3px 10px;background:#1a3a6b;color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:4px}
-.sq-play-btn:hover{background:#15306e}
-.sq-play-btn.active{background:#dc2626}
-.sq-list{flex:1;overflow-y:auto}
-.sq-poss{border-bottom:1px solid #f3f4f6}
-.sq-poss-hdr{padding:8px 12px;display:flex;align-items:center;gap:7px;cursor:pointer;font-size:11.5px;font-weight:600;color:#374151;background:#f9fafb;user-select:none}
-.sq-poss-hdr:hover{background:#f3f4f6}
-.sq-poss-hdr.open{background:#eff6ff;color:#1a3a6b}
-.sq-poss-caret{font-size:9px;color:#9ca3af;margin-left:auto;transition:transform .15s}
-.sq-poss-hdr.open .sq-poss-caret{transform:rotate(90deg)}
-.sq-poss-team{font-size:10px;font-weight:700;padding:1px 5px;border-radius:4px;background:#e5e7eb;color:#374151}
-.sq-poss-hdr.open .sq-poss-team{background:#dbeafe;color:#1e40af}
-.sq-events{display:none}
-.sq-events.open{display:block}
-.sq-event{padding:7px 12px 7px 16px;display:flex;align-items:center;gap:7px;cursor:pointer;border-left:3px solid transparent;border-bottom:1px solid #f9fafb;background:#fff}
-.sq-event:hover{background:#f9fafb}
-.sq-event.sel{background:#eff6ff;border-left-color:#1a3a6b}
-.sq-badge{padding:1px 6px;border-radius:4px;font-size:10px;font-weight:700;white-space:nowrap;flex-shrink:0}
-.sq-badge-shot{background:#dbeafe;border:1px solid #93c5fd;color:#1e40af}
-.sq-badge-foul{background:#fee2e2;border:1px solid #fca5a5;color:#991b1b}
-.sq-badge-drive{background:#f3e8ff;border:1px solid #d8b4fe;color:#6b21a8}
-.sq-badge-rebound{background:#ccfbf1;border:1px solid #5eead4;color:#0f766e}
-.sq-badge-oob{background:#f3f4f6;border:1px solid #d1d5db;color:#6b7280}
-.sq-badge-travel{background:#fff7ed;border:1px solid #fdba74;color:#c2410c}
-.sq-evt-time{font-size:10px;color:#9ca3af;white-space:nowrap}
-.sq-evt-player{font-size:11.5px;color:#374151;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* LEFT PANEL */
+.lp{width:260px;flex-shrink:0;background:#fff;border:1px solid #e5e7eb;border-radius:10px;display:flex;flex-direction:column;overflow:hidden}
+.lp-filterbar{padding:8px 10px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;gap:5px;flex-shrink:0;flex-wrap:wrap}
+.filter-ev-btn{padding:3px 9px;font-size:11px;border:1px solid #d1d5db;border-radius:6px;background:#fff;color:#374151;cursor:pointer;font-weight:500;white-space:nowrap}
+.filter-ev-btn:hover{background:#f9fafb}
+.q-tog{padding:3px 8px;font-size:11px;border:1px solid #d1d5db;border-radius:5px;background:#fff;color:#374151;cursor:pointer;font-weight:600}
+.q-tog:hover{background:#f9fafb}
+.q-tog.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
+.buf-label{font-size:10.5px;color:#6b7280;margin-left:4px;white-space:nowrap}
+.poss-list{flex:1;overflow-y:auto}
+.poss-item{border-bottom:1px solid #f3f4f6}
+.poss-hdr{padding:7px 10px;display:flex;align-items:center;gap:6px;cursor:pointer;font-size:11.5px;font-weight:600;color:#374151;background:#f9fafb;user-select:none;transition:background .1s}
+.poss-hdr:hover{background:#f3f4f6}
+.poss-num{color:#9ca3af;font-size:10.5px;font-weight:600;min-width:16px}
+.poss-team{color:#1a3a6b;font-weight:700}
+.poss-time{flex:1;color:#374151}
+.poss-warn{color:#f59e0b;font-size:12px;flex-shrink:0}
+.poss-chevron{color:#9ca3af;font-size:11px;transition:transform .15s;flex-shrink:0}
+.poss-item.open .poss-chevron{transform:rotate(90deg)}
+.poss-events{display:none;padding:2px 0}
+.poss-item.open .poss-events{display:block}
+.ev-row{padding:4px 12px 4px 20px;font-size:11.5px;cursor:default;display:flex;align-items:center;gap:4px;line-height:1.3}
+.ev-row.reviewable{cursor:pointer;color:#2563eb}
+.ev-row.reviewable:hover{background:#eff6ff}
+.ev-row.whistled{color:#16a34a;font-weight:600}
+.ev-row.plain{color:#374151}
+.ev-row.sel{border-left:3px solid #1a3a6b;background:#eff6ff;padding-left:17px}
+.ev-check{flex-shrink:0}
+.ev-warn{flex-shrink:0;color:#f59e0b;font-size:11px}
+.lp-footer{padding:10px;border-top:1px solid #e5e7eb;flex-shrink:0}
+.submit-qi-btn{width:100%;padding:8px;background:#1a3a6b;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.4px}
+.submit-qi-btn:hover{background:#15306e}
 
 /* CENTER PANEL */
-.center-panel{flex:1;min-width:0;display:flex;flex-direction:column;overflow:hidden;background:#fff;border:1px solid #e5e7eb;border-radius:10px}
-.center-scroll{flex:1;overflow-y:auto;display:flex;flex-direction:column}
-
-/* EVENT HEADER (band1) */
-.band1{background:#fff;border-bottom:1px solid #e5e7eb;padding:12px 16px;flex-shrink:0}
-.b1-r1{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:5px}
-.ev-badge{padding:2px 9px;border-radius:6px;font-size:11px;font-weight:600;background:#f3f4f6;border:1px solid #e5e7eb;color:#6b7280;white-space:nowrap}
-.b1-time{font-size:11px;color:#6b7280}
-.b1-seg{font-size:11px;color:#9ca3af}
-.b1-desc{font-size:14px;font-weight:600;color:#111827;margin-bottom:6px}
-.b1-r2{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.b1-players{font-size:13px}
-.b1-players b{font-weight:600;color:#1a3a6b}
-.vsep{width:1px;height:14px;background:#e5e7eb}
-.b1-sub{font-size:12px;color:#9ca3af;font-style:italic}
-.called-pill{padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.3px;border:1px solid}
-.called-c{background:#dcfce7;border-color:#86efac;color:#166534}
-.called-nc{background:#f3f4f6;border-color:#d1d5db;color:#6b7280}
-.rated-badge{padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;background:#dbeafe;border:1px solid #93c5fd;color:#1e40af}
-
-/* PLACEHOLDER */
-.center-placeholder{flex:1;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-size:13px;font-style:italic;padding:40px}
-
-/* INFRACTION TABLE */
-.infraction-section{padding:14px 16px;border-bottom:1px solid #f3f4f6}
-.inf-section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.inf-section-title{font-size:10px;font-weight:700;letter-spacing:.5px;color:#6b7280}
-.inf-add-btn{padding:2px 8px;border:1px solid #d1d5db;border-radius:6px;font-size:10px;font-weight:600;background:#f9fafb;color:#6b7280;cursor:pointer;display:flex;align-items:center;gap:3px}
-.inf-add-btn:hover{background:#eff6ff;border-color:#bfdbfe;color:#1d4ed8}
-.infraction-table{width:100%;border-collapse:collapse;font-size:12px;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden}
-.infraction-table th{padding:7px 10px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.4px;color:#9ca3af;background:#f9fafb;border-bottom:1px solid #e5e7eb;white-space:nowrap}
-.infraction-table td{padding:8px 10px;border-bottom:1px solid #f3f4f6;vertical-align:middle;cursor:pointer}
-.infraction-table tbody tr:last-child td{border-bottom:none}
-.infraction-table tbody tr:hover td{background:#f9fafb}
-.infraction-table tbody tr.sel td{background:#eff6ff}
-.infraction-table tbody tr.sel td:first-child{border-left:3px solid #1a3a6b}
-.inf-type-cell{font-weight:500;color:#111827}
-.inf-onball{text-align:center}
-.inf-onball-yes{display:inline-block;width:14px;height:14px;border-radius:50%;background:#dcfce7;border:1px solid #86efac}
-
-/* SAVED RATING CARD */
-.saved-ratings-area{padding:0 16px 12px}
-.saved-rating-card{background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:9px 12px;margin-bottom:8px;display:flex;align-items:center;gap:8px}
-.src-rating{padding:2px 8px;border-radius:6px;font-size:11px;font-weight:700}
-.src-infraction{background:#fee2e2;border:1px solid #fca5a5;color:#991b1b}
-.src-pi-lean{background:#fff7ed;border:1px solid #fdba74;color:#c2410c}
-.src-pi-no{background:#eef2ff;border:1px solid #c7d2fe;color:#4338ca}
-.src-no-infraction{background:#dcfce7;border:1px solid #86efac;color:#166534}
-.src-type{font-size:12px;color:#374151;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.src-actions{display:flex;gap:4px;flex-shrink:0}
-.src-btn{background:none;border:none;color:#9ca3af;cursor:pointer;padding:2px 4px;font-size:13px}
-.src-btn:hover{color:#374151}
-
-/* RATING FORM */
-.rating-form-area{padding:14px 16px;border-top:1px solid #e5e7eb;display:none}
-.rating-form-area.open{display:block}
-.rating-section{margin-bottom:16px}
-.rating-section-label{font-size:10px;font-weight:700;letter-spacing:.6px;color:#6b7280;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #f3f4f6}
-.classification-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
-.cf-field{display:flex;flex-direction:column;gap:3px}
-.cf-label{font-size:10px;font-weight:600;color:#9ca3af;letter-spacing:.3px}
-.cf-select{width:100%;height:30px;font-size:12px;padding:0 8px;border:1px solid #d1d5db;border-radius:6px;background:#fff;color:#111827;cursor:pointer}
-.cf-select:focus{outline:none;border-color:#1a3a6b}
-.rating-btns{display:flex;gap:8px}
-.rating-btn{flex:1;padding:10px;border:2px solid;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;text-align:center;background:#f9fafb;transition:all .12s}
-.rating-btn-infraction{border-color:#fca5a5;color:#991b1b}
-.rating-btn-infraction:hover,.rating-btn-infraction.sel{background:#fee2e2;border-color:#f87171}
-.rating-btn-pi-lean{border-color:#fdba74;color:#c2410c}
-.rating-btn-pi-lean:hover,.rating-btn-pi-lean.sel{background:#fff7ed;border-color:#f97316}
-.rating-btn-pi-no{border-color:#c7d2fe;color:#4338ca}
-.rating-btn-pi-no:hover,.rating-btn-pi-no.sel{background:#eef2ff;border-color:#818cf8}
-.rating-btn-no-infraction{border-color:#86efac;color:#166534}
-.rating-btn-no-infraction:hover,.rating-btn-no-infraction.sel{background:#dcfce7;border-color:#4ade80}
-.comment-editor{min-height:70px;border:1px solid #d1d5db;border-radius:8px;padding:8px 10px;font-size:12px;line-height:1.6;outline:none;color:#111827;background:#fff}
-.comment-editor:focus{border-color:#1a3a6b}
-.comment-editor:empty:before{content:attr(data-placeholder);color:#9ca3af;font-style:italic;pointer-events:none}
-.notes-textarea{width:100%;resize:vertical;min-height:48px;border:1px solid #e5e7eb;border-radius:8px;padding:7px 10px;font-size:11.5px;color:#6b7280;font-style:italic;outline:none;font-family:inherit;background:#f9fafb;margin-top:8px}
-.notes-textarea:focus{border-color:#d1d5db}
-.notes-textarea::placeholder{color:#d1d5db;font-style:italic}
-.form-footer{display:flex;align-items:center;gap:8px;margin-top:12px}
-.btn-save{padding:7px 18px;background:#1a3a6b;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer}
-.btn-save:hover{background:#15306e}
-.btn-flag{padding:7px 14px;border:1px solid #d1d5db;border-radius:8px;font-size:12px;font-weight:500;background:#fff;color:#374151;cursor:pointer}
-.btn-flag:hover{background:#f9fafb}
-.btn-skip{background:none;border:none;font-size:12px;color:#9ca3af;cursor:pointer;padding:7px 10px}
-.btn-skip:hover{color:#374151}
+.cp{flex:1;display:flex;flex-direction:column;overflow:hidden;background:#fff;border:1px solid #e5e7eb;border-radius:10px}
+.cp-empty{flex:1;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-size:13px;font-style:italic}
+.inf-table-wrap{flex-shrink:0;border-bottom:1px solid #e5e7eb}
+.inf-table-hdr{padding:8px 14px;display:flex;align-items:center;justify-content:space-between;background:#f9fafb;border-bottom:1px solid #e5e7eb}
+.inf-table-title{font-size:10px;font-weight:700;color:#6b7280;letter-spacing:.5px}
+.inf-table-btns{display:flex;gap:6px}
+.inf-add-btn{padding:4px 10px;background:#1a3a6b;color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer}
+.inf-add-btn:hover{background:#15306e}
+.inf-ev-btn{padding:4px 10px;background:#fff;color:#374151;border:1px solid #d1d5db;border-radius:6px;font-size:11px;font-weight:500;cursor:pointer}
+.inf-ev-btn:hover{background:#f9fafb}
+.inf-tbl{width:100%;border-collapse:collapse;font-size:11.5px}
+.inf-tbl th{padding:6px 10px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.4px;color:#9ca3af;background:#f9fafb;border-bottom:1px solid #e5e7eb;white-space:nowrap}
+.inf-tbl td{padding:7px 10px;border-bottom:1px solid #f3f4f6;vertical-align:middle;cursor:pointer}
+.inf-tbl tbody tr:hover td{background:#f9fafb}
+.inf-tbl tbody tr.inf-sel td{background:#1a3a6b;color:#fff}
+.inf-tbl tbody tr.inf-sel td .rating-chip{background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.3)}
+.rating-chip{display:inline-block;padding:1px 7px;border-radius:10px;font-size:10px;font-weight:600;background:#f3f4f6;color:#374151;border:1px solid #e5e7eb}
+.rating-form{flex-shrink:0;border-bottom:1px solid #e5e7eb;background:#f9fafb;overflow-y:auto;max-height:310px}
+.rf-inner{display:grid;grid-template-columns:1fr 220px;gap:0}
+.rf-left{padding:12px 14px;border-right:1px solid #e5e7eb;display:flex;flex-direction:column;gap:7px}
+.rf-right{padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.rf-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.rf-label{font-size:10.5px;font-weight:600;color:#6b7280;min-width:115px;flex-shrink:0}
+.rf-clock{padding:3px 10px;border:1px solid #d1d5db;border-radius:6px;font-size:12px;font-weight:600;color:#111827;background:#fff;width:80px;text-align:center}
+.rf-checks{display:flex;gap:8px;flex-wrap:wrap}
+.rf-check{display:flex;align-items:center;gap:4px;font-size:11px;color:#374151;cursor:pointer}
+.rf-check input{width:13px;height:13px;cursor:pointer;accent-color:#1a3a6b}
+.ref-btn,.loc-btn{padding:4px 9px;border:1px solid #d1d5db;border-radius:6px;font-size:11px;cursor:pointer;background:#fff;color:#374151;font-weight:500;white-space:nowrap}
+.ref-btn:hover,.loc-btn:hover{background:#f9fafb}
+.ref-btn.on,.loc-btn.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
+.rating-btn{display:block;width:100%;text-align:left;padding:6px 10px;font-size:11.5px;border:1px solid #d1d5db;border-radius:6px;cursor:pointer;background:#fff;color:#374151;margin-bottom:3px}
+.rating-btn:hover{background:#f3f4f6}
+.rating-btn.on{background:#4b5563;border-color:#4b5563;color:#fff}
+.rf-select{padding:4px 8px;border:1px solid #d1d5db;border-radius:6px;font-size:11.5px;color:#374151;background:#fff;cursor:pointer;width:100%}
+.rf-section-lbl{font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;margin-bottom:1px}
+.rf-save-btn{padding:7px 14px;background:#1a3a6b;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px}
+.rf-save-btn:hover{background:#15306e}
+.rf-cancel-btn{padding:7px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:12px;color:#374151;background:#fff;cursor:pointer}
+.rf-cancel-btn:hover{background:#f9fafb}
+.comment-section{flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:10px}
+.comment-tmpl-row{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.tmpl-lbl{font-size:10.5px;font-weight:600;color:#6b7280;white-space:nowrap}
+.tmpl-btn{padding:3px 10px;border:1px solid #d1d5db;border-radius:6px;font-size:11px;cursor:pointer;background:#fff;color:#374151;font-weight:500;display:inline-flex;align-items:center;gap:3px}
+.tmpl-btn:hover{background:#f9fafb}
+.tmpl-btn.special{background:#1a3a6b;color:#fff;border-color:#1a3a6b}
+.comment-lbl{font-size:10.5px;font-weight:700;color:#374151;letter-spacing:.3px}
+.comment-ta{width:100%;border:1px solid #d1d5db;border-radius:8px;padding:8px 10px;font-size:12px;color:#374151;background:#fff;resize:vertical;font-family:inherit;line-height:1.5;min-height:60px}
+.comment-ta:focus{outline:none;border-color:#1a3a6b}
 
 /* RIGHT PANEL */
-.rp{width:360px;flex-shrink:0;background:#fff;border:1px solid #e5e7eb;border-radius:10px;display:flex;flex-direction:column;overflow:hidden}
+.rp{width:360px;flex-shrink:0;background:#fff;display:flex;flex-direction:column;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden}
 .vid-area{background:#0f1117;padding:6px 6px 0;flex-shrink:0}
 .vid-frame{width:100%;aspect-ratio:16/9;background:#1a1f2e;border-radius:6px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.vid-frame img{width:100%;height:100%;object-fit:cover;border-radius:6px}
+.vid-ph{display:flex;flex-direction:column;align-items:center;gap:6px}
+.vid-ph i{font-size:28px;color:#374151}
+.vid-ph span{font-size:11px;color:#4b5563}
 .ang-row{display:flex;gap:3px;padding:6px 10px;background:#fff;border-bottom:1px solid #f3f4f6;overflow-x:auto;flex-shrink:0}
 .ang{padding:2px 7px;font-size:10px;border:1px solid #e5e7eb;background:#f9fafb;color:#6b7280;cursor:pointer;border-radius:4px;white-space:nowrap;flex-shrink:0;font-weight:500}
 .ang:hover{color:#374151;border-color:#d1d5db;background:#f3f4f6}
@@ -168,14 +150,24 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .vid-ctrl{padding:6px 10px;border-bottom:1px solid #f3f4f6;display:flex;align-items:center;gap:6px;flex-shrink:0;background:#fff}
 .vcb{background:none;border:none;color:#9ca3af;cursor:pointer;font-size:15px;display:flex;align-items:center}
 .vcb:hover{color:#111827}
-.vtrack{flex:1;height:3px;background:#e5e7eb;border-radius:2px;position:relative;cursor:pointer}
-.vfill{width:38%;height:100%;background:#1a3a6b;border-radius:2px;pointer-events:none}
-.vhead{width:10px;height:10px;background:#1a3a6b;border-radius:50%;position:absolute;right:-5px;top:-3.5px;border:2px solid #fff;box-shadow:0 0 0 1px #1a3a6b;pointer-events:none}
-.vtime{color:#9ca3af;font-size:11px;min-width:56px;text-align:right}
+.vtrack{flex:1;height:3px;background:#e5e7eb;border-radius:2px;position:relative}
+.vfill{width:22%;height:100%;background:#1a3a6b;border-radius:2px}
+.vhead{width:10px;height:10px;background:#1a3a6b;border-radius:50%;position:absolute;right:-5px;top:-3.5px;border:2px solid #fff;box-shadow:0 0 0 1px #1a3a6b}
+.vtime{color:#9ca3af;font-size:11px;min-width:80px;text-align:right}
+.clip-bar{padding:6px 10px;border-bottom:1px solid #f3f4f6;display:flex;gap:5px;align-items:center;flex-shrink:0;background:#f9fafb}
+.clip-btn{padding:4px 10px;background:#1a3a6b;color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:4px}
+.clip-btn:hover{background:#15306e}
+.hotkeys-btn{padding:4px 10px;border:1px solid #d1d5db;border-radius:6px;font-size:11px;cursor:pointer;background:#fff;color:#374151;display:inline-flex;align-items:center;gap:3px}
+.hotkeys-btn:hover{background:#f9fafb}
 .rp-box{padding:8px 10px;border-bottom:1px solid #f3f4f6;flex-shrink:0;background:#fff}
 .rp-lbl{font-size:10px;color:#9ca3af;font-weight:700;margin-bottom:3px;display:flex;align-items:center;gap:5px}
 .rp-lbl i{font-size:13px}
 .rp-val{font-size:11px;color:#6b7280;font-style:italic;line-height:1.5}
+.rp-ptiw-lbl{color:#f59e0b;font-weight:700}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:7px;opacity:0;transition:opacity .18s;z-index:60;white-space:nowrap;pointer-events:none;background:#166534;color:#dcfce7;box-shadow:0 4px 20px rgba(0,0,0,.2)}
+.toast.show{opacity:1}
 </style>
 </head>
 <body>
@@ -191,14 +183,29 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
     <span class="nl" onclick="location='home.html'">HOME</span>
     <span class="nl" onclick="location='published-games.html'">PUBLISHED GAMES</span>
     <span class="nl" onclick="location='rim.html'">RIM</span>
+    <span class="nl">RM REVIEW</span>
+    <span class="nl">FINAL L2M REVIEW</span>
+    <span class="nl">INDEPENDENT REVIEW</span>
+    <span class="nl">ADMINISTRATION</span>
     <div class="nav-dropdown" id="nav-dropdown">
-      <span class="nl" onclick="toggleNavDropdown(event)">REVIEWER RESOURCE <span class="nav-dd-caret">▾</span></span>
+      <span class="nl" onclick="toggleNavDropdown(event)">REVIEWER RESOURCE <span class="nav-dd-caret">&#9662;</span></span>
       <div class="nav-dd-menu">
         <span class="nav-dd-item" onclick="location='comment-library.html'">Comment Library</span>
       </div>
     </div>
+    <span class="nl">MY SCHEDULE</span>
     <div class="nav-av">BN</div>
   </div>
+</div>
+
+<!-- SUBNAV -->
+<div class="subnav">
+  <span class="st on" onclick="location='review.html'">Review</span>
+  <span class="st">OCR</span>
+  <span class="st">Important Calls</span>
+  <span class="st" onclick="location='second-check.html'">Second Check</span>
+  <span class="st">PTIW</span>
+  <span class="st">OIW</span>
 </div>
 
 <!-- GAME HEADER -->
@@ -215,688 +222,714 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
         CHI (104)
       </span>
     </div>
-    <div class="gh-date">Wednesday, May 27, 2026</div>
+    <div class="gh-date">May 27, 2026 &nbsp;&middot;&nbsp; Refs: Genesis Perrymond (8) &middot; Catherine Chang (23) &middot; Kevin Fahy (86)</div>
   </div>
   <div class="gh-sep"></div>
+  <div class="stats">
+    <div class="stat s-g"><div class="sn">65</div><div class="sl">Whistles</div></div>
+    <div class="stat s-r"><div class="sn">60</div><div class="sl">Infractions</div></div>
+    <div class="stat s-t"><div class="sn">4</div><div class="sl">PTIW Events</div></div>
+  </div>
   <div class="gh-right">
-    <span style="font-size:11px;color:#6b7280">First-Pass Review</span>
+    <div class="ncc-badge">
+      <span style="font-weight:700">Non-Calls Counter:</span>
+      4 Deemed Infractions / 12 PI Calls
+    </div>
   </div>
 </div>
 
 <!-- MAIN -->
 <div class="main">
 
-  <!-- LEFT: SMART QUEUE -->
-  <div class="sq-panel">
-    <div class="sq-header">
-      <span class="sq-header-label">SMART QUEUE</span>
-      <button class="sq-play-btn" id="play-btn" onclick="toggleAutoPlay()">▶ Play</button>
+  <!-- LEFT PANEL -->
+  <div class="lp">
+    <div class="lp-filterbar">
+      <button class="filter-ev-btn">Filter Events</button>
+      <button class="q-tog on" id="qtog-Q1" onclick="filterQ('Q1',this)">Q1</button>
+      <button class="q-tog" id="qtog-Q2" onclick="filterQ('Q2',this)">Q2</button>
+      <button class="q-tog" id="qtog-Q3" onclick="filterQ('Q3',this)">Q3</button>
+      <button class="q-tog" id="qtog-Q4" onclick="filterQ('Q4',this)">Q4</button>
+      <span class="buf-label">Buffer: <b id="buf-val">0</b></span>
     </div>
-    <div class="sq-list" id="sq-list"></div>
-  </div>
-
-  <!-- CENTER -->
-  <div class="center-panel">
-    <!-- Event header -->
-    <div class="band1" id="event-header">
-      <div id="event-header-content">
-        <div style="color:#9ca3af;font-size:13px;font-style:italic">Select an event from the queue</div>
-      </div>
-    </div>
-
-    <div class="center-scroll" id="center-scroll">
-      <div class="center-placeholder" id="center-placeholder">Select an event from the queue to begin rating.</div>
-
-      <!-- Saved ratings area -->
-      <div class="saved-ratings-area" id="saved-ratings-area" style="display:none;padding-top:14px"></div>
-
-      <!-- Infraction table -->
-      <div class="infraction-section" id="infraction-section" style="display:none">
-        <div class="inf-section-hdr">
-          <span class="inf-section-title">POSSIBLE INFRACTIONS</span>
-          <button class="inf-add-btn">+ Add</button>
-        </div>
-        <table class="infraction-table" id="infraction-table">
-          <thead>
-            <tr>
-              <th>Infraction Type</th>
-              <th>Player</th>
-              <th>Opponent</th>
-              <th style="text-align:center">On-Ball</th>
-            </tr>
-          </thead>
-          <tbody id="infraction-tbody"></tbody>
-        </table>
-      </div>
-
-      <!-- Rating form -->
-      <div class="rating-form-area" id="rating-form">
-        <!-- Section 1: Classification -->
-        <div class="rating-section">
-          <div class="rating-section-label">CLASSIFICATION</div>
-          <div class="classification-grid">
-            <div class="cf-field">
-              <span class="cf-label">Infraction Type</span>
-              <select class="cf-select" id="cf-infraction-type">
-                <option>Foul: Shooting</option>
-                <option>Foul: Personal</option>
-                <option>Foul: Offensive</option>
-                <option>Foul: Loose Ball</option>
-                <option>Defensive Goaltending</option>
-                <option>Stoppage: Out-of-Bounds</option>
-                <option>Turnover: Traveling</option>
-              </select>
-            </div>
-            <div class="cf-field">
-              <span class="cf-label">Play Type / Situation</span>
-              <select class="cf-select" id="cf-play-type">
-                <option>Drive</option>
-                <option>Post-Up</option>
-                <option>Pick-and-Roll</option>
-                <option>Transition</option>
-                <option>Spot-Up</option>
-                <option>Handoff</option>
-                <option>Off-Screen</option>
-              </select>
-            </div>
-            <div class="cf-field">
-              <span class="cf-label">Sub Play Type</span>
-              <select class="cf-select" id="cf-sub-play">
-                <option>Contact on Shot</option>
-                <option>Reach-in</option>
-                <option>Hold</option>
-                <option>Push</option>
-                <option>Body Check</option>
-                <option>Charge</option>
-                <option>Blocking</option>
-              </select>
-            </div>
-            <div class="cf-field">
-              <span class="cf-label">Official</span>
-              <select class="cf-select" id="cf-official">
-                <option>Genesis Perrymond</option>
-                <option>Catherine Chang</option>
-                <option>Kevin Fahy</option>
-              </select>
-            </div>
-            <div class="cf-field">
-              <span class="cf-label">Location</span>
-              <select class="cf-select" id="cf-location">
-                <option>Lead</option>
-                <option>Slot</option>
-                <option>Trail</option>
-                <option>C1</option>
-                <option>C2</option>
-              </select>
-            </div>
-            <div class="cf-field">
-              <span class="cf-label">Observability</span>
-              <select class="cf-select" id="cf-observability">
-                <option>Observable</option>
-                <option>Partially Observable</option>
-                <option>Not Observable</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <!-- Section 2: Rating -->
-        <div class="rating-section">
-          <div class="rating-section-label">RATING</div>
-          <div class="rating-btns">
-            <button class="rating-btn rating-btn-infraction" data-rating="Infraction" onclick="selectRating(this)">Infraction</button>
-            <button class="rating-btn rating-btn-pi-lean" data-rating="PI - Lean" onclick="selectRating(this)">PI - Lean</button>
-            <button class="rating-btn rating-btn-pi-no" data-rating="PI - No" onclick="selectRating(this)">PI - No</button>
-            <button class="rating-btn rating-btn-no-infraction" data-rating="No Infraction" onclick="selectRating(this)">No Infraction</button>
-          </div>
-        </div>
-
-        <!-- Section 3: Comment -->
-        <div class="rating-section">
-          <div class="rating-section-label">COMMENT</div>
-          <div class="comment-editor" id="comment-editor" contenteditable="true" data-placeholder="Add your comment here... (Ctrl+B for bold)"></div>
-          <textarea class="notes-textarea" id="notes-textarea" placeholder="Notes to self..."></textarea>
-        </div>
-
-        <div class="form-footer">
-          <button class="btn-save" onclick="saveRating()">Save Rating</button>
-          <button class="btn-flag" onclick="flagEvent()">Flag</button>
-          <button class="btn-skip" onclick="skipEvent()">Skip</button>
-        </div>
-      </div>
+    <div class="poss-list" id="poss-list"></div>
+    <div class="lp-footer">
+      <button class="submit-qi-btn">Submit QI</button>
     </div>
   </div>
 
-  <!-- RIGHT: VIDEO PANEL -->
+  <!-- CENTER PANEL -->
+  <div class="cp" id="center-panel">
+    <div class="cp-empty" id="cp-empty">Select an event from the queue to review</div>
+
+    <div class="inf-table-wrap" id="inf-table-wrap" style="display:none">
+      <div class="inf-table-hdr">
+        <span class="inf-table-title">INFRACTION CANDIDATES</span>
+        <div class="inf-table-btns">
+          <button class="inf-add-btn" onclick="addInfractionRow()">+ INFRACTION</button>
+          <button class="inf-ev-btn">+ EVENT</button>
+        </div>
+      </div>
+      <table class="inf-tbl" id="inf-tbl">
+        <thead>
+          <tr>
+            <th>Infraction Type</th><th>Player</th><th>Opponent</th><th>Official</th><th>Location</th><th>Infraction Rating</th><th>Observability</th>
+          </tr>
+        </thead>
+        <tbody id="inf-tbody"></tbody>
+      </table>
+    </div>
+
+    <div class="rating-form" id="rating-form" style="display:none">
+      <div class="rf-inner">
+        <div class="rf-left">
+          <div class="rf-row">
+            <span class="rf-label">Game Clock:</span>
+            <input class="rf-clock" id="rf-clock" value="09:37.9" readonly>
+            <div class="rf-checks">
+              <label class="rf-check"><input type="checkbox" id="chk-called"> Called</label>
+              <label class="rf-check"><input type="checkbox" id="chk-ptiw"> PTIW</label>
+              <label class="rf-check"><input type="checkbox" id="chk-look"> Look</label>
+              <label class="rf-check"><input type="checkbox" id="chk-ogr"> OGR</label>
+              <label class="rf-check"><input type="checkbox" id="chk-poe"> POE</label>
+            </div>
+          </div>
+          <div class="rf-row">
+            <span class="rf-label">Responsible Ref:</span>
+            <button class="ref-btn on" onclick="selectRef(this)">Genesis Perrymond (8)</button>
+            <button class="ref-btn" onclick="selectRef(this)">Catherine Chang (23)</button>
+            <button class="ref-btn" onclick="selectRef(this)">Kevin Fahy (86)</button>
+          </div>
+          <div class="rf-row">
+            <span class="rf-label">Resp. Ref. Location:</span>
+            <button class="loc-btn on" onclick="selectLocation(this)">Lead</button>
+            <button class="loc-btn" onclick="selectLocation(this)">Trail</button>
+            <button class="loc-btn" onclick="selectLocation(this)">Slot</button>
+          </div>
+          <div class="rf-row">
+            <span class="rf-label">Infraction Type:</span>
+            <select class="rf-select" style="width:auto;flex:1">
+              <option>Blocking Foul</option><option>Holding Foul</option><option>Illegal Screen</option>
+              <option>Pushing Foul</option><option>Shooting Foul</option><option>Charge</option>
+              <option>Travel</option><option>OOB</option><option>Illegal Dribble</option>
+            </select>
+          </div>
+          <div class="rf-row">
+            <span class="rf-label">Play Type:</span>
+            <select class="rf-select" style="width:auto;flex:1">
+              <option>Drive</option><option>Post</option><option>Perimeter</option>
+              <option>Screen</option><option>Rebound</option>
+            </select>
+          </div>
+          <div class="rf-row">
+            <span class="rf-label">Sub Play Type:</span>
+            <select class="rf-select" style="width:auto;flex:1">
+              <option>-- select --</option><option>Off Ball</option>
+              <option>Ball Handler</option><option>Cutter</option>
+            </select>
+          </div>
+          <div class="rf-row">
+            <span class="rf-label">Role:</span>
+            <select class="rf-select" style="width:auto;flex:1">
+              <option>Def Player 1</option><option>Off Player 1</option>
+              <option>Def Player 2</option><option>Off Player 2</option>
+            </select>
+          </div>
+          <div class="rf-row">
+            <span class="rf-label">Player:</span>
+            <select class="rf-select" id="rf-player" style="width:auto;flex:1">
+              <option>Sabally, Nyara (13) — Tempo</option>
+              <option>Rice, Kahleah (5) — Tempo</option>
+              <option>Mabrey, Marina (4) — Tempo</option>
+              <option>Key, Tiffany (22) — Tempo</option>
+              <option>Conde, Natasha (11) — Tempo</option>
+              <option>Juskaite, Laurita (7) — Tempo</option>
+              <option>Nurse, Natalie (21) — Tempo</option>
+              <option>Diggins, Skylar (4) — Sky</option>
+              <option>Cardoso, Kamilla (10) — Sky</option>
+              <option>Williams, Eartha (3) — Sky</option>
+              <option>Sykes, Brianna (15) — Sky</option>
+              <option>Cloud, Tianna (2) — Sky</option>
+              <option>Banham, Natalie (9) — Sky</option>
+              <option>Taylor, Maya (14) — Sky</option>
+            </select>
+          </div>
+          <div class="rf-row">
+            <span class="rf-label">Opponent:</span>
+            <select class="rf-select" id="rf-opponent" style="width:auto;flex:1">
+              <option>Diggins, Skylar (4) — Sky</option>
+              <option>Cardoso, Kamilla (10) — Sky</option>
+              <option>Williams, Eartha (3) — Sky</option>
+              <option>Sykes, Brianna (15) — Sky</option>
+              <option>Cloud, Tianna (2) — Sky</option>
+              <option>Banham, Natalie (9) — Sky</option>
+              <option>Taylor, Maya (14) — Sky</option>
+              <option>Sabally, Nyara (13) — Tempo</option>
+              <option>Rice, Kahleah (5) — Tempo</option>
+              <option>Mabrey, Marina (4) — Tempo</option>
+            </select>
+          </div>
+        </div>
+        <div class="rf-right">
+          <div class="rf-section-lbl">Infraction Rating:</div>
+          <button class="rating-btn" onclick="selectRating(this)">Infraction</button>
+          <button class="rating-btn" onclick="selectRating(this)">Judgement - Lean Infraction</button>
+          <button class="rating-btn on" onclick="selectRating(this)">Judgement - Lean No</button>
+          <button class="rating-btn" onclick="selectRating(this)">No Infraction</button>
+          <div class="rf-section-lbl" style="margin-top:6px">Assessment Ratings:</div>
+          <select class="rf-select">
+            <option>- if applicable -</option><option>Egregious</option>
+            <option>Clear</option><option>Toss Up</option>
+          </select>
+          <div class="rf-section-lbl" style="margin-top:6px">Observability:</div>
+          <select class="rf-select">
+            <option>Observable</option><option>Difficult</option><option>Very Difficult</option>
+          </select>
+          <div style="display:flex;gap:6px;margin-top:10px">
+            <button class="rf-save-btn" onclick="saveRating()"><i class="ti ti-check"></i> Save Ratings &#8594;</button>
+            <button class="rf-cancel-btn" onclick="cancelRating()">&#10005;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="comment-section" id="comment-section" style="display:none">
+      <div class="comment-tmpl-row">
+        <span class="tmpl-lbl">Comment Templates:</span>
+        <button class="tmpl-btn special"><i class="ti ti-diamond"></i> Auto Comments</button>
+        <button class="tmpl-btn">Coach's Challenge &#9662;</button>
+        <button class="tmpl-btn">Take Fouls &#9662;</button>
+        <button class="tmpl-btn">Head/Face Contact</button>
+        <button class="tmpl-btn">Enhanced Review</button>
+      </div>
+      <div>
+        <div class="comment-lbl" style="margin-bottom:5px">Comments:</div>
+        <textarea class="comment-ta" id="comment-ta" rows="4" placeholder="Enter comments here"></textarea>
+      </div>
+      <div>
+        <div class="comment-lbl" style="margin-bottom:5px">Internal Notes:</div>
+        <textarea class="comment-ta" id="notes-ta" rows="3" placeholder="Enter internal notes here"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
   <div class="rp">
     <div class="vid-area">
       <div class="vid-frame">
-        <img src="Logos/video player placeholder.png" style="width:100%;height:100%;object-fit:cover;border-radius:6px;display:block" onerror="this.style.display='none'">
+        <img src="Logos/video player placeholder.png" alt="Video"
+          onerror="this.parentElement.innerHTML='<div class=&quot;vid-ph&quot;><i class=&quot;ti ti-player-play&quot;></i><span>Video Placeholder</span></div>'">
       </div>
     </div>
     <div class="ang-row">
-      <span class="ang on" onclick="selAng(this)">LLB</span>
-      <span class="ang" onclick="selAng(this)">RLB</span>
-      <span class="ang" onclick="selAng(this)">LAR</span>
-      <span class="ang" onclick="selAng(this)">RAR</span>
-      <span class="ang" onclick="selAng(this)">RLS</span>
-      <span class="ang" onclick="selAng(this)">ABP</span>
-      <span class="ang" onclick="selAng(this)">HBP</span>
-      <span class="ang" onclick="selAng(this)">INA</span>
-      <span class="ang" onclick="selAng(this)">DF BCAST</span>
+      <div class="ang on" onclick="angClick(this)">LL5</div>
+      <div class="ang" onclick="angClick(this)">LL5</div>
+      <div class="ang" onclick="angClick(this)">LR5</div>
+      <div class="ang" onclick="angClick(this)">LR5</div>
+      <div class="ang" onclick="angClick(this)">LS5</div>
+      <div class="ang" onclick="angClick(this)">RS5</div>
+      <div class="ang" onclick="angClick(this)">ABP</div>
+      <div class="ang" onclick="angClick(this)">HBP</div>
+      <div class="ang" onclick="angClick(this)">INA</div>
+      <div class="ang" onclick="angClick(this)">DF BCAST</div>
     </div>
     <div class="vid-ctrl">
-      <button class="vcb" onclick="vidControl('prev')"><i class="ti ti-rewind"></i></button>
-      <button class="vcb" id="vid-play-btn" onclick="vidControl('play')"><i class="ti ti-player-play"></i></button>
-      <button class="vcb" onclick="vidControl('next')"><i class="ti ti-fast-forward"></i></button>
-      <div class="vtrack" id="vtrack" onclick="scrubVideo(event)">
-        <div class="vfill" id="vfill" style="width:0%"><div class="vhead"></div></div>
-      </div>
-      <span class="vtime" id="v-time">0:00</span>
-      <button class="vcb"><i class="ti ti-maximize"></i></button>
+      <button class="vcb"><i class="ti ti-player-play"></i></button>
+      <button class="vcb"><i class="ti ti-volume"></i></button>
+      <div class="vtrack"><div class="vfill"></div><div class="vhead"></div></div>
+      <span class="vtime">40:51 / 3:12:27</span>
+      <button class="vcb"><i class="ti ti-arrows-maximize"></i></button>
+    </div>
+    <div class="clip-bar">
+      <button class="clip-btn"><i class="ti ti-paperclip"></i> CLIP VIDEO <span style="font-size:10px;opacity:.7">(ctrl+v)</span></button>
+      <button class="hotkeys-btn">Video Hotkeys &#9662;</button>
     </div>
     <div class="rp-box">
-      <div class="rp-lbl"><i class="ti ti-bell" style="color:#f59e0b"></i> PTIW comment</div>
-      <div class="rp-val">No PTIW comment</div>
+      <div class="rp-lbl"><i class="ti ti-alert-triangle" style="color:#f59e0b"></i> <span class="rp-ptiw-lbl">PTIW Comment:</span></div>
+      <div class="rp-val" id="ptiw-comment">No PTIW Comment</div>
     </div>
     <div class="rp-box">
-      <div class="rp-lbl"><i class="ti ti-message-circle" style="color:#f97316"></i> OIW comment</div>
-      <div class="rp-val">No OIW comment</div>
+      <div class="rp-lbl"><i class="ti ti-info-circle"></i> OIW Comment:</div>
+      <div class="rp-val" id="oiw-comment">No OIW Comment</div>
     </div>
   </div>
 
-</div><!-- /main -->
-</div><!-- /page -->
+</div>
+</div>
+
+<div class="toast" id="toast"></div>
 
 <script>
-// ─── DATA ───────────────────────────────────────────────────────────────────
-const possessions = [
-  {
-    id: 0, q: 'Q1', team: 'TOR', clock: '9:45',
-    events: [
-      {id:0, type:'DRIVE', time:'9:41', player:'N.Sabally', desc:'Drive by N.Sabally'},
-      {id:1, type:'FOUL',  time:'9:38', player:'T.Key',     desc:'Shooting foul on T.Key', detail:'(shooting)'},
-      {id:2, type:'SHOT',  time:'9:32', player:'K.Rice',    desc:'Shot by K.Rice', detail:'(made)'},
-    ]
-  },
-  {
-    id: 1, q: 'Q1', team: 'CHI', clock: '9:10',
-    events: [
-      {id:0, type:'DRIVE',   time:'9:07', player:'S.Diggins',  desc:'Drive by S.Diggins'},
-      {id:1, type:'FOUL',    time:'9:04', player:'M.Conde',    desc:'Personal foul on M.Conde', detail:'(personal)'},
-      {id:2, type:'SHOT',    time:'8:58', player:'K.Cardoso',  desc:'Shot by K.Cardoso', detail:'(missed)'},
-      {id:3, type:'REBOUND', time:'8:55', player:'E.Williams', desc:'Rebound by E.Williams'},
-    ]
-  },
-  {
-    id: 2, q: 'Q1', team: 'TOR', clock: '8:30',
-    events: [
-      {id:0, type:'SHOT',    time:'8:26', player:'N.Sabally', desc:'Shot by N.Sabally', detail:'(missed)'},
-      {id:1, type:'REBOUND', time:'8:24', player:'M.Mabrey',  desc:'Rebound by M.Mabrey'},
-      {id:2, type:'FOUL',    time:'8:21', player:'N.Banham',  desc:'Personal foul on N.Banham', detail:'(personal)'},
-    ]
-  },
-  {
-    id: 3, q: 'Q1', team: 'CHI', clock: '7:55',
-    events: [
-      {id:0, type:'DRIVE', time:'7:51', player:'E.Williams', desc:'Drive by E.Williams'},
-      {id:1, type:'SHOT',  time:'7:47', player:'E.Williams', desc:'Shot by E.Williams', detail:'(made)'},
-    ]
-  },
-  {
-    id: 4, q: 'Q1', team: 'TOR', clock: '7:20',
-    events: [
-      {id:0, type:'DRIVE',   time:'7:18', player:'K.Rice',     desc:'Drive by K.Rice'},
-      {id:1, type:'OOB',     time:'7:14', player:'T.Cloud',    desc:'Out of bounds — T.Cloud'},
-      {id:2, type:'SHOT',    time:'7:08', player:'M.Mabrey',   desc:'Shot by M.Mabrey', detail:'(missed)'},
-      {id:3, type:'REBOUND', time:'7:05', player:'L.Juskaite', desc:'Rebound by L.Juskaite'},
-    ]
-  },
-  {
-    id: 5, q: 'Q1', team: 'CHI', clock: '6:45',
-    events: [
-      {id:0, type:'TRAVEL', time:'6:42', player:'S.Diggins', desc:'Travel — S.Diggins'},
-      {id:1, type:'DRIVE',  time:'6:38', player:'N.Banham',  desc:'Drive by N.Banham'},
-      {id:2, type:'FOUL',   time:'6:34', player:'T.Key',     desc:'Shooting foul on T.Key', detail:'(shooting)'},
-      {id:3, type:'SHOT',   time:'6:29', player:'K.Cardoso', desc:'Shot by K.Cardoso', detail:'(made)'},
-    ]
-  },
+const REFS = ['Genesis Perrymond (8)','Catherine Chang (23)','Kevin Fahy (86)'];
+const TOR_P = ['N. Sabally','K. Rice','M. Mabrey','T. Key','N. Conde','L. Juskaite','N. Nurse'];
+const CHI_P = ['S. Diggins','K. Cardoso','E. Williams','B. Sykes','T. Cloud','N. Banham','M. Taylor'];
+
+const POSSESSIONS = [
+  {id:1,q:1,team:'TOR',time:'09:45.0',ptiw:false,events:[
+    {id:'e1-1',time:'09:44.8',label:'INBOUND',type:'plain'},
+    {id:'e1-2',time:'09:43.2',label:'DRIVE',type:'plain'},
+    {id:'e1-3',time:'09:41.0',label:'PICK',type:'plain'},
+    {id:'e1-4',time:'09:40.5',label:'NO DRIBBLE',type:'reviewable'},
+    {id:'e1-5',time:'09:39.8',label:'DRIBBLE',type:'plain'},
+    {id:'e1-6',time:'09:38.1',label:'SHOT',type:'plain'},
+    {id:'e1-7',time:'09:37.9',label:'DEAD BALL',type:'plain'},
+    {id:'e1-8',time:'09:37.9',label:'Foul: Shooting',type:'whistle',player:'T. Key',foulType:'Foul: Shooting'},
+    {id:'e1-9',time:'09:37.9',label:'FREE THROW',type:'plain'},
+    {id:'e1-10',time:'09:37.9',label:'FREE THROW',type:'plain'},
+  ]},
+  {id:2,q:1,team:'CHI',time:'09:30.0',ptiw:false,events:[
+    {id:'e2-1',time:'09:29.5',label:'INBOUND',type:'plain'},
+    {id:'e2-2',time:'09:28.0',label:'DRIVE',type:'plain'},
+    {id:'e2-3',time:'09:26.5',label:'SHOT',type:'plain'},
+    {id:'e2-4',time:'09:25.9',label:'DEAD BALL',type:'plain'},
+    {id:'e2-5',time:'09:25.9',label:'Foul: Blocking',type:'whistle',player:'K. Cardoso',foulType:'Foul: Blocking'},
+    {id:'e2-6',time:'09:25.9',label:'FREE THROW',type:'plain'},
+  ]},
+  {id:3,q:1,team:'TOR',time:'09:20.0',ptiw:true,events:[
+    {id:'e3-1',time:'09:19.7',label:'INBOUND',type:'plain'},
+    {id:'e3-2',time:'09:18.0',label:'PICK',type:'plain'},
+    {id:'e3-3',time:'09:17.1',label:'DRIVE',type:'plain'},
+    {id:'e3-4',time:'09:16.2',label:'TRAVEL',type:'reviewable'},
+    {id:'e3-5',time:'09:15.8',label:'DEAD BALL',type:'plain'},
+    {id:'e3-6',time:'09:15.8',label:'OOB: TOR',type:'whistle',player:'N. Sabally',foulType:'OOB: TOR'},
+  ]},
+  {id:4,q:1,team:'CHI',time:'09:10.0',ptiw:false,events:[
+    {id:'e4-1',time:'09:09.8',label:'INBOUND',type:'plain'},
+    {id:'e4-2',time:'09:08.2',label:'DRIBBLE',type:'plain'},
+    {id:'e4-3',time:'09:07.0',label:'PICK',type:'plain'},
+    {id:'e4-4',time:'09:05.5',label:'DRIVE',type:'plain'},
+    {id:'e4-5',time:'09:04.0',label:'SHOT',type:'plain'},
+    {id:'e4-6',time:'09:03.8',label:'REBOUND',type:'plain'},
+    {id:'e4-7',time:'09:03.0',label:'SHOT',type:'plain'},
+    {id:'e4-8',time:'09:02.9',label:'DEAD BALL',type:'plain'},
+    {id:'e4-9',time:'09:02.9',label:'Foul: Holding',type:'whistle',player:'E. Williams',foulType:'Foul: Holding'},
+  ]},
+  {id:5,q:1,team:'TOR',time:'08:55.0',ptiw:false,events:[
+    {id:'e5-1',time:'08:54.7',label:'INBOUND',type:'plain'},
+    {id:'e5-2',time:'08:53.5',label:'DRIVE',type:'plain'},
+    {id:'e5-3',time:'08:52.0',label:'ILLEGAL SCREEN',type:'reviewable'},
+    {id:'e5-4',time:'08:51.0',label:'SHOT',type:'plain'},
+    {id:'e5-5',time:'08:50.9',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:6,q:1,team:'CHI',time:'08:45.0',ptiw:false,events:[
+    {id:'e6-1',time:'08:44.8',label:'INBOUND',type:'plain'},
+    {id:'e6-2',time:'08:43.0',label:'DRIBBLE',type:'plain'},
+    {id:'e6-3',time:'08:41.5',label:'OOB: CHI',type:'whistle',player:'S. Diggins',foulType:'OOB: CHI'},
+    {id:'e6-4',time:'08:41.5',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:7,q:1,team:'TOR',time:'08:35.0',ptiw:false,events:[
+    {id:'e7-1',time:'08:34.5',label:'INBOUND',type:'plain'},
+    {id:'e7-2',time:'08:33.0',label:'PICK',type:'plain'},
+    {id:'e7-3',time:'08:31.5',label:'DRIVE',type:'plain'},
+    {id:'e7-4',time:'08:30.0',label:'NO DRIBBLE',type:'reviewable'},
+    {id:'e7-5',time:'08:29.5',label:'DEAD BALL',type:'plain'},
+    {id:'e7-6',time:'08:29.5',label:'Foul: Shooting',type:'whistle',player:'M. Mabrey',foulType:'Foul: Shooting'},
+    {id:'e7-7',time:'08:29.5',label:'FREE THROW',type:'plain'},
+    {id:'e7-8',time:'08:29.5',label:'FREE THROW',type:'plain'},
+  ]},
+  {id:8,q:1,team:'CHI',time:'08:20.0',ptiw:false,events:[
+    {id:'e8-1',time:'08:19.8',label:'INBOUND',type:'plain'},
+    {id:'e8-2',time:'08:18.0',label:'DRIVE',type:'plain'},
+    {id:'e8-3',time:'08:16.5',label:'SHOT',type:'plain'},
+    {id:'e8-4',time:'08:16.3',label:'REBOUND',type:'plain'},
+    {id:'e8-5',time:'08:15.0',label:'TRAVEL',type:'reviewable'},
+    {id:'e8-6',time:'08:14.5',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:9,q:1,team:'TOR',time:'08:05.0',ptiw:true,events:[
+    {id:'e9-1',time:'08:04.7',label:'INBOUND',type:'plain'},
+    {id:'e9-2',time:'08:03.0',label:'DRIBBLE',type:'plain'},
+    {id:'e9-3',time:'08:01.5',label:'PICK',type:'plain'},
+    {id:'e9-4',time:'08:00.0',label:'DRIVE',type:'plain'},
+    {id:'e9-5',time:'07:58.5',label:'SHOT',type:'plain'},
+    {id:'e9-6',time:'07:58.3',label:'DEAD BALL',type:'plain'},
+    {id:'e9-7',time:'07:58.3',label:'Foul: Pushing',type:'whistle',player:'K. Rice',foulType:'Foul: Pushing'},
+    {id:'e9-8',time:'07:58.3',label:'FREE THROW',type:'plain'},
+  ]},
+  {id:10,q:1,team:'CHI',time:'07:50.0',ptiw:false,events:[
+    {id:'e10-1',time:'07:49.7',label:'INBOUND',type:'plain'},
+    {id:'e10-2',time:'07:48.0',label:'DRIVE',type:'plain'},
+    {id:'e10-3',time:'07:46.5',label:'OOB: TOR',type:'whistle',player:'N. Banham',foulType:'OOB: TOR'},
+    {id:'e10-4',time:'07:46.5',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:11,q:2,team:'TOR',time:'09:48.0',ptiw:false,events:[
+    {id:'e11-1',time:'09:47.8',label:'INBOUND',type:'plain'},
+    {id:'e11-2',time:'09:46.0',label:'DRIVE',type:'plain'},
+    {id:'e11-3',time:'09:44.5',label:'PICK',type:'plain'},
+    {id:'e11-4',time:'09:43.0',label:'SHOT',type:'plain'},
+    {id:'e11-5',time:'09:42.8',label:'DEAD BALL',type:'plain'},
+    {id:'e11-6',time:'09:42.8',label:'Foul: Shooting',type:'whistle',player:'N. Conde',foulType:'Foul: Shooting'},
+    {id:'e11-7',time:'09:42.8',label:'FREE THROW',type:'plain'},
+  ]},
+  {id:12,q:2,team:'CHI',time:'09:35.0',ptiw:false,events:[
+    {id:'e12-1',time:'09:34.8',label:'INBOUND',type:'plain'},
+    {id:'e12-2',time:'09:33.0',label:'DRIVE',type:'plain'},
+    {id:'e12-3',time:'09:31.5',label:'ILLEGAL SCREEN',type:'reviewable'},
+    {id:'e12-4',time:'09:30.0',label:'SHOT',type:'plain'},
+    {id:'e12-5',time:'09:29.8',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:13,q:2,team:'TOR',time:'09:20.0',ptiw:false,events:[
+    {id:'e13-1',time:'09:19.7',label:'INBOUND',type:'plain'},
+    {id:'e13-2',time:'09:18.0',label:'DRIBBLE',type:'plain'},
+    {id:'e13-3',time:'09:16.5',label:'TRAVEL',type:'reviewable'},
+    {id:'e13-4',time:'09:16.0',label:'DEAD BALL',type:'plain'},
+    {id:'e13-5',time:'09:16.0',label:'Foul: Blocking',type:'whistle',player:'L. Juskaite',foulType:'Foul: Blocking'},
+  ]},
+  {id:14,q:2,team:'CHI',time:'09:05.0',ptiw:false,events:[
+    {id:'e14-1',time:'09:04.7',label:'INBOUND',type:'plain'},
+    {id:'e14-2',time:'09:03.0',label:'PICK',type:'plain'},
+    {id:'e14-3',time:'09:01.5',label:'DRIVE',type:'plain'},
+    {id:'e14-4',time:'09:00.0',label:'SHOT',type:'plain'},
+    {id:'e14-5',time:'08:59.8',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:15,q:2,team:'TOR',time:'08:50.0',ptiw:true,events:[
+    {id:'e15-1',time:'08:49.7',label:'INBOUND',type:'plain'},
+    {id:'e15-2',time:'08:48.0',label:'DRIVE',type:'plain'},
+    {id:'e15-3',time:'08:46.5',label:'OOB: CHI',type:'whistle',player:'T. Key',foulType:'OOB: CHI'},
+    {id:'e15-4',time:'08:46.5',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:16,q:2,team:'CHI',time:'08:38.0',ptiw:false,events:[
+    {id:'e16-1',time:'08:37.8',label:'INBOUND',type:'plain'},
+    {id:'e16-2',time:'08:36.0',label:'PICK',type:'plain'},
+    {id:'e16-3',time:'08:34.5',label:'NO DRIBBLE',type:'reviewable'},
+    {id:'e16-4',time:'08:33.0',label:'SHOT',type:'plain'},
+    {id:'e16-5',time:'08:32.8',label:'DEAD BALL',type:'plain'},
+    {id:'e16-6',time:'08:32.8',label:'Foul: Holding',type:'whistle',player:'T. Cloud',foulType:'Foul: Holding'},
+    {id:'e16-7',time:'08:32.8',label:'FREE THROW',type:'plain'},
+  ]},
+  {id:17,q:2,team:'TOR',time:'08:20.0',ptiw:false,events:[
+    {id:'e17-1',time:'08:19.7',label:'INBOUND',type:'plain'},
+    {id:'e17-2',time:'08:18.0',label:'DRIVE',type:'plain'},
+    {id:'e17-3',time:'08:16.5',label:'SHOT',type:'plain'},
+    {id:'e17-4',time:'08:16.3',label:'REBOUND',type:'plain'},
+    {id:'e17-5',time:'08:15.0',label:'SHOT',type:'plain'},
+    {id:'e17-6',time:'08:14.8',label:'DEAD BALL',type:'plain'},
+    {id:'e17-7',time:'08:14.8',label:'Foul: Pushing',type:'whistle',player:'N. Sabally',foulType:'Foul: Pushing'},
+    {id:'e17-8',time:'08:14.8',label:'FREE THROW',type:'plain'},
+    {id:'e17-9',time:'08:14.8',label:'FREE THROW',type:'plain'},
+  ]},
+  {id:18,q:2,team:'CHI',time:'08:00.0',ptiw:false,events:[
+    {id:'e18-1',time:'07:59.7',label:'INBOUND',type:'plain'},
+    {id:'e18-2',time:'07:58.0',label:'DRIBBLE',type:'plain'},
+    {id:'e18-3',time:'07:56.5',label:'TRAVEL',type:'reviewable'},
+    {id:'e18-4',time:'07:56.0',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:19,q:2,team:'TOR',time:'07:48.0',ptiw:false,events:[
+    {id:'e19-1',time:'07:47.7',label:'INBOUND',type:'plain'},
+    {id:'e19-2',time:'07:46.0',label:'PICK',type:'plain'},
+    {id:'e19-3',time:'07:44.5',label:'DRIVE',type:'plain'},
+    {id:'e19-4',time:'07:43.0',label:'OOB: TOR',type:'whistle',player:'M. Mabrey',foulType:'OOB: TOR'},
+    {id:'e19-5',time:'07:43.0',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:20,q:2,team:'CHI',time:'07:35.0',ptiw:false,events:[
+    {id:'e20-1',time:'07:34.8',label:'INBOUND',type:'plain'},
+    {id:'e20-2',time:'07:33.0',label:'DRIVE',type:'plain'},
+    {id:'e20-3',time:'07:31.5',label:'SHOT',type:'plain'},
+    {id:'e20-4',time:'07:31.3',label:'DEAD BALL',type:'plain'},
+    {id:'e20-5',time:'07:31.3',label:'Foul: Shooting',type:'whistle',player:'B. Sykes',foulType:'Foul: Shooting'},
+    {id:'e20-6',time:'07:31.3',label:'FREE THROW',type:'plain'},
+    {id:'e20-7',time:'07:31.3',label:'FREE THROW',type:'plain'},
+  ]},
+  {id:21,q:3,team:'TOR',time:'09:50.0',ptiw:false,events:[
+    {id:'e21-1',time:'09:49.7',label:'INBOUND',type:'plain'},
+    {id:'e21-2',time:'09:48.0',label:'DRIVE',type:'plain'},
+    {id:'e21-3',time:'09:46.5',label:'PICK',type:'plain'},
+    {id:'e21-4',time:'09:45.0',label:'SHOT',type:'plain'},
+    {id:'e21-5',time:'09:44.8',label:'DEAD BALL',type:'plain'},
+    {id:'e21-6',time:'09:44.8',label:'Foul: Blocking',type:'whistle',player:'K. Rice',foulType:'Foul: Blocking'},
+  ]},
+  {id:22,q:3,team:'CHI',time:'09:38.0',ptiw:false,events:[
+    {id:'e22-1',time:'09:37.8',label:'INBOUND',type:'plain'},
+    {id:'e22-2',time:'09:36.0',label:'DRIBBLE',type:'plain'},
+    {id:'e22-3',time:'09:34.5',label:'ILLEGAL SCREEN',type:'reviewable'},
+    {id:'e22-4',time:'09:33.0',label:'DRIVE',type:'plain'},
+    {id:'e22-5',time:'09:31.5',label:'SHOT',type:'plain'},
+    {id:'e22-6',time:'09:31.3',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:23,q:3,team:'TOR',time:'09:20.0',ptiw:false,events:[
+    {id:'e23-1',time:'09:19.7',label:'INBOUND',type:'plain'},
+    {id:'e23-2',time:'09:18.0',label:'DRIVE',type:'plain'},
+    {id:'e23-3',time:'09:16.5',label:'OOB: CHI',type:'whistle',player:'N. Nurse',foulType:'OOB: CHI'},
+    {id:'e23-4',time:'09:16.5',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:24,q:3,team:'CHI',time:'09:08.0',ptiw:true,events:[
+    {id:'e24-1',time:'09:07.7',label:'INBOUND',type:'plain'},
+    {id:'e24-2',time:'09:06.0',label:'PICK',type:'plain'},
+    {id:'e24-3',time:'09:04.5',label:'DRIVE',type:'plain'},
+    {id:'e24-4',time:'09:03.0',label:'NO DRIBBLE',type:'reviewable'},
+    {id:'e24-5',time:'09:02.5',label:'DEAD BALL',type:'plain'},
+    {id:'e24-6',time:'09:02.5',label:'Foul: Holding',type:'whistle',player:'N. Banham',foulType:'Foul: Holding'},
+    {id:'e24-7',time:'09:02.5',label:'FREE THROW',type:'plain'},
+  ]},
+  {id:25,q:3,team:'TOR',time:'08:52.0',ptiw:false,events:[
+    {id:'e25-1',time:'08:51.7',label:'INBOUND',type:'plain'},
+    {id:'e25-2',time:'08:50.0',label:'DRIBBLE',type:'plain'},
+    {id:'e25-3',time:'08:48.5',label:'PICK',type:'plain'},
+    {id:'e25-4',time:'08:47.0',label:'SHOT',type:'plain'},
+    {id:'e25-5',time:'08:46.8',label:'REBOUND',type:'plain'},
+    {id:'e25-6',time:'08:45.5',label:'TRAVEL',type:'reviewable'},
+    {id:'e25-7',time:'08:45.0',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:26,q:3,team:'CHI',time:'08:38.0',ptiw:false,events:[
+    {id:'e26-1',time:'08:37.7',label:'INBOUND',type:'plain'},
+    {id:'e26-2',time:'08:36.0',label:'DRIVE',type:'plain'},
+    {id:'e26-3',time:'08:34.5',label:'SHOT',type:'plain'},
+    {id:'e26-4',time:'08:34.3',label:'DEAD BALL',type:'plain'},
+    {id:'e26-5',time:'08:34.3',label:'Foul: Shooting',type:'whistle',player:'K. Cardoso',foulType:'Foul: Shooting'},
+    {id:'e26-6',time:'08:34.3',label:'FREE THROW',type:'plain'},
+    {id:'e26-7',time:'08:34.3',label:'FREE THROW',type:'plain'},
+  ]},
+  {id:27,q:3,team:'TOR',time:'08:22.0',ptiw:false,events:[
+    {id:'e27-1',time:'08:21.7',label:'INBOUND',type:'plain'},
+    {id:'e27-2',time:'08:20.0',label:'DRIVE',type:'plain'},
+    {id:'e27-3',time:'08:18.5',label:'PICK',type:'plain'},
+    {id:'e27-4',time:'08:17.0',label:'OOB: TOR',type:'whistle',player:'N. Conde',foulType:'OOB: TOR'},
+    {id:'e27-5',time:'08:17.0',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:28,q:3,team:'CHI',time:'08:08.0',ptiw:false,events:[
+    {id:'e28-1',time:'08:07.7',label:'INBOUND',type:'plain'},
+    {id:'e28-2',time:'08:06.0',label:'DRIBBLE',type:'plain'},
+    {id:'e28-3',time:'08:04.5',label:'DRIVE',type:'plain'},
+    {id:'e28-4',time:'08:03.0',label:'SHOT',type:'plain'},
+    {id:'e28-5',time:'08:02.8',label:'DEAD BALL',type:'plain'},
+    {id:'e28-6',time:'08:02.8',label:'Foul: Pushing',type:'whistle',player:'M. Taylor',foulType:'Foul: Pushing'},
+  ]},
+  {id:29,q:3,team:'TOR',time:'07:54.0',ptiw:false,events:[
+    {id:'e29-1',time:'07:53.7',label:'INBOUND',type:'plain'},
+    {id:'e29-2',time:'07:52.0',label:'PICK',type:'plain'},
+    {id:'e29-3',time:'07:50.5',label:'DRIVE',type:'plain'},
+    {id:'e29-4',time:'07:49.0',label:'ILLEGAL SCREEN',type:'reviewable'},
+    {id:'e29-5',time:'07:48.5',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:30,q:3,team:'CHI',time:'07:40.0',ptiw:false,events:[
+    {id:'e30-1',time:'07:39.7',label:'INBOUND',type:'plain'},
+    {id:'e30-2',time:'07:38.0',label:'DRIVE',type:'plain'},
+    {id:'e30-3',time:'07:36.5',label:'SHOT',type:'plain'},
+    {id:'e30-4',time:'07:36.3',label:'DEAD BALL',type:'plain'},
+    {id:'e30-5',time:'07:36.3',label:'Foul: Shooting',type:'whistle',player:'E. Williams',foulType:'Foul: Shooting'},
+    {id:'e30-6',time:'07:36.3',label:'FREE THROW',type:'plain'},
+  ]},
+  {id:31,q:4,team:'TOR',time:'09:47.0',ptiw:false,events:[
+    {id:'e31-1',time:'09:46.7',label:'INBOUND',type:'plain'},
+    {id:'e31-2',time:'09:45.0',label:'DRIVE',type:'plain'},
+    {id:'e31-3',time:'09:43.5',label:'PICK',type:'plain'},
+    {id:'e31-4',time:'09:42.0',label:'SHOT',type:'plain'},
+    {id:'e31-5',time:'09:41.8',label:'DEAD BALL',type:'plain'},
+    {id:'e31-6',time:'09:41.8',label:'Foul: Blocking',type:'whistle',player:'N. Sabally',foulType:'Foul: Blocking'},
+    {id:'e31-7',time:'09:41.8',label:'FREE THROW',type:'plain'},
+    {id:'e31-8',time:'09:41.8',label:'FREE THROW',type:'plain'},
+  ]},
+  {id:32,q:4,team:'CHI',time:'09:34.0',ptiw:false,events:[
+    {id:'e32-1',time:'09:33.7',label:'INBOUND',type:'plain'},
+    {id:'e32-2',time:'09:32.0',label:'DRIBBLE',type:'plain'},
+    {id:'e32-3',time:'09:30.5',label:'TRAVEL',type:'reviewable'},
+    {id:'e32-4',time:'09:30.0',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:33,q:4,team:'TOR',time:'09:22.0',ptiw:false,events:[
+    {id:'e33-1',time:'09:21.7',label:'INBOUND',type:'plain'},
+    {id:'e33-2',time:'09:20.0',label:'PICK',type:'plain'},
+    {id:'e33-3',time:'09:18.5',label:'DRIVE',type:'plain'},
+    {id:'e33-4',time:'09:17.0',label:'OOB: CHI',type:'whistle',player:'K. Rice',foulType:'OOB: CHI'},
+    {id:'e33-5',time:'09:17.0',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:34,q:4,team:'CHI',time:'09:08.0',ptiw:true,events:[
+    {id:'e34-1',time:'09:07.7',label:'INBOUND',type:'plain'},
+    {id:'e34-2',time:'09:06.0',label:'DRIVE',type:'plain'},
+    {id:'e34-3',time:'09:04.5',label:'ILLEGAL SCREEN',type:'reviewable'},
+    {id:'e34-4',time:'09:03.0',label:'SHOT',type:'plain'},
+    {id:'e34-5',time:'09:02.8',label:'DEAD BALL',type:'plain'},
+    {id:'e34-6',time:'09:02.8',label:'Foul: Pushing',type:'whistle',player:'S. Diggins',foulType:'Foul: Pushing'},
+    {id:'e34-7',time:'09:02.8',label:'FREE THROW',type:'plain'},
+  ]},
+  {id:35,q:4,team:'TOR',time:'08:54.0',ptiw:false,events:[
+    {id:'e35-1',time:'08:53.7',label:'INBOUND',type:'plain'},
+    {id:'e35-2',time:'08:52.0',label:'DRIBBLE',type:'plain'},
+    {id:'e35-3',time:'08:50.5',label:'PICK',type:'plain'},
+    {id:'e35-4',time:'08:49.0',label:'NO DRIBBLE',type:'reviewable'},
+    {id:'e35-5',time:'08:48.5',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:36,q:4,team:'CHI',time:'08:40.0',ptiw:false,events:[
+    {id:'e36-1',time:'08:39.7',label:'INBOUND',type:'plain'},
+    {id:'e36-2',time:'08:38.0',label:'DRIVE',type:'plain'},
+    {id:'e36-3',time:'08:36.5',label:'SHOT',type:'plain'},
+    {id:'e36-4',time:'08:36.3',label:'DEAD BALL',type:'plain'},
+    {id:'e36-5',time:'08:36.3',label:'Foul: Shooting',type:'whistle',player:'N. Banham',foulType:'Foul: Shooting'},
+    {id:'e36-6',time:'08:36.3',label:'FREE THROW',type:'plain'},
+    {id:'e36-7',time:'08:36.3',label:'FREE THROW',type:'plain'},
+  ]},
+  {id:37,q:4,team:'TOR',time:'08:25.0',ptiw:false,events:[
+    {id:'e37-1',time:'08:24.7',label:'INBOUND',type:'plain'},
+    {id:'e37-2',time:'08:23.0',label:'PICK',type:'plain'},
+    {id:'e37-3',time:'08:21.5',label:'DRIVE',type:'plain'},
+    {id:'e37-4',time:'08:20.0',label:'SHOT',type:'plain'},
+    {id:'e37-5',time:'08:19.8',label:'REBOUND',type:'plain'},
+    {id:'e37-6',time:'08:18.5',label:'TRAVEL',type:'reviewable'},
+    {id:'e37-7',time:'08:18.0',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:38,q:4,team:'CHI',time:'08:10.0',ptiw:false,events:[
+    {id:'e38-1',time:'08:09.7',label:'INBOUND',type:'plain'},
+    {id:'e38-2',time:'08:08.0',label:'DRIVE',type:'plain'},
+    {id:'e38-3',time:'08:06.5',label:'OOB: TOR',type:'whistle',player:'T. Cloud',foulType:'OOB: TOR'},
+    {id:'e38-4',time:'08:06.5',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:39,q:4,team:'TOR',time:'07:58.0',ptiw:false,events:[
+    {id:'e39-1',time:'07:57.7',label:'INBOUND',type:'plain'},
+    {id:'e39-2',time:'07:56.0',label:'DRIBBLE',type:'plain'},
+    {id:'e39-3',time:'07:54.5',label:'DRIVE',type:'plain'},
+    {id:'e39-4',time:'07:53.0',label:'SHOT',type:'plain'},
+    {id:'e39-5',time:'07:52.8',label:'DEAD BALL',type:'plain'},
+    {id:'e39-6',time:'07:52.8',label:'Foul: Holding',type:'whistle',player:'M. Mabrey',foulType:'Foul: Holding'},
+    {id:'e39-7',time:'07:52.8',label:'FREE THROW',type:'plain'},
+  ]},
+  {id:40,q:4,team:'CHI',time:'07:44.0',ptiw:false,events:[
+    {id:'e40-1',time:'07:43.7',label:'INBOUND',type:'plain'},
+    {id:'e40-2',time:'07:42.0',label:'PICK',type:'plain'},
+    {id:'e40-3',time:'07:40.5',label:'DRIVE',type:'plain'},
+    {id:'e40-4',time:'07:39.0',label:'SHOT',type:'plain'},
+    {id:'e40-5',time:'07:38.8',label:'DEAD BALL',type:'plain'},
+    {id:'e40-6',time:'07:38.8',label:'Foul: Pushing',type:'whistle',player:'B. Sykes',foulType:'Foul: Pushing'},
+    {id:'e40-7',time:'07:38.8',label:'FREE THROW',type:'plain'},
+    {id:'e40-8',time:'07:38.8',label:'FREE THROW',type:'plain'},
+  ]},
 ];
 
-// Infraction candidates by event type
-function getInfractionCandidates(evt) {
-  const p = evt.player;
-  if (evt.type === 'FOUL') return [
-    {type:'Foul: Shooting', player:p, opponent:'Defender', onball:true},
-    {type:'Foul: Offensive', player:'Offense', opponent:p, onball:false},
-  ];
-  if (evt.type === 'DRIVE') return [
-    {type:'Foul: Personal', player:'Defender', opponent:p, onball:true},
-    {type:'Foul: Offensive', player:p, opponent:'Defender', onball:false},
-  ];
-  if (evt.type === 'SHOT') return [
-    {type:'Foul: Shooting · Def. Goaltending', player:'Defender', opponent:p, onball:true},
-  ];
-  if (evt.type === 'OOB') return [
-    {type:'Stoppage: Out-of-Bounds', player:p, opponent:'—', onball:false},
-  ];
-  if (evt.type === 'TRAVEL') return [
-    {type:'Turnover: Traveling', player:p, opponent:'—', onball:true},
-  ];
-  if (evt.type === 'REBOUND') return [
-    {type:'Foul: Loose Ball', player:'—', opponent:p, onball:false},
-  ];
-  return [];
-}
-
-// ─── STATE ───────────────────────────────────────────────────────────────────
-let selectedEvent = null;   // {possId, evtId}
-let selectedInfraction = null;
-let autoPlay = false;
-let autoTimer = null;
-let curPossIdx = 0;
-let curEvtIdx = 0;
+let activeQ = 'Q1';
 let openPossId = null;
-let savedRatings = {};  // key: "possId-evtId", value: [{rating,type,comment}]
-let currentRating = null;
-
-// ─── RENDER QUEUE ─────────────────────────────────────────────────────────────
-function badgeClass(type) {
-  return 'sq-badge sq-badge-' + type.toLowerCase();
-}
+let selectedEvtId = null;
+let selectedInfRow = null;
+let infractionRows = [];
+let currentPoss = null;
+let currentEv = null;
 
 function renderQueue() {
-  const list = document.getElementById('sq-list');
+  const list = document.getElementById('poss-list');
   list.innerHTML = '';
-  possessions.forEach((poss, pi) => {
-    const isOpen = openPossId === pi;
-    const div = document.createElement('div');
-    div.className = 'sq-poss';
-    div.id = 'poss-' + pi;
-
+  POSSESSIONS.filter(p => 'Q'+p.q === activeQ).forEach(p => {
+    const item = document.createElement('div');
+    item.className = 'poss-item' + (p.id === openPossId ? ' open' : '');
     const hdr = document.createElement('div');
-    hdr.className = 'sq-poss-hdr' + (isOpen ? ' open' : '');
-    hdr.innerHTML = `<span class="sq-poss-team">${poss.team}</span> <span>${poss.q} · ${poss.clock}</span><span class="sq-poss-caret">▶</span>`;
-    hdr.onclick = () => togglePoss(pi);
-    div.appendChild(hdr);
-
-    const evtsDiv = document.createElement('div');
-    evtsDiv.className = 'sq-events' + (isOpen ? ' open' : '');
-    evtsDiv.id = 'events-' + pi;
-
-    poss.events.forEach((evt, ei) => {
-      const isSel = selectedEvent && selectedEvent.possId === pi && selectedEvent.evtId === ei;
+    hdr.className = 'poss-hdr';
+    hdr.onclick = () => openPoss(p.id);
+    hdr.innerHTML = '<span class="poss-num">'+p.id+'</span><span class="poss-team">'+p.team+'</span><span class="poss-time">'+p.time+'</span>'+(p.ptiw?'<span class="poss-warn">&#9888;</span>':'')+'<span class="poss-chevron">&#9654;</span>';
+    const evWrap = document.createElement('div');
+    evWrap.className = 'poss-events';
+    p.events.forEach(ev => {
       const row = document.createElement('div');
-      row.className = 'sq-event' + (isSel ? ' sel' : '');
-      row.id = 'evt-' + pi + '-' + ei;
-      row.innerHTML = `<span class="${badgeClass(evt.type)}">${evt.type}</span><span class="sq-evt-time">${evt.time}</span><span class="sq-evt-player">${evt.player}</span>`;
-      row.onclick = () => selectEvent(pi, ei);
-      evtsDiv.appendChild(row);
+      let cls = 'ev-row ';
+      cls += ev.type==='whistle' ? 'whistled' : ev.type==='reviewable' ? 'reviewable' : 'plain';
+      if (ev.id === selectedEvtId) cls += ' sel';
+      row.className = cls;
+      if (ev.type==='whistle') row.innerHTML='<span class="ev-check">&#10003;</span><span>'+ev.time+'-'+ev.label+'</span><span class="ev-warn">&#9888;</span>';
+      else row.innerHTML='<span>'+ev.time+'-'+ev.label+'</span>';
+      if (ev.type!=='plain') row.onclick = () => selectEvent(ev.id, p, ev);
+      evWrap.appendChild(row);
     });
-
-    div.appendChild(evtsDiv);
-    list.appendChild(div);
+    item.appendChild(hdr); item.appendChild(evWrap);
+    list.appendChild(item);
   });
 }
 
-function togglePoss(pi) {
-  openPossId = openPossId === pi ? null : pi;
+function filterQ(q, btn) {
+  activeQ = q;
+  document.querySelectorAll('.q-tog').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
   renderQueue();
 }
 
-// ─── SELECT EVENT ─────────────────────────────────────────────────────────────
-function selectEvent(possId, evtId) {
-  selectedEvent = {possId, evtId};
-  selectedInfraction = null;
-  currentRating = null;
-  openPossId = possId;
-  curPossIdx = possId;
-  curEvtIdx = evtId;
+function openPoss(id) {
+  openPossId = (openPossId === id) ? null : id;
   renderQueue();
-  renderEventHeader();
+}
+
+function selectEvent(evtId, poss, ev) {
+  selectedEvtId = evtId; selectedInfRow = null;
+  currentPoss = poss; currentEv = ev;
+  if (ev.type==='whistle') {
+    infractionRows = [{type:ev.foulType||ev.label, player:ev.player||(poss.team==='TOR'?TOR_P[0]:CHI_P[0]),
+      opponent:poss.team==='TOR'?CHI_P[0]:TOR_P[0], official:REFS[0], location:'Lead', rating:'Called', observability:'Observable'}];
+  } else {
+    const rt = ev.label==='TRAVEL'?'Travel':ev.label==='ILLEGAL SCREEN'?'Illegal Screen':'Illegal Dribble';
+    infractionRows = [{type:rt, player:poss.team==='TOR'?TOR_P[0]:CHI_P[0],
+      opponent:poss.team==='TOR'?CHI_P[1]:TOR_P[1], official:REFS[1], location:'Trail', rating:'Judgement - Lean No', observability:'Observable'}];
+  }
+  renderQueue();
+  document.getElementById('cp-empty').style.display='none';
+  document.getElementById('inf-table-wrap').style.display='block';
+  document.getElementById('comment-section').style.display='flex';
+  document.getElementById('rating-form').style.display='none';
+  document.getElementById('rf-clock').value = ev.time;
+  document.getElementById('ptiw-comment').textContent = poss.ptiw ? 'PTIW flagged on this possession' : 'No PTIW Comment';
   renderInfractionTable();
-  closeRatingForm();
-  scrollEvtIntoView(possId, evtId);
 }
 
-function scrollEvtIntoView(pi, ei) {
-  const el = document.getElementById('evt-' + pi + '-' + ei);
-  if (el) el.scrollIntoView({block:'nearest', behavior:'smooth'});
-}
-
-function renderEventHeader() {
-  const hdr = document.getElementById('event-header-content');
-  if (!selectedEvent) {
-    hdr.innerHTML = '<div style="color:#9ca3af;font-size:13px;font-style:italic">Select an event from the queue</div>';
-    return;
-  }
-  const poss = possessions[selectedEvent.possId];
-  const evt = poss.events[selectedEvent.evtId];
-  const key = selectedEvent.possId + '-' + selectedEvent.evtId;
-  const ratings = savedRatings[key] || [];
-  const ratedBadge = ratings.length > 0 ? `<span class="rated-badge">${ratings.length} rated</span>` : '';
-
-  const isCall = evt.type === 'FOUL';
-  const callPill = isCall
-    ? `<span class="called-pill called-c">CALLED</span>`
-    : `<span class="called-pill called-nc">NO CALL</span>`;
-
-  hdr.innerHTML = `
-    <div class="b1-r1">
-      <span class="ev-badge">${evt.type}</span>
-      <span class="b1-time">${evt.time}</span>
-      <span class="b1-seg">${poss.q} · ${poss.team}</span>
-      ${callPill}
-      ${ratedBadge}
-    </div>
-    <div class="b1-desc">${evt.desc}${evt.detail ? ' ' + evt.detail : ''}</div>
-    <div class="b1-r2">
-      <div class="b1-players"><b>${evt.player}</b></div>
-      <div class="vsep"></div>
-      <span class="b1-sub">Official: Genesis Perrymond &nbsp;·&nbsp; Location: Lead</span>
-    </div>
-  `;
-}
-
-// ─── INFRACTION TABLE ────────────────────────────────────────────────────────
 function renderInfractionTable() {
-  const section = document.getElementById('infraction-section');
-  const tbody = document.getElementById('infraction-tbody');
-  const placeholder = document.getElementById('center-placeholder');
-  const savedArea = document.getElementById('saved-ratings-area');
-
-  if (!selectedEvent) {
-    section.style.display = 'none';
-    placeholder.style.display = 'flex';
-    savedArea.style.display = 'none';
-    return;
-  }
-
-  placeholder.style.display = 'none';
-  section.style.display = 'block';
-
-  const poss = possessions[selectedEvent.possId];
-  const evt = poss.events[selectedEvent.evtId];
-  const candidates = getInfractionCandidates(evt);
-
+  const tbody = document.getElementById('inf-tbody');
   tbody.innerHTML = '';
-  candidates.forEach((inf, idx) => {
+  infractionRows.forEach((row, idx) => {
     const tr = document.createElement('tr');
-    tr.id = 'inf-row-' + idx;
-    if (selectedInfraction === idx) tr.className = 'sel';
-    tr.onclick = () => selectInfraction(idx);
-    tr.innerHTML = `
-      <td class="inf-type-cell">${inf.type}</td>
-      <td>${inf.player}</td>
-      <td>${inf.opponent}</td>
-      <td class="inf-onball">${inf.onball ? '<span class="inf-onball-yes"></span>' : '—'}</td>
-    `;
+    if (idx===selectedInfRow) tr.className='inf-sel';
+    tr.onclick = () => selectInfractionRow(idx);
+    tr.innerHTML='<td>'+row.type+'</td><td>'+row.player+'</td><td>'+row.opponent+'</td><td>'+row.official+'</td><td>'+row.location+'</td><td><span class="rating-chip">'+row.rating+'</span></td><td>'+row.observability+'</td>';
     tbody.appendChild(tr);
   });
-
-  // Render saved ratings
-  renderSavedRatings();
 }
 
-function renderSavedRatings() {
-  const savedArea = document.getElementById('saved-ratings-area');
-  if (!selectedEvent) return;
-  const key = selectedEvent.possId + '-' + selectedEvent.evtId;
-  const ratings = savedRatings[key] || [];
-
-  if (ratings.length === 0) {
-    savedArea.style.display = 'none';
-    return;
-  }
-
-  savedArea.style.display = 'block';
-  savedArea.innerHTML = '';
-
-  ratings.forEach((r, idx) => {
-    const card = document.createElement('div');
-    card.className = 'saved-rating-card';
-    const ratingClass = 'src-' + r.rating.toLowerCase().replace(' - ', '-').replace(' ', '-');
-    card.innerHTML = `
-      <span class="src-rating ${ratingClass}">${r.rating}</span>
-      <span class="src-type">${r.type}</span>
-      <div class="src-actions">
-        <button class="src-btn" title="Edit" onclick="editSavedRating(${idx})"><i class="ti ti-pencil"></i></button>
-        <button class="src-btn" title="Delete" onclick="deleteSavedRating(${idx})"><i class="ti ti-trash"></i></button>
-      </div>
-    `;
-    savedArea.appendChild(card);
-  });
+function addInfractionRow() {
+  infractionRows.push({type:'Blocking Foul',player:TOR_P[0],opponent:CHI_P[0],official:REFS[0],location:'Lead',rating:'No Infraction',observability:'Observable'});
+  renderInfractionTable();
 }
 
-// ─── SELECT INFRACTION ───────────────────────────────────────────────────────
-function selectInfraction(idx) {
-  selectedInfraction = idx;
-
-  // Update row highlight
-  document.querySelectorAll('#infraction-tbody tr').forEach((tr, i) => {
-    tr.className = i === idx ? 'sel' : '';
-  });
-
-  // Pre-fill infraction type
-  if (selectedEvent) {
-    const poss = possessions[selectedEvent.possId];
-    const evt = poss.events[selectedEvent.evtId];
-    const candidates = getInfractionCandidates(evt);
-    if (candidates[idx]) {
-      const sel = document.getElementById('cf-infraction-type');
-      // Try to match
-      const opts = Array.from(sel.options);
-      const match = opts.find(o => candidates[idx].type.startsWith(o.value) || o.value.startsWith(candidates[idx].type.split(' ·')[0]));
-      if (match) sel.value = match.value;
-    }
-  }
-
-  openRatingForm();
+function selectInfractionRow(idx) {
+  selectedInfRow = idx;
+  document.getElementById('rating-form').style.display='block';
+  if (currentEv) document.getElementById('rf-clock').value = currentEv.time;
+  const r = infractionRows[idx].rating;
+  document.querySelectorAll('.rating-btn').forEach(b => b.classList.toggle('on', b.textContent.trim()===r));
+  renderInfractionTable();
 }
 
-function openRatingForm() {
-  document.getElementById('rating-form').classList.add('open');
-  // Reset rating buttons
-  document.querySelectorAll('.rating-btn').forEach(b => b.classList.remove('sel'));
-  currentRating = null;
+function selectRef(btn) {
+  btn.closest('.rf-row').querySelectorAll('.ref-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
 }
-
-function closeRatingForm() {
-  document.getElementById('rating-form').classList.remove('open');
-  document.getElementById('comment-editor').innerHTML = '';
-  document.getElementById('notes-textarea').value = '';
-  document.querySelectorAll('.rating-btn').forEach(b => b.classList.remove('sel'));
-  currentRating = null;
+function selectLocation(btn) {
+  btn.closest('.rf-row').querySelectorAll('.loc-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
 }
-
 function selectRating(btn) {
-  document.querySelectorAll('.rating-btn').forEach(b => b.classList.remove('sel'));
-  btn.classList.add('sel');
-  currentRating = btn.dataset.rating;
+  document.querySelectorAll('.rating-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  if (selectedInfRow!==null && infractionRows[selectedInfRow]) {
+    infractionRows[selectedInfRow].rating = btn.textContent.trim();
+    renderInfractionTable();
+  }
 }
-
-// ─── SAVE RATING ─────────────────────────────────────────────────────────────
 function saveRating() {
-  if (!selectedEvent || !currentRating) {
-    alert('Please select a rating before saving.');
-    return;
-  }
-  const key = selectedEvent.possId + '-' + selectedEvent.evtId;
-  if (!savedRatings[key]) savedRatings[key] = [];
-
-  const poss = possessions[selectedEvent.possId];
-  const evt = poss.events[selectedEvent.evtId];
-  const candidates = getInfractionCandidates(evt);
-  const infType = selectedInfraction !== null && candidates[selectedInfraction]
-    ? candidates[selectedInfraction].type
-    : document.getElementById('cf-infraction-type').value;
-
-  savedRatings[key].push({
-    rating: currentRating,
-    type: infType,
-    comment: document.getElementById('comment-editor').innerText.trim(),
-    notes: document.getElementById('notes-textarea').value.trim(),
-  });
-
-  closeRatingForm();
-  selectedInfraction = null;
-  document.querySelectorAll('#infraction-tbody tr').forEach(tr => tr.className = '');
-  renderSavedRatings();
-  renderEventHeader(); // update rated badge
+  document.getElementById('rating-form').style.display='none';
+  selectedInfRow=null; renderInfractionTable(); showToast('Rating saved');
 }
-
-function editSavedRating(idx) {
-  const key = selectedEvent.possId + '-' + selectedEvent.evtId;
-  const r = savedRatings[key][idx];
-  savedRatings[key].splice(idx, 1);
-  renderSavedRatings();
-  renderEventHeader();
-
-  // Re-populate form
-  document.getElementById('cf-infraction-type').value = r.type.split(' ·')[0] || r.type;
-  document.getElementById('comment-editor').innerText = r.comment;
-  document.getElementById('notes-textarea').value = r.notes;
-  openRatingForm();
-  // Select rating
-  document.querySelectorAll('.rating-btn').forEach(b => {
-    if (b.dataset.rating === r.rating) { b.classList.add('sel'); currentRating = r.rating; }
-  });
+function cancelRating() {
+  document.getElementById('rating-form').style.display='none';
+  selectedInfRow=null; renderInfractionTable();
 }
-
-function deleteSavedRating(idx) {
-  const key = selectedEvent.possId + '-' + selectedEvent.evtId;
-  savedRatings[key].splice(idx, 1);
-  renderSavedRatings();
-  renderEventHeader();
-}
-
-function flagEvent() {
-  alert('Event flagged.');
-}
-
-function skipEvent() {
-  advanceAutoPlay();
-}
-
-// ─── AUTO-PLAY ────────────────────────────────────────────────────────────────
-function toggleAutoPlay() {
-  autoPlay = !autoPlay;
-  const btn = document.getElementById('play-btn');
-  if (autoPlay) {
-    btn.textContent = '⏸ Stop';
-    btn.classList.add('active');
-    autoTimer = setInterval(advanceAutoPlay, 3000);
-  } else {
-    btn.textContent = '▶ Play';
-    btn.classList.remove('active');
-    clearInterval(autoTimer);
-    autoTimer = null;
-  }
-}
-
-function advanceAutoPlay() {
-  // Determine next event
-  const poss = possessions[curPossIdx];
-  if (!poss) { stopAutoPlay(); return; }
-
-  const nextEvtIdx = curEvtIdx + 1;
-  if (nextEvtIdx < poss.events.length) {
-    curEvtIdx = nextEvtIdx;
-    selectEvent(curPossIdx, curEvtIdx);
-  } else {
-    // Next possession
-    const nextPossIdx = curPossIdx + 1;
-    if (nextPossIdx < possessions.length) {
-      curPossIdx = nextPossIdx;
-      curEvtIdx = 0;
-      openPossId = curPossIdx;
-      selectEvent(curPossIdx, curEvtIdx);
-    } else {
-      stopAutoPlay();
-    }
-  }
-}
-
-function stopAutoPlay() {
-  autoPlay = false;
-  const btn = document.getElementById('play-btn');
-  btn.textContent = '▶ Play';
-  btn.classList.remove('active');
-  clearInterval(autoTimer);
-  autoTimer = null;
-}
-
-// ─── VIDEO CONTROLS ───────────────────────────────────────────────────────────
-let vidPlaying = false;
-let vidProgress = 0;
-let vidInterval = null;
-
-function selAng(el) {
-  document.querySelectorAll('.ang').forEach(a => a.classList.remove('on'));
+function angClick(el) {
+  document.querySelectorAll('.ang').forEach(a=>a.classList.remove('on'));
   el.classList.add('on');
 }
-
-function vidControl(action) {
-  const btn = document.getElementById('vid-play-btn');
-  if (action === 'play') {
-    vidPlaying = !vidPlaying;
-    if (vidPlaying) {
-      btn.innerHTML = '<i class="ti ti-player-pause"></i>';
-      vidInterval = setInterval(() => {
-        vidProgress = Math.min(vidProgress + 0.5, 100);
-        updateVidDisplay();
-        if (vidProgress >= 100) { vidPlaying = false; btn.innerHTML = '<i class="ti ti-player-play"></i>'; clearInterval(vidInterval); }
-      }, 100);
-    } else {
-      btn.innerHTML = '<i class="ti ti-player-play"></i>';
-      clearInterval(vidInterval);
-    }
-  } else if (action === 'prev') {
-    vidProgress = Math.max(0, vidProgress - 10);
-    updateVidDisplay();
-  } else if (action === 'next') {
-    vidProgress = Math.min(100, vidProgress + 10);
-    updateVidDisplay();
-  }
-}
-
-function scrubVideo(e) {
-  const track = document.getElementById('vtrack');
-  const rect = track.getBoundingClientRect();
-  vidProgress = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
-  updateVidDisplay();
-}
-
-function updateVidDisplay() {
-  document.getElementById('vfill').style.width = vidProgress + '%';
-  const totalSecs = 600;
-  const secs = Math.floor((vidProgress / 100) * totalSecs);
-  const m = Math.floor(secs / 60);
-  const s = secs % 60;
-  document.getElementById('v-time').textContent = m + ':' + String(s).padStart(2,'0');
-}
-
-// ─── NAV DROPDOWN ─────────────────────────────────────────────────────────────
 function toggleNavDropdown(e) {
   e.stopPropagation();
   document.getElementById('nav-dropdown').classList.toggle('open');
 }
-document.addEventListener('click', () => {
-  document.getElementById('nav-dropdown').classList.remove('open');
-});
+document.addEventListener('click', () => document.getElementById('nav-dropdown').classList.remove('open'));
 
-// ─── COMMENT EDITOR Ctrl+B ────────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
-  const editor = document.getElementById('comment-editor');
-  editor.addEventListener('keydown', e => {
-    if ((e.ctrlKey || e.metaKey) && e.key === 'b') {
-      e.preventDefault();
-      document.execCommand('bold');
-    }
-  });
-  // Init
-  renderQueue();
-});
+function showToast(msg) {
+  const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2000);
+}
+
+// INIT
+openPossId = 1; renderQueue();
+const fp = POSSESSIONS[0];
+const fe = fp.events.find(e=>e.type==='reviewable'||e.type==='whistle');
+if(fe){selectEvent(fe.id,fp,fe);renderQueue();}
 </script>
 </body>
 </html>
