@@ -562,7 +562,6 @@ const SEED_COMMENTS = [
   "Bagley III (DAL) makes contact to the ball as he and Mobley (CLE) pursue the rebound. While the ball is still loose, Bagley III reaches across Mobley's shoulder and there is judgment regarding the degree and effect of the contact.",
   "Marshall (DAL) initiates arm contact with Harden (CLE) after he gathers the ball during a moving shot. Although a foul is correctly called, a shooting foul should have been assessed instead.",
   "Nembhard (DAL) initiates contact with Mobley's (CLE) wrist, causing him to lose control of the ball. Since the illegal contact occurs prior to Mobley's upward shooting motion, it is correctly assessed as a non-shooting foul.",
-  "Vassell (SAS) deflects the ball away from Dunn (LAC). Any ensuing contact that occurs after the deflection is considered incidental. Play should have continued without a whistle.",
   "Ighodaro (PHX) swipes down and initiates contact with Gobert's (MIN) arm that affects his ability to maintain control of the ball.",
   "Goodwin (PHX) momentarily applies his hands to Hyland's (MIN) upper body and some contact occurs during his drive. Although contact does occur, there is minimal effect on Hyland's SQBR as he moves through the contact and continues his drive.",
   "Gillespie (PHX) beats Gobert (MIN) to the spot, and establishes a legal guarding position outside of the RA, prior to contact occurring during Gobert's play at the basket. A shooting foul is called on Gillespie, but an offensive foul should have been called on Gobert instead.",
@@ -606,7 +605,7 @@ function detectPlayType(text) {
   const t = text.toLowerCase();
   const scores = {'Foul: Shooting':0,'Foul: Offensive':0,'Foul: Loose Ball':0,'Foul: Personal':0,'Turnover: Out of Bounds':0,'Turnover: Traveling':0,'Turnover: Defensive Goaltending':0,'Turnover: Offensive Goaltending':0};
   const kw = {
-    'Foul: Shooting': ['shooting motion','shot attempt','upward shooting','jump shot','contesting','contests the','release of','releases the','in control of the ball','shot release','upward motion','elevates'],
+    'Foul: Shooting': ['shooting motion','shot attempt','upward shooting','jump shot','contesting','contests the','release of','releases the','in control of the ball','shot release','upward motion','elevates','finish at the rim'],
     'Foul: Offensive': ['screen','pick','screening position','set the pick','sets a screen','setting the pick'],
     'Foul: Loose Ball': ['rebound','loose ball','pursue the rebound','pursues the rebound'],
     'Foul: Personal': ['sqbr','drive to the basket','drives toward','personal foul','hand-on-ball','during the drive','during his drive'],
