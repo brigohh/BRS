@@ -387,6 +387,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 <script>
 const PLAY_TYPES = ['All','Foul: Shooting','Foul: Offensive','Foul: Personal','Foul: Loose Ball','Foul: Away from Play','Foul: Transition Take Foul','Stoppage: Inadvertent Whistle','Stoppage: Out-of-Bounds','Turnover: Traveling','Turnover: Double Dribble','Uncategorized'];
 const STORAGE_KEY = 'brs_comments_v6';
+const EDITS_KEY = 'brs_seed_edits_v1'; // persists manual edits to seed comments across storage clears
 
 // 3-level taxonomy — sourced directly from Review_7.csv (active rows only)
 const TAXONOMY = {
@@ -847,16 +848,30 @@ function renderBold(text) {
 
 // ── Storage ───────────────────────────────────────────────────────────────
 
+function loadSeedEdits() {
+  try { return JSON.parse(localStorage.getItem(EDITS_KEY) || '{}'); } catch(e) { return {}; }
+}
+function saveSeedEdits(map) {
+  localStorage.setItem(EDITS_KEY, JSON.stringify(map));
+}
+
 function loadComments() {
+  const seedEdits = loadSeedEdits();
   const stored = localStorage.getItem(STORAGE_KEY);
-  if (stored) { try { return JSON.parse(stored); } catch(e) {} }
+  if (stored) {
+    try {
+      const parsed = JSON.parse(stored);
+      // Apply any persisted seed edits over stored data in case they diverged
+      return parsed.map(c => seedEdits[c.id] ? { ...c, ...seedEdits[c.id] } : c);
+    } catch(e) {}
+  }
   const now = Date.now();
   const seeded = SEED_COMMENTS.map((raw, i) => {
     const cleaned = cleanComment(raw);
     const redacted = plainRedact(cleaned);
     const withKey = detectKeyPhrase(redacted);
     const pt = detectPlayType(redacted);
-    return {
+    const base = {
       id: 'seed_' + i,
       text: withKey,
       playType: pt,
@@ -865,8 +880,10 @@ function loadComments() {
       callType: detectInfractionRating(redacted),
       source: 'seed',
       createdAt: now - (SEED_COMMENTS.length - i) * 3600000,
-      savedBy: Math.floor(Math.random() * 4)  // simulated "also saved by" count
+      savedBy: Math.floor(Math.random() * 4)
     };
+    // Apply persisted edits even on fresh seed
+    return seedEdits[base.id] ? { ...base, ...seedEdits[base.id] } : base;
   });
   localStorage.setItem(STORAGE_KEY, JSON.stringify(seeded));
   return seeded;
@@ -1235,6 +1252,8 @@ function closeEditModal() {
   editingId = null;
 }
 
+function onEditEditorInput() { /* no-op: no live preview needed for edit modal */ }
+
 function onEditOverlayClick(e) { if (e.target===document.getElementById('edit-overlay')) closeEditModal(); }
 
 function onEditPtChange() {
@@ -1285,14 +1304,20 @@ function saveEditComment() {
   if (!editingId) return;
   const idx = allComments.findIndex(x => x.id === editingId);
   if (idx === -1) return;
-  allComments[idx] = {
-    ...allComments[idx],
+  const edits = {
     text: editorToMarkdown(document.getElementById('edit-editor')),
     playType: document.getElementById('edit-pt').value,
     situation: document.getElementById('edit-sit').value,
     subPlayType: document.getElementById('edit-spt').value,
     callType: document.getElementById('edit-ct').value,
   };
+  allComments[idx] = { ...allComments[idx], ...edits };
+  // Persist seed edits separately so they survive storage clears
+  if (editingId.startsWith('seed_')) {
+    const map = loadSeedEdits();
+    map[editingId] = edits;
+    saveSeedEdits(map);
+  }
   saveComments(); closeEditModal(); render();
 }
 
