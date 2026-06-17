@@ -99,7 +99,38 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .card-action-btn:hover{color:#6b7280}
 .card-action-btn.delete:hover{color:#ef4444}
 
-/* EMPTY STATE */
+/* VIEW TOGGLE */
+.view-toggle{display:flex;background:#f3f4f6;border-radius:8px;padding:2px;gap:2px}
+.view-tab{padding:5px 14px;border-radius:6px;border:none;background:none;font-size:11.5px;font-weight:600;color:#6b7280;cursor:pointer;transition:background .12s,color .12s;white-space:nowrap}
+.view-tab.on{background:#fff;color:#1a3a6b;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+
+/* QUICK COPY MODE TOGGLE */
+.qc-toggle{display:flex;align-items:center;gap:6px;font-size:11px;color:#6b7280;cursor:pointer;user-select:none}
+.qc-toggle input{accent-color:#1a3a6b;width:13px;height:13px;cursor:pointer}
+.qc-toggle.active{color:#1a3a6b;font-weight:600}
+
+/* BOOKMARK */
+.bookmark-btn{background:none;border:none;cursor:pointer;padding:2px 4px;font-size:13px;color:#d1d5db;transition:color .1s;line-height:1}
+.bookmark-btn:hover{color:#f59e0b}
+.bookmark-btn.saved{color:#f59e0b}
+
+/* SAVED BY */
+.saved-by{font-size:9.5px;color:#9ca3af;display:flex;align-items:center;gap:3px}
+.saved-by i{font-size:10px}
+
+/* QUICK COPY overlay flash */
+.comment-card.qc-mode{cursor:pointer}
+.comment-card.qc-mode:hover{box-shadow:0 2px 16px rgba(26,58,107,.15);border-color:#1a3a6b}
+.comment-card.qc-flash{background:#f0fdf4;border-color:#86efac}
+
+/* COLLECTION VIEW */
+.section-header{padding:6px 0 8px;margin-bottom:2px;display:flex;align-items:center;justify-content:space-between}
+.section-title{font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px}
+.section-count{font-size:10px;color:#d1d5db;font-weight:600}
+.collection-empty{text-align:center;padding:80px 20px;color:#9ca3af}
+.collection-empty i{font-size:36px;margin-bottom:12px;display:block;color:#d1d5db}
+.collection-empty p{font-size:13px;margin-bottom:6px}
+.collection-empty small{font-size:11px;color:#d1d5db}
 .empty-state{text-align:center;padding:80px 20px;color:#9ca3af}
 .empty-state i{font-size:36px;margin-bottom:12px;display:block;color:#d1d5db}
 .empty-state p{font-size:13px}
@@ -203,17 +234,37 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 <div class="layout">
   <div class="main">
     <div class="main-header">
-      <div class="main-header-left">
-        <div class="main-title">Comment Library</div>
+      <div class="main-header-left" style="gap:14px">
+        <div class="view-toggle">
+          <button class="view-tab on" id="tab-library" onclick="setView('library')">Comment Library</button>
+          <button class="view-tab" id="tab-collection" onclick="setView('collection')">My Collection <span id="coll-badge" style="display:none;background:#1a3a6b;color:#fff;border-radius:10px;padding:1px 6px;font-size:9px;margin-left:2px"></span></button>
+        </div>
         <div class="main-count" id="main-count"></div>
       </div>
-      <button class="submit-btn" onclick="openSubmitModal()"><i class="ti ti-plus"></i> Submit a Comment</button>
+      <div style="display:flex;align-items:center;gap:14px">
+        <label class="qc-toggle" id="qc-label" title="Click any card to instantly copy it">
+          <input type="checkbox" id="qc-checkbox" onchange="onQcToggle()"> Quick Copy
+        </label>
+        <button class="submit-btn" id="submit-btn-header" onclick="openSubmitModal()"><i class="ti ti-plus"></i> Submit a Comment</button>
+      </div>
     </div>
     <div class="cards-area">
-      <div class="cards-grid" id="cards-grid"></div>
-      <div class="empty-state" id="empty-state" style="display:none">
-        <i class="ti ti-search"></i>
-        <p>No comments match your search.</p>
+      <!-- Library view -->
+      <div id="view-library">
+        <div class="cards-grid" id="cards-grid"></div>
+        <div class="empty-state" id="empty-state" style="display:none">
+          <i class="ti ti-search"></i>
+          <p>No comments match your search.</p>
+        </div>
+      </div>
+      <!-- Collection view -->
+      <div id="view-collection" style="display:none">
+        <div id="collection-sections"></div>
+        <div class="collection-empty" id="collection-empty" style="display:none">
+          <i class="ti ti-bookmark"></i>
+          <p>Your collection is empty</p>
+          <small>Click the bookmark icon on any comment to save it here</small>
+        </div>
       </div>
     </div>
   </div>
@@ -316,7 +367,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 
 <script>
 const PLAY_TYPES = ['All','Foul: Shooting','Foul: Offensive','Foul: Personal','Foul: Loose Ball','Foul: Away from Play','Foul: Transition Take Foul','Stoppage: Inadvertent Whistle','Stoppage: Out-of-Bounds','Uncategorized'];
-const STORAGE_KEY = 'brs_comments_v5';
+const STORAGE_KEY = 'brs_comments_v6';
 
 // 3-level taxonomy — sourced directly from Review_7.csv (active rows only)
 const TAXONOMY = {
@@ -773,6 +824,7 @@ function renderBold(text) {
 function loadComments() {
   const stored = localStorage.getItem(STORAGE_KEY);
   if (stored) { try { return JSON.parse(stored); } catch(e) {} }
+  const now = Date.now();
   const seeded = SEED_COMMENTS.map((raw, i) => {
     const cleaned = cleanComment(raw);
     const redacted = plainRedact(cleaned);
@@ -785,7 +837,9 @@ function loadComments() {
       situation: detectSituation(redacted, pt),
       subPlayType: detectSubPlayType(redacted, pt),
       callType: detectInfractionRating(redacted),
-      source: 'seed'
+      source: 'seed',
+      createdAt: now - (SEED_COMMENTS.length - i) * 3600000,
+      savedBy: Math.floor(Math.random() * 4)  // simulated "also saved by" count
     };
   });
   localStorage.setItem(STORAGE_KEY, JSON.stringify(seeded));
@@ -805,6 +859,18 @@ let filterSpt = '';
 let filterIR = '';
 let searchQuery = '';
 let editingId = null;
+let currentView = 'library';  // 'library' | 'collection'
+let quickCopyMode = false;
+
+// Collection — stored as Set of comment IDs in localStorage
+const COLL_KEY = 'brs_collection_v1';
+function loadCollection() {
+  try { return new Set(JSON.parse(localStorage.getItem(COLL_KEY) || '[]')); } catch(e) { return new Set(); }
+}
+function saveCollection() {
+  localStorage.setItem(COLL_KEY, JSON.stringify([...collection]));
+}
+let collection = loadCollection();
 
 // ── Nav dropdown ─────────────────────────────────────────────────────────
 
@@ -819,14 +885,16 @@ document.addEventListener('click', () => {
 // ── Render ────────────────────────────────────────────────────────────────
 
 function filteredComments() {
-  return allComments.filter(c => {
-    if (filterPT && c.playType !== filterPT) return false;
-    if (filterSit && c.situation !== filterSit) return false;
-    if (filterSpt && c.subPlayType !== filterSpt) return false;
-    if (filterIR && c.callType !== filterIR) return false;
-    if (searchQuery && !c.text.toLowerCase().includes(searchQuery.toLowerCase())) return false;
-    return true;
-  });
+  return allComments
+    .filter(c => {
+      if (filterPT && c.playType !== filterPT) return false;
+      if (filterSit && c.situation !== filterSit) return false;
+      if (filterSpt && c.subPlayType !== filterSpt) return false;
+      if (filterIR && c.callType !== filterIR) return false;
+      if (searchQuery && !c.text.toLowerCase().includes(searchQuery.toLowerCase())) return false;
+      return true;
+    })
+    .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
 }
 
 function renderFilterBar() {
@@ -891,9 +959,13 @@ function ratingBadge(ct) {
   return `<span class="ct-badge ct-${cls}">${ct||'—'}</span>`;
 }
 
-function renderCard(c) {
+function renderCard(c, inCollection) {
   const bodyHtml = renderBold(c.text.replace(/</g,'&lt;').replace(/>/g,'&gt;'));
-  return `<div class="comment-card" id="card-${c.id}">
+  const isSaved = collection.has(c.id);
+  const savedCount = (c.savedBy || 0) + (isSaved ? 1 : 0);
+  const qcClass = quickCopyMode ? ' qc-mode' : '';
+  const qcClick = quickCopyMode ? `onclick="quickCopy('${c.id}')"` : '';
+  return `<div class="comment-card${qcClass}" id="card-${c.id}" ${qcClick}>
     <div class="card-top">
       <div class="card-top-left">
         <span class="pt-pill">${c.playType}</span>
@@ -901,14 +973,22 @@ function renderCard(c) {
         ${c.subPlayType ? `<span class="pt-pill pt-pill-spt">${c.subPlayType}</span>` : ''}
         ${ratingBadge(c.callType)}
       </div>
-      <button class="card-action-btn" onclick="openEditModal('${c.id}')" title="Edit"><i class="ti ti-pencil"></i></button>
+      <div style="display:flex;align-items:center;gap:2px">
+        <button class="bookmark-btn${isSaved?' saved':''}" onclick="toggleCollection('${c.id}')" title="${isSaved?'Remove from collection':'Save to collection'}">
+          ${isSaved ? '<i class="ti ti-bookmark-filled"></i>' : '<i class="ti ti-bookmark"></i>'}
+        </button>
+        <button class="card-action-btn" onclick="openEditModal('${c.id}')" title="Edit"><i class="ti ti-pencil"></i></button>
+      </div>
     </div>
     <div class="card-body">${bodyHtml}</div>
     <div class="card-footer">
       <button class="copy-btn" id="copy-${c.id}" onclick="copyComment('${c.id}')">
         <i class="ti ti-copy"></i> Copy
       </button>
-      <span class="card-source${c.source==='submitted'?' submitted':''}">${c.source==='submitted'?'Submitted':'Pre-loaded'}</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        ${savedCount > 0 ? `<span class="saved-by"><i class="ti ti-bookmark"></i> ${savedCount}</span>` : ''}
+        <span class="card-source${c.source==='submitted'?' submitted':''}">${c.source==='submitted'?'Submitted':'Pre-loaded'}</span>
+      </div>
     </div>
   </div>`;
 }
@@ -919,10 +999,86 @@ function renderCards() {
   const fc = filteredComments();
   document.getElementById('main-count').textContent = fc.length + ' comment' + (fc.length!==1?'s':'');
   if (!fc.length) { grid.innerHTML=''; empty.style.display='block'; }
-  else { empty.style.display='none'; grid.innerHTML=fc.map(renderCard).join(''); }
+  else { empty.style.display='none'; grid.innerHTML=fc.map(c=>renderCard(c,false)).join(''); }
 }
 
-function render() { renderFilterBar(); renderCards(); }
+function renderCollection() {
+  const collComments = allComments.filter(c => collection.has(c.id));
+  const sectionsEl = document.getElementById('collection-sections');
+  const emptyEl = document.getElementById('collection-empty');
+  // Update badge
+  const badge = document.getElementById('coll-badge');
+  if (collection.size > 0) { badge.style.display=''; badge.textContent=collection.size; }
+  else badge.style.display='none';
+  if (!collComments.length) { sectionsEl.innerHTML=''; emptyEl.style.display='block'; document.getElementById('main-count').textContent='0 saved'; return; }
+  emptyEl.style.display='none';
+  document.getElementById('main-count').textContent = collComments.length + ' saved';
+  // Group by play type
+  const groups = {};
+  collComments.forEach(c => { const k=c.playType||'Uncategorized'; (groups[k]=groups[k]||[]).push(c); });
+  sectionsEl.innerHTML = Object.entries(groups).map(([pt, cards]) => `
+    <div class="section-header">
+      <span class="section-title">${pt}</span>
+      <span class="section-count">${cards.length}</span>
+    </div>
+    <div class="cards-grid">${cards.map(c=>renderCard(c,true)).join('')}</div>
+  `).join('');
+}
+
+function render() {
+  renderFilterBar();
+  if (currentView === 'library') renderCards();
+  else renderCollection();
+  // Keep collection badge updated always
+  const badge = document.getElementById('coll-badge');
+  if (collection.size > 0) { badge.style.display=''; badge.textContent=collection.size; }
+  else badge.style.display='none';
+}
+
+// ── View switching ────────────────────────────────────────────────────────
+
+function setView(v) {
+  currentView = v;
+  document.getElementById('tab-library').classList.toggle('on', v==='library');
+  document.getElementById('tab-collection').classList.toggle('on', v==='collection');
+  document.getElementById('view-library').style.display = v==='library' ? '' : 'none';
+  document.getElementById('view-collection').style.display = v==='collection' ? '' : 'none';
+  // Filter bar only relevant for library
+  document.getElementById('filter-bar').style.opacity = v==='collection' ? '.5' : '';
+  document.getElementById('filter-bar').style.pointerEvents = v==='collection' ? 'none' : '';
+  render();
+}
+
+// ── Collection ────────────────────────────────────────────────────────────
+
+function toggleCollection(id) {
+  if (collection.has(id)) collection.delete(id);
+  else collection.add(id);
+  saveCollection();
+  render();
+}
+
+// ── Quick Copy ────────────────────────────────────────────────────────────
+
+function onQcToggle() {
+  quickCopyMode = document.getElementById('qc-checkbox').checked;
+  document.getElementById('qc-label').classList.toggle('active', quickCopyMode);
+  render();
+}
+
+function quickCopy(id) {
+  if (!quickCopyMode) return;
+  const c = allComments.find(x=>x.id===id);
+  if (!c) return;
+  const plain = c.text.replace(/\*\*(.+?)\*\*/g,'$1');
+  navigator.clipboard.writeText(plain).then(() => {
+    const card = document.getElementById('card-'+id);
+    if (card) {
+      card.classList.add('qc-flash');
+      setTimeout(() => card.classList.remove('qc-flash'), 600);
+    }
+  });
+}
 
 // ── Actions ───────────────────────────────────────────────────────────────
 
@@ -1018,7 +1174,9 @@ function submitComment() {
     situation: document.getElementById('submit-sit').value,
     subPlayType: document.getElementById('submit-spt').value,
     callType: document.getElementById('submit-ct').value,
-    source: 'submitted'
+    source: 'submitted',
+    createdAt: Date.now(),
+    savedBy: 0
   };
   allComments.unshift(comment);
   saveComments(); closeSubmitModal(); render();
