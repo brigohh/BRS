@@ -47,15 +47,23 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .s-r{background:#fee2e2;color:#991b1b}
 .s-t{background:#ccfbf1;color:#0f766e}
 .gh-right{margin-left:auto;display:flex;align-items:center;gap:8px}
-.ncc-counter{background:#f0f9ff;border:1px solid #bae6fd;border-radius:10px;padding:5px 12px;display:flex;flex-direction:column;align-items:center;gap:2px}
-.ncc-lbl{font-size:9.5px;font-weight:700;color:#0369a1;letter-spacing:.4px;text-transform:uppercase;white-space:nowrap}
+.ncc-counter{border-radius:10px;padding:5px 12px;display:flex;flex-direction:column;align-items:center;gap:2px}
+.ncc-counter.ncc-q{background:#fffbeb;border:1px solid #fcd34d}
+.ncc-counter.ncc-game{background:#f0f9ff;border:1px solid #bae6fd}
+.ncc-lbl{font-size:9.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;white-space:nowrap}
+.ncc-counter.ncc-q .ncc-lbl{color:#92400e}
+.ncc-counter.ncc-game .ncc-lbl{color:#0369a1}
 .ncc-stats{display:flex;gap:8px}
 .ncc-stat{text-align:center;min-width:46px}
-.ncc-n{font-size:17px;font-weight:700;line-height:1;color:#0369a1}
-.ncc-sl{font-size:9.5px;color:#0369a1;line-height:1.3;white-space:nowrap}
+.ncc-n{font-size:17px;font-weight:700;line-height:1}
+.ncc-counter.ncc-q .ncc-n{color:#b45309}
+.ncc-counter.ncc-game .ncc-n{color:#0369a1}
+.ncc-sl{font-size:9.5px;line-height:1.3;white-space:nowrap}
+.ncc-counter.ncc-q .ncc-sl{color:#92400e}
+.ncc-counter.ncc-game .ncc-sl{color:#0369a1}
 
 /* MAIN LAYOUT */
-.main{flex:1;display:flex;min-height:0;overflow:hidden;padding:16px 20px 0;gap:16px;background:#f3f4f6}
+.main{flex:1;display:flex;min-height:0;overflow:hidden;padding:14px 20px 0;gap:16px;background:#f3f4f6}
 .main-right{flex:1;display:flex;flex-direction:column;overflow:hidden;gap:0}
 .main-bottom{flex:1;display:flex;gap:16px;overflow:hidden;padding:0 0 16px 0;min-height:0}
 
@@ -93,58 +101,59 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .submit-qi-btn:hover{background:#15306e}
 
 /* INFRACTION TABLE (standalone, full width) */
-.inf-table-wrap{flex-shrink:0;margin:16px 0 12px;border:1px solid #e5e7eb;border-radius:10px;background:#fff;}
-.inf-table-hdr{padding:8px 14px;display:flex;align-items:center;justify-content:space-between;background:#f9fafb;border-bottom:1px solid #e5e7eb;border-radius:10px 10px 0 0}
-.inf-table-title{font-size:10px;font-weight:700;color:#6b7280;letter-spacing:.5px}
-.inf-table-btns{display:flex;gap:6px}
-.inf-add-btn{padding:4px 10px;background:#1a3a6b;color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer}
-.inf-add-btn:hover{background:#15306e}
-.inf-ev-btn{padding:4px 10px;background:#fff;color:#374151;border:1px solid #d1d5db;border-radius:6px;font-size:11px;font-weight:500;cursor:pointer}
-.inf-ev-btn:hover{background:#f9fafb}
+.inf-table-wrap{flex-shrink:0;margin:0 0 12px;border:1px solid #e5e7eb;border-radius:10px;background:#fff;}
 .inf-tbl{width:100%;border-collapse:collapse;font-size:11.5px}
-.inf-tbl th{padding:6px 10px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.4px;color:#9ca3af;background:#f9fafb;border-bottom:1px solid #e5e7eb;white-space:nowrap}
-.inf-tbl td{padding:7px 10px;border-bottom:1px solid #f3f4f6;vertical-align:middle;cursor:pointer}
+.inf-tbl th{padding:5px 10px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.4px;color:#9ca3af;background:#f9fafb;border-bottom:1px solid #e5e7eb;white-space:nowrap}
+.inf-tbl th:first-child{border-radius:10px 0 0 0}
+.inf-tbl th:last-child{border-radius:0 10px 0 0}
+.inf-tbl td{padding:5px 10px;border-bottom:1px solid #f3f4f6;vertical-align:middle;cursor:pointer}
+.inf-tbl tbody tr:last-child td{border-bottom:none}
 .inf-tbl tbody tr:hover td{background:#f9fafb}
 .inf-tbl tbody tr.inf-sel td{background:#1a3a6b;color:#fff}
 .inf-tbl tbody tr.inf-sel td .rating-chip{background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.3)}
 .rating-chip{display:inline-block;padding:1px 7px;border-radius:10px;font-size:10px;font-weight:600;background:#f3f4f6;color:#374151;border:1px solid #e5e7eb}
+.inf-row-btns{display:flex;gap:5px;white-space:nowrap}
+.inf-add-btn{padding:3px 9px;background:#1a3a6b;color:#fff;border:none;border-radius:6px;font-size:10.5px;font-weight:600;cursor:pointer}
+.inf-add-btn:hover{background:#15306e}
+.inf-ev-btn{padding:3px 9px;background:#fff;color:#374151;border:1px solid #d1d5db;border-radius:6px;font-size:10.5px;font-weight:500;cursor:pointer}
+.inf-ev-btn:hover{background:#f9fafb}
 
 /* CENTER PANEL */
 .cp{flex:1;display:flex;flex-direction:column;overflow:hidden;background:#fff;border:1px solid #e5e7eb;border-radius:10px}
 .cp-empty{flex:1;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-size:13px;font-style:italic}
 .rating-form{flex-shrink:0;border-bottom:1px solid #e5e7eb;background:#f9fafb;margin-top:6px}
-.rf-inner{display:grid;grid-template-columns:1fr 200px;gap:0}
-.rf-left{padding:12px 14px;border-right:1px solid #e5e7eb;display:flex;flex-direction:column;gap:8px}
-.rf-right{padding:12px 14px;display:flex;flex-direction:column;gap:6px}
-.rf-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.rf-label{font-size:10.5px;font-weight:600;color:#6b7280;min-width:100px;flex-shrink:0}
+.rf-inner{display:grid;grid-template-columns:1fr 210px;gap:0}
+.rf-left{padding:14px 22px;border-right:1px solid #e5e7eb;display:flex;flex-direction:column;gap:9px}
+.rf-right{padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.rf-row{display:flex;align-items:center;gap:10px}
+.rf-label{font-size:10.5px;font-weight:600;color:#6b7280;min-width:120px;flex-shrink:0}
 .rf-clock{padding:3px 10px;border:1px solid #d1d5db;border-radius:6px;font-size:12px;font-weight:600;color:#111827;background:#fff;width:80px;text-align:center}
 .rf-checks{display:flex;gap:8px;flex-wrap:wrap}
 .rf-check{display:flex;align-items:center;gap:4px;font-size:11px;color:#374151;cursor:pointer}
 .rf-check input{width:13px;height:13px;cursor:pointer;accent-color:#1a3a6b}
-.btn-group{display:flex;gap:5px;width:210px}
-.ref-btn,.loc-btn{flex:1;text-align:center;padding:4px 4px;border:1px solid #d1d5db;border-radius:6px;font-size:10.5px;cursor:pointer;background:#fff;color:#374151;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.btn-group{display:flex;gap:5px;flex:1}
+.ref-btn,.loc-btn{flex:1;text-align:center;padding:5px 4px;border:1px solid #d1d5db;border-radius:6px;font-size:10.5px;cursor:pointer;background:#fff;color:#374151;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ref-btn:hover,.loc-btn:hover{background:#f9fafb}
 .ref-btn.on,.loc-btn.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
-.rating-btn{display:block;width:100%;text-align:left;padding:6px 10px;font-size:11.5px;border:1px solid #d1d5db;border-radius:6px;cursor:pointer;background:#fff;color:#374151;margin-bottom:3px}
+.rating-btn{display:block;width:100%;text-align:left;padding:6px 10px;font-size:11px;border:1px solid #d1d5db;border-radius:6px;cursor:pointer;background:#fff;color:#374151;margin-bottom:3px}
 .rating-btn:hover{background:#f3f4f6}
 .rating-btn.on{background:#4b5563;border-color:#4b5563;color:#fff}
 .rf-select{padding:5px 8px;border:1px solid #d1d5db;border-radius:6px;font-size:11.5px;color:#374151;background:#fff;cursor:pointer}
-.rf-left .rf-select{width:210px}
+.rf-left .rf-select{flex:1}
 .rf-right .rf-select{width:100%}
-.rf-section-lbl{font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;margin-bottom:1px}
-.rf-save-btn{padding:7px 14px;background:#1a3a6b;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px}
+.rf-section-lbl{font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;margin-bottom:2px}
+.rf-save-btn{padding:5px 11px;background:#1a3a6b;color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:4px}
 .rf-save-btn:hover{background:#15306e}
-.rf-cancel-btn{padding:7px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:12px;color:#374151;background:#fff;cursor:pointer}
+.rf-cancel-btn{padding:5px 9px;border:1px solid #d1d5db;border-radius:6px;font-size:11px;color:#374151;background:#fff;cursor:pointer}
 .rf-cancel-btn:hover{background:#f9fafb}
-.comment-section{flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:10px}
+.comment-section{flex:1;overflow:hidden;padding:12px 14px;display:flex;flex-direction:column;gap:10px}
 .comment-tmpl-row{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
 .tmpl-lbl{font-size:10.5px;font-weight:600;color:#6b7280;white-space:nowrap}
 .tmpl-btn{padding:3px 10px;border:1px solid #d1d5db;border-radius:6px;font-size:11px;cursor:pointer;background:#fff;color:#374151;font-weight:500;display:inline-flex;align-items:center;gap:3px}
 .tmpl-btn:hover{background:#f9fafb}
 .tmpl-btn.special{background:#1a3a6b;color:#fff;border-color:#1a3a6b}
 .comment-lbl{font-size:10.5px;font-weight:700;color:#374151;letter-spacing:.3px}
-.comment-ta{width:100%;border:1px solid #d1d5db;border-radius:8px;padding:8px 10px;font-size:12px;color:#374151;background:#fff;resize:vertical;font-family:inherit;line-height:1.5;min-height:60px}
+.comment-ta{width:100%;border:1px solid #d1d5db;border-radius:8px;padding:8px 10px;font-size:12px;color:#374151;background:#fff;resize:none;font-family:inherit;line-height:1.5}
 .comment-ta:focus{outline:none;border-color:#1a3a6b}
 
 /* RIGHT PANEL */
@@ -240,7 +249,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
         CHI (104)
       </span>
     </div>
-    <div class="gh-date">May 27, 2026 &nbsp;&middot;&nbsp; Refs: Genesis Perrymond (8) &middot; Catherine Chang (23) &middot; Kevin Fahy (86)</div>
+    <div class="gh-date">Wednesday, May 27, 2026 &nbsp;&middot;&nbsp; 8:00 PM &nbsp;&middot;&nbsp; #1022600050 &nbsp;&middot;&nbsp; Refs: Genesis Perrymond (8) &middot; Catherine Chang (23) &middot; Kevin Fahy (86)</div>
   </div>
   <div class="gh-sep"></div>
   <div class="stats">
@@ -250,14 +259,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   </div>
   <div class="gh-right">
     <div style="display:flex;gap:8px">
-      <div class="ncc-counter">
+      <div class="ncc-counter ncc-q">
         <div class="ncc-lbl">Non-Call — Q1</div>
         <div class="ncc-stats">
           <div class="ncc-stat"><div class="ncc-n">1</div><div class="ncc-sl">Deemed Infr.</div></div>
           <div class="ncc-stat"><div class="ncc-n">3</div><div class="ncc-sl">PI Calls</div></div>
         </div>
       </div>
-      <div class="ncc-counter">
+      <div class="ncc-counter ncc-game">
         <div class="ncc-lbl">Non-Call — Game</div>
         <div class="ncc-stats">
           <div class="ncc-stat"><div class="ncc-n">4</div><div class="ncc-sl">Deemed Infr.</div></div>
@@ -292,17 +301,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 
     <!-- INFRACTION TABLE (full width, above form+video) -->
     <div class="inf-table-wrap" id="inf-table-wrap" style="display:none">
-      <div class="inf-table-hdr">
-        <span></span>
-        <div class="inf-table-btns">
-          <button class="inf-add-btn" onclick="addInfractionRow()">+ INFRACTION</button>
-          <button class="inf-ev-btn">+ EVENT</button>
-        </div>
-      </div>
       <table class="inf-tbl" id="inf-tbl">
         <thead>
           <tr>
-            <th>Infraction Type</th><th>Player</th><th>Opponent</th><th>Official</th><th>Location</th><th>Infraction Rating</th><th>Observability</th>
+            <th>Infraction Type</th><th>Player</th><th>Opponent</th><th>Official</th><th>Location</th><th>Infraction Rating</th><th>Observability</th><th></th>
           </tr>
         </thead>
         <tbody id="inf-tbody"></tbody>
@@ -412,12 +414,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
               </div>
             </div>
             <div class="rf-right">
-              <div class="rf-section-lbl">Infraction Rating:</div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2px">
+                <div class="rf-section-lbl" style="margin-bottom:0">Infraction Rating:</div>
+                <div style="display:flex;gap:5px">
+                  <button class="rf-save-btn" onclick="saveRating()"><i class="ti ti-check"></i> Save</button>
+                  <button class="rf-cancel-btn" onclick="cancelRating()">&#10005;</button>
+                </div>
+              </div>
               <button class="rating-btn" onclick="selectRating(this)">Infraction</button>
               <button class="rating-btn" onclick="selectRating(this)">Judgement - Lean Infraction</button>
               <button class="rating-btn on" onclick="selectRating(this)">Judgement - Lean No</button>
               <button class="rating-btn" onclick="selectRating(this)">No Infraction</button>
-              <div class="rf-section-lbl" style="margin-top:6px">Assessment Ratings:</div>
+              <div class="rf-section-lbl" style="margin-top:8px">Assessment Ratings:</div>
               <select class="rf-select" id="rf-assessment">
                 <option>- if applicable -</option>
                 <option>Personal Foul Assessment</option>
@@ -425,14 +433,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
                 <option>Wrong Player Assessment</option>
                 <option>Block-Charge Assessment</option>
               </select>
-              <div class="rf-section-lbl" style="margin-top:6px">Observability:</div>
+              <div class="rf-section-lbl" style="margin-top:8px">Observability:</div>
               <select class="rf-select" id="rf-observability">
                 <option>Observable</option><option>Difficult</option><option>Very Difficult</option>
               </select>
-              <div style="display:flex;gap:6px;margin-top:10px">
-                <button class="rf-save-btn" onclick="saveRating()"><i class="ti ti-check"></i> Save Ratings</button>
-                <button class="rf-cancel-btn" onclick="cancelRating()">&#10005;</button>
-              </div>
             </div>
           </div>
         </div>
@@ -448,11 +452,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
           </div>
           <div>
             <div class="comment-lbl" style="margin-bottom:5px">Comments:</div>
-            <textarea class="comment-ta" id="comment-ta" rows="4" placeholder="Enter comments here"></textarea>
+            <textarea class="comment-ta" id="comment-ta" rows="3" placeholder="Enter comments here"></textarea>
           </div>
           <div>
             <div class="comment-lbl" style="margin-bottom:5px">Internal Notes:</div>
-            <textarea class="comment-ta" id="notes-ta" rows="3" placeholder="Enter internal notes here"></textarea>
+            <textarea class="comment-ta" id="notes-ta" rows="2" placeholder="Enter internal notes here"></textarea>
           </div>
         </div>
       </div>
@@ -1095,10 +1099,14 @@ function renderInfractionTable() {
   const tbody = document.getElementById('inf-tbody');
   tbody.innerHTML = '';
   infractionRows.forEach((row, idx) => {
+    const isLast = idx === infractionRows.length - 1;
     const tr = document.createElement('tr');
     if (idx===selectedInfRow) tr.className='inf-sel';
     tr.onclick = () => selectInfractionRow(idx);
-    tr.innerHTML='<td>'+row.type+'</td><td>'+row.player+'</td><td>'+row.opponent+'</td><td>'+row.official+'</td><td>'+row.location+'</td><td><span class="rating-chip">'+row.rating+'</span></td><td>'+row.observability+'</td>';
+    const btns = isLast
+      ? `<td style="white-space:nowrap"><div class="inf-row-btns"><button class="inf-add-btn" onclick="event.stopPropagation();addInfractionRow()">+ INFRACTION</button><button class="inf-ev-btn" onclick="event.stopPropagation()">+ EVENT</button></div></td>`
+      : '<td></td>';
+    tr.innerHTML='<td>'+row.type+'</td><td>'+row.player+'</td><td>'+row.opponent+'</td><td>'+row.official+'</td><td>'+row.location+'</td><td><span class="rating-chip">'+row.rating+'</span></td><td>'+row.observability+'</td>'+btns;
     tbody.appendChild(tr);
   });
 }
