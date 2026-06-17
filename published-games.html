@@ -92,10 +92,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .lg-chip.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
 .lg-chip img{width:20px;height:20px;object-fit:contain}
 .lg-filter-top{display:flex;align-items:center;gap:8px;margin-bottom:20px;padding-top:4px}
-.analytics-toggle{display:flex;align-items:center;justify-content:space-between;font-size:11px;font-weight:700;letter-spacing:.5px;color:#9ca3af;text-transform:uppercase;margin-bottom:14px;cursor:pointer;user-select:none}
-.analytics-toggle:hover .at-label{color:#6b7280}
-.analytics-toggle .at-label{display:flex;align-items:center;gap:6px;color:#9ca3af}
-.analytics-toggle .at-chevron{font-size:9px;opacity:.6;margin-top:1px}
+.analytics-toggle{display:flex;align-items:center;justify-content:space-between;font-size:11px;font-weight:700;letter-spacing:.5px;color:#fff;text-transform:uppercase;margin-bottom:14px;cursor:pointer;user-select:none;background:#1a3a6b;border:1.5px solid #1a3a6b;border-radius:8px;padding:8px 14px;transition:background .12s}
+.analytics-toggle:hover{background:#163460}
+.analytics-toggle .at-label{display:flex;align-items:center;gap:6px;color:#fff}
+.analytics-toggle .at-chevron{font-size:12px;opacity:.9;margin-top:0;transition:transform .2s}
 #analytics-section{transition:none}
 .bottom-card{background:#fff;border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,.07);border:1px solid #e5e7eb;overflow:hidden}
 .bottom-card table{width:100%;border-collapse:collapse}
@@ -187,19 +187,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   <div class="lg-filter-top">
     <div class="lg-chip on" data-lg="" onclick="lgFilter(this)">All Leagues</div>
     <div class="lg-chip" data-lg="WNBA" onclick="lgFilter(this)">
-      <img src="Logos/WNBA LOGO.png" onerror="this.style.display='none'"> WNBA
+      <img src="Logos/WNBA LOGO.png"> WNBA
     </div>
     <div class="lg-chip" data-lg="NBA" onclick="lgFilter(this)">
-      <img src="Logos/nba-logo.svg" onerror="this.style.display='none'"> NBA
+      <img src="Logos/nba-logo.svg"> NBA
     </div>
-    <div class="lg-chip" data-lg="G-League" onclick="lgFilter(this)"><img src="Logos/g league logo.png" onerror="this.style.display='none'"> G-League</div>
-    <div class="lg-chip" data-lg="BAL" onclick="lgFilter(this)"><img src="Logos/basketball-africa-league-logo-png_seeklogo-510470.png" onerror="this.style.display='none'"> BAL</div>
+    <div class="lg-chip" data-lg="G-League" onclick="lgFilter(this)"><img src="Logos/g league logo.png"> G-League</div>
+    <div class="lg-chip" data-lg="BAL" onclick="lgFilter(this)"><img src="Logos/basketball-africa-league-logo-png_seeklogo-510470.png"> BAL</div>
   </div>
 
   <!-- ANALYTICS TOGGLE -->
   <div class="analytics-toggle" onclick="toggleAnalytics()" id="analytics-btn">
     <div class="at-label"><i class="ti ti-chart-bar"></i> <span id="analytics-btn-txt">Analytics</span></div>
-    <span class="at-chevron" id="analytics-chevron">▲</span>
+    <i class="ti ti-chevron-up at-chevron" id="analytics-chevron"></i>
   </div>
 
   <!-- COLLAPSIBLE ANALYTICS SECTION -->
@@ -275,8 +275,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   <!-- OVERTURN RATE TABLE + RC CHART ROW -->
   <div class="bottom-grid">
     <div>
-      <div class="section-title" style="margin-top:8px">Overturn rate by play type &amp; sub play type · season</div>
       <div class="bottom-card" style="margin-bottom:0;padding:0">
+        <div class="chart-header" style="padding:16px 20px 12px;border-bottom:1px solid #f3f4f6;margin-bottom:0">
+          <div><div class="chart-title" style="font-size:12px">Overturn Rate by Play Type &amp; Sub Play Type · Season</div></div>
+        </div>
         <table style="width:100%;border-collapse:collapse">
           <thead>
             <tr>
@@ -292,9 +294,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
     </div>
     <!-- RATING CHANGES CHART -->
     <div>
-      <div class="section-title" style="margin-top:8px">Rating Changes — Last 10 Games</div>
       <div class="side-card">
-        <div style="font-size:10px;color:#9ca3af;margin-bottom:12px">Total changes per rating type</div>
+        <div class="chart-header" style="margin-bottom:12px">
+          <div><div class="chart-title" style="font-size:12px">Rating Changes — Last 10 Games</div><div class="chart-desc">Total changes per rating type</div></div>
+        </div>
         <div id="rc-chart" style="display:flex;flex-direction:column;gap:7px"></div>
       </div>
     </div>
@@ -750,44 +753,29 @@ function drawChart() {
 }
 
 function drawRcChart() {
-  const games = SC_GAMES.slice(0, 10);
   const el = document.getElementById('rc-chart');
   if (!el) return;
 
-  const TYPE_COLORS = {
-    'CNC→INC': '#ec4899',
-    'PII→INC': '#f06db3',
-    'PIN→INC': '#f472b6',
-    'CC→IC':   '#f78fc3',
-    'IC→CC':   '#f9a8d4',
-    'PIN→CNC': '#fbb6ce',
-    'PII→CNC': '#fce7f3',
-  };
-  const TYPE_ORDER = ['CNC→INC','PII→INC','PIN→INC','CC→IC','IC→CC','PIN→CNC','PII→CNC'];
+  const RC_DATA = [
+    { type: 'PI-No → PI-Lean', pct: 35, color: '#ec4899' },
+    { type: 'PI-Lean → PI-No', pct: 25, color: '#f06db3' },
+    { type: 'CC → IC',         pct: 15, color: '#f472b6' },
+    { type: 'IC → CC',         pct: 10, color: '#f78fc3' },
+    { type: 'CNC → INC',       pct:  8, color: '#f9a8d4' },
+    { type: 'INC → CNC',       pct:  5, color: '#fbb6ce' },
+    { type: 'Other',           pct:  2, color: '#fce7f3' },
+  ];
+  const maxPct = RC_DATA[0].pct;
 
-  // Count totals per change type
-  const totals = {};
-  games.forEach(g => (g.rc||[]).forEach(r => {
-    const key = `${r.from}→${r.to}`;
-    totals[key] = (totals[key]||0) + 1;
-  }));
-
-  // Sort by count desc, maintaining type order as tiebreak
-  const rows = Object.entries(totals)
-    .sort((a,b) => TYPE_ORDER.indexOf(a[0]) - TYPE_ORDER.indexOf(b[0]));
-
-  const maxCount = rows.length ? rows[0][1] : 1;
-
-  el.innerHTML = rows.map(([type, count]) => {
-    const col = TYPE_COLORS[type] || '#fce7f3';
-    const pct = Math.round(count / maxCount * 100);
+  el.innerHTML = RC_DATA.map(({ type, pct, color }) => {
+    const barW = Math.round(pct / maxPct * 100);
     return `<div style="display:flex;flex-direction:column;gap:2px">
       <div style="display:flex;justify-content:space-between;align-items:center">
         <span style="font-size:11px;font-weight:600;color:#374151">${type}</span>
-        <span style="font-size:10px;font-weight:700;color:${col}">${count}</span>
+        <span style="font-size:10px;font-weight:700;color:${color}">${pct}%</span>
       </div>
       <div style="height:7px;background:#f3f4f6;border-radius:4px;overflow:hidden">
-        <div style="height:100%;width:${pct}%;background:${col};border-radius:4px"></div>
+        <div style="height:100%;width:${barW}%;background:${color};border-radius:4px"></div>
       </div>
     </div>`;
   }).join('');
@@ -880,7 +868,8 @@ let analyticsOpen = true;
 function toggleAnalytics() {
   analyticsOpen = !analyticsOpen;
   document.getElementById('analytics-section').style.display = analyticsOpen ? '' : 'none';
-  document.getElementById('analytics-chevron').textContent = analyticsOpen ? '▲' : '▼';
+  const chev = document.getElementById('analytics-chevron');
+  chev.className = analyticsOpen ? 'ti ti-chevron-up at-chevron' : 'ti ti-chevron-down at-chevron';
 }
 
 const LEAGUE_STATS = {
@@ -1032,17 +1021,20 @@ const PLAY_TYPE_STATS = [
     { name:'Vertical',                     included:0, changed:0 },
   ]},
   // ── Other play types ───────────────────────────────────────
+  { section: 'Foul: Offensive' },
   { type:'Foul: Offensive', included:29, changed:11, subs:[
     { name:'Dislodge from Position', included:10, changed:5 },
     { name:'Hook',                   included:8,  changed:3 },
     { name:'Pass & Crash',           included:6,  changed:2 },
     { name:'Clamp-Lock-Hold',        included:5,  changed:1 },
   ]},
+  { section: 'Foul: Loose Ball' },
   { type:'Foul: Loose Ball', included:26, changed:8, subs:[
     { name:'Clamp-Lock-Hold',        included:10, changed:4 },
     { name:'Dislodge from Position', included:9,  changed:3 },
     { name:'Contact to Arm',         included:7,  changed:1 },
   ]},
+  { section: 'Foul: Personal' },
   { type:'Foul: Personal', included:38, changed:10, subs:[
     { name:'Contact to Arm',         included:12, changed:4 },
     { name:'Hand/Forearm to Front',  included:10, changed:3 },
@@ -1050,14 +1042,17 @@ const PLAY_TYPE_STATS = [
     { name:'Rip-Through',            included:5,  changed:1 },
     { name:'Two Hands',              included:3,  changed:0 },
   ]},
+  { section: 'Out of Bounds' },
   { type:'Out of Bounds', included:20, changed:5, subs:[
     { name:'Dislodge from Position', included:9,  changed:3 },
     { name:'Other',                  included:11, changed:2 },
   ]},
+  { section: 'Travel' },
   { type:'Travel', included:18, changed:3, subs:[
     { name:'Gather Step',            included:11, changed:2 },
     { name:'Pivot Foot',             included:7,  changed:1 },
   ]},
+  { section: 'Goaltending' },
   { type:'Goaltending', included:14, changed:2, subs:[
     { name:'Defensive Goaltending',  included:9,  changed:1 },
     { name:'Offensive Goaltending',  included:5,  changed:1 },
@@ -1076,7 +1071,7 @@ function renderPlayTypeTable() {
   PLAY_TYPE_STATS.forEach(pt => {
     if (pt.section) {
       const hr = document.createElement('tr');
-      hr.innerHTML = `<td colspan="4" style="padding:10px 14px 4px;font-size:9.5px;font-weight:700;letter-spacing:.6px;color:#9ca3af;text-transform:uppercase;background:#f8fafc;border-top:1px solid #e5e7eb">${pt.section}</td>`;
+      hr.innerHTML = `<td colspan="4" style="padding:8px 14px 4px 12px;font-size:9.5px;font-weight:700;letter-spacing:.6px;color:#1a3a6b;text-transform:uppercase;background:#eff6ff;border-top:2px solid #bfdbfe;border-left:3px solid #1a3a6b">${pt.section}</td>`;
       tbody.appendChild(hr);
       return;
     }
@@ -1222,10 +1217,10 @@ drawChart();
 drawRcChart();
 renderTable();
 renderPtSidebar();
-// Lock sidebar height to season view so toggle doesn't reflow
+// Lock sidebar card height to season view so toggle doesn't reflow
 requestAnimationFrame(() => {
-  const el = document.getElementById('pt-sidebar');
-  if (el) el.style.minHeight = el.offsetHeight + 'px';
+  const card = document.querySelector('.side-stack .side-card');
+  if (card) { card.style.height = card.offsetHeight + 'px'; card.style.overflow = 'hidden'; }
 });
 </script>
 </body>
