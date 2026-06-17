@@ -1198,7 +1198,7 @@ function selectInfractionRow(idx) {
   setSelectVal('rf-observability', pf.observability || '');
   document.getElementById('chk-ogr').checked = !!(pf.ogr);
   document.getElementById('chk-called').checked = !!(pf.called);
-  renderInfractionTable();
+  document.querySelectorAll('#inf-tbody tr').forEach((tr, i) => tr.classList.toggle('inf-sel', i === idx));
   updateSuggestions();
 }
 
