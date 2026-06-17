@@ -23,8 +23,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .section-title{font-size:11px;font-weight:700;letter-spacing:.5px;color:#9ca3af;text-transform:uppercase;margin-bottom:14px}
 /* HERO STATS ROW */
 .hero-stats{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;margin-bottom:28px}
-.stat-card{background:#fff;border-radius:12px;padding:20px 22px;box-shadow:0 2px 8px rgba(0,0,0,.08);border:1px solid #e5e7eb;border-left:4px solid #e5e7eb}
-.stat-card.primary{background:#1a3a6b;border-color:#1a3a6b;border-left-color:#f9a8d4}
+.stat-card{background:rgba(255,255,255,.97);border-radius:12px;padding:20px 22px;box-shadow:0 4px 12px rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.15);border-left:4px solid rgba(255,255,255,.25)}
+.stat-card.primary{background:#fff;border-color:#e5e7eb;border-left-color:#f9a8d4}
 .stat-card.accent-orange{border-left-color:#f9a8d4}
 .stat-card.accent-teal{border-left-color:#f9a8d4}
 .stat-card.accent-purple{border-left-color:#f9a8d4}
@@ -43,7 +43,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .main-grid{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:16px;align-items:stretch}
 .bottom-grid{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:28px;align-items:start}
 /* CHART CARD */
-.chart-card{background:#fff;border-radius:12px;padding:22px 24px;box-shadow:0 2px 8px rgba(0,0,0,.08);border:1px solid #e5e7eb}
+.chart-card{background:#fff;border-radius:12px;padding:22px 24px;box-shadow:0 4px 12px rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.1)}
 .chart-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px}
 .chart-title{font-size:14px;font-weight:700;color:#111827}
 .chart-desc{font-size:11px;color:#9ca3af;margin-top:2px}
@@ -54,7 +54,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .chart-svg{width:100%;overflow:visible}
 /* SIDEBAR CARDS */
 .side-stack{display:flex;flex-direction:column;gap:16px;height:100%}
-.side-card{background:#fff;border-radius:12px;padding:18px 20px;box-shadow:0 2px 8px rgba(0,0,0,.08);border:1px solid #e5e7eb;flex:1;display:flex;flex-direction:column;min-height:0}
+.side-card{background:#fff;border-radius:12px;padding:18px 20px;box-shadow:0 4px 12px rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.1);flex:1;display:flex;flex-direction:column;min-height:0}
 /* PLAY TYPES */
 .play-rows-wrap{display:flex;flex-direction:column;gap:0;flex:1;overflow-y:auto;min-height:0}
 .play-type-group{display:flex;flex-direction:column;gap:3px}
@@ -92,12 +92,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .lg-chip.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
 .lg-chip img{width:20px;height:20px;object-fit:contain}
 .lg-filter-top{display:flex;align-items:center;gap:8px;margin-bottom:20px;padding-top:4px}
-.analytics-toggle{display:flex;align-items:center;justify-content:space-between;font-size:11px;font-weight:700;letter-spacing:.5px;color:#fff;text-transform:uppercase;margin-bottom:14px;cursor:pointer;user-select:none;background:#1a3a6b;border:1.5px solid #1a3a6b;border-radius:8px;padding:8px 14px;transition:background .12s}
-.analytics-toggle:hover{background:#163460}
-.analytics-toggle .at-label{display:flex;align-items:center;gap:6px;color:#fff}
-.analytics-toggle .at-chevron{font-size:12px;opacity:.9;margin-top:0;transition:transform .2s}
+.analytics-toggle{display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:700;letter-spacing:.4px;color:#fff;cursor:pointer;user-select:none;background:transparent;border:none;padding:18px 24px;width:100%;text-align:left;transition:opacity .12s}
+.analytics-toggle:hover{opacity:.85}
+.analytics-toggle .at-label{display:flex;align-items:center;gap:8px;color:#fff}
+.analytics-toggle .at-chevron{font-size:14px;color:rgba(255,255,255,.7);transition:transform .2s}
+.analytics-card{background:#1a3a6b;border-radius:14px;margin-bottom:24px;overflow:hidden;box-shadow:0 4px 16px rgba(26,58,107,.18)}
+.analytics-card-body{padding:0 20px 20px}
 #analytics-section{transition:none}
-.bottom-card{background:#fff;border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,.07);border:1px solid #e5e7eb;overflow:hidden}
+.bottom-card{background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.1);overflow:hidden}
+.bottom-card.standalone{box-shadow:0 1px 4px rgba(0,0,0,.07);border:1px solid #e5e7eb}
 .bottom-card table{width:100%;border-collapse:collapse}
 .bottom-card thead{background:#f8fafc}
 .bottom-card th{padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.3px;color:#9ca3af;text-transform:uppercase;border-bottom:1px solid #e5e7eb;white-space:nowrap}
@@ -196,17 +199,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
     <div class="lg-chip" data-lg="BAL" onclick="lgFilter(this)"><img src="Logos/basketball-africa-league-logo-png_seeklogo-510470.png"> BAL</div>
   </div>
 
-  <!-- ANALYTICS TOGGLE -->
-  <div class="analytics-toggle" onclick="toggleAnalytics()" id="analytics-btn">
-    <div class="at-label"><i class="ti ti-chart-bar"></i> <span id="analytics-btn-txt">Analytics</span></div>
-    <i class="ti ti-chevron-up at-chevron" id="analytics-chevron"></i>
-  </div>
+  <!-- ANALYTICS CARD -->
+  <div class="analytics-card">
+    <button class="analytics-toggle" onclick="toggleAnalytics()" id="analytics-btn">
+      <div class="at-label"><i class="ti ti-chart-bar"></i> <span>Analytics</span><span style="font-size:10px;font-weight:400;opacity:.6;margin-left:6px" id="analytics-btn-txt">Season overview · 2026</span></div>
+      <i class="ti ti-chevron-up at-chevron" id="analytics-chevron"></i>
+    </button>
 
-  <!-- COLLAPSIBLE ANALYTICS SECTION -->
-  <div id="analytics-section">
+    <div id="analytics-section" class="analytics-card-body">
 
     <!-- HEADLINE STATS -->
-    <div class="section-title" id="analytics-section-title">Season overview · 2026 · All Leagues</div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:.5px;color:rgba(255,255,255,.45);text-transform:uppercase;margin-bottom:14px" id="analytics-section-title">Season overview · 2026 · All Leagues</div>
     <div class="hero-stats">
       <div class="stat-card primary">
         <div class="stat-label">First Pass Accuracy</div>
@@ -303,11 +306,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
     </div>
   </div>
 
-  </div><!-- /analytics-section -->
+    </div><!-- /analytics-section -->
+  </div><!-- /analytics-card -->
 
   <!-- GAME BY GAME TABLE -->
   <div class="section-title">All published games</div>
-  <div class="bottom-card">
+  <div class="bottom-card standalone">
     <table>
       <thead>
         <tr>
@@ -1058,16 +1062,6 @@ function ptColor(pct) {
   return '#f9a8d4';
 }
 
-const GROUP_COLORS = {
-  'Foul: Shooting': '#3b82f6',
-  'Foul: Offensive': '#f59e0b',
-  'Foul: Loose Ball': '#10b981',
-  'Foul: Personal': '#8b5cf6',
-  'Out of Bounds': '#6b7280',
-  'Travel': '#ef4444',
-  'Goaltending': '#ec4899',
-};
-
 function renderPlayTypeTable() {
   const tbody = document.getElementById('pt-tbody');
   let ptIdx = 0;
@@ -1077,16 +1071,13 @@ function renderPlayTypeTable() {
     const col = ptColor(pct);
     const groupId = `ptg-${ptIdx++}`;
     const grp = pt.group || '';
-    const groupColor = GROUP_COLORS[grp] || '#9ca3af';
     const isNewGroup = grp !== lastGroup;
     lastGroup = grp;
     const tr = document.createElement('tr');
     tr.className = 'pt-type-row';
-    // Top border separates groups; left accent color identifies group
     const topBorder = isNewGroup && ptIdx > 1 ? 'border-top:2px solid #f3f4f6' : '';
-    const groupBadge = isNewGroup ? `<span style="font-size:9px;font-weight:700;color:#fff;background:${groupColor};border-radius:4px;padding:1px 5px;margin-left:6px;vertical-align:middle;letter-spacing:.2px">${grp}</span>` : '';
     tr.innerHTML = `
-      <td style="padding:9px 14px;border-left:3px solid ${groupColor};${topBorder}">${pt.type}${groupBadge} <span class="pt-chevron">▶</span></td>
+      <td style="padding:9px 14px;${topBorder}">${pt.type} <span class="pt-chevron">▶</span></td>
       <td style="padding:9px 14px;text-align:center;color:#6b7280;${topBorder}">${pt.included}</td>
       <td style="padding:9px 14px;text-align:center;font-weight:700;color:${col};${topBorder}">${pt.changed}</td>
       <td style="padding:9px 14px;${topBorder}">
@@ -1106,7 +1097,7 @@ function renderPlayTypeTable() {
       const sr = document.createElement('tr');
       sr.className = `pt-sub-row ${groupId} hidden`;
       sr.innerHTML = `
-        <td style="padding:6px 14px 6px 30px;color:${sub.included===0?'#9ca3af':'inherit'};border-left:3px solid ${groupColor}22">${sub.name}</td>
+        <td style="padding:6px 14px 6px 30px;color:${sub.included===0?'#9ca3af':'inherit'}">${sub.name}</td>
         <td style="padding:6px 14px;text-align:center;color:#9ca3af">${sub.included || '—'}</td>
         <td style="padding:6px 14px;text-align:center;font-weight:600;color:${scol}">${sub.included > 0 ? sub.changed : '—'}</td>
         <td style="padding:6px 14px">
