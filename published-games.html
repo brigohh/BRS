@@ -1099,14 +1099,30 @@ function renderPlayTypeTable() {
         </td>`;
       tbody.appendChild(tr);
 
-      // Sub play type rows — always visible, smaller, empty ones dimmed
+      // Sub rows — collapsed by default, expand on click
+      const subGroupId = `sg-${Math.random().toString(36).slice(2)}`;
       const activeSubs = pt.subs.filter(s => s.included > 0);
       const emptySubs = pt.subs.filter(s => s.included === 0);
+
+      // Make play type row clickable to toggle subs
+      tr.style.cursor = 'pointer';
+      const chevronSpan = document.createElement('span');
+      chevronSpan.className = 'pt-chevron';
+      chevronSpan.style.cssText = 'font-size:9px;color:#9ca3af;margin-left:6px;transition:transform .15s;display:inline-block';
+      chevronSpan.textContent = '▶';
+      tr.querySelector('td').appendChild(chevronSpan);
+      tr.onclick = () => {
+        const isOpen = tr.classList.toggle('open');
+        chevronSpan.style.transform = isOpen ? 'rotate(90deg)' : '';
+        document.querySelectorAll(`.${subGroupId}`).forEach(r => r.style.display = isOpen ? '' : 'none');
+      };
 
       activeSubs.forEach(sub => {
         const spct = Math.round(sub.changed / sub.included * 100);
         const scol = ptColor(spct);
         const sr = document.createElement('tr');
+        sr.className = subGroupId;
+        sr.style.display = 'none';
         sr.innerHTML = `
           <td style="padding:5px 14px 5px 28px;font-size:11px;color:#374151;border-bottom:1px solid #f3f4f6">
             <span style="color:#d1d5db;margin-right:5px">└</span>${sub.name}
@@ -1122,25 +1138,23 @@ function renderPlayTypeTable() {
         tbody.appendChild(sr);
       });
 
-      // Empty sub-rows collapsed behind a toggle
       if (emptySubs.length) {
-        const toggleId = `empty-${Math.random().toString(36).slice(2)}`;
+        const emptyId = `empty-${Math.random().toString(36).slice(2)}`;
         const toggleRow = document.createElement('tr');
-        toggleRow.innerHTML = `<td colspan="4" style="padding:3px 14px 6px 28px;border-bottom:1px solid #f3f4f6">
-          <span onclick="toggleEmptySubs('${toggleId}',this)" style="font-size:10px;color:#9ca3af;cursor:pointer;user-select:none">
+        toggleRow.className = subGroupId;
+        toggleRow.style.display = 'none';
+        toggleRow.innerHTML = `<td colspan="4" style="padding:3px 14px 5px 28px;border-bottom:1px solid #f3f4f6">
+          <span onclick="toggleEmptySubs('${emptyId}',this)" style="font-size:10px;color:#9ca3af;cursor:pointer;user-select:none">
             <span class="empty-toggle-icon">▶</span> ${emptySubs.length} sub type${emptySubs.length>1?'s':''} with no data
           </span>
         </td>`;
         tbody.appendChild(toggleRow);
-
         emptySubs.forEach(sub => {
           const sr = document.createElement('tr');
-          sr.className = toggleId;
+          sr.className = `${subGroupId} ${emptyId}`;
           sr.style.display = 'none';
           sr.innerHTML = `
-            <td style="padding:4px 14px 4px 28px;font-size:10.5px;color:#c4c4c4;border-bottom:1px solid #f9fafb">
-              <span style="color:#e5e7eb;margin-right:5px">└</span>${sub.name}
-            </td>
+            <td style="padding:4px 14px 4px 36px;font-size:10.5px;color:#c4c4c4;border-bottom:1px solid #f9fafb">└ ${sub.name}</td>
             <td style="padding:4px 14px;text-align:center;font-size:10.5px;color:#d1d5db;border-bottom:1px solid #f9fafb">—</td>
             <td style="padding:4px 14px;text-align:center;font-size:10.5px;color:#d1d5db;border-bottom:1px solid #f9fafb">—</td>
             <td style="padding:4px 14px;border-bottom:1px solid #f9fafb"><span style="color:#e5e7eb;font-size:10px">—</span></td>`;
