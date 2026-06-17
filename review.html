@@ -47,7 +47,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .s-r{background:#fee2e2;color:#991b1b}
 .s-t{background:#ccfbf1;color:#0f766e}
 .gh-right{margin-left:auto;display:flex;align-items:center;gap:8px}
-.ncc-badge{background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:5px 12px;font-size:11px;color:#0369a1;display:flex;gap:6px;align-items:center}
+.ncc-counter{background:#f0f9ff;border:1px solid #bae6fd;border-radius:10px;padding:5px 12px;display:flex;flex-direction:column;align-items:center;gap:2px}
+.ncc-lbl{font-size:9.5px;font-weight:700;color:#0369a1;letter-spacing:.4px;text-transform:uppercase;white-space:nowrap}
+.ncc-stats{display:flex;gap:8px}
+.ncc-stat{text-align:center;min-width:46px}
+.ncc-n{font-size:17px;font-weight:700;line-height:1;color:#0369a1}
+.ncc-sl{font-size:9.5px;color:#0369a1;line-height:1.3;white-space:nowrap}
 
 /* MAIN LAYOUT */
 .main{flex:1;display:flex;min-height:0;overflow:hidden;padding:14px 18px;gap:14px;background:#f3f4f6}
@@ -64,7 +69,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .poss-list{flex:1;overflow-y:auto}
 .poss-item{border-bottom:1px solid #f3f4f6}
 .poss-hdr{padding:7px 10px;display:flex;align-items:center;gap:6px;cursor:pointer;font-size:11.5px;font-weight:600;color:#374151;background:#f9fafb;user-select:none;transition:background .1s}
-.poss-hdr:hover{background:#f3f4f6}
+.poss-hdr:hover:not(.static){background:#f3f4f6}
 .poss-num{color:#9ca3af;font-size:10.5px;font-weight:600;min-width:16px}
 .poss-team{color:#1a3a6b;font-weight:700}
 .poss-time{flex:1;color:#374151}
@@ -103,7 +108,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .inf-tbl tbody tr.inf-sel td{background:#1a3a6b;color:#fff}
 .inf-tbl tbody tr.inf-sel td .rating-chip{background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.3)}
 .rating-chip{display:inline-block;padding:1px 7px;border-radius:10px;font-size:10px;font-weight:600;background:#f3f4f6;color:#374151;border:1px solid #e5e7eb}
-.rating-form{flex-shrink:0;border-bottom:1px solid #e5e7eb;background:#f9fafb;overflow-y:auto;max-height:310px}
+.rating-form{flex-shrink:0;border-bottom:1px solid #e5e7eb;background:#f9fafb;margin-top:6px}
 .rf-inner{display:grid;grid-template-columns:1fr 220px;gap:0}
 .rf-left{padding:12px 14px;border-right:1px solid #e5e7eb;display:flex;flex-direction:column;gap:7px}
 .rf-right{padding:12px 14px;display:flex;flex-direction:column;gap:6px}
@@ -119,7 +124,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .rating-btn{display:block;width:100%;text-align:left;padding:6px 10px;font-size:11.5px;border:1px solid #d1d5db;border-radius:6px;cursor:pointer;background:#fff;color:#374151;margin-bottom:3px}
 .rating-btn:hover{background:#f3f4f6}
 .rating-btn.on{background:#4b5563;border-color:#4b5563;color:#fff}
-.rf-select{padding:4px 8px;border:1px solid #d1d5db;border-radius:6px;font-size:11.5px;color:#374151;background:#fff;cursor:pointer;width:100%}
+.rf-select{padding:4px 8px;border:1px solid #d1d5db;border-radius:6px;font-size:11.5px;color:#374151;background:#fff;cursor:pointer}
+.rf-left .rf-select{width:210px}
+.rf-right .rf-select{width:100%}
 .rf-section-lbl{font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;margin-bottom:1px}
 .rf-save-btn{padding:7px 14px;background:#1a3a6b;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px}
 .rf-save-btn:hover{background:#15306e}
@@ -136,7 +143,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .comment-ta:focus{outline:none;border-color:#1a3a6b}
 
 /* RIGHT PANEL */
-.rp{width:360px;flex-shrink:0;background:#fff;display:flex;flex-direction:column;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden}
+.rp{width:440px;flex-shrink:0;background:#fff;display:flex;flex-direction:column;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden}
 .vid-area{background:#0f1117;padding:6px 6px 0;flex-shrink:0}
 .vid-frame{width:100%;aspect-ratio:16/9;background:#1a1f2e;border-radius:6px;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .vid-frame img{width:100%;height:100%;object-fit:cover;border-radius:6px}
@@ -231,9 +238,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
     <div class="stat s-t"><div class="sn">4</div><div class="sl">PTIW Events</div></div>
   </div>
   <div class="gh-right">
-    <div class="ncc-badge">
-      <span style="font-weight:700">Non-Calls Counter:</span>
-      4 Deemed Infractions / 12 PI Calls
+    <div class="ncc-counter">
+      <div class="ncc-lbl">Non-Call Counter</div>
+      <div class="ncc-stats">
+        <div class="ncc-stat"><div class="ncc-n">4</div><div class="ncc-sl">Deemed Infr.</div></div>
+        <div class="ncc-stat"><div class="ncc-n">12</div><div class="ncc-sl">PI Calls</div></div>
+      </div>
     </div>
   </div>
 </div>
@@ -307,36 +317,68 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
           </div>
           <div class="rf-row">
             <span class="rf-label">Infraction Type:</span>
-            <select class="rf-select" style="width:auto;flex:1">
-              <option>Blocking Foul</option><option>Holding Foul</option><option>Illegal Screen</option>
-              <option>Pushing Foul</option><option>Shooting Foul</option><option>Charge</option>
-              <option>Travel</option><option>OOB</option><option>Illegal Dribble</option>
+            <select class="rf-select" id="rf-infraction-type" onchange="updatePlayTypes()">
+              <option>-- select --</option>
+              <optgroup label="Fouls">
+                <option>Personal Foul</option>
+                <option>Shooting Foul</option>
+                <option>Block / Charge</option>
+                <option>Loose Ball Foul</option>
+                <option>Illegal Screen</option>
+                <option>Flagrant Foul 1</option>
+                <option>Flagrant Foul 2</option>
+                <option>Technical Foul</option>
+              </optgroup>
+              <optgroup label="Violations">
+                <option>Traveling</option>
+                <option>Double Dribble</option>
+                <option>Kicked Ball</option>
+                <option>Goaltending / BI</option>
+                <option>Out of Bounds</option>
+                <option>3-Second Violation</option>
+                <option>5-Second Violation</option>
+                <option>8-Second Violation</option>
+                <option>Shot Clock Violation</option>
+              </optgroup>
             </select>
           </div>
           <div class="rf-row">
             <span class="rf-label">Play Type:</span>
-            <select class="rf-select" style="width:auto;flex:1">
-              <option>Drive</option><option>Post</option><option>Perimeter</option>
-              <option>Screen</option><option>Rebound</option>
+            <select class="rf-select" id="rf-play-type" onchange="updateSubPlayTypes()">
+              <option>-- select --</option>
+              <option>Driving Shot Attempt</option>
+              <option>Jump Shot</option>
+              <option>Layup or Dunk</option>
+              <option>Floater</option>
+              <option>Post Shot</option>
+              <option>Off Ball (Away from Play)</option>
+              <option>Rebound / Box Out</option>
+              <option>Screen (On Ball)</option>
+              <option>Screen (Off Ball)</option>
+              <option>Loose Ball</option>
+              <option>Transition</option>
+              <option>Inbound</option>
             </select>
           </div>
           <div class="rf-row">
             <span class="rf-label">Sub Play Type:</span>
-            <select class="rf-select" style="width:auto;flex:1">
-              <option>-- select --</option><option>Off Ball</option>
-              <option>Ball Handler</option><option>Cutter</option>
+            <select class="rf-select" id="rf-sub-play-type">
+              <option>-- select --</option>
             </select>
           </div>
           <div class="rf-row">
             <span class="rf-label">Role:</span>
-            <select class="rf-select" style="width:auto;flex:1">
-              <option>Def Player 1</option><option>Off Player 1</option>
-              <option>Def Player 2</option><option>Off Player 2</option>
+            <select class="rf-select">
+              <option>-- select --</option>
+              <option>Def Player 1 (Primary)</option>
+              <option>Def Player 2 (Secondary)</option>
+              <option>Off Player 1 (Ball Handler)</option>
+              <option>Off Player 2 (Screener/Cutter)</option>
             </select>
           </div>
           <div class="rf-row">
             <span class="rf-label">Player:</span>
-            <select class="rf-select" id="rf-player" style="width:auto;flex:1">
+            <select class="rf-select" id="rf-player">
               <option>Sabally, Nyara (13) — Tempo</option>
               <option>Rice, Kahleah (5) — Tempo</option>
               <option>Mabrey, Marina (4) — Tempo</option>
@@ -355,7 +397,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
           </div>
           <div class="rf-row">
             <span class="rf-label">Opponent:</span>
-            <select class="rf-select" id="rf-opponent" style="width:auto;flex:1">
+            <select class="rf-select" id="rf-opponent">
               <option>Diggins, Skylar (4) — Sky</option>
               <option>Cardoso, Kamilla (10) — Sky</option>
               <option>Williams, Eartha (3) — Sky</option>
@@ -460,6 +502,34 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 
 <script>
 const REFS = ['Genesis Perrymond (8)','Catherine Chang (23)','Kevin Fahy (86)'];
+
+const SUB_PLAY_TYPES = {
+  'Driving Shot Attempt': ['Drive (Straight Line)','Drive (Crossover)','Drive (Off Dribble Handoff)','Drive (Off Screen)','Drive (Isolation)','Drive (Transition)'],
+  'Jump Shot': ['Catch & Shoot (Stationary)','Catch & Shoot (Off Screen)','Pull-Up Jump Shot','Step-Back Jump Shot','Fade-Away Jump Shot','Pull-Up (Transition)'],
+  'Layup or Dunk': ['Layup (Standard)','Reverse Layup','Euro Step','Spin Move','Dunk','Power Layup','Layup (Off Pass)'],
+  'Floater': ['Floater (One-Foot)','Floater (Two-Foot)','Runner','Tear Drop'],
+  'Post Shot': ['Post Hook (Inside)','Post Hook (Outside)','Post Fade','Post Turn (Baseline)','Post Turn (Middle)','Up & Under'],
+  'Off Ball (Away from Play)': ['Hand Check','Body Contact','Push Off','Grabbing / Holding','Illegal Use of Elbow'],
+  'Rebound / Box Out': ['Box Out - Offensive','Box Out - Defensive','Loose Ball - Offensive','Loose Ball - Defensive'],
+  'Screen (On Ball)': ['Standard Pick & Roll','Pick & Pop','Handoff Screen','Flare Screen'],
+  'Screen (Off Ball)': ['Back Screen','Down Screen','Cross Screen','Curl Screen','Flare Screen (Off Ball)'],
+  'Loose Ball': ['Scramble','Tip / Deflection','Jump Ball Situation'],
+  'Transition': ['Fast Break','Secondary Break','Early Offense'],
+  'Inbound': ['Under Basket Inbound','Sideline Inbound','Full Court Inbound'],
+};
+
+function updatePlayTypes() {
+  // no dynamic filtering needed — play types are static
+}
+
+function updateSubPlayTypes() {
+  const pt = document.getElementById('rf-play-type').value;
+  const sel = document.getElementById('rf-sub-play-type');
+  sel.innerHTML = '<option>-- select --</option>';
+  (SUB_PLAY_TYPES[pt] || []).forEach(s => {
+    const o = document.createElement('option'); o.textContent = s; sel.appendChild(o);
+  });
+}
 const TOR_P = ['N. Sabally','K. Rice','M. Mabrey','T. Key','N. Conde','L. Juskaite','N. Nurse'];
 const CHI_P = ['S. Diggins','K. Cardoso','E. Williams','B. Sykes','T. Cloud','N. Banham','M. Taylor'];
 
@@ -802,29 +872,58 @@ let currentEv = null;
 function renderQueue() {
   const list = document.getElementById('poss-list');
   list.innerHTML = '';
-  POSSESSIONS.filter(p => 'Q'+p.q === activeQ).forEach(p => {
+  const qNum = parseInt(activeQ[1]);
+  const qPoss = POSSESSIONS.filter(p => 'Q'+p.q === activeQ);
+
+  // render real possessions — only poss id===1 is expandable
+  qPoss.forEach((p, qi) => {
+    const isExpandable = (p.id === 1);
     const item = document.createElement('div');
-    item.className = 'poss-item' + (p.id === openPossId ? ' open' : '');
+    item.className = 'poss-item' + (isExpandable && p.id === openPossId ? ' open' : '');
     const hdr = document.createElement('div');
-    hdr.className = 'poss-hdr';
-    hdr.onclick = () => openPoss(p.id);
-    hdr.innerHTML = '<span class="poss-num">'+p.id+'</span><span class="poss-team">'+p.team+'</span><span class="poss-time">'+p.time+'</span>'+(p.ptiw?'<span class="poss-warn">&#9888;</span>':'')+'<span class="poss-chevron">&#9654;</span>';
-    const evWrap = document.createElement('div');
-    evWrap.className = 'poss-events';
-    p.events.forEach(ev => {
-      const row = document.createElement('div');
-      let cls = 'ev-row ';
-      cls += ev.type==='whistle' ? 'whistled' : ev.type==='reviewable' ? 'reviewable' : 'plain';
-      if (ev.id === selectedEvtId) cls += ' sel';
-      row.className = cls;
-      if (ev.type==='whistle') row.innerHTML='<span class="ev-check">&#10003;</span><span>'+ev.time+'-'+ev.label+'</span><span class="ev-warn">&#9888;</span>';
-      else row.innerHTML='<span>'+ev.time+'-'+ev.label+'</span>';
-      if (ev.type!=='plain') row.onclick = () => selectEvent(ev.id, p, ev);
-      evWrap.appendChild(row);
-    });
-    item.appendChild(hdr); item.appendChild(evWrap);
+    hdr.className = 'poss-hdr' + (isExpandable ? '' : ' static');
+    hdr.style.cursor = isExpandable ? 'pointer' : 'default';
+    if (isExpandable) hdr.onclick = () => openPoss(p.id);
+    const localNum = qi + 1;
+    hdr.innerHTML = '<span class="poss-num">'+localNum+'</span><span class="poss-team">'+p.team+'</span><span class="poss-time">'+p.time+'</span>'+(p.ptiw?'<span class="poss-warn">&#9888;</span>':'')+(isExpandable?'<span class="poss-chevron">&#9654;</span>':'');
+    item.appendChild(hdr);
+    if (isExpandable) {
+      const evWrap = document.createElement('div');
+      evWrap.className = 'poss-events';
+      p.events.forEach(ev => {
+        const row = document.createElement('div');
+        let cls = 'ev-row ';
+        cls += ev.type==='whistle' ? 'whistled' : ev.type==='reviewable' ? 'reviewable' : 'plain';
+        if (ev.id === selectedEvtId) cls += ' sel';
+        row.className = cls;
+        if (ev.type==='whistle') row.innerHTML='<span class="ev-check">&#10003;</span><span>'+ev.time+' — '+ev.label+'</span><span class="ev-warn">&#9888;</span>';
+        else row.innerHTML='<span>'+ev.time+' — '+ev.label+'</span>';
+        if (ev.type!=='plain') row.onclick = () => selectEvent(ev.id, p, ev);
+        evWrap.appendChild(row);
+      });
+      item.appendChild(evWrap);
+    }
     list.appendChild(item);
   });
+
+  // fill static placeholders up to 35
+  const teams = ['TOR','CHI'];
+  const baseMin = 10 - (qNum-1)*0; // 10 min per quarter
+  for (let i = qPoss.length + 1; i <= 35; i++) {
+    const secFromStart = i * 16;
+    const mins = Math.floor((600 - secFromStart) / 60);
+    const secs = (600 - secFromStart) % 60;
+    const timeStr = String(mins).padStart(2,'0')+':'+String(secs).padStart(2,'0')+'.0';
+    const team = teams[i % 2];
+    const item = document.createElement('div');
+    item.className = 'poss-item';
+    const hdr = document.createElement('div');
+    hdr.className = 'poss-hdr static';
+    hdr.style.cursor = 'default';
+    hdr.innerHTML = '<span class="poss-num">'+i+'</span><span class="poss-team">'+team+'</span><span class="poss-time">'+timeStr+'</span>';
+    item.appendChild(hdr);
+    list.appendChild(item);
+  }
 }
 
 function filterQ(q, btn) {
@@ -854,10 +953,14 @@ function selectEvent(evtId, poss, ev) {
   document.getElementById('cp-empty').style.display='none';
   document.getElementById('inf-table-wrap').style.display='block';
   document.getElementById('comment-section').style.display='flex';
-  document.getElementById('rating-form').style.display='none';
   document.getElementById('rf-clock').value = ev.time;
   document.getElementById('ptiw-comment').textContent = poss.ptiw ? 'PTIW flagged on this possession' : 'No PTIW Comment';
   renderInfractionTable();
+  if (ev.type==='whistle') {
+    selectInfractionRow(0);
+  } else {
+    document.getElementById('rating-form').style.display='none';
+  }
 }
 
 function renderInfractionTable() {
