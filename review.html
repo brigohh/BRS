@@ -55,7 +55,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .ncc-sl{font-size:9.5px;color:#0369a1;line-height:1.3;white-space:nowrap}
 
 /* MAIN LAYOUT */
-.main{flex:1;display:flex;min-height:0;overflow:hidden;padding:14px 18px;gap:14px;background:#f3f4f6}
+.main{flex:1;display:flex;min-height:0;overflow:hidden;padding:14px 18px 0;gap:14px;background:#f3f4f6}
+.main-right{flex:1;display:flex;flex-direction:column;overflow:hidden;gap:0}
+.main-bottom{flex:1;display:flex;gap:14px;overflow:hidden;padding:0 0 14px 0;min-height:0}
 
 /* LEFT PANEL */
 .lp{width:260px;flex-shrink:0;background:#fff;border:1px solid #e5e7eb;border-radius:10px;display:flex;flex-direction:column;overflow:hidden}
@@ -90,11 +92,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .submit-qi-btn{width:100%;padding:8px;background:#1a3a6b;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.4px}
 .submit-qi-btn:hover{background:#15306e}
 
-/* CENTER PANEL */
-.cp{flex:1;display:flex;flex-direction:column;overflow:hidden;background:#fff;border:1px solid #e5e7eb;border-radius:10px}
-.cp-empty{flex:1;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-size:13px;font-style:italic}
-.inf-table-wrap{flex-shrink:0;border-bottom:1px solid #e5e7eb}
-.inf-table-hdr{padding:8px 14px;display:flex;align-items:center;justify-content:space-between;background:#f9fafb;border-bottom:1px solid #e5e7eb}
+/* INFRACTION TABLE (standalone, full width) */
+.inf-table-wrap{flex-shrink:0;margin:14px 0 8px;border:1px solid #e5e7eb;border-radius:10px;background:#fff;}
+.inf-table-hdr{padding:8px 14px;display:flex;align-items:center;justify-content:space-between;background:#f9fafb;border-bottom:1px solid #e5e7eb;border-radius:10px 10px 0 0}
 .inf-table-title{font-size:10px;font-weight:700;color:#6b7280;letter-spacing:.5px}
 .inf-table-btns{display:flex;gap:6px}
 .inf-add-btn{padding:4px 10px;background:#1a3a6b;color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer}
@@ -108,23 +108,28 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .inf-tbl tbody tr.inf-sel td{background:#1a3a6b;color:#fff}
 .inf-tbl tbody tr.inf-sel td .rating-chip{background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.3)}
 .rating-chip{display:inline-block;padding:1px 7px;border-radius:10px;font-size:10px;font-weight:600;background:#f3f4f6;color:#374151;border:1px solid #e5e7eb}
+
+/* CENTER PANEL */
+.cp{flex:1;display:flex;flex-direction:column;overflow:hidden;background:#fff;border:1px solid #e5e7eb;border-radius:10px}
+.cp-empty{flex:1;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-size:13px;font-style:italic}
 .rating-form{flex-shrink:0;border-bottom:1px solid #e5e7eb;background:#f9fafb;margin-top:6px}
-.rf-inner{display:grid;grid-template-columns:1fr 220px;gap:0}
-.rf-left{padding:12px 14px;border-right:1px solid #e5e7eb;display:flex;flex-direction:column;gap:7px}
+.rf-inner{display:grid;grid-template-columns:1fr 200px;gap:0}
+.rf-left{padding:12px 14px;border-right:1px solid #e5e7eb;display:flex;flex-direction:column;gap:5px}
 .rf-right{padding:12px 14px;display:flex;flex-direction:column;gap:6px}
 .rf-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.rf-label{font-size:10.5px;font-weight:600;color:#6b7280;min-width:115px;flex-shrink:0}
+.rf-label{font-size:10.5px;font-weight:600;color:#6b7280;min-width:100px;flex-shrink:0}
 .rf-clock{padding:3px 10px;border:1px solid #d1d5db;border-radius:6px;font-size:12px;font-weight:600;color:#111827;background:#fff;width:80px;text-align:center}
 .rf-checks{display:flex;gap:8px;flex-wrap:wrap}
 .rf-check{display:flex;align-items:center;gap:4px;font-size:11px;color:#374151;cursor:pointer}
 .rf-check input{width:13px;height:13px;cursor:pointer;accent-color:#1a3a6b}
-.ref-btn,.loc-btn{padding:4px 9px;border:1px solid #d1d5db;border-radius:6px;font-size:11px;cursor:pointer;background:#fff;color:#374151;font-weight:500;white-space:nowrap}
+.btn-group{display:flex;gap:5px;flex:1}
+.ref-btn,.loc-btn{flex:1;text-align:center;padding:4px 6px;border:1px solid #d1d5db;border-radius:6px;font-size:11px;cursor:pointer;background:#fff;color:#374151;font-weight:500;white-space:nowrap}
 .ref-btn:hover,.loc-btn:hover{background:#f9fafb}
 .ref-btn.on,.loc-btn.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
 .rating-btn{display:block;width:100%;text-align:left;padding:6px 10px;font-size:11.5px;border:1px solid #d1d5db;border-radius:6px;cursor:pointer;background:#fff;color:#374151;margin-bottom:3px}
 .rating-btn:hover{background:#f3f4f6}
 .rating-btn.on{background:#4b5563;border-color:#4b5563;color:#fff}
-.rf-select{padding:4px 8px;border:1px solid #d1d5db;border-radius:6px;font-size:11.5px;color:#374151;background:#fff;cursor:pointer}
+.rf-select{padding:5px 8px;border:1px solid #d1d5db;border-radius:6px;font-size:11.5px;color:#374151;background:#fff;cursor:pointer}
 .rf-left .rf-select{flex:1;min-width:0}
 .rf-right .rf-select{width:100%}
 .rf-section-lbl{font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;margin-bottom:1px}
@@ -267,10 +272,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
     </div>
   </div>
 
-  <!-- CENTER PANEL -->
-  <div class="cp" id="center-panel">
-    <div class="cp-empty" id="cp-empty">Select an event from the queue to review</div>
+  <!-- MAIN RIGHT (infraction table above, then bottom row) -->
+  <div class="main-right">
 
+    <!-- INFRACTION TABLE (full width, above form+video) -->
     <div class="inf-table-wrap" id="inf-table-wrap" style="display:none">
       <div class="inf-table-hdr">
         <span class="inf-table-title">INFRACTION CANDIDATES</span>
@@ -289,247 +294,332 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       </table>
     </div>
 
-    <div class="rating-form" id="rating-form" style="display:none">
-      <div class="rf-inner">
-        <div class="rf-left">
-          <div class="rf-row">
-            <span class="rf-label">Game Clock:</span>
-            <input class="rf-clock" id="rf-clock" value="09:37.9" readonly>
-            <div class="rf-checks">
-              <label class="rf-check"><input type="checkbox" id="chk-called"> Called</label>
-              <label class="rf-check"><input type="checkbox" id="chk-ptiw"> PTIW</label>
-              <label class="rf-check"><input type="checkbox" id="chk-look"> Look</label>
-              <label class="rf-check"><input type="checkbox" id="chk-ogr"> OGR</label>
-              <label class="rf-check"><input type="checkbox" id="chk-poe"> POE</label>
+    <!-- BOTTOM ROW: center panel + right panel -->
+    <div class="main-bottom">
+
+      <!-- CENTER PANEL -->
+      <div class="cp" id="center-panel">
+        <div class="cp-empty" id="cp-empty">Select an event from the queue to review</div>
+
+        <div class="rating-form" id="rating-form" style="display:none">
+          <div class="rf-inner">
+            <div class="rf-left">
+              <div class="rf-row">
+                <span class="rf-label">Game Clock:</span>
+                <input class="rf-clock" id="rf-clock" value="09:37.9" readonly>
+                <div class="rf-checks">
+                  <label class="rf-check"><input type="checkbox" id="chk-called"> Called</label>
+                  <label class="rf-check"><input type="checkbox" id="chk-ptiw"> PTIW</label>
+                  <label class="rf-check"><input type="checkbox" id="chk-look"> Look</label>
+                  <label class="rf-check"><input type="checkbox" id="chk-ogr"> OGR</label>
+                  <label class="rf-check"><input type="checkbox" id="chk-poe"> POE</label>
+                </div>
+              </div>
+              <div class="rf-row">
+                <span class="rf-label">Responsible Ref:</span>
+                <div class="btn-group">
+                  <button class="ref-btn on" onclick="selectRef(this)">Genesis Perrymond (8)</button>
+                  <button class="ref-btn" onclick="selectRef(this)">Catherine Chang (23)</button>
+                  <button class="ref-btn" onclick="selectRef(this)">Kevin Fahy (86)</button>
+                </div>
+              </div>
+              <div class="rf-row">
+                <span class="rf-label">Resp. Ref. Location:</span>
+                <div class="btn-group">
+                  <button class="loc-btn on" onclick="selectLocation(this)">Lead</button>
+                  <button class="loc-btn" onclick="selectLocation(this)">Trail</button>
+                  <button class="loc-btn" onclick="selectLocation(this)">Slot</button>
+                </div>
+              </div>
+              <div class="rf-row">
+                <span class="rf-label">Infraction Type:</span>
+                <select class="rf-select" id="rf-infraction-type" onchange="updateInfrType()">
+                  <option>-- select --</option>
+                  <optgroup label="Fouls">
+                    <option>Foul: Away from Play</option>
+                    <option>Foul: Defense 3 Second</option>
+                    <option>Foul: Double Technical</option>
+                    <option>Foul: Loose Ball</option>
+                    <option>Foul: Non-Unsportsmanlike Tech Flopping</option>
+                    <option>Foul: Offensive</option>
+                    <option>Foul: Personal</option>
+                    <option>Foul: Shooting</option>
+                    <option>Foul: Transition Take Foul</option>
+                  </optgroup>
+                  <optgroup label="Stoppages">
+                    <option>Stoppage: Inadvertent Whistle</option>
+                    <option>Stoppage: Out-of-Bounds</option>
+                  </optgroup>
+                  <optgroup label="Turnovers">
+                    <option>Turnover: 3 Second Violation</option>
+                    <option>Turnover: Defensive Goaltending</option>
+                    <option>Turnover: Lost Ball Out of Bounds</option>
+                    <option>Turnover: Offensive Goaltending</option>
+                    <option>Turnover: Out of Bounds</option>
+                    <option>Turnover: Out of Bounds &#8211; Bad Pass Turn</option>
+                    <option>Turnover: Stepped out of Bounds</option>
+                    <option>Turnover: Traveling</option>
+                  </optgroup>
+                  <optgroup label="Violations">
+                    <option>Violation: Defensive Goaltending</option>
+                  </optgroup>
+                </select>
+              </div>
+              <div class="rf-row">
+                <span class="rf-label">Play Type:</span>
+                <select class="rf-select" id="rf-play-type" onchange="updateSubPlayTypes()">
+                  <option>-- select --</option>
+                </select>
+              </div>
+              <div class="rf-row">
+                <span class="rf-label">Sub Play Type:</span>
+                <select class="rf-select" id="rf-sub-play-type">
+                  <option>-- select --</option>
+                </select>
+              </div>
+              <div class="rf-row">
+                <span class="rf-label">Role:</span>
+                <select class="rf-select" id="rf-role-select">
+                  <option>-- select --</option>
+                  <option>Def Player 1 (Primary)</option>
+                  <option>Def Player 2 (Secondary)</option>
+                  <option>Off Player 1 (Ball Handler)</option>
+                  <option>Off Player 2 (Screener/Cutter)</option>
+                </select>
+              </div>
+              <div class="rf-row">
+                <span class="rf-label">Player:</span>
+                <select class="rf-select" id="rf-player">
+                  <option>Sabally, Nyara (13) — Tempo</option>
+                  <option>Rice, Kahleah (5) — Tempo</option>
+                  <option>Mabrey, Marina (4) — Tempo</option>
+                  <option>Key, Tiffany (22) — Tempo</option>
+                  <option>Conde, Natasha (11) — Tempo</option>
+                  <option>Juskaite, Laurita (7) — Tempo</option>
+                  <option>Nurse, Natalie (21) — Tempo</option>
+                  <option>Diggins, Skylar (4) — Sky</option>
+                  <option>Cardoso, Kamilla (10) — Sky</option>
+                  <option>Williams, Eartha (3) — Sky</option>
+                  <option>Sykes, Brianna (15) — Sky</option>
+                  <option>Cloud, Tianna (2) — Sky</option>
+                  <option>Banham, Natalie (9) — Sky</option>
+                  <option>Taylor, Maya (14) — Sky</option>
+                </select>
+              </div>
+              <div class="rf-row">
+                <span class="rf-label">Opponent:</span>
+                <select class="rf-select" id="rf-opponent">
+                  <option>Diggins, Skylar (4) — Sky</option>
+                  <option>Cardoso, Kamilla (10) — Sky</option>
+                  <option>Williams, Eartha (3) — Sky</option>
+                  <option>Sykes, Brianna (15) — Sky</option>
+                  <option>Cloud, Tianna (2) — Sky</option>
+                  <option>Banham, Natalie (9) — Sky</option>
+                  <option>Taylor, Maya (14) — Sky</option>
+                  <option>Sabally, Nyara (13) — Tempo</option>
+                  <option>Rice, Kahleah (5) — Tempo</option>
+                  <option>Mabrey, Marina (4) — Tempo</option>
+                </select>
+              </div>
+            </div>
+            <div class="rf-right">
+              <div class="rf-section-lbl">Infraction Rating:</div>
+              <button class="rating-btn" onclick="selectRating(this)">Infraction</button>
+              <button class="rating-btn" onclick="selectRating(this)">Judgement - Lean Infraction</button>
+              <button class="rating-btn on" onclick="selectRating(this)">Judgement - Lean No</button>
+              <button class="rating-btn" onclick="selectRating(this)">No Infraction</button>
+              <div class="rf-section-lbl" style="margin-top:6px">Assessment Ratings:</div>
+              <select class="rf-select">
+                <option>- if applicable -</option><option>Egregious</option>
+                <option>Clear</option><option>Toss Up</option>
+              </select>
+              <div class="rf-section-lbl" style="margin-top:6px">Observability:</div>
+              <select class="rf-select" id="rf-observability">
+                <option>Observable</option><option>Difficult</option><option>Very Difficult</option>
+              </select>
+              <div style="display:flex;gap:6px;margin-top:10px">
+                <button class="rf-save-btn" onclick="saveRating()"><i class="ti ti-check"></i> Save Ratings &#8594;</button>
+                <button class="rf-cancel-btn" onclick="cancelRating()">&#10005;</button>
+              </div>
             </div>
           </div>
-          <div class="rf-row">
-            <span class="rf-label">Responsible Ref:</span>
-            <button class="ref-btn on" onclick="selectRef(this)">Genesis Perrymond (8)</button>
-            <button class="ref-btn" onclick="selectRef(this)">Catherine Chang (23)</button>
-            <button class="ref-btn" onclick="selectRef(this)">Kevin Fahy (86)</button>
-          </div>
-          <div class="rf-row">
-            <span class="rf-label">Resp. Ref. Location:</span>
-            <button class="loc-btn on" onclick="selectLocation(this)">Lead</button>
-            <button class="loc-btn" onclick="selectLocation(this)">Trail</button>
-            <button class="loc-btn" onclick="selectLocation(this)">Slot</button>
-          </div>
-          <div class="rf-row">
-            <span class="rf-label">Infraction Type:</span>
-            <select class="rf-select" id="rf-infraction-type" onchange="updatePlayTypes()">
-              <option>-- select --</option>
-              <optgroup label="Fouls">
-                <option>Personal Foul</option>
-                <option>Shooting Foul</option>
-                <option>Block / Charge</option>
-                <option>Loose Ball Foul</option>
-                <option>Illegal Screen</option>
-                <option>Flagrant Foul 1</option>
-                <option>Flagrant Foul 2</option>
-                <option>Technical Foul</option>
-              </optgroup>
-              <optgroup label="Violations">
-                <option>Traveling</option>
-                <option>Double Dribble</option>
-                <option>Kicked Ball</option>
-                <option>Goaltending / BI</option>
-                <option>Out of Bounds</option>
-                <option>3-Second Violation</option>
-                <option>5-Second Violation</option>
-                <option>8-Second Violation</option>
-                <option>Shot Clock Violation</option>
-              </optgroup>
-            </select>
-          </div>
-          <div class="rf-row">
-            <span class="rf-label">Play Type:</span>
-            <select class="rf-select" id="rf-play-type" onchange="updateSubPlayTypes()">
-              <option>-- select --</option>
-              <option>Driving Shot Attempt</option>
-              <option>Jump Shot</option>
-              <option>Layup or Dunk</option>
-              <option>Floater</option>
-              <option>Post Shot</option>
-              <option>Off Ball (Away from Play)</option>
-              <option>Rebound / Box Out</option>
-              <option>Screen (On Ball)</option>
-              <option>Screen (Off Ball)</option>
-              <option>Loose Ball</option>
-              <option>Transition</option>
-              <option>Inbound</option>
-            </select>
-          </div>
-          <div class="rf-row">
-            <span class="rf-label">Sub Play Type:</span>
-            <select class="rf-select" id="rf-sub-play-type">
-              <option>-- select --</option>
-            </select>
-          </div>
-          <div class="rf-row">
-            <span class="rf-label">Role:</span>
-            <select class="rf-select" id="rf-role-select">
-              <option>-- select --</option>
-              <option>Def Player 1 (Primary)</option>
-              <option>Def Player 2 (Secondary)</option>
-              <option>Off Player 1 (Ball Handler)</option>
-              <option>Off Player 2 (Screener/Cutter)</option>
-            </select>
-          </div>
-          <div class="rf-row">
-            <span class="rf-label">Player:</span>
-            <select class="rf-select" id="rf-player">
-              <option>Sabally, Nyara (13) — Tempo</option>
-              <option>Rice, Kahleah (5) — Tempo</option>
-              <option>Mabrey, Marina (4) — Tempo</option>
-              <option>Key, Tiffany (22) — Tempo</option>
-              <option>Conde, Natasha (11) — Tempo</option>
-              <option>Juskaite, Laurita (7) — Tempo</option>
-              <option>Nurse, Natalie (21) — Tempo</option>
-              <option>Diggins, Skylar (4) — Sky</option>
-              <option>Cardoso, Kamilla (10) — Sky</option>
-              <option>Williams, Eartha (3) — Sky</option>
-              <option>Sykes, Brianna (15) — Sky</option>
-              <option>Cloud, Tianna (2) — Sky</option>
-              <option>Banham, Natalie (9) — Sky</option>
-              <option>Taylor, Maya (14) — Sky</option>
-            </select>
-          </div>
-          <div class="rf-row">
-            <span class="rf-label">Opponent:</span>
-            <select class="rf-select" id="rf-opponent">
-              <option>Diggins, Skylar (4) — Sky</option>
-              <option>Cardoso, Kamilla (10) — Sky</option>
-              <option>Williams, Eartha (3) — Sky</option>
-              <option>Sykes, Brianna (15) — Sky</option>
-              <option>Cloud, Tianna (2) — Sky</option>
-              <option>Banham, Natalie (9) — Sky</option>
-              <option>Taylor, Maya (14) — Sky</option>
-              <option>Sabally, Nyara (13) — Tempo</option>
-              <option>Rice, Kahleah (5) — Tempo</option>
-              <option>Mabrey, Marina (4) — Tempo</option>
-            </select>
-          </div>
         </div>
-        <div class="rf-right">
-          <div class="rf-section-lbl">Infraction Rating:</div>
-          <button class="rating-btn" onclick="selectRating(this)">Infraction</button>
-          <button class="rating-btn" onclick="selectRating(this)">Judgement - Lean Infraction</button>
-          <button class="rating-btn on" onclick="selectRating(this)">Judgement - Lean No</button>
-          <button class="rating-btn" onclick="selectRating(this)">No Infraction</button>
-          <div class="rf-section-lbl" style="margin-top:6px">Assessment Ratings:</div>
-          <select class="rf-select">
-            <option>- if applicable -</option><option>Egregious</option>
-            <option>Clear</option><option>Toss Up</option>
-          </select>
-          <div class="rf-section-lbl" style="margin-top:6px">Observability:</div>
-          <select class="rf-select" id="rf-observability">
-            <option>Observable</option><option>Difficult</option><option>Very Difficult</option>
-          </select>
-          <div style="display:flex;gap:6px;margin-top:10px">
-            <button class="rf-save-btn" onclick="saveRating()"><i class="ti ti-check"></i> Save Ratings &#8594;</button>
-            <button class="rf-cancel-btn" onclick="cancelRating()">&#10005;</button>
+
+        <div class="comment-section" id="comment-section" style="display:none">
+          <div class="comment-tmpl-row">
+            <span class="tmpl-lbl">Comment Templates:</span>
+            <button class="tmpl-btn special"><i class="ti ti-diamond"></i> Auto Comments</button>
+            <button class="tmpl-btn">Coach's Challenge &#9662;</button>
+            <button class="tmpl-btn">Take Fouls &#9662;</button>
+            <button class="tmpl-btn">Head/Face Contact</button>
+            <button class="tmpl-btn">Enhanced Review</button>
+          </div>
+          <div>
+            <div class="comment-lbl" style="margin-bottom:5px">Comments:</div>
+            <textarea class="comment-ta" id="comment-ta" rows="4" placeholder="Enter comments here"></textarea>
+          </div>
+          <div>
+            <div class="comment-lbl" style="margin-bottom:5px">Internal Notes:</div>
+            <textarea class="comment-ta" id="notes-ta" rows="3" placeholder="Enter internal notes here"></textarea>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="comment-section" id="comment-section" style="display:none">
-      <div class="comment-tmpl-row">
-        <span class="tmpl-lbl">Comment Templates:</span>
-        <button class="tmpl-btn special"><i class="ti ti-diamond"></i> Auto Comments</button>
-        <button class="tmpl-btn">Coach's Challenge &#9662;</button>
-        <button class="tmpl-btn">Take Fouls &#9662;</button>
-        <button class="tmpl-btn">Head/Face Contact</button>
-        <button class="tmpl-btn">Enhanced Review</button>
+      <!-- RIGHT PANEL -->
+      <div class="rp">
+        <div class="vid-area">
+          <div class="vid-frame">
+            <img src="Logos/video player placeholder.png" alt="Video"
+              onerror="this.parentElement.innerHTML='<div class=&quot;vid-ph&quot;><i class=&quot;ti ti-player-play&quot;></i><span>Video Placeholder</span></div>'">
+          </div>
+        </div>
+        <div class="ang-row">
+          <div class="ang on" onclick="angClick(this)">LL5</div>
+          <div class="ang" onclick="angClick(this)">LL5</div>
+          <div class="ang" onclick="angClick(this)">LR5</div>
+          <div class="ang" onclick="angClick(this)">LR5</div>
+          <div class="ang" onclick="angClick(this)">LS5</div>
+          <div class="ang" onclick="angClick(this)">RS5</div>
+          <div class="ang" onclick="angClick(this)">ABP</div>
+          <div class="ang" onclick="angClick(this)">HBP</div>
+          <div class="ang" onclick="angClick(this)">INA</div>
+          <div class="ang" onclick="angClick(this)">DF BCAST</div>
+        </div>
+        <div class="vid-ctrl">
+          <button class="vcb"><i class="ti ti-player-play"></i></button>
+          <button class="vcb"><i class="ti ti-volume"></i></button>
+          <div class="vtrack"><div class="vfill"></div><div class="vhead"></div></div>
+          <span class="vtime">40:51 / 3:12:27</span>
+          <button class="vcb"><i class="ti ti-arrows-maximize"></i></button>
+        </div>
+        <div class="clip-bar">
+          <button class="clip-btn"><i class="ti ti-paperclip"></i> CLIP VIDEO <span style="font-size:10px;opacity:.7">(ctrl+v)</span></button>
+          <button class="hotkeys-btn">Video Hotkeys &#9662;</button>
+        </div>
+        <div class="rp-box">
+          <div class="rp-lbl"><i class="ti ti-alert-triangle" style="color:#f59e0b"></i> <span class="rp-ptiw-lbl">PTIW Comment:</span></div>
+          <div class="rp-val" id="ptiw-comment">No PTIW Comment</div>
+        </div>
+        <div class="rp-box">
+          <div class="rp-lbl"><i class="ti ti-info-circle"></i> OIW Comment:</div>
+          <div class="rp-val" id="oiw-comment">No OIW Comment</div>
+        </div>
       </div>
-      <div>
-        <div class="comment-lbl" style="margin-bottom:5px">Comments:</div>
-        <textarea class="comment-ta" id="comment-ta" rows="4" placeholder="Enter comments here"></textarea>
-      </div>
-      <div>
-        <div class="comment-lbl" style="margin-bottom:5px">Internal Notes:</div>
-        <textarea class="comment-ta" id="notes-ta" rows="3" placeholder="Enter internal notes here"></textarea>
-      </div>
-    </div>
-  </div>
 
-  <!-- RIGHT PANEL -->
-  <div class="rp">
-    <div class="vid-area">
-      <div class="vid-frame">
-        <img src="Logos/video player placeholder.png" alt="Video"
-          onerror="this.parentElement.innerHTML='<div class=&quot;vid-ph&quot;><i class=&quot;ti ti-player-play&quot;></i><span>Video Placeholder</span></div>'">
-      </div>
-    </div>
-    <div class="ang-row">
-      <div class="ang on" onclick="angClick(this)">LL5</div>
-      <div class="ang" onclick="angClick(this)">LL5</div>
-      <div class="ang" onclick="angClick(this)">LR5</div>
-      <div class="ang" onclick="angClick(this)">LR5</div>
-      <div class="ang" onclick="angClick(this)">LS5</div>
-      <div class="ang" onclick="angClick(this)">RS5</div>
-      <div class="ang" onclick="angClick(this)">ABP</div>
-      <div class="ang" onclick="angClick(this)">HBP</div>
-      <div class="ang" onclick="angClick(this)">INA</div>
-      <div class="ang" onclick="angClick(this)">DF BCAST</div>
-    </div>
-    <div class="vid-ctrl">
-      <button class="vcb"><i class="ti ti-player-play"></i></button>
-      <button class="vcb"><i class="ti ti-volume"></i></button>
-      <div class="vtrack"><div class="vfill"></div><div class="vhead"></div></div>
-      <span class="vtime">40:51 / 3:12:27</span>
-      <button class="vcb"><i class="ti ti-arrows-maximize"></i></button>
-    </div>
-    <div class="clip-bar">
-      <button class="clip-btn"><i class="ti ti-paperclip"></i> CLIP VIDEO <span style="font-size:10px;opacity:.7">(ctrl+v)</span></button>
-      <button class="hotkeys-btn">Video Hotkeys &#9662;</button>
-    </div>
-    <div class="rp-box">
-      <div class="rp-lbl"><i class="ti ti-alert-triangle" style="color:#f59e0b"></i> <span class="rp-ptiw-lbl">PTIW Comment:</span></div>
-      <div class="rp-val" id="ptiw-comment">No PTIW Comment</div>
-    </div>
-    <div class="rp-box">
-      <div class="rp-lbl"><i class="ti ti-info-circle"></i> OIW Comment:</div>
-      <div class="rp-val" id="oiw-comment">No OIW Comment</div>
-    </div>
-  </div>
+    </div><!-- /.main-bottom -->
+  </div><!-- /.main-right -->
 
-</div>
-</div>
+</div><!-- /.main -->
+</div><!-- /.page -->
 
 <div class="toast" id="toast"></div>
 
 <script>
 const REFS = ['Genesis Perrymond (8)','Catherine Chang (23)','Kevin Fahy (86)'];
 
-const SUB_PLAY_TYPES = {
-  'Driving Shot Attempt': ['Drive (Straight Line)','Drive (Crossover)','Drive (Off Dribble Handoff)','Drive (Off Screen)','Drive (Isolation)','Drive (Transition)'],
-  'Jump Shot': ['Catch & Shoot (Stationary)','Catch & Shoot (Off Screen)','Pull-Up Jump Shot','Step-Back Jump Shot','Fade-Away Jump Shot','Pull-Up (Transition)'],
-  'Layup or Dunk': ['Layup (Standard)','Reverse Layup','Euro Step','Spin Move','Dunk','Power Layup','Layup (Off Pass)'],
-  'Floater': ['Floater (One-Foot)','Floater (Two-Foot)','Runner','Tear Drop'],
-  'Post Shot': ['Post Hook (Inside)','Post Hook (Outside)','Post Fade','Post Turn (Baseline)','Post Turn (Middle)','Up & Under'],
-  'Off Ball (Away from Play)': ['Hand Check','Body Contact','Push Off','Grabbing / Holding','Illegal Use of Elbow'],
-  'Rebound / Box Out': ['Box Out - Offensive','Box Out - Defensive','Loose Ball - Offensive','Loose Ball - Defensive'],
-  'Screen (On Ball)': ['Standard Pick & Roll','Pick & Pop','Handoff Screen','Flare Screen'],
-  'Screen (Off Ball)': ['Back Screen','Down Screen','Cross Screen','Curl Screen','Flare Screen (Off Ball)'],
-  'Loose Ball': ['Scramble','Tip / Deflection','Jump Ball Situation'],
-  'Transition': ['Fast Break','Secondary Break','Early Offense'],
-  'Inbound': ['Under Basket Inbound','Sideline Inbound','Full Court Inbound'],
+const TAXONOMY = {
+  'Foul: Loose Ball': {
+    'Non-Rebound': ['Clamp-Lock-Hold','Contact to Arm','Dislodge From Position','Engage/Disengage','Head Contact','Impede','Jersey','Other','Trip','Legal Guarding Position'],
+    'Rebound': ['Clamp-Lock-Hold','Contact to Arm','Dislodge From Position','Engage/Disengage','Head Contact','Impede','Jersey','Other'],
+    'TTFS - Off Ball': ['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul','Transition Opportunity Ended'],
+    'TTFS - On Ball': ['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul','Transition Opportunity Ended'],
+    'N/A': ['N/A'],
+  },
+  'Foul: Offensive': {
+    'During Drive': ['Block-Charge Situation','Clear Space','Dislodge From Position','Flail','Head Contact','Hook','Initiates Contact','Jersey','Lead Unnaturally','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Pass & Crash','Trip','Wipe Away','NBP: Kick-Out','NBP: Launch Angle'],
+    'End Of Drive': ['Block-Charge Situation','Clear Space','Dislodge From Position','Flail','Head Contact','Hook','Initiates Contact','Jersey','Lead Unnaturally','NBP: Kick-Out','NBP: Launch Angle','NBP: Veer Into Defender','Other','Pass & Crash','Trip','Wipe Away','NBP: Off-Arm Contact','NBP: Rip-Through'],
+    'Off-Ball': ['Affect Defender Defend The Pass','Affect Defender Defend The Shot','Clamp-Lock-Hold','Dislodge From Position','Engage/Disengage','Head Contact','Hook','Jersey','Other','Pass & Crash','Seal','Trip','W - Three-Quarter Defense','Wrap'],
+    'On-Ball': ['Clamp-Lock-Hold','Clear Space','Dislodge From Position','Head Contact','Hook','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Pass & Crash','Trip','Wipe Away','Other'],
+    'Start Of Drive': ['Block-Charge Situation','Clear Space','Dislodge From Position','Flail','Head Contact','Hook','Initiates Contact','Jersey','Lead Unnaturally','NBP: Kick-Out','NBP: Launch Angle','NBP: Veer Into Defender','Other','Trip','Wipe Away','NBP: Off-Arm Contact','NBP: Rip-Through','Pass & Crash'],
+    'Ball Handler': ['Clear Space','Dislodge From Position','Head Contact','Hook','Jersey','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Trip','Wipe Away'],
+    'Screener': ['Arms','Delay','Deliver/Absorb','Distance','Head Contact','Other','Push Off','Rolls to Basket','W - DHO','Wide Stance','Push Play'],
+    'Cutter': ['Dislodge From Position','Head Contact','Hook','Jersey','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Push Off','Push Play','Trip','Wipe Away'],
+    'Driving Shot Attempt': ['Affect Defender Defend The Shot','Block-Charge Situation','Clear Space','Flail','Head Contact','Hook','Lead Unnaturally','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Restricted Area'],
+    'Floater': ['Affect Defender Defend The Shot','Block-Charge Situation','Clear Space','Flail','Head Contact','Hook','Lead Unnaturally','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Restricted Area'],
+    'Jump Shot': ['Affect Defender Defend The Shot','Clear Space','Flail','Head Contact','Hook','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other'],
+    'Layup Or Dunk': ['Affect Defender Defend The Shot','Block-Charge Situation','Clear Space','Flail','Head Contact','Hook','Lead Unnaturally','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Restricted Area'],
+    'Post Shot': ['Affect Defender Defend The Shot','Block-Charge Situation','Clear Space','Flail','Head Contact','Hook','Lead Unnaturally','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Restricted Area'],
+    'Pick - Ball Handler': ['Clear Space','Dislodge From Position','Head Contact','Hook','Jersey','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Trip','Wipe Away'],
+    'Pick - Screener': ['Arms','Delay','Deliver/Absorb','Distance','Head Contact','Other','Push Off','Rolls to Basket','W - DHO','Wide Stance','Push Play'],
+    'Screen - Cutter': ['Dislodge From Position','Head Contact','Hook','Jersey','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Push Off','Push Play','Trip','Wipe Away'],
+    'Screen - Screener': ['Arms','Delay','Deliver/Absorb','Distance','Head Contact','Other','Push Off','Rolls to Basket','W - DHO','Wide Stance'],
+    'Steal': ['Other'],
+    'Contact - Off-Ball': ['Affect Defender Defend The Pass','Affect Defender Defend The Shot','Clamp-Lock-Hold','Dislodge From Position','Engage/Disengage','Head Contact','Hook','Jersey','Other','Pass & Crash','Seal','Trip','W - Three-Quarter Defense','Wrap'],
+    'Contact - On-Ball': ['Clamp-Lock-Hold','Clear Space','Dislodge From Position','Head Contact','Hook','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Pass & Crash','Trip','Wipe Away','Other'],
+    'TTFS - Off Ball': ['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul','Transition Opportunity Ended'],
+    'TTFS - On Ball': ['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul','Transition Opportunity Ended'],
+    'N/A': ['N/A'],
+  },
+  'Foul: Personal': {
+    'Off-Ball': ['Clamp-Lock-Hold','Dislodge From Position','Engage/Disengage','Freedom Of Movement','Get To The Pass','Hand/Forearm To Front','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Trip','Two Hands','W - Three-Quarter Defense','Wrap'],
+    'On-Ball': ['Body Contact/Check','Clamp-Lock-Hold','Contact to Arm','Freedom Of Movement','Hand/Forearm To Front','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Pass','Trip','Two Hands','Wrap'],
+    'During Drive': ['Body Contact/Check','Clamp-Lock-Hold','Contact to Arm','Freedom Of Movement','Hand/Forearm To Front','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Trip','Two Hands','Wrap'],
+    'End Of Drive': ['Body Contact/Check','Clamp-Lock-Hold','Contact to Arm','Freedom Of Movement','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Trip','Two Hands','Wrap'],
+    'Start Of Drive': ['Body Contact/Check','Clamp-Lock-Hold','Contact to Arm','Freedom Of Movement','Hand/Forearm To Front','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Trip','Two Hands','Wrap'],
+    'Primary Defender': ['Body Contact/Check','Clamp-Lock-Hold','Contact to Arm','Freedom Of Movement','Hand/Forearm To Front','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Trip','Two Hands','Wrap'],
+    'Secondary Defender': ['Body Contact/Check','Clamp-Lock-Hold','Contact to Arm','Freedom Of Movement','Hand/Forearm To Front','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Trip','Two Hands','Wrap'],
+    'Pick - Primary Defender': ['Body Contact/Check','Clamp-Lock-Hold','Contact to Arm','Freedom Of Movement','Hand/Forearm To Front','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Trip','Two Hands','Wrap'],
+    'Pick - Secondary Defender': ['Body Contact/Check','Clamp-Lock-Hold','Contact to Arm','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Trip','Two Hands'],
+    'Post': ['Body Contact/Check','Clamp-Lock-Hold','Contact to Arm','Freedom Of Movement','Hand/Forearm To Front','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Off-Arm Contact','NBP: Rip-Through','Other','Trip','Two Hands','Wrap'],
+    'Screen - Primary Defender': ['Body Contact/Check','Clamp-Lock-Hold','Contact to Arm','Head Contact','Impede','Jersey','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Trip','Two Hands'],
+    'Screen - Secondary Defender': ['Body Contact/Check','Clamp-Lock-Hold','Contact to Arm','Head Contact','Impede','Jersey','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Trip','Two Hands'],
+    'Steal': ['Other'],
+    'Contact - Off-Ball': ['Clamp-Lock-Hold','Dislodge From Position','Engage/Disengage','Freedom Of Movement','Get To The Pass','Hand/Forearm To Front','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Trip','Two Hands','W - Three-Quarter Defense','Wrap'],
+    'Contact - On-Ball': ['Body Contact/Check','Clamp-Lock-Hold','Contact to Arm','Freedom Of Movement','Hand/Forearm To Front','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Pass','Trip','Two Hands','Wrap'],
+    'TTFS - Off Ball': ['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul','Transition Opportunity Ended'],
+    'TTFS - On Ball': ['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul','Transition Opportunity Ended'],
+  },
+  'Foul: Shooting': {
+    'Driving Shot Attempt': ['A -> B Movement','Arm Follow-Through','Arm Shooting Motion','Block-Charge Situation','Body Follow-Through','Body Shooting Motion','Head Contact','High-Five','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Restricted Area','Vertical'],
+    'Floater': ['A -> B Movement','Arm Follow-Through','Arm Shooting Motion','Block-Charge Situation','Body Follow-Through','Body Shooting Motion','Head Contact','High-Five','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Restricted Area','Vertical'],
+    'Jump Shot': ['Arm Follow-Through','Arm Shooting Motion','Body Follow-Through','Body Shooting Motion','Head Contact','High-Five','Landing Area','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Launch Angle','NBP: Rip-Through','Other','Vertical','A -> B Movement'],
+    'Layup Or Dunk': ['A -> B Movement','Arm Follow-Through','Arm Shooting Motion','Block-Charge Situation','Body Follow-Through','Body Shooting Motion','Head Contact','High-Five','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Veer Into Defender','Other','Restricted Area','Vertical'],
+    'Post Shot': ['A -> B Movement','Arm Follow-Through','Arm Shooting Motion','Block-Charge Situation','Body Follow-Through','Body Shooting Motion','Head Contact','High-Five','Landing Area','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Restricted Area','Vertical'],
+    'TTFS - Off Ball': ['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul'],
+    'TTFS - On Ball': ['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul'],
+  },
+  'Foul: Transition Take Foul': {
+    'TTFS - Off Ball': ['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul'],
+    'TTFS - On Ball': ['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul'],
+  },
+  'Foul: Away from Play': { 'Off-Ball': ['Clamp-Lock-Hold','Dislodge From Position','Engage/Disengage','Freedom Of Movement','Head Contact','Impede','Jersey','Other','Trip','Wrap'] },
+  'Foul: Defense 3 Second': { 'Imminently Legal': ['Actively Guarding','Exit','Shot'], 'Legal': ['Actively Guarding','Exit','Loss Of Control','Shot'], 'Violation': ['Fail To Clear','Foot On Line','Longer Than 3 Seconds','N/A','Straddle'] },
+  'Foul: Double Technical': { 'N/A': ['N/A'] },
+  'Foul: Non-Unsportsmanlike Tech Flopping': { 'N/A': ['N/A'] },
+  'Stoppage: Inadvertent Whistle': { "Coach's Challenge": ['Foul','Goaltending/Basket Interference','Out of Bounds'], 'Inadvertent Whistle': ['N/A'] },
+  'Stoppage: Out-of-Bounds': { 'Ball Out of Bounds': ['N/A'], 'Player Out of Bounds': ['N/A'] },
+  'Turnover: Traveling': { 'Gather': ['Changes Pivot Foot','First to Touch','Gather And Steps','Other','Pivot Foot Moves','Slide','Stutter Step'], 'Receives Pass': ['Changes Pivot Foot','First to Touch','Gather And Steps','Other','Pivot Foot Moves'], 'Start Of Dribble': ['Changes Pivot Foot','Gather And Steps','Other'], 'Stationary Movement': ['Other','Pivot Foot Moves'] },
+  'Turnover: 3 Second Violation': { 'Imminently Legal': ['Actively Guarding','Exit'], 'Legal': ['Actively Guarding','Exit'], 'Violation': ['Fail To Clear','Foot On Line','Longer Than 3 Seconds','N/A'] },
+  'Turnover: Defensive Goaltending': { 'Defensive Goaltending': ['N/A'], 'N/A': ['N/A'] },
+  'Turnover: Offensive Goaltending': { 'Offensive Goaltending': ['N/A'] },
+  'Turnover: Out of Bounds': { 'Ball Out of Bounds': ['N/A'], 'Player Out of Bounds': ['N/A'] },
+  'Turnover: Out of Bounds – Bad Pass Turn': { 'Ball Out of Bounds': ['N/A'], 'Player Out of Bounds': ['N/A'] },
+  'Turnover: Stepped out of Bounds': { 'Ball Out of Bounds': ['N/A'], 'Player Out of Bounds': ['N/A'] },
+  'Turnover: Lost Ball Out of Bounds': { 'Ball Out of Bounds': ['N/A'], 'Player Out of Bounds': ['N/A'] },
+  'Violation: Defensive Goaltending': { 'Defensive Goaltending': ['N/A'] },
 };
 
-function updatePlayTypes() {
-  // no dynamic filtering needed — play types are static
+function updateInfrType() {
+  const it = document.getElementById('rf-infraction-type').value;
+  const ptSel = document.getElementById('rf-play-type');
+  ptSel.innerHTML = '<option>-- select --</option>';
+  if (TAXONOMY[it]) {
+    Object.keys(TAXONOMY[it]).forEach(pt => {
+      const o = document.createElement('option'); o.textContent = pt; ptSel.appendChild(o);
+    });
+  }
+  updateSubPlayTypes();
 }
 
 function updateSubPlayTypes() {
+  const it = document.getElementById('rf-infraction-type').value;
   const pt = document.getElementById('rf-play-type').value;
   const sel = document.getElementById('rf-sub-play-type');
   sel.innerHTML = '<option>-- select --</option>';
-  (SUB_PLAY_TYPES[pt] || []).forEach(s => {
-    const o = document.createElement('option'); o.textContent = s; sel.appendChild(o);
-  });
+  const spts = (TAXONOMY[it] || {})[pt] || [];
+  spts.forEach(s => { const o = document.createElement('option'); o.textContent = s; sel.appendChild(o); });
 }
+
 const TOR_P = ['N. Sabally','K. Rice','M. Mabrey','T. Key','N. Conde','L. Juskaite','N. Nurse'];
 const CHI_P = ['S. Diggins','K. Cardoso','E. Williams','B. Sykes','T. Cloud','N. Banham','M. Taylor'];
 
@@ -537,7 +627,7 @@ const POSSESSIONS = [
   {id:1,q:1,team:'TOR',time:'09:45.0',ptiw:false,events:[
     {id:'e1-1',time:'09:44.8',label:'INBOUND',type:'plain'},
     {id:'e1-2',time:'09:43.2',label:'DRIVE',type:'plain'},
-    {id:'e1-3',time:'09:41.0',label:'PICK',type:'reviewable',prefill:{infrType:'Illegal Screen',playType:'Screen (On Ball)',subPlayType:'Standard Pick & Roll',role:'Off Player 2 (Screener/Cutter)',player:'Sabally, Nyara (13) — Tempo',opponent:'Diggins, Skylar (4) — Sky',rating:'No Infraction',observability:'Observable',ogr:true}},
+    {id:'e1-3',time:'09:41.0',label:'PICK',type:'reviewable',prefill:{infrType:'Foul: Offensive',playType:'Pick - Screener',subPlayType:'Arms',role:'Off Player 2 (Screener/Cutter)',player:'Sabally, Nyara (13) — Tempo',opponent:'Diggins, Skylar (4) — Sky',rating:'No Infraction',observability:'Observable',ogr:true}},
     {id:'e1-4',time:'09:40.5',label:'NO DRIBBLE',type:'plain'},
     {id:'e1-5',time:'09:39.8',label:'DRIBBLE',type:'plain'},
     {id:'e1-6',time:'09:38.1',label:'SHOT',type:'plain'},
@@ -945,9 +1035,13 @@ function selectEvent(evtId, poss, ev) {
     infractionRows = [{type:ev.foulType||ev.label, player:ev.player||(poss.team==='TOR'?TOR_P[0]:CHI_P[0]),
       opponent:poss.team==='TOR'?CHI_P[0]:TOR_P[0], official:REFS[0], location:'Lead', rating:'Called', observability:'Observable'}];
   } else if (ev.prefill) {
-    const p = ev.prefill;
-    infractionRows = [{type:p.infrType, player:p.player, opponent:p.opponent, official:REFS[0],
-      location:'Lead', rating:p.rating, observability:p.observability, prefill:p}];
+    infractionRows = [
+      {type:'Foul: Offensive', player:'Sabally, Nyara (13) — Tempo', opponent:'Diggins, Skylar (4) — Sky', official:REFS[0], location:'Lead', rating:'No Infraction', observability:'Observable',
+       prefill:{infrType:'Foul: Offensive', playType:'Pick - Screener', subPlayType:'Arms', role:'Off Player 2 (Screener/Cutter)', player:'Sabally, Nyara (13) — Tempo', opponent:'Diggins, Skylar (4) — Sky', rating:'No Infraction', observability:'Observable', ogr:true}},
+      {type:'Foul: Offensive', player:'Sabally, Nyara (13) — Tempo', opponent:'Cardoso, Kamilla (10) — Sky', official:REFS[1], location:'Trail', rating:'No Infraction', observability:'Observable'},
+      {type:'Foul: Personal', player:'Diggins, Skylar (4) — Sky', opponent:'Rice, Kahleah (5) — Tempo', official:REFS[0], location:'Lead', rating:'No Infraction', observability:'Observable'},
+      {type:'Foul: Personal', player:'Cardoso, Kamilla (10) — Sky', opponent:'Mabrey, Marina (4) — Tempo', official:REFS[2], location:'Slot', rating:'No Infraction', observability:'Observable'},
+    ];
   } else {
     const rt = ev.label==='TRAVEL'?'Travel':ev.label==='ILLEGAL SCREEN'?'Illegal Screen':'Illegal Dribble';
     infractionRows = [{type:rt, player:poss.team==='TOR'?TOR_P[0]:CHI_P[0],
@@ -994,6 +1088,7 @@ function selectInfractionRow(idx) {
   // apply prefill values to form dropdowns/checkboxes
   const pf = row.prefill || {};
   setSelectVal('rf-infraction-type', pf.infrType || row.type || '');
+  updateInfrType();
   setSelectVal('rf-play-type', pf.playType || '');
   updateSubPlayTypes();
   setSelectVal('rf-sub-play-type', pf.subPlayType || '');
