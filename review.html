@@ -101,21 +101,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .submit-qi-btn:hover{background:#15306e}
 
 /* INFRACTION TABLE (standalone, full width) */
-.inf-table-wrap{flex-shrink:0;margin:0 0 12px;border:1px solid #e5e7eb;border-radius:10px;background:#fff;}
-.inf-tbl{width:100%;border-collapse:collapse;font-size:11.5px}
-.inf-tbl th{padding:5px 10px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.4px;color:#9ca3af;background:#f9fafb;border-bottom:1px solid #e5e7eb;white-space:nowrap}
+.inf-table-outer{display:flex;align-items:flex-start;gap:8px;margin:0 0 8px}
+.inf-table-wrap{flex:1;min-width:0;border:1px solid #e5e7eb;border-radius:10px;background:#fff;overflow:hidden}
+.inf-tbl{width:100%;border-collapse:collapse;font-size:11.5px;table-layout:fixed}
+.inf-tbl th{padding:5px 10px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.4px;color:#9ca3af;background:#f9fafb;border-bottom:1px solid #e5e7eb;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .inf-tbl th:first-child{border-radius:10px 0 0 0}
 .inf-tbl th:last-child{border-radius:0 10px 0 0}
-.inf-tbl td{padding:5px 10px;border-bottom:1px solid #f3f4f6;vertical-align:middle;cursor:pointer}
+.inf-tbl td{padding:5px 10px;border-bottom:1px solid #f3f4f6;vertical-align:middle;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .inf-tbl tbody tr:last-child td{border-bottom:none}
 .inf-tbl tbody tr:hover td{background:#f9fafb}
 .inf-tbl tbody tr.inf-sel td{background:#1a3a6b;color:#fff}
 .inf-tbl tbody tr.inf-sel td .rating-chip{background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.3)}
-.rating-chip{display:inline-block;padding:1px 7px;border-radius:10px;font-size:10px;font-weight:600;background:#f3f4f6;color:#374151;border:1px solid #e5e7eb}
-.inf-row-btns{display:flex;gap:5px;white-space:nowrap}
-.inf-add-btn{padding:3px 9px;background:#1a3a6b;color:#fff;border:none;border-radius:6px;font-size:10.5px;font-weight:600;cursor:pointer}
+.rating-chip{display:inline-block;padding:1px 7px;border-radius:10px;font-size:10px;font-weight:600;background:#f3f4f6;color:#374151;border:1px solid #e5e7eb;white-space:nowrap}
+.inf-side-btns{display:flex;flex-direction:column;gap:5px;flex-shrink:0;padding-top:1px}
+.inf-add-btn{padding:4px 10px;background:#1a3a6b;color:#fff;border:none;border-radius:6px;font-size:10.5px;font-weight:600;cursor:pointer;white-space:nowrap}
 .inf-add-btn:hover{background:#15306e}
-.inf-ev-btn{padding:3px 9px;background:#fff;color:#374151;border:1px solid #d1d5db;border-radius:6px;font-size:10.5px;font-weight:500;cursor:pointer}
+.inf-ev-btn{padding:4px 10px;background:#fff;color:#374151;border:1px solid #d1d5db;border-radius:6px;font-size:10.5px;font-weight:500;cursor:pointer;white-space:nowrap}
 .inf-ev-btn:hover{background:#f9fafb}
 
 /* CENTER PANEL */
@@ -201,15 +202,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .rp-ptiw-lbl{color:#f59e0b;font-weight:700}
 
 /* ASSIST PANEL */
-.assist-panel{width:180px;flex-shrink:0;display:flex;flex-direction:column;gap:10px;min-height:0}
-.assist-card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:10px 12px;flex-shrink:0}
+.assist-panel{width:180px;flex-shrink:0;display:flex;flex-direction:column;gap:8px;min-height:0}
+.assist-card{border:1px solid #e5e7eb;border-radius:10px;padding:10px 12px;flex-shrink:0;background:#fff}
+.assist-card-red{background:#fff0f0;border-color:#fecaca}
 .assist-action-row{display:flex;gap:6px}
 .assist-action-row .rf-cancel-btn,.assist-action-row .rf-save-btn{flex:1;justify-content:center}
-.assist-btn{width:100%;padding:8px 10px;background:#1a3a6b;color:#fff;border:none;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px}
-.assist-btn:hover{background:#15306e}
+.assist-btn{width:100%;padding:8px 10px;background:#ef4444;color:#fff;border:none;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px}
+.assist-btn:hover{background:#dc2626}
 .suggestions-card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:10px 12px;flex:1;overflow-y:auto;min-height:0}
-.suggestions-lbl{font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;margin-bottom:6px;text-transform:uppercase}
-.suggestion-item{padding:6px 8px;border:1px solid #e5e7eb;border-radius:6px;font-size:11px;color:#374151;cursor:pointer;margin-bottom:4px;line-height:1.4;background:#f9fafb}
+.suggestions-lbl{font-size:10px;font-weight:700;color:#374151;letter-spacing:.4px;margin-bottom:2px;text-transform:uppercase}
+.suggestions-sub{font-size:9.5px;color:#9ca3af;margin-bottom:8px;line-height:1.4}
+.suggestion-item{padding:6px 8px;border:1px solid #e5e7eb;border-radius:6px;font-size:10.5px;color:#374151;cursor:pointer;margin-bottom:5px;line-height:1.4;background:#f9fafb}
 .suggestion-item:hover{background:#eff6ff;border-color:#bfdbfe;color:#1e40af}
 .suggestions-empty{font-size:11px;color:#9ca3af;font-style:italic;line-height:1.5}
 /* CHATBOT FLOATING WINDOW */
@@ -336,20 +339,25 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   <div class="main-right">
 
     <!-- INFRACTION TABLE (full width, above form+video) -->
-    <div id="inf-table-wrap" style="display:none;margin:0 0 8px">
-      <div class="inf-table-wrap">
-        <table class="inf-tbl" id="inf-tbl">
-          <thead>
-            <tr>
-              <th>Infraction Type</th><th>Player</th><th>Opponent</th><th>Official</th><th>Location</th><th>Infraction Rating</th><th>Observability</th>
-            </tr>
-          </thead>
-          <tbody id="inf-tbody"></tbody>
-        </table>
-      </div>
-      <div style="display:flex;gap:6px;margin-top:6px;padding:0 2px">
-        <button class="inf-add-btn" onclick="addInfractionRow()">+ INFRACTION</button>
-        <button class="inf-ev-btn">+ EVENT</button>
+    <div id="inf-table-wrap" style="display:none">
+      <div class="inf-table-outer">
+        <div class="inf-table-wrap">
+          <table class="inf-tbl" id="inf-tbl">
+            <colgroup>
+              <col style="width:18%"><col style="width:17%"><col style="width:17%"><col style="width:14%"><col style="width:9%"><col style="width:16%"><col style="width:9%">
+            </colgroup>
+            <thead>
+              <tr>
+                <th>Infraction Type</th><th>Player</th><th>Opponent</th><th>Official</th><th>Location</th><th>Infraction Rating</th><th>Observability</th>
+              </tr>
+            </thead>
+            <tbody id="inf-tbody"></tbody>
+          </table>
+        </div>
+        <div class="inf-side-btns">
+          <button class="inf-add-btn" onclick="addInfractionRow()">+ INFRACTION</button>
+          <button class="inf-ev-btn">+ EVENT</button>
+        </div>
       </div>
     </div>
 
@@ -501,15 +509,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 
       <!-- ASSIST PANEL -->
       <div class="assist-panel">
-        <div class="assist-card">
+        <div class="assist-card" style="background:#fff">
           <div class="assist-action-row">
             <button class="rf-cancel-btn" onclick="cancelRating()">&#10005; Cancel</button>
             <button class="rf-save-btn" onclick="saveRating()"><i class="ti ti-check"></i> Save</button>
           </div>
-          <button class="assist-btn" onclick="openChatbot()" style="margin-top:8px"><i class="ti ti-whistle" style="font-size:13px"></i> Help Side Assist</button>
+        </div>
+        <div class="assist-card assist-card-red">
+          <button class="assist-btn" onclick="openChatbot()"><i class="ti ti-whistle" style="font-size:13px"></i> Help Side Assist</button>
         </div>
         <div class="suggestions-card" id="suggestions-card">
-          <div class="suggestions-lbl">Comment Suggestions</div>
+          <div class="suggestions-lbl">Comment Library</div>
+          <div class="suggestions-sub">Click a suggestion to enter into comments</div>
           <div id="suggestions-list"><div class="suggestions-empty">Select infraction type, play type, and rating to see suggestions.</div></div>
         </div>
       </div>
@@ -727,7 +738,7 @@ const POSSESSIONS = [
   {id:1,q:1,team:'TOR',time:'09:45.0',ptiw:false,events:[
     {id:'e1-1',time:'09:44.8',label:'INBOUND',type:'plain'},
     {id:'e1-2',time:'09:43.2',label:'DRIVE',type:'plain'},
-    {id:'e1-3',time:'09:41.0',label:'PICK',type:'reviewable',prefill:{infrType:'Foul: Offensive',playType:'Pick - Screener',subPlayType:'Arms',role:'Off Player 2 (Screener/Cutter)',player:'Sabally, Nyara (13) — Tempo',opponent:'Diggins, Skylar (4) — Sky',rating:'No Infraction',observability:'Observable',ogr:true}},
+    {id:'e1-3',time:'09:41.0',label:'PICK',type:'reviewable',prefill:{infrType:'Foul: Offensive',playType:'Pick - Screener',subPlayType:'Deliver/Absorb',role:'Off Player 2 (Screener/Cutter)',player:'Sabally, Nyara (13) — Tempo',opponent:'Diggins, Skylar (4) — Sky',rating:'No Infraction',observability:'Observable',ogr:true}},
     {id:'e1-4',time:'09:40.5',label:'NO DRIBBLE',type:'plain'},
     {id:'e1-5',time:'09:39.8',label:'DRIBBLE',type:'plain'},
     {id:'e1-6',time:'09:38.1',label:'SHOT',type:'plain'},
@@ -1137,7 +1148,7 @@ function selectEvent(evtId, poss, ev) {
   } else if (ev.prefill) {
     infractionRows = [
       {type:'Foul: Offensive', player:'Sabally, Nyara (13) — Tempo', opponent:'Diggins, Skylar (4) — Sky', official:REFS[0], location:'Lead', rating:'No Infraction', observability:'Observable',
-       prefill:{infrType:'Foul: Offensive', playType:'Pick - Screener', subPlayType:'Arms', role:'Off Player 2 (Screener/Cutter)', player:'Sabally, Nyara (13) — Tempo', opponent:'Diggins, Skylar (4) — Sky', rating:'No Infraction', observability:'Observable', ogr:true}},
+       prefill:{infrType:'Foul: Offensive', playType:'Pick - Screener', subPlayType:'Deliver/Absorb', role:'Off Player 2 (Screener/Cutter)', player:'Sabally, Nyara (13) — Tempo', opponent:'Diggins, Skylar (4) — Sky', rating:'No Infraction', observability:'Observable', ogr:true}},
       {type:'Foul: Offensive', player:'Sabally, Nyara (13) — Tempo', opponent:'Cardoso, Kamilla (10) — Sky', official:REFS[1], location:'Trail', rating:'No Infraction', observability:'Observable'},
       {type:'Foul: Personal', player:'Diggins, Skylar (4) — Sky', opponent:'Rice, Kahleah (5) — Tempo', official:REFS[0], location:'Lead', rating:'No Infraction', observability:'Observable'},
       {type:'Foul: Personal', player:'Cardoso, Kamilla (10) — Sky', opponent:'Mabrey, Marina (4) — Tempo', official:REFS[2], location:'Slot', rating:'No Infraction', observability:'Observable'},
@@ -1318,14 +1329,14 @@ function updateSuggestions() {
     return;
   }
   const MOCK_COMMENTS = [
-    {infractionType:'Foul: Offensive',playType:'Pick - Screener',rating:'No Infraction',comment:'Screener set a legal screen with feet inside shoulder width and arms at sides. Defender was given the opportunity to avoid the contact. No infraction.'},
-    {infractionType:'Foul: Offensive',playType:'Pick - Screener',rating:'No Infraction',comment:'Contact was initiated by the defender moving laterally into the screener\'s established position. Screener was stationary at time of contact.'},
-    {infractionType:'Foul: Offensive',playType:'Pick - Screener',rating:'Judgement - Lean No',comment:'Screener\'s arms were slightly extended but did not create significant advantage. Borderline but lean toward legal given the space.'},
-    {infractionType:'Foul: Offensive',playType:'Pick - Ball Handler',rating:'No Infraction',comment:'Ball handler used a normal change of direction. No use of arm bar or shoulder to create space.'},
-    {infractionType:'Foul: Personal',playType:'On-Ball',rating:'No Infraction',comment:'Defender maintained legal guarding position throughout. Hand check was incidental and did not impede offensive player\'s progress.'},
-    {infractionType:'Foul: Personal',playType:'On-Ball',rating:'Judgement - Lean Infraction',comment:'Defender\'s arm contact on the drive was marginal. Slight impeding of the offensive player\'s path — lean toward infraction.'},
-    {infractionType:'Foul: Shooting',playType:'Driving Shot Attempt',rating:'No Infraction',comment:'Defender was in legal vertical position at time of shot. Contact was minimal and did not affect the shooting motion.'},
-    {infractionType:'Foul: Shooting',playType:'Jump Shot',rating:'Infraction',comment:'Defender landed on shooter\'s foot after leaving vertical plane, creating dangerous contact that affected the shooting motion.'},
+    {infractionType:'Foul: Offensive',playType:'Pick - Screener',rating:'No Infraction',comment:'Sabally firms up on their left foot and absorbs the body contact that occurs while setting the pick on Diggins. Additionally, Sabally does not go through Diggins\'s space, therefore, the contact as the players come together is considered incidental.'},
+    {infractionType:'Foul: Offensive',playType:'Pick - Screener',rating:'No Infraction',comment:'Sabally establishes herself in Diggins\'s path and absorbs the contact during the pick. Diggins then loses her balance on her own and not as a result of any contact from Sabally.'},
+    {infractionType:'Foul: Offensive',playType:'Pick - Screener',rating:'Judgement - Lean No',comment:'Screener firms up prior to contact but arms are slightly extended at impact. The contact as the players come together is borderline — lean toward incidental given the screener\'s established position.'},
+    {infractionType:'Foul: Offensive',playType:'Pick - Ball Handler',rating:'No Infraction',comment:'Ball handler uses a normal change of direction without creating space through illegal contact. No use of arm bar or shoulder to impede the defender.'},
+    {infractionType:'Foul: Personal',playType:'On-Ball',rating:'No Infraction',comment:'Defender maintains legal guarding position throughout the possession. Hand check is incidental and does not impede the offensive player\'s progress.'},
+    {infractionType:'Foul: Personal',playType:'On-Ball',rating:'Judgement - Lean Infraction',comment:'Defender\'s arm contact on the drive marginally impedes the offensive player\'s path — lean toward infraction given the defender\'s positioning outside the restricted area.'},
+    {infractionType:'Foul: Shooting',playType:'Driving Shot Attempt',rating:'No Infraction',comment:'Defender is in a legal vertical position at the time of the shot. Contact is minimal and does not affect the shooting motion or gather.'},
+    {infractionType:'Foul: Shooting',playType:'Jump Shot',rating:'Infraction',comment:'Defender lands on the shooter\'s foot after leaving the vertical plane, creating dangerous contact that affects the shooting motion. Infraction.'},
   ];
   try {
     const stored = localStorage.getItem('brs_comments_v6');
