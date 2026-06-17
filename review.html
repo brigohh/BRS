@@ -138,6 +138,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .rating-btn{display:block;width:100%;text-align:left;padding:6px 10px;font-size:11px;border:1px solid #d1d5db;border-radius:6px;cursor:pointer;background:#fff;color:#374151;margin-bottom:3px}
 .rating-btn:hover{background:#f3f4f6}
 .rating-btn.on{background:#4b5563;border-color:#4b5563;color:#fff}
+.rating-btn.on[data-rating="infraction"]{background:#dc2626;border-color:#dc2626;color:#fff}
+.rating-btn.on[data-rating="lean-infraction"]{background:#d97706;border-color:#d97706;color:#fff}
+.rating-btn.on[data-rating="lean-no"]{background:#2563eb;border-color:#2563eb;color:#fff}
+.rating-btn.on[data-rating="no-infraction"]{background:#16a34a;border-color:#16a34a;color:#fff}
+.rc-infraction{background:#fee2e2;color:#991b1b;border-color:#fca5a5}
+.rc-lean-infraction{background:#fef3c7;color:#92400e;border-color:#fcd34d}
+.rc-lean-no{background:#dbeafe;color:#1e40af;border-color:#bfdbfe}
+.rc-no-infraction{background:#dcfce7;color:#166534;border-color:#86efac}
 .rf-select{padding:5px 8px;border:1px solid #d1d5db;border-radius:6px;font-size:11.5px;color:#374151;background:#fff;cursor:pointer}
 .rf-left .rf-select{flex:1}
 .rf-right .rf-select{width:100%}
@@ -158,7 +166,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 
 /* RIGHT PANEL */
 .rp-col{width:440px;flex-shrink:0;display:flex;flex-direction:column;gap:10px;min-height:0}
-.rp{flex:1;background:#fff;display:flex;flex-direction:column;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;min-height:0}
+.rp{flex-shrink:0;background:#fff;display:flex;flex-direction:column;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;min-height:0}
 .rp-card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:10px 14px;flex-shrink:0}
 .rp-card-lbl{font-size:10px;color:#9ca3af;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:5px}
 .rp-card-lbl i{font-size:13px}
@@ -192,6 +200,34 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .rp-val{font-size:11px;color:#6b7280;font-style:italic;line-height:1.5}
 .rp-ptiw-lbl{color:#f59e0b;font-weight:700}
 
+/* ASSIST PANEL */
+.assist-panel{width:220px;flex-shrink:0;display:flex;flex-direction:column;gap:10px;min-height:0}
+.assist-card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:10px 12px;flex-shrink:0}
+.assist-card-lbl{font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;margin-bottom:8px;text-transform:uppercase}
+.assist-btn{width:100%;padding:8px 10px;background:#1a3a6b;color:#fff;border:none;border-radius:8px;font-size:11.5px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+.assist-btn:hover{background:#15306e}
+.suggestions-card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:10px 12px;flex:1;overflow-y:auto;min-height:0}
+.suggestions-lbl{font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;margin-bottom:6px;text-transform:uppercase}
+.suggestion-item{padding:6px 8px;border:1px solid #e5e7eb;border-radius:6px;font-size:11px;color:#374151;cursor:pointer;margin-bottom:4px;line-height:1.4;background:#f9fafb}
+.suggestion-item:hover{background:#eff6ff;border-color:#bfdbfe;color:#1e40af}
+.suggestions-empty{font-size:11px;color:#9ca3af;font-style:italic;line-height:1.5}
+/* CHATBOT MODAL */
+.chatbot-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;align-items:center;justify-content:center}
+.chatbot-overlay.open{display:flex}
+.chatbot-modal{background:#fff;border-radius:12px;width:460px;max-height:600px;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.3);overflow:hidden}
+.chatbot-hdr{background:#1a3a6b;color:#fff;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.chatbot-title{font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px}
+.chatbot-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:18px;cursor:pointer;line-height:1;padding:0}
+.chatbot-close:hover{color:#fff}
+.chatbot-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;min-height:200px}
+.chat-msg{padding:8px 12px;border-radius:10px;font-size:12px;line-height:1.5;max-width:85%}
+.chat-msg.bot{background:#f3f4f6;color:#111827;align-self:flex-start;border-bottom-left-radius:3px}
+.chat-msg.user{background:#1a3a6b;color:#fff;align-self:flex-end;border-bottom-right-radius:3px}
+.chatbot-input-row{display:flex;gap:6px;padding:10px 14px;border-top:1px solid #e5e7eb;flex-shrink:0;background:#f9fafb}
+.chatbot-input{flex:1;padding:7px 10px;border:1px solid #d1d5db;border-radius:8px;font-size:12px;font-family:inherit;color:#374151;background:#fff}
+.chatbot-input:focus{outline:none;border-color:#1a3a6b}
+.chatbot-send{padding:7px 14px;background:#1a3a6b;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer}
+.chatbot-send:hover{background:#15306e}
 /* TOAST */
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:7px;opacity:0;transition:opacity .18s;z-index:60;white-space:nowrap;pointer-events:none;background:#166534;color:#dcfce7;box-shadow:0 4px 20px rgba(0,0,0,.2)}
 .toast.show{opacity:1}
@@ -414,17 +450,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
               </div>
             </div>
             <div class="rf-right">
-              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2px">
-                <div class="rf-section-lbl" style="margin-bottom:0">Infraction Rating:</div>
-                <div style="display:flex;gap:5px">
-                  <button class="rf-save-btn" onclick="saveRating()"><i class="ti ti-check"></i> Save</button>
-                  <button class="rf-cancel-btn" onclick="cancelRating()">&#10005;</button>
-                </div>
-              </div>
-              <button class="rating-btn" onclick="selectRating(this)">Infraction</button>
-              <button class="rating-btn" onclick="selectRating(this)">Judgement - Lean Infraction</button>
-              <button class="rating-btn on" onclick="selectRating(this)">Judgement - Lean No</button>
-              <button class="rating-btn" onclick="selectRating(this)">No Infraction</button>
+              <div style="margin-bottom:6px">
+                <div class="rf-section-lbl" style="margin-bottom:4px">Infraction Rating:</div>
+              <button class="rating-btn" data-rating="infraction" onclick="selectRating(this)">Infraction</button>
+              <button class="rating-btn" data-rating="lean-infraction" onclick="selectRating(this)">Judgement - Lean Infraction</button>
+              <button class="rating-btn on" data-rating="lean-no" onclick="selectRating(this)">Judgement - Lean No</button>
+              <button class="rating-btn" data-rating="no-infraction" onclick="selectRating(this)">No Infraction</button>
               <div class="rf-section-lbl" style="margin-top:8px">Assessment Ratings:</div>
               <select class="rf-select" id="rf-assessment">
                 <option>- if applicable -</option>
@@ -442,6 +473,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
         </div>
 
         <div class="comment-section" id="comment-section" style="display:none">
+          <div style="display:flex;gap:6px;flex-shrink:0">
+            <button class="rf-cancel-btn" onclick="cancelRating()">&#10005; Cancel</button>
+            <button class="rf-save-btn" onclick="saveRating()"><i class="ti ti-check"></i> Save Rating</button>
+          </div>
           <div class="comment-tmpl-row">
             <span class="tmpl-lbl">Comment Templates:</span>
             <button class="tmpl-btn special"><i class="ti ti-diamond"></i> Auto Comments</button>
@@ -458,6 +493,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
             <div class="comment-lbl" style="margin-bottom:5px">Internal Notes:</div>
             <textarea class="comment-ta" id="notes-ta" rows="2" placeholder="Enter internal notes here"></textarea>
           </div>
+        </div>
+      </div>
+
+      <!-- ASSIST PANEL -->
+      <div class="assist-panel">
+        <div class="assist-card">
+          <div class="assist-card-lbl">Help</div>
+          <button class="assist-btn" onclick="openChatbot()">📣 Help Side Assist</button>
+        </div>
+        <div class="suggestions-card" id="suggestions-card">
+          <div class="suggestions-lbl">Comment Suggestions</div>
+          <div id="suggestions-list"><div class="suggestions-empty">Select infraction type, play type, and rating to see suggestions.</div></div>
         </div>
       </div>
 
@@ -510,6 +557,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 </div><!-- /.main -->
 </div><!-- /.page -->
 
+<div class="chatbot-overlay" id="chatbot-overlay" onclick="closeChatbotOutside(event)">
+  <div class="chatbot-modal">
+    <div class="chatbot-hdr">
+      <div class="chatbot-title">📣 Help Side Assist</div>
+      <button class="chatbot-close" onclick="closeChatbot()">&#10005;</button>
+    </div>
+    <div class="chatbot-msgs" id="chatbot-msgs">
+      <div class="chat-msg bot">How can I help you with this play?</div>
+    </div>
+    <div class="chatbot-input-row">
+      <input class="chatbot-input" id="chatbot-input" type="text" placeholder="Ask about this play..." onkeydown="if(event.key==='Enter')sendChat()">
+      <button class="chatbot-send" onclick="sendChat()">Send</button>
+    </div>
+  </div>
+</div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -1137,6 +1199,7 @@ function selectInfractionRow(idx) {
   document.getElementById('chk-ogr').checked = !!(pf.ogr);
   document.getElementById('chk-called').checked = !!(pf.called);
   renderInfractionTable();
+  updateSuggestions();
 }
 
 function setSelectVal(id, val) {
@@ -1160,8 +1223,25 @@ function selectRating(btn) {
   btn.classList.add('on');
   if (selectedInfRow!==null && infractionRows[selectedInfRow]) {
     infractionRows[selectedInfRow].rating = btn.textContent.trim();
-    renderInfractionTable();
+    // directly update just the rating chip in row selectedInfRow (col index 5)
+    const rows = document.querySelectorAll('#inf-tbody tr');
+    if (rows[selectedInfRow]) {
+      const chip = rows[selectedInfRow].querySelectorAll('td')[5]?.querySelector('.rating-chip');
+      if (chip) {
+        chip.textContent = btn.textContent.trim();
+        chip.className = 'rating-chip ' + ratingClass(btn.textContent.trim());
+      }
+    }
   }
+  updateSuggestions();
+}
+
+function ratingClass(rating) {
+  if (rating === 'Infraction') return 'rc-infraction';
+  if (rating === 'Judgement - Lean Infraction') return 'rc-lean-infraction';
+  if (rating === 'Judgement - Lean No') return 'rc-lean-no';
+  if (rating === 'No Infraction') return 'rc-no-infraction';
+  return '';
 }
 function saveRating() {
   document.getElementById('rating-form').style.display='none';
@@ -1191,6 +1271,79 @@ openPossId = 1; renderQueue();
 const fp = POSSESSIONS[0];
 const fe = fp.events.find(e=>e.id==='e1-3');
 if(fe){selectEvent(fe.id,fp,fe);renderQueue();}
+
+function openChatbot() {
+  document.getElementById('chatbot-overlay').classList.add('open');
+  document.getElementById('chatbot-input').focus();
+}
+function closeChatbot() {
+  document.getElementById('chatbot-overlay').classList.remove('open');
+}
+function closeChatbotOutside(e) {
+  if (e.target === document.getElementById('chatbot-overlay')) closeChatbot();
+}
+function sendChat() {
+  const input = document.getElementById('chatbot-input');
+  const msg = input.value.trim();
+  if (!msg) return;
+  const msgs = document.getElementById('chatbot-msgs');
+  const userDiv = document.createElement('div');
+  userDiv.className = 'chat-msg user';
+  userDiv.textContent = msg;
+  msgs.appendChild(userDiv);
+  input.value = '';
+  // placeholder response
+  setTimeout(() => {
+    const botDiv = document.createElement('div');
+    botDiv.className = 'chat-msg bot';
+    const responses = [
+      'Based on the play, consider the positioning of the defender relative to the offensive player.',
+      'Look at the timing of the contact — was it before, during, or after the gather?',
+      'The key factor here is whether the defender had established legal guarding position.',
+      'Consider the NBP principles: did the contact affect the offensive player\'s natural movement?',
+    ];
+    botDiv.textContent = responses[Math.floor(Math.random() * responses.length)];
+    msgs.appendChild(botDiv);
+    msgs.scrollTop = msgs.scrollHeight;
+  }, 600);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function updateSuggestions() {
+  const infrType = document.getElementById('rf-infraction-type')?.value || '';
+  const playType = document.getElementById('rf-play-type')?.value || '';
+  const rating = selectedInfRow !== null && infractionRows[selectedInfRow] ? infractionRows[selectedInfRow].rating : '';
+  const listEl = document.getElementById('suggestions-list');
+  if (!listEl) return;
+  if (!infrType || infrType === '-- select --' || !playType || playType === '-- select --' || !rating) {
+    listEl.innerHTML = '<div class="suggestions-empty">Select infraction type, play type, and rating to see suggestions.</div>';
+    return;
+  }
+  try {
+    const stored = localStorage.getItem('brs_comments_v6');
+    const comments = stored ? JSON.parse(stored) : [];
+    const matches = comments.filter(c =>
+      c.infractionType === infrType && c.playType === playType && c.rating === rating
+    );
+    if (matches.length === 0) {
+      listEl.innerHTML = '<div class="suggestions-empty">No saved suggestions for this combination.</div>';
+      return;
+    }
+    listEl.innerHTML = '';
+    matches.forEach(c => {
+      const div = document.createElement('div');
+      div.className = 'suggestion-item';
+      div.textContent = c.comment;
+      div.onclick = () => {
+        const ta = document.getElementById('comment-ta');
+        if (ta) ta.value += (ta.value ? ' ' : '') + c.comment;
+      };
+      listEl.appendChild(div);
+    });
+  } catch(e) {
+    listEl.innerHTML = '<div class="suggestions-empty">No suggestions available.</div>';
+  }
+}
 </script>
 </body>
 </html>
