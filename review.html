@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GRS — Review</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;color:#111827;background:#f3f4f6;height:100vh;overflow:hidden}
+.page{height:100vh;display:flex;flex-direction:column;overflow:hidden}
+
+/* NAV */
+.nav{background:#1a3a6b;height:48px;display:flex;align-items:center;padding:0 24px;flex-shrink:0;overflow:visible;position:relative;z-index:300}
+.nav-logo{display:flex;align-items:center;gap:8px}
+.nav-brand{color:rgba(255,255,255,.9);font-size:11.5px;font-weight:600;white-space:nowrap;letter-spacing:.5px}
+.nav-links{display:flex;margin-left:auto;flex-shrink:0;flex-wrap:nowrap;align-items:center}
+.nl{color:rgba(255,255,255,.55);font-size:10.5px;padding:0 8px;cursor:pointer;font-weight:500;height:48px;display:flex;align-items:center;border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0}
+.nl:hover{color:#fff}
+.nl.on{color:#fff;border-bottom-color:rgba(255,255,255,.7);font-weight:600}
+.nav-av{width:30px;height:30px;border-radius:50%;background:#2d5aa0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;flex-shrink:0;margin-left:12px}
+.nav-dropdown{position:relative;display:flex;align-items:center;height:48px}
+.nav-dropdown .nl{gap:4px}
+.nav-dd-caret{font-size:8px;opacity:.7;transition:transform .15s}
+.nav-dropdown.open .nav-dd-caret{transform:rotate(180deg)}
+.nav-dd-menu{display:none;position:absolute;top:44px;right:0;background:#fff;border:1px solid #e5e7eb;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.14);min-width:170px;z-index:400;padding:4px 0}
+.nav-dropdown.open .nav-dd-menu{display:block}
+.nav-dd-item{display:block;padding:9px 16px;font-size:11px;font-weight:500;color:#374151;text-decoration:none;white-space:nowrap;cursor:pointer}
+.nav-dd-item:hover{background:#f0f2f5;color:#1a3a6b}
+
+/* GAME HEADER */
+.game-hdr{background:#fff;border-bottom:1px solid #e5e7eb;padding:10px 20px;display:flex;align-items:center;gap:14px;flex-shrink:0}
+.gh-title{font-size:13px;font-weight:600;display:flex;align-items:center;gap:4px;flex-wrap:nowrap;white-space:nowrap}
+.gh-date{font-size:11px;color:#6b7280;margin-top:2px}
+.gh-sep{width:1px;height:28px;background:#e5e7eb}
+.gh-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+
+/* MAIN LAYOUT */
+.main{flex:1;display:flex;min-height:0;overflow:hidden;padding:14px 18px;gap:14px;background:#f3f4f6}
+
+/* LEFT PANEL — SMART QUEUE */
+.sq-panel{width:260px;flex-shrink:0;background:#fff;border:1px solid #e5e7eb;border-radius:10px;display:flex;flex-direction:column;overflow:hidden}
+.sq-header{padding:10px 12px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.sq-header-label{font-size:10px;font-weight:700;letter-spacing:.6px;color:#6b7280}
+.sq-play-btn{padding:3px 10px;background:#1a3a6b;color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:4px}
+.sq-play-btn:hover{background:#15306e}
+.sq-play-btn.active{background:#dc2626}
+.sq-list{flex:1;overflow-y:auto}
+.sq-poss{border-bottom:1px solid #f3f4f6}
+.sq-poss-hdr{padding:8px 12px;display:flex;align-items:center;gap:7px;cursor:pointer;font-size:11.5px;font-weight:600;color:#374151;background:#f9fafb;user-select:none}
+.sq-poss-hdr:hover{background:#f3f4f6}
+.sq-poss-hdr.open{background:#eff6ff;color:#1a3a6b}
+.sq-poss-caret{font-size:9px;color:#9ca3af;margin-left:auto;transition:transform .15s}
+.sq-poss-hdr.open .sq-poss-caret{transform:rotate(90deg)}
+.sq-poss-team{font-size:10px;font-weight:700;padding:1px 5px;border-radius:4px;background:#e5e7eb;color:#374151}
+.sq-poss-hdr.open .sq-poss-team{background:#dbeafe;color:#1e40af}
+.sq-events{display:none}
+.sq-events.open{display:block}
+.sq-event{padding:7px 12px 7px 16px;display:flex;align-items:center;gap:7px;cursor:pointer;border-left:3px solid transparent;border-bottom:1px solid #f9fafb;background:#fff}
+.sq-event:hover{background:#f9fafb}
+.sq-event.sel{background:#eff6ff;border-left-color:#1a3a6b}
+.sq-badge{padding:1px 6px;border-radius:4px;font-size:10px;font-weight:700;white-space:nowrap;flex-shrink:0}
+.sq-badge-shot{background:#dbeafe;border:1px solid #93c5fd;color:#1e40af}
+.sq-badge-foul{background:#fee2e2;border:1px solid #fca5a5;color:#991b1b}
+.sq-badge-drive{background:#f3e8ff;border:1px solid #d8b4fe;color:#6b21a8}
+.sq-badge-rebound{background:#ccfbf1;border:1px solid #5eead4;color:#0f766e}
+.sq-badge-oob{background:#f3f4f6;border:1px solid #d1d5db;color:#6b7280}
+.sq-badge-travel{background:#fff7ed;border:1px solid #fdba74;color:#c2410c}
+.sq-evt-time{font-size:10px;color:#9ca3af;white-space:nowrap}
+.sq-evt-player{font-size:11.5px;color:#374151;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* CENTER PANEL */
+.center-panel{flex:1;min-width:0;display:flex;flex-direction:column;overflow:hidden;background:#fff;border:1px solid #e5e7eb;border-radius:10px}
+.center-scroll{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+
+/* EVENT HEADER (band1) */
+.band1{background:#fff;border-bottom:1px solid #e5e7eb;padding:12px 16px;flex-shrink:0}
+.b1-r1{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:5px}
+.ev-badge{padding:2px 9px;border-radius:6px;font-size:11px;font-weight:600;background:#f3f4f6;border:1px solid #e5e7eb;color:#6b7280;white-space:nowrap}
+.b1-time{font-size:11px;color:#6b7280}
+.b1-seg{font-size:11px;color:#9ca3af}
+.b1-desc{font-size:14px;font-weight:600;color:#111827;margin-bottom:6px}
+.b1-r2{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.b1-players{font-size:13px}
+.b1-players b{font-weight:600;color:#1a3a6b}
+.vsep{width:1px;height:14px;background:#e5e7eb}
+.b1-sub{font-size:12px;color:#9ca3af;font-style:italic}
+.called-pill{padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.3px;border:1px solid}
+.called-c{background:#dcfce7;border-color:#86efac;color:#166534}
+.called-nc{background:#f3f4f6;border-color:#d1d5db;color:#6b7280}
+.rated-badge{padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;background:#dbeafe;border:1px solid #93c5fd;color:#1e40af}
+
+/* PLACEHOLDER */
+.center-placeholder{flex:1;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-size:13px;font-style:italic;padding:40px}
+
+/* INFRACTION TABLE */
+.infraction-section{padding:14px 16px;border-bottom:1px solid #f3f4f6}
+.inf-section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.inf-section-title{font-size:10px;font-weight:700;letter-spacing:.5px;color:#6b7280}
+.inf-add-btn{padding:2px 8px;border:1px solid #d1d5db;border-radius:6px;font-size:10px;font-weight:600;background:#f9fafb;color:#6b7280;cursor:pointer;display:flex;align-items:center;gap:3px}
+.inf-add-btn:hover{background:#eff6ff;border-color:#bfdbfe;color:#1d4ed8}
+.infraction-table{width:100%;border-collapse:collapse;font-size:12px;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden}
+.infraction-table th{padding:7px 10px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.4px;color:#9ca3af;background:#f9fafb;border-bottom:1px solid #e5e7eb;white-space:nowrap}
+.infraction-table td{padding:8px 10px;border-bottom:1px solid #f3f4f6;vertical-align:middle;cursor:pointer}
+.infraction-table tbody tr:last-child td{border-bottom:none}
+.infraction-table tbody tr:hover td{background:#f9fafb}
+.infraction-table tbody tr.sel td{background:#eff6ff}
+.infraction-table tbody tr.sel td:first-child{border-left:3px solid #1a3a6b}
+.inf-type-cell{font-weight:500;color:#111827}
+.inf-onball{text-align:center}
+.inf-onball-yes{display:inline-block;width:14px;height:14px;border-radius:50%;background:#dcfce7;border:1px solid #86efac}
+
+/* SAVED RATING CARD */
+.saved-ratings-area{padding:0 16px 12px}
+.saved-rating-card{background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:9px 12px;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.src-rating{padding:2px 8px;border-radius:6px;font-size:11px;font-weight:700}
+.src-infraction{background:#fee2e2;border:1px solid #fca5a5;color:#991b1b}
+.src-pi-lean{background:#fff7ed;border:1px solid #fdba74;color:#c2410c}
+.src-pi-no{background:#eef2ff;border:1px solid #c7d2fe;color:#4338ca}
+.src-no-infraction{background:#dcfce7;border:1px solid #86efac;color:#166534}
+.src-type{font-size:12px;color:#374151;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.src-actions{display:flex;gap:4px;flex-shrink:0}
+.src-btn{background:none;border:none;color:#9ca3af;cursor:pointer;padding:2px 4px;font-size:13px}
+.src-btn:hover{color:#374151}
+
+/* RATING FORM */
+.rating-form-area{padding:14px 16px;border-top:1px solid #e5e7eb;display:none}
+.rating-form-area.open{display:block}
+.rating-section{margin-bottom:16px}
+.rating-section-label{font-size:10px;font-weight:700;letter-spacing:.6px;color:#6b7280;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #f3f4f6}
+.classification-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.cf-field{display:flex;flex-direction:column;gap:3px}
+.cf-label{font-size:10px;font-weight:600;color:#9ca3af;letter-spacing:.3px}
+.cf-select{width:100%;height:30px;font-size:12px;padding:0 8px;border:1px solid #d1d5db;border-radius:6px;background:#fff;color:#111827;cursor:pointer}
+.cf-select:focus{outline:none;border-color:#1a3a6b}
+.rating-btns{display:flex;gap:8px}
+.rating-btn{flex:1;padding:10px;border:2px solid;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;text-align:center;background:#f9fafb;transition:all .12s}
+.rating-btn-infraction{border-color:#fca5a5;color:#991b1b}
+.rating-btn-infraction:hover,.rating-btn-infraction.sel{background:#fee2e2;border-color:#f87171}
+.rating-btn-pi-lean{border-color:#fdba74;color:#c2410c}
+.rating-btn-pi-lean:hover,.rating-btn-pi-lean.sel{background:#fff7ed;border-color:#f97316}
+.rating-btn-pi-no{border-color:#c7d2fe;color:#4338ca}
+.rating-btn-pi-no:hover,.rating-btn-pi-no.sel{background:#eef2ff;border-color:#818cf8}
+.rating-btn-no-infraction{border-color:#86efac;color:#166534}
+.rating-btn-no-infraction:hover,.rating-btn-no-infraction.sel{background:#dcfce7;border-color:#4ade80}
+.comment-editor{min-height:70px;border:1px solid #d1d5db;border-radius:8px;padding:8px 10px;font-size:12px;line-height:1.6;outline:none;color:#111827;background:#fff}
+.comment-editor:focus{border-color:#1a3a6b}
+.comment-editor:empty:before{content:attr(data-placeholder);color:#9ca3af;font-style:italic;pointer-events:none}
+.notes-textarea{width:100%;resize:vertical;min-height:48px;border:1px solid #e5e7eb;border-radius:8px;padding:7px 10px;font-size:11.5px;color:#6b7280;font-style:italic;outline:none;font-family:inherit;background:#f9fafb;margin-top:8px}
+.notes-textarea:focus{border-color:#d1d5db}
+.notes-textarea::placeholder{color:#d1d5db;font-style:italic}
+.form-footer{display:flex;align-items:center;gap:8px;margin-top:12px}
+.btn-save{padding:7px 18px;background:#1a3a6b;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer}
+.btn-save:hover{background:#15306e}
+.btn-flag{padding:7px 14px;border:1px solid #d1d5db;border-radius:8px;font-size:12px;font-weight:500;background:#fff;color:#374151;cursor:pointer}
+.btn-flag:hover{background:#f9fafb}
+.btn-skip{background:none;border:none;font-size:12px;color:#9ca3af;cursor:pointer;padding:7px 10px}
+.btn-skip:hover{color:#374151}
+
+/* RIGHT PANEL */
+.rp{width:360px;flex-shrink:0;background:#fff;border:1px solid #e5e7eb;border-radius:10px;display:flex;flex-direction:column;overflow:hidden}
+.vid-area{background:#0f1117;padding:6px 6px 0;flex-shrink:0}
+.vid-frame{width:100%;aspect-ratio:16/9;background:#1a1f2e;border-radius:6px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.ang-row{display:flex;gap:3px;padding:6px 10px;background:#fff;border-bottom:1px solid #f3f4f6;overflow-x:auto;flex-shrink:0}
+.ang{padding:2px 7px;font-size:10px;border:1px solid #e5e7eb;background:#f9fafb;color:#6b7280;cursor:pointer;border-radius:4px;white-space:nowrap;flex-shrink:0;font-weight:500}
+.ang:hover{color:#374151;border-color:#d1d5db;background:#f3f4f6}
+.ang.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
+.vid-ctrl{padding:6px 10px;border-bottom:1px solid #f3f4f6;display:flex;align-items:center;gap:6px;flex-shrink:0;background:#fff}
+.vcb{background:none;border:none;color:#9ca3af;cursor:pointer;font-size:15px;display:flex;align-items:center}
+.vcb:hover{color:#111827}
+.vtrack{flex:1;height:3px;background:#e5e7eb;border-radius:2px;position:relative;cursor:pointer}
+.vfill{width:38%;height:100%;background:#1a3a6b;border-radius:2px;pointer-events:none}
+.vhead{width:10px;height:10px;background:#1a3a6b;border-radius:50%;position:absolute;right:-5px;top:-3.5px;border:2px solid #fff;box-shadow:0 0 0 1px #1a3a6b;pointer-events:none}
+.vtime{color:#9ca3af;font-size:11px;min-width:56px;text-align:right}
+.rp-box{padding:8px 10px;border-bottom:1px solid #f3f4f6;flex-shrink:0;background:#fff}
+.rp-lbl{font-size:10px;color:#9ca3af;font-weight:700;margin-bottom:3px;display:flex;align-items:center;gap:5px}
+.rp-lbl i{font-size:13px}
+.rp-val{font-size:11px;color:#6b7280;font-style:italic;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- NAV -->
+<div class="nav">
+  <div class="nav-logo" onclick="location='home.html'" style="cursor:pointer">
+    <img src="Logos/nba-logo.svg" style="width:16px;height:auto" onerror="this.style.display='none'">
+    <div class="nav-brand">BRIDGET REVIEW SYSTEM 1.0</div>
+  </div>
+  <div class="nav-links">
+    <span class="nl" onclick="location='home.html'">HOME</span>
+    <span class="nl" onclick="location='published-games.html'">PUBLISHED GAMES</span>
+    <span class="nl" onclick="location='rim.html'">RIM</span>
+    <div class="nav-dropdown" id="nav-dropdown">
+      <span class="nl" onclick="toggleNavDropdown(event)">REVIEWER RESOURCE <span class="nav-dd-caret">▾</span></span>
+      <div class="nav-dd-menu">
+        <span class="nav-dd-item" onclick="location='comment-library.html'">Comment Library</span>
+      </div>
+    </div>
+    <div class="nav-av">BN</div>
+  </div>
+</div>
+
+<!-- GAME HEADER -->
+<div class="game-hdr">
+  <div>
+    <div class="gh-title">
+      <span style="display:inline-flex;align-items:center;gap:5px">
+        <img src="Logos/toronto tempo logo.jpg" style="width:20px;height:20px;object-fit:contain" onerror="this.style.display='none'">
+        TOR (111)
+      </span>
+      <span style="color:#9ca3af;margin:0 6px">@</span>
+      <span style="display:inline-flex;align-items:center;gap:5px">
+        <img src="Logos/chicago sky logo.png" style="width:20px;height:20px;object-fit:contain" onerror="this.style.display='none'">
+        CHI (104)
+      </span>
+    </div>
+    <div class="gh-date">Wednesday, May 27, 2026</div>
+  </div>
+  <div class="gh-sep"></div>
+  <div class="gh-right">
+    <span style="font-size:11px;color:#6b7280">First-Pass Review</span>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- LEFT: SMART QUEUE -->
+  <div class="sq-panel">
+    <div class="sq-header">
+      <span class="sq-header-label">SMART QUEUE</span>
+      <button class="sq-play-btn" id="play-btn" onclick="toggleAutoPlay()">▶ Play</button>
+    </div>
+    <div class="sq-list" id="sq-list"></div>
+  </div>
+
+  <!-- CENTER -->
+  <div class="center-panel">
+    <!-- Event header -->
+    <div class="band1" id="event-header">
+      <div id="event-header-content">
+        <div style="color:#9ca3af;font-size:13px;font-style:italic">Select an event from the queue</div>
+      </div>
+    </div>
+
+    <div class="center-scroll" id="center-scroll">
+      <div class="center-placeholder" id="center-placeholder">Select an event from the queue to begin rating.</div>
+
+      <!-- Saved ratings area -->
+      <div class="saved-ratings-area" id="saved-ratings-area" style="display:none;padding-top:14px"></div>
+
+      <!-- Infraction table -->
+      <div class="infraction-section" id="infraction-section" style="display:none">
+        <div class="inf-section-hdr">
+          <span class="inf-section-title">POSSIBLE INFRACTIONS</span>
+          <button class="inf-add-btn">+ Add</button>
+        </div>
+        <table class="infraction-table" id="infraction-table">
+          <thead>
+            <tr>
+              <th>Infraction Type</th>
+              <th>Player</th>
+              <th>Opponent</th>
+              <th style="text-align:center">On-Ball</th>
+            </tr>
+          </thead>
+          <tbody id="infraction-tbody"></tbody>
+        </table>
+      </div>
+
+      <!-- Rating form -->
+      <div class="rating-form-area" id="rating-form">
+        <!-- Section 1: Classification -->
+        <div class="rating-section">
+          <div class="rating-section-label">CLASSIFICATION</div>
+          <div class="classification-grid">
+            <div class="cf-field">
+              <span class="cf-label">Infraction Type</span>
+              <select class="cf-select" id="cf-infraction-type">
+                <option>Foul: Shooting</option>
+                <option>Foul: Personal</option>
+                <option>Foul: Offensive</option>
+                <option>Foul: Loose Ball</option>
+                <option>Defensive Goaltending</option>
+                <option>Stoppage: Out-of-Bounds</option>
+                <option>Turnover: Traveling</option>
+              </select>
+            </div>
+            <div class="cf-field">
+              <span class="cf-label">Play Type / Situation</span>
+              <select class="cf-select" id="cf-play-type">
+                <option>Drive</option>
+                <option>Post-Up</option>
+                <option>Pick-and-Roll</option>
+                <option>Transition</option>
+                <option>Spot-Up</option>
+                <option>Handoff</option>
+                <option>Off-Screen</option>
+              </select>
+            </div>
+            <div class="cf-field">
+              <span class="cf-label">Sub Play Type</span>
+              <select class="cf-select" id="cf-sub-play">
+                <option>Contact on Shot</option>
+                <option>Reach-in</option>
+                <option>Hold</option>
+                <option>Push</option>
+                <option>Body Check</option>
+                <option>Charge</option>
+                <option>Blocking</option>
+              </select>
+            </div>
+            <div class="cf-field">
+              <span class="cf-label">Official</span>
+              <select class="cf-select" id="cf-official">
+                <option>Genesis Perrymond</option>
+                <option>Catherine Chang</option>
+                <option>Kevin Fahy</option>
+              </select>
+            </div>
+            <div class="cf-field">
+              <span class="cf-label">Location</span>
+              <select class="cf-select" id="cf-location">
+                <option>Lead</option>
+                <option>Slot</option>
+                <option>Trail</option>
+                <option>C1</option>
+                <option>C2</option>
+              </select>
+            </div>
+            <div class="cf-field">
+              <span class="cf-label">Observability</span>
+              <select class="cf-select" id="cf-observability">
+                <option>Observable</option>
+                <option>Partially Observable</option>
+                <option>Not Observable</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: Rating -->
+        <div class="rating-section">
+          <div class="rating-section-label">RATING</div>
+          <div class="rating-btns">
+            <button class="rating-btn rating-btn-infraction" data-rating="Infraction" onclick="selectRating(this)">Infraction</button>
+            <button class="rating-btn rating-btn-pi-lean" data-rating="PI - Lean" onclick="selectRating(this)">PI - Lean</button>
+            <button class="rating-btn rating-btn-pi-no" data-rating="PI - No" onclick="selectRating(this)">PI - No</button>
+            <button class="rating-btn rating-btn-no-infraction" data-rating="No Infraction" onclick="selectRating(this)">No Infraction</button>
+          </div>
+        </div>
+
+        <!-- Section 3: Comment -->
+        <div class="rating-section">
+          <div class="rating-section-label">COMMENT</div>
+          <div class="comment-editor" id="comment-editor" contenteditable="true" data-placeholder="Add your comment here... (Ctrl+B for bold)"></div>
+          <textarea class="notes-textarea" id="notes-textarea" placeholder="Notes to self..."></textarea>
+        </div>
+
+        <div class="form-footer">
+          <button class="btn-save" onclick="saveRating()">Save Rating</button>
+          <button class="btn-flag" onclick="flagEvent()">Flag</button>
+          <button class="btn-skip" onclick="skipEvent()">Skip</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: VIDEO PANEL -->
+  <div class="rp">
+    <div class="vid-area">
+      <div class="vid-frame">
+        <img src="Logos/video player placeholder.png" style="width:100%;height:100%;object-fit:cover;border-radius:6px;display:block" onerror="this.style.display='none'">
+      </div>
+    </div>
+    <div class="ang-row">
+      <span class="ang on" onclick="selAng(this)">LLB</span>
+      <span class="ang" onclick="selAng(this)">RLB</span>
+      <span class="ang" onclick="selAng(this)">LAR</span>
+      <span class="ang" onclick="selAng(this)">RAR</span>
+      <span class="ang" onclick="selAng(this)">RLS</span>
+      <span class="ang" onclick="selAng(this)">ABP</span>
+      <span class="ang" onclick="selAng(this)">HBP</span>
+      <span class="ang" onclick="selAng(this)">INA</span>
+      <span class="ang" onclick="selAng(this)">DF BCAST</span>
+    </div>
+    <div class="vid-ctrl">
+      <button class="vcb" onclick="vidControl('prev')"><i class="ti ti-rewind"></i></button>
+      <button class="vcb" id="vid-play-btn" onclick="vidControl('play')"><i class="ti ti-player-play"></i></button>
+      <button class="vcb" onclick="vidControl('next')"><i class="ti ti-fast-forward"></i></button>
+      <div class="vtrack" id="vtrack" onclick="scrubVideo(event)">
+        <div class="vfill" id="vfill" style="width:0%"><div class="vhead"></div></div>
+      </div>
+      <span class="vtime" id="v-time">0:00</span>
+      <button class="vcb"><i class="ti ti-maximize"></i></button>
+    </div>
+    <div class="rp-box">
+      <div class="rp-lbl"><i class="ti ti-bell" style="color:#f59e0b"></i> PTIW comment</div>
+      <div class="rp-val">No PTIW comment</div>
+    </div>
+    <div class="rp-box">
+      <div class="rp-lbl"><i class="ti ti-message-circle" style="color:#f97316"></i> OIW comment</div>
+      <div class="rp-val">No OIW comment</div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+</div><!-- /page -->
+
+<script>
+// ─── DATA ───────────────────────────────────────────────────────────────────
+const possessions = [
+  {
+    id: 0, q: 'Q1', team: 'TOR', clock: '9:45',
+    events: [
+      {id:0, type:'DRIVE', time:'9:41', player:'N.Sabally', desc:'Drive by N.Sabally'},
+      {id:1, type:'FOUL',  time:'9:38', player:'T.Key',     desc:'Shooting foul on T.Key', detail:'(shooting)'},
+      {id:2, type:'SHOT',  time:'9:32', player:'K.Rice',    desc:'Shot by K.Rice', detail:'(made)'},
+    ]
+  },
+  {
+    id: 1, q: 'Q1', team: 'CHI', clock: '9:10',
+    events: [
+      {id:0, type:'DRIVE',   time:'9:07', player:'S.Diggins',  desc:'Drive by S.Diggins'},
+      {id:1, type:'FOUL',    time:'9:04', player:'M.Conde',    desc:'Personal foul on M.Conde', detail:'(personal)'},
+      {id:2, type:'SHOT',    time:'8:58', player:'K.Cardoso',  desc:'Shot by K.Cardoso', detail:'(missed)'},
+      {id:3, type:'REBOUND', time:'8:55', player:'E.Williams', desc:'Rebound by E.Williams'},
+    ]
+  },
+  {
+    id: 2, q: 'Q1', team: 'TOR', clock: '8:30',
+    events: [
+      {id:0, type:'SHOT',    time:'8:26', player:'N.Sabally', desc:'Shot by N.Sabally', detail:'(missed)'},
+      {id:1, type:'REBOUND', time:'8:24', player:'M.Mabrey',  desc:'Rebound by M.Mabrey'},
+      {id:2, type:'FOUL',    time:'8:21', player:'N.Banham',  desc:'Personal foul on N.Banham', detail:'(personal)'},
+    ]
+  },
+  {
+    id: 3, q: 'Q1', team: 'CHI', clock: '7:55',
+    events: [
+      {id:0, type:'DRIVE', time:'7:51', player:'E.Williams', desc:'Drive by E.Williams'},
+      {id:1, type:'SHOT',  time:'7:47', player:'E.Williams', desc:'Shot by E.Williams', detail:'(made)'},
+    ]
+  },
+  {
+    id: 4, q: 'Q1', team: 'TOR', clock: '7:20',
+    events: [
+      {id:0, type:'DRIVE',   time:'7:18', player:'K.Rice',     desc:'Drive by K.Rice'},
+      {id:1, type:'OOB',     time:'7:14', player:'T.Cloud',    desc:'Out of bounds — T.Cloud'},
+      {id:2, type:'SHOT',    time:'7:08', player:'M.Mabrey',   desc:'Shot by M.Mabrey', detail:'(missed)'},
+      {id:3, type:'REBOUND', time:'7:05', player:'L.Juskaite', desc:'Rebound by L.Juskaite'},
+    ]
+  },
+  {
+    id: 5, q: 'Q1', team: 'CHI', clock: '6:45',
+    events: [
+      {id:0, type:'TRAVEL', time:'6:42', player:'S.Diggins', desc:'Travel — S.Diggins'},
+      {id:1, type:'DRIVE',  time:'6:38', player:'N.Banham',  desc:'Drive by N.Banham'},
+      {id:2, type:'FOUL',   time:'6:34', player:'T.Key',     desc:'Shooting foul on T.Key', detail:'(shooting)'},
+      {id:3, type:'SHOT',   time:'6:29', player:'K.Cardoso', desc:'Shot by K.Cardoso', detail:'(made)'},
+    ]
+  },
+];
+
+// Infraction candidates by event type
+function getInfractionCandidates(evt) {
+  const p = evt.player;
+  if (evt.type === 'FOUL') return [
+    {type:'Foul: Shooting', player:p, opponent:'Defender', onball:true},
+    {type:'Foul: Offensive', player:'Offense', opponent:p, onball:false},
+  ];
+  if (evt.type === 'DRIVE') return [
+    {type:'Foul: Personal', player:'Defender', opponent:p, onball:true},
+    {type:'Foul: Offensive', player:p, opponent:'Defender', onball:false},
+  ];
+  if (evt.type === 'SHOT') return [
+    {type:'Foul: Shooting · Def. Goaltending', player:'Defender', opponent:p, onball:true},
+  ];
+  if (evt.type === 'OOB') return [
+    {type:'Stoppage: Out-of-Bounds', player:p, opponent:'—', onball:false},
+  ];
+  if (evt.type === 'TRAVEL') return [
+    {type:'Turnover: Traveling', player:p, opponent:'—', onball:true},
+  ];
+  if (evt.type === 'REBOUND') return [
+    {type:'Foul: Loose Ball', player:'—', opponent:p, onball:false},
+  ];
+  return [];
+}
+
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let selectedEvent = null;   // {possId, evtId}
+let selectedInfraction = null;
+let autoPlay = false;
+let autoTimer = null;
+let curPossIdx = 0;
+let curEvtIdx = 0;
+let openPossId = null;
+let savedRatings = {};  // key: "possId-evtId", value: [{rating,type,comment}]
+let currentRating = null;
+
+// ─── RENDER QUEUE ─────────────────────────────────────────────────────────────
+function badgeClass(type) {
+  return 'sq-badge sq-badge-' + type.toLowerCase();
+}
+
+function renderQueue() {
+  const list = document.getElementById('sq-list');
+  list.innerHTML = '';
+  possessions.forEach((poss, pi) => {
+    const isOpen = openPossId === pi;
+    const div = document.createElement('div');
+    div.className = 'sq-poss';
+    div.id = 'poss-' + pi;
+
+    const hdr = document.createElement('div');
+    hdr.className = 'sq-poss-hdr' + (isOpen ? ' open' : '');
+    hdr.innerHTML = `<span class="sq-poss-team">${poss.team}</span> <span>${poss.q} · ${poss.clock}</span><span class="sq-poss-caret">▶</span>`;
+    hdr.onclick = () => togglePoss(pi);
+    div.appendChild(hdr);
+
+    const evtsDiv = document.createElement('div');
+    evtsDiv.className = 'sq-events' + (isOpen ? ' open' : '');
+    evtsDiv.id = 'events-' + pi;
+
+    poss.events.forEach((evt, ei) => {
+      const isSel = selectedEvent && selectedEvent.possId === pi && selectedEvent.evtId === ei;
+      const row = document.createElement('div');
+      row.className = 'sq-event' + (isSel ? ' sel' : '');
+      row.id = 'evt-' + pi + '-' + ei;
+      row.innerHTML = `<span class="${badgeClass(evt.type)}">${evt.type}</span><span class="sq-evt-time">${evt.time}</span><span class="sq-evt-player">${evt.player}</span>`;
+      row.onclick = () => selectEvent(pi, ei);
+      evtsDiv.appendChild(row);
+    });
+
+    div.appendChild(evtsDiv);
+    list.appendChild(div);
+  });
+}
+
+function togglePoss(pi) {
+  openPossId = openPossId === pi ? null : pi;
+  renderQueue();
+}
+
+// ─── SELECT EVENT ─────────────────────────────────────────────────────────────
+function selectEvent(possId, evtId) {
+  selectedEvent = {possId, evtId};
+  selectedInfraction = null;
+  currentRating = null;
+  openPossId = possId;
+  curPossIdx = possId;
+  curEvtIdx = evtId;
+  renderQueue();
+  renderEventHeader();
+  renderInfractionTable();
+  closeRatingForm();
+  scrollEvtIntoView(possId, evtId);
+}
+
+function scrollEvtIntoView(pi, ei) {
+  const el = document.getElementById('evt-' + pi + '-' + ei);
+  if (el) el.scrollIntoView({block:'nearest', behavior:'smooth'});
+}
+
+function renderEventHeader() {
+  const hdr = document.getElementById('event-header-content');
+  if (!selectedEvent) {
+    hdr.innerHTML = '<div style="color:#9ca3af;font-size:13px;font-style:italic">Select an event from the queue</div>';
+    return;
+  }
+  const poss = possessions[selectedEvent.possId];
+  const evt = poss.events[selectedEvent.evtId];
+  const key = selectedEvent.possId + '-' + selectedEvent.evtId;
+  const ratings = savedRatings[key] || [];
+  const ratedBadge = ratings.length > 0 ? `<span class="rated-badge">${ratings.length} rated</span>` : '';
+
+  const isCall = evt.type === 'FOUL';
+  const callPill = isCall
+    ? `<span class="called-pill called-c">CALLED</span>`
+    : `<span class="called-pill called-nc">NO CALL</span>`;
+
+  hdr.innerHTML = `
+    <div class="b1-r1">
+      <span class="ev-badge">${evt.type}</span>
+      <span class="b1-time">${evt.time}</span>
+      <span class="b1-seg">${poss.q} · ${poss.team}</span>
+      ${callPill}
+      ${ratedBadge}
+    </div>
+    <div class="b1-desc">${evt.desc}${evt.detail ? ' ' + evt.detail : ''}</div>
+    <div class="b1-r2">
+      <div class="b1-players"><b>${evt.player}</b></div>
+      <div class="vsep"></div>
+      <span class="b1-sub">Official: Genesis Perrymond &nbsp;·&nbsp; Location: Lead</span>
+    </div>
+  `;
+}
+
+// ─── INFRACTION TABLE ────────────────────────────────────────────────────────
+function renderInfractionTable() {
+  const section = document.getElementById('infraction-section');
+  const tbody = document.getElementById('infraction-tbody');
+  const placeholder = document.getElementById('center-placeholder');
+  const savedArea = document.getElementById('saved-ratings-area');
+
+  if (!selectedEvent) {
+    section.style.display = 'none';
+    placeholder.style.display = 'flex';
+    savedArea.style.display = 'none';
+    return;
+  }
+
+  placeholder.style.display = 'none';
+  section.style.display = 'block';
+
+  const poss = possessions[selectedEvent.possId];
+  const evt = poss.events[selectedEvent.evtId];
+  const candidates = getInfractionCandidates(evt);
+
+  tbody.innerHTML = '';
+  candidates.forEach((inf, idx) => {
+    const tr = document.createElement('tr');
+    tr.id = 'inf-row-' + idx;
+    if (selectedInfraction === idx) tr.className = 'sel';
+    tr.onclick = () => selectInfraction(idx);
+    tr.innerHTML = `
+      <td class="inf-type-cell">${inf.type}</td>
+      <td>${inf.player}</td>
+      <td>${inf.opponent}</td>
+      <td class="inf-onball">${inf.onball ? '<span class="inf-onball-yes"></span>' : '—'}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  // Render saved ratings
+  renderSavedRatings();
+}
+
+function renderSavedRatings() {
+  const savedArea = document.getElementById('saved-ratings-area');
+  if (!selectedEvent) return;
+  const key = selectedEvent.possId + '-' + selectedEvent.evtId;
+  const ratings = savedRatings[key] || [];
+
+  if (ratings.length === 0) {
+    savedArea.style.display = 'none';
+    return;
+  }
+
+  savedArea.style.display = 'block';
+  savedArea.innerHTML = '';
+
+  ratings.forEach((r, idx) => {
+    const card = document.createElement('div');
+    card.className = 'saved-rating-card';
+    const ratingClass = 'src-' + r.rating.toLowerCase().replace(' - ', '-').replace(' ', '-');
+    card.innerHTML = `
+      <span class="src-rating ${ratingClass}">${r.rating}</span>
+      <span class="src-type">${r.type}</span>
+      <div class="src-actions">
+        <button class="src-btn" title="Edit" onclick="editSavedRating(${idx})"><i class="ti ti-pencil"></i></button>
+        <button class="src-btn" title="Delete" onclick="deleteSavedRating(${idx})"><i class="ti ti-trash"></i></button>
+      </div>
+    `;
+    savedArea.appendChild(card);
+  });
+}
+
+// ─── SELECT INFRACTION ───────────────────────────────────────────────────────
+function selectInfraction(idx) {
+  selectedInfraction = idx;
+
+  // Update row highlight
+  document.querySelectorAll('#infraction-tbody tr').forEach((tr, i) => {
+    tr.className = i === idx ? 'sel' : '';
+  });
+
+  // Pre-fill infraction type
+  if (selectedEvent) {
+    const poss = possessions[selectedEvent.possId];
+    const evt = poss.events[selectedEvent.evtId];
+    const candidates = getInfractionCandidates(evt);
+    if (candidates[idx]) {
+      const sel = document.getElementById('cf-infraction-type');
+      // Try to match
+      const opts = Array.from(sel.options);
+      const match = opts.find(o => candidates[idx].type.startsWith(o.value) || o.value.startsWith(candidates[idx].type.split(' ·')[0]));
+      if (match) sel.value = match.value;
+    }
+  }
+
+  openRatingForm();
+}
+
+function openRatingForm() {
+  document.getElementById('rating-form').classList.add('open');
+  // Reset rating buttons
+  document.querySelectorAll('.rating-btn').forEach(b => b.classList.remove('sel'));
+  currentRating = null;
+}
+
+function closeRatingForm() {
+  document.getElementById('rating-form').classList.remove('open');
+  document.getElementById('comment-editor').innerHTML = '';
+  document.getElementById('notes-textarea').value = '';
+  document.querySelectorAll('.rating-btn').forEach(b => b.classList.remove('sel'));
+  currentRating = null;
+}
+
+function selectRating(btn) {
+  document.querySelectorAll('.rating-btn').forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel');
+  currentRating = btn.dataset.rating;
+}
+
+// ─── SAVE RATING ─────────────────────────────────────────────────────────────
+function saveRating() {
+  if (!selectedEvent || !currentRating) {
+    alert('Please select a rating before saving.');
+    return;
+  }
+  const key = selectedEvent.possId + '-' + selectedEvent.evtId;
+  if (!savedRatings[key]) savedRatings[key] = [];
+
+  const poss = possessions[selectedEvent.possId];
+  const evt = poss.events[selectedEvent.evtId];
+  const candidates = getInfractionCandidates(evt);
+  const infType = selectedInfraction !== null && candidates[selectedInfraction]
+    ? candidates[selectedInfraction].type
+    : document.getElementById('cf-infraction-type').value;
+
+  savedRatings[key].push({
+    rating: currentRating,
+    type: infType,
+    comment: document.getElementById('comment-editor').innerText.trim(),
+    notes: document.getElementById('notes-textarea').value.trim(),
+  });
+
+  closeRatingForm();
+  selectedInfraction = null;
+  document.querySelectorAll('#infraction-tbody tr').forEach(tr => tr.className = '');
+  renderSavedRatings();
+  renderEventHeader(); // update rated badge
+}
+
+function editSavedRating(idx) {
+  const key = selectedEvent.possId + '-' + selectedEvent.evtId;
+  const r = savedRatings[key][idx];
+  savedRatings[key].splice(idx, 1);
+  renderSavedRatings();
+  renderEventHeader();
+
+  // Re-populate form
+  document.getElementById('cf-infraction-type').value = r.type.split(' ·')[0] || r.type;
+  document.getElementById('comment-editor').innerText = r.comment;
+  document.getElementById('notes-textarea').value = r.notes;
+  openRatingForm();
+  // Select rating
+  document.querySelectorAll('.rating-btn').forEach(b => {
+    if (b.dataset.rating === r.rating) { b.classList.add('sel'); currentRating = r.rating; }
+  });
+}
+
+function deleteSavedRating(idx) {
+  const key = selectedEvent.possId + '-' + selectedEvent.evtId;
+  savedRatings[key].splice(idx, 1);
+  renderSavedRatings();
+  renderEventHeader();
+}
+
+function flagEvent() {
+  alert('Event flagged.');
+}
+
+function skipEvent() {
+  advanceAutoPlay();
+}
+
+// ─── AUTO-PLAY ────────────────────────────────────────────────────────────────
+function toggleAutoPlay() {
+  autoPlay = !autoPlay;
+  const btn = document.getElementById('play-btn');
+  if (autoPlay) {
+    btn.textContent = '⏸ Stop';
+    btn.classList.add('active');
+    autoTimer = setInterval(advanceAutoPlay, 3000);
+  } else {
+    btn.textContent = '▶ Play';
+    btn.classList.remove('active');
+    clearInterval(autoTimer);
+    autoTimer = null;
+  }
+}
+
+function advanceAutoPlay() {
+  // Determine next event
+  const poss = possessions[curPossIdx];
+  if (!poss) { stopAutoPlay(); return; }
+
+  const nextEvtIdx = curEvtIdx + 1;
+  if (nextEvtIdx < poss.events.length) {
+    curEvtIdx = nextEvtIdx;
+    selectEvent(curPossIdx, curEvtIdx);
+  } else {
+    // Next possession
+    const nextPossIdx = curPossIdx + 1;
+    if (nextPossIdx < possessions.length) {
+      curPossIdx = nextPossIdx;
+      curEvtIdx = 0;
+      openPossId = curPossIdx;
+      selectEvent(curPossIdx, curEvtIdx);
+    } else {
+      stopAutoPlay();
+    }
+  }
+}
+
+function stopAutoPlay() {
+  autoPlay = false;
+  const btn = document.getElementById('play-btn');
+  btn.textContent = '▶ Play';
+  btn.classList.remove('active');
+  clearInterval(autoTimer);
+  autoTimer = null;
+}
+
+// ─── VIDEO CONTROLS ───────────────────────────────────────────────────────────
+let vidPlaying = false;
+let vidProgress = 0;
+let vidInterval = null;
+
+function selAng(el) {
+  document.querySelectorAll('.ang').forEach(a => a.classList.remove('on'));
+  el.classList.add('on');
+}
+
+function vidControl(action) {
+  const btn = document.getElementById('vid-play-btn');
+  if (action === 'play') {
+    vidPlaying = !vidPlaying;
+    if (vidPlaying) {
+      btn.innerHTML = '<i class="ti ti-player-pause"></i>';
+      vidInterval = setInterval(() => {
+        vidProgress = Math.min(vidProgress + 0.5, 100);
+        updateVidDisplay();
+        if (vidProgress >= 100) { vidPlaying = false; btn.innerHTML = '<i class="ti ti-player-play"></i>'; clearInterval(vidInterval); }
+      }, 100);
+    } else {
+      btn.innerHTML = '<i class="ti ti-player-play"></i>';
+      clearInterval(vidInterval);
+    }
+  } else if (action === 'prev') {
+    vidProgress = Math.max(0, vidProgress - 10);
+    updateVidDisplay();
+  } else if (action === 'next') {
+    vidProgress = Math.min(100, vidProgress + 10);
+    updateVidDisplay();
+  }
+}
+
+function scrubVideo(e) {
+  const track = document.getElementById('vtrack');
+  const rect = track.getBoundingClientRect();
+  vidProgress = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+  updateVidDisplay();
+}
+
+function updateVidDisplay() {
+  document.getElementById('vfill').style.width = vidProgress + '%';
+  const totalSecs = 600;
+  const secs = Math.floor((vidProgress / 100) * totalSecs);
+  const m = Math.floor(secs / 60);
+  const s = secs % 60;
+  document.getElementById('v-time').textContent = m + ':' + String(s).padStart(2,'0');
+}
+
+// ─── NAV DROPDOWN ─────────────────────────────────────────────────────────────
+function toggleNavDropdown(e) {
+  e.stopPropagation();
+  document.getElementById('nav-dropdown').classList.toggle('open');
+}
+document.addEventListener('click', () => {
+  document.getElementById('nav-dropdown').classList.remove('open');
+});
+
+// ─── COMMENT EDITOR Ctrl+B ────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const editor = document.getElementById('comment-editor');
+  editor.addEventListener('keydown', e => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'b') {
+      e.preventDefault();
+      document.execCommand('bold');
+    }
+  });
+  // Init
+  renderQueue();
+});
+</script>
+</body>
+</html>
