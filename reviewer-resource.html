@@ -84,8 +84,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .ct-PIL{background:#fef9c3;color:#854d0e}
 .ct-Unknown{background:#f3f4f6;color:#9ca3af}
 .ct-Infraction{background:#fee2e2;color:#991b1b}
-.ct-PI-Lean{background:#f3f4f6;color:#6b7280}
-.ct-PI-No{background:#f3f4f6;color:#6b7280}
+.ct-PI-Lean{background:#fef3c7;color:#92400e}
+.ct-PI-No{background:#dbeafe;color:#1e40af}
 .ct-No-Infraction{background:#dcfce7;color:#166534}
 .card-body{font-size:12px;line-height:1.65;color:#4b5563;margin-bottom:12px}
 .card-body strong{font-weight:700;color:#374151}
@@ -147,6 +147,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .modal-label{font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
 .modal-textarea{width:100%;border:1px solid #e5e7eb;border-radius:10px;padding:12px 14px;font-size:12.5px;line-height:1.6;resize:vertical;min-height:100px;font-family:inherit;color:#374151;outline:none;background:#fafafa}
 .modal-textarea:focus{border-color:#1a3a6b;background:#fff}
+.modal-editor{width:100%;border:1px solid #e5e7eb;border-radius:10px;padding:12px 14px;font-size:12.5px;line-height:1.6;min-height:130px;font-family:inherit;color:#374151;outline:none;background:#fafafa;overflow-y:auto;white-space:pre-wrap;word-wrap:break-word;cursor:text}
+.modal-editor:focus{border-color:#1a3a6b;background:#fff}
+.modal-editor:empty:before{content:attr(data-placeholder);color:#9ca3af;pointer-events:none}
 .preview-box{background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:14px;font-size:12px;line-height:1.65;color:#374151;min-height:60px;display:none}
 .preview-box.visible{display:block}
 .preview-box mark{background:#fef9c3;border-radius:2px;padding:0 2px}
@@ -280,7 +283,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
     <div class="modal-body">
       <div>
         <div class="modal-label">Raw Comment</div>
-        <textarea class="modal-textarea" id="submit-textarea" placeholder="Paste or type your comment here..." oninput="onSubmitTextareaInput()"></textarea>
+        <div class="bold-toolbar">
+          <button class="bold-toolbar-btn" onclick="applyEditorBold('submit-editor')" title="Bold (Ctrl+B)"><b>B</b></button>
+          <span style="font-size:10px;color:#9ca3af">Ctrl+B or select text and click B to bold</span>
+        </div>
+        <div class="modal-editor" id="submit-editor" contenteditable="true" spellcheck="true" data-placeholder="Paste or type your comment here..." onkeydown="handleEditorKeydown(event,'submit-editor')" onpaste="handleEditorPaste(event)" oninput="onSubmitEditorInput()"></div>
       </div>
       <div>
         <div class="modal-label">Preview — after redaction</div>
@@ -328,10 +335,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       <div>
         <div class="modal-label">Comment Text</div>
         <div class="bold-toolbar">
-          <button class="bold-toolbar-btn" onclick="applyBoldToSelection()" title="Bold selected text">B</button>
-          <span style="font-size:10px;color:#9ca3af">Select text then click B to bold/highlight</span>
+          <button class="bold-toolbar-btn" onclick="applyEditorBold('edit-editor')" title="Bold (Ctrl+B)"><b>B</b></button>
+          <span style="font-size:10px;color:#9ca3af">Ctrl+B or select text and click B to bold</span>
         </div>
-        <textarea class="modal-textarea" id="edit-textarea" style="min-height:130px"></textarea>
+        <div class="modal-editor" id="edit-editor" contenteditable="true" spellcheck="true" onkeydown="handleEditorKeydown(event,'edit-editor')" onpaste="handleEditorPaste(event)" oninput="onEditEditorInput()"></div>
       </div>
       <div class="modal-row">
         <div class="modal-field">
@@ -572,6 +579,9 @@ function cleanComment(text) {
   r = r.charAt(0).toUpperCase() + r.slice(1);
   // Re-capitalize after sentence periods if lower-cased
   r = r.replace(/\.\s+([a-z])/g, (m, c) => '. ' + c.toUpperCase());
+  r = r.replace(/\bthe defender\b/gi, '[Player]');
+  r = r.replace(/\bthe offensive player\b/gi, '[Player]');
+  r = r.replace(/\bthe defensive player\b/gi, '[Player]');
   return r;
 }
 
@@ -987,7 +997,7 @@ function renderCard(c, inCollection) {
       </button>
       <div style="display:flex;align-items:center;gap:8px">
         ${savedCount > 0 ? `<span class="saved-by"><i class="ti ti-bookmark"></i> ${savedCount}</span>` : ''}
-        <span class="card-source${c.source==='submitted'?' submitted':''}">${c.source==='submitted'?'Submitted':'Pre-loaded'}</span>
+        ${c.source==='submitted'?'<span class="card-source submitted">Submitted</span>':''}
       </div>
     </div>
   </div>`;
@@ -1126,7 +1136,7 @@ let submitDebounce;
 
 function openSubmitModal() {
   document.getElementById('submit-overlay').classList.add('open');
-  document.getElementById('submit-textarea').value = '';
+  document.getElementById('submit-editor').innerHTML = '';
   document.getElementById('submit-preview').classList.remove('visible');
   document.getElementById('submit-btn').disabled = true;
   onSubmitPtChange();
@@ -1140,8 +1150,9 @@ function onSubmitPtChange() {
   populateContacts(document.getElementById('submit-pt'), document.getElementById('submit-spt'), '');
 }
 
-function onSubmitTextareaInput() {
-  const val = document.getElementById('submit-textarea').value.trim();
+function onSubmitEditorInput() {
+  const el = document.getElementById('submit-editor');
+  const val = el.innerText.trim();
   document.getElementById('submit-btn').disabled = !val;
   clearTimeout(submitDebounce);
   submitDebounce = setTimeout(() => {
@@ -1162,7 +1173,7 @@ function onSubmitTextareaInput() {
 }
 
 function submitComment() {
-  const raw = document.getElementById('submit-textarea').value.trim();
+  const raw = editorToMarkdown(document.getElementById('submit-editor'));
   if (!raw) return;
   const cleaned = cleanComment(plainRedact(raw));
   const withKey = detectKeyPhrase(cleaned);
@@ -1189,8 +1200,8 @@ function openEditModal(id) {
   const c = allComments.find(x => x.id === id);
   if (!c) return;
   // Populate fields
-  const ta = document.getElementById('edit-textarea');
-  ta.value = c.text; // stored with ** markers
+  const ta = document.getElementById('edit-editor');
+  ta.innerHTML = markdownToEditorHtml(c.text); // stored with ** markers
   document.getElementById('edit-pt').value = c.playType;
   onEditPtChange();
   const sitSel = document.getElementById('edit-sit');
@@ -1215,23 +1226,41 @@ function onEditPtChange() {
   populateContacts(pt, document.getElementById('edit-spt'), c?.subPlayType || '');
 }
 
-function applyBoldToSelection() {
-  const ta = document.getElementById('edit-textarea');
-  const start = ta.selectionStart;
-  const end = ta.selectionEnd;
-  if (start === end) return;
-  const selected = ta.value.slice(start, end);
-  // Toggle: if already bolded, remove markers; otherwise add
-  let replacement;
-  if (selected.startsWith('**') && selected.endsWith('**')) {
-    replacement = selected.slice(2, -2);
-  } else {
-    replacement = `**${selected}**`;
+function applyEditorBold(editorId) {
+  const el = document.getElementById(editorId);
+  el.focus();
+  document.execCommand('bold');
+}
+
+function handleEditorKeydown(e, editorId) {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'b') {
+    e.preventDefault();
+    applyEditorBold(editorId);
   }
-  ta.value = ta.value.slice(0, start) + replacement + ta.value.slice(end);
-  ta.selectionStart = start;
-  ta.selectionEnd = start + replacement.length;
-  ta.focus();
+}
+
+function handleEditorPaste(e) {
+  e.preventDefault();
+  const text = e.clipboardData.getData('text/plain');
+  document.execCommand('insertText', false, text);
+}
+
+function editorToMarkdown(el) {
+  // Walk the DOM and convert <b>/<strong> to **...**
+  function nodeToMd(node) {
+    if (node.nodeType === Node.TEXT_NODE) return node.textContent;
+    if (node.nodeName === 'BR') return '\n';
+    const inner = Array.from(node.childNodes).map(nodeToMd).join('');
+    if (node.nodeName === 'B' || node.nodeName === 'STRONG') return `**${inner}**`;
+    if (node.nodeName === 'DIV' || node.nodeName === 'P') return inner + '\n';
+    return inner;
+  }
+  return Array.from(el.childNodes).map(nodeToMd).join('').replace(/\n+$/, '').trim();
+}
+
+function markdownToEditorHtml(text) {
+  const escaped = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return escaped.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
 }
 
 function saveEditComment() {
@@ -1240,7 +1269,7 @@ function saveEditComment() {
   if (idx === -1) return;
   allComments[idx] = {
     ...allComments[idx],
-    text: document.getElementById('edit-textarea').value.trim(),
+    text: editorToMarkdown(document.getElementById('edit-editor')),
     playType: document.getElementById('edit-pt').value,
     situation: document.getElementById('edit-sit').value,
     subPlayType: document.getElementById('edit-spt').value,
