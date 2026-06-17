@@ -482,6 +482,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
               <select class="rf-select" id="rf-observability">
                 <option>Observable</option><option>Difficult</option><option>Very Difficult</option>
               </select>
+              <div style="display:flex;gap:6px;margin-top:10px">
+                <button class="rf-cancel-btn" onclick="cancelRating()" style="flex:1;justify-content:center">&#10005; Cancel</button>
+                <button class="rf-save-btn" onclick="saveRating()" style="flex:1;justify-content:center"><i class="ti ti-check"></i> Save</button>
+              </div>
             </div>
           </div>
         </div>
@@ -509,12 +513,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 
       <!-- ASSIST PANEL -->
       <div class="assist-panel">
-        <div class="assist-card" style="background:#fff">
-          <div class="assist-action-row">
-            <button class="rf-cancel-btn" onclick="cancelRating()">&#10005; Cancel</button>
-            <button class="rf-save-btn" onclick="saveRating()"><i class="ti ti-check"></i> Save</button>
-          </div>
-        </div>
         <div class="suggestions-card" id="suggestions-card">
           <div class="suggestions-lbl">Comment Library</div>
           <div class="suggestions-sub">Click a suggestion to enter into comments</div>
