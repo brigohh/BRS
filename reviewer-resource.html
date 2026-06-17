@@ -84,8 +84,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .ct-PIL{background:#fef9c3;color:#854d0e}
 .ct-Unknown{background:#f3f4f6;color:#9ca3af}
 .ct-Infraction{background:#fee2e2;color:#991b1b}
-.ct-PI-Lean{background:#fef3c7;color:#92400e}
-.ct-PI-No{background:#dbeafe;color:#1e40af}
+.ct-PI-Lean{background:#fed7aa;color:#9a3412}
+.ct-PI-No{background:#e0e7ff;color:#3730a3}
 .ct-No-Infraction{background:#dcfce7;color:#166534}
 .ct-Personal-Foul-Assessment{background:#ede9fe;color:#5b21b6}
 .ct-Shooting-Foul-Assessment{background:#ede9fe;color:#5b21b6}
@@ -1032,9 +1032,9 @@ function renderCollection() {
   const collComments = allComments.filter(c => collection.has(c.id));
   const sectionsEl = document.getElementById('collection-sections');
   const emptyEl = document.getElementById('collection-empty');
-  // Update badge
+  // Update badge — only count IDs that still exist
   const badge = document.getElementById('coll-badge');
-  if (collection.size > 0) { badge.style.display=''; badge.textContent=collection.size; }
+  if (collComments.length > 0) { badge.style.display=''; badge.textContent=collComments.length; }
   else badge.style.display='none';
   if (!collComments.length) { sectionsEl.innerHTML=''; emptyEl.style.display='block'; document.getElementById('main-count').textContent='0 saved'; return; }
   emptyEl.style.display='none';
@@ -1055,9 +1055,10 @@ function render() {
   renderFilterBar();
   if (currentView === 'library') renderCards();
   else renderCollection();
-  // Keep collection badge updated always
+  // Keep collection badge updated always (only count IDs matching existing comments)
   const badge = document.getElementById('coll-badge');
-  if (collection.size > 0) { badge.style.display=''; badge.textContent=collection.size; }
+  const collSize = allComments.filter(c => collection.has(c.id)).length;
+  if (collSize > 0) { badge.style.display=''; badge.textContent=collSize; }
   else badge.style.display='none';
 }
 
