@@ -54,9 +54,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .chart-svg{width:100%;overflow:visible}
 /* SIDEBAR CARDS */
 .side-stack{display:flex;flex-direction:column;gap:16px;height:100%}
-.side-card{background:#fff;border-radius:12px;padding:18px 20px;box-shadow:0 2px 8px rgba(0,0,0,.08);border:1px solid #e5e7eb;flex:1;display:flex;flex-direction:column}
+.side-card{background:#fff;border-radius:12px;padding:18px 20px;box-shadow:0 2px 8px rgba(0,0,0,.08);border:1px solid #e5e7eb;flex:1;display:flex;flex-direction:column;min-height:0}
 /* PLAY TYPES */
-.play-rows-wrap{display:flex;flex-direction:column;flex:1;justify-content:space-between}
+.play-rows-wrap{display:flex;flex-direction:column;gap:0;flex:1;overflow-y:auto;min-height:0}
 .play-type-group{display:flex;flex-direction:column;gap:3px}
 .play-type-name{font-size:11px;font-weight:600;color:#374151;margin-bottom:2px}
 .play-row{display:flex;align-items:center;gap:8px}
@@ -931,8 +931,7 @@ function renderTable() {
 
 const PLAY_TYPE_STATS = [
   // ── Foul: Shooting ─────────────────────────────────────────
-  { section: 'Foul: Shooting' },
-  { type:'Driving Shot Attempt', included:18, changed:9, subs:[
+  { group:'Foul: Shooting', type:'Driving Shot Attempt', included:18, changed:9, subs:[
     { name:'Arm Follow-Through',           included:4, changed:3 },
     { name:'Block-Charge Situation',       included:3, changed:2 },
     { name:'Arm Shooting Motion',          included:3, changed:1 },
@@ -950,7 +949,7 @@ const PLAY_TYPE_STATS = [
     { name:'Other',                        included:0, changed:0 },
     { name:'Restricted Area',              included:0, changed:0 },
   ]},
-  { type:'Jump Shot', included:14, changed:6, subs:[
+  { group:'Foul: Shooting', type:'Jump Shot', included:14, changed:6, subs:[
     { name:'Arm Follow-Through',           included:4, changed:2 },
     { name:'Landing Area',                 included:3, changed:2 },
     { name:'Legal Guarding Position',      included:2, changed:1 },
@@ -966,7 +965,7 @@ const PLAY_TYPE_STATS = [
     { name:'Other',                        included:0, changed:0 },
     { name:'Vertical',                     included:0, changed:0 },
   ]},
-  { type:'Layup or Dunk', included:9, changed:3, subs:[
+  { group:'Foul: Shooting', type:'Layup or Dunk', included:9, changed:3, subs:[
     { name:'Block-Charge Situation',       included:3, changed:1 },
     { name:'Arm Follow-Through',           included:2, changed:1 },
     { name:'Restricted Area',              included:2, changed:1 },
@@ -984,7 +983,7 @@ const PLAY_TYPE_STATS = [
     { name:'Other',                        included:0, changed:0 },
     { name:'Vertical',                     included:0, changed:0 },
   ]},
-  { type:'Floater', included:4, changed:2, subs:[
+  { group:'Foul: Shooting', type:'Floater', included:4, changed:2, subs:[
     { name:'Arm Follow-Through',           included:2, changed:1 },
     { name:'Block-Charge Situation',       included:1, changed:1 },
     { name:'NBP: Drawn Into Air/Closeout', included:1, changed:0 },
@@ -1002,7 +1001,7 @@ const PLAY_TYPE_STATS = [
     { name:'Restricted Area',              included:0, changed:0 },
     { name:'Vertical',                     included:0, changed:0 },
   ]},
-  { type:'Post Shot', included:3, changed:1, subs:[
+  { group:'Foul: Shooting', type:'Post Shot', included:3, changed:1, subs:[
     { name:'Body Shooting Motion',         included:1, changed:1 },
     { name:'Legal Guarding Position',      included:1, changed:0 },
     { name:'Body Follow-Through',          included:1, changed:0 },
@@ -1021,39 +1020,33 @@ const PLAY_TYPE_STATS = [
     { name:'Vertical',                     included:0, changed:0 },
   ]},
   // ── Other play types ───────────────────────────────────────
-  { section: 'Foul: Offensive' },
-  { type:'Foul: Offensive', included:29, changed:11, subs:[
+  { group:'Foul: Offensive', type:'Foul: Offensive', included:29, changed:11, subs:[
     { name:'Dislodge from Position', included:10, changed:5 },
     { name:'Hook',                   included:8,  changed:3 },
     { name:'Pass & Crash',           included:6,  changed:2 },
     { name:'Clamp-Lock-Hold',        included:5,  changed:1 },
   ]},
-  { section: 'Foul: Loose Ball' },
-  { type:'Foul: Loose Ball', included:26, changed:8, subs:[
+  { group:'Foul: Loose Ball', type:'Foul: Loose Ball', included:26, changed:8, subs:[
     { name:'Clamp-Lock-Hold',        included:10, changed:4 },
     { name:'Dislodge from Position', included:9,  changed:3 },
     { name:'Contact to Arm',         included:7,  changed:1 },
   ]},
-  { section: 'Foul: Personal' },
-  { type:'Foul: Personal', included:38, changed:10, subs:[
+  { group:'Foul: Personal', type:'Foul: Personal', included:38, changed:10, subs:[
     { name:'Contact to Arm',         included:12, changed:4 },
     { name:'Hand/Forearm to Front',  included:10, changed:3 },
     { name:'Body Contact/Check',     included:8,  changed:2 },
     { name:'Rip-Through',            included:5,  changed:1 },
     { name:'Two Hands',              included:3,  changed:0 },
   ]},
-  { section: 'Out of Bounds' },
-  { type:'Out of Bounds', included:20, changed:5, subs:[
+  { group:'Out of Bounds', type:'Out of Bounds', included:20, changed:5, subs:[
     { name:'Dislodge from Position', included:9,  changed:3 },
     { name:'Other',                  included:11, changed:2 },
   ]},
-  { section: 'Travel' },
-  { type:'Travel', included:18, changed:3, subs:[
+  { group:'Travel', type:'Travel', included:18, changed:3, subs:[
     { name:'Gather Step',            included:11, changed:2 },
     { name:'Pivot Foot',             included:7,  changed:1 },
   ]},
-  { section: 'Goaltending' },
-  { type:'Goaltending', included:14, changed:2, subs:[
+  { group:'Goaltending', type:'Goaltending', included:14, changed:2, subs:[
     { name:'Defensive Goaltending',  included:9,  changed:1 },
     { name:'Offensive Goaltending',  included:5,  changed:1 },
   ]},
@@ -1065,26 +1058,38 @@ function ptColor(pct) {
   return '#f9a8d4';
 }
 
+const GROUP_COLORS = {
+  'Foul: Shooting': '#3b82f6',
+  'Foul: Offensive': '#f59e0b',
+  'Foul: Loose Ball': '#10b981',
+  'Foul: Personal': '#8b5cf6',
+  'Out of Bounds': '#6b7280',
+  'Travel': '#ef4444',
+  'Goaltending': '#ec4899',
+};
+
 function renderPlayTypeTable() {
   const tbody = document.getElementById('pt-tbody');
   let ptIdx = 0;
+  let lastGroup = null;
   PLAY_TYPE_STATS.forEach(pt => {
-    if (pt.section) {
-      const hr = document.createElement('tr');
-      hr.innerHTML = `<td colspan="4" style="padding:8px 14px 4px 12px;font-size:9.5px;font-weight:700;letter-spacing:.6px;color:#1a3a6b;text-transform:uppercase;background:#eff6ff;border-top:2px solid #bfdbfe;border-left:3px solid #1a3a6b">${pt.section}</td>`;
-      tbody.appendChild(hr);
-      return;
-    }
     const pct = pt.included > 0 ? Math.round(pt.changed / pt.included * 100) : 0;
     const col = ptColor(pct);
     const groupId = `ptg-${ptIdx++}`;
+    const grp = pt.group || '';
+    const groupColor = GROUP_COLORS[grp] || '#9ca3af';
+    const isNewGroup = grp !== lastGroup;
+    lastGroup = grp;
     const tr = document.createElement('tr');
     tr.className = 'pt-type-row';
+    // Top border separates groups; left accent color identifies group
+    const topBorder = isNewGroup && ptIdx > 1 ? 'border-top:2px solid #f3f4f6' : '';
+    const groupBadge = isNewGroup ? `<span style="font-size:9px;font-weight:700;color:#fff;background:${groupColor};border-radius:4px;padding:1px 5px;margin-left:6px;vertical-align:middle;letter-spacing:.2px">${grp}</span>` : '';
     tr.innerHTML = `
-      <td style="padding:9px 14px">${pt.type} <span class="pt-chevron">▶</span></td>
-      <td style="padding:9px 14px;text-align:center;color:#6b7280">${pt.included}</td>
-      <td style="padding:9px 14px;text-align:center;font-weight:700;color:${col}">${pt.changed}</td>
-      <td style="padding:9px 14px">
+      <td style="padding:9px 14px;border-left:3px solid ${groupColor};${topBorder}">${pt.type}${groupBadge} <span class="pt-chevron">▶</span></td>
+      <td style="padding:9px 14px;text-align:center;color:#6b7280;${topBorder}">${pt.included}</td>
+      <td style="padding:9px 14px;text-align:center;font-weight:700;color:${col};${topBorder}">${pt.changed}</td>
+      <td style="padding:9px 14px;${topBorder}">
         <div class="pt-rate-cell">
           <span class="pt-pct" style="color:${col}">${pct}%</span>
           <div class="pt-bar-wrap"><div class="pt-bar" style="width:${pct}%;background:${col}"></div></div>
@@ -1101,7 +1106,7 @@ function renderPlayTypeTable() {
       const sr = document.createElement('tr');
       sr.className = `pt-sub-row ${groupId} hidden`;
       sr.innerHTML = `
-        <td style="padding:6px 14px 6px 30px;color:${sub.included===0?'#9ca3af':'inherit'}">${sub.name}</td>
+        <td style="padding:6px 14px 6px 30px;color:${sub.included===0?'#9ca3af':'inherit'};border-left:3px solid ${groupColor}22">${sub.name}</td>
         <td style="padding:6px 14px;text-align:center;color:#9ca3af">${sub.included || '—'}</td>
         <td style="padding:6px 14px;text-align:center;font-weight:600;color:${scol}">${sub.included > 0 ? sub.changed : '—'}</td>
         <td style="padding:6px 14px">
@@ -1217,11 +1222,6 @@ drawChart();
 drawRcChart();
 renderTable();
 renderPtSidebar();
-// Lock sidebar card height to season view so toggle doesn't reflow
-requestAnimationFrame(() => {
-  const card = document.querySelector('.side-stack .side-card');
-  if (card) { card.style.height = card.offsetHeight + 'px'; card.style.overflow = 'hidden'; }
-});
 </script>
 </body>
 </html>
