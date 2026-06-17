@@ -125,7 +125,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .rating-btn:hover{background:#f3f4f6}
 .rating-btn.on{background:#4b5563;border-color:#4b5563;color:#fff}
 .rf-select{padding:4px 8px;border:1px solid #d1d5db;border-radius:6px;font-size:11.5px;color:#374151;background:#fff;cursor:pointer}
-.rf-left .rf-select{width:210px}
+.rf-left .rf-select{flex:1;min-width:0}
 .rf-right .rf-select{width:100%}
 .rf-section-lbl{font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;margin-bottom:1px}
 .rf-save-btn{padding:7px 14px;background:#1a3a6b;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px}
@@ -368,7 +368,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
           </div>
           <div class="rf-row">
             <span class="rf-label">Role:</span>
-            <select class="rf-select">
+            <select class="rf-select" id="rf-role-select">
               <option>-- select --</option>
               <option>Def Player 1 (Primary)</option>
               <option>Def Player 2 (Secondary)</option>
@@ -423,7 +423,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
             <option>Clear</option><option>Toss Up</option>
           </select>
           <div class="rf-section-lbl" style="margin-top:6px">Observability:</div>
-          <select class="rf-select">
+          <select class="rf-select" id="rf-observability">
             <option>Observable</option><option>Difficult</option><option>Very Difficult</option>
           </select>
           <div style="display:flex;gap:6px;margin-top:10px">
@@ -537,8 +537,8 @@ const POSSESSIONS = [
   {id:1,q:1,team:'TOR',time:'09:45.0',ptiw:false,events:[
     {id:'e1-1',time:'09:44.8',label:'INBOUND',type:'plain'},
     {id:'e1-2',time:'09:43.2',label:'DRIVE',type:'plain'},
-    {id:'e1-3',time:'09:41.0',label:'PICK',type:'plain'},
-    {id:'e1-4',time:'09:40.5',label:'NO DRIBBLE',type:'reviewable'},
+    {id:'e1-3',time:'09:41.0',label:'PICK',type:'reviewable',prefill:{infrType:'Illegal Screen',playType:'Screen (On Ball)',subPlayType:'Standard Pick & Roll',role:'Off Player 2 (Screener/Cutter)',player:'Sabally, Nyara (13) — Tempo',opponent:'Diggins, Skylar (4) — Sky',rating:'No Infraction',observability:'Observable',ogr:true}},
+    {id:'e1-4',time:'09:40.5',label:'NO DRIBBLE',type:'plain'},
     {id:'e1-5',time:'09:39.8',label:'DRIBBLE',type:'plain'},
     {id:'e1-6',time:'09:38.1',label:'SHOT',type:'plain'},
     {id:'e1-7',time:'09:37.9',label:'DEAD BALL',type:'plain'},
@@ -944,6 +944,10 @@ function selectEvent(evtId, poss, ev) {
   if (ev.type==='whistle') {
     infractionRows = [{type:ev.foulType||ev.label, player:ev.player||(poss.team==='TOR'?TOR_P[0]:CHI_P[0]),
       opponent:poss.team==='TOR'?CHI_P[0]:TOR_P[0], official:REFS[0], location:'Lead', rating:'Called', observability:'Observable'}];
+  } else if (ev.prefill) {
+    const p = ev.prefill;
+    infractionRows = [{type:p.infrType, player:p.player, opponent:p.opponent, official:REFS[0],
+      location:'Lead', rating:p.rating, observability:p.observability, prefill:p}];
   } else {
     const rt = ev.label==='TRAVEL'?'Travel':ev.label==='ILLEGAL SCREEN'?'Illegal Screen':'Illegal Dribble';
     infractionRows = [{type:rt, player:poss.team==='TOR'?TOR_P[0]:CHI_P[0],
@@ -956,7 +960,7 @@ function selectEvent(evtId, poss, ev) {
   document.getElementById('rf-clock').value = ev.time;
   document.getElementById('ptiw-comment').textContent = poss.ptiw ? 'PTIW flagged on this possession' : 'No PTIW Comment';
   renderInfractionTable();
-  if (ev.type==='whistle') {
+  if (ev.type==='whistle' || ev.prefill) {
     selectInfractionRow(0);
   } else {
     document.getElementById('rating-form').style.display='none';
@@ -984,9 +988,30 @@ function selectInfractionRow(idx) {
   selectedInfRow = idx;
   document.getElementById('rating-form').style.display='block';
   if (currentEv) document.getElementById('rf-clock').value = currentEv.time;
-  const r = infractionRows[idx].rating;
+  const row = infractionRows[idx];
+  const r = row.rating;
   document.querySelectorAll('.rating-btn').forEach(b => b.classList.toggle('on', b.textContent.trim()===r));
+  // apply prefill values to form dropdowns/checkboxes
+  const pf = row.prefill || {};
+  setSelectVal('rf-infraction-type', pf.infrType || row.type || '');
+  setSelectVal('rf-play-type', pf.playType || '');
+  updateSubPlayTypes();
+  setSelectVal('rf-sub-play-type', pf.subPlayType || '');
+  setSelectVal('rf-role-select', pf.role || '');
+  setSelectVal('rf-player', pf.player || '');
+  setSelectVal('rf-opponent', pf.opponent || '');
+  setSelectVal('rf-observability', pf.observability || '');
+  document.getElementById('chk-ogr').checked = !!(pf.ogr);
+  document.getElementById('chk-called').checked = !!(pf.called);
   renderInfractionTable();
+}
+
+function setSelectVal(id, val) {
+  const el = document.getElementById(id);
+  if (!el || !val) return;
+  for (let i = 0; i < el.options.length; i++) {
+    if (el.options[i].text === val || el.options[i].value === val) { el.selectedIndex = i; return; }
+  }
 }
 
 function selectRef(btn) {
@@ -1031,7 +1056,7 @@ function showToast(msg) {
 // INIT
 openPossId = 1; renderQueue();
 const fp = POSSESSIONS[0];
-const fe = fp.events.find(e=>e.type==='reviewable'||e.type==='whistle');
+const fe = fp.events.find(e=>e.id==='e1-3');
 if(fe){selectEvent(fe.id,fp,fe);renderQueue();}
 </script>
 </body>
