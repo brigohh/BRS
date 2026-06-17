@@ -87,6 +87,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .ct-PI-Lean{background:#fef3c7;color:#92400e}
 .ct-PI-No{background:#dbeafe;color:#1e40af}
 .ct-No-Infraction{background:#dcfce7;color:#166534}
+.ct-Personal-Foul-Assessment{background:#ede9fe;color:#5b21b6}
+.ct-Shooting-Foul-Assessment{background:#ede9fe;color:#5b21b6}
+.ct-Wrong-Player-Assessment{background:#fce7f3;color:#9d174d}
+.ct-Block-Charge-Assessment{background:#ffedd5;color:#9a3412}
 .card-body{font-size:12px;line-height:1.65;color:#4b5563;margin-bottom:12px}
 .card-body strong{font-weight:700;color:#374151}
 .card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid #f3f4f6}
@@ -314,6 +318,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
           <option value="PI - Lean">PI - Lean</option>
           <option value="PI - No">PI - No</option>
           <option value="No Infraction">No Infraction</option>
+          <option value="Personal Foul Assessment">Personal Foul Assessment</option>
+          <option value="Shooting Foul Assessment">Shooting Foul Assessment</option>
+          <option value="Wrong Player Assessment">Wrong Player Assessment</option>
+          <option value="Block-Charge Assessment">Block-Charge Assessment</option>
         </select>
       </div>
     </div>
@@ -361,6 +369,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
           <option value="PI - Lean">PI - Lean</option>
           <option value="PI - No">PI - No</option>
           <option value="No Infraction">No Infraction</option>
+          <option value="Personal Foul Assessment">Personal Foul Assessment</option>
+          <option value="Shooting Foul Assessment">Shooting Foul Assessment</option>
+          <option value="Wrong Player Assessment">Wrong Player Assessment</option>
+          <option value="Block-Charge Assessment">Block-Charge Assessment</option>
         </select>
       </div>
     </div>
@@ -373,7 +385,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 </div>
 
 <script>
-const PLAY_TYPES = ['All','Foul: Shooting','Foul: Offensive','Foul: Personal','Foul: Loose Ball','Foul: Away from Play','Foul: Transition Take Foul','Stoppage: Inadvertent Whistle','Stoppage: Out-of-Bounds','Uncategorized'];
+const PLAY_TYPES = ['All','Foul: Shooting','Foul: Offensive','Foul: Personal','Foul: Loose Ball','Foul: Away from Play','Foul: Transition Take Foul','Stoppage: Inadvertent Whistle','Stoppage: Out-of-Bounds','Turnover: Traveling','Turnover: Double Dribble','Uncategorized'];
 const STORAGE_KEY = 'brs_comments_v6';
 
 // 3-level taxonomy — sourced directly from Review_7.csv (active rows only)
@@ -453,6 +465,10 @@ const TAXONOMY = {
   'Turnover: Traveling': {
     situations: ['Gather','Receives Pass','Start Of Dribble','Stationary Movement'],
     contacts: ['Axis/Moves Pivot Foot','Changes Pivot Foot','First to Touch','Gather And Steps','Hop Step','Jump Stop','Land Two Feet','Other','Pivot Moves Prior to Release','Returns to Ground','Slides Pivot Foot','Spin','Splits Pivot Foot']
+  },
+  'Turnover: Double Dribble': {
+    situations: ['Resumes Dribble','Two Hands','Catches Own Pass'],
+    contacts: ['N/A']
   },
   'Violation: Defensive Goaltending': {
     situations: ['Defensive Goaltending'],
@@ -929,7 +945,7 @@ function renderFilterBar() {
   }
   renderFdMenu('fd-spt-menu', spts, filterSpt, v => { filterSpt = v; renderFilterBar(); renderCards(); });
   // Infraction Rating menu
-  renderFdMenu('fd-ir-menu', ['Infraction','PI - Lean','PI - No','No Infraction'], filterIR, v => { filterIR = v; renderFilterBar(); renderCards(); });
+  renderFdMenu('fd-ir-menu', ['Infraction','PI - Lean','PI - No','No Infraction','Personal Foul Assessment','Shooting Foul Assessment','Wrong Player Assessment','Block-Charge Assessment'], filterIR, v => { filterIR = v; renderFilterBar(); renderCards(); });
 
   // Pills
   renderFdPill('fd-pt-pills', 'fd-pt', filterPT, () => { filterPT=''; filterSit=''; filterSpt=''; renderFilterBar(); renderCards(); });
@@ -1158,7 +1174,8 @@ function onSubmitEditorInput() {
   submitDebounce = setTimeout(() => {
     if (!val) { document.getElementById('submit-preview').classList.remove('visible'); return; }
     const preview = document.getElementById('submit-preview');
-    preview.innerHTML = redactForPreview(val);
+    const redacted = redactForPreview(val);
+    preview.innerHTML = renderBold(redacted);
     preview.classList.add('visible');
     const cleaned = cleanComment(plainRedact(val));
     const pt = detectPlayType(cleaned);
