@@ -515,13 +515,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
             <button class="rf-save-btn" onclick="saveRating()"><i class="ti ti-check"></i> Save</button>
           </div>
         </div>
-        <div class="assist-card assist-card-red">
-          <button class="assist-btn" onclick="openChatbot()"><i class="ti ti-whistle" style="font-size:13px"></i> Help Side Assist</button>
-        </div>
         <div class="suggestions-card" id="suggestions-card">
           <div class="suggestions-lbl">Comment Library</div>
           <div class="suggestions-sub">Click a suggestion to enter into comments</div>
           <div id="suggestions-list"><div class="suggestions-empty">Select infraction type, play type, and rating to see suggestions.</div></div>
+        </div>
+        <div class="assist-card assist-card-red">
+          <button class="assist-btn" onclick="openChatbot()"><i class="ti ti-whistle" style="font-size:13px"></i> Help Side Assist</button>
         </div>
       </div>
 
@@ -1329,11 +1329,11 @@ function updateSuggestions() {
     return;
   }
   const MOCK_COMMENTS = [
-    {infractionType:'Foul: Offensive',playType:'Pick - Screener',rating:'No Infraction',comment:'Sabally firms up on their left foot and absorbs the body contact that occurs while setting the pick on Diggins. Additionally, Sabally does not go through Diggins\'s space, therefore, the contact as the players come together is considered incidental.'},
-    {infractionType:'Foul: Offensive',playType:'Pick - Screener',rating:'No Infraction',comment:'Sabally establishes herself in Diggins\'s path and absorbs the contact during the pick. Diggins then loses her balance on her own and not as a result of any contact from Sabally.'},
-    {infractionType:'Foul: Offensive',playType:'Pick - Screener',rating:'Judgement - Lean No',comment:'Screener firms up prior to contact but arms are slightly extended at impact. The contact as the players come together is borderline — lean toward incidental given the screener\'s established position.'},
+    {infractionType:'Foul: Offensive',playType:'Pick - Screener',rating:'No Infraction',comment:'Sabally (TOR) firms up on their left foot and absorbs the body contact that occurs while setting the pick on Diggins (CHI). Additionally, Sabally does not go through Diggins\'s space, therefore, the contact as the players come together is considered incidental.'},
+    {infractionType:'Foul: Offensive',playType:'Pick - Screener',rating:'No Infraction',comment:'Sabally (TOR) establishes themselves in Diggins\'s (CHI) path and absorbs the contact during the pick. Diggins then loses their balance on their own and not as a result of any contact from Sabally.'},
+    {infractionType:'Foul: Offensive',playType:'Pick - Screener',rating:'Judgement - Lean No',comment:'Sabally (TOR) firms up prior to contact but their arms are slightly extended at impact on Diggins (CHI). The contact as the players come together is borderline — lean toward incidental given Sabally\'s established position.'},
     {infractionType:'Foul: Offensive',playType:'Pick - Ball Handler',rating:'No Infraction',comment:'Ball handler uses a normal change of direction without creating space through illegal contact. No use of arm bar or shoulder to impede the defender.'},
-    {infractionType:'Foul: Personal',playType:'On-Ball',rating:'No Infraction',comment:'Defender maintains legal guarding position throughout the possession. Hand check is incidental and does not impede the offensive player\'s progress.'},
+    {infractionType:'Foul: Personal',playType:'On-Ball',rating:'No Infraction',comment:'Defender maintains legal guarding position throughout the possession. Contact is incidental and does not impede the offensive player\'s progress.'},
     {infractionType:'Foul: Personal',playType:'On-Ball',rating:'Judgement - Lean Infraction',comment:'Defender\'s arm contact on the drive marginally impedes the offensive player\'s path — lean toward infraction given the defender\'s positioning outside the restricted area.'},
     {infractionType:'Foul: Shooting',playType:'Driving Shot Attempt',rating:'No Infraction',comment:'Defender is in a legal vertical position at the time of the shot. Contact is minimal and does not affect the shooting motion or gather.'},
     {infractionType:'Foul: Shooting',playType:'Jump Shot',rating:'Infraction',comment:'Defender lands on the shooter\'s foot after leaving the vertical plane, creating dangerous contact that affects the shooting motion. Infraction.'},
