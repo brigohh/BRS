@@ -55,9 +55,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .ncc-sl{font-size:9.5px;color:#0369a1;line-height:1.3;white-space:nowrap}
 
 /* MAIN LAYOUT */
-.main{flex:1;display:flex;min-height:0;overflow:hidden;padding:14px 18px 0;gap:14px;background:#f3f4f6}
+.main{flex:1;display:flex;min-height:0;overflow:hidden;padding:16px 20px 0;gap:16px;background:#f3f4f6}
 .main-right{flex:1;display:flex;flex-direction:column;overflow:hidden;gap:0}
-.main-bottom{flex:1;display:flex;gap:14px;overflow:hidden;padding:0 0 14px 0;min-height:0}
+.main-bottom{flex:1;display:flex;gap:16px;overflow:hidden;padding:0 0 16px 0;min-height:0}
 
 /* LEFT PANEL */
 .lp{width:260px;flex-shrink:0;background:#fff;border:1px solid #e5e7eb;border-radius:10px;display:flex;flex-direction:column;overflow:hidden}
@@ -93,7 +93,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .submit-qi-btn:hover{background:#15306e}
 
 /* INFRACTION TABLE (standalone, full width) */
-.inf-table-wrap{flex-shrink:0;margin:14px 0 8px;border:1px solid #e5e7eb;border-radius:10px;background:#fff;}
+.inf-table-wrap{flex-shrink:0;margin:16px 0 12px;border:1px solid #e5e7eb;border-radius:10px;background:#fff;}
 .inf-table-hdr{padding:8px 14px;display:flex;align-items:center;justify-content:space-between;background:#f9fafb;border-bottom:1px solid #e5e7eb;border-radius:10px 10px 0 0}
 .inf-table-title{font-size:10px;font-weight:700;color:#6b7280;letter-spacing:.5px}
 .inf-table-btns{display:flex;gap:6px}
@@ -114,7 +114,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .cp-empty{flex:1;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-size:13px;font-style:italic}
 .rating-form{flex-shrink:0;border-bottom:1px solid #e5e7eb;background:#f9fafb;margin-top:6px}
 .rf-inner{display:grid;grid-template-columns:1fr 200px;gap:0}
-.rf-left{padding:12px 14px;border-right:1px solid #e5e7eb;display:flex;flex-direction:column;gap:5px}
+.rf-left{padding:12px 14px;border-right:1px solid #e5e7eb;display:flex;flex-direction:column;gap:8px}
 .rf-right{padding:12px 14px;display:flex;flex-direction:column;gap:6px}
 .rf-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .rf-label{font-size:10.5px;font-weight:600;color:#6b7280;min-width:100px;flex-shrink:0}
@@ -122,15 +122,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .rf-checks{display:flex;gap:8px;flex-wrap:wrap}
 .rf-check{display:flex;align-items:center;gap:4px;font-size:11px;color:#374151;cursor:pointer}
 .rf-check input{width:13px;height:13px;cursor:pointer;accent-color:#1a3a6b}
-.btn-group{display:flex;gap:5px;flex:1}
-.ref-btn,.loc-btn{flex:1;text-align:center;padding:4px 6px;border:1px solid #d1d5db;border-radius:6px;font-size:11px;cursor:pointer;background:#fff;color:#374151;font-weight:500;white-space:nowrap}
+.btn-group{display:flex;gap:5px;width:210px}
+.ref-btn,.loc-btn{flex:1;text-align:center;padding:4px 4px;border:1px solid #d1d5db;border-radius:6px;font-size:10.5px;cursor:pointer;background:#fff;color:#374151;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ref-btn:hover,.loc-btn:hover{background:#f9fafb}
 .ref-btn.on,.loc-btn.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
 .rating-btn{display:block;width:100%;text-align:left;padding:6px 10px;font-size:11.5px;border:1px solid #d1d5db;border-radius:6px;cursor:pointer;background:#fff;color:#374151;margin-bottom:3px}
 .rating-btn:hover{background:#f3f4f6}
 .rating-btn.on{background:#4b5563;border-color:#4b5563;color:#fff}
 .rf-select{padding:5px 8px;border:1px solid #d1d5db;border-radius:6px;font-size:11.5px;color:#374151;background:#fff;cursor:pointer}
-.rf-left .rf-select{flex:1;min-width:0}
+.rf-left .rf-select{width:210px}
 .rf-right .rf-select{width:100%}
 .rf-section-lbl{font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;margin-bottom:1px}
 .rf-save-btn{padding:7px 14px;background:#1a3a6b;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px}
@@ -148,7 +148,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .comment-ta:focus{outline:none;border-color:#1a3a6b}
 
 /* RIGHT PANEL */
-.rp{width:440px;flex-shrink:0;background:#fff;display:flex;flex-direction:column;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden}
+.rp-col{width:440px;flex-shrink:0;display:flex;flex-direction:column;gap:10px;min-height:0}
+.rp{flex:1;background:#fff;display:flex;flex-direction:column;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;min-height:0}
+.rp-card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:10px 14px;flex-shrink:0}
+.rp-card-lbl{font-size:10px;color:#9ca3af;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:5px}
+.rp-card-lbl i{font-size:13px}
+.rp-card-val{font-size:11px;color:#6b7280;font-style:italic;line-height:1.5}
+.rp-card-ptiw{color:#f59e0b;font-weight:700}
 .vid-area{background:#0f1117;padding:6px 6px 0;flex-shrink:0}
 .vid-frame{width:100%;aspect-ratio:16/9;background:#1a1f2e;border-radius:6px;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .vid-frame img{width:100%;height:100%;object-fit:cover;border-radius:6px}
@@ -243,11 +249,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
     <div class="stat s-t"><div class="sn">4</div><div class="sl">PTIW Events</div></div>
   </div>
   <div class="gh-right">
-    <div class="ncc-counter">
-      <div class="ncc-lbl">Non-Call Counter</div>
-      <div class="ncc-stats">
-        <div class="ncc-stat"><div class="ncc-n">4</div><div class="ncc-sl">Deemed Infr.</div></div>
-        <div class="ncc-stat"><div class="ncc-n">12</div><div class="ncc-sl">PI Calls</div></div>
+    <div style="display:flex;gap:8px">
+      <div class="ncc-counter">
+        <div class="ncc-lbl">Non-Call — Q1</div>
+        <div class="ncc-stats">
+          <div class="ncc-stat"><div class="ncc-n">1</div><div class="ncc-sl">Deemed Infr.</div></div>
+          <div class="ncc-stat"><div class="ncc-n">3</div><div class="ncc-sl">PI Calls</div></div>
+        </div>
+      </div>
+      <div class="ncc-counter">
+        <div class="ncc-lbl">Non-Call — Game</div>
+        <div class="ncc-stats">
+          <div class="ncc-stat"><div class="ncc-n">4</div><div class="ncc-sl">Deemed Infr.</div></div>
+          <div class="ncc-stat"><div class="ncc-n">12</div><div class="ncc-sl">PI Calls</div></div>
+        </div>
       </div>
     </div>
   </div>
@@ -278,7 +293,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
     <!-- INFRACTION TABLE (full width, above form+video) -->
     <div class="inf-table-wrap" id="inf-table-wrap" style="display:none">
       <div class="inf-table-hdr">
-        <span class="inf-table-title">INFRACTION CANDIDATES</span>
+        <span></span>
         <div class="inf-table-btns">
           <button class="inf-add-btn" onclick="addInfractionRow()">+ INFRACTION</button>
           <button class="inf-ev-btn">+ EVENT</button>
@@ -389,37 +404,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
               </div>
               <div class="rf-row">
                 <span class="rf-label">Player:</span>
-                <select class="rf-select" id="rf-player">
-                  <option>Sabally, Nyara (13) — Tempo</option>
-                  <option>Rice, Kahleah (5) — Tempo</option>
-                  <option>Mabrey, Marina (4) — Tempo</option>
-                  <option>Key, Tiffany (22) — Tempo</option>
-                  <option>Conde, Natasha (11) — Tempo</option>
-                  <option>Juskaite, Laurita (7) — Tempo</option>
-                  <option>Nurse, Natalie (21) — Tempo</option>
-                  <option>Diggins, Skylar (4) — Sky</option>
-                  <option>Cardoso, Kamilla (10) — Sky</option>
-                  <option>Williams, Eartha (3) — Sky</option>
-                  <option>Sykes, Brianna (15) — Sky</option>
-                  <option>Cloud, Tianna (2) — Sky</option>
-                  <option>Banham, Natalie (9) — Sky</option>
-                  <option>Taylor, Maya (14) — Sky</option>
-                </select>
+                <select class="rf-select" id="rf-player"></select>
               </div>
               <div class="rf-row">
                 <span class="rf-label">Opponent:</span>
-                <select class="rf-select" id="rf-opponent">
-                  <option>Diggins, Skylar (4) — Sky</option>
-                  <option>Cardoso, Kamilla (10) — Sky</option>
-                  <option>Williams, Eartha (3) — Sky</option>
-                  <option>Sykes, Brianna (15) — Sky</option>
-                  <option>Cloud, Tianna (2) — Sky</option>
-                  <option>Banham, Natalie (9) — Sky</option>
-                  <option>Taylor, Maya (14) — Sky</option>
-                  <option>Sabally, Nyara (13) — Tempo</option>
-                  <option>Rice, Kahleah (5) — Tempo</option>
-                  <option>Mabrey, Marina (4) — Tempo</option>
-                </select>
+                <select class="rf-select" id="rf-opponent"></select>
               </div>
             </div>
             <div class="rf-right">
@@ -429,16 +418,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
               <button class="rating-btn on" onclick="selectRating(this)">Judgement - Lean No</button>
               <button class="rating-btn" onclick="selectRating(this)">No Infraction</button>
               <div class="rf-section-lbl" style="margin-top:6px">Assessment Ratings:</div>
-              <select class="rf-select">
-                <option>- if applicable -</option><option>Egregious</option>
-                <option>Clear</option><option>Toss Up</option>
+              <select class="rf-select" id="rf-assessment">
+                <option>- if applicable -</option>
+                <option>Personal Foul Assessment</option>
+                <option>Shooting Foul Assessment</option>
+                <option>Wrong Player Assessment</option>
+                <option>Block-Charge Assessment</option>
               </select>
               <div class="rf-section-lbl" style="margin-top:6px">Observability:</div>
               <select class="rf-select" id="rf-observability">
                 <option>Observable</option><option>Difficult</option><option>Very Difficult</option>
               </select>
               <div style="display:flex;gap:6px;margin-top:10px">
-                <button class="rf-save-btn" onclick="saveRating()"><i class="ti ti-check"></i> Save Ratings &#8594;</button>
+                <button class="rf-save-btn" onclick="saveRating()"><i class="ti ti-check"></i> Save Ratings</button>
                 <button class="rf-cancel-btn" onclick="cancelRating()">&#10005;</button>
               </div>
             </div>
@@ -465,44 +457,46 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
         </div>
       </div>
 
-      <!-- RIGHT PANEL -->
-      <div class="rp">
-        <div class="vid-area">
-          <div class="vid-frame">
-            <img src="Logos/video player placeholder.png" alt="Video"
-              onerror="this.parentElement.innerHTML='<div class=&quot;vid-ph&quot;><i class=&quot;ti ti-player-play&quot;></i><span>Video Placeholder</span></div>'">
+      <!-- RIGHT PANEL COLUMN -->
+      <div class="rp-col">
+        <div class="rp">
+          <div class="vid-area">
+            <div class="vid-frame">
+              <img src="Logos/video player placeholder.png" alt="Video"
+                onerror="this.parentElement.innerHTML='<div class=&quot;vid-ph&quot;><i class=&quot;ti ti-player-play&quot;></i><span>Video Placeholder</span></div>'">
+            </div>
+          </div>
+          <div class="ang-row">
+            <div class="ang on" onclick="angClick(this)">LL5</div>
+            <div class="ang" onclick="angClick(this)">LL5</div>
+            <div class="ang" onclick="angClick(this)">LR5</div>
+            <div class="ang" onclick="angClick(this)">LR5</div>
+            <div class="ang" onclick="angClick(this)">LS5</div>
+            <div class="ang" onclick="angClick(this)">RS5</div>
+            <div class="ang" onclick="angClick(this)">ABP</div>
+            <div class="ang" onclick="angClick(this)">HBP</div>
+            <div class="ang" onclick="angClick(this)">INA</div>
+            <div class="ang" onclick="angClick(this)">DF BCAST</div>
+          </div>
+          <div class="vid-ctrl">
+            <button class="vcb"><i class="ti ti-player-play"></i></button>
+            <button class="vcb"><i class="ti ti-volume"></i></button>
+            <div class="vtrack"><div class="vfill"></div><div class="vhead"></div></div>
+            <span class="vtime">40:51 / 3:12:27</span>
+            <button class="vcb"><i class="ti ti-arrows-maximize"></i></button>
+          </div>
+          <div class="clip-bar">
+            <button class="clip-btn"><i class="ti ti-paperclip"></i> CLIP VIDEO <span style="font-size:10px;opacity:.7">(ctrl+v)</span></button>
+            <button class="hotkeys-btn">Video Hotkeys &#9662;</button>
           </div>
         </div>
-        <div class="ang-row">
-          <div class="ang on" onclick="angClick(this)">LL5</div>
-          <div class="ang" onclick="angClick(this)">LL5</div>
-          <div class="ang" onclick="angClick(this)">LR5</div>
-          <div class="ang" onclick="angClick(this)">LR5</div>
-          <div class="ang" onclick="angClick(this)">LS5</div>
-          <div class="ang" onclick="angClick(this)">RS5</div>
-          <div class="ang" onclick="angClick(this)">ABP</div>
-          <div class="ang" onclick="angClick(this)">HBP</div>
-          <div class="ang" onclick="angClick(this)">INA</div>
-          <div class="ang" onclick="angClick(this)">DF BCAST</div>
+        <div class="rp-card">
+          <div class="rp-card-lbl"><i class="ti ti-alert-triangle" style="color:#f59e0b"></i> <span class="rp-card-ptiw">PTIW Comment</span></div>
+          <div class="rp-card-val" id="ptiw-comment">No PTIW Comment</div>
         </div>
-        <div class="vid-ctrl">
-          <button class="vcb"><i class="ti ti-player-play"></i></button>
-          <button class="vcb"><i class="ti ti-volume"></i></button>
-          <div class="vtrack"><div class="vfill"></div><div class="vhead"></div></div>
-          <span class="vtime">40:51 / 3:12:27</span>
-          <button class="vcb"><i class="ti ti-arrows-maximize"></i></button>
-        </div>
-        <div class="clip-bar">
-          <button class="clip-btn"><i class="ti ti-paperclip"></i> CLIP VIDEO <span style="font-size:10px;opacity:.7">(ctrl+v)</span></button>
-          <button class="hotkeys-btn">Video Hotkeys &#9662;</button>
-        </div>
-        <div class="rp-box">
-          <div class="rp-lbl"><i class="ti ti-alert-triangle" style="color:#f59e0b"></i> <span class="rp-ptiw-lbl">PTIW Comment:</span></div>
-          <div class="rp-val" id="ptiw-comment">No PTIW Comment</div>
-        </div>
-        <div class="rp-box">
-          <div class="rp-lbl"><i class="ti ti-info-circle"></i> OIW Comment:</div>
-          <div class="rp-val" id="oiw-comment">No OIW Comment</div>
+        <div class="rp-card">
+          <div class="rp-card-lbl"><i class="ti ti-info-circle"></i> OIW Comment</div>
+          <div class="rp-card-val" id="oiw-comment">No OIW Comment</div>
         </div>
       </div>
 
@@ -599,6 +593,38 @@ const TAXONOMY = {
   'Violation: Defensive Goaltending': { 'Defensive Goaltending': ['N/A'] },
 };
 
+const TOR_PLAYERS = [
+  'Sabally, Nyara (13) — Tempo','Rice, Kahleah (5) — Tempo','Mabrey, Marina (4) — Tempo',
+  'Key, Tiffany (22) — Tempo','Conde, Natasha (11) — Tempo','Juskaite, Laurita (7) — Tempo','Nurse, Natalie (21) — Tempo'
+];
+const CHI_PLAYERS = [
+  'Diggins, Skylar (4) — Sky','Cardoso, Kamilla (10) — Sky','Williams, Eartha (3) — Sky',
+  'Sykes, Brianna (15) — Sky','Cloud, Tianna (2) — Sky','Banham, Natalie (9) — Sky','Taylor, Maya (14) — Sky'
+];
+const ALL_PLAYERS = [...TOR_PLAYERS, ...CHI_PLAYERS];
+
+function updatePlayerDropdowns() {
+  const it = document.getElementById('rf-infraction-type').value;
+  const offTeam = currentPoss ? (currentPoss.team === 'TOR' ? TOR_PLAYERS : CHI_PLAYERS) : ALL_PLAYERS;
+  const defTeam = currentPoss ? (currentPoss.team === 'TOR' ? CHI_PLAYERS : TOR_PLAYERS) : ALL_PLAYERS;
+  let playerPool, opponentPool;
+  if (it === 'Foul: Personal') {
+    playerPool = defTeam; opponentPool = offTeam;
+  } else if (it === 'Foul: Offensive') {
+    playerPool = offTeam; opponentPool = defTeam;
+  } else {
+    playerPool = ALL_PLAYERS; opponentPool = ALL_PLAYERS;
+  }
+  const pSel = document.getElementById('rf-player');
+  const oSel = document.getElementById('rf-opponent');
+  const pVal = pSel.value, oVal = oSel.value;
+  pSel.innerHTML = playerPool.map(p=>`<option>${p}</option>`).join('');
+  oSel.innerHTML = opponentPool.map(p=>`<option>${p}</option>`).join('');
+  // restore previous values if still valid
+  setSelectVal('rf-player', pVal);
+  setSelectVal('rf-opponent', oVal);
+}
+
 function updateInfrType() {
   const it = document.getElementById('rf-infraction-type').value;
   const ptSel = document.getElementById('rf-play-type');
@@ -609,6 +635,7 @@ function updateInfrType() {
     });
   }
   updateSubPlayTypes();
+  updatePlayerDropdowns();
 }
 
 function updateSubPlayTypes() {
@@ -622,6 +649,9 @@ function updateSubPlayTypes() {
 
 const TOR_P = ['N. Sabally','K. Rice','M. Mabrey','T. Key','N. Conde','L. Juskaite','N. Nurse'];
 const CHI_P = ['S. Diggins','K. Cardoso','E. Williams','B. Sykes','T. Cloud','N. Banham','M. Taylor'];
+
+// Initialize player dropdowns to all players on page load
+document.addEventListener('DOMContentLoaded', () => updatePlayerDropdowns());
 
 const POSSESSIONS = [
   {id:1,q:1,team:'TOR',time:'09:45.0',ptiw:false,events:[
