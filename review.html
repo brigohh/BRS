@@ -151,6 +151,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .rf-left .rf-select{flex:1}
 .rf-right .rf-select{width:100%}
 .rf-section-lbl{font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;margin-bottom:2px}
+.rating-btn.disabled{opacity:.35;pointer-events:none;cursor:not-allowed}
+.assist-alert{display:none;position:fixed;bottom:90px;right:20px;width:300px;background:#fff;border:1px solid #fca5a5;border-radius:10px;box-shadow:0 6px 24px rgba(0,0,0,.15);z-index:600;padding:14px 16px;animation:slideUp .2s ease}
+.assist-alert.show{display:block}
+@keyframes slideUp{from{transform:translateY(12px);opacity:0}to{transform:translateY(0);opacity:1}}
+.assist-alert-hdr{display:flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700;color:#dc2626;margin-bottom:8px}
+.assist-alert-body{font-size:11.5px;color:#374151;line-height:1.5;margin-bottom:10px}
+.assist-alert-btns{display:flex;gap:6px}
+.assist-alert-btns button{flex:1;padding:5px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer}
+.assist-alert-yes{background:#1a3a6b;color:#fff;border:none}
+.assist-alert-yes:hover{background:#15306e}
+.assist-alert-no{background:#fff;color:#374151;border:1px solid #d1d5db}
+.assist-alert-no:hover{background:#f9fafb}
 .rf-save-btn{padding:5px 13px;background:#ec4899;color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:4px}
 .rf-save-btn:hover{background:#db2777}
 .rf-cancel-btn{padding:5px 9px;border:1px solid #d1d5db;border-radius:6px;font-size:11px;color:#374151;background:#fff;cursor:pointer}
@@ -477,7 +489,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
               <button class="rating-btn on" data-rating="lean-no" onclick="selectRating(this)">Judgement - Lean No</button>
               <button class="rating-btn" data-rating="no-infraction" onclick="selectRating(this)">No Infraction</button>
               <div class="rf-section-lbl" style="margin-top:8px">Assessment Ratings:</div>
-              <select class="rf-select" id="rf-assessment">
+              <select class="rf-select" id="rf-assessment" onchange="onAssessmentChange()">
                 <option>- if applicable -</option>
                 <option>Personal Foul Assessment</option>
                 <option>Shooting Foul Assessment</option>
@@ -583,6 +595,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 </div><!-- /.main -->
 </div><!-- /.page -->
 
+<div class="assist-alert" id="assist-alert">
+  <div class="assist-alert-hdr"><i class="ti ti-whistle"></i> Help Side Assist</div>
+  <div class="assist-alert-body" id="assist-alert-body"></div>
+  <div class="assist-alert-btns">
+    <button class="assist-alert-yes" onclick="assistAlertYes()">Yes, check it</button>
+    <button class="assist-alert-no" onclick="assistAlertNo()">Save anyway</button>
+  </div>
+</div>
 <div class="chatbot-window" id="chatbot-window">
   <div class="chatbot-hdr">
     <div class="chatbot-title"><i class="ti ti-whistle"></i> Help Side Assist</div>
@@ -749,6 +769,7 @@ const POSSESSIONS = [
     {id:'e1-2',time:'09:43.2',label:'DRIVE',type:'plain'},
     {id:'e1-3',time:'09:41.0',label:'PICK',type:'reviewable',prefill:{infrType:'Foul: Offensive',playType:'Pick - Screener',subPlayType:'Deliver/Absorb',role:'Off Player 2 (Screener/Cutter)',player:'Sabally, Nyara (13) — Tempo',opponent:'Diggins, Skylar (4) — Sky',rating:'No Infraction',observability:'Observable',ogr:true}},
     {id:'e1-4',time:'09:40.5',label:'NO DRIBBLE',type:'plain'},
+    {id:'e1-4b',time:'09:40.2',label:'DEAD BALL',type:'reviewable',prefill:{isDeadBall:true}},
     {id:'e1-5',time:'09:39.8',label:'DRIBBLE',type:'plain'},
     {id:'e1-6',time:'09:38.1',label:'SHOT',type:'plain'},
     {id:'e1-7',time:'09:37.9',label:'DEAD BALL',type:'plain'},
@@ -1154,6 +1175,13 @@ function selectEvent(evtId, poss, ev) {
   if (ev.type==='whistle') {
     infractionRows = [{type:ev.foulType||ev.label, player:ev.player||(poss.team==='TOR'?TOR_P[0]:CHI_P[0]),
       opponent:poss.team==='TOR'?CHI_P[0]:TOR_P[0], official:REFS[0], location:'Lead', rating:'Called', observability:'Observable'}];
+  } else if (ev.prefill && ev.prefill.isDeadBall) {
+    infractionRows = [
+      {type:'Stoppage: Inadvertent Whistle', player:'Sabally, Nyara (13) — Tempo', opponent:'Diggins, Skylar (4) — Sky', official:REFS[0], location:'Lead', rating:'No Infraction', observability:'Observable'},
+      {type:'Stoppage: Out-of-Bounds', player:'Sabally, Nyara (13) — Tempo', opponent:'Diggins, Skylar (4) — Sky', official:REFS[0], location:'Lead', rating:'No Infraction', observability:'Observable',
+       prefill:{infrType:'Stoppage: Out-of-Bounds', playType:'', subPlayType:'', role:'Off Player 1 (Ball Handler)', player:'Sabally, Nyara (13) — Tempo', opponent:'Diggins, Skylar (4) — Sky', rating:'No Infraction', observability:'Observable'}},
+      {type:'Turnover: Lost Ball Out of Bounds', player:'Sabally, Nyara (13) — Tempo', opponent:'Diggins, Skylar (4) — Sky', official:REFS[0], location:'Lead', rating:'No Infraction', observability:'Observable'},
+    ];
   } else if (ev.prefill) {
     infractionRows = [
       {type:'Foul: Offensive', player:'Sabally, Nyara (13) — Tempo', opponent:'Diggins, Skylar (4) — Sky', official:REFS[0], location:'Lead', rating:'No Infraction', observability:'Observable',
@@ -1263,7 +1291,35 @@ function ratingClass(rating) {
   if (rating === 'No Infraction') return 'rc-no-infraction';
   return '';
 }
+function onAssessmentChange() {
+  const val = document.getElementById('rf-assessment').value;
+  const isAssessment = val !== '- if applicable -';
+  document.querySelectorAll('.rating-btn').forEach(b => b.classList.toggle('disabled', isAssessment));
+}
+
 function saveRating() {
+  // If an assessment is selected and Called is not checked, intercept
+  const assessment = document.getElementById('rf-assessment').value;
+  const called = document.getElementById('chk-called').checked;
+  const infrType = document.getElementById('rf-infraction-type').value || '';
+  if (assessment !== '- if applicable -' && !called && infrType.toLowerCase().includes('out-of-bounds')) {
+    showAssistAlert('You appear to be entering an incorrectly assessed Out of Bounds play — would you like to check the Called box?');
+    return;
+  }
+  document.getElementById('rating-form').style.display='none';
+  selectedInfRow=null; renderInfractionTable(); showToast('Rating saved');
+}
+
+function showAssistAlert(msg) {
+  document.getElementById('assist-alert-body').textContent = msg;
+  document.getElementById('assist-alert').classList.add('show');
+}
+function assistAlertYes() {
+  document.getElementById('assist-alert').classList.remove('show');
+  document.getElementById('chk-called').checked = true;
+}
+function assistAlertNo() {
+  document.getElementById('assist-alert').classList.remove('show');
   document.getElementById('rating-form').style.display='none';
   selectedInfRow=null; renderInfractionTable(); showToast('Rating saved');
 }
@@ -1289,7 +1345,7 @@ function showToast(msg) {
 // INIT
 openPossId = 1; renderQueue();
 const fp = POSSESSIONS[0];
-const fe = fp.events.find(e=>e.id==='e1-3');
+const fe = fp.events.find(e=>e.id==='e1-4b');
 if(fe){selectEvent(fe.id,fp,fe);renderQueue();}
 
 function openChatbot() {
