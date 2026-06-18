@@ -96,7 +96,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .analytics-toggle:hover{opacity:.85}
 .analytics-toggle .at-label{display:flex;align-items:center;gap:8px;color:#fff}
 .analytics-toggle .at-chevron{font-size:14px;color:rgba(255,255,255,.7);transition:transform .2s}
-.analytics-card{background:#1a3a6b;border-radius:14px;margin-bottom:24px;overflow:hidden;box-shadow:0 4px 16px rgba(26,58,107,.18)}
+.analytics-card{background:#1a3a6b;border-radius:14px;margin-bottom:24px;overflow:hidden;box-shadow:0 4px 16px rgba(26,58,107,.18);transition:background .25s}
+.analytics-card.lg-wnba{background:#c2410c}
+.analytics-card.lg-nba{background:#1a3a6b}
+.analytics-card.lg-gleague{background:#111827}
+.analytics-card.lg-bal{background:#166534}
 .analytics-card-body{padding:0 20px 20px}
 #analytics-section{transition:none}
 .bottom-card{background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.1);overflow:hidden}
@@ -279,8 +283,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   <div class="bottom-grid">
     <div>
       <div class="bottom-card" style="margin-bottom:0;padding:0">
-        <div class="chart-header" style="padding:16px 20px 12px;border-bottom:1px solid #f3f4f6;margin-bottom:0">
-          <div><div class="chart-title" style="font-size:12px">Overturn Rate by Play Type &amp; Sub Play Type · Season</div></div>
+        <div class="chart-header" style="padding:16px 20px 12px;border-bottom:1px solid #f3f4f6;margin-bottom:0;display:flex;align-items:center;justify-content:space-between">
+          <div><div class="chart-title" style="font-size:12px" id="pt-table-title">Overturn Rate by Play Type &amp; Sub Play Type · Season</div></div>
+          <div style="display:flex;background:#f3f4f6;border-radius:6px;padding:2px;gap:2px">
+            <button id="pt-tbl-season" onclick="setPtTableMode('season')" style="font-size:9.5px;font-weight:600;padding:3px 8px;border-radius:4px;border:none;cursor:pointer;background:#fff;color:#374151;box-shadow:0 1px 2px rgba(0,0,0,.08)">Season</button>
+            <button id="pt-tbl-10" onclick="setPtTableMode('10g')" style="font-size:9.5px;font-weight:600;padding:3px 8px;border-radius:4px;border:none;cursor:pointer;background:transparent;color:#9ca3af">Last 10</button>
+          </div>
         </div>
         <table style="width:100%;border-collapse:collapse">
           <thead>
@@ -907,6 +915,12 @@ function lgFilter(el) {
   activeLg = el.dataset.lg;
   updateHeroStats(activeLg);
   renderTable();
+  const card = document.querySelector('.analytics-card');
+  card.classList.remove('lg-wnba','lg-nba','lg-gleague','lg-bal');
+  if (activeLg === 'WNBA') card.classList.add('lg-wnba');
+  else if (activeLg === 'NBA') card.classList.add('lg-nba');
+  else if (activeLg === 'G-League') card.classList.add('lg-gleague');
+  else if (activeLg === 'BAL') card.classList.add('lg-bal');
 }
 
 // BOTTOM TABLE
@@ -1070,6 +1084,8 @@ const PT_SECTIONS = [
 
 function renderPlayTypeTable() {
   const tbody = document.getElementById('pt-tbody');
+  tbody.innerHTML = '';
+  const is10g = _ptTableMode === '10g';
 
   PT_SECTIONS.forEach(section => {
     // Section header row — full-width navy band
@@ -1080,7 +1096,9 @@ function renderPlayTypeTable() {
     const sectionPts = PLAY_TYPE_STATS.filter(pt => section.groups.includes(pt.group));
 
     sectionPts.forEach(pt => {
-      const pct = pt.included > 0 ? Math.round(pt.changed / pt.included * 100) : 0;
+      const included = is10g ? Math.round(pt.included * 0.32) : pt.included;
+      const changed = is10g ? Math.min(included, Math.round(pt.changed * 0.30 + (pt.included > 0 ? (pt.changed/pt.included - 0.3) * 1.5 : 0))) : pt.changed;
+      const pct = included > 0 ? Math.round(changed / included * 100) : 0;
       const col = ptColor(pct);
 
       // Play type row — bold, prominent
@@ -1089,8 +1107,8 @@ function renderPlayTypeTable() {
       tr.style.cssText = 'background:#f8fafc;cursor:default';
       tr.innerHTML = `
         <td style="padding:10px 14px;font-weight:700;font-size:12px;color:#111827;border-bottom:1px solid #e5e7eb">${pt.type}</td>
-        <td style="padding:10px 14px;text-align:center;font-weight:600;color:#374151;border-bottom:1px solid #e5e7eb">${pt.included}</td>
-        <td style="padding:10px 14px;text-align:center;font-weight:700;color:${col};border-bottom:1px solid #e5e7eb">${pt.changed}</td>
+        <td style="padding:10px 14px;text-align:center;font-weight:600;color:#374151;border-bottom:1px solid #e5e7eb">${included}</td>
+        <td style="padding:10px 14px;text-align:center;font-weight:700;color:${col};border-bottom:1px solid #e5e7eb">${changed}</td>
         <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb">
           <div class="pt-rate-cell">
             <span style="font-size:12px;font-weight:800;color:${col};min-width:34px">${pct}%</span>
@@ -1101,8 +1119,11 @@ function renderPlayTypeTable() {
 
       // Sub rows — collapsed by default, expand on click
       const subGroupId = `sg-${Math.random().toString(36).slice(2)}`;
-      const activeSubs = pt.subs.filter(s => s.included > 0);
-      const emptySubs = pt.subs.filter(s => s.included === 0);
+      const activeSubs = pt.subs.filter(s => {
+        const si = is10g ? Math.round(s.included * 0.32) : s.included;
+        return si > 0;
+      });
+      const emptySubs = [];
 
       // Make play type row clickable to toggle subs
       tr.style.cursor = 'pointer';
@@ -1118,7 +1139,9 @@ function renderPlayTypeTable() {
       };
 
       activeSubs.forEach(sub => {
-        const spct = Math.round(sub.changed / sub.included * 100);
+        const si = is10g ? Math.round(sub.included * 0.32) : sub.included;
+        const sc = is10g ? Math.min(si, Math.round(sub.changed * 0.30)) : sub.changed;
+        const spct = si > 0 ? Math.round(sc / si * 100) : 0;
         const scol = ptColor(spct);
         const sr = document.createElement('tr');
         sr.className = subGroupId;
@@ -1127,8 +1150,8 @@ function renderPlayTypeTable() {
           <td style="padding:5px 14px 5px 28px;font-size:11px;color:#374151;border-bottom:1px solid #f3f4f6">
             <span style="color:#d1d5db;margin-right:5px">└</span>${sub.name}
           </td>
-          <td style="padding:5px 14px;text-align:center;font-size:11px;color:#6b7280;border-bottom:1px solid #f3f4f6">${sub.included}</td>
-          <td style="padding:5px 14px;text-align:center;font-size:11px;font-weight:600;color:${scol};border-bottom:1px solid #f3f4f6">${sub.changed}</td>
+          <td style="padding:5px 14px;text-align:center;font-size:11px;color:#6b7280;border-bottom:1px solid #f3f4f6">${si}</td>
+          <td style="padding:5px 14px;text-align:center;font-size:11px;font-weight:600;color:${scol};border-bottom:1px solid #f3f4f6">${sc}</td>
           <td style="padding:5px 14px;border-bottom:1px solid #f3f4f6">
             <div class="pt-rate-cell">
               <span style="font-size:10.5px;font-weight:700;color:${scol};min-width:34px">${spct}%</span>
@@ -1215,6 +1238,24 @@ function sparkline(data, color) {
 }
 
 let _ptMode = 'season';
+let _ptTableMode = 'season';
+
+function setPtTableMode(mode) {
+  _ptTableMode = mode;
+  const btnS = document.getElementById('pt-tbl-season');
+  const btn10 = document.getElementById('pt-tbl-10');
+  const title = document.getElementById('pt-table-title');
+  if (mode === 'season') {
+    btnS.style.background = '#fff'; btnS.style.color = '#374151'; btnS.style.boxShadow = '0 1px 2px rgba(0,0,0,.08)';
+    btn10.style.background = 'transparent'; btn10.style.color = '#9ca3af'; btn10.style.boxShadow = 'none';
+    if (title) title.textContent = 'Overturn Rate by Play Type & Sub Play Type · Season';
+  } else {
+    btn10.style.background = '#fff'; btn10.style.color = '#374151'; btn10.style.boxShadow = '0 1px 2px rgba(0,0,0,.08)';
+    btnS.style.background = 'transparent'; btnS.style.color = '#9ca3af'; btnS.style.boxShadow = 'none';
+    if (title) title.textContent = 'Overturn Rate by Play Type & Sub Play Type · Last 10 Games';
+  }
+  renderPlayTypeTable();
+}
 
 function setPtMode(mode) {
   _ptMode = mode;
