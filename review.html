@@ -123,9 +123,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .cp{flex:1;display:flex;flex-direction:column;overflow:hidden;background:#fff;border:1px solid #e5e7eb;border-radius:10px}
 .cp-empty{flex:1;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-size:13px;font-style:italic}
 .rating-form{flex-shrink:0;border-bottom:1px solid #e5e7eb;background:#f9fafb;margin-top:6px}
-.rf-inner{display:grid;grid-template-columns:1fr 200px;gap:0}
-.rf-left{padding:14px 20px 14px 24px;border-right:1px solid #e5e7eb;display:flex;flex-direction:column;gap:9px}
-.rf-right{padding:14px 22px 14px 20px;display:flex;flex-direction:column;gap:8px}
+.rf-inner{display:flex;flex-direction:column}
+.rf-left{padding:14px 24px 14px 24px;display:flex;flex-direction:column;gap:9px}
 .rf-row{display:flex;align-items:center;gap:10px}
 .rf-label{font-size:10.5px;font-weight:600;color:#6b7280;min-width:100px;flex-shrink:0}
 .rf-clock{padding:3px 10px;border:1px solid #d1d5db;border-radius:6px;font-size:12px;font-weight:600;color:#111827;background:#fff;width:80px;text-align:center}
@@ -179,7 +178,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .comment-ta:focus{outline:none;border-color:#1a3a6b}
 
 /* RIGHT PANEL */
-.rp-col{width:390px;flex-shrink:0;display:flex;flex-direction:column;gap:10px;min-height:0}
+.rp-col{width:600px;flex-shrink:0;display:flex;flex-direction:column;gap:10px;min-height:0}
 .rp{flex-shrink:0;background:#fff;display:flex;flex-direction:column;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;min-height:0}
 .rp-card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:10px 14px;flex-shrink:0}
 .rp-card-lbl{font-size:10px;color:#9ca3af;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:5px}
@@ -222,6 +221,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .assist-action-row .rf-cancel-btn,.assist-action-row .rf-save-btn{flex:1;justify-content:center}
 .assist-btn{width:100%;padding:8px 10px;background:#ef4444;color:#fff;border:none;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px}
 .assist-btn:hover{background:#dc2626}
+.tmpl-assist-btn{width:auto;padding:3px 10px;background:#fecaca;color:#7f1d1d;border:1px solid #f87171;border-radius:6px;font-weight:600}
 .suggestions-card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:10px 12px;flex:1;overflow-y:auto;min-height:0}
 .suggestions-lbl{font-size:10px;font-weight:700;color:#374151;letter-spacing:.4px;margin-bottom:2px;text-transform:uppercase}
 .suggestions-sub{font-size:9.5px;color:#9ca3af;margin-bottom:8px;line-height:1.4}
@@ -481,29 +481,29 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
                 <span class="rf-label">Opponent:</span>
                 <select class="rf-select" id="rf-opponent"></select>
               </div>
-            </div>
-            <div class="rf-right">
-              <div style="margin-bottom:6px">
-                <div class="rf-section-lbl" style="margin-bottom:4px">Infraction Rating:</div>
-              <button class="rating-btn" data-rating="infraction" onclick="selectRating(this)">Infraction</button>
-              <button class="rating-btn" data-rating="lean-infraction" onclick="selectRating(this)">Judgement - Lean Infraction</button>
-              <button class="rating-btn on" data-rating="lean-no" onclick="selectRating(this)">Judgement - Lean No</button>
-              <button class="rating-btn" data-rating="no-infraction" onclick="selectRating(this)">No Infraction</button>
-              <div class="rf-section-lbl" style="margin-top:8px">Assessment Ratings:</div>
-              <select class="rf-select" id="rf-assessment" onchange="onAssessmentChange()">
-                <option>- if applicable -</option>
-                <option>Personal Foul Assessment</option>
-                <option>Shooting Foul Assessment</option>
-                <option>Wrong Player Assessment</option>
-                <option>Block-Charge Assessment</option>
-              </select>
-              <div class="rf-section-lbl" style="margin-top:8px">Observability:</div>
-              <select class="rf-select" id="rf-observability">
-                <option>Observable</option><option>Difficult</option><option>Very Difficult</option>
-              </select>
-              <div style="display:flex;gap:6px;margin-top:10px">
-                <button class="rf-cancel-btn" onclick="cancelRating()" style="flex:1;justify-content:center">&#10005; Cancel</button>
-                <button class="rf-save-btn" onclick="saveRating()" style="flex:1;justify-content:center"><i class="ti ti-check"></i> Save</button>
+              <div class="rf-row">
+                <span class="rf-label">Rating:</span>
+                <select class="rf-select" id="rf-rating-combined" onchange="onRatingCombinedChange()">
+                  <option value="">-- select --</option>
+                  <optgroup label="Infraction Rating">
+                    <option value="Infraction">Infraction</option>
+                    <option value="Judgement - Lean Infraction">Judgement - Lean Infraction</option>
+                    <option value="Judgement - Lean No">Judgement - Lean No</option>
+                    <option value="No Infraction">No Infraction</option>
+                  </optgroup>
+                  <optgroup label="Assessment Rating">
+                    <option value="Personal Foul Assessment">Personal Foul Assessment</option>
+                    <option value="Shooting Foul Assessment">Shooting Foul Assessment</option>
+                    <option value="Wrong Player Assessment">Wrong Player Assessment</option>
+                    <option value="Block-Charge Assessment">Block-Charge Assessment</option>
+                  </optgroup>
+                </select>
+              </div>
+              <div class="rf-row">
+                <span class="rf-label">Observability:</span>
+                <select class="rf-select" id="rf-observability">
+                  <option>Observable</option><option>Difficult</option><option>Very Difficult</option>
+                </select>
               </div>
             </div>
           </div>
@@ -518,6 +518,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
             <button class="tmpl-btn">Take Fouls &#9662;</button>
             <button class="tmpl-btn">Head/Face Contact</button>
             <button class="tmpl-btn">Enhanced Review</button>
+            <button class="assist-btn tmpl-assist-btn" onclick="openChatbot()"><i class="ti ti-whistle" style="font-size:13px"></i> Help Side Assist</button>
+            <div style="margin-left:auto;display:flex;gap:5px">
+              <button class="rf-cancel-btn" onclick="cancelRating()">Cancel</button>
+              <button class="rf-save-btn" onclick="saveRating()">Save</button>
+            </div>
           </div>
           <div>
             <div class="comment-lbl" style="margin-bottom:5px">Comments:</div>
@@ -530,24 +535,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
         </div>
       </div>
 
-      <!-- ASSIST PANEL -->
-      <div class="assist-panel">
-        <div class="suggestions-card under-construction">
-          <div class="caution-tape">⚠ CAUTION ⚠ CAUTION ⚠ CAUTION ⚠</div>
-          <div class="uc-body">
-            <i class="ti ti-tools" style="font-size:22px;color:#92400e;margin-bottom:6px"></i>
-            <div class="uc-title">Comment Framework</div>
-            <div class="uc-sub">Under construction</div>
-            <div class="uc-credit">Curt &amp; Co.</div>
-          </div>
-          <div class="caution-tape">⚠ CAUTION ⚠ CAUTION ⚠ CAUTION ⚠</div>
-        </div>
-        <div class="assist-card assist-card-red">
-          <button class="assist-btn" onclick="openChatbot()"><i class="ti ti-whistle" style="font-size:13px"></i> Help Side Assist</button>
-        </div>
-      </div>
-
-      <!-- RIGHT PANEL COLUMN -->
+<!-- RIGHT PANEL COLUMN -->
       <div class="rp-col">
         <div class="rp">
           <div class="vid-area">
@@ -1234,7 +1222,7 @@ function selectInfractionRow(idx) {
   if (currentEv) document.getElementById('rf-clock').value = currentEv.time;
   const row = infractionRows[idx];
   const r = row.rating;
-  document.querySelectorAll('.rating-btn').forEach(b => b.classList.toggle('on', b.textContent.trim()===r));
+  setSelectVal('rf-rating-combined', r);
   // apply prefill values to form dropdowns/checkboxes
   const pf = row.prefill || {};
   setSelectVal('rf-infraction-type', pf.infrType || row.type || '');
@@ -1268,18 +1256,16 @@ function selectLocation(btn) {
   btn.closest('.rf-row').querySelectorAll('.loc-btn').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
 }
-function selectRating(btn) {
-  document.querySelectorAll('.rating-btn').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  if (selectedInfRow!==null && infractionRows[selectedInfRow]) {
-    infractionRows[selectedInfRow].rating = btn.textContent.trim();
-    // directly update just the rating chip in row selectedInfRow (col index 5)
+function onRatingCombinedChange() {
+  const val = document.getElementById('rf-rating-combined').value;
+  if (selectedInfRow !== null && infractionRows[selectedInfRow]) {
+    infractionRows[selectedInfRow].rating = val;
     const rows = document.querySelectorAll('#inf-tbody tr');
     if (rows[selectedInfRow]) {
       const chip = rows[selectedInfRow].querySelectorAll('td')[5]?.querySelector('.rating-chip');
       if (chip) {
-        chip.textContent = btn.textContent.trim();
-        chip.className = 'rating-chip ' + ratingClass(btn.textContent.trim());
+        chip.textContent = val;
+        chip.className = 'rating-chip ' + ratingClass(val);
       }
     }
   }
@@ -1293,18 +1279,13 @@ function ratingClass(rating) {
   if (rating === 'No Infraction') return 'rc-no-infraction';
   return '';
 }
-function onAssessmentChange() {
-  const val = document.getElementById('rf-assessment').value;
-  const isAssessment = val !== '- if applicable -';
-  document.querySelectorAll('.rating-btn').forEach(b => b.classList.toggle('disabled', isAssessment));
-}
-
 function saveRating() {
-  const assessment = document.getElementById('rf-assessment').value;
+  const rating = document.getElementById('rf-rating-combined').value;
+  const isAssessment = rating.includes('Assessment');
   const called = document.getElementById('chk-called').checked;
   const rowType = (selectedInfRow !== null && infractionRows[selectedInfRow]) ? infractionRows[selectedInfRow].type.toLowerCase() : '';
   const isOOB = rowType.includes('out-of-bounds') || rowType.includes('out of bounds');
-  if (assessment !== '- if applicable -' && !called && isOOB) {
+  if (isAssessment && !called && isOOB) {
     showAssistAlert('You appear to be entering an incorrectly assessed Out of Bounds play — would you like to check the Called box?');
     return;
   }
