@@ -1300,10 +1300,7 @@ function renderPtSidebar() {
       return `<div class="play-type-group">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
           <div class="play-type-name">${pt.name}</div>
-          <div style="display:flex;align-items:center;gap:8px">
-            ${sparkline(trend, col10)}
-            <div style="font-size:10px;color:${col10};font-weight:700">${avg10}%</div>
-          </div>
+          <div style="font-size:10px;color:${col10};font-weight:700">${avg10}%</div>
         </div>
         <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:${avg10}%;background:${col10}"></div></div><div class="play-pct" style="color:${textCol10}">${pt.frac10}</div></div>
       </div>`;
