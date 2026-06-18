@@ -152,9 +152,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .rf-right .rf-select{width:100%}
 .rf-section-lbl{font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;margin-bottom:2px}
 .rating-btn.disabled{opacity:.35;pointer-events:none;cursor:not-allowed}
-.assist-alert{display:none;position:fixed;bottom:90px;right:20px;width:300px;background:#fff;border:1px solid #fca5a5;border-radius:10px;box-shadow:0 6px 24px rgba(0,0,0,.15);z-index:600;padding:14px 16px;animation:slideUp .2s ease}
+.assist-alert{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-60%);width:340px;background:#fff;border:1px solid #fca5a5;border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,.22);z-index:600;padding:18px 20px;animation:popIn .18s ease}
+@keyframes popIn{from{transform:translate(-50%,-55%);opacity:0}to{transform:translate(-50%,-60%);opacity:1}}
 .assist-alert.show{display:block}
-@keyframes slideUp{from{transform:translateY(12px);opacity:0}to{transform:translateY(0);opacity:1}}
 .assist-alert-hdr{display:flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700;color:#dc2626;margin-bottom:8px}
 .assist-alert-body{font-size:11.5px;color:#374151;line-height:1.5;margin-bottom:10px}
 .assist-alert-btns{display:flex;gap:6px}
@@ -599,7 +599,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   <div class="assist-alert-hdr"><i class="ti ti-whistle"></i> Help Side Assist</div>
   <div class="assist-alert-body" id="assist-alert-body"></div>
   <div class="assist-alert-btns">
-    <button class="assist-alert-yes" onclick="assistAlertYes()">Yes, check it</button>
+    <button class="assist-alert-yes" onclick="assistAlertYes()">Yes, check and save</button>
     <button class="assist-alert-no" onclick="assistAlertNo()">Save anyway</button>
   </div>
 </div>
@@ -1317,6 +1317,8 @@ function showAssistAlert(msg) {
 function assistAlertYes() {
   document.getElementById('assist-alert').classList.remove('show');
   document.getElementById('chk-called').checked = true;
+  document.getElementById('rating-form').style.display='none';
+  selectedInfRow=null; renderInfractionTable(); showToast('Rating saved');
 }
 function assistAlertNo() {
   document.getElementById('assist-alert').classList.remove('show');
