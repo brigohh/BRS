@@ -120,11 +120,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .inf-ev-btn:hover{background:#f9fafb}
 
 /* CENTER PANEL */
-.cp{flex:1;display:flex;flex-direction:column;overflow:hidden;background:#fff;border:1px solid #e5e7eb;border-radius:10px}
+.cp{flex:1 1 0;min-width:0;display:flex;flex-direction:column;overflow:hidden;background:#fff;border:1px solid #e5e7eb;border-radius:10px}
 .cp-empty{flex:1;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-size:13px;font-style:italic}
-.rating-form{flex-shrink:0;border-bottom:1px solid #e5e7eb;background:#f9fafb;margin-top:6px}
-.rf-inner{display:flex;flex-direction:column}
-.rf-left{padding:14px 24px 14px 24px;display:flex;flex-direction:column;gap:9px}
+.rating-form{flex-shrink:0;border-bottom:1px solid #e5e7eb;background:#f9fafb;margin-top:6px;overflow:hidden}
+.rf-inner{display:flex;flex-direction:column;overflow:hidden}
+.rf-left{padding:14px 24px 14px 24px;display:flex;flex-direction:column;gap:9px;min-width:0}
 .rf-row{display:flex;align-items:center;gap:10px}
 .rf-label{font-size:10.5px;font-weight:600;color:#6b7280;min-width:100px;flex-shrink:0}
 .rf-clock{padding:3px 10px;border:1px solid #d1d5db;border-radius:6px;font-size:12px;font-weight:600;color:#111827;background:#fff;width:80px;text-align:center}
@@ -178,7 +178,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .comment-ta:focus{outline:none;border-color:#1a3a6b}
 
 /* RIGHT PANEL */
-.rp-col{width:600px;flex-shrink:0;display:flex;flex-direction:column;gap:10px;min-height:0}
+.rp-col{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:10px;min-height:0}
 .rp{flex-shrink:0;background:#fff;display:flex;flex-direction:column;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;min-height:0}
 .rp-card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:10px 14px;flex-shrink:0}
 .rp-card-lbl{font-size:10px;color:#9ca3af;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:5px}
