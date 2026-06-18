@@ -152,8 +152,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .rf-right .rf-select{width:100%}
 .rf-section-lbl{font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;margin-bottom:2px}
 .rating-btn.disabled{opacity:.35;pointer-events:none;cursor:not-allowed}
-.assist-alert{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-60%);width:340px;background:#fff;border:1px solid #fca5a5;border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,.22);z-index:600;padding:18px 20px;animation:popIn .18s ease}
-@keyframes popIn{from{transform:translate(-50%,-55%);opacity:0}to{transform:translate(-50%,-60%);opacity:1}}
+.assist-alert-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:699}
+.assist-alert-backdrop.show{display:block}
+.assist-alert{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:360px;background:#fff;border:1px solid #fca5a5;border-radius:12px;box-shadow:0 16px 48px rgba(0,0,0,.28);z-index:700;padding:20px 22px}
 .assist-alert.show{display:block}
 .assist-alert-hdr{display:flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700;color:#dc2626;margin-bottom:8px}
 .assist-alert-body{font-size:11.5px;color:#374151;line-height:1.5;margin-bottom:10px}
@@ -595,6 +596,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 </div><!-- /.main -->
 </div><!-- /.page -->
 
+<div class="assist-alert-backdrop" id="assist-alert-backdrop"></div>
 <div class="assist-alert" id="assist-alert">
   <div class="assist-alert-hdr"><i class="ti ti-whistle"></i> Help Side Assist</div>
   <div class="assist-alert-body" id="assist-alert-body"></div>
@@ -1298,11 +1300,11 @@ function onAssessmentChange() {
 }
 
 function saveRating() {
-  // If an assessment is selected and Called is not checked, intercept
   const assessment = document.getElementById('rf-assessment').value;
   const called = document.getElementById('chk-called').checked;
-  const infrType = document.getElementById('rf-infraction-type').value || '';
-  if (assessment !== '- if applicable -' && !called && infrType.toLowerCase().includes('out-of-bounds')) {
+  const rowType = (selectedInfRow !== null && infractionRows[selectedInfRow]) ? infractionRows[selectedInfRow].type.toLowerCase() : '';
+  const isOOB = rowType.includes('out-of-bounds') || rowType.includes('out of bounds');
+  if (assessment !== '- if applicable -' && !called && isOOB) {
     showAssistAlert('You appear to be entering an incorrectly assessed Out of Bounds play — would you like to check the Called box?');
     return;
   }
@@ -1313,15 +1315,20 @@ function saveRating() {
 function showAssistAlert(msg) {
   document.getElementById('assist-alert-body').textContent = msg;
   document.getElementById('assist-alert').classList.add('show');
+  document.getElementById('assist-alert-backdrop').classList.add('show');
+}
+function hideAssistAlert() {
+  document.getElementById('assist-alert').classList.remove('show');
+  document.getElementById('assist-alert-backdrop').classList.remove('show');
 }
 function assistAlertYes() {
-  document.getElementById('assist-alert').classList.remove('show');
+  hideAssistAlert();
   document.getElementById('chk-called').checked = true;
   document.getElementById('rating-form').style.display='none';
   selectedInfRow=null; renderInfractionTable(); showToast('Rating saved');
 }
 function assistAlertNo() {
-  document.getElementById('assist-alert').classList.remove('show');
+  hideAssistAlert();
   document.getElementById('rating-form').style.display='none';
   selectedInfRow=null; renderInfractionTable(); showToast('Rating saved');
 }
