@@ -49,8 +49,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .pl-cover-badge{position:absolute;top:8px;right:8px;padding:2px 7px;border-radius:10px;font-size:9px;font-weight:700}
 .pl-cover-badge.pub{background:rgba(255,255,255,.9);color:#1a3a6b}
 .pl-cover-badge.priv{background:rgba(0,0,0,.45);color:#fff}
-.pl-card-name{font-size:12.5px;font-weight:700;color:#111827;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pl-card-meta{font-size:11px;color:#9ca3af}
+.pl-card-name{font-size:12.5px;font-weight:700;color:#111827;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-card-meta{font-size:11px;color:#9ca3af;margin-bottom:1px}
+.pl-card-author{font-size:10.5px;color:#9ca3af;display:flex;align-items:center;gap:4px}
 
 /* ── SPLIT VIEW ── */
 #detail{flex:1;display:none;flex-direction:column;min-height:0;overflow:hidden}
@@ -198,7 +199,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   <div class="nav-links">
     <span class="nl" onclick="location='home.html'">HOME</span>
     <span class="nl" onclick="location='published-games.html'">PUBLISHED GAMES</span>
-    <span class="nl on" onclick="location='rim.html'">RIM</span>
+    <div class="nav-dropdown" id="rim-dropdown">
+      <span class="nl on" onclick="location='rim.html'">RIM</span>
+      <span class="nl" style="padding-left:0;padding-right:6px;font-size:9px;opacity:.8;cursor:pointer" onclick="toggleRimDropdown(event)">▾</span>
+      <div class="nav-dd-menu" id="rim-dd-menu" style="min-width:190px;left:0;right:auto">
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-home" style="margin-right:7px;font-size:12px"></i>RIM Home</span>
+        <span class="nav-dd-item"><i class="ti ti-inbox" style="margin-right:7px;font-size:12px"></i>Interactions</span>
+        <span class="nav-dd-item"><i class="ti ti-messages" style="margin-right:7px;font-size:12px"></i>Threads</span>
+        <span class="nav-dd-item"><i class="ti ti-layout-board" style="margin-right:7px;font-size:12px"></i>Message Board</span>
+        <span class="nav-dd-item" onclick="location='playlists.html'"><i class="ti ti-playlist" style="margin-right:7px;font-size:12px"></i>Playlists</span>
+        <span class="nav-dd-item"><i class="ti ti-trending-up" style="margin-right:7px;font-size:12px"></i>Trends</span>
+        <span class="nav-dd-item"><i class="ti ti-ball-basketball" style="margin-right:7px;font-size:12px"></i>My Games</span>
+      </div>
+    </div>
     <span class="nl">RM REVIEW</span>
     <span class="nl">FINAL L2M REVIEW</span>
     <span class="nl">INDEPENDENT REVIEW</span>
@@ -227,6 +240,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   </div>
 
   <div class="landing-body">
+
+    <!-- CURATED -->
+    <div class="row-lbl">
+      <div class="row-lbl-text" style="display:flex;align-items:center;gap:7px"><i class="ti ti-sparkles" style="color:#7c3aed;font-size:15px"></i> BRS Curated</div>
+      <div class="row-lbl-link" style="font-size:10.5px;color:#9ca3af;font-weight:400">Auto-updated weekly &amp; biweekly</div>
+    </div>
+    <div class="pl-row" id="row-curated"></div>
 
     <!-- FEATURED -->
     <div class="row-lbl">
@@ -365,8 +385,32 @@ const COVER_COLORS = [
   ['#92400e','#fbbf24'],['#9d174d','#f472b6'],['#1a3a6b','#60a5fa']
 ];
 
+/* ─── CURATED (auto-generated) ─── */
+const CURATED = [
+  {id:'c1', name:'Overturn Mix · Week of 6/22', desc:'Auto-generated from this week\'s highest-impact overturned plays across all leagues', author:'BRS System', curated:true, cadence:'Weekly', updatedAt:'Jun 22', color:5,
+   plays:[
+    {id:'c101',type:'Foul: Shooting',subType:'Block-Charge Situation',game:'OKC @ IND',date:'6/22/26',q:'Q4',clock:'00:34.2',rating:'Infraction',ref:'Fahy (86)',loc:'Slot',note:'',comments:[]},
+    {id:'c102',type:'Stoppage: Out-of-Bounds',subType:'',game:'IND @ OKC',date:'6/19/26',q:'Q3',clock:'02:11.5',rating:'No Infraction',ref:'Chang (23)',loc:'Trail',note:'',comments:[]},
+    {id:'c103',type:'Foul: Loose Ball',subType:'Clamp-Lock-Hold',game:'TOR @ CHI',date:'5/27/26',q:'Q2',clock:'04:18.7',rating:'Infraction',ref:'Chang (23)',loc:'Trail',note:'',comments:[]},
+    {id:'c104',type:'Foul: Personal',subType:'',game:'CON @ CHI',date:'6/05/26',q:'Q4',clock:'00:52.1',rating:'Judgement - Lean Infraction',ref:'Perrymond (8)',loc:'Lead',note:'',comments:[]},
+    {id:'c105',type:'Foul: Shooting',subType:'Driving Shot Attempt',game:'LVA @ LAS',date:'6/02/26',q:'Q1',clock:'08:14.3',rating:'No Infraction',ref:'Fahy (86)',loc:'Lead',note:'',comments:[]},
+   ]},
+  {id:'c2', name:'Block-Charge Radar · Jun', desc:'All block-charge situations from the last two weeks — sorted by overturn rate', author:'BRS System', curated:true, cadence:'Biweekly', updatedAt:'Jun 18', color:2,
+   plays:[
+    {id:'c201',type:'Foul: Shooting',subType:'Block-Charge Situation',game:'PHX @ NYL',date:'5/29/26',q:'Q3',clock:'03:21.8',rating:'Judgement - Lean Infraction',ref:'Chang (23)',loc:'Trail',note:'',comments:[]},
+    {id:'c202',type:'Foul: Shooting',subType:'Block-Charge Situation',game:'ATL @ PDX',date:'5/29/26',q:'Q2',clock:'05:44.0',rating:'No Infraction',ref:'Perrymond (8)',loc:'Lead',note:'',comments:[]},
+    {id:'c203',type:'Foul: Shooting',subType:'Block-Charge Situation',game:'OKC @ IND',date:'6/22/26',q:'Q4',clock:'00:34.2',rating:'Infraction',ref:'Fahy (86)',loc:'Slot',note:'',comments:[]},
+   ]},
+  {id:'c3', name:'Late-Game Fouls · Season', desc:'High-leverage foul calls in the final 2 minutes, auto-curated from all published reviews', author:'BRS System', curated:true, cadence:'Season', updatedAt:'Jun 22', color:4,
+   plays:[
+    {id:'c301',type:'Foul: Personal',subType:'',game:'TOR @ CHI',date:'5/27/26',q:'Q4',clock:'00:22.6',rating:'No Infraction',ref:'Chang (23)',loc:'Trail',note:'',comments:[]},
+    {id:'c302',type:'Foul: Shooting',subType:'Driving Shot Attempt',game:'IND @ OKC',date:'6/15/26',q:'Q4',clock:'01:02.4',rating:'Infraction',ref:'Perrymond (8)',loc:'Lead',note:'',comments:[]},
+    {id:'c303',type:'Foul: Loose Ball',subType:'Dislodge from Position',game:'CON @ CHI',date:'6/05/26',q:'Q4',clock:'00:09.7',rating:'Judgement - Lean No',ref:'Fahy (86)',loc:'Slot',note:'',comments:[]},
+   ]},
+];
+
 let PLAYLISTS = [
-  {id:1, name:'Plays for 2026-27 Training', desc:'Calibration plays for next season prep', visibility:'public',
+  {id:1, name:'Plays for 2026-27 Training', desc:'Calibration plays for next season prep', author:'Bridget Ng', visibility:'public',
    collaborators:['TG','CF'], featured:true, mine:true,
    plays:[
     {id:101,type:'Foul: Shooting',subType:'Driving Shot Attempt',game:'TOR @ CHI',date:'5/27/26',q:'Q3',clock:'09:40.2',rating:'No Infraction',ref:'Perrymond (8)',loc:'Lead',note:'Good example of defender vertical — no contact on shooting arm.',comments:[{who:'Tucker Grady',initials:'TG',when:'5/28',text:'Strong example for the arm follow-through sub-type.'}]},
@@ -374,24 +418,46 @@ let PLAYLISTS = [
     {id:103,type:'Stoppage: Out-of-Bounds',subType:'',game:'IND @ OKC',date:'6/22/26',q:'Q4',clock:'01:02.4',rating:'Block-Charge Assessment',ref:'Fahy (86)',loc:'Slot',note:'OOB + Assessment without Called box — good training example.',comments:[{who:'Curtis Oakley Jr.',initials:'CO',when:'6/23',text:'Flag this for assessment discussion at next calibration.'}]},
     {id:104,type:'Foul: Personal',subType:'',game:'CON @ CHI',date:'6/05/26',q:'Q1',clock:'07:33.1',rating:'Judgement - Lean No',ref:'Perrymond (8)',loc:'Lead',note:'',comments:[]},
     {id:105,type:'Turnover: Lost Ball Out of Bounds',subType:'',game:'TOR @ CHI',date:'5/27/26',q:'Q4',clock:'00:22.6',rating:'No Infraction',ref:'Chang (23)',loc:'Trail',note:'',comments:[]},
+    {id:106,type:'Foul: Offensive',subType:'Dislodge from Position',game:'DAL @ NYL',date:'5/24/26',q:'Q2',clock:'06:11.3',rating:'Infraction',ref:'Chang (23)',loc:'Lead',note:'Great example of off-ball screen contact initiating the call.',comments:[]},
+    {id:107,type:'Foul: Shooting',subType:'Arm Follow-Through',game:'PHX @ NYL',date:'5/29/26',q:'Q3',clock:'03:47.2',rating:'Judgement - Lean No',ref:'Fahy (86)',loc:'Trail',note:'',comments:[]},
+    {id:108,type:'Violation: Defensive Goaltending',subType:'',game:'GSV @ IND',date:'5/22/26',q:'Q4',clock:'01:29.0',rating:'Infraction',ref:'Perrymond (8)',loc:'Lead',note:'Clear violation — ball on the way down.',comments:[{who:'Dan Foley',initials:'DF',when:'5/23',text:'Good clip to pair with the Wemby examples.'}]},
   ], color:0},
-  {id:2, name:'WNBA DHO Examples', desc:'Drive-hand-off situations across 2026 season', visibility:'public',
+  {id:2, name:'WNBA DHO Examples', desc:'Drive-hand-off situations across 2026 season', author:'Bridget Ng', visibility:'public',
    collaborators:['DF'], featured:true, mine:true,
    plays:[
     {id:201,type:'Foul: Personal',subType:'DHO Screen',game:'LVA @ LAS',date:'6/02/26',q:'Q2',clock:'05:44.1',rating:'Infraction',ref:'Perrymond (8)',loc:'Lead',note:'Classic DHO — defensive player goes under.',comments:[]},
     {id:202,type:'Foul: Shooting',subType:'DHO Follow',game:'PHX @ NYL',date:'5/29/26',q:'Q3',clock:'03:21.8',rating:'No Infraction',ref:'Chang (23)',loc:'Trail',note:'',comments:[]},
+    {id:203,type:'Foul: Personal',subType:'DHO Screen',game:'TOR @ CHI',date:'5/27/26',q:'Q1',clock:'09:05.4',rating:'Judgement - Lean Infraction',ref:'Fahy (86)',loc:'Lead',note:'Defender caught on the DHO — slight lean toward infraction.',comments:[]},
+    {id:204,type:'Foul: Shooting',subType:'DHO Follow',game:'ATL @ PDX',date:'5/29/26',q:'Q3',clock:'06:22.0',rating:'No Infraction',ref:'Perrymond (8)',loc:'Trail',note:'',comments:[]},
+    {id:205,type:'Foul: Personal',subType:'DHO Screen',game:'CON @ CHI',date:'6/05/26',q:'Q2',clock:'04:55.7',rating:'No Infraction',ref:'Chang (23)',loc:'Lead',note:'',comments:[{who:'Dan Foley',initials:'DF',when:'6/06',text:'Good contrast play to 203 — same setup, different contact.'}]},
    ], color:1},
-  {id:3, name:'Block-Charge 2026', desc:'Block-charge calls from this season', visibility:'private',
+  {id:3, name:'Block-Charge 2026', desc:'Block-charge calls from this season', author:'Bridget Ng', visibility:'private',
    collaborators:[], featured:false, mine:true,
    plays:[
     {id:301,type:'Foul: Shooting',subType:'Block-Charge Situation',game:'OKC @ IND',date:'6/19/26',q:'Q4',clock:'00:34.2',rating:'Judgement - Lean Infraction',ref:'Fahy (86)',loc:'Slot',note:'Defender still in movement — lean infraction is correct here.',comments:[]},
+    {id:302,type:'Foul: Shooting',subType:'Block-Charge Situation',game:'TOR @ CHI',date:'5/27/26',q:'Q3',clock:'07:14.5',rating:'No Infraction',ref:'Chang (23)',loc:'Trail',note:'Clear secondary, no call correct.',comments:[]},
+    {id:303,type:'Foul: Shooting',subType:'Block-Charge Situation',game:'PHX @ NYL',date:'5/29/26',q:'Q1',clock:'10:11.2',rating:'Infraction',ref:'Perrymond (8)',loc:'Lead',note:'',comments:[]},
+    {id:304,type:'Foul: Shooting',subType:'Block-Charge Situation',game:'IND @ OKC',date:'6/12/26',q:'Q2',clock:'05:38.1',rating:'Judgement - Lean No',ref:'Fahy (86)',loc:'Slot',note:'',comments:[]},
    ], color:2},
-  {id:4, name:'3Q Defense Examples', desc:'Third-quarter defensive situations', visibility:'private',
+  {id:4, name:'Late Clock Situations', desc:'Plays in the final 30 seconds requiring heightened judgment', author:'Bridget Ng', visibility:'private',
    collaborators:[], featured:false, mine:true,
-   plays:[], color:3},
-  {id:5, name:'Flagrant Foul Reviews', desc:'Flagrant 1 and 2 examples from reviewers', visibility:'public',
-   collaborators:['MA','WA'], featured:false, mine:false,
-   plays:[], color:4},
+   plays:[
+    {id:401,type:'Foul: Personal',subType:'',game:'TOR @ CHI',date:'5/27/26',q:'Q4',clock:'00:22.6',rating:'No Infraction',ref:'Chang (23)',loc:'Trail',note:'',comments:[]},
+    {id:402,type:'Foul: Shooting',subType:'Driving Shot Attempt',game:'IND @ OKC',date:'6/22/26',q:'Q4',clock:'00:11.3',rating:'Infraction',ref:'Perrymond (8)',loc:'Lead',note:'High-stakes shooting foul in final 12 seconds.',comments:[]},
+   ], color:3},
+  {id:5, name:'Flagrant Foul Reviews', desc:'Flagrant 1 and 2 examples from reviewers', author:'Michael Abdenour', visibility:'public',
+   collaborators:['MA','WA'], featured:true, mine:false,
+   plays:[
+    {id:501,type:'Foul: Personal',subType:'Flagrant 1',game:'GSV @ IND',date:'5/22/26',q:'Q2',clock:'05:11.4',rating:'Infraction',ref:'Perrymond (8)',loc:'Lead',note:'',comments:[]},
+    {id:502,type:'Foul: Personal',subType:'Flagrant 2',game:'OKC @ IND',date:'6/15/26',q:'Q3',clock:'03:44.7',rating:'Infraction',ref:'Fahy (86)',loc:'Slot',note:'Unnecessary and excessive — clear FF2.',comments:[{who:'Waheed Ameen',initials:'WA',when:'6/16',text:'Agree — no doubt on this one.'}]},
+   ], color:4},
+  {id:6, name:'Wemby Off-Ball Clamps', desc:'Defensive off-ball foul situations involving Wembanyama', author:'Myron Hickman', visibility:'public',
+   collaborators:['MH'], featured:false, mine:false,
+   plays:[
+    {id:601,type:'Foul: Away from Play',subType:'',game:'OKC @ IND',date:'6/15/26',q:'Q1',clock:'08:33.1',rating:'Judgement - Lean No',ref:'Fahy (86)',loc:'Lead',note:'Off-ball positioning — body contact initiating off screen.',comments:[]},
+    {id:602,type:'Foul: Away from Play',subType:'',game:'IND @ OKC',date:'6/19/26',q:'Q3',clock:'04:22.0',rating:'No Infraction',ref:'Chang (23)',loc:'Trail',note:'',comments:[]},
+    {id:603,type:'Foul: Personal',subType:'',game:'OKC @ IND',date:'6/22/26',q:'Q2',clock:'06:48.3',rating:'Infraction',ref:'Perrymond (8)',loc:'Lead',note:'',comments:[]},
+   ], color:0},
 ];
 
 const RATING_CLASS = {
@@ -404,30 +470,36 @@ const RATING_CLASS = {
 let activePl = null, activePlayIdx = 0, newVisibility = 'private';
 
 /* ─── LANDING ─── */
-function buildCard(pl) {
+function buildCard(pl, isCurated) {
   const [c1,c2] = COVER_COLORS[pl.color % COVER_COLORS.length];
-  const badge = pl.visibility === 'public'
-    ? `<div class="pl-cover-badge pub"><i class="ti ti-world" style="font-size:9px"></i> Public</div>`
-    : `<div class="pl-cover-badge priv"><i class="ti ti-lock" style="font-size:9px"></i> Private</div>`;
-  return `<div class="pl-card" onclick="openPlaylist(${pl.id})">
+  const badge = isCurated
+    ? `<div class="pl-cover-badge" style="background:rgba(0,0,0,.55);color:#fff"><i class="ti ti-sparkles" style="font-size:9px"></i> Auto</div>`
+    : pl.visibility === 'public'
+      ? `<div class="pl-cover-badge pub"><i class="ti ti-world" style="font-size:9px"></i> Public</div>`
+      : `<div class="pl-cover-badge priv"><i class="ti ti-lock" style="font-size:9px"></i> Private</div>`;
+  const icon = isCurated ? 'ti-sparkles' : 'ti-playlist';
+  const id = JSON.stringify(pl.id);
+  return `<div class="pl-card" onclick="openPlaylist(${id},${isCurated?'true':'false'})">
     <div class="pl-cover" style="background:linear-gradient(135deg,${c1},${c2})">
-      <i class="ti ti-playlist" style="color:rgba(255,255,255,.35)"></i>
+      <i class="ti ${icon}" style="color:rgba(255,255,255,.35)"></i>
       ${badge}
     </div>
     <div class="pl-card-name">${pl.name}</div>
-    <div class="pl-card-meta">${pl.plays.length} plays · ${pl.visibility === 'public'?'Public':'Private'}</div>
+    <div class="pl-card-meta">${pl.plays.length} plays</div>
+    <div class="pl-card-author">${isCurated ? `<i class="ti ti-sparkles" style="font-size:10px"></i> ${pl.cadence}` : pl.author||''}</div>
   </div>`;
 }
 
 function renderLanding() {
-  document.getElementById('row-featured').innerHTML = PLAYLISTS.filter(p=>p.featured).map(buildCard).join('');
-  document.getElementById('row-recent').innerHTML = [...PLAYLISTS].slice(0,4).map(buildCard).join('');
-  document.getElementById('row-mine').innerHTML = PLAYLISTS.filter(p=>p.mine).map(buildCard).join('');
+  document.getElementById('row-curated').innerHTML = CURATED.map(p=>buildCard(p,true)).join('');
+  document.getElementById('row-featured').innerHTML = PLAYLISTS.filter(p=>p.featured).map(p=>buildCard(p,false)).join('');
+  document.getElementById('row-recent').innerHTML = [...PLAYLISTS].slice(0,4).map(p=>buildCard(p,false)).join('');
+  document.getElementById('row-mine').innerHTML = PLAYLISTS.filter(p=>p.mine).map(p=>buildCard(p,false)).join('');
 }
 
 /* ─── DETAIL ─── */
-function openPlaylist(id) {
-  activePl = PLAYLISTS.find(p=>p.id===id);
+function openPlaylist(id, isCurated) {
+  activePl = isCurated ? CURATED.find(p=>p.id===id) : PLAYLISTS.find(p=>p.id===id);
   if (!activePl) return;
   document.getElementById('landing').style.display = 'none';
   document.getElementById('detail').style.display = 'flex';
@@ -654,7 +726,8 @@ function showToast(msg) {
 }
 
 function toggleNavDropdown(e){e.stopPropagation();document.getElementById('nav-dropdown').classList.toggle('open')}
-document.addEventListener('click',()=>document.getElementById('nav-dropdown').classList.remove('open'));
+document.addEventListener('click',()=>{document.getElementById('nav-dropdown').classList.remove('open');document.getElementById('rim-dropdown')?.classList.remove('open');});
+function toggleRimDropdown(e){e.stopPropagation();document.getElementById('rim-dropdown').classList.toggle('open');document.getElementById('nav-dropdown').classList.remove('open');}
 
 /* ─── INIT ─── */
 renderLanding();

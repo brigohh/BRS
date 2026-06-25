@@ -172,7 +172,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   <div class="nav-links">
     <span class="nl" onclick="location='home.html'">HOME</span>
     <span class="nl on">PUBLISHED GAMES</span>
-    <span class="nl" onclick="location='rim.html'">RIM</span>
+    <div class="nav-dropdown" id="rim-dropdown">
+      <span class="nl" onclick="location='rim.html'">RIM</span>
+      <span class="nl" style="padding-left:0;padding-right:6px;font-size:9px;opacity:.6;cursor:pointer" onclick="toggleRimDropdown(event)">▾</span>
+      <div class="nav-dd-menu" id="rim-dd-menu" style="min-width:190px;left:0;right:auto">
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-home" style="margin-right:7px;font-size:12px"></i>RIM Home</span>
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-inbox" style="margin-right:7px;font-size:12px"></i>Interactions</span>
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-messages" style="margin-right:7px;font-size:12px"></i>Threads</span>
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-layout-board" style="margin-right:7px;font-size:12px"></i>Message Board</span>
+        <span class="nav-dd-item" onclick="location='playlists.html'"><i class="ti ti-playlist" style="margin-right:7px;font-size:12px"></i>Playlists</span>
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-trending-up" style="margin-right:7px;font-size:12px"></i>Trends</span>
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-ball-basketball" style="margin-right:7px;font-size:12px"></i>My Games</span>
+      </div>
+    </div>
     <span class="nl">RM REVIEW</span>
     <span class="nl">FINAL L2M REVIEW</span>
     <span class="nl">INDEPENDENT REVIEW</span>
@@ -1309,7 +1321,8 @@ function renderPtSidebar() {
 }
 
 function toggleNavDropdown(e){e.stopPropagation();document.getElementById('nav-dropdown').classList.toggle('open')}
-document.addEventListener('click',()=>document.getElementById('nav-dropdown').classList.remove('open'));
+document.addEventListener('click',()=>{document.getElementById('nav-dropdown').classList.remove('open');document.getElementById('rim-dropdown')?.classList.remove('open');})
+function toggleRimDropdown(e){e.stopPropagation();document.getElementById("rim-dropdown").classList.toggle("open");document.getElementById("nav-dropdown").classList.remove("open");}
 renderPlayTypeTable();
 drawChart();
 drawRcChart();
