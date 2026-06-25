@@ -113,18 +113,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 
 /* ── SPLIT VIEW ── */
 #detail{flex:1;display:none;flex-direction:column;min-height:0;overflow:hidden}
-.detail-header{background:linear-gradient(180deg,#1a3a6b 0%,#0f2347 100%);padding:20px 28px 0;flex-shrink:0}
-.dh-back{font-size:11px;color:rgba(255,255,255,.5);cursor:pointer;display:flex;align-items:center;gap:4px;margin-bottom:14px;font-weight:500;width:fit-content}
+.detail-header{background:linear-gradient(135deg,#1a3a6b 0%,#0f2347 100%);padding:0 20px;height:54px;display:flex;align-items:center;gap:14px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.08)}
+.dh-back{font-size:11px;color:rgba(255,255,255,.5);cursor:pointer;display:flex;align-items:center;gap:4px;font-weight:500;flex-shrink:0;padding-right:10px;border-right:1px solid rgba(255,255,255,.12)}
 .dh-back:hover{color:#fff}
-.dh-main{display:flex;align-items:flex-end;gap:20px;padding-bottom:20px}
-.dh-cover{width:80px;height:80px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:36px;flex-shrink:0}
-.dh-info{}
-.dh-eyebrow{font-size:9.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:4px}
-.dh-title{font-size:22px;font-weight:800;color:#fff;letter-spacing:-.2px;margin-bottom:5px}
-.dh-meta{font-size:11px;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:8px}
-.dh-dot{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.35)}
-.dh-actions{display:flex;align-items:center;gap:8px;margin-top:0;padding:12px 28px;background:#0f2347;border-bottom:1px solid rgba(255,255,255,.08)}
-.dh-btn{padding:6px 14px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;border:none;display:flex;align-items:center;gap:5px;transition:opacity .15s}
+.dh-cover{width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.dh-info{flex:1;min-width:0;display:flex;align-items:center;gap:10px}
+.dh-eyebrow{display:none}
+.dh-title{font-size:14px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dh-meta{font-size:11px;color:rgba(255,255,255,.45);display:flex;align-items:center;gap:6px;white-space:nowrap;flex-shrink:0}
+.dh-dot{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.3);flex-shrink:0}
+.dh-actions{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.dh-btn{padding:5px 12px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;border:none;display:flex;align-items:center;gap:5px;transition:opacity .15s}
 .dh-btn.play{background:#fff;color:#1a3a6b}
 .dh-btn.ghost{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.15)}
 .dh-btn:hover{opacity:.85}
@@ -160,13 +159,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .add-play-btn:hover{background:#f3f4f6;color:#374151;border-color:#9ca3af}
 
 /* RIGHT column: video fills top, info bar at bottom */
-.right-col{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.right-col{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
 .vid-panel{flex:1;display:flex;flex-direction:column;overflow:hidden;background:#0f1117;min-height:0}
-.vid-section{flex:1;display:flex;align-items:center;justify-content:center;padding:10px}
-.vid-frame{width:100%;max-height:100%;aspect-ratio:16/9;background:#1a1f2e;border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.vid-frame img{width:100%;height:100%;object-fit:cover;border-radius:8px}
-.vid-ph{display:flex;flex-direction:column;align-items:center;gap:6px;color:rgba(255,255,255,.2);font-size:11px}
-.vid-ph i{font-size:36px}
+.vid-section{flex:1;position:relative;overflow:hidden;min-height:0}
+.vid-frame{position:absolute;inset:0;width:100%;height:100%;background:#0f1117;display:flex;align-items:center;justify-content:center}
+.vid-frame img{max-width:100%;max-height:100%;object-fit:contain}
+.vid-frame-inner{position:relative;display:inline-flex;align-items:center;justify-content:center;width:100%;height:100%}
+.vid-play-btn{position:absolute;width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s,transform .15s;backdrop-filter:blur(4px)}
+.vid-play-btn:hover{background:rgba(255,255,255,.3);transform:scale(1.08)}
+.vid-play-btn i{font-size:22px;color:#fff;margin-left:3px}
+.vid-ph{display:flex;flex-direction:column;align-items:center;gap:10px;color:rgba(255,255,255,.2);font-size:11px}
+.vid-ph i{font-size:40px}
 .ang-row{display:flex;gap:3px;padding:5px 10px;background:#1a1f2e;border-top:1px solid rgba(255,255,255,.06);overflow-x:auto;flex-shrink:0}
 .ang{padding:2px 7px;font-size:10px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.07);color:rgba(255,255,255,.55);cursor:pointer;border-radius:4px;white-space:nowrap;font-weight:500}
 .ang:hover{color:#fff;background:rgba(255,255,255,.12)}
@@ -335,21 +338,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 <div id="detail">
   <div class="detail-header">
     <div class="dh-back" onclick="showLanding()"><i class="ti ti-chevron-left"></i> Playlists</div>
-    <div class="dh-main">
-      <div class="dh-cover" id="dh-cover"></div>
-      <div class="dh-info">
-        <div class="dh-eyebrow">Playlist</div>
-        <div class="dh-title" id="dh-title"></div>
-        <div class="dh-meta" id="dh-meta"></div>
-      </div>
+    <div class="dh-cover" id="dh-cover"></div>
+    <div class="dh-info">
+      <div class="dh-title" id="dh-title"></div>
+      <div class="dh-meta" id="dh-meta"></div>
     </div>
-  </div>
-  <div class="dh-actions">
-    <button class="dh-btn play" onclick="togglePlay()"><i class="ti ti-player-play" id="play-icon"></i> <span id="play-label">Play All</span></button>
-    <button class="dh-btn ghost" onclick="openShareModal()"><i class="ti ti-share"></i> Share</button>
-    <button class="dh-btn ghost" id="vis-toggle" onclick="toggleVisibility()"><i class="ti ti-lock"></i> <span id="vis-label">Private</span></button>
-    <div class="collab-row" id="collab-row" style="margin-left:8px"></div>
-    <button class="dh-btn ghost" style="margin-left:auto" onclick="openAddPlayModal()"><i class="ti ti-plus"></i> Add Play</button>
+    <div class="dh-actions">
+      <button class="dh-btn play" onclick="togglePlay()"><i class="ti ti-player-play" id="play-icon"></i> <span id="play-label">Play All</span></button>
+      <button class="dh-btn ghost" onclick="openShareModal()"><i class="ti ti-share"></i> Share</button>
+      <button class="dh-btn ghost" id="vis-toggle" onclick="toggleVisibility()"><i class="ti ti-lock"></i> <span id="vis-label">Private</span></button>
+      <div class="collab-row" id="collab-row"></div>
+      <button class="dh-btn ghost" onclick="openAddPlayModal()"><i class="ti ti-plus"></i> Add Play</button>
+    </div>
   </div>
 
   <div class="split-body">
@@ -373,8 +373,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       <div class="vid-panel">
         <div class="vid-section">
           <div class="vid-frame">
-            <img src="Logos/video player placeholder.png" alt="Video"
-              onerror="this.parentElement.innerHTML='<div class=&quot;vid-ph&quot;><i class=&quot;ti ti-player-play&quot;></i><span>Video</span></div>'">
+            <div class="vid-frame-inner">
+              <img src="Logos/video player placeholder.png" alt="Video"
+                style="max-width:100%;max-height:100%;object-fit:contain"
+                onerror="this.style.display='none'">
+              <div class="vid-ph" id="vid-ph" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0">
+                <div class="vid-play-btn" onclick="togglePlay()"><i class="ti ti-player-play"></i></div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="ang-row">
@@ -607,8 +613,9 @@ function openPlaylist(id, isCurated) {
   document.getElementById('detail').style.display = 'flex';
 
   const [c1,c2] = COVER_COLORS[activePl.color % COVER_COLORS.length];
-  document.getElementById('dh-cover').style.cssText = `background:linear-gradient(135deg,${c1},${c2});width:80px;height:80px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:36px`;
-  document.getElementById('dh-cover').innerHTML = `<i class="ti ti-playlist" style="color:rgba(255,255,255,.4)"></i>`;
+  const coverEl = document.getElementById('dh-cover');
+  coverEl.style.cssText = `background:linear-gradient(135deg,${c1},${c2});width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0`;
+  coverEl.innerHTML = `<i class="ti ti-playlist" style="color:rgba(255,255,255,.5)"></i>`;
   document.getElementById('dh-title').textContent = activePl.name;
 
   const collabs = activePl.collaborators;
