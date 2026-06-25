@@ -123,8 +123,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .cp{flex:1 1 0;min-width:0;display:flex;flex-direction:column;overflow:hidden;background:#fff;border:1px solid #e5e7eb;border-radius:10px}
 .cp-empty{flex:1;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-size:13px;font-style:italic}
 .rating-form{flex-shrink:0;border-bottom:1px solid #e5e7eb;background:#f9fafb;margin-top:6px;overflow:hidden}
-.rf-inner{display:flex;flex-direction:column;overflow:hidden}
-.rf-left{padding:14px 24px 14px 24px;display:flex;flex-direction:column;gap:9px;min-width:0}
+.rf-inner{display:grid;grid-template-columns:1fr 160px;overflow:hidden}
+.rf-left{padding:14px 16px 14px 24px;display:flex;flex-direction:column;gap:9px;min-width:0}
+.rf-right-col{padding:14px 16px 14px 12px;border-left:1px solid #e5e7eb;display:flex;flex-direction:column;gap:8px;background:#f9fafb}
 .rf-row{display:flex;align-items:center;gap:10px}
 .rf-label{font-size:10.5px;font-weight:600;color:#6b7280;min-width:100px;flex-shrink:0}
 .rf-clock{padding:3px 10px;border:1px solid #d1d5db;border-radius:6px;font-size:12px;font-weight:600;color:#111827;background:#fff;width:80px;text-align:center}
@@ -178,7 +179,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .comment-ta:focus{outline:none;border-color:#1a3a6b}
 
 /* RIGHT PANEL */
-.rp-col{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:10px;min-height:0}
+.rp-col{flex:0 0 42%;max-width:42%;display:flex;flex-direction:column;gap:10px;min-height:0}
 .rp{flex-shrink:0;background:#fff;display:flex;flex-direction:column;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;min-height:0}
 .rp-card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:10px 14px;flex-shrink:0}
 .rp-card-lbl{font-size:10px;color:#9ca3af;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:5px}
@@ -393,13 +394,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
               <div class="rf-row">
                 <span class="rf-label">Game Clock:</span>
                 <input class="rf-clock" id="rf-clock" value="09:37.9" readonly>
-                <div class="rf-checks">
-                  <label class="rf-check"><input type="checkbox" id="chk-called"> Called</label>
-                  <label class="rf-check"><input type="checkbox" id="chk-ptiw"> PTIW</label>
-                  <label class="rf-check"><input type="checkbox" id="chk-look"> Look</label>
-                  <label class="rf-check"><input type="checkbox" id="chk-ogr"> OGR</label>
-                  <label class="rf-check"><input type="checkbox" id="chk-poe"> POE</label>
-                </div>
               </div>
               <div class="rf-row">
                 <span class="rf-label">Responsible Ref:</span>
@@ -506,6 +500,23 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
                 </select>
               </div>
             </div>
+            <div class="rf-right-col">
+              <div style="font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;margin-bottom:2px">FLAGS</div>
+              <div class="rf-checks" style="flex-direction:column;gap:6px">
+                <label class="rf-check"><input type="checkbox" id="chk-called"> Called</label>
+                <label class="rf-check"><input type="checkbox" id="chk-ptiw"> PTIW</label>
+                <label class="rf-check"><input type="checkbox" id="chk-look"> Look</label>
+                <label class="rf-check"><input type="checkbox" id="chk-ogr"> OGR</label>
+                <label class="rf-check"><input type="checkbox" id="chk-poe"> POE</label>
+              </div>
+              <div style="border-top:1px solid #e5e7eb;margin:2px 0"></div>
+              <button class="assist-btn tmpl-assist-btn" onclick="openChatbot()" style="width:100%;justify-content:center"><i class="ti ti-whistle" style="font-size:12px"></i> Help Side Assist</button>
+              <button class="tmpl-btn" style="width:100%;justify-content:center;gap:4px"><i class="ti ti-playlist" style="font-size:12px"></i> Add to Playlist</button>
+              <div style="display:flex;flex-direction:column;gap:5px;margin-top:auto">
+                <button class="rf-save-btn" onclick="saveRating()" style="width:100%;justify-content:center">Save</button>
+                <button class="rf-cancel-btn" onclick="cancelRating()" style="width:100%;justify-content:center">Cancel</button>
+              </div>
+            </div>
           </div>
         </div><!-- /.rating-form -->
 
@@ -517,11 +528,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
             <button class="tmpl-btn">Take Fouls &#9662;</button>
             <button class="tmpl-btn">Head/Face Contact</button>
             <button class="tmpl-btn">Enhanced Review</button>
-            <button class="assist-btn tmpl-assist-btn" onclick="openChatbot()"><i class="ti ti-whistle" style="font-size:13px"></i> Help Side Assist</button>
-            <div style="margin-left:auto;display:flex;gap:5px">
-              <button class="rf-cancel-btn" onclick="cancelRating()">Cancel</button>
-              <button class="rf-save-btn" onclick="saveRating()">Save</button>
-            </div>
           </div>
           <div>
             <div class="comment-lbl" style="margin-bottom:5px">Comments:</div>
