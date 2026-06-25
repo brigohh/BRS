@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BRS — Playlists</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;color:#111827;background:#f3f4f6;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+
+/* NAV */
+.nav{background:#1a3a6b;height:48px;display:flex;align-items:center;padding:0 24px;flex-shrink:0;z-index:300;position:relative}
+.nav-logo{display:flex;align-items:center;gap:8px;cursor:pointer}
+.nav-brand{color:rgba(255,255,255,.9);font-size:11.5px;font-weight:600;letter-spacing:.5px}
+.nav-links{display:flex;align-items:center;margin-left:auto;flex-shrink:0}
+.nl{color:rgba(255,255,255,.55);font-size:10.5px;padding:0 8px;cursor:pointer;font-weight:500;height:48px;display:flex;align-items:center;border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0}
+.nl:hover{color:#fff}
+.nl.on{color:#fff;border-bottom-color:rgba(255,255,255,.7);font-weight:600}
+.nav-av{width:30px;height:30px;border-radius:50%;background:#2d5aa0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;flex-shrink:0;margin-left:12px}
+.nav-dropdown{position:relative;display:flex;align-items:center;height:48px}
+.nav-dd-caret{font-size:8px;opacity:.7;transition:transform .15s}
+.nav-dropdown.open .nav-dd-caret{transform:rotate(180deg)}
+.nav-dd-menu{display:none;position:absolute;top:44px;right:0;background:#fff;border:1px solid #e5e7eb;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.14);min-width:170px;z-index:400;padding:4px 0}
+.nav-dropdown.open .nav-dd-menu{display:block}
+.nav-dd-item{display:block;padding:9px 16px;font-size:11px;font-weight:500;color:#374151;cursor:pointer}
+.nav-dd-item:hover{background:#f0f2f5;color:#1a3a6b}
+
+/* ── LANDING VIEW ── */
+#landing{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+.landing-hero{background:linear-gradient(135deg,#1a3a6b 0%,#0f2347 100%);padding:32px 40px 28px;flex-shrink:0}
+.lh-eyebrow{font-size:10px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:6px}
+.lh-title{font-size:24px;font-weight:800;color:#fff;letter-spacing:-.2px;margin-bottom:16px}
+.lh-actions{display:flex;gap:8px}
+.lh-btn{padding:8px 18px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;border:none;display:flex;align-items:center;gap:6px;transition:opacity .15s}
+.lh-btn:hover{opacity:.85}
+.lh-btn.primary{background:#fff;color:#1a3a6b}
+.lh-btn.ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2)}
+.landing-body{padding:28px 40px 40px;flex:1}
+.row-lbl{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.row-lbl-text{font-size:14px;font-weight:700;color:#111827}
+.row-lbl-link{font-size:11.5px;color:#1a3a6b;cursor:pointer;font-weight:500}
+.row-lbl-link:hover{text-decoration:underline}
+.pl-row{display:flex;gap:14px;overflow-x:auto;padding-bottom:4px;margin-bottom:28px}
+.pl-card{width:168px;flex-shrink:0;cursor:pointer;transition:transform .15s}
+.pl-card:hover{transform:translateY(-2px)}
+.pl-card:hover .pl-card-name{color:#1a3a6b}
+.pl-cover{width:168px;height:168px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:48px;margin-bottom:10px;position:relative;flex-shrink:0;overflow:hidden}
+.pl-cover-badge{position:absolute;top:8px;right:8px;padding:2px 7px;border-radius:10px;font-size:9px;font-weight:700}
+.pl-cover-badge.pub{background:rgba(255,255,255,.9);color:#1a3a6b}
+.pl-cover-badge.priv{background:rgba(0,0,0,.45);color:#fff}
+.pl-card-name{font-size:12.5px;font-weight:700;color:#111827;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-card-meta{font-size:11px;color:#9ca3af}
+
+/* ── SPLIT VIEW ── */
+#detail{flex:1;display:none;flex-direction:column;min-height:0;overflow:hidden}
+.detail-header{background:linear-gradient(180deg,#1a3a6b 0%,#0f2347 100%);padding:20px 28px 0;flex-shrink:0}
+.dh-back{font-size:11px;color:rgba(255,255,255,.5);cursor:pointer;display:flex;align-items:center;gap:4px;margin-bottom:14px;font-weight:500;width:fit-content}
+.dh-back:hover{color:#fff}
+.dh-main{display:flex;align-items:flex-end;gap:20px;padding-bottom:20px}
+.dh-cover{width:80px;height:80px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:36px;flex-shrink:0}
+.dh-info{}
+.dh-eyebrow{font-size:9.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:4px}
+.dh-title{font-size:22px;font-weight:800;color:#fff;letter-spacing:-.2px;margin-bottom:5px}
+.dh-meta{font-size:11px;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:8px}
+.dh-dot{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.35)}
+.dh-actions{display:flex;align-items:center;gap:8px;margin-top:0;padding:12px 28px;background:#0f2347;border-bottom:1px solid rgba(255,255,255,.08)}
+.dh-btn{padding:6px 14px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;border:none;display:flex;align-items:center;gap:5px;transition:opacity .15s}
+.dh-btn.play{background:#fff;color:#1a3a6b}
+.dh-btn.ghost{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.15)}
+.dh-btn:hover{opacity:.85}
+.dh-badge{padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;display:flex;align-items:center;gap:4px}
+.dh-badge.pub{background:rgba(255,255,255,.12);color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.15)}
+.dh-badge.priv{background:rgba(0,0,0,.2);color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.08)}
+
+/* SPLIT BODY */
+.split-body{flex:1;display:flex;min-height:0;overflow:hidden}
+.track-list{width:420px;flex-shrink:0;display:flex;flex-direction:column;overflow:hidden;background:#fff;border-right:1px solid #e5e7eb}
+.track-list-hdr{padding:10px 20px;display:flex;align-items:center;gap:0;border-bottom:1px solid #e5e7eb;flex-shrink:0}
+.tl-col{font-size:9.5px;font-weight:700;letter-spacing:.4px;color:#9ca3af;text-transform:uppercase}
+.track-scroll{flex:1;overflow-y:auto}
+.track-row{display:flex;align-items:center;gap:10px;padding:9px 20px;border-bottom:1px solid #f3f4f6;cursor:pointer;transition:background .1s;position:relative}
+.track-row:hover{background:#f9fafb}
+.track-row.active{background:#eff6ff}
+.track-row.active .tr-num{display:none}
+.track-row.active .tr-playing{display:flex}
+.tr-num{font-size:12px;font-weight:600;color:#d1d5db;width:20px;text-align:center;flex-shrink:0}
+.tr-playing{display:none;width:20px;justify-content:center;align-items:center;flex-shrink:0}
+.tr-playing i{color:#1a3a6b;font-size:13px;animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.tr-info{flex:1;min-width:0}
+.tr-type{font-size:11.5px;font-weight:600;color:#111827;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tr-game{font-size:10.5px;color:#9ca3af;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tr-chip{padding:1px 7px;border-radius:10px;font-size:9.5px;font-weight:700;white-space:nowrap;flex-shrink:0}
+.tr-clock{font-size:10.5px;color:#9ca3af;white-space:nowrap;flex-shrink:0;min-width:44px;text-align:right}
+.tr-note-icon{font-size:13px;color:#d1d5db;flex-shrink:0;cursor:pointer}
+.tr-note-icon.has-note{color:#f59e0b}
+.tr-note-icon:hover{color:#9ca3af}
+.track-list-footer{padding:10px 20px;border-top:1px solid #e5e7eb;flex-shrink:0}
+.add-play-btn{width:100%;padding:8px;background:#f9fafb;border:1px dashed #d1d5db;border-radius:8px;font-size:11.5px;font-weight:500;color:#6b7280;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px}
+.add-play-btn:hover{background:#f3f4f6;color:#374151;border-color:#9ca3af}
+
+/* RIGHT PANEL */
+.detail-right{flex:1;display:flex;flex-direction:column;overflow:hidden;background:#f9fafb}
+.vid-section{background:#0f1117;padding:12px 12px 0;flex-shrink:0}
+.vid-frame{width:100%;aspect-ratio:16/9;background:#1a1f2e;border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.vid-frame img{width:100%;height:100%;object-fit:cover;border-radius:8px}
+.vid-ph{display:flex;flex-direction:column;align-items:center;gap:6px;color:rgba(255,255,255,.2);font-size:11px}
+.vid-ph i{font-size:28px}
+.ang-row{display:flex;gap:3px;padding:6px 10px;background:#fff;border-bottom:1px solid #f3f4f6;overflow-x:auto;flex-shrink:0}
+.ang{padding:2px 7px;font-size:10px;border:1px solid #e5e7eb;background:#f9fafb;color:#6b7280;cursor:pointer;border-radius:4px;white-space:nowrap;font-weight:500}
+.ang:hover{color:#374151;background:#f3f4f6}
+.ang.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
+.vid-ctrl{padding:6px 12px;border-bottom:1px solid #f3f4f6;display:flex;align-items:center;gap:6px;flex-shrink:0;background:#fff}
+.vcb{background:none;border:none;color:#9ca3af;cursor:pointer;font-size:15px;display:flex;align-items:center}
+.vtrack{flex:1;height:3px;background:#e5e7eb;border-radius:2px;position:relative}
+.vfill{width:30%;height:100%;background:#1a3a6b;border-radius:2px}
+.vtime{font-size:10.5px;color:#9ca3af;white-space:nowrap}
+.play-info-section{flex:1;overflow-y:auto;padding:16px 20px;display:flex;flex-direction:column;gap:16px}
+.play-meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.meta-block{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:10px 12px}
+.meta-lbl{font-size:9.5px;font-weight:700;color:#9ca3af;letter-spacing:.4px;text-transform:uppercase;margin-bottom:4px}
+.meta-val{font-size:12px;font-weight:600;color:#111827;display:flex;align-items:center;gap:6px}
+.notes-block{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:12px 14px}
+.notes-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.notes-lbl{font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;text-transform:uppercase}
+.notes-save-btn{padding:3px 10px;background:#1a3a6b;color:#fff;border:none;border-radius:5px;font-size:10.5px;font-weight:600;cursor:pointer;display:none}
+.notes-save-btn.show{display:block}
+.notes-ta{width:100%;border:1px solid #e5e7eb;border-radius:6px;padding:8px 10px;font-size:12px;color:#374151;resize:none;font-family:inherit;line-height:1.55;background:#f9fafb;min-height:80px}
+.notes-ta:focus{outline:none;border-color:#1a3a6b;background:#fff}
+.comments-block{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:12px 14px}
+.comment-item{display:flex;gap:8px;padding:8px 0;border-bottom:1px solid #f3f4f6}
+.comment-item:last-child{border-bottom:none}
+.comment-av{width:26px;height:26px;border-radius:50%;background:#1a3a6b;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0}
+.comment-body{}
+.comment-who{font-size:11px;font-weight:700;color:#111827;display:flex;align-items:center;gap:6px}
+.comment-when{font-size:10px;color:#9ca3af;font-weight:400}
+.comment-text{font-size:11.5px;color:#374151;line-height:1.5;margin-top:2px}
+.comment-input-row{display:flex;gap:8px;margin-top:8px;align-items:flex-end}
+.comment-input{flex:1;border:1px solid #e5e7eb;border-radius:6px;padding:7px 10px;font-size:12px;font-family:inherit;resize:none;color:#374151;background:#f9fafb}
+.comment-input:focus{outline:none;border-color:#1a3a6b;background:#fff}
+.comment-send{padding:7px 12px;background:#1a3a6b;color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;flex-shrink:0}
+.comment-send:hover{background:#15306e}
+
+/* COLLAB AVATARS */
+.collab-row{display:flex;align-items:center;gap:6px}
+.collab-av{width:22px;height:22px;border-radius:50%;border:2px solid #fff;margin-left:-6px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#fff}
+.collab-av:first-child{margin-left:0}
+
+/* MODAL: add to playlist */
+.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:800}
+.modal-backdrop.show{display:block}
+.modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:340px;background:#fff;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.25);z-index:801;padding:22px 24px}
+.modal.show{display:block}
+.modal-title{font-size:14px;font-weight:700;color:#111827;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
+.modal-close{background:none;border:none;font-size:18px;color:#9ca3af;cursor:pointer;line-height:1}
+.modal-close:hover{color:#374151}
+.modal-pl-list{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;max-height:220px;overflow-y:auto}
+.modal-pl-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid #e5e7eb;border-radius:8px;cursor:pointer;transition:background .1s}
+.modal-pl-item:hover{background:#f9fafb}
+.modal-pl-item.sel{background:#eff6ff;border-color:#bfdbfe}
+.mpi-icon{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.mpi-name{flex:1;font-size:12.5px;font-weight:600;color:#111827}
+.mpi-count{font-size:11px;color:#9ca3af}
+.modal-divider{border:none;border-top:1px solid #f3f4f6;margin:2px 0 10px}
+.modal-new-input{width:100%;padding:8px 10px;border:1px solid #e5e7eb;border-radius:7px;font-size:12.5px;font-family:inherit;color:#374151;margin-bottom:10px}
+.modal-new-input:focus{outline:none;border-color:#1a3a6b}
+.modal-footer{display:flex;gap:8px}
+.modal-btn{flex:1;padding:8px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;border:none}
+.modal-btn.cancel{background:#f3f4f6;color:#6b7280}
+.modal-btn.cancel:hover{background:#e5e7eb}
+.modal-btn.confirm{background:#1a3a6b;color:#fff}
+.modal-btn.confirm:hover{background:#15306e}
+
+/* CREATE PLAYLIST MODAL */
+.new-pl-visibility{display:flex;gap:8px;margin-bottom:14px}
+.vis-opt{flex:1;padding:8px 10px;border:1px solid #e5e7eb;border-radius:8px;cursor:pointer;text-align:center;font-size:11.5px;font-weight:600;color:#6b7280;transition:all .1s}
+.vis-opt:hover{border-color:#d1d5db}
+.vis-opt.sel{background:#eff6ff;border-color:#1a3a6b;color:#1a3a6b}
+.vis-opt i{display:block;font-size:18px;margin-bottom:4px}
+
+/* RATING CHIPS (reuse) */
+.rc-infraction{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5}
+.rc-lean-infraction{background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+.rc-lean-no{background:#dbeafe;color:#1e40af;border:1px solid #bfdbfe}
+.rc-no-infraction{background:#dcfce7;color:#166534;border:1px solid #86efac}
+.rc-assessment{background:#f3e8ff;color:#6d28d9;border:1px solid #c4b5fd}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav">
+  <div class="nav-logo" onclick="location='home.html'">
+    <img src="Logos/nba-logo.svg" style="width:16px;height:auto">
+    <div class="nav-brand">BRIDGET REVIEW SYSTEM 1.0</div>
+  </div>
+  <div class="nav-links">
+    <span class="nl" onclick="location='home.html'">HOME</span>
+    <span class="nl" onclick="location='published-games.html'">PUBLISHED GAMES</span>
+    <span class="nl on" onclick="location='rim.html'">RIM</span>
+    <span class="nl">RM REVIEW</span>
+    <span class="nl">FINAL L2M REVIEW</span>
+    <span class="nl">INDEPENDENT REVIEW</span>
+    <span class="nl">ADMINISTRATION</span>
+    <div class="nav-dropdown" id="nav-dropdown">
+      <span class="nl" onclick="toggleNavDropdown(event)">REVIEWER RESOURCE <span class="nav-dd-caret">▾</span></span>
+      <div class="nav-dd-menu">
+        <span class="nav-dd-item" onclick="location='comment-library.html'">Comment Library</span>
+      </div>
+    </div>
+    <span class="nl">MY SCHEDULE</span>
+    <div class="nav-av">BN</div>
+  </div>
+</div>
+
+<!-- ══ LANDING VIEW ══ -->
+<div id="landing">
+  <div class="landing-hero">
+    <div class="lh-eyebrow">RIM · Review Insights &amp; Messaging Platform</div>
+    <div class="lh-title">Playlists</div>
+    <div class="lh-actions">
+      <button class="lh-btn primary" onclick="openCreateModal()"><i class="ti ti-plus"></i> New Playlist</button>
+      <button class="lh-btn ghost"><i class="ti ti-users"></i> Shared with Me</button>
+      <button class="lh-btn ghost" onclick="location='rim.html'"><i class="ti ti-arrow-left"></i> Back to RIM</button>
+    </div>
+  </div>
+
+  <div class="landing-body">
+
+    <!-- FEATURED -->
+    <div class="row-lbl">
+      <div class="row-lbl-text">⭐ Featured</div>
+    </div>
+    <div class="pl-row" id="row-featured"></div>
+
+    <!-- RECENTLY ADDED -->
+    <div class="row-lbl">
+      <div class="row-lbl-text">🕐 Recently Added</div>
+      <div class="row-lbl-link">See all</div>
+    </div>
+    <div class="pl-row" id="row-recent"></div>
+
+    <!-- MY PLAYLISTS -->
+    <div class="row-lbl">
+      <div class="row-lbl-text">My Playlists</div>
+      <div class="row-lbl-link" onclick="openCreateModal()">+ New</div>
+    </div>
+    <div class="pl-row" id="row-mine"></div>
+
+  </div>
+</div>
+
+<!-- ══ DETAIL / SPLIT VIEW ══ -->
+<div id="detail">
+  <div class="detail-header">
+    <div class="dh-back" onclick="showLanding()"><i class="ti ti-chevron-left"></i> Playlists</div>
+    <div class="dh-main">
+      <div class="dh-cover" id="dh-cover"></div>
+      <div class="dh-info">
+        <div class="dh-eyebrow">Playlist</div>
+        <div class="dh-title" id="dh-title"></div>
+        <div class="dh-meta" id="dh-meta"></div>
+      </div>
+    </div>
+  </div>
+  <div class="dh-actions">
+    <button class="dh-btn play" onclick="togglePlay()"><i class="ti ti-player-play" id="play-icon"></i> <span id="play-label">Play All</span></button>
+    <button class="dh-btn ghost" onclick="openShareModal()"><i class="ti ti-share"></i> Share</button>
+    <button class="dh-btn ghost" id="vis-toggle" onclick="toggleVisibility()"><i class="ti ti-lock"></i> <span id="vis-label">Private</span></button>
+    <div class="collab-row" id="collab-row" style="margin-left:8px"></div>
+    <button class="dh-btn ghost" style="margin-left:auto" onclick="openAddPlayModal()"><i class="ti ti-plus"></i> Add Play</button>
+  </div>
+
+  <div class="split-body">
+    <!-- TRACK LIST -->
+    <div class="track-list">
+      <div class="track-list-hdr">
+        <div class="tl-col" style="width:20px;margin-right:10px">#</div>
+        <div class="tl-col" style="flex:1">Play</div>
+        <div class="tl-col" style="width:60px;text-align:center">Rating</div>
+        <div class="tl-col" style="width:44px;text-align:right">Clock</div>
+        <div class="tl-col" style="width:20px"></div>
+      </div>
+      <div class="track-scroll" id="track-scroll"></div>
+      <div class="track-list-footer">
+        <button class="add-play-btn" onclick="openAddPlayModal()"><i class="ti ti-plus"></i> Add a play to this playlist</button>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="detail-right">
+      <div class="vid-section">
+        <div class="vid-frame">
+          <img src="Logos/video player placeholder.png" alt="Video"
+            onerror="this.parentElement.innerHTML='<div class=&quot;vid-ph&quot;><i class=&quot;ti ti-player-play&quot;></i><span>Video</span></div>'">
+        </div>
+      </div>
+      <div class="ang-row">
+        <span class="ang on">LL5</span><span class="ang">LR5</span><span class="ang">LS5</span><span class="ang">RS5</span><span class="ang">ABP</span><span class="ang">HBP</span><span class="ang">INA</span><span class="ang">DF BCAST</span>
+      </div>
+      <div class="vid-ctrl">
+        <button class="vcb"><i class="ti ti-player-skip-back"></i></button>
+        <button class="vcb"><i class="ti ti-player-play"></i></button>
+        <button class="vcb"><i class="ti ti-player-skip-forward"></i></button>
+        <div class="vtrack"><div class="vfill"></div></div>
+        <span class="vtime" id="vtime">09:40.2</span>
+        <button class="vcb"><i class="ti ti-volume"></i></button>
+        <button class="vcb"><i class="ti ti-arrows-maximize"></i></button>
+      </div>
+      <div class="play-info-section" id="play-info-section">
+        <div id="play-meta"></div>
+        <div class="notes-block">
+          <div class="notes-hdr">
+            <div class="notes-lbl"><i class="ti ti-notes" style="font-size:12px"></i> Notes</div>
+            <button class="notes-save-btn" id="notes-save-btn" onclick="saveNote()">Save</button>
+          </div>
+          <textarea class="notes-ta" id="notes-ta" placeholder="Add a note to this play…" oninput="onNoteInput()"></textarea>
+        </div>
+        <div class="comments-block" id="comments-block">
+          <div class="notes-lbl" style="margin-bottom:10px"><i class="ti ti-message-circle" style="font-size:12px"></i> Comments</div>
+          <div id="comments-list"></div>
+          <div class="comment-input-row">
+            <textarea class="comment-input" id="comment-input" rows="2" placeholder="Add a comment…"></textarea>
+            <button class="comment-send" onclick="sendComment()">Post</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Create Playlist -->
+<div class="modal-backdrop" id="create-backdrop" onclick="closeCreateModal()"></div>
+<div class="modal" id="create-modal">
+  <div class="modal-title">New Playlist <button class="modal-close" onclick="closeCreateModal()">×</button></div>
+  <input class="modal-new-input" id="new-pl-name" placeholder="Playlist name…">
+  <input class="modal-new-input" id="new-pl-desc" placeholder="Description (optional)">
+  <div class="new-pl-visibility">
+    <div class="vis-opt sel" onclick="selVis(this,'private')"><i class="ti ti-lock"></i>Private</div>
+    <div class="vis-opt" onclick="selVis(this,'public')"><i class="ti ti-world"></i>Public</div>
+  </div>
+  <div class="modal-footer">
+    <button class="modal-btn cancel" onclick="closeCreateModal()">Cancel</button>
+    <button class="modal-btn confirm" onclick="createPlaylist()">Create</button>
+  </div>
+</div>
+
+<!-- MODAL: Add Play -->
+<div class="modal-backdrop" id="addplay-backdrop" onclick="closeAddPlayModal()"></div>
+<div class="modal" id="addplay-modal">
+  <div class="modal-title">Add to Playlist <button class="modal-close" onclick="closeAddPlayModal()">×</button></div>
+  <div class="modal-pl-list" id="modal-pl-list"></div>
+  <hr class="modal-divider">
+  <div class="modal-footer">
+    <button class="modal-btn cancel" onclick="closeAddPlayModal()">Cancel</button>
+    <button class="modal-btn confirm" onclick="confirmAddPlay()">Add</button>
+  </div>
+</div>
+
+<script>
+/* ─── DATA ─── */
+const COVER_COLORS = [
+  ['#1e40af','#3b82f6'],['#7c3aed','#a78bfa'],['#065f46','#34d399'],
+  ['#92400e','#fbbf24'],['#9d174d','#f472b6'],['#1a3a6b','#60a5fa']
+];
+
+let PLAYLISTS = [
+  {id:1, name:'Plays for 2026-27 Training', desc:'Calibration plays for next season prep', visibility:'public',
+   collaborators:['TG','CF'], featured:true, mine:true,
+   plays:[
+    {id:101,type:'Foul: Shooting',subType:'Driving Shot Attempt',game:'TOR @ CHI',date:'5/27/26',q:'Q3',clock:'09:40.2',rating:'No Infraction',ref:'Perrymond (8)',loc:'Lead',note:'Good example of defender vertical — no contact on shooting arm.',comments:[{who:'Tucker Grady',initials:'TG',when:'5/28',text:'Strong example for the arm follow-through sub-type.'}]},
+    {id:102,type:'Foul: Loose Ball',subType:'Clamp-Lock-Hold',game:'TOR @ CHI',date:'5/27/26',q:'Q2',clock:'04:18.7',rating:'Infraction',ref:'Chang (23)',loc:'Trail',note:'',comments:[]},
+    {id:103,type:'Stoppage: Out-of-Bounds',subType:'',game:'IND @ OKC',date:'6/22/26',q:'Q4',clock:'01:02.4',rating:'Block-Charge Assessment',ref:'Fahy (86)',loc:'Slot',note:'OOB + Assessment without Called box — good training example.',comments:[{who:'Curtis Oakley Jr.',initials:'CO',when:'6/23',text:'Flag this for assessment discussion at next calibration.'}]},
+    {id:104,type:'Foul: Personal',subType:'',game:'CON @ CHI',date:'6/05/26',q:'Q1',clock:'07:33.1',rating:'Judgement - Lean No',ref:'Perrymond (8)',loc:'Lead',note:'',comments:[]},
+    {id:105,type:'Turnover: Lost Ball Out of Bounds',subType:'',game:'TOR @ CHI',date:'5/27/26',q:'Q4',clock:'00:22.6',rating:'No Infraction',ref:'Chang (23)',loc:'Trail',note:'',comments:[]},
+  ], color:0},
+  {id:2, name:'WNBA DHO Examples', desc:'Drive-hand-off situations across 2026 season', visibility:'public',
+   collaborators:['DF'], featured:true, mine:true,
+   plays:[
+    {id:201,type:'Foul: Personal',subType:'DHO Screen',game:'LVA @ LAS',date:'6/02/26',q:'Q2',clock:'05:44.1',rating:'Infraction',ref:'Perrymond (8)',loc:'Lead',note:'Classic DHO — defensive player goes under.',comments:[]},
+    {id:202,type:'Foul: Shooting',subType:'DHO Follow',game:'PHX @ NYL',date:'5/29/26',q:'Q3',clock:'03:21.8',rating:'No Infraction',ref:'Chang (23)',loc:'Trail',note:'',comments:[]},
+   ], color:1},
+  {id:3, name:'Block-Charge 2026', desc:'Block-charge calls from this season', visibility:'private',
+   collaborators:[], featured:false, mine:true,
+   plays:[
+    {id:301,type:'Foul: Shooting',subType:'Block-Charge Situation',game:'OKC @ IND',date:'6/19/26',q:'Q4',clock:'00:34.2',rating:'Judgement - Lean Infraction',ref:'Fahy (86)',loc:'Slot',note:'Defender still in movement — lean infraction is correct here.',comments:[]},
+   ], color:2},
+  {id:4, name:'3Q Defense Examples', desc:'Third-quarter defensive situations', visibility:'private',
+   collaborators:[], featured:false, mine:true,
+   plays:[], color:3},
+  {id:5, name:'Flagrant Foul Reviews', desc:'Flagrant 1 and 2 examples from reviewers', visibility:'public',
+   collaborators:['MA','WA'], featured:false, mine:false,
+   plays:[], color:4},
+];
+
+const RATING_CLASS = {
+  'Infraction':'rc-infraction','Judgement - Lean Infraction':'rc-lean-infraction',
+  'Judgement - Lean No':'rc-lean-no','No Infraction':'rc-no-infraction',
+  'Block-Charge Assessment':'rc-assessment','Personal Foul Assessment':'rc-assessment',
+  'Shooting Foul Assessment':'rc-assessment','Wrong Player Assessment':'rc-assessment',
+};
+
+let activePl = null, activePlayIdx = 0, newVisibility = 'private';
+
+/* ─── LANDING ─── */
+function buildCard(pl) {
+  const [c1,c2] = COVER_COLORS[pl.color % COVER_COLORS.length];
+  const badge = pl.visibility === 'public'
+    ? `<div class="pl-cover-badge pub"><i class="ti ti-world" style="font-size:9px"></i> Public</div>`
+    : `<div class="pl-cover-badge priv"><i class="ti ti-lock" style="font-size:9px"></i> Private</div>`;
+  return `<div class="pl-card" onclick="openPlaylist(${pl.id})">
+    <div class="pl-cover" style="background:linear-gradient(135deg,${c1},${c2})">
+      <i class="ti ti-playlist" style="color:rgba(255,255,255,.35)"></i>
+      ${badge}
+    </div>
+    <div class="pl-card-name">${pl.name}</div>
+    <div class="pl-card-meta">${pl.plays.length} plays · ${pl.visibility === 'public'?'Public':'Private'}</div>
+  </div>`;
+}
+
+function renderLanding() {
+  document.getElementById('row-featured').innerHTML = PLAYLISTS.filter(p=>p.featured).map(buildCard).join('');
+  document.getElementById('row-recent').innerHTML = [...PLAYLISTS].slice(0,4).map(buildCard).join('');
+  document.getElementById('row-mine').innerHTML = PLAYLISTS.filter(p=>p.mine).map(buildCard).join('');
+}
+
+/* ─── DETAIL ─── */
+function openPlaylist(id) {
+  activePl = PLAYLISTS.find(p=>p.id===id);
+  if (!activePl) return;
+  document.getElementById('landing').style.display = 'none';
+  document.getElementById('detail').style.display = 'flex';
+
+  const [c1,c2] = COVER_COLORS[activePl.color % COVER_COLORS.length];
+  document.getElementById('dh-cover').style.cssText = `background:linear-gradient(135deg,${c1},${c2});width:80px;height:80px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:36px`;
+  document.getElementById('dh-cover').innerHTML = `<i class="ti ti-playlist" style="color:rgba(255,255,255,.4)"></i>`;
+  document.getElementById('dh-title').textContent = activePl.name;
+
+  const collabs = activePl.collaborators;
+  document.getElementById('dh-meta').innerHTML = `
+    <span>${activePl.plays.length} plays</span>
+    <div class="dh-dot"></div>
+    <span>${activePl.desc}</span>
+    ${collabs.length ? `<div class="dh-dot"></div><span>${collabs.length} collaborator${collabs.length>1?'s':''}</span>` : ''}`;
+
+  const visBtn = document.getElementById('vis-toggle');
+  document.getElementById('vis-label').textContent = activePl.visibility === 'public' ? 'Public' : 'Private';
+  visBtn.querySelector('i').className = activePl.visibility === 'public' ? 'ti ti-world' : 'ti ti-lock';
+
+  const cr = document.getElementById('collab-row');
+  const collabColors = ['#7c3aed','#ea580c','#16a34a','#2563eb'];
+  cr.innerHTML = activePl.collaborators.map((c,i)=>`<div class="collab-av" style="background:${collabColors[i%collabColors.length]}">${c}</div>`).join('');
+
+  renderTracks();
+  if (activePl.plays.length > 0) { activePlayIdx = 0; loadPlay(0); }
+}
+
+function renderTracks() {
+  const scroll = document.getElementById('track-scroll');
+  scroll.innerHTML = activePl.plays.map((play, i) => {
+    const rc = RATING_CLASS[play.rating] || '';
+    const hasNote = play.note && play.note.trim().length > 0;
+    return `<div class="track-row ${i===activePlayIdx?'active':''}" onclick="loadPlay(${i})" id="tr-${i}">
+      <div class="tr-num">${i+1}</div>
+      <div class="tr-playing"><i class="ti ti-player-play"></i></div>
+      <div class="tr-info">
+        <div class="tr-type">${play.type}${play.subType?` · ${play.subType}`:''}</div>
+        <div class="tr-game">${play.game} · ${play.date} · ${play.q} · ${play.ref}</div>
+      </div>
+      <span class="tr-chip ${rc}" style="font-size:9px">${ratingShort(play.rating)}</span>
+      <div class="tr-clock">${play.clock}</div>
+      <div class="tr-note-icon ${hasNote?'has-note':''}" onclick="event.stopPropagation();focusNote(${i})" title="${hasNote?'Has note':'Add note'}"><i class="ti ti-${hasNote?'notes':'notes-off'}"></i></div>
+    </div>`;
+  }).join('') || `<div style="padding:24px;text-align:center;color:#9ca3af;font-size:12px;font-style:italic">No plays yet — add one below</div>`;
+}
+
+function ratingShort(r) {
+  if (!r) return '—';
+  if (r==='Infraction') return 'INF';
+  if (r==='No Infraction') return 'NO INF';
+  if (r==='Judgement - Lean Infraction') return 'LEAN INF';
+  if (r==='Judgement - Lean No') return 'LEAN NO';
+  if (r.includes('Assessment')) return r.replace(' Assessment','').replace('Block-Charge','B-C');
+  return r;
+}
+
+function loadPlay(idx) {
+  activePlayIdx = idx;
+  renderTracks();
+  const play = activePl.plays[idx];
+  if (!play) return;
+  document.getElementById('vtime').textContent = play.clock;
+
+  document.getElementById('play-meta').innerHTML = `
+    <div class="play-meta-grid">
+      <div class="meta-block">
+        <div class="meta-lbl">Play Type</div>
+        <div class="meta-val">${play.type}</div>
+      </div>
+      <div class="meta-block">
+        <div class="meta-lbl">Sub Play Type</div>
+        <div class="meta-val">${play.subType||'—'}</div>
+      </div>
+      <div class="meta-block">
+        <div class="meta-lbl">Game</div>
+        <div class="meta-val"><i class="ti ti-ball-basketball" style="font-size:12px;color:#9ca3af"></i>${play.game} · ${play.date}</div>
+      </div>
+      <div class="meta-block">
+        <div class="meta-lbl">Period & Clock</div>
+        <div class="meta-val"><i class="ti ti-clock" style="font-size:12px;color:#9ca3af"></i>${play.q} · ${play.clock}</div>
+      </div>
+      <div class="meta-block">
+        <div class="meta-lbl">Rating</div>
+        <div class="meta-val"><span class="tr-chip ${RATING_CLASS[play.rating]||''}" style="font-size:10px;padding:2px 8px">${play.rating||'—'}</span></div>
+      </div>
+      <div class="meta-block">
+        <div class="meta-lbl">Responsible Ref</div>
+        <div class="meta-val"><i class="ti ti-whistle" style="font-size:12px;color:#9ca3af"></i>${play.ref} · ${play.loc}</div>
+      </div>
+    </div>`;
+
+  document.getElementById('notes-ta').value = play.note || '';
+  document.getElementById('notes-save-btn').classList.remove('show');
+  renderComments(play);
+}
+
+function renderComments(play) {
+  const list = document.getElementById('comments-list');
+  list.innerHTML = (play.comments||[]).map(c=>`
+    <div class="comment-item">
+      <div class="comment-av">${c.initials||c.who.split(' ').map(w=>w[0]).join('').slice(0,2)}</div>
+      <div class="comment-body">
+        <div class="comment-who">${c.who} <span class="comment-when">${c.when}</span></div>
+        <div class="comment-text">${c.text}</div>
+      </div>
+    </div>`).join('') || `<div style="font-size:11px;color:#9ca3af;font-style:italic;padding:6px 0">No comments yet</div>`;
+}
+
+function onNoteInput() {
+  document.getElementById('notes-save-btn').classList.add('show');
+}
+function saveNote() {
+  const play = activePl.plays[activePlayIdx];
+  if (!play) return;
+  play.note = document.getElementById('notes-ta').value;
+  document.getElementById('notes-save-btn').classList.remove('show');
+  renderTracks();
+}
+function focusNote(idx) {
+  loadPlay(idx);
+  setTimeout(()=>document.getElementById('notes-ta').focus(), 50);
+}
+
+function sendComment() {
+  const input = document.getElementById('comment-input');
+  const text = input.value.trim();
+  if (!text) return;
+  const play = activePl.plays[activePlayIdx];
+  if (!play) return;
+  play.comments.push({who:'Bridget Ng', initials:'BN', when:'Now', text});
+  input.value = '';
+  renderComments(play);
+}
+
+let playing = false;
+function togglePlay() {
+  playing = !playing;
+  document.getElementById('play-icon').className = playing ? 'ti ti-player-pause' : 'ti ti-player-play';
+  document.getElementById('play-label').textContent = playing ? 'Pause' : 'Play All';
+}
+
+function toggleVisibility() {
+  activePl.visibility = activePl.visibility === 'public' ? 'private' : 'public';
+  document.getElementById('vis-label').textContent = activePl.visibility === 'public' ? 'Public' : 'Private';
+  document.getElementById('vis-toggle').querySelector('i').className = activePl.visibility === 'public' ? 'ti ti-world' : 'ti ti-lock';
+}
+
+function showLanding() {
+  document.getElementById('detail').style.display = 'none';
+  document.getElementById('landing').style.display = 'flex';
+  renderLanding();
+}
+
+/* ─── CREATE MODAL ─── */
+function openCreateModal() {
+  document.getElementById('create-backdrop').classList.add('show');
+  document.getElementById('create-modal').classList.add('show');
+  document.getElementById('new-pl-name').focus();
+}
+function closeCreateModal() {
+  document.getElementById('create-backdrop').classList.remove('show');
+  document.getElementById('create-modal').classList.remove('show');
+}
+function selVis(el, v) {
+  document.querySelectorAll('.vis-opt').forEach(o=>o.classList.remove('sel'));
+  el.classList.add('sel');
+  newVisibility = v;
+}
+function createPlaylist() {
+  const name = document.getElementById('new-pl-name').value.trim();
+  if (!name) { document.getElementById('new-pl-name').focus(); return; }
+  const desc = document.getElementById('new-pl-desc').value.trim();
+  const newPl = {id: Date.now(), name, desc, visibility: newVisibility,
+    collaborators:[], featured:false, mine:true, plays:[], color: PLAYLISTS.length % COVER_COLORS.length};
+  PLAYLISTS.unshift(newPl);
+  document.getElementById('new-pl-name').value = '';
+  document.getElementById('new-pl-desc').value = '';
+  closeCreateModal();
+  renderLanding();
+  openPlaylist(newPl.id);
+}
+
+/* ─── ADD PLAY MODAL ─── */
+let selectedAddPl = null;
+function openAddPlayModal() {
+  const list = document.getElementById('modal-pl-list');
+  list.innerHTML = PLAYLISTS.filter(p=>p.mine||p.collaborators.includes('BN')).map(pl=>{
+    const [c1,c2] = COVER_COLORS[pl.color % COVER_COLORS.length];
+    return `<div class="modal-pl-item ${pl.id===activePl?.id?'sel':''}" onclick="selAddPl(this,${pl.id})">
+      <div class="mpi-icon" style="background:linear-gradient(135deg,${c1},${c2})"><i class="ti ti-playlist" style="color:rgba(255,255,255,.7)"></i></div>
+      <div class="mpi-name">${pl.name}</div>
+      <div class="mpi-count">${pl.plays.length} plays</div>
+    </div>`;
+  }).join('');
+  selectedAddPl = activePl?.id || null;
+  document.getElementById('addplay-backdrop').classList.add('show');
+  document.getElementById('addplay-modal').classList.add('show');
+}
+function closeAddPlayModal() {
+  document.getElementById('addplay-backdrop').classList.remove('show');
+  document.getElementById('addplay-modal').classList.remove('show');
+}
+function selAddPl(el, id) {
+  document.querySelectorAll('.modal-pl-item').forEach(i=>i.classList.remove('sel'));
+  el.classList.add('sel');
+  selectedAddPl = id;
+}
+function confirmAddPlay() {
+  closeAddPlayModal();
+  showToast('Play added to playlist');
+}
+
+/* ─── SHARE MODAL (simple toast for now) ─── */
+function openShareModal() { showToast('Share — coming soon'); }
+
+/* ─── TOAST ─── */
+function showToast(msg) {
+  const t = document.createElement('div');
+  t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:9px 20px;border-radius:8px;font-size:12px;font-weight:500;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,.3);opacity:0;transition:opacity .2s';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  requestAnimationFrame(()=>{ t.style.opacity='1'; setTimeout(()=>{ t.style.opacity='0'; setTimeout(()=>t.remove(),200); }, 2200); });
+}
+
+function toggleNavDropdown(e){e.stopPropagation();document.getElementById('nav-dropdown').classList.toggle('open')}
+document.addEventListener('click',()=>document.getElementById('nav-dropdown').classList.remove('open'));
+
+/* ─── INIT ─── */
+renderLanding();
+</script>
+</body>
+</html>
