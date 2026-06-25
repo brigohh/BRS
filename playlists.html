@@ -132,9 +132,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .dh-badge.pub{background:rgba(255,255,255,.12);color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.15)}
 .dh-badge.priv{background:rgba(0,0,0,.2);color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.08)}
 
-/* SPLIT BODY */
-.split-body{flex:1;display:flex;min-height:0;overflow:hidden}
-.track-list{width:420px;flex-shrink:0;display:flex;flex-direction:column;overflow:hidden;background:#fff;border-right:1px solid #e5e7eb}
+/* SPLIT BODY — 3 columns: queue | info | video */
+.split-body{flex:1;display:grid;grid-template-columns:360px 1fr 440px;min-height:0;overflow:hidden}
+.track-list{display:flex;flex-direction:column;overflow:hidden;background:#fff;border-right:1px solid #e5e7eb}
 .track-list-hdr{padding:10px 20px;display:flex;align-items:center;gap:0;border-bottom:1px solid #e5e7eb;flex-shrink:0}
 .tl-col{font-size:9.5px;font-weight:700;letter-spacing:.4px;color:#9ca3af;text-transform:uppercase}
 .track-scroll{flex:1;overflow-y:auto}
@@ -159,23 +159,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .add-play-btn{width:100%;padding:8px;background:#f9fafb;border:1px dashed #d1d5db;border-radius:8px;font-size:11.5px;font-weight:500;color:#6b7280;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px}
 .add-play-btn:hover{background:#f3f4f6;color:#374151;border-color:#9ca3af}
 
-/* RIGHT PANEL */
-.detail-right{flex:1;display:flex;flex-direction:column;overflow:hidden;background:#f9fafb}
-.vid-section{background:#0f1117;padding:12px 12px 0;flex-shrink:0}
-.vid-frame{width:100%;aspect-ratio:16/9;background:#1a1f2e;border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.vid-frame img{width:100%;height:100%;object-fit:cover;border-radius:8px}
-.vid-ph{display:flex;flex-direction:column;align-items:center;gap:6px;color:rgba(255,255,255,.2);font-size:11px}
-.vid-ph i{font-size:28px}
-.ang-row{display:flex;gap:3px;padding:6px 10px;background:#fff;border-bottom:1px solid #f3f4f6;overflow-x:auto;flex-shrink:0}
-.ang{padding:2px 7px;font-size:10px;border:1px solid #e5e7eb;background:#f9fafb;color:#6b7280;cursor:pointer;border-radius:4px;white-space:nowrap;font-weight:500}
-.ang:hover{color:#374151;background:#f3f4f6}
-.ang.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
-.vid-ctrl{padding:6px 12px;border-bottom:1px solid #f3f4f6;display:flex;align-items:center;gap:6px;flex-shrink:0;background:#fff}
-.vcb{background:none;border:none;color:#9ca3af;cursor:pointer;font-size:15px;display:flex;align-items:center}
-.vtrack{flex:1;height:3px;background:#e5e7eb;border-radius:2px;position:relative}
-.vfill{width:30%;height:100%;background:#1a3a6b;border-radius:2px}
-.vtime{font-size:10.5px;color:#9ca3af;white-space:nowrap}
-.play-info-section{flex:1;overflow-y:auto;padding:16px 20px;display:flex;flex-direction:column;gap:16px}
+/* MIDDLE: play info */
+.play-info-col{display:flex;flex-direction:column;overflow:hidden;background:#f9fafb;border-right:1px solid #e5e7eb}
+.play-info-section{flex:1;overflow-y:auto;padding:16px 20px;display:flex;flex-direction:column;gap:14px}
 .play-meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .meta-block{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:10px 12px}
 .meta-lbl{font-size:9.5px;font-weight:700;color:#9ca3af;letter-spacing:.4px;text-transform:uppercase;margin-bottom:4px}
@@ -185,7 +171,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .notes-lbl{font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;text-transform:uppercase}
 .notes-save-btn{padding:3px 10px;background:#1a3a6b;color:#fff;border:none;border-radius:5px;font-size:10.5px;font-weight:600;cursor:pointer;display:none}
 .notes-save-btn.show{display:block}
-.notes-ta{width:100%;border:1px solid #e5e7eb;border-radius:6px;padding:8px 10px;font-size:12px;color:#374151;resize:none;font-family:inherit;line-height:1.55;background:#f9fafb;min-height:80px}
+.notes-ta{width:100%;border:1px solid #e5e7eb;border-radius:6px;padding:8px 10px;font-size:12px;color:#374151;resize:none;font-family:inherit;line-height:1.55;background:#f9fafb;min-height:72px}
 .notes-ta:focus{outline:none;border-color:#1a3a6b;background:#fff}
 .comments-block{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:12px 14px}
 .comment-item{display:flex;gap:8px;padding:8px 0;border-bottom:1px solid #f3f4f6}
@@ -200,6 +186,24 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .comment-input:focus{outline:none;border-color:#1a3a6b;background:#fff}
 .comment-send{padding:7px 12px;background:#1a3a6b;color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;flex-shrink:0}
 .comment-send:hover{background:#15306e}
+
+/* RIGHT: video panel */
+.vid-panel{display:flex;flex-direction:column;overflow:hidden;background:#0f1117}
+.vid-section{flex-shrink:0;padding:10px 10px 0}
+.vid-frame{width:100%;aspect-ratio:16/9;background:#1a1f2e;border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.vid-frame img{width:100%;height:100%;object-fit:cover;border-radius:8px}
+.vid-ph{display:flex;flex-direction:column;align-items:center;gap:6px;color:rgba(255,255,255,.2);font-size:11px}
+.vid-ph i{font-size:28px}
+.ang-row{display:flex;gap:3px;padding:6px 10px;background:#fff;border-bottom:1px solid #f3f4f6;overflow-x:auto;flex-shrink:0}
+.ang{padding:2px 7px;font-size:10px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.07);color:rgba(255,255,255,.55);cursor:pointer;border-radius:4px;white-space:nowrap;font-weight:500}
+.ang:hover{color:#fff;background:rgba(255,255,255,.12)}
+.ang.on{background:#2563eb;border-color:#3b82f6;color:#fff}
+.vid-ctrl{padding:6px 12px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:6px;flex-shrink:0;background:#1a1f2e}
+.vcb{background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;font-size:15px;display:flex;align-items:center}
+.vcb:hover{color:#fff}
+.vtrack{flex:1;height:3px;background:rgba(255,255,255,.15);border-radius:2px;position:relative}
+.vfill{width:30%;height:100%;background:#60a5fa;border-radius:2px}
+.vtime{font-size:10.5px;color:rgba(255,255,255,.4);white-space:nowrap}
 
 /* COLLAB AVATARS */
 .collab-row{display:flex;align-items:center;gap:6px}
@@ -364,15 +368,40 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       </div>
     </div>
 
-    <!-- RIGHT PANEL -->
-    <div class="detail-right">
-      <div class="vid-section" style="padding:10px 10px 0">
-        <div class="vid-frame" style="max-height:180px">
+    <!-- MIDDLE: play info -->
+    <div class="play-info-col">
+      <div class="play-info-section" id="play-info-section">
+        <div id="play-summary" style="display:flex;flex-direction:column;gap:8px">
+          <div id="play-rating-row" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"></div>
+          <div id="play-meta"></div>
+        </div>
+        <div class="notes-block">
+          <div class="notes-hdr">
+            <div class="notes-lbl"><i class="ti ti-notes" style="font-size:12px"></i> Playlist Note</div>
+            <button class="notes-save-btn" id="notes-save-btn" onclick="saveNote()">Save</button>
+          </div>
+          <textarea class="notes-ta" id="notes-ta" placeholder="Notes added when this play was added to the playlist…" oninput="onNoteInput()"></textarea>
+        </div>
+        <div class="comments-block" id="comments-block">
+          <div class="notes-lbl" style="margin-bottom:10px"><i class="ti ti-message-circle" style="font-size:12px"></i> Comments</div>
+          <div id="comments-list"></div>
+          <div class="comment-input-row">
+            <textarea class="comment-input" id="comment-input" rows="2" placeholder="Add a comment…"></textarea>
+            <button class="comment-send" onclick="sendComment()">Post</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: video panel -->
+    <div class="vid-panel">
+      <div class="vid-section">
+        <div class="vid-frame">
           <img src="Logos/video player placeholder.png" alt="Video"
             onerror="this.parentElement.innerHTML='<div class=&quot;vid-ph&quot;><i class=&quot;ti ti-player-play&quot;></i><span>Video</span></div>'">
         </div>
       </div>
-      <div class="ang-row">
+      <div class="ang-row" style="background:#1a1f2e;border-color:rgba(255,255,255,.08)">
         <span class="ang on">LL5</span><span class="ang">LR5</span><span class="ang">LS5</span><span class="ang">RS5</span><span class="ang">ABP</span><span class="ang">HBP</span><span class="ang">INA</span><span class="ang">DF BCAST</span>
       </div>
       <div class="vid-ctrl">
@@ -383,30 +412,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
         <span class="vtime" id="vtime">09:40.2</span>
         <button class="vcb"><i class="ti ti-volume"></i></button>
         <button class="vcb"><i class="ti ti-arrows-maximize"></i></button>
-      </div>
-      <div class="play-info-section" id="play-info-section">
-        <!-- Rating + play details -->
-        <div id="play-summary" style="display:flex;flex-direction:column;gap:8px">
-          <div id="play-rating-row" style="display:flex;align-items:center;gap:8px"></div>
-          <div id="play-meta"></div>
-        </div>
-        <!-- Playlist note -->
-        <div class="notes-block">
-          <div class="notes-hdr">
-            <div class="notes-lbl"><i class="ti ti-notes" style="font-size:12px"></i> Playlist Note</div>
-            <button class="notes-save-btn" id="notes-save-btn" onclick="saveNote()">Save</button>
-          </div>
-          <textarea class="notes-ta" id="notes-ta" placeholder="Notes added when this play was added to the playlist…" oninput="onNoteInput()"></textarea>
-        </div>
-        <!-- Comments -->
-        <div class="comments-block" id="comments-block">
-          <div class="notes-lbl" style="margin-bottom:10px"><i class="ti ti-message-circle" style="font-size:12px"></i> Comments</div>
-          <div id="comments-list"></div>
-          <div class="comment-input-row">
-            <textarea class="comment-input" id="comment-input" rows="2" placeholder="Add a comment…"></textarea>
-            <button class="comment-send" onclick="sendComment()">Post</button>
-          </div>
-        </div>
       </div>
     </div>
   </div>
