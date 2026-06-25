@@ -524,6 +524,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
               <div style="border-top:1px solid #e5e7eb;margin:2px 0"></div>
               <button class="assist-btn tmpl-assist-btn" onclick="openChatbot()" style="width:100%;justify-content:center"><i class="ti ti-whistle" style="font-size:12px"></i> Help Side Assist</button>
               <button class="tmpl-btn" style="width:100%;justify-content:center;gap:4px" onclick="openAddToPlaylist()"><i class="ti ti-playlist" style="font-size:12px"></i> Add to Playlist</button>
+              <button class="tmpl-btn" style="width:100%;justify-content:center;gap:4px" onclick="openSlackModal()"><i class="ti ti-brand-slack" style="font-size:12px"></i> Send to Slack</button>
               <div style="display:flex;flex-direction:column;gap:5px;margin-top:auto">
                 <button class="rf-save-btn" onclick="saveRating()" style="width:100%;justify-content:center">Save</button>
                 <button class="rf-cancel-btn" onclick="cancelRating()" style="width:100%;justify-content:center">Cancel</button>
@@ -1486,6 +1487,93 @@ function confirmAtp() {
   document.getElementById('atp-modal')?.remove();
   document.getElementById('atp-bd')?.remove();
   showToast('Play added to playlist ✓');
+}
+
+/* ─── SLACK MODAL ─── */
+const SLACK_CHANNELS = [
+  {name:'#referee-review', desc:'General review discussion'},
+  {name:'#wnba-officiating', desc:'WNBA crew channel'},
+  {name:'#nba-officiating', desc:'NBA crew channel'},
+  {name:'#block-charge-wg', desc:'Block-charge working group'},
+  {name:'#late-game-situations', desc:'Late clock & crunch time plays'},
+];
+const SLACK_PEOPLE = ['Tucker Grady','Curtis Oakley Jr.','Dan Foley','Michael Abdenour','Myron Hickman'];
+
+let slackSelChannel = SLACK_CHANNELS[0].name, slackSelPeople = [];
+
+function openSlackModal() {
+  document.getElementById('slack-modal-bd')?.remove();
+  document.getElementById('slack-modal-el')?.remove();
+
+  const bd = document.createElement('div');
+  bd.id = 'slack-modal-bd';
+  bd.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:799';
+  bd.onclick = closeSlackModal;
+  document.body.appendChild(bd);
+
+  const modal = document.createElement('div');
+  modal.id = 'slack-modal-el';
+  modal.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:380px;background:#fff;border-radius:13px;box-shadow:0 16px 48px rgba(0,0,0,.22);z-index:800;padding:20px 22px;border:1px solid #e5e7eb';
+  modal.innerHTML = `
+    <div style="display:flex;align-items:center;gap:9px;margin-bottom:16px">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="#E01E5A" style="flex-shrink:0"><path d="M5.042 15.165a2.528 2.528 0 01-2.52 2.52 2.528 2.528 0 01-2.522-2.52 2.528 2.528 0 012.522-2.52h2.52v2.52zm1.271 0a2.528 2.528 0 012.52-2.52 2.528 2.528 0 012.52 2.52v6.313A2.528 2.528 0 018.833 24a2.528 2.528 0 01-2.52-2.522v-6.313zM8.833 5.042a2.528 2.528 0 01-2.52-2.52A2.528 2.528 0 018.833 0a2.528 2.528 0 012.52 2.522v2.52H8.833zm0 1.271a2.528 2.528 0 012.52 2.52 2.528 2.528 0 01-2.52 2.52H2.522A2.528 2.528 0 010 8.833a2.528 2.528 0 012.522-2.52h6.311zm10.122 2.52a2.528 2.528 0 012.522-2.52A2.528 2.528 0 0124 8.833a2.528 2.528 0 01-2.522 2.52h-2.522V8.833zm-1.268 0a2.528 2.528 0 01-2.52 2.52 2.528 2.528 0 01-2.522-2.52V2.522A2.528 2.528 0 0115.167 0a2.528 2.528 0 012.52 2.522v6.311zm-2.52 10.122a2.528 2.528 0 012.52 2.522A2.528 2.528 0 0115.167 24a2.528 2.528 0 01-2.522-2.522v-2.52h2.522zm0-1.268a2.528 2.528 0 01-2.522-2.52 2.528 2.528 0 012.522-2.522h6.313A2.528 2.528 0 0124 15.167a2.528 2.528 0 01-2.522 2.52h-6.311z"/></svg>
+      <span style="font-size:13px;font-weight:700;color:#111827;flex:1">Send to Slack</span>
+      <button onclick="closeSlackModal()" style="background:none;border:none;font-size:18px;color:#9ca3af;cursor:pointer;line-height:1">×</button>
+    </div>
+    <div style="font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;text-transform:uppercase;margin-bottom:6px">Channel</div>
+    <select id="slack-channel-sel" style="width:100%;padding:8px 10px;border:1px solid #e5e7eb;border-radius:7px;font-size:12px;font-family:inherit;color:#374151;background:#fff;margin-bottom:14px" onchange="slackSelChannel=this.value">
+      ${SLACK_CHANNELS.map(c=>`<option value="${c.name}">${c.name} — ${c.desc}</option>`).join('')}
+    </select>
+    <div style="font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;text-transform:uppercase;margin-bottom:6px">Also notify (optional)</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px">
+      ${SLACK_PEOPLE.map(p=>`<div onclick="toggleSlackPerson(this,'${p}')" style="padding:4px 11px;border:1.5px solid #e5e7eb;border-radius:20px;font-size:11.5px;font-weight:500;color:#6b7280;cursor:pointer;transition:all .15s" data-person="${p}">${p}</div>`).join('')}
+    </div>
+    <div style="font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;text-transform:uppercase;margin-bottom:6px">Message (optional)</div>
+    <textarea id="slack-msg" placeholder="Add context for your teammates…" style="width:100%;border:1px solid #e5e7eb;border-radius:7px;padding:8px 10px;font-size:12px;font-family:inherit;resize:none;color:#374151;line-height:1.5;background:#f9fafb;min-height:64px" onfocus="this.style.borderColor='#4A154B';this.style.background='#fff'" onblur="this.style.borderColor='#e5e7eb';this.style.background='#f9fafb'"></textarea>
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button onclick="closeSlackModal()" style="flex:1;padding:8px;border-radius:7px;background:#f3f4f6;color:#6b7280;border:none;font-size:12px;font-weight:600;cursor:pointer">Cancel</button>
+      <button onclick="sendToSlack()" style="flex:1;padding:8px;border-radius:7px;background:#4A154B;color:#fff;border:none;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px"><i class="ti ti-send"></i> Send</button>
+    </div>`;
+  document.body.appendChild(modal);
+  slackSelChannel = SLACK_CHANNELS[0].name;
+  slackSelPeople = [];
+}
+
+function closeSlackModal() {
+  document.getElementById('slack-modal-el')?.remove();
+  document.getElementById('slack-modal-bd')?.remove();
+}
+
+function toggleSlackPerson(el, name) {
+  const idx = slackSelPeople.indexOf(name);
+  if (idx === -1) {
+    slackSelPeople.push(name);
+    el.style.cssText += ';background:#f3e8ff;border-color:#a855f7;color:#7c3aed';
+  } else {
+    slackSelPeople.splice(idx, 1);
+    el.style.background = '';
+    el.style.borderColor = '#e5e7eb';
+    el.style.color = '#6b7280';
+  }
+}
+
+function sendToSlack() {
+  const channel = slackSelChannel;
+  const people = slackSelPeople;
+  const msg = document.getElementById('slack-msg')?.value.trim();
+  closeSlackModal();
+
+  /* append to internal notes */
+  const ta = document.getElementById('notes-ta');
+  if (ta) {
+    const now = new Date();
+    const stamp = `${now.getMonth()+1}/${now.getDate()} ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`;
+    const who = people.length ? ` & ${people.join(', ')}` : '';
+    const note = `[Sent to ${channel}${who} on ${stamp}]${msg ? ' — "'+msg+'"' : ''}`;
+    ta.value = ta.value ? ta.value + '\n' + note : note;
+  }
+
+  showToast(`Sent to ${channel} ✓`);
 }
 </script>
 </body>
