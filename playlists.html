@@ -311,26 +311,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
     <!-- Previous curated grid -->
     <div class="pl-grid" id="row-curated-prev" style="grid-template-columns:repeat(auto-fill,minmax(152px,1fr));margin-bottom:32px"></div>
 
-    <!-- BY PLAY TYPE -->
-    <div class="sec-row" style="margin-bottom:10px">
-      <div class="sec-title">By Play Type</div>
-    </div>
-    <div class="filter-chips" id="pt-chips"></div>
-    <div class="pt-grid" id="pt-grid"></div>
-
-    <!-- BY RATING -->
-    <div class="sec-row" style="margin-bottom:12px">
-      <div class="sec-title">By Rating</div>
-    </div>
-    <div class="rating-grid" id="rating-grid"></div>
-
-    <!-- BY GAME -->
-    <div class="sec-row" style="margin-bottom:12px">
-      <div class="sec-title">By Game</div>
-      <div class="sec-link">See all</div>
-    </div>
-    <div class="game-list" id="game-list"></div>
-
     <!-- FEATURED PLAYLISTS -->
     <div class="sec-row">
       <div class="sec-title">Featured</div>
@@ -386,8 +366,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 
     <!-- RIGHT PANEL -->
     <div class="detail-right">
-      <div class="vid-section">
-        <div class="vid-frame">
+      <div class="vid-section" style="padding:10px 10px 0">
+        <div class="vid-frame" style="max-height:180px">
           <img src="Logos/video player placeholder.png" alt="Video"
             onerror="this.parentElement.innerHTML='<div class=&quot;vid-ph&quot;><i class=&quot;ti ti-player-play&quot;></i><span>Video</span></div>'">
         </div>
@@ -405,14 +385,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
         <button class="vcb"><i class="ti ti-arrows-maximize"></i></button>
       </div>
       <div class="play-info-section" id="play-info-section">
-        <div id="play-meta"></div>
+        <!-- Rating + play details -->
+        <div id="play-summary" style="display:flex;flex-direction:column;gap:8px">
+          <div id="play-rating-row" style="display:flex;align-items:center;gap:8px"></div>
+          <div id="play-meta"></div>
+        </div>
+        <!-- Playlist note -->
         <div class="notes-block">
           <div class="notes-hdr">
-            <div class="notes-lbl"><i class="ti ti-notes" style="font-size:12px"></i> Notes</div>
+            <div class="notes-lbl"><i class="ti ti-notes" style="font-size:12px"></i> Playlist Note</div>
             <button class="notes-save-btn" id="notes-save-btn" onclick="saveNote()">Save</button>
           </div>
-          <textarea class="notes-ta" id="notes-ta" placeholder="Add a note to this play…" oninput="onNoteInput()"></textarea>
+          <textarea class="notes-ta" id="notes-ta" placeholder="Notes added when this play was added to the playlist…" oninput="onNoteInput()"></textarea>
         </div>
+        <!-- Comments -->
         <div class="comments-block" id="comments-block">
           <div class="notes-lbl" style="margin-bottom:10px"><i class="ti ti-message-circle" style="font-size:12px"></i> Comments</div>
           <div id="comments-list"></div>
@@ -444,13 +430,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 
 <!-- MODAL: Add Play -->
 <div class="modal-backdrop" id="addplay-backdrop" onclick="closeAddPlayModal()"></div>
-<div class="modal" id="addplay-modal">
+<div class="modal" id="addplay-modal" style="width:380px">
   <div class="modal-title">Add to Playlist <button class="modal-close" onclick="closeAddPlayModal()">×</button></div>
   <div class="modal-pl-list" id="modal-pl-list"></div>
   <hr class="modal-divider">
+  <div style="margin-bottom:10px">
+    <div style="font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;text-transform:uppercase;margin-bottom:5px">Playlist Note</div>
+    <textarea id="addplay-note" class="modal-new-input" rows="3" placeholder="Add a note about why this play was added…" style="resize:none;padding:8px 10px;line-height:1.5"></textarea>
+  </div>
   <div class="modal-footer">
     <button class="modal-btn cancel" onclick="closeAddPlayModal()">Cancel</button>
-    <button class="modal-btn confirm" onclick="confirmAddPlay()">Add</button>
+    <button class="modal-btn confirm" onclick="confirmAddPlay()">Add to Playlist</button>
   </div>
 </div>
 
@@ -566,27 +556,6 @@ function buildCard(pl, isCurated) {
   </div>`;
 }
 
-/* Play type data */
-const PLAY_TYPES = [
-  {key:'driving',  label:'Driving Attempts',   icon:'ti-run',             bg:'#eff6ff',  ic:'#3b82f6', clips:38, games:14},
-  {key:'blockchg', label:'Block-Charge',        icon:'ti-shield-half',     bg:'#fee2e2',  ic:'#ef4444', clips:24, games:11},
-  {key:'looseball',label:'Loose Ball',          icon:'ti-ball-basketball', bg:'#fef3c7',  ic:'#f59e0b', clips:19, games:9},
-  {key:'screens',  label:'Screens',             icon:'ti-arrows-split-2',  bg:'#f3e8ff',  ic:'#8b5cf6', clips:17, games:8},
-  {key:'postup',   label:'Post-Up',             icon:'ti-user-bolt',       bg:'#f0fdfa',  ic:'#0d9488', clips:12, games:7},
-  {key:'3pt',      label:'3-Point Attempts',    icon:'ti-target',          bg:'#dcfce7',  ic:'#16a34a', clips:15, games:6},
-  {key:'rebound',  label:'Rebound',             icon:'ti-refresh',         bg:'#eef2ff',  ic:'#4f46e5', clips:11, games:5},
-  {key:'lateclock',label:'Late Clock',          icon:'ti-clock',           bg:'#f8fafc',  ic:'#64748b', clips:9,  games:5},
-];
-let activePtFilter = 'all';
-
-/* Game data */
-const GAMES = [
-  {teams:'TOR @ CHI', date:'5/27/26', league:'WNBA', wrong:2, saved:3, mastered:4},
-  {teams:'IND @ OKC', date:'6/22/26', league:'NBA',  wrong:1, saved:2, mastered:6},
-  {teams:'PHX @ NYL', date:'5/29/26', league:'WNBA', wrong:3, saved:1, mastered:3},
-  {teams:'CON @ CHI', date:'6/05/26', league:'WNBA', wrong:1, saved:2, mastered:5},
-  {teams:'GSV @ IND', date:'5/22/26', league:'NBA',  wrong:2, saved:1, mastered:4},
-];
 
 function renderLanding() {
   /* ── Curated featured card ── */
@@ -619,61 +588,11 @@ function renderLanding() {
   /* ── Previous curated (smaller grid) ── */
   document.getElementById('row-curated-prev').innerHTML = CURATED.slice(1).map(p=>buildCard(p,true)).join('');
 
-  /* ── By Play Type ── */
-  const chips = [{key:'all',label:'All'},...PLAY_TYPES];
-  document.getElementById('pt-chips').innerHTML = chips.map(c=>
-    `<div class="fchip ${c.key===activePtFilter?'on':''}" onclick="setPtFilter('${c.key}')">${c.label}</div>`
-  ).join('');
-  const filtered = activePtFilter==='all' ? PLAY_TYPES : PLAY_TYPES.filter(p=>p.key===activePtFilter);
-  document.getElementById('pt-grid').innerHTML = filtered.map(pt=>`
-    <div class="pt-card" onclick="showToast('Browse by ${pt.label} — coming soon')">
-      <div class="pt-icon" style="background:${pt.bg};color:${pt.ic}"><i class="ti ${pt.icon}"></i></div>
-      <div class="pt-info">
-        <div class="pt-name">${pt.label}</div>
-        <div class="pt-meta">${pt.clips} clips &middot; ${pt.games} games</div>
-      </div>
-      <i class="ti ti-chevron-right" style="color:#d1d5db;font-size:13px;flex-shrink:0"></i>
-    </div>`).join('');
-
-  /* ── By Rating ── */
-  const ratings = [
-    {label:'Infraction',         short:'INF',      bg:'#fee2e2',color:'#991b1b',border:'#fca5a5',icon:'ti-alert-circle', clips:47},
-    {label:'Lean Infraction',    short:'LEAN INF', bg:'#fef3c7',color:'#92400e',border:'#fcd34d',icon:'ti-alert-triangle',clips:31},
-    {label:'Lean No',            short:'LEAN NO',  bg:'#dbeafe',color:'#1e40af',border:'#bfdbfe',icon:'ti-info-circle',  clips:28},
-    {label:'No Infraction',      short:'NO INF',   bg:'#dcfce7',color:'#166534',border:'#86efac',icon:'ti-circle-check', clips:52},
-  ];
-  document.getElementById('rating-grid').innerHTML = ratings.map(r=>`
-    <div class="rating-card" style="background:${r.bg};border-color:${r.border}" onclick="showToast('Browse by ${r.label} — coming soon')">
-      <div class="rc-icon" style="color:${r.color}"><i class="ti ${r.icon}"></i></div>
-      <div class="rc-label" style="color:${r.color}">${r.short}</div>
-      <div class="rc-meta" style="color:${r.color}">${r.clips} clips</div>
-    </div>`).join('');
-
-  /* ── By Game ── */
-  const lgColors = {WNBA:'#f59e4a',NBA:'#1a3a6b','G-League':'#111827',BAL:'#166534'};
-  document.getElementById('game-list').innerHTML = GAMES.map(g=>`
-    <div class="game-row" onclick="showToast('${g.teams} — coming soon')">
-      <div style="flex:1;min-width:0">
-        <div class="game-teams">${g.teams}</div>
-        <div class="game-sub">${g.date} &middot; ${g.league}</div>
-      </div>
-      <div class="game-badge" style="background:${lgColors[g.league]||'#9ca3af'};color:#fff">${g.league}</div>
-      <div class="game-counts">
-        <div class="gcount" style="color:#ef4444"><div class="gcount-dot" style="background:#ef4444"></div>${g.wrong} wrong</div>
-        <div class="gcount" style="color:#f59e0b"><div class="gcount-dot" style="background:#f59e0b"></div>${g.saved} saved</div>
-        <div class="gcount" style="color:#16a34a"><div class="gcount-dot" style="background:#16a34a"></div>${g.mastered} mastered</div>
-      </div>
-    </div>`).join('');
-
   /* ── Featured & Mine ── */
   document.getElementById('row-featured').innerHTML = PLAYLISTS.filter(p=>p.featured).map(p=>buildCard(p,false)).join('');
   document.getElementById('row-mine').innerHTML = PLAYLISTS.filter(p=>p.mine).map(p=>buildCard(p,false)).join('');
 }
 
-function setPtFilter(key) {
-  activePtFilter = key;
-  renderLanding();
-}
 
 /* ─── DETAIL ─── */
 function openPlaylist(id, isCurated) {
@@ -742,16 +661,14 @@ function loadPlay(idx) {
   if (!play) return;
   document.getElementById('vtime').textContent = play.clock;
 
+  /* Rating chip row */
+  const rc = RATING_CLASS[play.rating] || '';
+  document.getElementById('play-rating-row').innerHTML =
+    `<span class="tr-chip ${rc}" style="font-size:11px;padding:3px 10px">${play.rating||'—'}</span>
+     <span style="font-size:11px;color:#6b7280">${play.type}${play.subType?' · '+play.subType:''}</span>`;
+
   document.getElementById('play-meta').innerHTML = `
     <div class="play-meta-grid">
-      <div class="meta-block">
-        <div class="meta-lbl">Play Type</div>
-        <div class="meta-val">${play.type}</div>
-      </div>
-      <div class="meta-block">
-        <div class="meta-lbl">Sub Play Type</div>
-        <div class="meta-val">${play.subType||'—'}</div>
-      </div>
       <div class="meta-block">
         <div class="meta-lbl">Game</div>
         <div class="meta-val"><i class="ti ti-ball-basketball" style="font-size:12px;color:#9ca3af"></i>${play.game} · ${play.date}</div>
@@ -761,12 +678,12 @@ function loadPlay(idx) {
         <div class="meta-val"><i class="ti ti-clock" style="font-size:12px;color:#9ca3af"></i>${play.q} · ${play.clock}</div>
       </div>
       <div class="meta-block">
-        <div class="meta-lbl">Rating</div>
-        <div class="meta-val"><span class="tr-chip ${RATING_CLASS[play.rating]||''}" style="font-size:10px;padding:2px 8px">${play.rating||'—'}</span></div>
+        <div class="meta-lbl">Responsible Ref</div>
+        <div class="meta-val"><i class="ti ti-whistle" style="font-size:12px;color:#9ca3af"></i>${play.ref}</div>
       </div>
       <div class="meta-block">
-        <div class="meta-lbl">Responsible Ref</div>
-        <div class="meta-val"><i class="ti ti-whistle" style="font-size:12px;color:#9ca3af"></i>${play.ref} · ${play.loc}</div>
+        <div class="meta-lbl">Position</div>
+        <div class="meta-val">${play.loc}</div>
       </div>
     </div>`;
 
@@ -887,9 +804,11 @@ function selAddPl(el, id) {
   selectedAddPl = id;
 }
 function confirmAddPlay() {
+  const note = document.getElementById('addplay-note')?.value.trim() || '';
   closeAddPlayModal();
   showToast('Play added to playlist');
 }
+
 
 /* ─── SHARE MODAL (simple toast for now) ─── */
 function openShareModal() { showToast('Share — coming soon'); }
