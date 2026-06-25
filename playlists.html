@@ -134,7 +134,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 
 /* SPLIT BODY — queue | right (video + bottom bar) */
 .split-body{flex:1;display:flex;min-height:0;overflow:hidden}
-.track-list{display:flex;flex-direction:column;overflow:hidden;background:#fff;border-right:1px solid #e5e7eb}
+.track-list{width:340px;flex-shrink:0;display:flex;flex-direction:column;overflow:hidden;background:#fff;border-right:1px solid #e5e7eb}
 .track-list-hdr{padding:10px 20px;display:flex;align-items:center;gap:0;border-bottom:1px solid #e5e7eb;flex-shrink:0}
 .tl-col{font-size:9.5px;font-weight:700;letter-spacing:.4px;color:#9ca3af;text-transform:uppercase}
 .track-scroll{flex:1;overflow-y:auto}
@@ -313,8 +313,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
     <!-- Curated featured card (latest) -->
     <div class="curated-hero" id="curated-hero-card" onclick="openPlaylist('c1',true)"></div>
 
-    <!-- Previous curated grid -->
-    <div class="pl-grid" id="row-curated-prev" style="grid-template-columns:repeat(auto-fill,minmax(152px,1fr));margin-bottom:32px"></div>
+    <div id="row-curated-prev"></div>
 
     <!-- FEATURED PLAYLISTS -->
     <div class="sec-row">
@@ -471,18 +470,6 @@ const CURATED = [
     {id:'c104',type:'Foul: Personal',subType:'',game:'CON @ CHI',date:'6/05/26',q:'Q4',clock:'00:52.1',rating:'Judgement - Lean Infraction',ref:'Perrymond (8)',loc:'Lead',note:'',comments:[]},
     {id:'c105',type:'Foul: Shooting',subType:'Driving Shot Attempt',game:'LVA @ LAS',date:'6/02/26',q:'Q1',clock:'08:14.3',rating:'No Infraction',ref:'Fahy (86)',loc:'Lead',note:'',comments:[]},
    ]},
-  {id:'c2', name:'Block-Charge Radar · Jun', desc:'All block-charge situations from the last two weeks — sorted by overturn rate', author:'BRS System', curated:true, cadence:'Biweekly', updatedAt:'Jun 18', color:2,
-   plays:[
-    {id:'c201',type:'Foul: Shooting',subType:'Block-Charge Situation',game:'PHX @ NYL',date:'5/29/26',q:'Q3',clock:'03:21.8',rating:'Judgement - Lean Infraction',ref:'Chang (23)',loc:'Trail',note:'',comments:[]},
-    {id:'c202',type:'Foul: Shooting',subType:'Block-Charge Situation',game:'ATL @ PDX',date:'5/29/26',q:'Q2',clock:'05:44.0',rating:'No Infraction',ref:'Perrymond (8)',loc:'Lead',note:'',comments:[]},
-    {id:'c203',type:'Foul: Shooting',subType:'Block-Charge Situation',game:'OKC @ IND',date:'6/22/26',q:'Q4',clock:'00:34.2',rating:'Infraction',ref:'Fahy (86)',loc:'Slot',note:'',comments:[]},
-   ]},
-  {id:'c3', name:'Late-Game Fouls · Season', desc:'High-leverage foul calls in the final 2 minutes, auto-curated from all published reviews', author:'BRS System', curated:true, cadence:'Season', updatedAt:'Jun 22', color:4,
-   plays:[
-    {id:'c301',type:'Foul: Personal',subType:'',game:'TOR @ CHI',date:'5/27/26',q:'Q4',clock:'00:22.6',rating:'No Infraction',ref:'Chang (23)',loc:'Trail',note:'',comments:[]},
-    {id:'c302',type:'Foul: Shooting',subType:'Driving Shot Attempt',game:'IND @ OKC',date:'6/15/26',q:'Q4',clock:'01:02.4',rating:'Infraction',ref:'Perrymond (8)',loc:'Lead',note:'',comments:[]},
-    {id:'c303',type:'Foul: Loose Ball',subType:'Dislodge from Position',game:'CON @ CHI',date:'6/05/26',q:'Q4',clock:'00:09.7',rating:'Judgement - Lean No',ref:'Fahy (86)',loc:'Slot',note:'',comments:[]},
-   ]},
 ];
 
 let PLAYLISTS = [
@@ -595,8 +582,16 @@ function renderLanding() {
       </div>
     </div>`;
 
-  /* ── Previous curated (smaller grid) ── */
-  document.getElementById('row-curated-prev').innerHTML = CURATED.slice(1).map(p=>buildCard(p,true)).join('');
+  /* ── Previous curated (smaller grid, hidden if none) ── */
+  const prevCurated = CURATED.slice(1);
+  const prevEl = document.getElementById('row-curated-prev');
+  if (prevCurated.length) {
+    prevEl.className = 'pl-grid';
+    prevEl.style.marginBottom = '32px';
+    prevEl.innerHTML = prevCurated.map(p=>buildCard(p,true)).join('');
+  } else {
+    prevEl.innerHTML = '';
+  }
 
   /* ── Featured & Mine ── */
   document.getElementById('row-featured').innerHTML = PLAYLISTS.filter(p=>p.featured).map(p=>buildCard(p,false)).join('');
