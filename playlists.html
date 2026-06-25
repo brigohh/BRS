@@ -28,30 +28,88 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 
 /* ── LANDING VIEW ── */
 #landing{flex:1;overflow-y:auto;display:flex;flex-direction:column}
-.landing-hero{background:linear-gradient(135deg,#1a3a6b 0%,#0f2347 100%);padding:32px 40px 28px;flex-shrink:0}
+.landing-hero{background:linear-gradient(135deg,#1a3a6b 0%,#0f2347 100%);padding:28px 40px 24px;flex-shrink:0}
 .lh-eyebrow{font-size:10px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:6px}
-.lh-title{font-size:24px;font-weight:800;color:#fff;letter-spacing:-.2px;margin-bottom:16px}
+.lh-title{font-size:24px;font-weight:800;color:#fff;letter-spacing:-.2px;margin-bottom:14px}
 .lh-actions{display:flex;gap:8px}
-.lh-btn{padding:8px 18px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;border:none;display:flex;align-items:center;gap:6px;transition:opacity .15s}
+.lh-btn{padding:7px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;border:none;display:flex;align-items:center;gap:6px;transition:opacity .15s}
 .lh-btn:hover{opacity:.85}
 .lh-btn.primary{background:#fff;color:#1a3a6b}
 .lh-btn.ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2)}
-.landing-body{padding:28px 40px 40px;flex:1}
-.row-lbl{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.row-lbl-text{font-size:14px;font-weight:700;color:#111827}
-.row-lbl-link{font-size:11.5px;color:#1a3a6b;cursor:pointer;font-weight:500}
-.row-lbl-link:hover{text-decoration:underline}
-.pl-row{display:flex;gap:14px;overflow-x:auto;padding-bottom:4px;margin-bottom:28px}
-.pl-card{width:168px;flex-shrink:0;cursor:pointer;transition:transform .15s}
+.landing-body{padding:24px 40px 48px;flex:1}
+
+/* Section headers */
+.sec-row{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:5px}
+.sec-title{font-size:15px;font-weight:800;color:#111827;display:flex;align-items:center;gap:7px}
+.sec-link{font-size:11.5px;color:#1a3a6b;cursor:pointer;font-weight:500}
+.sec-link:hover{text-decoration:underline}
+.sec-desc{font-size:11.5px;color:#6b7280;margin-bottom:14px;line-height:1.5}
+
+/* Spotify-like grid */
+.pl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(152px,1fr));gap:16px;margin-bottom:32px}
+.pl-card{cursor:pointer;transition:transform .15s}
 .pl-card:hover{transform:translateY(-2px)}
 .pl-card:hover .pl-card-name{color:#1a3a6b}
-.pl-cover{width:168px;height:168px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:48px;margin-bottom:10px;position:relative;flex-shrink:0;overflow:hidden}
+.pl-cover{width:100%;aspect-ratio:1;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:44px;margin-bottom:9px;position:relative;overflow:hidden}
 .pl-cover-badge{position:absolute;top:8px;right:8px;padding:2px 7px;border-radius:10px;font-size:9px;font-weight:700}
 .pl-cover-badge.pub{background:rgba(255,255,255,.9);color:#1a3a6b}
 .pl-cover-badge.priv{background:rgba(0,0,0,.45);color:#fff}
-.pl-card-name{font-size:12.5px;font-weight:700;color:#111827;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-card-name{font-size:12.5px;font-weight:700;color:#111827;margin-bottom:2px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .pl-card-meta{font-size:11px;color:#9ca3af;margin-bottom:1px}
 .pl-card-author{font-size:10.5px;color:#9ca3af;display:flex;align-items:center;gap:4px}
+
+/* Curated featured card */
+.curated-hero{display:grid;grid-template-columns:200px 1fr;background:#111827;border-radius:14px;overflow:hidden;margin-bottom:16px;cursor:pointer;transition:box-shadow .2s}
+.curated-hero:hover{box-shadow:0 6px 24px rgba(0,0,0,.18)}
+.ch-cover{width:200px;height:200px;display:flex;align-items:center;justify-content:center;position:relative;flex-shrink:0}
+.ch-play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.35);opacity:0;transition:opacity .2s}
+.curated-hero:hover .ch-play-overlay{opacity:1}
+.ch-play-btn{width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;color:#111827}
+.ch-right{padding:22px 26px;display:flex;flex-direction:column;gap:10px}
+.ch-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;background:#7c3aed;color:#fff;border-radius:20px;font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;width:fit-content}
+.ch-title{font-size:19px;font-weight:800;color:#fff;letter-spacing:-.2px;line-height:1.2}
+.ch-sub{font-size:11.5px;color:rgba(255,255,255,.55);line-height:1.55}
+.ch-chips{display:flex;gap:7px;flex-wrap:wrap}
+.ch-chip{padding:3px 9px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.14);border-radius:20px;font-size:10.5px;color:rgba(255,255,255,.65);display:flex;align-items:center;gap:4px}
+.ch-actions{display:flex;gap:7px;margin-top:auto}
+.ch-btn{padding:6px 14px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;border:none;display:flex;align-items:center;gap:5px;transition:opacity .15s}
+.ch-btn:hover{opacity:.85}
+.ch-btn.play{background:#fff;color:#111827}
+.ch-btn.ghost{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.15)}
+
+/* Filter chips */
+.filter-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.fchip{padding:5px 14px;border-radius:20px;font-size:11.5px;font-weight:600;cursor:pointer;border:1.5px solid #e5e7eb;color:#6b7280;background:#fff;transition:all .15s;white-space:nowrap}
+.fchip:hover{border-color:#d1d5db;color:#374151}
+.fchip.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
+
+/* Play type cards */
+.pt-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:32px}
+.pt-card{display:flex;align-items:center;gap:13px;padding:13px 15px;background:#fff;border:1px solid #e5e7eb;border-radius:11px;cursor:pointer;transition:all .15s}
+.pt-card:hover{border-color:#d1d5db;box-shadow:0 2px 8px rgba(0,0,0,.06);transform:translateY(-1px)}
+.pt-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.pt-info{flex:1;min-width:0}
+.pt-name{font-size:12px;font-weight:700;color:#111827;margin-bottom:2px}
+.pt-meta{font-size:10.5px;color:#9ca3af}
+
+/* Rating cards */
+.rating-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:32px}
+.rating-card{padding:16px;border-radius:12px;cursor:pointer;border:1.5px solid transparent;transition:transform .15s,box-shadow .15s}
+.rating-card:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,.1)}
+.rc-icon{font-size:22px;margin-bottom:8px}
+.rc-label{font-size:12px;font-weight:800;margin-bottom:3px}
+.rc-meta{font-size:10.5px;font-weight:500;opacity:.75}
+
+/* By Game rows */
+.game-list{display:flex;flex-direction:column;gap:6px;margin-bottom:32px}
+.game-row{display:flex;align-items:center;gap:12px;padding:11px 16px;background:#fff;border:1px solid #e5e7eb;border-radius:10px;cursor:pointer;transition:background .1s}
+.game-row:hover{background:#f9fafb}
+.game-teams{font-size:12.5px;font-weight:700;color:#111827;flex:1}
+.game-sub{font-size:10.5px;color:#9ca3af;margin-top:1px}
+.game-badge{font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:8px;background:#f3f4f6;color:#6b7280;white-space:nowrap}
+.game-counts{display:flex;gap:10px}
+.gcount{display:flex;align-items:center;gap:4px;font-size:11px;font-weight:700}
+.gcount-dot{width:7px;height:7px;border-radius:50%}
 
 /* ── SPLIT VIEW ── */
 #detail{flex:1;display:none;flex-direction:column;min-height:0;overflow:hidden}
@@ -241,32 +299,50 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 
   <div class="landing-body">
 
-    <!-- CURATED -->
-    <div class="row-lbl">
-      <div class="row-lbl-text" style="display:flex;align-items:center;gap:7px"><i class="ti ti-sparkles" style="color:#7c3aed;font-size:15px"></i> BRS Curated</div>
-      <div class="row-lbl-link" style="font-size:10.5px;color:#9ca3af;font-weight:400">Auto-updated weekly &amp; biweekly</div>
+    <!-- BRS CURATED -->
+    <div class="sec-row">
+      <div class="sec-title"><i class="ti ti-sparkles" style="color:#7c3aed;font-size:15px"></i> BRS Curated</div>
     </div>
-    <div class="pl-row" id="row-curated"></div>
+    <div class="sec-desc">Auto-updated weekly and biweekly — plays from your assigned games over the past 2 weeks that are worth a second look, based on rating outcomes, overturn patterns, and high-leverage situations.</div>
 
-    <!-- FEATURED -->
-    <div class="row-lbl">
-      <div class="row-lbl-text">⭐ Featured</div>
-    </div>
-    <div class="pl-row" id="row-featured"></div>
+    <!-- Curated featured card (latest) -->
+    <div class="curated-hero" id="curated-hero-card" onclick="openPlaylist('c1',true)"></div>
 
-    <!-- RECENTLY ADDED -->
-    <div class="row-lbl">
-      <div class="row-lbl-text">🕐 Recently Added</div>
-      <div class="row-lbl-link">See all</div>
+    <!-- Previous curated grid -->
+    <div class="pl-grid" id="row-curated-prev" style="grid-template-columns:repeat(auto-fill,minmax(152px,1fr));margin-bottom:32px"></div>
+
+    <!-- BY PLAY TYPE -->
+    <div class="sec-row" style="margin-bottom:10px">
+      <div class="sec-title">By Play Type</div>
     </div>
-    <div class="pl-row" id="row-recent"></div>
+    <div class="filter-chips" id="pt-chips"></div>
+    <div class="pt-grid" id="pt-grid"></div>
+
+    <!-- BY RATING -->
+    <div class="sec-row" style="margin-bottom:12px">
+      <div class="sec-title">By Rating</div>
+    </div>
+    <div class="rating-grid" id="rating-grid"></div>
+
+    <!-- BY GAME -->
+    <div class="sec-row" style="margin-bottom:12px">
+      <div class="sec-title">By Game</div>
+      <div class="sec-link">See all</div>
+    </div>
+    <div class="game-list" id="game-list"></div>
+
+    <!-- FEATURED PLAYLISTS -->
+    <div class="sec-row">
+      <div class="sec-title">Featured</div>
+    </div>
+    <div class="pl-grid" id="row-featured"></div>
 
     <!-- MY PLAYLISTS -->
-    <div class="row-lbl">
-      <div class="row-lbl-text">My Playlists</div>
-      <div class="row-lbl-link" onclick="openCreateModal()">+ New</div>
+    <div class="sec-row">
+      <div class="sec-title">My Playlists</div>
+      <div class="sec-link" onclick="openCreateModal()">+ New</div>
     </div>
-    <div class="pl-row" id="row-mine"></div>
+    <div class="pl-grid" id="row-mine"></div>
 
   </div>
 </div>
@@ -490,11 +566,113 @@ function buildCard(pl, isCurated) {
   </div>`;
 }
 
+/* Play type data */
+const PLAY_TYPES = [
+  {key:'driving',  label:'Driving Attempts',   icon:'ti-run',             bg:'#eff6ff',  ic:'#3b82f6', clips:38, games:14},
+  {key:'blockchg', label:'Block-Charge',        icon:'ti-shield-half',     bg:'#fee2e2',  ic:'#ef4444', clips:24, games:11},
+  {key:'looseball',label:'Loose Ball',          icon:'ti-ball-basketball', bg:'#fef3c7',  ic:'#f59e0b', clips:19, games:9},
+  {key:'screens',  label:'Screens',             icon:'ti-arrows-split-2',  bg:'#f3e8ff',  ic:'#8b5cf6', clips:17, games:8},
+  {key:'postup',   label:'Post-Up',             icon:'ti-user-bolt',       bg:'#f0fdfa',  ic:'#0d9488', clips:12, games:7},
+  {key:'3pt',      label:'3-Point Attempts',    icon:'ti-target',          bg:'#dcfce7',  ic:'#16a34a', clips:15, games:6},
+  {key:'rebound',  label:'Rebound',             icon:'ti-refresh',         bg:'#eef2ff',  ic:'#4f46e5', clips:11, games:5},
+  {key:'lateclock',label:'Late Clock',          icon:'ti-clock',           bg:'#f8fafc',  ic:'#64748b', clips:9,  games:5},
+];
+let activePtFilter = 'all';
+
+/* Game data */
+const GAMES = [
+  {teams:'TOR @ CHI', date:'5/27/26', league:'WNBA', wrong:2, saved:3, mastered:4},
+  {teams:'IND @ OKC', date:'6/22/26', league:'NBA',  wrong:1, saved:2, mastered:6},
+  {teams:'PHX @ NYL', date:'5/29/26', league:'WNBA', wrong:3, saved:1, mastered:3},
+  {teams:'CON @ CHI', date:'6/05/26', league:'WNBA', wrong:1, saved:2, mastered:5},
+  {teams:'GSV @ IND', date:'5/22/26', league:'NBA',  wrong:2, saved:1, mastered:4},
+];
+
 function renderLanding() {
-  document.getElementById('row-curated').innerHTML = CURATED.map(p=>buildCard(p,true)).join('');
+  /* ── Curated featured card ── */
+  const c0 = CURATED[0];
+  const [cc1,cc2] = COVER_COLORS[c0.color % COVER_COLORS.length];
+  document.getElementById('curated-hero-card').innerHTML = `
+    <div class="ch-cover" style="background:linear-gradient(135deg,${cc1},${cc2})">
+      <i class="ti ti-sparkles" style="font-size:56px;color:rgba(255,255,255,.25)"></i>
+      <div class="ch-play-overlay"><div class="ch-play-btn"><i class="ti ti-player-play"></i></div></div>
+    </div>
+    <div class="ch-right">
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="ch-badge"><i class="ti ti-sparkles" style="font-size:9px"></i> New this week</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.4);font-weight:500">Updated ${c0.updatedAt}</div>
+      </div>
+      <div class="ch-title">${c0.name}</div>
+      <div class="ch-sub">${c0.desc}</div>
+      <div class="ch-chips">
+        <div class="ch-chip"><i class="ti ti-player-play" style="font-size:9px"></i> ${c0.plays.length} clips</div>
+        <div class="ch-chip"><i class="ti ti-ball-basketball" style="font-size:9px"></i> ${[...new Set(c0.plays.map(p=>p.game))].length} games</div>
+        <div class="ch-chip"><i class="ti ti-refresh" style="font-size:9px"></i> ${c0.cadence}</div>
+      </div>
+      <div class="ch-actions">
+        <button class="ch-btn play" onclick="event.stopPropagation();openPlaylist('c1',true)"><i class="ti ti-player-play"></i> Play All</button>
+        <button class="ch-btn ghost" onclick="event.stopPropagation();showToast('Saved to My Playlists')"><i class="ti ti-bookmark"></i> Save</button>
+        <button class="ch-btn ghost" onclick="event.stopPropagation();showToast('Export — coming soon')"><i class="ti ti-download"></i> Export</button>
+      </div>
+    </div>`;
+
+  /* ── Previous curated (smaller grid) ── */
+  document.getElementById('row-curated-prev').innerHTML = CURATED.slice(1).map(p=>buildCard(p,true)).join('');
+
+  /* ── By Play Type ── */
+  const chips = [{key:'all',label:'All'},...PLAY_TYPES];
+  document.getElementById('pt-chips').innerHTML = chips.map(c=>
+    `<div class="fchip ${c.key===activePtFilter?'on':''}" onclick="setPtFilter('${c.key}')">${c.label}</div>`
+  ).join('');
+  const filtered = activePtFilter==='all' ? PLAY_TYPES : PLAY_TYPES.filter(p=>p.key===activePtFilter);
+  document.getElementById('pt-grid').innerHTML = filtered.map(pt=>`
+    <div class="pt-card" onclick="showToast('Browse by ${pt.label} — coming soon')">
+      <div class="pt-icon" style="background:${pt.bg};color:${pt.ic}"><i class="ti ${pt.icon}"></i></div>
+      <div class="pt-info">
+        <div class="pt-name">${pt.label}</div>
+        <div class="pt-meta">${pt.clips} clips &middot; ${pt.games} games</div>
+      </div>
+      <i class="ti ti-chevron-right" style="color:#d1d5db;font-size:13px;flex-shrink:0"></i>
+    </div>`).join('');
+
+  /* ── By Rating ── */
+  const ratings = [
+    {label:'Infraction',         short:'INF',      bg:'#fee2e2',color:'#991b1b',border:'#fca5a5',icon:'ti-alert-circle', clips:47},
+    {label:'Lean Infraction',    short:'LEAN INF', bg:'#fef3c7',color:'#92400e',border:'#fcd34d',icon:'ti-alert-triangle',clips:31},
+    {label:'Lean No',            short:'LEAN NO',  bg:'#dbeafe',color:'#1e40af',border:'#bfdbfe',icon:'ti-info-circle',  clips:28},
+    {label:'No Infraction',      short:'NO INF',   bg:'#dcfce7',color:'#166534',border:'#86efac',icon:'ti-circle-check', clips:52},
+  ];
+  document.getElementById('rating-grid').innerHTML = ratings.map(r=>`
+    <div class="rating-card" style="background:${r.bg};border-color:${r.border}" onclick="showToast('Browse by ${r.label} — coming soon')">
+      <div class="rc-icon" style="color:${r.color}"><i class="ti ${r.icon}"></i></div>
+      <div class="rc-label" style="color:${r.color}">${r.short}</div>
+      <div class="rc-meta" style="color:${r.color}">${r.clips} clips</div>
+    </div>`).join('');
+
+  /* ── By Game ── */
+  const lgColors = {WNBA:'#f59e4a',NBA:'#1a3a6b','G-League':'#111827',BAL:'#166534'};
+  document.getElementById('game-list').innerHTML = GAMES.map(g=>`
+    <div class="game-row" onclick="showToast('${g.teams} — coming soon')">
+      <div style="flex:1;min-width:0">
+        <div class="game-teams">${g.teams}</div>
+        <div class="game-sub">${g.date} &middot; ${g.league}</div>
+      </div>
+      <div class="game-badge" style="background:${lgColors[g.league]||'#9ca3af'};color:#fff">${g.league}</div>
+      <div class="game-counts">
+        <div class="gcount" style="color:#ef4444"><div class="gcount-dot" style="background:#ef4444"></div>${g.wrong} wrong</div>
+        <div class="gcount" style="color:#f59e0b"><div class="gcount-dot" style="background:#f59e0b"></div>${g.saved} saved</div>
+        <div class="gcount" style="color:#16a34a"><div class="gcount-dot" style="background:#16a34a"></div>${g.mastered} mastered</div>
+      </div>
+    </div>`).join('');
+
+  /* ── Featured & Mine ── */
   document.getElementById('row-featured').innerHTML = PLAYLISTS.filter(p=>p.featured).map(p=>buildCard(p,false)).join('');
-  document.getElementById('row-recent').innerHTML = [...PLAYLISTS].slice(0,4).map(p=>buildCard(p,false)).join('');
   document.getElementById('row-mine').innerHTML = PLAYLISTS.filter(p=>p.mine).map(p=>buildCard(p,false)).join('');
+}
+
+function setPtFilter(key) {
+  activePtFilter = key;
+  renderLanding();
 }
 
 /* ─── DETAIL ─── */
