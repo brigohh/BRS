@@ -7,15 +7,17 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;color:#111827;background:#f3f4f6;min-height:100vh}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;color:#111827;background:#f3f4f6;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+
+/* NAV */
 .nav{background:#1a3a6b;height:48px;display:flex;align-items:center;padding:0 24px;flex-shrink:0;overflow:visible;position:relative;z-index:300}
-.nav-logo{display:flex;align-items:center;gap:8px}
+.nav-logo{display:flex;align-items:center;gap:8px;cursor:pointer}
 .nav-brand{color:rgba(255,255,255,.9);font-size:11.5px;font-weight:600;white-space:nowrap;letter-spacing:.5px}
-.nav-links{display:flex;align-items:center;margin-left:auto;flex-shrink:0;flex-wrap:nowrap}
+.nav-links{display:flex;align-items:center;margin-left:auto;flex-shrink:0;flex-wrap:nowrap;gap:0}
 .nl{color:rgba(255,255,255,.55);font-size:10.5px;padding:0 8px;cursor:pointer;font-weight:500;height:48px;display:flex;align-items:center;border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0}
 .nl:hover{color:#fff}
 .nl.on{color:#fff;border-bottom-color:rgba(255,255,255,.7);font-weight:600}
-.nav-av{width:30px;height:30px;border-radius:50%;background:#2d5aa0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;flex-shrink:0}
+.nav-av{width:30px;height:30px;border-radius:50%;background:#2d5aa0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;flex-shrink:0;margin-left:12px;cursor:pointer}
 .nav-dropdown{position:relative;display:flex;align-items:center;height:48px}
 .nav-dropdown .nl{gap:4px}
 .nav-dd-caret{font-size:8px;opacity:.7;transition:transform .15s}
@@ -24,12 +26,154 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .nav-dropdown.open .nav-dd-menu{display:block}
 .nav-dd-item{display:block;padding:9px 16px;font-size:11px;font-weight:500;color:#374151;text-decoration:none;white-space:nowrap;cursor:pointer}
 .nav-dd-item:hover{background:#f0f2f5;color:#1a3a6b}
+
+/* RIM TOP BAND */
+.rim-band{background:#0f1f45;padding:12px 24px;flex-shrink:0;display:flex;align-items:center;gap:20px;border-bottom:1px solid rgba(255,255,255,.08)}
+.rim-title-block{display:flex;flex-direction:column}
+.rim-title{font-size:16px;font-weight:800;color:#fff;letter-spacing:.3px}
+.rim-sub{font-size:10px;color:rgba(255,255,255,.45);font-weight:500;letter-spacing:.5px;text-transform:uppercase;margin-top:1px}
+.rim-stat-chips{display:flex;gap:8px;margin-left:auto}
+.rim-chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:5px 14px;display:flex;flex-direction:column;align-items:center;gap:1px}
+.rim-chip-n{font-size:16px;font-weight:700;color:#fff;line-height:1}
+.rim-chip-l{font-size:9px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.4px;white-space:nowrap}
+.rim-chip.unread .rim-chip-n{color:#f87171}
+.rim-league-tabs{display:flex;gap:4px}
+.rim-lg-tab{padding:5px 12px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;color:rgba(255,255,255,.5);background:transparent;border:1px solid transparent;display:flex;align-items:center;gap:6px;transition:all .15s}
+.rim-lg-tab img{width:16px;height:16px;object-fit:contain}
+.rim-lg-tab:hover{color:#fff;background:rgba(255,255,255,.08)}
+.rim-lg-tab.on{color:#fff;background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.18)}
+
+/* RECENTLY UPDATED GAMES BAR */
+.games-bar{background:#1a3a6b;padding:10px 24px;flex-shrink:0;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(255,255,255,.08);overflow-x:auto}
+.gb-lbl{font-size:10px;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.5px;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+.game-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:8px 14px;cursor:pointer;flex-shrink:0;transition:background .15s;min-width:160px}
+.game-card:hover{background:rgba(255,255,255,.13)}
+.game-card.active{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.3)}
+.gc-row{display:flex;align-items:center;gap:7px}
+.gc-team{font-size:11.5px;font-weight:600;color:#fff;flex:1}
+.gc-score{font-size:13px;font-weight:700;color:#fff}
+.gc-meta{font-size:9.5px;color:rgba(255,255,255,.4);margin-top:5px;display:flex;align-items:center;gap:5px}
+.gc-badge{padding:1px 6px;border-radius:10px;font-size:9px;font-weight:700;background:#16a34a;color:#fff}
+.gc-badge.l2m{background:#2563eb}
+.gc-logo{width:16px;height:16px;object-fit:contain;flex-shrink:0}
+
+/* MAIN LAYOUT */
+.rim-body{flex:1;display:flex;min-height:0;overflow:hidden}
+
+/* SIDEBAR */
+.rim-sidebar{width:220px;flex-shrink:0;background:#fff;border-right:1px solid #e5e7eb;display:flex;flex-direction:column;overflow:hidden}
+.rim-sidebar-user{padding:16px 16px 12px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;gap:10px}
+.sidebar-av{width:36px;height:36px;border-radius:50%;background:#1a3a6b;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0}
+.sidebar-name{font-size:13px;font-weight:700;color:#111827}
+.sidebar-role{font-size:10.5px;color:#9ca3af;margin-top:1px}
+.rim-nav-items{padding:10px 8px;display:flex;flex-direction:column;gap:2px;flex:1;overflow-y:auto}
+.rim-nav-item{padding:8px 12px;border-radius:8px;display:flex;align-items:center;gap:9px;cursor:pointer;font-size:12px;font-weight:500;color:#6b7280;transition:all .12s;position:relative}
+.rim-nav-item:hover{background:#f9fafb;color:#111827}
+.rim-nav-item.on{background:#eff6ff;color:#1a3a6b;font-weight:600}
+.rim-nav-item i{font-size:16px;flex-shrink:0}
+.rim-nav-item .badge{position:absolute;right:10px;min-width:18px;height:18px;border-radius:9px;background:#ef4444;color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px}
+.rim-nav-section{font-size:9.5px;font-weight:700;color:#d1d5db;letter-spacing:.5px;text-transform:uppercase;padding:12px 12px 4px;margin-top:4px}
+.rim-sidebar-footer{padding:12px 16px;border-top:1px solid #e5e7eb;font-size:10.5px;color:#9ca3af}
+
+/* MAIN CONTENT */
+.rim-main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+
+/* LAST VISITED + QUICK ACTIONS */
+.rim-top-row{display:flex;gap:14px;padding:16px 20px 12px;flex-shrink:0}
+.lv-card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:14px 16px;flex-shrink:0;min-width:200px;max-width:220px}
+.lv-lbl{font-size:9.5px;font-weight:700;color:#9ca3af;letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px}
+.lv-matchup{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.lv-team{font-size:12px;font-weight:700;color:#111827}
+.lv-at{font-size:11px;color:#d1d5db;font-weight:400}
+.lv-meta{font-size:10.5px;color:#9ca3af;display:flex;align-items:center;gap:6px}
+.lv-badge{padding:2px 7px;border-radius:10px;font-size:9.5px;font-weight:700;background:#dbeafe;color:#1e40af;border:1px solid #bfdbfe}
+.quick-cards{display:flex;gap:10px;flex:1;flex-wrap:wrap}
+.quick-card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:14px 16px;flex:1;min-width:140px;cursor:pointer;transition:box-shadow .15s}
+.quick-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.qc-icon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:8px}
+.qc-icon.blue{background:#dbeafe;color:#2563eb}
+.qc-icon.purple{background:#f3e8ff;color:#7c3aed}
+.qc-icon.green{background:#dcfce7;color:#16a34a}
+.qc-icon.orange{background:#fff7ed;color:#ea580c}
+.qc-lbl{font-size:12px;font-weight:700;color:#111827;margin-bottom:2px}
+.qc-sub{font-size:10.5px;color:#9ca3af}
+
+/* CONTENT AREA */
+.rim-content{flex:1;display:flex;gap:0;overflow:hidden;padding:0 20px 16px}
+
+/* INTERACTIONS TABLE */
+.interactions-panel{flex:1;display:flex;flex-direction:column;overflow:hidden;background:#fff;border:1px solid #e5e7eb;border-radius:10px;min-width:0}
+.panel-hdr{padding:14px 18px 10px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.panel-title{font-size:14px;font-weight:700;color:#111827}
+.panel-tabs{display:flex;gap:0;margin-left:0;border-bottom:0}
+.ptab{padding:5px 14px;font-size:11.5px;font-weight:500;color:#6b7280;cursor:pointer;border-bottom:2px solid transparent;transition:all .12s}
+.ptab:hover{color:#111827}
+.ptab.on{color:#1a3a6b;border-bottom-color:#1a3a6b;font-weight:600}
+.panel-actions{margin-left:auto;display:flex;gap:6px}
+.pa-btn{padding:5px 12px;border:1px solid #e5e7eb;border-radius:7px;font-size:11px;font-weight:500;cursor:pointer;background:#fff;color:#374151;display:flex;align-items:center;gap:5px;transition:background .1s}
+.pa-btn:hover{background:#f9fafb}
+.pa-btn.primary{background:#1a3a6b;color:#fff;border-color:#1a3a6b}
+.pa-btn.primary:hover{background:#15306e}
+.int-table{width:100%;border-collapse:collapse}
+.int-table th{padding:8px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.4px;color:#9ca3af;background:#f9fafb;border-bottom:2px solid #e5e7eb;text-transform:uppercase;white-space:nowrap}
+.int-table td{padding:10px 14px;border-bottom:1px solid #f3f4f6;font-size:12px;color:#374151;vertical-align:middle}
+.int-table tr:hover td{background:#f9fafb;cursor:pointer}
+.int-table tr.unread td{color:#111827}
+.int-table tr.unread td:first-child{font-weight:600}
+.int-date{color:#9ca3af;font-size:11px;white-space:nowrap}
+.int-from{font-weight:600;color:#111827}
+.int-from.highlight{color:#2563eb}
+.int-cat{display:inline-flex;padding:2px 8px;border-radius:10px;font-size:10.5px;font-weight:600;white-space:nowrap}
+.cat-play{background:#dbeafe;color:#1e40af}
+.cat-playlist{background:#f3e8ff;color:#7c3aed}
+.cat-trend{background:#dcfce7;color:#166534}
+.cat-issue{background:#fee2e2;color:#991b1b}
+.cat-l2m{background:#fef9c3;color:#854d0e}
+.cat-assign{background:#e0e7ff;color:#3730a3}
+.cat-wishlist{background:#f3f4f6;color:#6b7280}
+.int-subject{flex:1;max-width:380px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.int-unread-dot{width:8px;height:8px;border-radius:50%;background:#ef4444;flex-shrink:0;display:inline-block}
+.int-expand{color:#9ca3af;font-size:12px;text-align:center}
+.table-scroll{flex:1;overflow-y:auto}
+.filter-row{padding:8px 18px;border-bottom:1px solid #e5e7eb;display:flex;gap:6px;align-items:center;flex-shrink:0}
+.filt-btn{padding:3px 10px;border:1px solid #e5e7eb;border-radius:20px;font-size:11px;font-weight:500;cursor:pointer;background:#fff;color:#6b7280;transition:all .12s}
+.filt-btn:hover{border-color:#d1d5db;color:#374151}
+.filt-btn.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
+.search-box{margin-left:auto;padding:4px 10px;border:1px solid #e5e7eb;border-radius:7px;font-size:11.5px;color:#374151;background:#fff;width:180px;outline:none}
+.search-box:focus{border-color:#1a3a6b}
+
+/* RIGHT PANEL */
+.rim-right{width:280px;flex-shrink:0;display:flex;flex-direction:column;gap:12px;padding-left:14px;overflow-y:auto}
+.rp-card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:14px 16px}
+.rp-card-title{font-size:11px;font-weight:700;color:#6b7280;letter-spacing:.4px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.rp-card-title i{font-size:14px}
+.playlist-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #f3f4f6;cursor:pointer}
+.playlist-item:last-child{border-bottom:none}
+.playlist-item:hover .pl-name{color:#1a3a6b}
+.pl-icon{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.pl-icon.blue{background:#dbeafe;color:#2563eb}
+.pl-icon.purple{background:#f3e8ff;color:#7c3aed}
+.pl-icon.green{background:#dcfce7;color:#16a34a}
+.pl-icon.orange{background:#fff7ed;color:#ea580c}
+.pl-name{font-size:12px;font-weight:600;color:#111827;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-count{font-size:10.5px;color:#9ca3af;white-space:nowrap}
+.trend-row{padding:6px 0;border-bottom:1px solid #f3f4f6;display:flex;align-items:flex-start;gap:8px}
+.trend-row:last-child{border-bottom:none}
+.trend-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.trend-dot.red{background:#ef4444}
+.trend-dot.blue{background:#2563eb}
+.trend-dot.green{background:#16a34a}
+.trend-text{font-size:11.5px;color:#374151;line-height:1.45;flex:1}
+.trend-meta{font-size:10px;color:#9ca3af;margin-top:2px}
+.new-msg-btn{width:100%;padding:9px;background:#1a3a6b;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:6px}
+.new-msg-btn:hover{background:#15306e}
 </style>
 </head>
 <body>
 
+<!-- NAV -->
 <div class="nav">
-  <div class="nav-logo" onclick="location='home.html'" style="cursor:pointer">
+  <div class="nav-logo" onclick="location='home.html'">
     <img src="Logos/nba-logo.svg" style="width:16px;height:auto">
     <div class="nav-brand">BRIDGET REVIEW SYSTEM 1.0</div>
   </div>
@@ -48,11 +192,355 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       </div>
     </div>
     <span class="nl">MY SCHEDULE</span>
-    <div class="nav-av" style="margin-left:12px">BN</div>
+    <div class="nav-av">BN</div>
   </div>
 </div>
 
+<!-- RIM TOP BAND -->
+<div class="rim-band">
+  <div class="rim-title-block">
+    <div class="rim-title"><i class="ti ti-messages" style="font-size:18px;vertical-align:middle;margin-right:6px;opacity:.8"></i>RIM</div>
+    <div class="rim-sub">Review Insights &amp; Messaging Platform</div>
+  </div>
+  <div class="rim-league-tabs">
+    <div class="rim-lg-tab on" onclick="setLg(this,'')">All</div>
+    <div class="rim-lg-tab" onclick="setLg(this,'NBA')"><img src="Logos/nba-logo.svg" onerror="this.style.display='none'"> NBA</div>
+    <div class="rim-lg-tab" onclick="setLg(this,'WNBA')"><img src="Logos/WNBA LOGO.png" onerror="this.style.display='none'"> WNBA</div>
+    <div class="rim-lg-tab" onclick="setLg(this,'G-League')"><img src="Logos/g league logo.png" onerror="this.style.display='none'"> G-League</div>
+  </div>
+  <div class="rim-stat-chips">
+    <div class="rim-chip unread">
+      <div class="rim-chip-n" id="chip-unread">7</div>
+      <div class="rim-chip-l">Unread</div>
+    </div>
+    <div class="rim-chip">
+      <div class="rim-chip-n">23</div>
+      <div class="rim-chip-l">Interactions</div>
+    </div>
+    <div class="rim-chip">
+      <div class="rim-chip-n">5</div>
+      <div class="rim-chip-l">Playlists</div>
+    </div>
+    <div class="rim-chip">
+      <div class="rim-chip-n">12</div>
+      <div class="rim-chip-l">Threads</div>
+    </div>
+  </div>
+</div>
+
+<!-- RECENTLY UPDATED GAMES BAR -->
+<div class="games-bar">
+  <div class="gb-lbl">Recently Updated</div>
+  <div class="game-card active" onclick="selectGame(this)">
+    <div class="gc-row">
+      <img src="Logos/toronto tempo logo.jpg" class="gc-logo" onerror="this.outerHTML='<span class=&quot;gc-logo&quot; style=&quot;font-size:9px;font-weight:700;color:rgba(255,255,255,.6)&quot;>TOR</span>'"> <span class="gc-team">Tempo</span><span class="gc-score">121</span>
+    </div>
+    <div class="gc-row" style="margin-top:4px">
+      <img src="Logos/chicago sky logo.png" class="gc-logo" onerror="this.outerHTML='<span class=&quot;gc-logo&quot; style=&quot;font-size:9px;font-weight:700;color:rgba(255,255,255,.6)&quot;>CHI</span>'"> <span class="gc-team">Sky</span><span class="gc-score">118</span>
+    </div>
+    <div class="gc-meta">5/27/26 · SC: Foley <span class="gc-badge l2m">L2M</span></div>
+  </div>
+  <div class="game-card" onclick="selectGame(this)">
+    <div class="gc-row">
+      <img src="Logos/Indiana_Pacers_logo.svg.png" class="gc-logo" onerror="this.outerHTML='<span class=&quot;gc-logo&quot; style=&quot;font-size:9px;font-weight:700;color:rgba(255,255,255,.6)&quot;>IND</span>'"> <span class="gc-team">Pacers</span><span class="gc-score">121</span>
+    </div>
+    <div class="gc-row" style="margin-top:4px">
+      <img src="Logos/oklahoma-city-thunder-logo.png" class="gc-logo" onerror="this.outerHTML='<span class=&quot;gc-logo&quot; style=&quot;font-size:9px;font-weight:700;color:rgba(255,255,255,.6)&quot;>OKC</span>'"> <span class="gc-team">Thunder</span><span class="gc-score">117</span>
+    </div>
+    <div class="gc-meta">6/22/26 · SC: Foley <span class="gc-badge">Published</span></div>
+  </div>
+  <div class="game-card" onclick="selectGame(this)">
+    <div class="gc-row">
+      <span class="gc-team">CON</span><span class="gc-score">88</span>
+    </div>
+    <div class="gc-row" style="margin-top:4px">
+      <span class="gc-team">CHI</span><span class="gc-score">82</span>
+    </div>
+    <div class="gc-meta">6/05/26 · SC: Gargin <span class="gc-badge">Published</span></div>
+  </div>
+  <div class="game-card" onclick="selectGame(this)">
+    <div class="gc-row">
+      <span class="gc-team">LVA</span><span class="gc-score">101</span>
+    </div>
+    <div class="gc-row" style="margin-top:4px">
+      <span class="gc-team">LAS</span><span class="gc-score">94</span>
+    </div>
+    <div class="gc-meta">6/02/26 · SC: Oakley Jr. <span class="gc-badge l2m">L2M</span></div>
+  </div>
+  <div class="game-card" onclick="selectGame(this)">
+    <div class="gc-row">
+      <span class="gc-team">OKC</span><span class="gc-score">112</span>
+    </div>
+    <div class="gc-row" style="margin-top:4px">
+      <span class="gc-team">IND</span><span class="gc-score">109</span>
+    </div>
+    <div class="gc-meta">6/19/26 · SC: Gargin <span class="gc-badge">Published</span></div>
+  </div>
+  <div class="game-card" onclick="selectGame(this)">
+    <div class="gc-row">
+      <span class="gc-team">PHX</span><span class="gc-score">97</span>
+    </div>
+    <div class="gc-row" style="margin-top:4px">
+      <span class="gc-team">NYL</span><span class="gc-score">91</span>
+    </div>
+    <div class="gc-meta">5/29/26 · SC: Gargin</div>
+  </div>
+</div>
+
+<!-- BODY -->
+<div class="rim-body">
+
+  <!-- SIDEBAR -->
+  <div class="rim-sidebar">
+    <div class="rim-sidebar-user">
+      <div class="sidebar-av">BN</div>
+      <div>
+        <div class="sidebar-name">Bridget Ng</div>
+        <div class="sidebar-role">SC Reviewer</div>
+      </div>
+    </div>
+    <div class="rim-nav-items">
+      <div class="rim-nav-section">Main</div>
+      <div class="rim-nav-item on" onclick="navTo(this,'interactions')"><i class="ti ti-inbox"></i> Interactions <span class="badge">7</span></div>
+      <div class="rim-nav-item" onclick="navTo(this,'threads')"><i class="ti ti-messages"></i> Threads <span class="badge">3</span></div>
+      <div class="rim-nav-item" onclick="navTo(this,'message-board')"><i class="ti ti-layout-board"></i> Message Board</div>
+      <div class="rim-nav-section">Content</div>
+      <div class="rim-nav-item" onclick="navTo(this,'my-games')"><i class="ti ti-ball-basketball"></i> My Games</div>
+      <div class="rim-nav-item" onclick="navTo(this,'playlists')"><i class="ti ti-playlist"></i> Playlists</div>
+      <div class="rim-nav-item" onclick="navTo(this,'trends')"><i class="ti ti-trending-up"></i> Trends</div>
+      <div class="rim-nav-section">Tools</div>
+      <div class="rim-nav-item" onclick="navTo(this,'calendar')"><i class="ti ti-calendar"></i> Calendar</div>
+      <div class="rim-nav-item" onclick="navTo(this,'resources')"><i class="ti ti-book"></i> Resources</div>
+      <div class="rim-nav-item" onclick="navTo(this,'settings')"><i class="ti ti-settings"></i> Settings</div>
+    </div>
+    <div class="rim-sidebar-footer">RIM v1.0 · BRS Platform</div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="rim-main">
+    <!-- TOP ROW: Last Visited + Quick Actions -->
+    <div class="rim-top-row">
+      <div class="lv-card">
+        <div class="lv-lbl">Last Visited</div>
+        <div class="lv-matchup">
+          <span class="lv-team">TOR</span>
+          <span class="lv-at">@</span>
+          <span class="lv-team">CHI</span>
+        </div>
+        <div class="lv-meta">
+          <div class="lv-badge">IN PROGRESS</div>
+          <span>5/27/2026</span>
+        </div>
+      </div>
+      <div class="quick-cards">
+        <div class="quick-card" onclick="navTo(document.querySelector('[data-nav=interactions]'),'interactions')">
+          <div class="qc-icon blue"><i class="ti ti-send"></i></div>
+          <div class="qc-lbl">New Interaction</div>
+          <div class="qc-sub">Share a play or start a thread</div>
+        </div>
+        <div class="quick-card" onclick="navTo(document.querySelector('[data-nav=playlists]'),'playlists')">
+          <div class="qc-icon purple"><i class="ti ti-playlist"></i></div>
+          <div class="qc-lbl">My Playlists</div>
+          <div class="qc-sub">5 active playlists</div>
+        </div>
+        <div class="quick-card" onclick="navTo(document.querySelector('[data-nav=trends]'),'trends')">
+          <div class="qc-icon green"><i class="ti ti-trending-up"></i></div>
+          <div class="qc-lbl">Trends</div>
+          <div class="qc-sub">Block-charge trending up</div>
+        </div>
+        <div class="quick-card" onclick="navTo(document.querySelector('[data-nav=threads]'),'threads')">
+          <div class="qc-icon orange"><i class="ti ti-messages"></i></div>
+          <div class="qc-lbl">Active Threads</div>
+          <div class="qc-sub">3 unread replies</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTENT AREA -->
+    <div class="rim-content">
+
+      <!-- INTERACTIONS TABLE -->
+      <div class="interactions-panel">
+        <div class="panel-hdr">
+          <div class="panel-title">My Interactions</div>
+          <div class="panel-tabs" style="display:flex;gap:0;margin-left:16px;border-bottom:0">
+            <div class="ptab on" onclick="setTab(this)">All</div>
+            <div class="ptab" onclick="setTab(this)">Unread</div>
+            <div class="ptab" onclick="setTab(this)">Play Sharing</div>
+            <div class="ptab" onclick="setTab(this)">Playlists</div>
+            <div class="ptab" onclick="setTab(this)">Threads</div>
+          </div>
+          <div class="panel-actions">
+            <button class="pa-btn"><i class="ti ti-filter" style="font-size:12px"></i> Filter</button>
+            <button class="pa-btn primary" onclick="newInteraction()"><i class="ti ti-plus" style="font-size:12px"></i> New</button>
+          </div>
+        </div>
+        <div class="filter-row">
+          <div class="filt-btn on" onclick="filt(this,'all')">All</div>
+          <div class="filt-btn" onclick="filt(this,'play')">Play Clarification &amp; Feedback</div>
+          <div class="filt-btn" onclick="filt(this,'playlist')">Playlists</div>
+          <div class="filt-btn" onclick="filt(this,'trend')">Reviewer Trends</div>
+          <div class="filt-btn" onclick="filt(this,'issue')">Performance Issues</div>
+          <div class="filt-btn" onclick="filt(this,'assign')">Game Assignments</div>
+          <input class="search-box" type="text" placeholder="Search interactions…">
+        </div>
+        <div class="table-scroll">
+          <table class="int-table">
+            <thead>
+              <tr>
+                <th style="width:90px">Date</th>
+                <th>From</th>
+                <th>Category</th>
+                <th>Subject</th>
+                <th style="width:60px;text-align:center">Unread</th>
+                <th style="width:60px;text-align:center">Expand</th>
+              </tr>
+            </thead>
+            <tbody id="int-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- RIGHT PANEL -->
+      <div class="rim-right">
+        <button class="new-msg-btn"><i class="ti ti-send" style="font-size:14px"></i> New Interaction</button>
+
+        <div class="rp-card">
+          <div class="rp-card-title"><i class="ti ti-playlist" style="color:#7c3aed"></i> My Playlists</div>
+          <div class="playlist-item">
+            <div class="pl-icon purple"><i class="ti ti-player-play"></i></div>
+            <div class="pl-name">WNBA DHO Examples</div>
+            <div class="pl-count">14 plays</div>
+          </div>
+          <div class="playlist-item">
+            <div class="pl-icon blue"><i class="ti ti-player-play"></i></div>
+            <div class="pl-name">Block-Charge 2026</div>
+            <div class="pl-count">9 plays</div>
+          </div>
+          <div class="playlist-item">
+            <div class="pl-icon green"><i class="ti ti-player-play"></i></div>
+            <div class="pl-name">Plays for 2026-27 Training</div>
+            <div class="pl-count">22 plays</div>
+          </div>
+          <div class="playlist-item">
+            <div class="pl-icon orange"><i class="ti ti-player-play"></i></div>
+            <div class="pl-name">3Q Defense Examples</div>
+            <div class="pl-count">7 plays</div>
+          </div>
+          <div class="playlist-item">
+            <div class="pl-icon blue"><i class="ti ti-player-play"></i></div>
+            <div class="pl-name">Flagrant Foul Reviews</div>
+            <div class="pl-count">5 plays</div>
+          </div>
+        </div>
+
+        <div class="rp-card">
+          <div class="rp-card-title"><i class="ti ti-trending-up" style="color:#16a34a"></i> Recent Trends</div>
+          <div class="trend-row">
+            <div class="trend-dot red"></div>
+            <div>
+              <div class="trend-text">Block-charge overturn rate up 8% over last 10 games</div>
+              <div class="trend-meta">Reviewer Trends · Curtis Oakley Jr.</div>
+            </div>
+          </div>
+          <div class="trend-row">
+            <div class="trend-dot blue"></div>
+            <div>
+              <div class="trend-text">Off-ball contact calls increasing in Q4 situations</div>
+              <div class="trend-meta">Reviewer Trends · Myron Hickman</div>
+            </div>
+          </div>
+          <div class="trend-row">
+            <div class="trend-dot green"></div>
+            <div>
+              <div class="trend-text">WNBA DHO foul rate down 12% since rule clarification</div>
+              <div class="trend-meta">Reviewer Trends · Dan Foley</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /rim-content -->
+  </div><!-- /rim-main -->
+</div><!-- /rim-body -->
+
 <script>
+const INTERACTIONS = [
+  {date:'5/27/2026', from:'Bridget Ng', fromSelf:true, cat:'wishlist', catLabel:'GRS Wish List', subject:"Bridget added an item to 'GRS Wish List'", unread:false},
+  {date:'5/27/2026', from:'Maeve Carroll', highlight:true, cat:'play', catLabel:'Play Clarification and Feedback', subject:'Maeve sent you a play - 5/25 NYK @ CLE', unread:true},
+  {date:'5/27/2026', from:'Dan Foley', cat:'playlist', catLabel:'Playlists - Calibration', subject:"Dan added a play to 'WNBA three-quarter defense examples'", unread:false},
+  {date:'5/26/2026', from:'Curtis Oakley, Jr.', cat:'trend', catLabel:'Reviewer Trends', subject:'Re: Re: Re: Your Interaction Created 5/24/2026', unread:false},
+  {date:'5/25/2026', from:'Tucker Grady', highlight:true, cat:'playlist', catLabel:'Playlist - Play Examples', subject:"Tucker added you to a playlist - 'Plays for 2026-27 Training'", unread:true},
+  {date:'5/25/2026', from:'Curtis Oakley, Jr.', cat:'trend', catLabel:'Reviewer Trends', subject:'Re: Re: Your Interaction Created 5/24/2026', unread:false},
+  {date:'5/24/2026', from:'Curtis Oakley, Jr.', cat:'trend', catLabel:'Reviewer Trends', subject:'Re: Your Interaction Created 5/24/2026', unread:false},
+  {date:'5/20/2026', from:'Dan Foley', highlight:true, cat:'playlist', catLabel:'Playlists - Calibration', subject:"Dan added a play to 'WNBA DHO Examples'", unread:true},
+  {date:'5/20/2026', from:'Sofia Carrillo', cat:'play', catLabel:'Play Clarifications and Feedback', subject:'Re: Sofia sent you a play - 5/19 CLE @ NYK', unread:false},
+  {date:'5/20/2026', from:'Sofia Carrillo', cat:'play', catLabel:'Play Clarifications and Feedback', subject:'Sofia sent you a play - 5/19 CLE @ NYK', unread:false},
+  {date:'5/16/2026', from:'Myron Hickman', cat:'trend', catLabel:'Player Trends and Observations', subject:"Myron created a thread - 'Wemby off-ball clamps and hooks'", unread:false},
+  {date:'5/15/2026', from:'Dan Foley', highlight:true, cat:'issue', catLabel:'GRS Performance Issues', subject:"Re: Dan wrote on 'GRS Performance Issues Message Board'", unread:true},
+  {date:'5/15/2026', from:'Dan Foley', highlight:true, cat:'issue', catLabel:'GRS Performance Issues', subject:"Dan wrote on 'GRS Performance Issues Message Board'", unread:true},
+  {date:'5/14/2026', from:'Mark Wunderlich', cat:'l2m', catLabel:'L2M - RM Review', subject:'Re: L2M - 5/13 CLE @ DET', unread:false},
+  {date:'5/14/2026', from:'Waheed Ameen', highlight:true, cat:'l2m', catLabel:'L2M - Initial Review', subject:'L2M Completed - 5/13 CLE @ DET', unread:true},
+  {date:'5/13/2026', from:'Erica Cabrera', cat:'play', catLabel:'Play Clarifications and Feedback', subject:'Re: Erica started an interaction with you', unread:false},
+  {date:'5/13/2026', from:'Erica Cabrera', cat:'play', catLabel:'Play Clarifications and Feedback', subject:'Erica started an interaction with you', unread:false},
+  {date:'5/11/2026', from:'Tucker Grady', highlight:true, cat:'assign', catLabel:'Game Assignments', subject:'Tucker updated your game assignment - 5/12 MIN @ SAS Second Check', unread:true},
+];
+
+const CAT_STYLE = {
+  play:'cat-play', playlist:'cat-playlist', trend:'cat-trend',
+  issue:'cat-issue', l2m:'cat-l2m', assign:'cat-assign', wishlist:'cat-wishlist'
+};
+
+function renderInteractions(rows) {
+  const tbody = document.getElementById('int-tbody');
+  tbody.innerHTML = rows.map(r => `
+    <tr class="${r.unread?'unread':''}" onclick="openInteraction(this)">
+      <td class="int-date">${r.date}</td>
+      <td class="int-from ${r.highlight?'highlight':''}">${r.from}</td>
+      <td><span class="int-cat ${CAT_STYLE[r.cat]||''}">${r.catLabel}</span></td>
+      <td class="int-subject">${r.subject}</td>
+      <td style="text-align:center">${r.unread?'<span class="int-unread-dot"></span>':''}</td>
+      <td class="int-expand"><i class="ti ti-chevron-down"></i></td>
+    </tr>`).join('');
+}
+
+renderInteractions(INTERACTIONS);
+
+function filt(el, type) {
+  document.querySelectorAll('.filt-btn').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  const filtered = type === 'all' ? INTERACTIONS : INTERACTIONS.filter(r => r.cat === type || (type==='play' && r.cat==='play'));
+  renderInteractions(filtered);
+}
+
+function setTab(el) {
+  document.querySelectorAll('.ptab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  const label = el.textContent.trim();
+  if (label === 'Unread') renderInteractions(INTERACTIONS.filter(r=>r.unread));
+  else if (label === 'Play Sharing') renderInteractions(INTERACTIONS.filter(r=>r.cat==='play'));
+  else if (label === 'Playlists') renderInteractions(INTERACTIONS.filter(r=>r.cat==='playlist'));
+  else if (label === 'Threads') renderInteractions(INTERACTIONS.filter(r=>r.cat==='trend'||r.cat==='issue'));
+  else renderInteractions(INTERACTIONS);
+}
+
+function navTo(el, section) {
+  document.querySelectorAll('.rim-nav-item').forEach(i=>i.classList.remove('on'));
+  if (el) el.classList.add('on');
+}
+function setLg(el) {
+  document.querySelectorAll('.rim-lg-tab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+}
+function selectGame(el) {
+  document.querySelectorAll('.game-card').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+}
+function openInteraction(row) {
+  row.classList.toggle('unread');
+  row.querySelector('td:nth-child(5)').innerHTML = '';
+}
+function newInteraction() { alert('New Interaction — coming soon'); }
 function toggleNavDropdown(e){e.stopPropagation();document.getElementById('nav-dropdown').classList.toggle('open')}
 document.addEventListener('click',()=>document.getElementById('nav-dropdown').classList.remove('open'));
 </script>
