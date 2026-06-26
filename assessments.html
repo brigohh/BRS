@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BRS — Assessments</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;color:#111827;background:#f3f4f6;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+
+/* NAV */
+.nav{background:#1a3a6b;height:48px;display:flex;align-items:center;padding:0 24px;flex-shrink:0;z-index:300;position:relative}
+.nav-logo{display:flex;align-items:center;gap:8px;cursor:pointer}
+.nav-brand{color:rgba(255,255,255,.9);font-size:11.5px;font-weight:600;letter-spacing:.5px}
+.nav-links{display:flex;align-items:center;margin-left:auto;flex-shrink:0}
+.nl{color:rgba(255,255,255,.55);font-size:10.5px;padding:0 8px;cursor:pointer;font-weight:500;height:48px;display:flex;align-items:center;border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0}
+.nl:hover{color:#fff}
+.nl.on{color:#fff;border-bottom-color:rgba(255,255,255,.7);font-weight:600}
+.nav-av{width:30px;height:30px;border-radius:50%;background:#2d5aa0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;flex-shrink:0;margin-left:12px}
+.nav-dropdown{position:relative;display:flex;align-items:center;height:48px}
+.nav-dd-caret{font-size:8px;opacity:.7;transition:transform .15s}
+.nav-dropdown.open .nav-dd-caret{transform:rotate(180deg)}
+.nav-dd-menu{display:none;position:absolute;top:44px;right:0;background:#fff;border:1px solid #e5e7eb;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.14);min-width:170px;z-index:400;padding:4px 0}
+.nav-dropdown.open .nav-dd-menu{display:block}
+.nav-dd-item{display:block;padding:9px 16px;font-size:11px;font-weight:500;color:#374151;cursor:pointer}
+.nav-dd-item:hover{background:#f0f2f5;color:#1a3a6b}
+
+/* VIEWS */
+#landing{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+#quiz,#results{flex:1;display:none;flex-direction:column;overflow:hidden}
+
+/* LANDING */
+.landing-hero{background:linear-gradient(135deg,#1a3a6b,#0f2347);padding:28px 40px 24px;flex-shrink:0}
+.lh-eyebrow{font-size:10px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:6px}
+.lh-title{font-size:24px;font-weight:800;color:#fff;letter-spacing:-.2px;margin-bottom:6px}
+.lh-sub{font-size:12.5px;color:rgba(255,255,255,.55);margin-bottom:16px;line-height:1.5}
+.lh-actions{display:flex;gap:8px}
+.lh-btn{padding:7px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;border:none;display:flex;align-items:center;gap:6px;transition:opacity .15s}
+.lh-btn:hover{opacity:.85}
+.lh-btn.ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2)}
+.landing-body{padding:24px 40px 40px;flex:1}
+
+/* CALLOUT */
+.callout{background:#eef2ff;border:1px solid #c7d2fe;border-radius:12px;padding:14px 18px;margin-bottom:24px;display:flex;gap:13px;align-items:flex-start}
+.callout-icon{width:34px;height:34px;border-radius:9px;background:#6366f1;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.callout-icon i{color:#fff;font-size:16px}
+.callout-text{font-size:12px;color:#3730a3;line-height:1.6}
+.callout-title{font-size:12.5px;font-weight:700;color:#312e81;margin-bottom:3px}
+
+/* ACTIVE ASSESSMENT CARD */
+.active-card{background:#fff;border:1.5px solid #1a3a6b;border-radius:14px;padding:22px 24px;margin-bottom:28px;position:relative;overflow:hidden}
+.active-card-accent{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#1a3a6b,#2563eb)}
+.ac-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
+.ac-badge{padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;background:#dcfce7;color:#166534;display:flex;align-items:center;gap:4px}
+.ac-name{font-size:17px;font-weight:800;color:#111827;letter-spacing:-.2px;margin-bottom:4px}
+.ac-meta{font-size:11.5px;color:#6b7280;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.ac-dot{width:3px;height:3px;border-radius:50%;background:#d1d5db}
+.ac-deadline{font-size:11.5px;color:#d97706;font-weight:600;display:flex;align-items:center;gap:4px;margin-top:6px}
+.ac-progress{margin:14px 0}
+.ac-prog-lbl{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:#9ca3af;margin-bottom:5px}
+.prog-bar{height:5px;background:#f3f4f6;border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;background:#1a3a6b;border-radius:3px;transition:width .3s}
+.ac-areas{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.area-tag{padding:3px 10px;border-radius:20px;font-size:10.5px;font-weight:600;background:#f3f4f6;color:#6b7280;border:1px solid #e5e7eb}
+.ac-footer{display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:14px;border-top:1px solid #f3f4f6}
+.start-btn{padding:9px 22px;background:#1a3a6b;color:#fff;border:none;border-radius:8px;font-size:12.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;transition:background .15s}
+.start-btn:hover{background:#15306e}
+
+/* PAST ASSESSMENTS */
+.past-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.past-card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:16px 18px;cursor:pointer;transition:border-color .15s}
+.past-card:hover{border-color:#d1d5db}
+.past-score{font-size:22px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
+.past-score.great{color:#16a34a}
+.past-score.good{color:#1a3a6b}
+.past-score.work{color:#d97706}
+.past-name{font-size:12px;font-weight:700;color:#111827;margin-bottom:3px}
+.past-date{font-size:10.5px;color:#9ca3af;margin-bottom:10px}
+.past-areas{display:flex;gap:4px;flex-wrap:wrap}
+.past-area{padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;background:#fef3c7;color:#92400e}
+.past-area.ok{background:#dcfce7;color:#166534}
+
+/* SECTION HEADER */
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.sec-title{font-size:14px;font-weight:800;color:#111827}
+.sec-link{font-size:11.5px;color:#1a3a6b;cursor:pointer;font-weight:500}
+.sec-link:hover{text-decoration:underline}
+
+/* ── QUIZ VIEW ── */
+.quiz-header{background:linear-gradient(135deg,#1a3a6b,#0f2347);height:54px;display:flex;align-items:center;padding:0 20px;gap:14px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.08)}
+.qh-back{font-size:11px;color:rgba(255,255,255,.5);cursor:pointer;display:flex;align-items:center;gap:4px;font-weight:500;flex-shrink:0;padding-right:12px;border-right:1px solid rgba(255,255,255,.12)}
+.qh-back:hover{color:#fff}
+.qh-name{font-size:13px;font-weight:700;color:#fff;flex:1}
+.qh-counter{font-size:11.5px;color:rgba(255,255,255,.55);white-space:nowrap}
+.qh-prog{width:120px;height:4px;background:rgba(255,255,255,.15);border-radius:2px;flex-shrink:0}
+.qh-prog-fill{height:100%;background:#60a5fa;border-radius:2px;transition:width .3s}
+
+.quiz-body{flex:1;display:flex;overflow:hidden;min-height:0}
+
+/* QUIZ LEFT — video */
+.quiz-vid-col{width:55%;display:flex;flex-direction:column;overflow:hidden;background:#0f1117;border-right:1px solid rgba(255,255,255,.06)}
+.qv-section{flex:1;position:relative;overflow:hidden;min-height:0}
+.qv-frame{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#0f1117}
+.qv-play-btn{width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(4px);transition:background .2s,transform .15s}
+.qv-play-btn:hover{background:rgba(255,255,255,.3);transform:scale(1.08)}
+.qv-play-btn i{font-size:22px;color:#fff;margin-left:3px}
+.qv-ang{display:flex;gap:3px;padding:5px 10px;background:#1a1f2e;border-top:1px solid rgba(255,255,255,.06);overflow-x:auto;flex-shrink:0}
+.ang{padding:2px 7px;font-size:10px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.07);color:rgba(255,255,255,.55);cursor:pointer;border-radius:4px;white-space:nowrap;font-weight:500}
+.ang:hover{color:#fff;background:rgba(255,255,255,.12)}
+.ang.on{background:#2563eb;border-color:#3b82f6;color:#fff}
+.qv-ctrl{padding:6px 12px;background:#111827;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:6px;flex-shrink:0}
+.vcb{background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;font-size:15px;display:flex;align-items:center}
+.vcb:hover{color:#fff}
+.vtrack{flex:1;height:3px;background:rgba(255,255,255,.15);border-radius:2px}
+.vfill{width:30%;height:100%;background:#60a5fa;border-radius:2px}
+.vtime{font-size:10.5px;color:rgba(255,255,255,.4);white-space:nowrap}
+.qv-info{background:#1a1f2e;border-top:1px solid rgba(255,255,255,.06);padding:10px 14px;flex-shrink:0}
+.qv-info-game{font-size:12px;font-weight:700;color:#fff;margin-bottom:2px}
+.qv-info-sub{font-size:10.5px;color:rgba(255,255,255,.45)}
+
+/* QUIZ RIGHT — question */
+.quiz-q-col{flex:1;display:flex;flex-direction:column;overflow-y:auto;padding:28px 32px;background:#fff}
+.q-num{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#9ca3af;margin-bottom:10px}
+.q-text{font-size:16px;font-weight:800;color:#111827;letter-spacing:-.2px;line-height:1.4;margin-bottom:24px}
+.q-options{display:flex;flex-direction:column;gap:10px}
+.q-opt{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1.5px solid #e5e7eb;border-radius:12px;cursor:pointer;transition:all .15s;position:relative}
+.q-opt:hover{border-color:#d1d5db;background:#f9fafb}
+.q-opt.sel{border-color:#1a3a6b;background:#eff6ff}
+.q-opt.correct{border-color:#16a34a;background:#dcfce7}
+.q-opt.wrong{border-color:#dc2626;background:#fee2e2}
+.q-opt-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.q-opt-label{font-size:13px;font-weight:700;color:#111827;margin-bottom:2px}
+.q-opt-desc{font-size:11px;color:#9ca3af;line-height:1.4}
+.q-opt-check{margin-left:auto;font-size:18px;flex-shrink:0}
+.q-next-row{margin-top:28px;display:flex;justify-content:flex-end}
+.q-next{padding:10px 26px;background:#1a3a6b;color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:7px;transition:background .15s}
+.q-next:hover{background:#15306e}
+.q-next:disabled{opacity:.4;cursor:default}
+
+/* ── RESULTS VIEW ── */
+.results-header{background:linear-gradient(135deg,#1a3a6b,#0f2347);height:54px;display:flex;align-items:center;padding:0 20px;gap:14px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.08)}
+.results-body{flex:1;overflow-y:auto;padding:32px 40px 48px}
+
+.score-card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:28px 32px;display:flex;align-items:center;gap:32px;margin-bottom:24px}
+.score-ring{width:100px;height:100px;position:relative;flex-shrink:0}
+.score-ring svg{transform:rotate(-90deg)}
+.score-ring-num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.score-big{font-size:22px;font-weight:900;color:#111827;line-height:1}
+.score-denom{font-size:11px;color:#9ca3af;font-weight:600}
+.score-right{}
+.score-msg{font-size:18px;font-weight:800;color:#111827;letter-spacing:-.2px;margin-bottom:4px}
+.score-pct{font-size:13px;color:#6b7280;margin-bottom:12px}
+.score-areas{display:flex;gap:6px;flex-wrap:wrap}
+
+.breakdown-list{display:flex;flex-direction:column;gap:8px;margin-bottom:28px}
+.bk-row{display:flex;align-items:center;gap:12px;padding:12px 16px;background:#fff;border:1px solid #e5e7eb;border-radius:10px}
+.bk-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.bk-icon.correct{background:#dcfce7;color:#16a34a}
+.bk-icon.wrong{background:#fee2e2;color:#dc2626}
+.bk-play{flex:1;min-width:0}
+.bk-type{font-size:12px;font-weight:700;color:#111827;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bk-game{font-size:10.5px;color:#9ca3af}
+.bk-ans{text-align:right;flex-shrink:0}
+.bk-your{font-size:10.5px;color:#9ca3af}
+.bk-correct{font-size:11px;font-weight:600;color:#374151}
+
+.rc-infraction{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5}
+.rc-lean-infraction{background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+.rc-lean-no{background:#dbeafe;color:#1e40af;border:1px solid #bfdbfe}
+.rc-no-infraction{background:#dcfce7;color:#166534;border:1px solid #86efac}
+.chip{padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav">
+  <div class="nav-logo" onclick="location='home.html'">
+    <img src="Logos/nba-logo.svg" style="width:16px;height:auto">
+    <div class="nav-brand">BRIDGET REVIEW SYSTEM 1.0</div>
+  </div>
+  <div class="nav-links">
+    <span class="nl" onclick="location='home.html'">HOME</span>
+    <span class="nl" onclick="location='published-games.html'">PUBLISHED GAMES</span>
+    <div class="nav-dropdown" id="rim-dropdown">
+      <span class="nl on" onclick="location='rim.html'">RIM</span>
+      <span class="nl" style="padding-left:0;padding-right:6px;font-size:9px;opacity:.8;cursor:pointer" onclick="toggleRimDropdown(event)">▾</span>
+      <div class="nav-dd-menu" id="rim-dd-menu" style="min-width:200px;left:0;right:auto">
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-home" style="margin-right:7px;font-size:12px"></i>RIM Home</span>
+        <span class="nav-dd-item"><i class="ti ti-inbox" style="margin-right:7px;font-size:12px"></i>Interactions</span>
+        <span class="nav-dd-item"><i class="ti ti-messages" style="margin-right:7px;font-size:12px"></i>Threads</span>
+        <span class="nav-dd-item"><i class="ti ti-layout-board" style="margin-right:7px;font-size:12px"></i>Message Board</span>
+        <span class="nav-dd-item" onclick="location='playlists.html'"><i class="ti ti-playlist" style="margin-right:7px;font-size:12px"></i>Playlists</span>
+        <span class="nav-dd-item" onclick="location='assessments.html'"><i class="ti ti-clipboard-check" style="margin-right:7px;font-size:12px"></i>Assessments</span>
+        <span class="nav-dd-item" onclick="location='poe.html'"><i class="ti ti-target" style="margin-right:7px;font-size:12px"></i>Points of Emphasis</span>
+        <span class="nav-dd-item"><i class="ti ti-trending-up" style="margin-right:7px;font-size:12px"></i>Trends</span>
+        <span class="nav-dd-item"><i class="ti ti-ball-basketball" style="margin-right:7px;font-size:12px"></i>My Games</span>
+      </div>
+    </div>
+    <span class="nl">RM REVIEW</span>
+    <span class="nl">FINAL L2M REVIEW</span>
+    <span class="nl">INDEPENDENT REVIEW</span>
+    <span class="nl">ADMINISTRATION</span>
+    <div class="nav-dropdown" id="nav-dropdown">
+      <span class="nl" onclick="toggleNavDropdown(event)">REVIEWER RESOURCE <span class="nav-dd-caret">▾</span></span>
+      <div class="nav-dd-menu">
+        <span class="nav-dd-item" onclick="location='comment-library.html'">Comment Library</span>
+      </div>
+    </div>
+    <span class="nl">MY SCHEDULE</span>
+    <div class="nav-av">BN</div>
+  </div>
+</div>
+
+<!-- ══ LANDING ══ -->
+<div id="landing">
+  <div class="landing-hero">
+    <div class="lh-eyebrow">RIM · Review Insights &amp; Messaging Platform</div>
+    <div class="lh-title">Assessments</div>
+    <div class="lh-sub">AI-generated evaluations based on your recent game performance — test your rating accuracy and coverage judgment.</div>
+    <div class="lh-actions">
+      <button class="lh-btn ghost" onclick="location='rim.html'"><i class="ti ti-arrow-left"></i> Back to RIM</button>
+    </div>
+  </div>
+
+  <div class="landing-body">
+
+    <div class="callout">
+      <div class="callout-icon"><i class="ti ti-sparkles"></i></div>
+      <div>
+        <div class="callout-title">How Assessments Work</div>
+        <div class="callout-text">Assessments are auto-generated monthly based on your last 15–20 games. Each assessment tests your infraction rating accuracy and ref coverage judgment using real plays from your reviews. Results identify where to focus your development. Assessments are open for 2 weeks — complete them at your own pace.</div>
+      </div>
+    </div>
+
+    <!-- Active -->
+    <div class="sec-hdr"><div class="sec-title">Active Assessment</div></div>
+    <div class="active-card">
+      <div class="active-card-accent"></div>
+      <div class="ac-top">
+        <div>
+          <div class="ac-name">June Assessment · 2026-27 Season</div>
+          <div class="ac-meta">
+            <span>8 questions</span><div class="ac-dot"></div>
+            <span>Generated from last 15 games</span><div class="ac-dot"></div>
+            <span>Monthly cadence</span>
+          </div>
+          <div class="ac-deadline"><i class="ti ti-clock" style="font-size:12px"></i> Open until Jul 10, 2026 &nbsp;·&nbsp; 12 days left</div>
+        </div>
+        <div class="ac-badge"><i class="ti ti-circle-check" style="font-size:11px"></i> OPEN</div>
+      </div>
+      <div class="ac-progress">
+        <div class="ac-prog-lbl"><span>Progress</span><span id="prog-label">0 of 8 completed</span></div>
+        <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+      </div>
+      <div style="font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;text-transform:uppercase;margin-bottom:6px">Areas Tested</div>
+      <div class="ac-areas">
+        <div class="area-tag">Shooting Fouls</div>
+        <div class="area-tag">Ref Coverage</div>
+        <div class="area-tag">Block-Charge</div>
+        <div class="area-tag">Personal Fouls</div>
+        <div class="area-tag">Loose Ball</div>
+      </div>
+      <div class="ac-footer">
+        <div style="font-size:11px;color:#9ca3af"><i class="ti ti-lock-open" style="font-size:12px"></i> Responses are private until the assessment closes</div>
+        <button class="start-btn" onclick="startQuiz()"><i class="ti ti-player-play"></i> Start Assessment</button>
+      </div>
+    </div>
+
+    <!-- Past -->
+    <div class="sec-hdr">
+      <div class="sec-title">Past Assessments</div>
+      <div class="sec-link">View all</div>
+    </div>
+    <div class="past-grid">
+      <div class="past-card" onclick="showResults(6,8,['Block-Charge'])">
+        <div class="past-score good">6/8</div>
+        <div class="past-name">May Assessment · 2026-27</div>
+        <div class="past-date">Completed May 31, 2026 · 75%</div>
+        <div class="past-areas">
+          <div class="past-area">Block-Charge</div>
+        </div>
+      </div>
+      <div class="past-card" onclick="showResults(7,8,[])">
+        <div class="past-score great">7/8</div>
+        <div class="past-name">April Assessment · 2026-27</div>
+        <div class="past-date">Completed Apr 28, 2026 · 87%</div>
+        <div class="past-areas">
+          <div class="past-area ok">Strong performance</div>
+        </div>
+      </div>
+      <div class="past-card" onclick="showResults(5,8,['Shooting Fouls','Ref Coverage'])">
+        <div class="past-score work">5/8</div>
+        <div class="past-name">March Assessment · 2026-27</div>
+        <div class="past-date">Completed Mar 30, 2026 · 62%</div>
+        <div class="past-areas">
+          <div class="past-area">Shooting Fouls</div>
+          <div class="past-area">Ref Coverage</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ QUIZ VIEW ══ -->
+<div id="quiz">
+  <div class="quiz-header">
+    <div class="qh-back" onclick="showLanding()"><i class="ti ti-chevron-left"></i> Assessments</div>
+    <div class="qh-name">June Assessment · 2026-27</div>
+    <div class="qh-counter" id="q-counter">Question 1 of 8</div>
+    <div class="qh-prog"><div class="qh-prog-fill" id="q-prog-fill" style="width:12.5%"></div></div>
+  </div>
+  <div class="quiz-body">
+
+    <!-- LEFT: video -->
+    <div class="quiz-vid-col">
+      <div class="qv-section">
+        <div class="qv-frame">
+          <div class="qv-play-btn"><i class="ti ti-player-play"></i></div>
+        </div>
+      </div>
+      <div class="qv-ang">
+        <span class="ang on">LL5</span><span class="ang">LR5</span><span class="ang">LS5</span><span class="ang">RS5</span><span class="ang">ABP</span><span class="ang">HBP</span><span class="ang">INA</span><span class="ang">DF BCAST</span>
+      </div>
+      <div class="qv-ctrl">
+        <button class="vcb"><i class="ti ti-player-skip-back"></i></button>
+        <button class="vcb"><i class="ti ti-player-play"></i></button>
+        <button class="vcb"><i class="ti ti-player-skip-forward"></i></button>
+        <div class="vtrack"><div class="vfill"></div></div>
+        <span class="vtime" id="q-vtime">09:40.2</span>
+        <button class="vcb"><i class="ti ti-volume"></i></button>
+        <button class="vcb"><i class="ti ti-arrows-maximize"></i></button>
+      </div>
+      <div class="qv-info">
+        <div class="qv-info-game" id="q-game">TOR @ CHI · May 27, 2026</div>
+        <div class="qv-info-sub" id="q-playtype">Foul: Shooting · Driving Shot Attempt &nbsp;·&nbsp; Perrymond (8) · Lead</div>
+      </div>
+    </div>
+
+    <!-- RIGHT: question -->
+    <div class="quiz-q-col">
+      <div class="q-num" id="q-num">Question 1 of 8 — Infraction Rating</div>
+      <div class="q-text" id="q-text">What is the correct infraction rating for this play?</div>
+      <div class="q-options" id="q-options"></div>
+      <div class="q-next-row">
+        <button class="q-next" id="q-next-btn" onclick="nextQuestion()" disabled>Next <i class="ti ti-arrow-right"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ RESULTS VIEW ══ -->
+<div id="results">
+  <div class="results-header">
+    <div class="qh-back" onclick="showLanding()"><i class="ti ti-chevron-left"></i> Assessments</div>
+    <div class="qh-name">June Assessment · 2026-27 — Results</div>
+  </div>
+  <div class="results-body">
+    <div class="score-card" id="score-card"></div>
+    <div class="sec-hdr" style="margin-bottom:12px"><div class="sec-title">Question Breakdown</div></div>
+    <div class="breakdown-list" id="breakdown-list"></div>
+    <div class="sec-hdr" style="margin-bottom:12px"><div class="sec-title">Learning Areas</div></div>
+    <div id="learning-areas" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px"></div>
+    <button onclick="showToast('Practice playlist created ✓')" style="padding:9px 20px;background:#1a3a6b;color:#fff;border:none;border-radius:9px;font-size:12.5px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:7px"><i class="ti ti-playlist"></i> Create Practice Playlist from Missed Plays</button>
+  </div>
+</div>
+
+<script>
+/* ── DATA ── */
+const QUESTIONS = [
+  {id:1,type:'infraction',play:{game:'TOR @ CHI',date:'May 27, 2026',time:'09:40.2',type:'Foul: Shooting',sub:'Driving Shot Attempt',ref:'Perrymond (8)',loc:'Lead'},correct:'No Infraction',area:'Shooting Fouls'},
+  {id:2,type:'coverage',play:{game:'IND @ OKC',date:'Jun 22, 2026',time:'00:34.2',type:'Foul: Shooting',sub:'Block-Charge Situation',ref:'Fahy (86)',loc:'Slot'},correct:'Slot',area:'Ref Coverage'},
+  {id:3,type:'infraction',play:{game:'TOR @ CHI',date:'May 27, 2026',time:'04:18.7',type:'Foul: Loose Ball',sub:'Clamp-Lock-Hold',ref:'Chang (23)',loc:'Trail'},correct:'Infraction',area:'Loose Ball'},
+  {id:4,type:'coverage',play:{game:'PHX @ NYL',date:'May 29, 2026',time:'03:21.8',type:'Foul: Personal',sub:'DHO Screen',ref:'Chang (23)',loc:'Trail'},correct:'Trail',area:'Ref Coverage'},
+  {id:5,type:'infraction',play:{game:'OKC @ IND',date:'Jun 19, 2026',time:'00:34.2',type:'Foul: Shooting',sub:'Block-Charge Situation',ref:'Fahy (86)',loc:'Slot'},correct:'Lean Infraction',area:'Block-Charge'},
+  {id:6,type:'infraction',play:{game:'CON @ CHI',date:'Jun 05, 2026',time:'07:33.1',type:'Foul: Personal',sub:'',ref:'Perrymond (8)',loc:'Lead'},correct:'Lean No',area:'Personal Fouls'},
+  {id:7,type:'coverage',play:{game:'GSV @ IND',date:'May 22, 2026',time:'01:29.0',type:'Violation: Defensive Goaltending',sub:'',ref:'Perrymond (8)',loc:'Lead'},correct:'Lead',area:'Ref Coverage'},
+  {id:8,type:'infraction',play:{game:'LVA @ LAS',date:'Jun 02, 2026',time:'05:44.1',type:'Foul: Personal',sub:'DHO Screen',ref:'Perrymond (8)',loc:'Lead'},correct:'Infraction',area:'Shooting Fouls'},
+];
+
+const INF_OPTS = [
+  {val:'Infraction',      short:'INF',      desc:'Clear, unambiguous violation',          cls:'rc-infraction',      bg:'#fee2e2',ic:'#991b1b'},
+  {val:'Lean Infraction', short:'LEAN INF', desc:'More likely an infraction than not',    cls:'rc-lean-infraction', bg:'#fef3c7',ic:'#92400e'},
+  {val:'Lean No',         short:'LEAN NO',  desc:'More likely correct than infraction',   cls:'rc-lean-no',         bg:'#dbeafe',ic:'#1e40af'},
+  {val:'No Infraction',   short:'NO INF',   desc:'Correct call — no violation',           cls:'rc-no-infraction',   bg:'#dcfce7',ic:'#166534'},
+];
+const COV_OPTS = [
+  {val:'Lead',  desc:'Ball-side low, primary on paint contact and near-side cuts'},
+  {val:'Trail', desc:'Top of the arc, primary on perimeter and off-ball off screens'},
+  {val:'Slot',  desc:'Weak-side elbow, rotation and secondary coverage'},
+];
+
+let curQ = 0, answers = [], revealed = false;
+
+function startQuiz() {
+  curQ = 0; answers = []; revealed = false;
+  document.getElementById('landing').style.display = 'none';
+  document.getElementById('quiz').style.display = 'flex';
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[curQ];
+  revealed = false;
+  document.getElementById('q-counter').textContent = `Question ${curQ+1} of ${QUESTIONS.length}`;
+  document.getElementById('q-prog-fill').style.width = `${((curQ)/QUESTIONS.length)*100}%`;
+  document.getElementById('q-num').textContent = `Question ${curQ+1} of ${QUESTIONS.length} — ${q.type==='infraction'?'Infraction Rating':'Ref Coverage'}`;
+  document.getElementById('q-text').textContent = q.type==='infraction'
+    ? 'What is the correct infraction rating for this play?'
+    : 'Which official has primary coverage responsibility for this play?';
+  document.getElementById('q-vtime').textContent = q.play.time;
+  document.getElementById('q-game').textContent = `${q.play.game} · ${q.play.date}`;
+  document.getElementById('q-playtype').textContent = `${q.play.type}${q.play.sub?' · '+q.play.sub:''} · ${q.play.ref} · ${q.play.loc}`;
+  document.getElementById('q-next-btn').disabled = true;
+  document.getElementById('q-next-btn').innerHTML = curQ < QUESTIONS.length-1 ? 'Next <i class="ti ti-arrow-right"></i>' : 'Submit Assessment <i class="ti ti-check"></i>';
+
+  const opts = q.type === 'infraction' ? INF_OPTS : COV_OPTS.map(o=>({...o,cls:'',bg:'#f3f4f6',ic:'#6b7280'}));
+  document.getElementById('q-options').innerHTML = opts.map(o=>`
+    <div class="q-opt" id="opt-${o.val.replace(/ /g,'_')}" onclick="selectOpt('${o.val.replace(/'/g,"\\'")}')">
+      <div class="q-opt-icon" style="background:${o.bg};color:${o.ic}"><i class="ti ${q.type==='infraction'?'ti-clipboard-check':'ti-whistle'}"></i></div>
+      <div>
+        <div class="q-opt-label">${o.val}</div>
+        <div class="q-opt-desc">${o.desc}</div>
+      </div>
+      <div class="q-opt-check" id="chk-${o.val.replace(/ /g,'_')}"></div>
+    </div>`).join('');
+}
+
+function selectOpt(val) {
+  if (revealed) return;
+  const q = QUESTIONS[curQ];
+  answers[curQ] = val;
+  revealed = true;
+  const opts = q.type === 'infraction' ? INF_OPTS : COV_OPTS;
+  opts.forEach(o => {
+    const el = document.getElementById('opt-'+o.val.replace(/ /g,'_'));
+    const chk = document.getElementById('chk-'+o.val.replace(/ /g,'_'));
+    if (!el) return;
+    if (o.val === q.correct) { el.classList.add('correct'); chk.innerHTML='<i class="ti ti-circle-check" style="color:#16a34a"></i>'; }
+    else if (o.val === val) { el.classList.add('wrong'); chk.innerHTML='<i class="ti ti-circle-x" style="color:#dc2626"></i>'; }
+  });
+  document.getElementById('q-next-btn').disabled = false;
+}
+
+function nextQuestion() {
+  if (curQ < QUESTIONS.length - 1) { curQ++; renderQuestion(); }
+  else { showResults(); }
+}
+
+function showResults(correct, total, areas) {
+  if (correct === undefined) {
+    correct = answers.filter((a,i)=>a===QUESTIONS[i].correct).length;
+    total = QUESTIONS.length;
+    areas = [...new Set(QUESTIONS.filter((_,i)=>answers[i]&&answers[i]!==QUESTIONS[i].correct).map(q=>q.area))];
+  }
+  const pct = Math.round((correct/total)*100);
+  const msg = pct>=87?'Strong performance':pct>=75?'Good — a few areas to revisit':'Keep working on these areas';
+  const msgColor = pct>=87?'#16a34a':pct>=75?'#1a3a6b':'#d97706';
+
+  document.getElementById('quiz').style.display='none';
+  document.getElementById('landing').style.display='none';
+  document.getElementById('results').style.display='flex';
+
+  const r = 42, c = 2*Math.PI*r, fill = c*(correct/total);
+  document.getElementById('score-card').innerHTML = `
+    <div class="score-ring">
+      <svg width="100" height="100" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="${r}" fill="none" stroke="#f3f4f6" stroke-width="8"/>
+        <circle cx="50" cy="50" r="${r}" fill="none" stroke="${msgColor}" stroke-width="8"
+          stroke-dasharray="${fill} ${c}" stroke-linecap="round"/>
+      </svg>
+      <div class="score-ring-num"><div class="score-big">${correct}/${total}</div><div class="score-denom">${pct}%</div></div>
+    </div>
+    <div class="score-right">
+      <div class="score-msg" style="color:${msgColor}">${msg}</div>
+      <div class="score-pct">June Assessment · 2026-27 Season</div>
+      ${areas.length?`<div class="score-areas">${areas.map(a=>`<span class="area-tag" style="background:#fef3c7;color:#92400e;border-color:#fcd34d">${a}</span>`).join('')}</div>`:'<div style="font-size:12px;color:#16a34a"><i class="ti ti-check"></i> No areas to flag</div>'}
+    </div>`;
+
+  const bk = document.getElementById('breakdown-list');
+  bk.innerHTML = QUESTIONS.map((q,i)=>{
+    const ans = answers[i]||'—';
+    const ok = ans===q.correct;
+    const rc = q.correct==='Infraction'?'rc-infraction':q.correct==='Lean Infraction'?'rc-lean-infraction':q.correct==='Lean No'?'rc-lean-no':q.correct==='No Infraction'?'rc-no-infraction':'';
+    return `<div class="bk-row">
+      <div class="bk-icon ${ok?'correct':'wrong'}"><i class="ti ti-${ok?'check':'x'}"></i></div>
+      <div class="bk-play">
+        <div class="bk-type">${q.play.type}${q.play.sub?' · '+q.play.sub:''}</div>
+        <div class="bk-game">${q.play.game} · ${q.play.date} · ${q.play.time}</div>
+      </div>
+      <div class="bk-ans">
+        ${!ok?`<div class="bk-your" style="color:#dc2626">Your answer: ${ans}</div>`:''}
+        <div class="bk-correct"><span class="chip ${rc}" style="${!rc?'background:#f3f4f6;color:#374151;border:1px solid #e5e7eb':''}">${q.correct}</span></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('learning-areas').innerHTML = areas.length
+    ? areas.map(a=>`<div class="area-tag" style="font-size:12px;padding:5px 14px;background:#fef3c7;color:#92400e;border-color:#fcd34d">${a}</div>`).join('')
+    : '<div style="font-size:12px;color:#16a34a;font-weight:600"><i class="ti ti-circle-check"></i> No learning areas flagged — great work!</div>';
+}
+
+function showLanding() {
+  document.getElementById('quiz').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('landing').style.display='flex';
+  if (answers.length > 0) {
+    const done = answers.filter(Boolean).length;
+    document.getElementById('prog-label').textContent = `${done} of ${QUESTIONS.length} completed`;
+    document.getElementById('prog-fill').style.width = `${(done/QUESTIONS.length)*100}%`;
+  }
+}
+
+function showToast(msg){const t=document.createElement('div');t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:9px 20px;border-radius:8px;font-size:12px;font-weight:500;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,.3);opacity:0;transition:opacity .2s';t.textContent=msg;document.body.appendChild(t);requestAnimationFrame(()=>{t.style.opacity='1';setTimeout(()=>{t.style.opacity='0';setTimeout(()=>t.remove(),200)},2200)});}
+function toggleNavDropdown(e){e.stopPropagation();document.getElementById('nav-dropdown').classList.toggle('open')}
+function toggleRimDropdown(e){e.stopPropagation();document.getElementById('rim-dropdown').classList.toggle('open');document.getElementById('nav-dropdown').classList.remove('open');}
+document.addEventListener('click',()=>{document.getElementById('nav-dropdown').classList.remove('open');document.getElementById('rim-dropdown')?.classList.remove('open');});
+</script>
+</body>
+</html>

@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BRS — Points of Emphasis</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;color:#111827;background:#f3f4f6;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+
+/* NAV */
+.nav{background:#1a3a6b;height:48px;display:flex;align-items:center;padding:0 24px;flex-shrink:0;z-index:300;position:relative}
+.nav-logo{display:flex;align-items:center;gap:8px;cursor:pointer}
+.nav-brand{color:rgba(255,255,255,.9);font-size:11.5px;font-weight:600;letter-spacing:.5px}
+.nav-links{display:flex;align-items:center;margin-left:auto;flex-shrink:0}
+.nl{color:rgba(255,255,255,.55);font-size:10.5px;padding:0 8px;cursor:pointer;font-weight:500;height:48px;display:flex;align-items:center;border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0}
+.nl:hover{color:#fff}
+.nl.on{color:#fff;border-bottom-color:rgba(255,255,255,.7);font-weight:600}
+.nav-av{width:30px;height:30px;border-radius:50%;background:#2d5aa0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;flex-shrink:0;margin-left:12px}
+.nav-dropdown{position:relative;display:flex;align-items:center;height:48px}
+.nav-dd-caret{font-size:8px;opacity:.7;transition:transform .15s}
+.nav-dropdown.open .nav-dd-caret{transform:rotate(180deg)}
+.nav-dd-menu{display:none;position:absolute;top:44px;right:0;background:#fff;border:1px solid #e5e7eb;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.14);min-width:170px;z-index:400;padding:4px 0}
+.nav-dropdown.open .nav-dd-menu{display:block}
+.nav-dd-item{display:block;padding:9px 16px;font-size:11px;font-weight:500;color:#374151;cursor:pointer}
+.nav-dd-item:hover{background:#f0f2f5;color:#1a3a6b}
+
+/* VIEWS */
+#landing{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+#detail{flex:1;display:none;flex-direction:column;overflow:hidden}
+
+/* LANDING */
+.landing-hero{background:linear-gradient(135deg,#1a3a6b,#0f2347);padding:28px 40px 24px;flex-shrink:0}
+.lh-eyebrow{font-size:10px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:6px}
+.lh-title{font-size:24px;font-weight:800;color:#fff;letter-spacing:-.2px;margin-bottom:6px}
+.lh-sub{font-size:12.5px;color:rgba(255,255,255,.55);margin-bottom:0;line-height:1.5}
+.landing-body{padding:24px 40px 40px;flex:1}
+
+/* CALLOUT */
+.callout{background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:14px 18px;margin-bottom:28px;display:flex;gap:13px;align-items:flex-start}
+.callout-icon{width:34px;height:34px;border-radius:9px;background:#f59e0b;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.callout-icon i{color:#fff;font-size:16px}
+.callout-text{font-size:12px;color:#92400e;line-height:1.6}
+.callout-title{font-size:12.5px;font-weight:700;color:#78350f;margin-bottom:3px}
+
+/* POE GRID */
+.poe-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px}
+.poe-card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;overflow:hidden;cursor:pointer;transition:box-shadow .15s,transform .15s}
+.poe-card:hover{box-shadow:0 6px 24px rgba(0,0,0,.1);transform:translateY(-2px)}
+.poe-card-banner{height:6px}
+.poe-card-body{padding:20px 20px 18px}
+.poe-icon-wrap{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.poe-icon-wrap i{font-size:20px;color:#fff}
+.poe-name{font-size:15px;font-weight:800;color:#111827;letter-spacing:-.2px;margin-bottom:4px}
+.poe-desc{font-size:11.5px;color:#6b7280;line-height:1.55;margin-bottom:16px}
+.poe-stats{display:flex;gap:18px;margin-bottom:14px}
+.poe-stat{text-align:center}
+.poe-stat-val{font-size:18px;font-weight:800;color:#111827}
+.poe-stat-lbl{font-size:10px;color:#9ca3af;font-weight:500;margin-top:1px}
+.poe-prog-lbl{display:flex;justify-content:space-between;font-size:10.5px;color:#9ca3af;margin-bottom:4px}
+.poe-prog-bar{height:4px;background:#f3f4f6;border-radius:2px;overflow:hidden}
+.poe-prog-fill{height:100%;border-radius:2px;transition:width .4s}
+.poe-card-footer{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:#f9fafb;border-top:1px solid #f3f4f6}
+.poe-status{font-size:10.5px;font-weight:600;display:flex;align-items:center;gap:5px}
+.poe-status.open{color:#16a34a}
+.poe-status.cal{color:#7c3aed}
+.poe-open-btn{font-size:11px;font-weight:600;color:#1a3a6b;cursor:pointer;display:flex;align-items:center;gap:4px}
+.poe-open-btn:hover{text-decoration:underline}
+
+/* SECTION HEADER */
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.sec-title{font-size:14px;font-weight:800;color:#111827}
+.sec-link{font-size:11.5px;color:#1a3a6b;cursor:pointer;font-weight:500}
+.sec-link:hover{text-decoration:underline}
+
+/* ── DETAIL VIEW ── */
+.detail-header{background:linear-gradient(135deg,#1a3a6b,#0f2347);padding:0 20px;height:54px;display:flex;align-items:center;gap:14px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.08)}
+.dh-back{font-size:11px;color:rgba(255,255,255,.5);cursor:pointer;display:flex;align-items:center;gap:4px;font-weight:500;flex-shrink:0;padding-right:12px;border-right:1px solid rgba(255,255,255,.12)}
+.dh-back:hover{color:#fff}
+.dh-cover{width:32px;height:32px;border-radius:7px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.dh-cover i{font-size:16px;color:#fff}
+.dh-info{flex:1;min-width:0}
+.dh-title{font-size:13px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dh-meta{font-size:10.5px;color:rgba(255,255,255,.45)}
+.dh-tabs{display:flex;gap:0;margin-left:auto;flex-shrink:0;border:1px solid rgba(255,255,255,.15);border-radius:8px;overflow:hidden}
+.dh-tab{padding:6px 14px;font-size:11px;font-weight:600;cursor:pointer;color:rgba(255,255,255,.5);background:transparent;border:none;transition:background .15s,color .15s}
+.dh-tab:hover{color:#fff}
+.dh-tab.on{background:rgba(255,255,255,.15);color:#fff}
+
+/* TABS CONTAINER */
+.detail-body{flex:1;display:flex;overflow:hidden;min-height:0}
+#tab-plays{flex:1;display:flex;overflow:hidden;min-height:0}
+#tab-calibration{flex:1;display:none;overflow-y:auto;background:#f9fafb;padding:28px 32px}
+
+/* PLAYS TAB — left queue + right panel */
+.track-list{width:300px;flex-shrink:0;border-right:1px solid #e5e7eb;background:#fff;display:flex;flex-direction:column;overflow:hidden}
+.tl-header{padding:12px 16px 8px;border-bottom:1px solid #f3f4f6;flex-shrink:0}
+.tl-hdr-row{display:flex;align-items:center;justify-content:space-between}
+.tl-title{font-size:12px;font-weight:700;color:#111827}
+.tl-count{font-size:10.5px;color:#9ca3af}
+.tl-scroll{flex:1;overflow-y:auto}
+.track-row{display:flex;align-items:center;gap:10px;padding:9px 14px;cursor:pointer;border-bottom:1px solid #f9fafb;transition:background .12s}
+.track-row:hover{background:#f9fafb}
+.track-row.active{background:#eff6ff;border-left:3px solid #1a3a6b}
+.tr-num{font-size:10px;color:#9ca3af;width:14px;text-align:center;flex-shrink:0}
+.tr-info{flex:1;min-width:0}
+.tr-game{font-size:11.5px;font-weight:600;color:#111827;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tr-time{font-size:10px;color:#9ca3af;margin-top:1px}
+.tr-chip{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;flex-shrink:0}
+.rc-infraction{background:#fee2e2;color:#991b1b}
+.rc-lean-infraction{background:#fef3c7;color:#92400e}
+.rc-lean-no{background:#dbeafe;color:#1e40af}
+.rc-no-infraction{background:#dcfce7;color:#166534}
+.rc-unrated{background:#f3f4f6;color:#9ca3af}
+
+/* RIGHT PANEL */
+.right-col{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+.vid-section{flex:1;position:relative;overflow:hidden;min-height:0}
+.vid-frame{position:absolute;inset:0;width:100%;height:100%;background:#0f1117;display:flex;align-items:center;justify-content:center}
+.vid-frame img{max-width:100%;max-height:100%;object-fit:contain}
+.vid-play-btn{position:absolute;width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(4px);transition:background .2s,transform .15s}
+.vid-play-btn:hover{background:rgba(255,255,255,.3);transform:scale(1.08)}
+.vid-play-btn i{font-size:22px;color:#fff;margin-left:3px}
+.vid-ang-bar{display:flex;gap:3px;padding:5px 10px;background:#1a1f2e;border-top:1px solid rgba(255,255,255,.06);overflow-x:auto;flex-shrink:0}
+.ang{padding:2px 7px;font-size:10px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.07);color:rgba(255,255,255,.55);cursor:pointer;border-radius:4px;white-space:nowrap;font-weight:500}
+.ang.on{background:rgba(255,255,255,.18);color:#fff;border-color:rgba(255,255,255,.3)}
+
+/* INFO BAR */
+.info-bar{flex-shrink:0;height:190px;display:flex;overflow:hidden;background:#fff;border-top:1px solid #e5e7eb}
+.info-bar-section{padding:12px 16px;display:flex;flex-direction:column;gap:6px;overflow:hidden}
+.info-bar-section+.info-bar-section{border-left:1px solid #e5e7eb}
+.ibs-title{font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;flex-shrink:0}
+.meta-block{display:flex;flex-direction:column;gap:1px}
+.meta-lbl{font-size:10px;color:#9ca3af}
+.meta-val{font-size:12px;font-weight:600;color:#111827}
+
+/* RATING CHIPS in info bar */
+.rating-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:2px}
+.r-chip{padding:5px 12px;border-radius:8px;font-size:11.5px;font-weight:700;cursor:pointer;border:2px solid transparent;transition:all .15s;flex:1;text-align:center;min-width:0}
+.r-chip.inf{background:#fee2e2;color:#991b1b;border-color:#fca5a5}
+.r-chip.lean-inf{background:#fef3c7;color:#92400e;border-color:#fcd34d}
+.r-chip.lean-no{background:#dbeafe;color:#1e40af;border-color:#93c5fd}
+.r-chip.no-inf{background:#dcfce7;color:#166534;border-color:#86efac}
+.r-chip:hover{filter:brightness(.95)}
+.r-chip.selected{box-shadow:0 0 0 3px rgba(0,0,0,.18);transform:scale(1.04)}
+.r-chip.inf.selected{box-shadow:0 0 0 3px #991b1b}
+.r-chip.lean-inf.selected{box-shadow:0 0 0 3px #92400e}
+.r-chip.lean-no.selected{box-shadow:0 0 0 3px #1e40af}
+.r-chip.no-inf.selected{box-shadow:0 0 0 3px #166534}
+.ibs-save-row{display:flex;gap:6px;margin-top:auto}
+.ibs-save-btn{flex:1;padding:6px 0;background:#1a3a6b;color:#fff;border:none;border-radius:7px;font-size:11.5px;font-weight:700;cursor:pointer;transition:background .15s}
+.ibs-save-btn:hover{background:#15306e}
+
+/* COMMENT AREA in info bar */
+.ibs-comment{flex:1;resize:none;border:1px solid #e5e7eb;border-radius:7px;padding:7px 10px;font-size:11.5px;font-family:inherit;color:#374151;line-height:1.5;outline:none;transition:border .15s;min-height:0}
+.ibs-comment:focus{border-color:#93c5fd}
+
+/* ── CALIBRATION TAB ── */
+.cal-section-title{font-size:14px;font-weight:800;color:#111827;margin-bottom:16px}
+.cal-table-wrap{background:#fff;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;margin-bottom:28px}
+table.cal-table{width:100%;border-collapse:collapse}
+.cal-table th{padding:10px 14px;font-size:10.5px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid #f3f4f6;background:#f9fafb;text-align:left}
+.cal-table td{padding:11px 14px;font-size:12px;color:#374151;border-bottom:1px solid #f9fafb}
+.cal-table tr:last-child td{border-bottom:none}
+.cal-table tr:hover td{background:#f9fafb}
+.cal-table .play-cell{font-weight:600;color:#111827;max-width:160px}
+.cal-table .play-sub{font-size:10.5px;color:#9ca3af;margin-top:1px}
+.cal-chip{display:inline-block;padding:2px 9px;border-radius:10px;font-size:10px;font-weight:700}
+.cal-chip.inf{background:#fee2e2;color:#991b1b}
+.cal-chip.lean-inf{background:#fef3c7;color:#92400e}
+.cal-chip.lean-no{background:#dbeafe;color:#1e40af}
+.cal-chip.no-inf{background:#dcfce7;color:#166534}
+.cal-chip.none{background:#f3f4f6;color:#9ca3af}
+.cal-consensus{font-weight:700}
+.cal-align{color:#16a34a;font-size:10.5px;font-weight:600;display:flex;align-items:center;gap:4px}
+.cal-split{color:#d97706;font-size:10.5px;font-weight:600;display:flex;align-items:center;gap:4px}
+.cal-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.cal-sum-card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:14px 16px;text-align:center}
+.cal-sum-name{font-size:11px;color:#6b7280;margin-bottom:6px;font-weight:500}
+.cal-sum-agree{font-size:22px;font-weight:800;color:#111827}
+.cal-sum-lbl{font-size:10px;color:#9ca3af}
+.cal-sum-bar{height:3px;background:#f3f4f6;border-radius:2px;overflow:hidden;margin-top:8px}
+.cal-sum-fill{height:100%;border-radius:2px;background:#1a3a6b}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo" onclick="location='home.html'">
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+      <rect width="26" height="26" rx="6" fill="rgba(255,255,255,0.15)"/>
+      <path d="M7 19V10l6-4 6 4v9" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M10 19v-5h6v5" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span class="nav-brand">BRS</span>
+  </div>
+  <div class="nav-links">
+    <span class="nl" onclick="location='review.html'">Review</span>
+    <span class="nl" onclick="location='second-check.html'">Second Check</span>
+    <span class="nl" onclick="location='published-games.html'">Games</span>
+    <span class="nl" onclick="location='playlists.html'">Playlists</span>
+    <div class="nav-dropdown" id="rimDd">
+      <span class="nl on" onclick="toggleRimDropdown(event)" style="gap:5px">
+        RIM <i class="ti ti-chevron-down nav-dd-caret"></i>
+      </span>
+      <div class="nav-dd-menu">
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-layout-dashboard" style="margin-right:7px;font-size:12px"></i>Overview</span>
+        <span class="nav-dd-item" onclick="location='assessments.html'"><i class="ti ti-clipboard-check" style="margin-right:7px;font-size:12px"></i>Assessments</span>
+        <span class="nav-dd-item" onclick="location='poe.html'" style="color:#1a3a6b;font-weight:700"><i class="ti ti-target" style="margin-right:7px;font-size:12px"></i>Points of Emphasis</span>
+        <span class="nav-dd-item" onclick="location='comment-library.html'"><i class="ti ti-books" style="margin-right:7px;font-size:12px"></i>Comment Library</span>
+      </div>
+    </div>
+    <div class="nav-av">BN</div>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════ LANDING ══════════════════════════════ -->
+<div id="landing">
+  <div class="landing-hero">
+    <div class="lh-eyebrow">RIM · Points of Emphasis</div>
+    <div class="lh-title">2026–27 Season POEs</div>
+    <div class="lh-sub">Review plays for each point of emphasis set at pre-season training. Rate plays and submit comments — calibration opens after 2 weeks.</div>
+  </div>
+
+  <div class="landing-body">
+    <div class="callout">
+      <div class="callout-icon"><i class="ti ti-info-circle"></i></div>
+      <div>
+        <div class="callout-title">How POE Calibration Works</div>
+        <div class="callout-text">Each POE playlist contains plays hand-picked by the supervisory staff. Rate each play and leave a comment. After the open window closes, you'll see everyone's ratings side-by-side in the Calibration view — discuss differences and align on standards for the season.</div>
+      </div>
+    </div>
+
+    <div class="sec-hdr"><div class="sec-title">2026–27 Points of Emphasis</div></div>
+    <div class="poe-grid">
+
+      <!-- Clear Space -->
+      <div class="poe-card" onclick="openPOE('clear-space')">
+        <div class="poe-card-banner" style="background:#2563eb"></div>
+        <div class="poe-card-body">
+          <div class="poe-icon-wrap" style="background:#2563eb"><i class="ti ti-arrows-maximize"></i></div>
+          <div class="poe-name">Clear Space</div>
+          <div class="poe-desc">Defender must give the ball-handler sufficient clear space to complete their move. Focus on incidental contact versus illegal displacement.</div>
+          <div class="poe-stats">
+            <div class="poe-stat"><div class="poe-stat-val">12</div><div class="poe-stat-lbl">Plays</div></div>
+            <div class="poe-stat"><div class="poe-stat-val">8</div><div class="poe-stat-lbl">Rated</div></div>
+            <div class="poe-stat"><div class="poe-stat-val">4d</div><div class="poe-stat-lbl">Left</div></div>
+          </div>
+          <div class="poe-prog-lbl"><span>Your progress</span><span>8/12</span></div>
+          <div class="poe-prog-bar"><div class="poe-prog-fill" style="width:67%;background:#2563eb"></div></div>
+        </div>
+        <div class="poe-card-footer">
+          <div class="poe-status open"><i class="ti ti-circle-filled" style="font-size:7px"></i> Open · Rate plays</div>
+          <div class="poe-open-btn" onclick="event.stopPropagation();openPOE('clear-space')">Open <i class="ti ti-chevron-right" style="font-size:10px"></i></div>
+        </div>
+      </div>
+
+      <!-- Landing Area -->
+      <div class="poe-card" onclick="openPOE('landing-area')">
+        <div class="poe-card-banner" style="background:#ea580c"></div>
+        <div class="poe-card-body">
+          <div class="poe-icon-wrap" style="background:#ea580c"><i class="ti ti-map-pin"></i></div>
+          <div class="poe-name">Landing Area</div>
+          <div class="poe-desc">Shooter is entitled to their landing space. Defenders moving into the landing zone after the shot releases creates a reviewable foul.</div>
+          <div class="poe-stats">
+            <div class="poe-stat"><div class="poe-stat-val">10</div><div class="poe-stat-lbl">Plays</div></div>
+            <div class="poe-stat"><div class="poe-stat-val">10</div><div class="poe-stat-lbl">Rated</div></div>
+            <div class="poe-stat"><div class="poe-stat-val">4d</div><div class="poe-stat-lbl">Left</div></div>
+          </div>
+          <div class="poe-prog-lbl"><span>Your progress</span><span>10/10</span></div>
+          <div class="poe-prog-bar"><div class="poe-prog-fill" style="width:100%;background:#ea580c"></div></div>
+        </div>
+        <div class="poe-card-footer">
+          <div class="poe-status cal"><i class="ti ti-circle-filled" style="font-size:7px"></i> Calibration open</div>
+          <div class="poe-open-btn" onclick="event.stopPropagation();openPOE('landing-area')">Open <i class="ti ti-chevron-right" style="font-size:10px"></i></div>
+        </div>
+      </div>
+
+      <!-- Illegal Screens -->
+      <div class="poe-card" onclick="openPOE('illegal-screens')">
+        <div class="poe-card-banner" style="background:#7c3aed"></div>
+        <div class="poe-card-body">
+          <div class="poe-icon-wrap" style="background:#7c3aed"><i class="ti ti-shield-x"></i></div>
+          <div class="poe-name">Illegal Screens</div>
+          <div class="poe-desc">Moving screens, extended arms, and shoulder drops when setting screens. Distinguish between marginal movement and genuine illegal use.</div>
+          <div class="poe-stats">
+            <div class="poe-stat"><div class="poe-stat-val">14</div><div class="poe-stat-lbl">Plays</div></div>
+            <div class="poe-stat"><div class="poe-stat-val">3</div><div class="poe-stat-lbl">Rated</div></div>
+            <div class="poe-stat"><div class="poe-stat-val">11d</div><div class="poe-stat-lbl">Left</div></div>
+          </div>
+          <div class="poe-prog-lbl"><span>Your progress</span><span>3/14</span></div>
+          <div class="poe-prog-bar"><div class="poe-prog-fill" style="width:21%;background:#7c3aed"></div></div>
+        </div>
+        <div class="poe-card-footer">
+          <div class="poe-status open"><i class="ti ti-circle-filled" style="font-size:7px"></i> Open · Rate plays</div>
+          <div class="poe-open-btn" onclick="event.stopPropagation();openPOE('illegal-screens')">Open <i class="ti ti-chevron-right" style="font-size:10px"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ DETAIL VIEW ══════════════════════════════ -->
+<div id="detail" style="display:none;flex:1;flex-direction:column;overflow:hidden">
+
+  <!-- Compact Header -->
+  <div class="detail-header">
+    <div class="dh-back" onclick="showLanding()"><i class="ti ti-chevron-left"></i> POEs</div>
+    <div class="dh-cover" id="dh-cover-icon" style="background:#2563eb"><i class="ti ti-arrows-maximize" id="dh-icon"></i></div>
+    <div class="dh-info">
+      <div class="dh-title" id="dh-poe-name">Clear Space</div>
+      <div class="dh-meta" id="dh-poe-meta">12 plays · Open through Jul 15</div>
+    </div>
+    <div class="dh-tabs">
+      <button class="dh-tab on" id="tab-plays-btn" onclick="switchTab('plays')">Plays</button>
+      <button class="dh-tab" id="tab-cal-btn" onclick="switchTab('calibration')">Calibration</button>
+    </div>
+  </div>
+
+  <!-- Body: tabs container -->
+  <div class="detail-body">
+
+    <!-- PLAYS TAB -->
+    <div id="tab-plays">
+      <!-- Queue -->
+      <div class="track-list">
+        <div class="tl-header">
+          <div class="tl-hdr-row">
+            <span class="tl-title" id="queue-title">Clear Space Plays</span>
+            <span class="tl-count" id="queue-count">12 plays</span>
+          </div>
+        </div>
+        <div class="tl-scroll" id="track-scroll"></div>
+      </div>
+
+      <!-- Right: video + info bar -->
+      <div class="right-col">
+        <div class="vid-section">
+          <div class="vid-frame">
+            <img src="https://via.placeholder.com/800x450/0f1117/333?text=" alt="play">
+            <div class="vid-play-btn" onclick="this.style.display='none'"><i class="ti ti-player-play-filled"></i></div>
+          </div>
+        </div>
+        <div class="vid-ang-bar">
+          <span class="ang on">Broadcast</span>
+          <span class="ang">Lead</span>
+          <span class="ang">Trail</span>
+          <span class="ang">Slot</span>
+        </div>
+
+        <!-- Info Bar: 3 sections -->
+        <div class="info-bar">
+          <!-- Play Info -->
+          <div class="info-bar-section" style="width:220px;flex-shrink:0">
+            <div class="ibs-title">Play Info</div>
+            <div style="display:flex;flex-direction:column;gap:8px;margin-top:2px">
+              <div class="meta-block"><div class="meta-lbl">Game</div><div class="meta-val" id="ib-game">TOR @ CHI</div></div>
+              <div class="meta-block"><div class="meta-lbl">Period · Clock</div><div class="meta-val" id="ib-clock">Q3 · 4:22</div></div>
+              <div class="meta-block"><div class="meta-lbl">Ref (Position)</div><div class="meta-val" id="ib-ref">Perrymond (8) · Lead</div></div>
+              <div class="meta-block"><div class="meta-lbl">Play Type</div><div class="meta-val" id="ib-type">Foul: Shooting</div></div>
+            </div>
+          </div>
+
+          <!-- Your Rating -->
+          <div class="info-bar-section" style="flex:1">
+            <div class="ibs-title">Your Rating</div>
+            <div class="rating-chips" id="rating-chips">
+              <div class="r-chip inf" onclick="selectRating('inf',this)">Infraction</div>
+              <div class="r-chip lean-inf" onclick="selectRating('lean-inf',this)">Lean Inf</div>
+              <div class="r-chip lean-no" onclick="selectRating('lean-no',this)">Lean No</div>
+              <div class="r-chip no-inf" onclick="selectRating('no-inf',this)">No Infraction</div>
+            </div>
+            <div style="flex:1"></div>
+            <button class="ibs-save-btn" onclick="saveRating()"><i class="ti ti-check" style="font-size:12px;margin-right:4px"></i>Save Rating</button>
+          </div>
+
+          <!-- Comment -->
+          <div class="info-bar-section" style="flex:1.2">
+            <div class="ibs-title">Your Comment</div>
+            <textarea class="ibs-comment" id="play-comment" placeholder="Add your notes on this play — what makes it a clear space violation or why it's incidental…"></textarea>
+            <button class="ibs-save-btn" style="margin-top:6px;flex-shrink:0" onclick="saveComment()"><i class="ti ti-message" style="font-size:12px;margin-right:4px"></i>Save Comment</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CALIBRATION TAB -->
+    <div id="tab-calibration">
+      <div class="cal-section-title" id="cal-section-title">Landing Area — Calibration</div>
+
+      <!-- Agreement summary per reviewer -->
+      <div class="cal-summary">
+        <div class="cal-sum-card">
+          <div class="cal-sum-name">Bridget N.</div>
+          <div class="cal-sum-agree">87%</div>
+          <div class="cal-sum-lbl">agreement with consensus</div>
+          <div class="cal-sum-bar"><div class="cal-sum-fill" style="width:87%"></div></div>
+        </div>
+        <div class="cal-sum-card">
+          <div class="cal-sum-name">Tucker G.</div>
+          <div class="cal-sum-agree">92%</div>
+          <div class="cal-sum-lbl">agreement with consensus</div>
+          <div class="cal-sum-bar"><div class="cal-sum-fill" style="width:92%"></div></div>
+        </div>
+        <div class="cal-sum-card">
+          <div class="cal-sum-name">Michael A.</div>
+          <div class="cal-sum-agree">80%</div>
+          <div class="cal-sum-lbl">agreement with consensus</div>
+          <div class="cal-sum-bar"><div class="cal-sum-fill" style="width:80%"></div></div>
+        </div>
+        <div class="cal-sum-card">
+          <div class="cal-sum-name">Curtis OJr.</div>
+          <div class="cal-sum-agree">75%</div>
+          <div class="cal-sum-lbl">agreement with consensus</div>
+          <div class="cal-sum-bar"><div class="cal-sum-fill" style="width:75%"></div></div>
+        </div>
+      </div>
+
+      <!-- Calibration Table -->
+      <div class="cal-table-wrap">
+        <table class="cal-table">
+          <thead>
+            <tr>
+              <th>Play</th>
+              <th>BN</th>
+              <th>TG</th>
+              <th>MA</th>
+              <th>COJr</th>
+              <th>Consensus</th>
+              <th>Alignment</th>
+            </tr>
+          </thead>
+          <tbody id="cal-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const POES = {
+  'clear-space': {
+    name:'Clear Space',
+    color:'#2563eb',
+    icon:'ti-arrows-maximize',
+    meta:'12 plays · Open through Jul 15',
+    queueTitle:'Clear Space Plays',
+    plays:[
+      {id:'cs1',game:'TOR @ CHI',clock:'Q3 · 4:22',ref:'Perrymond (8) · Lead',type:'Foul: Shooting',myRating:null,comment:''},
+      {id:'cs2',game:'LV @ NY',clock:'Q1 · 9:12',ref:'Capers (14) · Trail',type:'Foul: Personal',myRating:null,comment:''},
+      {id:'cs3',game:'SEA @ ATL',clock:'Q4 · 2:08',ref:'Hughes (22) · Slot',type:'Foul: Shooting',myRating:'lean-inf',comment:'Defender moves clearly into space'},
+      {id:'cs4',game:'MIN @ CON',clock:'Q2 · 5:44',ref:'Perrymond (8) · Lead',type:'Foul: Personal',myRating:'no-inf',comment:''},
+      {id:'cs5',game:'DAL @ IND',clock:'Q3 · 7:01',ref:'Adams (31) · Trail',type:'Foul: Shooting',myRating:null,comment:''},
+      {id:'cs6',game:'PHX @ WAS',clock:'Q1 · 3:55',ref:'Capers (14) · Lead',type:'Foul: Personal',myRating:'inf',comment:'Clear displacement, should have been called'},
+      {id:'cs7',game:'CHI @ LV',clock:'Q4 · 0:38',ref:'Hughes (22) · Slot',type:'Foul: Shooting',myRating:'lean-no',comment:''},
+      {id:'cs8',game:'NY @ SEA',clock:'Q2 · 8:22',ref:'Adams (31) · Trail',type:'Foul: Personal',myRating:'lean-inf',comment:''},
+      {id:'cs9',game:'ATL @ MIN',clock:'Q3 · 6:14',ref:'Perrymond (8) · Lead',type:'Foul: Shooting',myRating:null,comment:''},
+      {id:'cs10',game:'CON @ DAL',clock:'Q1 · 1:45',ref:'Capers (14) · Trail',type:'Foul: Shooting',myRating:null,comment:''},
+      {id:'cs11',game:'IND @ PHX',clock:'Q4 · 3:59',ref:'Hughes (22) · Lead',type:'Foul: Personal',myRating:null,comment:''},
+      {id:'cs12',game:'WAS @ TOR',clock:'Q2 · 6:03',ref:'Adams (31) · Slot',type:'Foul: Shooting',myRating:null,comment:''},
+    ],
+    calPlays:[]
+  },
+  'landing-area': {
+    name:'Landing Area',
+    color:'#ea580c',
+    icon:'ti-map-pin',
+    meta:'10 plays · Calibration open',
+    queueTitle:'Landing Area Plays',
+    plays:[
+      {id:'la1',game:'TOR @ CHI',clock:'Q2 · 6:11',ref:'Capers (14) · Trail',type:'Foul: Shooting',myRating:'lean-inf',comment:'Defender steps into landing zone post-release'},
+      {id:'la2',game:'LV @ NY',clock:'Q3 · 4:38',ref:'Perrymond (8) · Lead',type:'Foul: Shooting',myRating:'inf',comment:'Textbook landing area violation'},
+      {id:'la3',game:'SEA @ ATL',clock:'Q1 · 8:55',ref:'Adams (31) · Slot',type:'Foul: Shooting',myRating:'lean-no',comment:'Borderline, defender already in spot'},
+      {id:'la4',game:'MIN @ CON',clock:'Q4 · 1:22',ref:'Hughes (22) · Lead',type:'Foul: Shooting',myRating:'no-inf',comment:''},
+      {id:'la5',game:'DAL @ IND',clock:'Q2 · 3:09',ref:'Capers (14) · Trail',type:'Foul: Shooting',myRating:'lean-inf',comment:''},
+      {id:'la6',game:'PHX @ WAS',clock:'Q3 · 7:44',ref:'Perrymond (8) · Slot',type:'Foul: Shooting',myRating:'inf',comment:''},
+      {id:'la7',game:'CHI @ LV',clock:'Q1 · 5:58',ref:'Adams (31) · Lead',type:'Foul: Shooting',myRating:'lean-inf',comment:''},
+      {id:'la8',game:'NY @ SEA',clock:'Q4 · 0:52',ref:'Hughes (22) · Trail',type:'Foul: Shooting',myRating:'lean-no',comment:''},
+      {id:'la9',game:'ATL @ MIN',clock:'Q2 · 9:01',ref:'Capers (14) · Lead',type:'Foul: Shooting',myRating:'no-inf',comment:''},
+      {id:'la10',game:'CON @ DAL',clock:'Q3 · 2:47',ref:'Perrymond (8) · Trail',type:'Foul: Shooting',myRating:'lean-inf',comment:'Tough call, slight lean'},
+    ],
+    calPlays:[
+      {play:'TOR @ CHI Q2 6:11',sub:'Shooting Foul · Lead',bn:'lean-inf',tg:'lean-inf',ma:'inf',co:'lean-inf',consensus:'lean-inf',aligned:true},
+      {play:'LV @ NY Q3 4:38',sub:'Shooting Foul · Lead',bn:'inf',tg:'inf',ma:'inf',co:'lean-inf',consensus:'inf',aligned:true},
+      {play:'SEA @ ATL Q1 8:55',sub:'Shooting Foul · Slot',bn:'lean-no',tg:'lean-no',ma:'lean-inf',co:'lean-no',consensus:'lean-no',aligned:false},
+      {play:'MIN @ CON Q4 1:22',sub:'Shooting Foul · Lead',bn:'no-inf',tg:'no-inf',ma:'no-inf',co:'lean-no',consensus:'no-inf',aligned:true},
+      {play:'DAL @ IND Q2 3:09',sub:'Shooting Foul · Trail',bn:'lean-inf',tg:'inf',ma:'lean-inf',co:'inf',consensus:'lean-inf',aligned:false},
+      {play:'PHX @ WAS Q3 7:44',sub:'Shooting Foul · Slot',bn:'inf',tg:'inf',ma:'inf',co:'inf',consensus:'inf',aligned:true},
+      {play:'CHI @ LV Q1 5:58',sub:'Shooting Foul · Lead',bn:'lean-inf',tg:'lean-inf',ma:'lean-no',co:'lean-inf',consensus:'lean-inf',aligned:false},
+      {play:'NY @ SEA Q4 0:52',sub:'Shooting Foul · Trail',bn:'lean-no',tg:'lean-no',ma:'lean-no',co:'lean-no',consensus:'lean-no',aligned:true},
+      {play:'ATL @ MIN Q2 9:01',sub:'Shooting Foul · Lead',bn:'no-inf',tg:'lean-no',ma:'no-inf',co:'no-inf',consensus:'no-inf',aligned:true},
+      {play:'CON @ DAL Q3 2:47',sub:'Shooting Foul · Trail',bn:'lean-inf',tg:'lean-inf',ma:'lean-inf',co:'lean-no',consensus:'lean-inf',aligned:true},
+    ]
+  },
+  'illegal-screens': {
+    name:'Illegal Screens',
+    color:'#7c3aed',
+    icon:'ti-shield-x',
+    meta:'14 plays · Open through Jul 22',
+    queueTitle:'Illegal Screen Plays',
+    plays:[
+      {id:'is1',game:'TOR @ CHI',clock:'Q1 · 7:33',ref:'Adams (31) · Trail',type:'Foul: Offensive',myRating:'lean-inf',comment:''},
+      {id:'is2',game:'LV @ NY',clock:'Q2 · 4:55',ref:'Capers (14) · Lead',type:'Foul: Offensive',myRating:null,comment:''},
+      {id:'is3',game:'SEA @ ATL',clock:'Q3 · 8:01',ref:'Perrymond (8) · Slot',type:'Foul: Offensive',myRating:'inf',comment:''},
+      {id:'is4',game:'MIN @ CON',clock:'Q4 · 2:22',ref:'Hughes (22) · Trail',type:'Foul: Offensive',myRating:null,comment:''},
+      {id:'is5',game:'DAL @ IND',clock:'Q1 · 5:47',ref:'Adams (31) · Lead',type:'Foul: Offensive',myRating:null,comment:''},
+      {id:'is6',game:'PHX @ WAS',clock:'Q2 · 1:18',ref:'Capers (14) · Slot',type:'Foul: Offensive',myRating:null,comment:''},
+      {id:'is7',game:'CHI @ LV',clock:'Q3 · 6:30',ref:'Perrymond (8) · Trail',type:'Foul: Offensive',myRating:null,comment:''},
+      {id:'is8',game:'NY @ SEA',clock:'Q1 · 9:05',ref:'Hughes (22) · Lead',type:'Foul: Offensive',myRating:null,comment:''},
+      {id:'is9',game:'ATL @ MIN',clock:'Q4 · 4:41',ref:'Adams (31) · Slot',type:'Foul: Offensive',myRating:null,comment:''},
+      {id:'is10',game:'CON @ DAL',clock:'Q2 · 7:29',ref:'Capers (14) · Trail',type:'Foul: Offensive',myRating:null,comment:''},
+      {id:'is11',game:'IND @ PHX',clock:'Q3 · 3:14',ref:'Perrymond (8) · Lead',type:'Foul: Offensive',myRating:null,comment:''},
+      {id:'is12',game:'WAS @ TOR',clock:'Q1 · 8:52',ref:'Hughes (22) · Trail',type:'Foul: Offensive',myRating:null,comment:''},
+      {id:'is13',game:'TOR @ LV',clock:'Q4 · 0:17',ref:'Adams (31) · Slot',type:'Foul: Offensive',myRating:null,comment:''},
+      {id:'is14',game:'CHI @ MIN',clock:'Q2 · 5:03',ref:'Capers (14) · Lead',type:'Foul: Offensive',myRating:null,comment:''},
+    ],
+    calPlays:[]
+  }
+};
+
+const CHIP_LABELS = {inf:'Infraction','lean-inf':'Lean Inf','lean-no':'Lean No','no-inf':'No Infraction',null:'—',undefined:'—'};
+const CHIP_CLASS = {inf:'inf','lean-inf':'lean-inf','lean-no':'lean-no','no-inf':'no-inf'};
+
+let currentPOE = null;
+let currentPlayIdx = 0;
+
+function toggleRimDropdown(e){
+  e.stopPropagation();
+  document.getElementById('rimDd').classList.toggle('open');
+}
+document.addEventListener('click',()=>document.getElementById('rimDd').classList.remove('open'));
+
+function openPOE(key){
+  currentPOE = key;
+  currentPlayIdx = 0;
+  const poe = POES[key];
+  document.getElementById('landing').style.display = 'none';
+  const det = document.getElementById('detail');
+  det.style.display = 'flex';
+
+  // header
+  document.getElementById('dh-poe-name').textContent = poe.name;
+  document.getElementById('dh-poe-meta').textContent = poe.meta;
+  document.getElementById('dh-cover-icon').style.background = poe.color;
+  document.getElementById('dh-icon').className = 'ti ' + poe.icon;
+  document.getElementById('queue-title').textContent = poe.queueTitle;
+  document.getElementById('queue-count').textContent = poe.plays.length + ' plays';
+
+  // landing area defaults to calibration tab
+  if(key === 'landing-area'){
+    switchTab('calibration');
+  } else {
+    switchTab('plays');
+  }
+
+  renderQueue();
+  if(poe.plays.length) loadPlay(0);
+}
+
+function showLanding(){
+  document.getElementById('detail').style.display = 'none';
+  document.getElementById('landing').style.display = 'flex';
+}
+
+function switchTab(tab){
+  document.getElementById('tab-plays').style.display = tab==='plays' ? 'flex':'none';
+  document.getElementById('tab-calibration').style.display = tab==='calibration' ? 'flex':'none';
+  document.getElementById('tab-plays-btn').classList.toggle('on', tab==='plays');
+  document.getElementById('tab-cal-btn').classList.toggle('on', tab==='calibration');
+  if(tab==='calibration') renderCalibration();
+}
+
+function renderQueue(){
+  const poe = POES[currentPOE];
+  const scroll = document.getElementById('track-scroll');
+  scroll.innerHTML = poe.plays.map((p,i)=>{
+    const rc = p.myRating ? 'rc-'+p.myRating : 'rc-unrated';
+    const label = p.myRating ? CHIP_LABELS[p.myRating] : '—';
+    return `<div class="track-row${i===currentPlayIdx?' active':''}" onclick="loadPlay(${i})">
+      <span class="tr-num">${i+1}</span>
+      <div class="tr-info">
+        <div class="tr-game">${p.game}</div>
+        <div class="tr-time">${p.clock}</div>
+      </div>
+      <span class="tr-chip ${rc}">${label}</span>
+    </div>`;
+  }).join('');
+}
+
+function loadPlay(idx){
+  currentPlayIdx = idx;
+  const poe = POES[currentPOE];
+  const p = poe.plays[idx];
+  document.getElementById('ib-game').textContent = p.game;
+  document.getElementById('ib-clock').textContent = p.clock;
+  document.getElementById('ib-ref').textContent = p.ref;
+  document.getElementById('ib-type').textContent = p.type;
+  document.getElementById('play-comment').value = p.comment || '';
+
+  // reset rating chips
+  document.querySelectorAll('.r-chip').forEach(c=>c.classList.remove('selected'));
+  if(p.myRating){
+    const active = document.querySelector(`.r-chip.${p.myRating}`);
+    if(active) active.classList.add('selected');
+  }
+
+  // update active row in queue
+  document.querySelectorAll('.track-row').forEach((r,i)=>{
+    r.classList.toggle('active', i===idx);
+  });
+}
+
+function selectRating(val, el){
+  document.querySelectorAll('.r-chip').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  POES[currentPOE].plays[currentPlayIdx].myRating = val;
+}
+
+function saveRating(){
+  const p = POES[currentPOE].plays[currentPlayIdx];
+  const active = document.querySelector('.r-chip.selected');
+  if(active){
+    const cls = [...active.classList].find(c=>['inf','lean-inf','lean-no','no-inf'].includes(c));
+    if(cls) p.myRating = cls;
+  }
+  renderQueue();
+  // advance to next unrated if any
+  const plays = POES[currentPOE].plays;
+  const next = plays.findIndex((pl,i)=>i>currentPlayIdx && !pl.myRating);
+  if(next !== -1) loadPlay(next);
+}
+
+function saveComment(){
+  POES[currentPOE].plays[currentPlayIdx].comment = document.getElementById('play-comment').value;
+}
+
+function renderCalibration(){
+  const poe = POES[currentPOE];
+  document.getElementById('cal-section-title').textContent = poe.name + ' — Calibration';
+  const rows = poe.calPlays;
+  if(!rows.length){
+    document.getElementById('cal-table-body').innerHTML =
+      `<tr><td colspan="7" style="text-align:center;color:#9ca3af;padding:32px">Calibration data will appear once the rating window closes.</td></tr>`;
+    return;
+  }
+  document.getElementById('cal-table-body').innerHTML = rows.map(r=>`
+    <tr>
+      <td><div class="play-cell">${r.play}</div><div class="play-sub">${r.sub}</div></td>
+      <td><span class="cal-chip ${CHIP_CLASS[r.bn]||'none'}">${CHIP_LABELS[r.bn]||'—'}</span></td>
+      <td><span class="cal-chip ${CHIP_CLASS[r.tg]||'none'}">${CHIP_LABELS[r.tg]||'—'}</span></td>
+      <td><span class="cal-chip ${CHIP_CLASS[r.ma]||'none'}">${CHIP_LABELS[r.ma]||'—'}</span></td>
+      <td><span class="cal-chip ${CHIP_CLASS[r.co]||'none'}">${CHIP_LABELS[r.co]||'—'}</span></td>
+      <td><span class="cal-chip ${CHIP_CLASS[r.consensus]||'none'} cal-consensus">${CHIP_LABELS[r.consensus]||'—'}</span></td>
+      <td>${r.aligned
+        ? '<div class="cal-align"><i class="ti ti-circle-check"></i>Aligned</div>'
+        : '<div class="cal-split"><i class="ti ti-alert-triangle"></i>Split</div>'}</td>
+    </tr>`).join('');
+}
+</script>
+</body>
+</html>
