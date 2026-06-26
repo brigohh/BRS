@@ -127,6 +127,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .q-opt{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1.5px solid #e5e7eb;border-radius:12px;cursor:pointer;transition:all .15s;position:relative}
 .q-opt:hover{border-color:#d1d5db;background:#f9fafb}
 .q-opt.sel{border-color:#1a3a6b;background:#eff6ff}
+.q-opt.selected{border-color:#1a3a6b;background:#eff6ff}
 .q-opt.correct{border-color:#16a34a;background:#dcfce7}
 .q-opt.wrong{border-color:#dc2626;background:#fee2e2}
 .q-opt-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
@@ -432,19 +433,32 @@ function selectOpt(val) {
   if (revealed) return;
   const q = QUESTIONS[curQ];
   answers[curQ] = val;
-  revealed = true;
+  // highlight selected only — no reveal yet
   const opts = q.type === 'infraction' ? INF_OPTS : COV_OPTS;
   opts.forEach(o => {
     const el = document.getElementById('opt-'+o.val.replace(/ /g,'_'));
-    const chk = document.getElementById('chk-'+o.val.replace(/ /g,'_'));
     if (!el) return;
-    if (o.val === q.correct) { el.classList.add('correct'); chk.innerHTML='<i class="ti ti-circle-check" style="color:#16a34a"></i>'; }
-    else if (o.val === val) { el.classList.add('wrong'); chk.innerHTML='<i class="ti ti-circle-x" style="color:#dc2626"></i>'; }
+    el.classList.toggle('selected', o.val === val);
   });
   document.getElementById('q-next-btn').disabled = false;
 }
 
 function nextQuestion() {
+  const q = QUESTIONS[curQ];
+  if (!revealed && answers[curQ] !== undefined) {
+    // reveal correct/wrong, then wait for second click to advance
+    revealed = true;
+    const opts = q.type === 'infraction' ? INF_OPTS : COV_OPTS;
+    opts.forEach(o => {
+      const el = document.getElementById('opt-'+o.val.replace(/ /g,'_'));
+      const chk = document.getElementById('chk-'+o.val.replace(/ /g,'_'));
+      if (!el) return;
+      el.classList.remove('selected');
+      if (o.val === q.correct) { el.classList.add('correct'); chk.innerHTML='<i class="ti ti-circle-check" style="color:#16a34a"></i>'; }
+      else if (o.val === answers[curQ]) { el.classList.add('wrong'); chk.innerHTML='<i class="ti ti-circle-x" style="color:#dc2626"></i>'; }
+    });
+    return;
+  }
   if (curQ < QUESTIONS.length - 1) { curQ++; renderQuestion(); }
   else { showResults(); }
 }
