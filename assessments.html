@@ -35,10 +35,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .lh-eyebrow{font-size:10px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:6px}
 .lh-title{font-size:24px;font-weight:800;color:#fff;letter-spacing:-.2px;margin-bottom:6px}
 .lh-sub{font-size:12.5px;color:rgba(255,255,255,.55);margin-bottom:16px;line-height:1.5}
-.lh-actions{display:flex;gap:8px}
+.lh-actions{display:flex;gap:8px;align-items:center}
 .lh-btn{padding:7px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;border:none;display:flex;align-items:center;gap:6px;transition:opacity .15s}
 .lh-btn:hover{opacity:.85}
 .lh-btn.ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2)}
+.lh-btn.manager-toggle{background:rgba(255,255,255,.9);color:#1a3a6b}
+.lh-btn.manager-toggle.on{background:#fbbf24;color:#78350f}
 .landing-body{padding:24px 40px 40px;flex:1}
 
 /* CALLOUT */
@@ -48,8 +50,24 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .callout-text{font-size:12px;color:#3730a3;line-height:1.6}
 .callout-title{font-size:12.5px;font-weight:700;color:#312e81;margin-bottom:3px}
 
+/* CHECK-IN CARD */
+.checkin-card{background:#fff;border:1.5px solid #f59e0b;border-radius:14px;padding:18px 22px;margin-bottom:20px;position:relative;overflow:hidden}
+.checkin-card-accent{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#f59e0b,#fbbf24)}
+.ci-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
+.ci-badge{padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;background:#fef3c7;color:#92400e;display:flex;align-items:center;gap:4px}
+.ci-name{font-size:15px;font-weight:800;color:#111827;margin-bottom:3px}
+.ci-meta{font-size:11.5px;color:#6b7280;margin-bottom:10px;line-height:1.5}
+.ci-areas{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.ci-area{padding:3px 10px;border-radius:20px;font-size:10.5px;font-weight:600;background:#fef3c7;color:#92400e;border:1px solid #fde68a}
+.ci-actions{display:flex;gap:8px;align-items:center}
+.ci-btn{padding:7px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;transition:opacity .15s;border:none}
+.ci-btn:hover{opacity:.85}
+.ci-btn.cal{background:#1a3a6b;color:#fff}
+.ci-btn.complete{background:#dcfce7;color:#166534;border:1px solid #86efac}
+.ci-note{font-size:11px;color:#9ca3af;margin-top:8px;display:flex;align-items:center;gap:5px}
+
 /* ACTIVE ASSESSMENT CARD */
-.active-card{background:#fff;border:1.5px solid #1a3a6b;border-radius:14px;padding:22px 24px;margin-bottom:28px;position:relative;overflow:hidden}
+.active-card{background:#fff;border:1.5px solid #1a3a6b;border-radius:14px;padding:22px 24px;margin-bottom:20px;position:relative;overflow:hidden}
 .active-card-accent{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#1a3a6b,#2563eb)}
 .ac-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
 .ac-badge{padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;background:#dcfce7;color:#166534;display:flex;align-items:center;gap:4px}
@@ -68,24 +86,51 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .start-btn:hover{background:#15306e}
 
 /* PAST ASSESSMENTS */
-.past-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.past-card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:16px 18px;cursor:pointer;transition:border-color .15s}
+.past-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px}
+.past-card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:16px 18px;cursor:pointer;transition:border-color .15s;position:relative}
 .past-card:hover{border-color:#d1d5db}
 .past-score{font-size:22px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
 .past-score.great{color:#16a34a}
 .past-score.good{color:#1a3a6b}
 .past-score.work{color:#d97706}
+.past-score.fail{color:#dc2626}
 .past-name{font-size:12px;font-weight:700;color:#111827;margin-bottom:3px}
 .past-date{font-size:10.5px;color:#9ca3af;margin-bottom:10px}
 .past-areas{display:flex;gap:4px;flex-wrap:wrap}
 .past-area{padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;background:#fef3c7;color:#92400e}
 .past-area.ok{background:#dcfce7;color:#166534}
+.past-status{position:absolute;top:14px;right:14px;padding:2px 8px;border-radius:20px;font-size:9.5px;font-weight:700}
+.ps-pass{background:#dcfce7;color:#166534}
+.ps-fail{background:#fee2e2;color:#991b1b}
+.ps-checkin{background:#fef3c7;color:#92400e}
 
 /* SECTION HEADER */
 .sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .sec-title{font-size:14px;font-weight:800;color:#111827}
 .sec-link{font-size:11.5px;color:#1a3a6b;cursor:pointer;font-weight:500}
 .sec-link:hover{text-decoration:underline}
+
+/* MANAGER ROSTER TABLE */
+.roster-wrap{background:#fff;border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;margin-bottom:28px}
+.roster-header{padding:14px 20px;background:#f9fafb;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between}
+.roster-title{font-size:13px;font-weight:800;color:#111827}
+.roster-meta{font-size:11px;color:#9ca3af}
+table.roster-table{width:100%;border-collapse:collapse}
+.roster-table th{padding:9px 16px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#6b7280;border-bottom:1px solid #f3f4f6;text-align:left;background:#fafafa}
+.roster-table td{padding:12px 16px;font-size:12px;color:#374151;border-bottom:1px solid #f9fafb;vertical-align:middle}
+.roster-table tr:last-child td{border-bottom:none}
+.roster-table tr:hover td{background:#f9fafb}
+.r-name{font-weight:700;color:#111827;margin-bottom:1px}
+.r-sub{font-size:10.5px;color:#9ca3af}
+.r-status{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:10.5px;font-weight:700}
+.rs-not-started{background:#f3f4f6;color:#6b7280}
+.rs-in-progress{background:#dbeafe;color:#1e40af}
+.rs-passed{background:#dcfce7;color:#166534}
+.rs-failed{background:#fee2e2;color:#991b1b}
+.rs-checkin{background:#fef3c7;color:#92400e}
+.rs-assign{padding:5px 12px;border:1px solid #d1d5db;border-radius:7px;font-size:11px;font-weight:600;color:#374151;background:#fff;cursor:pointer;transition:all .15s;white-space:nowrap}
+.rs-assign:hover{border-color:#1a3a6b;color:#1a3a6b}
+.rs-assigned-label{font-size:11px;color:#92400e;font-weight:600;display:flex;align-items:center;gap:4px}
 
 /* ── QUIZ VIEW ── */
 .quiz-header{background:linear-gradient(135deg,#1a3a6b,#0f2347);height:54px;display:flex;align-items:center;padding:0 20px;gap:14px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.08)}
@@ -95,7 +140,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .qh-counter{font-size:11.5px;color:rgba(255,255,255,.55);white-space:nowrap}
 .qh-prog{width:120px;height:4px;background:rgba(255,255,255,.15);border-radius:2px;flex-shrink:0}
 .qh-prog-fill{height:100%;background:#60a5fa;border-radius:2px;transition:width .3s}
-
 .quiz-body{flex:1;display:flex;overflow:hidden;min-height:0}
 
 /* QUIZ LEFT — video */
@@ -126,7 +170,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .q-options{display:flex;flex-direction:column;gap:10px}
 .q-opt{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1.5px solid #e5e7eb;border-radius:12px;cursor:pointer;transition:all .15s;position:relative}
 .q-opt:hover{border-color:#d1d5db;background:#f9fafb}
-.q-opt.sel{border-color:#1a3a6b;background:#eff6ff}
 .q-opt.selected{border-color:#1a3a6b;background:#eff6ff}
 .q-opt.correct{border-color:#16a34a;background:#dcfce7}
 .q-opt.wrong{border-color:#dc2626;background:#fee2e2}
@@ -143,13 +186,32 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .results-header{background:linear-gradient(135deg,#1a3a6b,#0f2347);height:54px;display:flex;align-items:center;padding:0 20px;gap:14px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.08)}
 .results-body{flex:1;overflow-y:auto;padding:32px 40px 48px}
 
+/* PASS/FAIL BANNER */
+.result-banner{border-radius:12px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px}
+.result-banner.pass{background:#dcfce7;border:1px solid #86efac}
+.result-banner.fail{background:#fee2e2;border:1px solid #fca5a5}
+.rb-icon{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.rb-icon.pass{background:#16a34a;color:#fff}
+.rb-icon.fail{background:#dc2626;color:#fff}
+.rb-text{flex:1}
+.rb-title{font-size:14px;font-weight:800;margin-bottom:2px}
+.rb-title.pass{color:#14532d}
+.rb-title.fail{color:#7f1d1d}
+.rb-sub{font-size:12px;line-height:1.5}
+.rb-sub.pass{color:#166534}
+.rb-sub.fail{color:#991b1b}
+.rb-actions{display:flex;gap:8px;flex-shrink:0}
+.rb-btn{padding:7px 16px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;border:none;display:flex;align-items:center;gap:6px;transition:opacity .15s;white-space:nowrap}
+.rb-btn:hover{opacity:.85}
+.rb-btn.retake{background:#dc2626;color:#fff}
+.rb-btn.assign{background:#1a3a6b;color:#fff}
+
 .score-card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:28px 32px;display:flex;align-items:center;gap:32px;margin-bottom:24px}
 .score-ring{width:100px;height:100px;position:relative;flex-shrink:0}
 .score-ring svg{transform:rotate(-90deg)}
 .score-ring-num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .score-big{font-size:22px;font-weight:900;color:#111827;line-height:1}
 .score-denom{font-size:11px;color:#9ca3af;font-weight:600}
-.score-right{}
 .score-msg{font-size:18px;font-weight:800;color:#111827;letter-spacing:-.2px;margin-bottom:4px}
 .score-pct{font-size:13px;color:#6b7280;margin-bottom:12px}
 .score-areas{display:flex;gap:6px;flex-wrap:wrap}
@@ -171,6 +233,32 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .rc-lean-no{background:#dbeafe;color:#1e40af;border:1px solid #bfdbfe}
 .rc-no-infraction{background:#dcfce7;color:#166534;border:1px solid #86efac}
 .chip{padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700}
+
+/* MODALS */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:900;display:none;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:16px;padding:24px;width:460px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.modal-title{font-size:16px;font-weight:800;color:#111827;margin-bottom:4px}
+.modal-sub{font-size:12px;color:#6b7280;margin-bottom:20px;line-height:1.5}
+.modal-field{margin-bottom:14px}
+.modal-lbl{font-size:11px;font-weight:700;color:#374151;margin-bottom:5px;text-transform:uppercase;letter-spacing:.4px}
+.modal-input{width:100%;padding:9px 12px;border:1px solid #e5e7eb;border-radius:8px;font-size:12.5px;color:#111827;font-family:inherit;outline:none;transition:border .15s}
+.modal-input:focus{border-color:#93c5fd}
+.modal-ta{width:100%;padding:9px 12px;border:1px solid #e5e7eb;border-radius:8px;font-size:12.5px;color:#111827;font-family:inherit;outline:none;resize:vertical;min-height:80px;transition:border .15s;line-height:1.5}
+.modal-ta:focus{border-color:#93c5fd}
+.modal-select{width:100%;padding:9px 12px;border:1px solid #e5e7eb;border-radius:8px;font-size:12.5px;color:#111827;background:#fff;outline:none}
+.modal-cal-preview{background:#eef2ff;border:1px solid #c7d2fe;border-radius:10px;padding:12px 14px;margin-bottom:14px;font-size:11.5px;color:#3730a3;line-height:1.6}
+.modal-cal-preview strong{color:#312e81}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:4px}
+.modal-btn{padding:8px 20px;border-radius:8px;font-size:12.5px;font-weight:700;cursor:pointer;border:none;display:flex;align-items:center;gap:6px;transition:opacity .15s}
+.modal-btn:hover{opacity:.85}
+.modal-btn.primary{background:#1a3a6b;color:#fff}
+.modal-btn.cancel{background:#f3f4f6;color:#374151}
+.modal-btn.success{background:#16a34a;color:#fff}
+.modal-divider{height:1px;background:#f3f4f6;margin:16px 0}
+.areas-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:5px}
+.area-chip-sel{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;border:1.5px solid #e5e7eb;background:#fff;color:#6b7280;cursor:pointer;transition:all .15s}
+.area-chip-sel.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
 </style>
 </head>
 <body>
@@ -195,8 +283,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
         <span class="nav-dd-item" onclick="location='playlists.html'"><i class="ti ti-playlist" style="margin-right:7px;font-size:12px"></i>Playlists</span>
         <span class="nav-dd-item" onclick="location='assessments.html'"><i class="ti ti-clipboard-check" style="margin-right:7px;font-size:12px"></i>Assessments</span>
         <span class="nav-dd-item" onclick="location='poe.html'"><i class="ti ti-target" style="margin-right:7px;font-size:12px"></i>Points of Emphasis</span>
-        <span class="nav-dd-item"><i class="ti ti-trending-up" style="margin-right:7px;font-size:12px"></i>Trends</span>
-        <span class="nav-dd-item"><i class="ti ti-ball-basketball" style="margin-right:7px;font-size:12px"></i>My Games</span>
       </div>
     </div>
     <span class="nl">RM REVIEW</span>
@@ -222,82 +308,168 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
     <div class="lh-sub">AI-generated evaluations based on your recent game performance — test your rating accuracy and coverage judgment.</div>
     <div class="lh-actions">
       <button class="lh-btn ghost" onclick="location='rim.html'"><i class="ti ti-arrow-left"></i> Back to RIM</button>
+      <button class="lh-btn manager-toggle" id="mgr-toggle-btn" onclick="toggleManagerView()"><i class="ti ti-layout-dashboard"></i> Manager View</button>
     </div>
   </div>
 
   <div class="landing-body">
 
-    <div class="callout">
-      <div class="callout-icon"><i class="ti ti-sparkles"></i></div>
-      <div>
-        <div class="callout-title">How Assessments Work</div>
-        <div class="callout-text">Assessments are auto-generated monthly based on your last 15–20 games. Each assessment tests your infraction rating accuracy and ref coverage judgment using real plays from your reviews. Results identify where to focus your development. Assessments are open for 2 weeks — complete them at your own pace.</div>
-      </div>
-    </div>
-
-    <!-- Active -->
-    <div class="sec-hdr"><div class="sec-title">Active Assessment</div></div>
-    <div class="active-card">
-      <div class="active-card-accent"></div>
-      <div class="ac-top">
+    <!-- REVIEWER VIEW -->
+    <div id="reviewer-view">
+      <div class="callout">
+        <div class="callout-icon"><i class="ti ti-sparkles"></i></div>
         <div>
-          <div class="ac-name">June Assessment · 2026-27 Season</div>
-          <div class="ac-meta">
-            <span>8 questions</span><div class="ac-dot"></div>
-            <span>Generated from last 15 games</span><div class="ac-dot"></div>
-            <span>Monthly cadence</span>
-          </div>
-          <div class="ac-deadline"><i class="ti ti-clock" style="font-size:12px"></i> Open until Jul 10, 2026 &nbsp;·&nbsp; 12 days left</div>
+          <div class="callout-title">How Assessments Work</div>
+          <div class="callout-text">Assessments are auto-generated monthly based on your last 15–20 games. Each assessment tests your infraction rating accuracy and ref coverage judgment using real plays from your reviews. Pass with 70%+ to complete — below that, you'll take a focused retake on areas you missed. Assessments are open for 2 weeks.</div>
         </div>
-        <div class="ac-badge"><i class="ti ti-circle-check" style="font-size:11px"></i> OPEN</div>
       </div>
-      <div class="ac-progress">
-        <div class="ac-prog-lbl"><span>Progress</span><span id="prog-label">0 of 8 completed</span></div>
-        <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+
+      <!-- Check-in card (shown when assigned) -->
+      <div id="checkin-card" style="display:none">
+        <div class="checkin-card">
+          <div class="checkin-card-accent"></div>
+          <div class="ci-top">
+            <div>
+              <div class="ci-name">Check-in Required</div>
+              <div class="ci-meta">Assigned by Curtis Oakley Jr. · Due Jul 8, 2026<br>Based on your March Assessment — below passing threshold on 2 areas.</div>
+            </div>
+            <div class="ci-badge"><i class="ti ti-clock" style="font-size:11px"></i> Pending</div>
+          </div>
+          <div class="ci-areas">
+            <div class="ci-area">Shooting Fouls</div>
+            <div class="ci-area">Ref Coverage</div>
+          </div>
+          <div class="ci-actions">
+            <button class="ci-btn cal" onclick="openCalLink()"><i class="ti ti-calendar"></i> Schedule with Manager</button>
+          </div>
+          <div class="ci-note"><i class="ti ti-info-circle" style="font-size:12px"></i> Your manager will mark this complete after your session.</div>
+        </div>
       </div>
-      <div style="font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;text-transform:uppercase;margin-bottom:6px">Areas Tested</div>
-      <div class="ac-areas">
-        <div class="area-tag">Shooting Fouls</div>
-        <div class="area-tag">Ref Coverage</div>
-        <div class="area-tag">Block-Charge</div>
-        <div class="area-tag">Personal Fouls</div>
-        <div class="area-tag">Loose Ball</div>
+
+      <!-- Active -->
+      <div class="sec-hdr"><div class="sec-title">Active Assessment</div></div>
+      <div class="active-card">
+        <div class="active-card-accent"></div>
+        <div class="ac-top">
+          <div>
+            <div class="ac-name">June Assessment · 2026-27 Season</div>
+            <div class="ac-meta">
+              <span>8 questions</span><div class="ac-dot"></div>
+              <span>Generated from last 15 games</span><div class="ac-dot"></div>
+              <span>Monthly cadence</span>
+            </div>
+            <div class="ac-deadline"><i class="ti ti-clock" style="font-size:12px"></i> Open until Jul 10, 2026 &nbsp;·&nbsp; 12 days left</div>
+          </div>
+          <div class="ac-badge"><i class="ti ti-circle-check" style="font-size:11px"></i> OPEN</div>
+        </div>
+        <div class="ac-progress">
+          <div class="ac-prog-lbl"><span>Progress</span><span id="prog-label">0 of 8 completed</span></div>
+          <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+        </div>
+        <div style="font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;text-transform:uppercase;margin-bottom:6px">Areas Tested</div>
+        <div class="ac-areas">
+          <div class="area-tag">Shooting Fouls</div>
+          <div class="area-tag">Ref Coverage</div>
+          <div class="area-tag">Block-Charge</div>
+          <div class="area-tag">Personal Fouls</div>
+          <div class="area-tag">Loose Ball</div>
+        </div>
+        <div class="ac-footer">
+          <div style="font-size:11px;color:#9ca3af"><i class="ti ti-lock-open" style="font-size:12px"></i> Responses are private until the assessment closes</div>
+          <button class="start-btn" onclick="startQuiz()"><i class="ti ti-player-play"></i> Start Assessment</button>
+        </div>
       </div>
-      <div class="ac-footer">
-        <div style="font-size:11px;color:#9ca3af"><i class="ti ti-lock-open" style="font-size:12px"></i> Responses are private until the assessment closes</div>
-        <button class="start-btn" onclick="startQuiz()"><i class="ti ti-player-play"></i> Start Assessment</button>
+
+      <!-- Past -->
+      <div class="sec-hdr">
+        <div class="sec-title">Past Assessments</div>
+        <div class="sec-link">View all</div>
+      </div>
+      <div class="past-grid">
+        <div class="past-card" onclick="showResults(6,8,['Block-Charge'],false)">
+          <div class="past-status ps-pass">Passed</div>
+          <div class="past-score good">6/8</div>
+          <div class="past-name">May Assessment · 2026-27</div>
+          <div class="past-date">Completed May 31, 2026 · 75%</div>
+          <div class="past-areas">
+            <div class="past-area">Block-Charge</div>
+          </div>
+        </div>
+        <div class="past-card" onclick="showResults(7,8,[],false)">
+          <div class="past-status ps-pass">Passed</div>
+          <div class="past-score great">7/8</div>
+          <div class="past-name">April Assessment · 2026-27</div>
+          <div class="past-date">Completed Apr 28, 2026 · 87%</div>
+          <div class="past-areas">
+            <div class="past-area ok">Strong performance</div>
+          </div>
+        </div>
+        <div class="past-card" onclick="showResults(5,8,['Shooting Fouls','Ref Coverage'],true)">
+          <div class="past-status ps-checkin">Check-in</div>
+          <div class="past-score fail">5/8</div>
+          <div class="past-name">March Assessment · 2026-27</div>
+          <div class="past-date">Completed Mar 30, 2026 · 62%</div>
+          <div class="past-areas">
+            <div class="past-area">Shooting Fouls</div>
+            <div class="past-area">Ref Coverage</div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Past -->
-    <div class="sec-hdr">
-      <div class="sec-title">Past Assessments</div>
-      <div class="sec-link">View all</div>
-    </div>
-    <div class="past-grid">
-      <div class="past-card" onclick="showResults(6,8,['Block-Charge'])">
-        <div class="past-score good">6/8</div>
-        <div class="past-name">May Assessment · 2026-27</div>
-        <div class="past-date">Completed May 31, 2026 · 75%</div>
-        <div class="past-areas">
-          <div class="past-area">Block-Charge</div>
+    <!-- MANAGER VIEW -->
+    <div id="manager-view" style="display:none">
+      <div class="callout" style="background:#fffbeb;border-color:#fde68a">
+        <div class="callout-icon" style="background:#f59e0b"><i class="ti ti-layout-dashboard"></i></div>
+        <div>
+          <div class="callout-title" style="color:#78350f">Manager View</div>
+          <div class="callout-text" style="color:#92400e">See all reviewers' status for the current assessment. Assign check-ins for reviewers who scored below 70%. Only you can see this view.</div>
         </div>
       </div>
-      <div class="past-card" onclick="showResults(7,8,[])">
-        <div class="past-score great">7/8</div>
-        <div class="past-name">April Assessment · 2026-27</div>
-        <div class="past-date">Completed Apr 28, 2026 · 87%</div>
-        <div class="past-areas">
-          <div class="past-area ok">Strong performance</div>
+
+      <div class="sec-hdr"><div class="sec-title">June Assessment · Reviewer Status</div><div class="sec-link">Export report</div></div>
+      <div class="roster-wrap">
+        <div class="roster-header">
+          <div class="roster-title">All Reviewers</div>
+          <div class="roster-meta">4 reviewers · 2 completed · 1 check-in assigned · 1 not started</div>
         </div>
+        <table class="roster-table">
+          <thead>
+            <tr>
+              <th>Reviewer</th>
+              <th>Status</th>
+              <th>Score</th>
+              <th>Weak Areas</th>
+              <th>Retakes</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="roster-body"></tbody>
+        </table>
       </div>
-      <div class="past-card" onclick="showResults(5,8,['Shooting Fouls','Ref Coverage'])">
-        <div class="past-score work">5/8</div>
-        <div class="past-name">March Assessment · 2026-27</div>
-        <div class="past-date">Completed Mar 30, 2026 · 62%</div>
-        <div class="past-areas">
-          <div class="past-area">Shooting Fouls</div>
-          <div class="past-area">Ref Coverage</div>
+
+      <div class="sec-hdr" style="margin-top:4px"><div class="sec-title">Past Assessments — Team Overview</div></div>
+      <div class="past-grid">
+        <div class="past-card" style="cursor:default">
+          <div class="past-score good" style="font-size:16px">May 2026</div>
+          <div class="past-name" style="margin-bottom:6px">Team avg: 79%</div>
+          <div class="past-areas">
+            <div class="past-area">Block-Charge (2)</div>
+          </div>
+        </div>
+        <div class="past-card" style="cursor:default">
+          <div class="past-score great" style="font-size:16px">April 2026</div>
+          <div class="past-name" style="margin-bottom:6px">Team avg: 85%</div>
+          <div class="past-areas">
+            <div class="past-area ok">All passed</div>
+          </div>
+        </div>
+        <div class="past-card" style="cursor:default">
+          <div class="past-score work" style="font-size:16px">March 2026</div>
+          <div class="past-name" style="margin-bottom:6px">Team avg: 71%</div>
+          <div class="past-areas">
+            <div class="past-area">Ref Coverage (3)</div>
+          </div>
         </div>
       </div>
     </div>
@@ -314,8 +486,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
     <div class="qh-prog"><div class="qh-prog-fill" id="q-prog-fill" style="width:12.5%"></div></div>
   </div>
   <div class="quiz-body">
-
-    <!-- LEFT: video -->
     <div class="quiz-vid-col">
       <div class="qv-section">
         <div class="qv-frame">
@@ -339,8 +509,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
         <div class="qv-info-sub" id="q-playtype">Foul: Shooting · Driving Shot Attempt &nbsp;·&nbsp; Perrymond (8) · Lead</div>
       </div>
     </div>
-
-    <!-- RIGHT: question -->
     <div class="quiz-q-col">
       <div class="q-num" id="q-num">Question 1 of 8 — Infraction Rating</div>
       <div class="q-text" id="q-text">What is the correct infraction rating for this play?</div>
@@ -356,9 +524,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 <div id="results">
   <div class="results-header">
     <div class="qh-back" onclick="showLanding()"><i class="ti ti-chevron-left"></i> Assessments</div>
-    <div class="qh-name">June Assessment · 2026-27 — Results</div>
+    <div class="qh-name" id="results-header-title">June Assessment · 2026-27 — Results</div>
   </div>
   <div class="results-body">
+    <div id="result-banner"></div>
     <div class="score-card" id="score-card"></div>
     <div class="sec-hdr" style="margin-bottom:12px"><div class="sec-title">Question Breakdown</div></div>
     <div class="breakdown-list" id="breakdown-list"></div>
@@ -368,8 +537,70 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   </div>
 </div>
 
+<!-- ══ ASSIGN CHECK-IN MODAL ══ -->
+<div class="modal-overlay" id="assign-modal">
+  <div class="modal">
+    <div class="modal-title">Assign Check-in</div>
+    <div class="modal-sub">Schedule a 1:1 with this reviewer to go over their assessment results and reinforce the areas they missed.</div>
+    <div class="modal-field">
+      <div class="modal-lbl">Reviewer</div>
+      <input class="modal-input" id="ci-reviewer" type="text" readonly>
+    </div>
+    <div class="modal-field">
+      <div class="modal-lbl">Focus Areas</div>
+      <div class="areas-chips" id="ci-areas-chips"></div>
+    </div>
+    <div class="modal-field">
+      <div class="modal-lbl">Due Date</div>
+      <input class="modal-input" id="ci-due" type="date">
+    </div>
+    <div class="modal-field">
+      <div class="modal-lbl">Notes for Reviewer</div>
+      <textarea class="modal-ta" id="ci-notes" placeholder="e.g. Let's walk through the block-charge plays and talk through the clear space rule…"></textarea>
+    </div>
+    <div class="modal-divider"></div>
+    <div class="modal-field">
+      <div class="modal-lbl">Schedule 1:1</div>
+      <div class="modal-cal-preview" id="ci-cal-preview">
+        <strong>Google Calendar invite will include:</strong><br>
+        Agenda: Assessment Check-in · <span id="ci-cal-name"></span><br>
+        Areas: <span id="ci-cal-areas"></span><br>
+        Description: BRS June Assessment — focused review of missed areas.
+      </div>
+      <button class="modal-btn primary" onclick="openCalLink()" style="width:100%;justify-content:center"><i class="ti ti-calendar"></i> Open Google Calendar</button>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn cancel" onclick="closeModal('assign-modal')">Cancel</button>
+      <button class="modal-btn primary" onclick="saveCheckin()"><i class="ti ti-check"></i> Assign Check-in</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ COMPLETE CHECK-IN MODAL ══ -->
+<div class="modal-overlay" id="complete-modal">
+  <div class="modal">
+    <div class="modal-title">Mark Check-in Complete</div>
+    <div class="modal-sub">Record the outcome of your session with <strong id="cm-reviewer-name"></strong>.</div>
+    <div class="modal-field">
+      <div class="modal-lbl">Outcome</div>
+      <select class="modal-select" id="cm-outcome">
+        <option value="cleared">Reviewer demonstrated understanding — cleared</option>
+        <option value="retake">Needs another retake before clearing</option>
+        <option value="follow-up">Follow-up session needed</option>
+      </select>
+    </div>
+    <div class="modal-field">
+      <div class="modal-lbl">Session Notes</div>
+      <textarea class="modal-ta" id="cm-notes" placeholder="Notes from your conversation — what was covered, what clicked, what still needs work…"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn cancel" onclick="closeModal('complete-modal')">Cancel</button>
+      <button class="modal-btn success" onclick="completeCheckin()"><i class="ti ti-circle-check"></i> Mark Complete</button>
+    </div>
+  </div>
+</div>
+
 <script>
-/* ── DATA ── */
 const QUESTIONS = [
   {id:1,type:'infraction',play:{game:'TOR @ CHI',date:'May 27, 2026',time:'09:40.2',type:'Foul: Shooting',sub:'Driving Shot Attempt',ref:'Perrymond (8)',loc:'Lead'},correct:'No Infraction',area:'Shooting Fouls'},
   {id:2,type:'coverage',play:{game:'IND @ OKC',date:'Jun 22, 2026',time:'00:34.2',type:'Foul: Shooting',sub:'Block-Charge Situation',ref:'Fahy (86)',loc:'Slot'},correct:'Slot',area:'Ref Coverage'},
@@ -385,7 +616,7 @@ const INF_OPTS = [
   {val:'Infraction',      short:'INF',      desc:'Clear, unambiguous violation',          cls:'rc-infraction',      bg:'#fee2e2',ic:'#991b1b'},
   {val:'Lean Infraction', short:'LEAN INF', desc:'More likely an infraction than not',    cls:'rc-lean-infraction', bg:'#fef3c7',ic:'#92400e'},
   {val:'Lean No',         short:'LEAN NO',  desc:'More likely correct than infraction',   cls:'rc-lean-no',         bg:'#dbeafe',ic:'#1e40af'},
-  {val:'No Infraction',   short:'NO INF',   desc:'Correct call — no violation',           cls:'rc-no-infraction',   bg:'#dcfce7',ic:'#166534'},
+  {val:'No Infraction',   short:'NO INF',   desc:'Correct call — no violation',           cls:'rc-no-infraction',   bg:'#dcfce7',ic:'#166634'},
 ];
 const COV_OPTS = [
   {val:'Lead',  desc:'Ball-side low, primary on paint contact and near-side cuts'},
@@ -393,8 +624,135 @@ const COV_OPTS = [
   {val:'Slot',  desc:'Weak-side elbow, rotation and secondary coverage'},
 ];
 
-let curQ = 0, answers = [], revealed = false;
+const ROSTER = [
+  {name:'Bridget N.',   initials:'BN', score:75, status:'passed',     areas:[],                   retakes:0, checkin:false},
+  {name:'Tucker G.',    initials:'TG', score:62, status:'failed',     areas:['Block-Charge','Ref Coverage'], retakes:1, checkin:false},
+  {name:'Michael A.',   initials:'MA', score:null,status:'in-progress',areas:[],                  retakes:0, checkin:false},
+  {name:'Curtis OJr.',  initials:'CO', score:null,status:'not-started',areas:[],                  retakes:0, checkin:false},
+];
 
+const PASS_THRESHOLD = 70;
+let curQ = 0, answers = [], revealed = false;
+let isManagerView = false;
+let currentCheckinTarget = null;
+
+/* ── NAV ── */
+function toggleNavDropdown(e){e.stopPropagation();document.getElementById('nav-dropdown').classList.toggle('open')}
+function toggleRimDropdown(e){e.stopPropagation();document.getElementById('rim-dropdown').classList.toggle('open');document.getElementById('nav-dropdown').classList.remove('open');}
+document.addEventListener('click',()=>{document.getElementById('nav-dropdown').classList.remove('open');document.getElementById('rim-dropdown')?.classList.remove('open');});
+
+/* ── MANAGER VIEW TOGGLE ── */
+function toggleManagerView() {
+  isManagerView = !isManagerView;
+  const btn = document.getElementById('mgr-toggle-btn');
+  btn.classList.toggle('on', isManagerView);
+  btn.innerHTML = isManagerView
+    ? '<i class="ti ti-user"></i> My View'
+    : '<i class="ti ti-layout-dashboard"></i> Manager View';
+  document.getElementById('reviewer-view').style.display = isManagerView ? 'none' : 'block';
+  document.getElementById('manager-view').style.display = isManagerView ? 'block' : 'none';
+  if (isManagerView) renderRoster();
+}
+
+function renderRoster() {
+  const statusLabel = {
+    'passed':       ['rs-passed',      'Passed'],
+    'failed':       ['rs-failed',      'Failed'],
+    'in-progress':  ['rs-in-progress', 'In Progress'],
+    'not-started':  ['rs-not-started', 'Not Started'],
+    'checkin':      ['rs-checkin',     'Check-in Assigned'],
+  };
+  document.getElementById('roster-body').innerHTML = ROSTER.map((r,i) => {
+    const [cls, lbl] = statusLabel[r.checkin ? 'checkin' : r.status];
+    const scoreTxt = r.score !== null ? `${r.score}%` : '—';
+    const scoreColor = r.score===null?'#9ca3af':r.score>=PASS_THRESHOLD?'#16a34a':'#dc2626';
+    const areas = r.areas.length ? r.areas.map(a=>`<span style="font-size:10px;padding:2px 7px;border-radius:10px;background:#fef3c7;color:#92400e;font-weight:600">${a}</span>`).join(' ') : '<span style="color:#9ca3af;font-size:11px">—</span>';
+    let action = '';
+    if (r.checkin) {
+      action = `<span class="rs-assigned-label"><i class="ti ti-clock" style="font-size:11px"></i> Check-in pending</span>
+                <button class="rs-assign" style="margin-left:6px" onclick="openCompleteModal(${i})">Mark Complete</button>`;
+    } else if (r.status === 'failed') {
+      action = `<button class="rs-assign" onclick="openAssignModal(${i})"><i class="ti ti-user-check" style="font-size:11px;margin-right:3px"></i>Assign Check-in</button>`;
+    } else {
+      action = '<span style="color:#9ca3af;font-size:11px">—</span>';
+    }
+    return `<tr>
+      <td>
+        <div style="display:flex;align-items:center;gap:9px">
+          <div style="width:30px;height:30px;border-radius:50%;background:#1a3a6b;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0">${r.initials}</div>
+          <div><div class="r-name">${r.name}</div></div>
+        </div>
+      </td>
+      <td><span class="r-status ${cls}">${lbl}</span></td>
+      <td><span style="font-weight:700;color:${scoreColor}">${scoreTxt}</span></td>
+      <td>${areas}</td>
+      <td style="color:#9ca3af;font-size:11.5px">${r.retakes > 0 ? r.retakes : '—'}</td>
+      <td>${action}</td>
+    </tr>`;
+  }).join('');
+}
+
+/* ── ASSIGN CHECK-IN MODAL ── */
+function openAssignModal(idx) {
+  currentCheckinTarget = idx;
+  const r = ROSTER[idx];
+  document.getElementById('ci-reviewer').value = r.name;
+  document.getElementById('ci-cal-name').textContent = r.name;
+  document.getElementById('ci-cal-areas').textContent = r.areas.join(', ') || 'General review';
+  const allAreas = ['Shooting Fouls','Ref Coverage','Block-Charge','Personal Fouls','Loose Ball'];
+  document.getElementById('ci-areas-chips').innerHTML = allAreas.map(a => {
+    const on = r.areas.includes(a) ? ' on' : '';
+    return `<span class="area-chip-sel${on}" onclick="toggleAreaChip(this)">${a}</span>`;
+  }).join('');
+  // default due date to 2 weeks out
+  const due = new Date(); due.setDate(due.getDate()+14);
+  document.getElementById('ci-due').value = due.toISOString().split('T')[0];
+  document.getElementById('assign-modal').classList.add('open');
+}
+
+function toggleAreaChip(el) {
+  el.classList.toggle('on');
+  const selected = [...document.querySelectorAll('#ci-areas-chips .area-chip-sel.on')].map(e=>e.textContent);
+  document.getElementById('ci-cal-areas').textContent = selected.join(', ') || 'General review';
+}
+
+function saveCheckin() {
+  if (currentCheckinTarget === null) return;
+  ROSTER[currentCheckinTarget].checkin = true;
+  closeModal('assign-modal');
+  renderRoster();
+  showToast('Check-in assigned ✓');
+}
+
+/* ── COMPLETE CHECK-IN MODAL ── */
+function openCompleteModal(idx) {
+  currentCheckinTarget = idx;
+  document.getElementById('cm-reviewer-name').textContent = ROSTER[idx].name;
+  document.getElementById('complete-modal').classList.add('open');
+}
+
+function completeCheckin() {
+  if (currentCheckinTarget === null) return;
+  ROSTER[currentCheckinTarget].checkin = false;
+  ROSTER[currentCheckinTarget].status = 'passed';
+  closeModal('complete-modal');
+  renderRoster();
+  showToast('Check-in marked complete ✓');
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+function openCalLink() {
+  const reviewer = (document.getElementById('ci-reviewer')||{}).value || 'Reviewer';
+  const areas = document.getElementById('ci-cal-areas')?.textContent || '';
+  const title = encodeURIComponent(`BRS Check-in · ${reviewer} — Assessment Follow-up`);
+  const details = encodeURIComponent(`Assessment check-in for ${reviewer}\nFocus areas: ${areas}\n\nSource: BRS Assessments`);
+  window.open(`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}`, '_blank');
+}
+
+/* ── QUIZ ── */
 function startQuiz() {
   curQ = 0; answers = []; revealed = false;
   document.getElementById('landing').style.display = 'none';
@@ -433,7 +791,6 @@ function selectOpt(val) {
   if (revealed) return;
   const q = QUESTIONS[curQ];
   answers[curQ] = val;
-  // highlight selected only — no reveal yet
   const opts = q.type === 'infraction' ? INF_OPTS : COV_OPTS;
   opts.forEach(o => {
     const el = document.getElementById('opt-'+o.val.replace(/ /g,'_'));
@@ -446,7 +803,6 @@ function selectOpt(val) {
 function nextQuestion() {
   const q = QUESTIONS[curQ];
   if (!revealed && answers[curQ] !== undefined) {
-    // reveal correct/wrong, then wait for second click to advance
     revealed = true;
     const opts = q.type === 'infraction' ? INF_OPTS : COV_OPTS;
     opts.forEach(o => {
@@ -457,25 +813,53 @@ function nextQuestion() {
       if (o.val === q.correct) { el.classList.add('correct'); chk.innerHTML='<i class="ti ti-circle-check" style="color:#16a34a"></i>'; }
       else if (o.val === answers[curQ]) { el.classList.add('wrong'); chk.innerHTML='<i class="ti ti-circle-x" style="color:#dc2626"></i>'; }
     });
+    document.getElementById('q-next-btn').innerHTML = curQ < QUESTIONS.length-1 ? 'Next Question <i class="ti ti-arrow-right"></i>' : 'See Results <i class="ti ti-chart-bar"></i>';
     return;
   }
   if (curQ < QUESTIONS.length - 1) { curQ++; renderQuestion(); }
   else { showResults(); }
 }
 
-function showResults(correct, total, areas) {
+/* ── RESULTS ── */
+function showResults(correct, total, areas, hasCheckin) {
   if (correct === undefined) {
     correct = answers.filter((a,i)=>a===QUESTIONS[i].correct).length;
     total = QUESTIONS.length;
     areas = [...new Set(QUESTIONS.filter((_,i)=>answers[i]&&answers[i]!==QUESTIONS[i].correct).map(q=>q.area))];
+    hasCheckin = false;
   }
   const pct = Math.round((correct/total)*100);
-  const msg = pct>=87?'Strong performance':pct>=75?'Good — a few areas to revisit':'Keep working on these areas';
-  const msgColor = pct>=87?'#16a34a':pct>=75?'#1a3a6b':'#d97706';
+  const passed = pct >= PASS_THRESHOLD;
+  const msg = pct>=87?'Strong performance':pct>=PASS_THRESHOLD?'Good — a few areas to revisit':'Needs improvement';
+  const msgColor = pct>=87?'#16a34a':pct>=PASS_THRESHOLD?'#1a3a6b':'#dc2626';
 
   document.getElementById('quiz').style.display='none';
   document.getElementById('landing').style.display='none';
   document.getElementById('results').style.display='flex';
+
+  // pass/fail banner
+  if (passed) {
+    document.getElementById('result-banner').innerHTML = `
+      <div class="result-banner pass">
+        <div class="rb-icon pass"><i class="ti ti-trophy"></i></div>
+        <div class="rb-text">
+          <div class="rb-title pass">Assessment Passed · ${pct}%</div>
+          <div class="rb-sub pass">You met the 70% threshold. ${pct>=87?'Great work — no areas flagged.':'A few areas to keep an eye on are listed below.'}</div>
+        </div>
+      </div>`;
+  } else {
+    document.getElementById('result-banner').innerHTML = `
+      <div class="result-banner fail">
+        <div class="rb-icon fail"><i class="ti ti-alert-triangle"></i></div>
+        <div class="rb-text">
+          <div class="rb-title fail">Below Passing Threshold · ${pct}%</div>
+          <div class="rb-sub fail">You need 70% to pass. A focused retake on ${areas.join(' and ')||'your missed areas'} has been generated.${hasCheckin?' Your manager has also assigned a check-in.':''}</div>
+        </div>
+        <div class="rb-actions">
+          <button class="rb-btn retake" onclick="startQuiz()"><i class="ti ti-refresh"></i> Take Retake</button>
+        </div>
+      </div>`;
+  }
 
   const r = 42, c = 2*Math.PI*r, fill = c*(correct/total);
   document.getElementById('score-card').innerHTML = `
@@ -489,7 +873,7 @@ function showResults(correct, total, areas) {
     </div>
     <div class="score-right">
       <div class="score-msg" style="color:${msgColor}">${msg}</div>
-      <div class="score-pct">June Assessment · 2026-27 Season</div>
+      <div class="score-pct">June Assessment · 2026-27 Season · Pass mark: 70%</div>
       ${areas.length?`<div class="score-areas">${areas.map(a=>`<span class="area-tag" style="background:#fef3c7;color:#92400e;border-color:#fcd34d">${a}</span>`).join('')}</div>`:'<div style="font-size:12px;color:#16a34a"><i class="ti ti-check"></i> No areas to flag</div>'}
     </div>`;
 
@@ -528,9 +912,6 @@ function showLanding() {
 }
 
 function showToast(msg){const t=document.createElement('div');t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:9px 20px;border-radius:8px;font-size:12px;font-weight:500;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,.3);opacity:0;transition:opacity .2s';t.textContent=msg;document.body.appendChild(t);requestAnimationFrame(()=>{t.style.opacity='1';setTimeout(()=>{t.style.opacity='0';setTimeout(()=>t.remove(),200)},2200)});}
-function toggleNavDropdown(e){e.stopPropagation();document.getElementById('nav-dropdown').classList.toggle('open')}
-function toggleRimDropdown(e){e.stopPropagation();document.getElementById('rim-dropdown').classList.toggle('open');document.getElementById('nav-dropdown').classList.remove('open');}
-document.addEventListener('click',()=>{document.getElementById('nav-dropdown').classList.remove('open');document.getElementById('rim-dropdown')?.classList.remove('open');});
 </script>
 </body>
 </html>
