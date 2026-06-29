@@ -541,6 +541,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
             <button class="tmpl-btn">Take Fouls &#9662;</button>
             <button class="tmpl-btn">Head/Face Contact</button>
             <button class="tmpl-btn">Enhanced Review</button>
+            <button class="tmpl-btn" style="background:#dbeafe;color:#1e40af;border-color:#93c5fd" onclick="openCommentLibrary()"><i class="ti ti-books" style="font-size:11px"></i> Comment Library</button>
           </div>
           <div>
             <div class="comment-lbl" style="margin-bottom:5px">Comments:</div>
@@ -625,6 +626,31 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   </div>
 </div>
 <div class="toast" id="toast"></div>
+
+<!-- COMMENT LIBRARY MODAL -->
+<div id="cl-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:800;align-items:flex-start;justify-content:center;padding-top:60px">
+  <div style="background:#fff;border-radius:16px;width:600px;max-height:80vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25);overflow:hidden">
+    <div style="padding:18px 22px 14px;border-bottom:1px solid #f3f4f6;flex-shrink:0">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+        <div style="font-size:15px;font-weight:800;color:#111827;display:flex;align-items:center;gap:8px"><i class="ti ti-books" style="color:#1e40af"></i> Comment Library</div>
+        <button onclick="closeCommentLibrary()" style="border:none;background:none;cursor:pointer;color:#9ca3af;font-size:18px">&#10005;</button>
+      </div>
+      <div style="font-size:11.5px;color:#6b7280" id="cl-context-line">Showing suggestions based on current play</div>
+      <div style="display:flex;gap:8px;margin-top:12px;align-items:center">
+        <input id="cl-search" type="text" placeholder="Search comments…" oninput="renderCLResults()" style="flex:1;padding:7px 12px;border:1px solid #e5e7eb;border-radius:8px;font-size:12px;outline:none;font-family:inherit">
+        <select id="cl-filter-rating" onchange="renderCLResults()" style="padding:7px 10px;border:1px solid #e5e7eb;border-radius:8px;font-size:12px;color:#374151;background:#fff;outline:none">
+          <option value="">All ratings</option>
+          <option value="infraction">Infraction</option>
+          <option value="lean infraction">Lean Infraction</option>
+          <option value="lean no">Lean No</option>
+          <option value="no infraction">No Infraction</option>
+        </select>
+      </div>
+    </div>
+    <div id="cl-results" style="flex:1;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:8px"></div>
+    <div style="padding:12px 18px;border-top:1px solid #f3f4f6;font-size:11px;color:#9ca3af;flex-shrink:0">Click a comment to insert it · <a href="comment-library.html" style="color:#1a3a6b;font-weight:600;text-decoration:none">Open full library →</a></div>
+  </div>
+</div>
 
 <script>
 const REFS = ['Genesis Perrymond (8)','Catherine Chang (23)','Kevin Fahy (86)'];
@@ -1570,6 +1596,131 @@ function sendToSlack() {
   }
   showToast(`Sent to ${dest} ✓`);
 }
+
+/* ── COMMENT LIBRARY POPUP ── */
+const CL_STORAGE_KEY = 'brs_comments_v6';
+const CL_SEED = [
+  {text:'**[Player]** firms up in a screening position and absorbs the body contact that occurs while setting the pick on **[Defender]**.',playType:'Foul: Offensive',callType:'no infraction'},
+  {text:'**[Player]** is moving alongside **[Defender]**\'s path and absorbs the marginal contact that occurs at the start of the drive. **[Defender]**\'s SQBR appears unaffected.',playType:'Foul: Personal',callType:'no infraction'},
+  {text:'**[Player]** legally contests **[Defender]**\'s driving shot attempt, and the follow-through contact after the release is considered incidental.',playType:'Foul: Shooting',callType:'no infraction'},
+  {text:'**[Player]** extends their arm into **[Defender]**\'s front and initiates contact with **[Defender]**\'s front that affects their SQBR during the drive.',playType:'Foul: Personal',callType:'infraction'},
+  {text:'**[Player]** is moving forward and late to establish a legal guarding position in **[Defender]**\'s path prior to contact.',playType:'Foul: Shooting',callType:'infraction'},
+  {text:'**[Player]** wraps their arms around **[Defender]**\'s body in an attempt to tie up the ball. A foul should be assessed rather than a jump ball.',playType:'Foul: Loose Ball',callType:'infraction'},
+  {text:'**[Player]** slightly extends their arms and some contact occurs with **[Defender]** as **[Defender]** navigates the screen. There is judgement regarding if **[Player]** absorbs the contact and retracts their arms during the screen, or if contact is delivered with the arms.',playType:'Foul: Offensive',callType:'lean infraction'},
+  {text:'**[Player]** briefly places a hand on **[Defender]**\'s side as they drive, and marginal contact occurs before **[Player]** retracts their hand during **[Defender]**\'s shooting motion. There is judgement regarding the degree and effect of the contact.',playType:'Foul: Shooting',callType:'lean infraction'},
+  {text:'**[Player]** briefly places a forearm on **[Defender]**\'s back and releases away as **[Defender]** jumps forward to pursue the rebound. The contact appears marginal.',playType:'Foul: Loose Ball',callType:'lean no'},
+  {text:'Although **[Player]** reaches in and there appears to be some arm contact as **[Defender]** attempts to gather the ball, there is no clear and conclusive video evidence to determine whether a foul occurs or whether the ball is legally dislodged on the play.',playType:'Foul: Personal',callType:'lean no'},
+  {text:'**[Player]** momentarily applies their forearm to **[Defender]**\'s side and marginal contact occurs. There is judgement in determining if the contact by either player rises to the level of a foul.',playType:'Foul: Personal',callType:'lean no'},
+  {text:'**[Player]** maintains verticality as they defend **[Defender]**\'s shot attempt. **[Player]** absorbs the contact and play should have continued without a whistle.',playType:'Foul: Shooting',callType:'no infraction'},
+  {text:'Replay review of the out of bounds called pursuant to a coach\'s challenge was deemed unsuccessful. **[Player]** is the last to touch the ball before it goes out of bounds.',playType:'Stoppage: Out-of-Bounds',callType:'no infraction'},
+  {text:'Contact to an opponent\'s head/face can be deemed marginal when the result of a natural basketball move, provided the contact is not disproportionate or uncontrolled.',playType:'Foul: Personal',callType:'lean no'},
+  {text:'**[Player]** makes contact with the part of **[Defender]**\'s hand that is on the ball as they defend the shot attempt. Contact which occurs on the hand of the offensive player, while that part of the hand is in contact with the ball, is legal. Play should have continued without a whistle.',playType:'Foul: Shooting',callType:'no infraction'},
+];
+
+function openCommentLibrary() {
+  // Load from localStorage if available, else use built-in seed
+  let comments = CL_SEED;
+  try {
+    const stored = localStorage.getItem(CL_STORAGE_KEY);
+    if (stored) comments = JSON.parse(stored);
+  } catch(e) {}
+  window._clComments = comments;
+
+  // Read current play context
+  const infrType = document.getElementById('rf-infraction-type')?.value || '';
+  const rating = document.getElementById('rf-rating-combined')?.value || '';
+
+  // Pre-fill filter to match current rating
+  const ratingMap = {'Infraction':'infraction','Lean Infraction':'lean infraction','Lean No':'lean no','No Infraction':'no infraction'};
+  const ratingKey = ratingMap[rating] || '';
+  document.getElementById('cl-filter-rating').value = ratingKey;
+  document.getElementById('cl-search').value = '';
+
+  const ctxParts = [infrType, rating].filter(Boolean);
+  document.getElementById('cl-context-line').textContent = ctxParts.length
+    ? `Filtered for: ${ctxParts.join(' · ')}`
+    : 'Showing all comments — select an infraction type and rating to narrow results';
+
+  window._clInfrType = infrType;
+  window._clRating = ratingKey;
+
+  renderCLResults();
+  const ov = document.getElementById('cl-overlay');
+  ov.style.display = 'flex';
+}
+
+function renderCLResults() {
+  const comments = window._clComments || CL_SEED;
+  const search = document.getElementById('cl-search').value.toLowerCase();
+  const ratingFilter = document.getElementById('cl-filter-rating').value.toLowerCase();
+  const infrType = (window._clInfrType || '').toLowerCase();
+
+  // Score each comment by relevance
+  const scored = comments.map(c => {
+    const text = (c.text||'').toLowerCase();
+    const pt = (c.playType||'').toLowerCase();
+    const ct = (c.callType||'').toLowerCase();
+    let score = 0;
+    if (infrType && pt && pt.includes(infrType.split(':')[0]?.toLowerCase())) score += 3;
+    if (infrType && pt === infrType.toLowerCase()) score += 5;
+    if (ratingFilter && ct === ratingFilter) score += 4;
+    if (search && text.includes(search)) score += 2;
+    if (search && !text.includes(search)) score -= 10;
+    if (ratingFilter && ct !== ratingFilter) score -= 2;
+    return {c, score};
+  })
+  .filter(({score}) => score > -5)
+  .sort((a,b) => b.score - a.score)
+  .slice(0, 20);
+
+  const container = document.getElementById('cl-results');
+  if (!scored.length) {
+    container.innerHTML = '<div style="text-align:center;color:#9ca3af;padding:32px;font-size:12px">No matching comments. Try adjusting your search or filters.</div>';
+    return;
+  }
+
+  const ratingChipStyle = {
+    'infraction': 'background:#fee2e2;color:#991b1b',
+    'lean infraction': 'background:#fef3c7;color:#92400e',
+    'lean no': 'background:#dbeafe;color:#1e40af',
+    'no infraction': 'background:#dcfce7;color:#166534',
+  };
+
+  container.innerHTML = scored.map(({c}) => {
+    const ct = (c.callType||'').toLowerCase();
+    const chipStyle = ratingChipStyle[ct] || 'background:#f3f4f6;color:#6b7280';
+    const chipLabel = c.callType ? c.callType.replace(/\b\w/g,l=>l.toUpperCase()) : '';
+    const displayText = (c.text||'').replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
+    return `<div onclick="insertComment(${JSON.stringify(c.text||'').replace(/"/g,'&quot;')})" style="border:1px solid #e5e7eb;border-radius:10px;padding:12px 14px;cursor:pointer;transition:all .12s;background:#fff" onmouseover="this.style.borderColor='#93c5fd';this.style.background='#f0f9ff'" onmouseout="this.style.borderColor='#e5e7eb';this.style.background='#fff'">
+      <div style="display:flex;align-items:center;gap:7px;margin-bottom:7px;flex-wrap:wrap">
+        ${c.playType?`<span style="font-size:10px;font-weight:600;color:#6b7280;background:#f3f4f6;padding:2px 8px;border-radius:10px">${c.playType}</span>`:''}
+        ${chipLabel?`<span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;${chipStyle}">${chipLabel}</span>`:''}
+        <span style="margin-left:auto;font-size:10px;color:#bfdbfe;font-weight:600"><i class="ti ti-plus" style="font-size:10px"></i> Insert</span>
+      </div>
+      <div style="font-size:11.5px;color:#374151;line-height:1.6">${displayText}</div>
+    </div>`;
+  }).join('');
+}
+
+function insertComment(text) {
+  // Strip markdown bold markers for the textarea
+  const plain = text.replace(/\*\*([^*]+)\*\*/g, '$1');
+  const ta = document.getElementById('comment-ta');
+  if (!ta) return;
+  ta.value = ta.value ? ta.value.trimEnd() + '\n' + plain : plain;
+  // Ensure the comment section is visible
+  const cs = document.getElementById('comment-section');
+  if (cs) cs.style.display = '';
+  closeCommentLibrary();
+  showToast('Comment inserted ✓');
+}
+
+function closeCommentLibrary() {
+  document.getElementById('cl-overlay').style.display = 'none';
+}
+document.getElementById('cl-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeCommentLibrary();
+});
 </script>
 </body>
 </html>
