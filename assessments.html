@@ -39,8 +39,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .lh-btn{padding:7px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;border:none;display:flex;align-items:center;gap:6px;transition:opacity .15s}
 .lh-btn:hover{opacity:.85}
 .lh-btn.ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2)}
-.lh-btn.manager-toggle{background:rgba(255,255,255,.9);color:#1a3a6b}
-.lh-btn.manager-toggle.on{background:#fbbf24;color:#78350f}
+.lh-btn.manager-toggle{background:#fce7f3;color:#9d174d}
+.lh-btn.manager-toggle.on{background:#f9a8d4;color:#831843}
 .landing-body{padding:24px 40px 40px;flex:1}
 
 /* CALLOUT */
@@ -562,12 +562,12 @@ table.roster-table{width:100%;border-collapse:collapse}
     <div class="modal-field">
       <div class="modal-lbl">Schedule 1:1</div>
       <div class="modal-cal-preview" id="ci-cal-preview">
-        <strong>Google Calendar invite will include:</strong><br>
+        <strong>Outlook invite will include:</strong><br>
         Agenda: Assessment Check-in · <span id="ci-cal-name"></span><br>
         Areas: <span id="ci-cal-areas"></span><br>
         Description: BRS June Assessment — focused review of missed areas.
       </div>
-      <button class="modal-btn primary" onclick="openCalLink()" style="width:100%;justify-content:center"><i class="ti ti-calendar"></i> Open Google Calendar</button>
+      <button class="modal-btn primary" onclick="openCalLink()" style="width:100%;justify-content:center"><i class="ti ti-calendar"></i> Open Outlook Calendar</button>
     </div>
     <div class="modal-actions">
       <button class="modal-btn cancel" onclick="closeModal('assign-modal')">Cancel</button>
@@ -628,7 +628,7 @@ const ROSTER = [
   {name:'Bridget N.',   initials:'BN', score:75, status:'passed',     areas:[],                   retakes:0, checkin:false},
   {name:'Tucker G.',    initials:'TG', score:62, status:'failed',     areas:['Block-Charge','Ref Coverage'], retakes:1, checkin:false},
   {name:'Michael A.',   initials:'MA', score:null,status:'in-progress',areas:[],                  retakes:0, checkin:false},
-  {name:'Curtis OJr.',  initials:'CO', score:null,status:'not-started',areas:[],                  retakes:0, checkin:false},
+  {name:'Curtis O.',    initials:'CO', score:null,status:'not-started',areas:[],                  retakes:0, checkin:false},
 ];
 
 const PASS_THRESHOLD = 70;
@@ -647,7 +647,7 @@ function toggleManagerView() {
   const btn = document.getElementById('mgr-toggle-btn');
   btn.classList.toggle('on', isManagerView);
   btn.innerHTML = isManagerView
-    ? '<i class="ti ti-user"></i> My View'
+    ? '<i class="ti ti-user"></i> First Pass View'
     : '<i class="ti ti-layout-dashboard"></i> Manager View';
   document.getElementById('reviewer-view').style.display = isManagerView ? 'none' : 'block';
   document.getElementById('manager-view').style.display = isManagerView ? 'block' : 'none';
@@ -748,8 +748,8 @@ function openCalLink() {
   const reviewer = (document.getElementById('ci-reviewer')||{}).value || 'Reviewer';
   const areas = document.getElementById('ci-cal-areas')?.textContent || '';
   const title = encodeURIComponent(`BRS Check-in · ${reviewer} — Assessment Follow-up`);
-  const details = encodeURIComponent(`Assessment check-in for ${reviewer}\nFocus areas: ${areas}\n\nSource: BRS Assessments`);
-  window.open(`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}`, '_blank');
+  const body = encodeURIComponent(`Assessment check-in for ${reviewer}\nFocus areas: ${areas}\n\nSource: BRS Assessments`);
+  window.open(`https://outlook.office.com/calendar/deeplink/compose?subject=${title}&body=${body}`, '_blank');
 }
 
 /* ── QUIZ ── */
