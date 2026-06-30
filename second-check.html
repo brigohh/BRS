@@ -314,6 +314,30 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .em-link-btn.alt{background:#fff;border:1px solid #d6dce8;color:#1a3a6b}
 .em-link-btn.report{background:#166534}
 .em-foot{padding:16px 28px;font-size:10.5px;color:#9ca3af;text-align:center;background:#f8f9fb}
+.ack-banner{display:flex;align-items:center;justify-content:space-between;gap:14px;background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:11px 16px;margin:0 0 14px}
+.ack-banner.done{background:#f0fdf4;border-color:#bbf7d0}
+.ack-banner-txt{font-size:12px;color:#991b1b;font-weight:600;display:flex;align-items:center;gap:7px}
+.ack-banner.done .ack-banner-txt{color:#166534}
+.ack-btn{background:#dc2626;color:#fff;border:none;font-size:11.5px;font-weight:700;padding:7px 14px;border-radius:8px;cursor:pointer;flex-shrink:0}
+.ack-btn:hover{background:#b91c1c}
+.ar-overlay{display:none;position:fixed;inset:0;background:rgba(15,20,35,.55);z-index:900;align-items:center;justify-content:center;padding:20px}
+.ar-overlay.open{display:flex}
+.ar-modal{background:#fff;border-radius:14px;width:560px;max-width:94vw;max-height:80vh;display:flex;flex-direction:column;box-shadow:0 24px 60px rgba(0,0,0,.3);overflow:hidden}
+.ar-hdr{background:#1a3a6b;color:#fff;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.ar-hdr-title{font-size:14px;font-weight:800}
+.ar-hdr-sub{font-size:11px;opacity:.8;margin-top:2px}
+.ar-close{background:none;border:none;font-size:18px;color:rgba(255,255,255,.75);cursor:pointer;line-height:1}
+.ar-close:hover{color:#fff}
+.ar-summary{padding:14px 22px;background:#f8f9fb;border-bottom:1px solid #e2e5ec;font-size:12.5px;color:#374151;flex-shrink:0}
+.ar-summary b{color:#1a3a6b}
+.ar-list{overflow-y:auto;padding:10px 16px}
+.ar-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 10px;border-bottom:1px solid #f0f1f5}
+.ar-row:last-child{border-bottom:none}
+.ar-row-play{font-size:12px;color:#1f2533;font-weight:600}
+.ar-row-meta{font-size:10.5px;color:#9ca3af;margin-top:2px}
+.ar-status{font-size:10px;font-weight:800;letter-spacing:.3px;padding:3px 9px;border-radius:20px;white-space:nowrap}
+.ar-status.ok{background:#dcfce7;color:#166534}
+.ar-status.pending{background:#fee2e2;color:#991b1b}
 </style>
 </head>
 <body>
@@ -404,6 +428,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   <div class="tb" data-t="ptiw" onclick="tf(this)">PTIW</div>
   <div class="tb" data-t="other" onclick="tf(this)">Other</div>
   <div class="tsep"></div>
+  <button class="email-preview-btn" onclick="openAckRollup()"><i class="ti ti-list-check"></i> Acknowledgments</button>
   <button class="email-preview-btn" onclick="openEmailPreview()"><i class="ti ti-mail"></i> Preview notify email</button>
 </div>
 
@@ -652,6 +677,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
         <span class="b1-sub" id="b1-sub"></span>
       </div>
     </div>
+    <div id="ack-banner"></div>
     <div class="band2" id="band2"></div>
     <div class="band3" id="band3"></div>
     <div class="footer">
@@ -1092,6 +1118,7 @@ function sbLabel(p) {
 }
 
 let cur = 0, flagged = new Set(), playlist = new Set(), viewed = new Set(), collection = new Set(), activeQ = 'all', activeT = 'all';
+let acked = new Map(); // play id -> ack timestamp string, critical-tier overturns only
 
 function buildSidebar() {
   const list = document.getElementById('sb-list');
@@ -1284,6 +1311,7 @@ function renderCenter(p) {
   const lEl = document.getElementById('b1-loc');
   lEl.textContent = p.loc; lEl.className = 'loc-p ' + p.locC;
   document.getElementById('b1-sub').textContent = p.sub;
+  document.getElementById('ack-banner').innerHTML = renderAckBanner(p);
   document.getElementById('band2').innerHTML = renderBand2(p);
   document.getElementById('band3').innerHTML = renderBand3(p);
   document.getElementById('v-time').textContent = p.vt;
@@ -1304,6 +1332,23 @@ function selectPlay(idx, row) {
   row.classList.add('sel');
   row.classList.add('viewed');
   renderCenter(PLAYS[idx]);
+  updateProgress();
+}
+
+function renderAckBanner(p) {
+  if (p.tier !== 'critical') return '';
+  const ts = acked.get(p.id);
+  if (ts) {
+    return `<div class="ack-banner done"><span class="ack-banner-txt"><i class="ti ti-circle-check"></i> Acknowledged · ${ts}</span></div>`;
+  }
+  return `<div class="ack-banner"><span class="ack-banner-txt"><i class="ti ti-alert-triangle"></i> Critical overturn — review required</span><button class="ack-btn" onclick="ackOverturn(${p.id})">Acknowledge</button></div>`;
+}
+
+function ackOverturn(id) {
+  acked.set(id, 'just now');
+  const p = PLAYS.find(x => x.id === id);
+  if (p && p.id === cur) renderCenter(p);
+  toast('Overturn acknowledged');
   updateProgress();
 }
 
@@ -1573,11 +1618,45 @@ function openEmailPreview() {
   document.getElementById('em-overlay').classList.add('open');
 }
 
+function openAckRollup() {
+  const critical = PLAYS.filter(p => p.tier === 'critical');
+  const ackedCount = critical.filter(p => acked.has(p.id)).length;
+  document.getElementById('ar-summary').innerHTML =
+    `<b>${ackedCount} / ${critical.length}</b> critical overturns acknowledged by Bridget Ng`;
+  document.getElementById('ar-list').innerHTML = critical.map(p => {
+    const ts = acked.get(p.id);
+    return `<div class="ar-row">
+      <div><div class="ar-row-play">${p.event} — ${p.desc}</div><div class="ar-row-meta">${p.time} · ${p.player} vs ${p.opp}</div></div>
+      ${ts ? `<span class="ar-status ok">ACKNOWLEDGED</span>` : `<span class="ar-status pending">PENDING</span>`}
+    </div>`;
+  }).join('') || '<div class="ar-row-meta" style="padding:14px 10px">No critical overturns in this game.</div>';
+  document.getElementById('ar-overlay').classList.add('open');
+}
+
+function closeAckRollup(e) {
+  if (e && e.target !== e.currentTarget) return;
+  document.getElementById('ar-overlay').classList.remove('open');
+}
+
 function closeEmailPreview(e) {
   if (e && e.target !== e.currentTarget) return;
   document.getElementById('em-overlay').classList.remove('open');
 }
 </script>
+
+<div class="ar-overlay" id="ar-overlay" onclick="closeAckRollup(event)">
+  <div class="ar-modal">
+    <div class="ar-hdr">
+      <div>
+        <div class="ar-hdr-title">Critical overturn acknowledgments</div>
+        <div class="ar-hdr-sub">Toronto Tempo @ Chicago Sky &nbsp;·&nbsp; Bridget Ng</div>
+      </div>
+      <button class="ar-close" onclick="closeAckRollup()">&times;</button>
+    </div>
+    <div class="ar-summary" id="ar-summary"></div>
+    <div class="ar-list" id="ar-list"></div>
+  </div>
+</div>
 
 <div class="em-overlay" id="em-overlay" onclick="closeEmailPreview(event)">
   <div class="em-modal">
