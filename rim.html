@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;color:#111827;background:#f3f4f6;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;color:#111827;background:linear-gradient(180deg,#f5f6fa 0%,#eef1f7 45%,#eef2f9 100%);height:100vh;overflow:hidden;display:flex;flex-direction:column}
 
 /* NAV */
 .nav{background:#1a3a6b;height:48px;display:flex;align-items:center;padding:0 24px;flex-shrink:0;overflow:visible;position:relative;z-index:300}
@@ -30,43 +30,47 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 /* PAGE */
 .page{flex:1;overflow-y:auto;padding:36px 48px 40px}
 
-/* WEEKLY SCHEDULE */
+/* WEEKLY CALENDAR */
 .sched{margin-bottom:32px}
 .sched-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.sched-row{display:flex;gap:14px}
-.sched-card{flex:1;background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;position:relative;overflow:hidden}
-.sched-card.empty{align-items:center;justify-content:center;color:#9ca3af;font-size:11.5px;font-weight:500;background:#fafafa;border-style:dashed}
-.sched-card-accent{position:absolute;top:0;left:0;right:0;height:4px;background:#1a3a6b}
-.sched-date{font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.4px}
-.sched-teams{font-size:15px;font-weight:800;color:#111827}
-.sched-meta{display:flex;align-items:center;gap:6px;font-size:11px;color:#6b7280}
-.sched-meta i{font-size:12px}
-.sched-badge{align-self:flex-start;font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px}
-.sched-badge.upcoming{background:#dbeafe;color:#1e40af}
-.sched-badge.today{background:#fee2e2;color:#b91c1c}
+.week-cal{display:grid;grid-template-columns:repeat(7,1fr);gap:10px}
+.week-day{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:12px 10px;min-height:172px;display:flex;flex-direction:column;gap:8px;transition:box-shadow .15s,transform .15s}
+.week-day:hover{box-shadow:0 6px 18px rgba(17,24,39,.08);transform:translateY(-2px)}
+.week-day.today{border-color:#c8102e;background:linear-gradient(180deg,#fff 0%,#fff7f7 100%);box-shadow:0 0 0 1.5px rgba(200,16,46,.35)}
+.week-day-hdr{display:flex;align-items:center;justify-content:space-between}
+.week-day-name{font-size:9.5px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px}
+.week-day-num{font-size:14px;font-weight:800;color:#111827;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.week-day.today .week-day-num{background:#c8102e;color:#fff}
+.week-day.today .week-day-name{color:#c8102e}
+.week-game{border-radius:9px;padding:9px 9px;display:flex;flex-direction:column;gap:3px;flex:1}
+.week-game-time{font-size:9px;font-weight:700;opacity:.75;text-transform:uppercase;letter-spacing:.3px}
+.week-game-teams{font-size:12.5px;font-weight:800}
+.week-game-meta{font-size:9.5px;opacity:.8;display:flex;align-items:center;gap:4px;margin-top:auto}
+.week-empty{flex:1;display:flex;align-items:center;justify-content:center;color:#b7bcc6;font-size:10px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;border:1.5px dashed #e5e7eb;border-radius:9px;background:repeating-linear-gradient(135deg,#fafbfc,#fafbfc 6px,#f4f5f7 6px,#f4f5f7 12px)}
 
 /* HERO */
-.hero{margin-bottom:32px}
-.hero-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#9ca3af;margin-bottom:6px}
-.hero-title{font-size:26px;font-weight:800;color:#111827;letter-spacing:-.3px;margin-bottom:4px}
-.hero-title span{color:#1a3a6b}
-.hero-sub{font-size:13px;color:#6b7280;max-width:500px;line-height:1.55}
-.hero-row{display:flex;align-items:flex-end;gap:0;justify-content:space-between}
+.hero{margin-bottom:32px;background:linear-gradient(120deg,#16284f 0%,#1a3a6b 42%,#7a1530 105%);border-radius:20px;padding:26px 32px;box-shadow:0 14px 36px rgba(20,35,70,.28);position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.10) 0%,rgba(255,255,255,0) 70%)}
+.hero-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:6px}
+.hero-title{font-size:26px;font-weight:800;color:#fff;letter-spacing:-.3px;margin-bottom:4px}
+.hero-title span{color:#ffd54a}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.78);max-width:500px;line-height:1.55}
+.hero-row{display:flex;align-items:flex-end;gap:0;justify-content:space-between;position:relative;z-index:1}
 .hero-stats{display:flex;gap:10px}
-.hero-stat{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:10px 20px;text-align:center}
-.hero-stat-n{font-size:22px;font-weight:800;color:#111827;line-height:1}
-.hero-stat-n.red{color:#ef4444}
-.hero-stat-l{font-size:10px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.4px;margin-top:3px}
+.hero-stat{background:rgba(255,255,255,.1);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:10px 20px;text-align:center}
+.hero-stat-n{font-size:22px;font-weight:800;color:#fff;line-height:1}
+.hero-stat-n.red{color:#ff8a8a}
+.hero-stat-l{font-size:10px;font-weight:600;color:rgba(255,255,255,.62);text-transform:uppercase;letter-spacing:.4px;margin-top:3px}
 
 /* SECTION LABEL */
 .section-lbl{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#9ca3af;margin-bottom:12px}
 
 /* FEATURE GRID */
 .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px}
-.feat-card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:22px 22px 18px;cursor:pointer;transition:box-shadow .15s,border-color .15s;display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden}
-.feat-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.08);border-color:#d1d5db}
+.feat-card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:22px 22px 18px;cursor:pointer;transition:box-shadow .18s,border-color .18s,transform .18s;display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden}
+.feat-card:hover{box-shadow:0 12px 28px rgba(17,24,39,.10);border-color:#d1d5db;transform:translateY(-3px)}
 .feat-card:hover .fc-arrow{opacity:1;transform:translateX(0)}
-.feat-card-accent{position:absolute;top:0;left:0;right:0;height:3px;border-radius:12px 12px 0 0}
+.feat-card-accent{position:absolute;top:0;left:0;right:0;height:4px;border-radius:14px 14px 0 0}
 .fc-top{display:flex;align-items:flex-start;justify-content:space-between}
 .fc-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
 .fc-badge{padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700}
@@ -78,7 +82,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 
 /* RECENT STRIP */
 .recent-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.recent-card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:18px 20px}
+.recent-card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:18px 20px;box-shadow:0 2px 10px rgba(17,24,39,.04)}
 .rc-title{font-size:11px;font-weight:700;color:#6b7280;letter-spacing:.4px;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
 .rc-title a{font-size:10.5px;color:#1a3a6b;font-weight:500;text-transform:none;letter-spacing:0;cursor:pointer;text-decoration:none}
 .rc-title a:hover{text-decoration:underline}
@@ -116,9 +120,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
         <span class="nav-dd-item"><i class="ti ti-inbox" style="margin-right:7px;font-size:12px"></i>Interactions</span>
         <span class="nav-dd-item"><i class="ti ti-messages" style="margin-right:7px;font-size:12px"></i>Threads</span>
         <span class="nav-dd-item"><i class="ti ti-layout-board" style="margin-right:7px;font-size:12px"></i>Message Board</span>
-        <span class="nav-dd-item" onclick="location='playlists.html'"><i class="ti ti-playlist" style="margin-right:7px;font-size:12px"></i>Playlists</span>
-        <span class="nav-dd-item" onclick="location='assessments.html'"><i class="ti ti-clipboard-check" style="margin-right:7px;font-size:12px"></i>Assessments</span>
-        <span class="nav-dd-item" onclick="location='poe.html'"><i class="ti ti-target" style="margin-right:7px;font-size:12px"></i>Points of Emphasis</span>
+        <span class="nav-dd-item" onclick="location='playlists.html'" style="background:linear-gradient(180deg,#fff 0%,#fff8f2 100%)"><i class="ti ti-playlist" style="margin-right:7px;font-size:12px"></i>Playlists</span>
+        <span class="nav-dd-item" onclick="location='assessments.html'" style="background:linear-gradient(180deg,#fff 0%,#f6f6ff 100%)"><i class="ti ti-clipboard-check" style="margin-right:7px;font-size:12px"></i>Assessments</span>
+        <span class="nav-dd-item" onclick="location='poe.html'" style="background:linear-gradient(180deg,#fff 0%,#fffaf0 100%)"><i class="ti ti-target" style="margin-right:7px;font-size:12px"></i>Points of Emphasis</span>
       </div>
     </div>
     <span class="nl">RM REVIEW</span>
@@ -167,36 +171,55 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
     </div>
   </div>
 
-  <!-- WEEKLY SCHEDULE -->
+  <!-- WEEKLY CALENDAR -->
   <div class="sched">
     <div class="sched-hdr">
       <div class="section-lbl" style="margin-bottom:0">This Week's Games</div>
       <div style="font-size:11px;color:#9ca3af;font-weight:600">Jun 29 – Jul 5</div>
     </div>
-    <div class="sched-row">
-      <div class="sched-card">
-        <div class="sched-card-accent"></div>
-        <div class="sched-badge today">Today</div>
-        <div class="sched-date">Mon, Jun 30 · 7:00 PM ET</div>
-        <div class="sched-teams">TOR @ CHI</div>
-        <div class="sched-meta"><i class="ti ti-map-pin"></i> Wintrust Arena</div>
-        <div class="sched-meta"><i class="ti ti-users"></i> G. Perrymond, C. Chang, K. Fahy</div>
+    <div class="week-cal">
+      <div class="week-day">
+        <div class="week-day-hdr"><span class="week-day-name">Mon</span><span class="week-day-num">29</span></div>
+        <div class="week-empty">Project</div>
       </div>
-      <div class="sched-card">
-        <div class="sched-card-accent" style="background:#7c3aed"></div>
-        <div class="sched-badge upcoming">Upcoming</div>
-        <div class="sched-date">Wed, Jul 2 · 8:00 PM ET</div>
-        <div class="sched-teams">ATL @ NYL</div>
-        <div class="sched-meta"><i class="ti ti-map-pin"></i> Barclays Center</div>
-        <div class="sched-meta"><i class="ti ti-users"></i> T. Grady, M. Abdenour</div>
+      <div class="week-day today">
+        <div class="week-day-hdr"><span class="week-day-name">Tue</span><span class="week-day-num">30</span></div>
+        <div class="week-game" style="background:#fdeaea;color:#7a1530">
+          <div class="week-game-time">7:00 PM ET</div>
+          <div class="week-game-teams">TOR @ CHI</div>
+          <div class="week-game-meta"><i class="ti ti-map-pin"></i> Wintrust Arena</div>
+          <div class="week-game-meta"><i class="ti ti-users"></i> Perrymond, Chang, Fahy</div>
+        </div>
       </div>
-      <div class="sched-card">
-        <div class="sched-card-accent" style="background:#0d9488"></div>
-        <div class="sched-badge upcoming">Upcoming</div>
-        <div class="sched-date">Fri, Jul 4 · 9:30 PM ET</div>
-        <div class="sched-teams">GSV @ LVA</div>
-        <div class="sched-meta"><i class="ti ti-map-pin"></i> Michelob Ultra Arena</div>
-        <div class="sched-meta"><i class="ti ti-users"></i> D. Foley, C. Oakley Jr.</div>
+      <div class="week-day">
+        <div class="week-day-hdr"><span class="week-day-name">Wed</span><span class="week-day-num">1</span></div>
+        <div class="week-empty">Project</div>
+      </div>
+      <div class="week-day">
+        <div class="week-day-hdr"><span class="week-day-name">Thu</span><span class="week-day-num">2</span></div>
+        <div class="week-game" style="background:#f3e8ff;color:#5b21b6">
+          <div class="week-game-time">8:00 PM ET</div>
+          <div class="week-game-teams">ATL @ NYL</div>
+          <div class="week-game-meta"><i class="ti ti-map-pin"></i> Barclays Center</div>
+          <div class="week-game-meta"><i class="ti ti-users"></i> Grady, Abdenour</div>
+        </div>
+      </div>
+      <div class="week-day">
+        <div class="week-day-hdr"><span class="week-day-name">Fri</span><span class="week-day-num">3</span></div>
+        <div class="week-empty">Project</div>
+      </div>
+      <div class="week-day">
+        <div class="week-day-hdr"><span class="week-day-name">Sat</span><span class="week-day-num">4</span></div>
+        <div class="week-game" style="background:#e0f2f1;color:#0f5e57">
+          <div class="week-game-time">9:30 PM ET</div>
+          <div class="week-game-teams">GSV @ LVA</div>
+          <div class="week-game-meta"><i class="ti ti-map-pin"></i> Michelob Ultra Arena</div>
+          <div class="week-game-meta"><i class="ti ti-users"></i> Foley, Oakley Jr.</div>
+        </div>
+      </div>
+      <div class="week-day">
+        <div class="week-day-hdr"><span class="week-day-name">Sun</span><span class="week-day-num">5</span></div>
+        <div class="week-empty">Project</div>
       </div>
     </div>
   </div>
@@ -205,7 +228,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   <div class="section-lbl">Sections</div>
   <div class="feature-grid">
 
-    <div class="feat-card" onclick="alert('Interactions — coming soon')">
+    <div class="feat-card" onclick="alert('Interactions — coming soon')" style="background:linear-gradient(180deg,#fff 0%,#f5f9ff 100%)">
       <div class="feat-card-accent" style="background:#2563eb"></div>
       <div class="fc-top">
         <div class="fc-icon" style="background:#dbeafe;color:#2563eb"><i class="ti ti-inbox"></i></div>
@@ -221,7 +244,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       </div>
     </div>
 
-    <div class="feat-card" onclick="alert('Threads — coming soon')">
+    <div class="feat-card" onclick="alert('Threads — coming soon')" style="background:linear-gradient(180deg,#fff 0%,#faf5ff 100%)">
       <div class="feat-card-accent" style="background:#7c3aed"></div>
       <div class="fc-top">
         <div class="fc-icon" style="background:#f3e8ff;color:#7c3aed"><i class="ti ti-messages"></i></div>
@@ -237,7 +260,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       </div>
     </div>
 
-    <div class="feat-card" onclick="alert('Message Board — coming soon')">
+    <div class="feat-card" onclick="alert('Message Board — coming soon')" style="background:linear-gradient(180deg,#fff 0%,#f0fdfd 100%)">
       <div class="feat-card-accent" style="background:#0891b2"></div>
       <div class="fc-top">
         <div class="fc-icon" style="background:#cffafe;color:#0e7490"><i class="ti ti-layout-board"></i></div>
@@ -253,7 +276,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       </div>
     </div>
 
-    <div class="feat-card" onclick="location='playlists.html'">
+    <div class="feat-card" onclick="location='playlists.html'" style="background:linear-gradient(180deg,#fff 0%,#fff8f2 100%)">
       <div class="feat-card-accent" style="background:#ea580c"></div>
       <div class="fc-top">
         <div class="fc-icon" style="background:#fff7ed;color:#ea580c"><i class="ti ti-playlist"></i></div>
@@ -269,7 +292,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       </div>
     </div>
 
-    <div class="feat-card" onclick="location='assessments.html'">
+    <div class="feat-card" onclick="location='assessments.html'" style="background:linear-gradient(180deg,#fff 0%,#f6f6ff 100%)">
       <div class="feat-card-accent" style="background:#6366f1"></div>
       <div class="fc-top">
         <div class="fc-icon" style="background:#eef2ff;color:#6366f1"><i class="ti ti-clipboard-check"></i></div>
@@ -285,7 +308,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       </div>
     </div>
 
-    <div class="feat-card" onclick="location='poe.html'">
+    <div class="feat-card" onclick="location='poe.html'" style="background:linear-gradient(180deg,#fff 0%,#fffaf0 100%)">
       <div class="feat-card-accent" style="background:#f59e0b"></div>
       <div class="fc-top">
         <div class="fc-icon" style="background:#fffbeb;color:#d97706"><i class="ti ti-target"></i></div>
