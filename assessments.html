@@ -320,7 +320,7 @@ table.roster-table{width:100%;border-collapse:collapse}
         <div class="callout-icon"><i class="ti ti-sparkles"></i></div>
         <div>
           <div class="callout-title">How Assessments Work</div>
-          <div class="callout-text">Assessments are auto-generated monthly based on your last 15–20 games. Each assessment tests your infraction rating accuracy and ref coverage judgment using real plays from your reviews. Pass with 70%+ to complete — below that, you'll take a focused retake on areas you missed. Assessments are open for 2 weeks.</div>
+          <div class="callout-text">Assessments are auto-generated every month — 10 questions based on your last 15–20 games. Each assessment tests your infraction rating accuracy and ref coverage judgment using real plays from your reviews. Pass with 70%+ to complete — below that, you'll take a focused retake on areas you missed. Assessments are open for 1 week, and the correct answers are only revealed in your final score so you can retake without memorizing them.</div>
         </div>
       </div>
 
@@ -354,16 +354,16 @@ table.roster-table{width:100%;border-collapse:collapse}
           <div>
             <div class="ac-name">June Assessment · 2026-27 Season</div>
             <div class="ac-meta">
-              <span>8 questions</span><div class="ac-dot"></div>
+              <span>10 questions</span><div class="ac-dot"></div>
               <span>Generated from last 15 games</span><div class="ac-dot"></div>
-              <span>Monthly cadence</span>
+              <span>Monthly cadence · 1 week to complete</span>
             </div>
-            <div class="ac-deadline"><i class="ti ti-clock" style="font-size:12px"></i> Open until Jul 10, 2026 &nbsp;·&nbsp; 12 days left</div>
+            <div class="ac-deadline"><i class="ti ti-clock" style="font-size:12px"></i> Open until Jul 7, 2026 &nbsp;·&nbsp; 7 days left</div>
           </div>
           <div class="ac-badge"><i class="ti ti-circle-check" style="font-size:11px"></i> OPEN</div>
         </div>
         <div class="ac-progress">
-          <div class="ac-prog-lbl"><span>Progress</span><span id="prog-label">0 of 8 completed</span></div>
+          <div class="ac-prog-lbl"><span>Progress</span><span id="prog-label">0 of 10 completed</span></div>
           <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
         </div>
         <div style="font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;text-transform:uppercase;margin-bottom:6px">Areas Tested</div>
@@ -428,10 +428,16 @@ table.roster-table{width:100%;border-collapse:collapse}
       </div>
 
       <div class="sec-hdr"><div class="sec-title">June Assessment · Reviewer Status</div><div class="sec-link">Export report</div></div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <div class="modal-lbl" style="margin-bottom:0">Filter by reviewer</div>
+        <select class="modal-select" id="roster-filter" style="width:220px;padding:7px 10px" onchange="renderRoster()">
+          <option value="">All Reviewers</option>
+        </select>
+      </div>
       <div class="roster-wrap">
         <div class="roster-header">
           <div class="roster-title">All Reviewers</div>
-          <div class="roster-meta">4 reviewers · 2 completed · 1 check-in assigned · 1 not started</div>
+          <div class="roster-meta" id="roster-meta">4 reviewers · 2 completed · 1 check-in assigned · 1 not started</div>
         </div>
         <table class="roster-table">
           <thead>
@@ -441,6 +447,7 @@ table.roster-table{width:100%;border-collapse:collapse}
               <th>Score</th>
               <th>Weak Areas</th>
               <th>Retakes</th>
+              <th>Flagged Pattern</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -482,7 +489,7 @@ table.roster-table{width:100%;border-collapse:collapse}
   <div class="quiz-header">
     <div class="qh-back" onclick="showLanding()"><i class="ti ti-chevron-left"></i> Assessments</div>
     <div class="qh-name">June Assessment · 2026-27</div>
-    <div class="qh-counter" id="q-counter">Question 1 of 8</div>
+    <div class="qh-counter" id="q-counter">Question 1 of 10</div>
     <div class="qh-prog"><div class="qh-prog-fill" id="q-prog-fill" style="width:12.5%"></div></div>
   </div>
   <div class="quiz-body">
@@ -610,6 +617,8 @@ const QUESTIONS = [
   {id:6,type:'infraction',play:{game:'CON @ CHI',date:'Jun 05, 2026',time:'07:33.1',type:'Foul: Personal',sub:'',ref:'Perrymond (8)',loc:'Lead'},correct:'Lean No',area:'Personal Fouls'},
   {id:7,type:'coverage',play:{game:'GSV @ IND',date:'May 22, 2026',time:'01:29.0',type:'Violation: Defensive Goaltending',sub:'',ref:'Perrymond (8)',loc:'Lead'},correct:'Lead',area:'Ref Coverage'},
   {id:8,type:'infraction',play:{game:'LVA @ LAS',date:'Jun 02, 2026',time:'05:44.1',type:'Foul: Personal',sub:'DHO Screen',ref:'Perrymond (8)',loc:'Lead'},correct:'Infraction',area:'Shooting Fouls'},
+  {id:9,type:'coverage',play:{game:'CHI @ TOR',date:'Jun 10, 2026',time:'02:11.5',type:'Foul: Shooting',sub:'Jump Shot',ref:'Chang (23)',loc:'Trail'},correct:'Trail',area:'Ref Coverage'},
+  {id:10,type:'infraction',play:{game:'NYL @ ATL',date:'Jun 14, 2026',time:'06:02.9',type:'Foul: Loose Ball',sub:'Dislodge from Position',ref:'Fahy (86)',loc:'Slot'},correct:'Lean Infraction',area:'Loose Ball'},
 ];
 
 const INF_OPTS = [
@@ -625,11 +634,22 @@ const COV_OPTS = [
 ];
 
 const ROSTER = [
-  {name:'Bridget N.',   initials:'BN', score:75, status:'passed',     areas:[],                   retakes:0, checkin:false},
-  {name:'Tucker G.',    initials:'TG', score:62, status:'failed',     areas:['Block-Charge','Ref Coverage'], retakes:1, checkin:false},
-  {name:'Michael A.',   initials:'MA', score:null,status:'in-progress',areas:[],                  retakes:0, checkin:false},
-  {name:'Curtis O.',    initials:'CO', score:null,status:'not-started',areas:[],                  retakes:0, checkin:false},
+  {name:'Bridget N.',   initials:'BN', score:75, status:'passed',     areas:[],                   retakes:0, checkin:false,
+    history:[{month:'Apr',areas:[]},{month:'May',areas:['Block-Charge']},{month:'Jun',areas:[]}]},
+  {name:'Tucker G.',    initials:'TG', score:62, status:'failed',     areas:['Block-Charge','Ref Coverage'], retakes:1, checkin:false,
+    history:[{month:'Apr',areas:['Block-Charge']},{month:'May',areas:['Block-Charge','Ref Coverage']},{month:'Jun',areas:['Block-Charge','Ref Coverage']}]},
+  {name:'Michael A.',   initials:'MA', score:null,status:'in-progress',areas:[],                  retakes:0, checkin:false,
+    history:[{month:'Apr',areas:['Ref Coverage']},{month:'May',areas:[]},{month:'Jun',areas:[]}]},
+  {name:'Curtis O.',    initials:'CO', score:null,status:'not-started',areas:[],                  retakes:0, checkin:false,
+    history:[{month:'Apr',areas:[]},{month:'May',areas:[]},{month:'Jun',areas:[]}]},
 ];
+
+// Flag any area that shows up as a weak area in 2+ of the reviewer's last 3 assessments
+function flaggedAreas(r) {
+  const counts = {};
+  (r.history||[]).forEach(h => h.areas.forEach(a => { counts[a] = (counts[a]||0) + 1; }));
+  return Object.entries(counts).filter(([,n]) => n >= 2).map(([a]) => a);
+}
 
 const PASS_THRESHOLD = 70;
 let curQ = 0, answers = [], revealed = false;
@@ -662,16 +682,34 @@ function renderRoster() {
     'not-started':  ['rs-not-started', 'Not Started'],
     'checkin':      ['rs-checkin',     'Check-in Assigned'],
   };
-  document.getElementById('roster-body').innerHTML = ROSTER.map((r,i) => {
+
+  const filterSel = document.getElementById('roster-filter');
+  if (filterSel.options.length === 1) {
+    filterSel.innerHTML += ROSTER.map(r => `<option value="${r.name}">${r.name}</option>`).join('');
+  }
+  const filterVal = filterSel.value;
+
+  const completed = ROSTER.filter(r=>r.status==='passed'||r.status==='failed').length;
+  const checkinCt = ROSTER.filter(r=>r.checkin).length;
+  const notStarted = ROSTER.filter(r=>r.status==='not-started').length;
+  document.getElementById('roster-meta').textContent = `${ROSTER.length} reviewers · ${completed} completed · ${checkinCt} check-in assigned · ${notStarted} not started`;
+
+  const rows = ROSTER.map((r,i) => ({r,i})).filter(({r}) => !filterVal || r.name === filterVal);
+
+  document.getElementById('roster-body').innerHTML = rows.map(({r,i}) => {
     const [cls, lbl] = statusLabel[r.checkin ? 'checkin' : r.status];
     const scoreTxt = r.score !== null ? `${r.score}%` : '—';
     const scoreColor = r.score===null?'#9ca3af':r.score>=PASS_THRESHOLD?'#16a34a':'#dc2626';
     const areas = r.areas.length ? r.areas.map(a=>`<span style="font-size:10px;padding:2px 7px;border-radius:10px;background:#fef3c7;color:#92400e;font-weight:600">${a}</span>`).join(' ') : '<span style="color:#9ca3af;font-size:11px">—</span>';
+    const flags = flaggedAreas(r);
+    const flagCell = flags.length
+      ? `<span style="display:inline-flex;align-items:center;gap:4px"><i class="ti ti-flag-3" style="color:#dc2626;font-size:12px"></i>${flags.map(a=>`<span style="font-size:10px;padding:2px 7px;border-radius:10px;background:#fee2e2;color:#991b1b;font-weight:700">${a}</span>`).join(' ')}</span>`
+      : '<span style="color:#9ca3af;font-size:11px">—</span>';
     let action = '';
     if (r.checkin) {
       action = `<span class="rs-assigned-label"><i class="ti ti-clock" style="font-size:11px"></i> Check-in pending</span>
                 <button class="rs-assign" style="margin-left:6px" onclick="openCompleteModal(${i})">Mark Complete</button>`;
-    } else if (r.status === 'failed') {
+    } else if (r.status === 'failed' || flags.length) {
       action = `<button class="rs-assign" onclick="openAssignModal(${i})"><i class="ti ti-user-check" style="font-size:11px;margin-right:3px"></i>Assign Check-in</button>`;
     } else {
       action = '<span style="color:#9ca3af;font-size:11px">—</span>';
@@ -687,6 +725,7 @@ function renderRoster() {
       <td><span style="font-weight:700;color:${scoreColor}">${scoreTxt}</span></td>
       <td>${areas}</td>
       <td style="color:#9ca3af;font-size:11.5px">${r.retakes > 0 ? r.retakes : '—'}</td>
+      <td>${flagCell}</td>
       <td>${action}</td>
     </tr>`;
   }).join('');
@@ -801,21 +840,7 @@ function selectOpt(val) {
 }
 
 function nextQuestion() {
-  const q = QUESTIONS[curQ];
-  if (!revealed && answers[curQ] !== undefined) {
-    revealed = true;
-    const opts = q.type === 'infraction' ? INF_OPTS : COV_OPTS;
-    opts.forEach(o => {
-      const el = document.getElementById('opt-'+o.val.replace(/ /g,'_'));
-      const chk = document.getElementById('chk-'+o.val.replace(/ /g,'_'));
-      if (!el) return;
-      el.classList.remove('selected');
-      if (o.val === q.correct) { el.classList.add('correct'); chk.innerHTML='<i class="ti ti-circle-check" style="color:#16a34a"></i>'; }
-      else if (o.val === answers[curQ]) { el.classList.add('wrong'); chk.innerHTML='<i class="ti ti-circle-x" style="color:#dc2626"></i>'; }
-    });
-    document.getElementById('q-next-btn').innerHTML = curQ < QUESTIONS.length-1 ? 'Next Question <i class="ti ti-arrow-right"></i>' : 'See Results <i class="ti ti-chart-bar"></i>';
-    return;
-  }
+  if (answers[curQ] === undefined) return;
   if (curQ < QUESTIONS.length - 1) { curQ++; renderQuestion(); }
   else { showResults(); }
 }

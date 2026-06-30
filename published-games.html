@@ -7,7 +7,11 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;color:#111827;background:#f3f4f6;min-height:100vh}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;color:#111827;background:linear-gradient(180deg,#f6f7fa 0%,#eef0f5 100%);min-height:100vh}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:6px}
+::-webkit-scrollbar-thumb:hover{background:#b8bec9}
 /* NAV */
 .nav{background:#1a3a6b;height:48px;display:flex;align-items:center;padding:0 24px;gap:0;flex-shrink:0;overflow:visible;position:relative;z-index:300}
 .nav-logo{display:flex;align-items:center;gap:8px}
@@ -18,12 +22,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .nl.on{color:#fff;border-bottom-color:rgba(255,255,255,.7);font-weight:600}
 .nav-av{width:30px;height:30px;border-radius:50%;background:#2d5aa0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;flex-shrink:0}
 /* PAGE WRAP */
-.page{max-width:1400px;margin:0 auto;padding:28px 32px}
+.page{max-width:1680px;margin:0 auto;padding:28px 20px}
 /* SECTION LABELS */
 .section-title{font-size:11px;font-weight:700;letter-spacing:.5px;color:#9ca3af;text-transform:uppercase;margin-bottom:14px}
 /* HERO STATS ROW */
 .hero-stats{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;margin-bottom:28px}
-.stat-card{background:rgba(255,255,255,.97);border-radius:12px;padding:20px 22px;box-shadow:0 4px 12px rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.15);border-left:4px solid rgba(255,255,255,.25)}
+.stat-card{background:rgba(255,255,255,.97);border-radius:13px;padding:20px 22px;box-shadow:0 1px 3px rgba(17,24,39,.07);border:1px solid rgba(255,255,255,.15);border-left:4px solid rgba(255,255,255,.25);transition:box-shadow .15s,transform .15s}
+.stat-card:hover{box-shadow:0 6px 16px rgba(17,24,39,.1);transform:translateY(-1px)}
 .stat-card.primary{background:#ffffff;border-color:transparent;border-left-color:#f9a8d4}
 .stat-card.accent-orange{border-left-color:#f9a8d4}
 .stat-card.accent-teal{border-left-color:#f9a8d4}
@@ -43,7 +48,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .main-grid{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:16px;align-items:stretch}
 .bottom-grid{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:28px;align-items:start}
 /* CHART CARD */
-.chart-card{background:#fff;border-radius:12px;padding:22px 24px;box-shadow:0 4px 12px rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.1)}
+.chart-card{background:#fff;border-radius:13px;padding:22px 24px;box-shadow:0 1px 3px rgba(17,24,39,.07);border:1px solid #e9ebf0}
 .chart-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px}
 .chart-title{font-size:14px;font-weight:700;color:#111827}
 .chart-desc{font-size:11px;color:#9ca3af;margin-top:2px}
@@ -54,7 +59,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .chart-svg{width:100%;overflow:visible}
 /* SIDEBAR CARDS */
 .side-stack{display:flex;flex-direction:column;gap:16px;height:100%}
-.side-card{background:#fff;border-radius:12px;padding:18px 20px;box-shadow:0 4px 12px rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.1);flex:1;display:flex;flex-direction:column;min-height:0}
+.side-card{background:#fff;border-radius:13px;padding:18px 20px;box-shadow:0 1px 3px rgba(17,24,39,.07);border:1px solid #e9ebf0;flex:1;display:flex;flex-direction:column;min-height:0}
 /* PLAY TYPES */
 .play-rows-wrap{display:flex;flex-direction:column;gap:0;flex:1;overflow-y:auto;min-height:0}
 .play-type-group{display:flex;flex-direction:column;gap:3px}
@@ -96,14 +101,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .analytics-toggle:hover{opacity:.85}
 .analytics-toggle .at-label{display:flex;align-items:center;gap:8px;color:#fff}
 .analytics-toggle .at-chevron{font-size:14px;color:rgba(255,255,255,.7);transition:transform .2s}
-.analytics-card{background:#9ca3af;border-radius:14px;margin-bottom:24px;overflow:hidden;box-shadow:0 4px 16px rgba(26,58,107,.18);transition:background .25s}
+.analytics-card{background:#1a3a6b;border-radius:14px;margin-bottom:24px;overflow:hidden;box-shadow:0 4px 16px rgba(26,58,107,.18);transition:background .25s}
 .analytics-card.lg-wnba{background:#f59e4a}
 .analytics-card.lg-nba{background:#1a3a6b}
 .analytics-card.lg-gleague{background:#111827}
 .analytics-card.lg-bal{background:#166534}
 .analytics-card-body{padding:0 20px 20px}
 #analytics-section{transition:none}
-.bottom-card{background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.1);overflow:hidden}
+.bottom-card{background:#fff;border-radius:13px;box-shadow:0 1px 3px rgba(17,24,39,.07);border:1px solid #e9ebf0;overflow:hidden}
 .bottom-card.standalone{box-shadow:0 1px 4px rgba(0,0,0,.07);border:1px solid #e5e7eb}
 .bottom-card table{width:100%;border-collapse:collapse}
 .bottom-card thead{background:#f8fafc}
@@ -1103,8 +1108,8 @@ function renderPlayTypeTable() {
   PT_SECTIONS.forEach(section => {
     // Section header row — full-width navy band
     const sh = document.createElement('tr');
-    const lgColors = {'WNBA':'#f59e4a','NBA':'#1a3a6b','G-League':'#111827','BAL':'#166534','':'#9ca3af'};
-    const shBg = lgColors[activeLg] || '#9ca3af';
+    const lgColors = {'WNBA':'#f59e4a','NBA':'#1a3a6b','G-League':'#111827','BAL':'#166534','':'#1a3a6b'};
+    const shBg = lgColors[activeLg] || '#1a3a6b';
     sh.innerHTML = `<td colspan="4" style="padding:10px 14px 8px;background:${shBg};color:#fff;font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase">${section.label}</td>`;
     tbody.appendChild(sh);
 
