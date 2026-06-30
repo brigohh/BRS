@@ -169,8 +169,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .assist-alert-yes:hover{background:#15306e}
 .assist-alert-no{background:#fff;color:#374151;border:1px solid #d8dce3}
 .assist-alert-no:hover{background:#f6f7fa}
-.rf-save-btn{padding:6px 14px;background:#ec4899;color:#fff;border:none;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:4px;transition:background .15s,box-shadow .15s}
-.rf-save-btn:hover{background:#db2777;box-shadow:0 4px 12px rgba(236,72,153,.32)}
+.rf-save-btn{padding:6px 14px;background:#f7b8d0;color:#7a1f44;border:none;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:4px;transition:background .15s,box-shadow .15s}
+.rf-save-btn:hover{background:#f3a0c0;box-shadow:0 4px 12px rgba(247,184,208,.45)}
 .rf-cancel-btn{padding:6px 10px;border:1px solid #d8dce3;border-radius:7px;font-size:11px;color:#374151;background:#fff;cursor:pointer;transition:background .12s}
 .rf-cancel-btn:hover{background:#f6f7fa}
 .comment-section{flex:1;overflow:hidden;padding:14px 16px;display:flex;flex-direction:column;gap:11px}
@@ -616,6 +616,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   <div class="assist-alert-btns">
     <button class="assist-alert-yes" onclick="assistAlertYes()">Yes, check and save</button>
     <button class="assist-alert-no" onclick="assistAlertNo()">Save anyway</button>
+  </div>
+</div>
+<div class="assist-alert-backdrop" id="mismatch-alert-backdrop"></div>
+<div class="assist-alert" id="mismatch-alert">
+  <div class="assist-alert-hdr"><i class="ti ti-alert-triangle"></i> Rating / Comment Mismatch</div>
+  <div class="assist-alert-body" id="mismatch-alert-body"></div>
+  <div class="assist-alert-btns">
+    <button class="assist-alert-no" onclick="hideMismatchAlert()">Go back and check</button>
+    <button class="assist-alert-yes" onclick="mismatchAlertConfirm()">Save anyway</button>
   </div>
 </div>
 <div class="chatbot-window" id="chatbot-window">
@@ -1329,6 +1338,38 @@ function ratingClass(rating) {
   if (rating === 'No Infraction') return 'rc-no-infraction';
   return '';
 }
+// Phrases that imply illegal/infraction-level contact occurred and affected the play
+const INFRACTION_LANGUAGE = [
+  /illegal(ly)? (contact|screen|pick|use of (hands|arms))/i,
+  /initiates? (illegal )?contact[^.]*affect/i,
+  /affects? (their|the)? ?(shot attempt|sqbr|driving shot|shooting motion)/i,
+  /should be assessed/i,
+  /clear (foul|violation)/i,
+];
+// Phrases that imply no foul / legal contact occurred
+const NO_INFRACTION_LANGUAGE = [
+  /no foul/i,
+  /legal(ly)? (contests?|guarding position|verticality)/i,
+  /considered incidental/i,
+  /natural basketball move/i,
+  /play should have continued without a whistle/i,
+  /absorbs? the contact/i,
+  /marginal contact/i,
+];
+const NO_INFRACTION_RATINGS = ['No Infraction', 'Judgement - Lean No'];
+const INFRACTION_RATINGS = ['Infraction', 'Judgement - Lean Infraction'];
+
+function findRatingCommentMismatch(comment, rating) {
+  if (!comment || !rating) return null;
+  if (NO_INFRACTION_RATINGS.includes(rating) && INFRACTION_LANGUAGE.some(re => re.test(comment))) {
+    return `Your comment describes contact that sounds like an infraction, but the rating is "${rating}".`;
+  }
+  if (INFRACTION_RATINGS.includes(rating) && NO_INFRACTION_LANGUAGE.some(re => re.test(comment))) {
+    return `Your comment sounds like it describes legal/no-call contact, but the rating is "${rating}".`;
+  }
+  return null;
+}
+
 function saveRating() {
   const rating = document.getElementById('rf-rating-combined').value;
   const isAssessment = rating.includes('Assessment');
@@ -1339,6 +1380,27 @@ function saveRating() {
     showAssistAlert('You appear to be entering an incorrectly assessed Out of Bounds play — would you like to check the Called box?');
     return;
   }
+  const comment = document.getElementById('comment-ta')?.value.trim() || '';
+  const mismatchReason = findRatingCommentMismatch(comment, rating);
+  if (mismatchReason) {
+    showMismatchAlert(`There appears to be a mismatch between your rating and comment, are you sure? ${mismatchReason}`);
+    return;
+  }
+  document.getElementById('rating-form').style.display='none';
+  selectedInfRow=null; renderInfractionTable(); showToast('Rating saved');
+}
+
+function showMismatchAlert(msg) {
+  document.getElementById('mismatch-alert-body').textContent = msg;
+  document.getElementById('mismatch-alert').classList.add('show');
+  document.getElementById('mismatch-alert-backdrop').classList.add('show');
+}
+function hideMismatchAlert() {
+  document.getElementById('mismatch-alert').classList.remove('show');
+  document.getElementById('mismatch-alert-backdrop').classList.remove('show');
+}
+function mismatchAlertConfirm() {
+  hideMismatchAlert();
   document.getElementById('rating-form').style.display='none';
   selectedInfRow=null; renderInfractionTable(); showToast('Rating saved');
 }
@@ -1624,7 +1686,7 @@ function buildLeagueOpsMsg(toName) {
   const greeting = toName ? `Hi ${toName.split(' ')[0]},` : 'Hi Sue/Anmool,';
 
   let lines = [];
-  lines.push(`<b>${greeting}</b>`);
+  lines.push(greeting);
   lines.push('');
   lines.push('I wanted to get your thoughts on / send this play along for your review because _____________');
   lines.push('');
@@ -1677,7 +1739,7 @@ function openLeagueOpsModal() {
     <div id="lo-msg" contenteditable="true" style="width:100%;border:1px solid #e5e7eb;border-radius:7px;padding:10px 12px;font-size:12px;font-family:inherit;color:#374151;line-height:1.6;background:#f9fafb;min-height:320px;max-height:50vh;overflow:auto" onfocus="this.style.borderColor='#92400e';this.style.background='#fff'" onblur="this.style.borderColor='#e5e7eb';this.style.background='#f9fafb'">${autoMsg}</div>
     <div style="display:flex;gap:8px;margin-top:12px">
       <button onclick="closeLeagueOpsModal()" style="flex:1;padding:8px;border-radius:7px;background:#f3f4f6;color:#6b7280;border:none;font-size:12px;font-weight:600;cursor:pointer">Cancel</button>
-      <button onclick="sendToLeagueOps()" style="flex:1;padding:8px;border-radius:7px;background:#92400e;color:#fff;border:none;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px"><i class="ti ti-send"></i> Send</button>
+      <button onclick="sendToLeagueOps()" style="flex:1;padding:8px;border-radius:7px;background:#f7b8d0;color:#7a1f44;border:none;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px"><i class="ti ti-send"></i> Send</button>
     </div>`;
   document.body.appendChild(modal);
 }
@@ -1704,21 +1766,24 @@ function sendToLeagueOps() {
 /* ── COMMENT LIBRARY POPUP ── */
 const CL_STORAGE_KEY = 'brs_comments_v6';
 const CL_SEED = [
-  {text:'**[Player]** firms up in a screening position and absorbs the body contact that occurs while setting the pick on **[Defender]**.',playType:'Foul: Offensive',callType:'no infraction'},
-  {text:'**[Player]** is moving alongside **[Defender]**\'s path and absorbs the marginal contact that occurs at the start of the drive. **[Defender]**\'s SQBR appears unaffected.',playType:'Foul: Personal',callType:'no infraction'},
-  {text:'**[Player]** legally contests **[Defender]**\'s driving shot attempt, and the follow-through contact after the release is considered incidental.',playType:'Foul: Shooting',callType:'no infraction'},
-  {text:'**[Player]** extends their arm into **[Defender]**\'s front and initiates contact with **[Defender]**\'s front that affects their SQBR during the drive.',playType:'Foul: Personal',callType:'infraction'},
-  {text:'**[Player]** is moving forward and late to establish a legal guarding position in **[Defender]**\'s path prior to contact.',playType:'Foul: Shooting',callType:'infraction'},
-  {text:'**[Player]** wraps their arms around **[Defender]**\'s body in an attempt to tie up the ball. A foul should be assessed rather than a jump ball.',playType:'Foul: Loose Ball',callType:'infraction'},
-  {text:'**[Player]** slightly extends their arms and some contact occurs with **[Defender]** as **[Defender]** navigates the screen. There is judgement regarding if **[Player]** absorbs the contact and retracts their arms during the screen, or if contact is delivered with the arms.',playType:'Foul: Offensive',callType:'lean infraction'},
-  {text:'**[Player]** briefly places a hand on **[Defender]**\'s side as they drive, and marginal contact occurs before **[Player]** retracts their hand during **[Defender]**\'s shooting motion. There is judgement regarding the degree and effect of the contact.',playType:'Foul: Shooting',callType:'lean infraction'},
-  {text:'**[Player]** briefly places a forearm on **[Defender]**\'s back and releases away as **[Defender]** jumps forward to pursue the rebound. The contact appears marginal.',playType:'Foul: Loose Ball',callType:'lean no'},
-  {text:'Although **[Player]** reaches in and there appears to be some arm contact as **[Defender]** attempts to gather the ball, there is no clear and conclusive video evidence to determine whether a foul occurs or whether the ball is legally dislodged on the play.',playType:'Foul: Personal',callType:'lean no'},
-  {text:'**[Player]** momentarily applies their forearm to **[Defender]**\'s side and marginal contact occurs. There is judgement in determining if the contact by either player rises to the level of a foul.',playType:'Foul: Personal',callType:'lean no'},
-  {text:'**[Player]** maintains verticality as they defend **[Defender]**\'s shot attempt. **[Player]** absorbs the contact and play should have continued without a whistle.',playType:'Foul: Shooting',callType:'no infraction'},
-  {text:'Replay review of the out of bounds called pursuant to a coach\'s challenge was deemed unsuccessful. **[Player]** is the last to touch the ball before it goes out of bounds.',playType:'Stoppage: Out-of-Bounds',callType:'no infraction'},
-  {text:'Contact to an opponent\'s head/face can be deemed marginal when the result of a natural basketball move, provided the contact is not disproportionate or uncontrolled.',playType:'Foul: Personal',callType:'lean no'},
-  {text:'**[Player]** makes contact with the part of **[Defender]**\'s hand that is on the ball as they defend the shot attempt. Contact which occurs on the hand of the offensive player, while that part of the hand is in contact with the ball, is legal. Play should have continued without a whistle.',playType:'Foul: Shooting',callType:'no infraction'},
+  {text:'**[Player]** firms up in a screening position and absorbs the body contact that occurs while setting the pick on **[Defender]**.',playType:'Foul: Offensive',subPlayType:'Screener',detail:'Deliver/Absorb',callType:'no infraction'},
+  {text:'**[Player]** is moving alongside **[Defender]**\'s path and absorbs the marginal contact that occurs at the start of the drive. **[Defender]**\'s SQBR appears unaffected.',playType:'Foul: Personal',subPlayType:'Start Of Drive',detail:'Freedom Of Movement',callType:'no infraction'},
+  {text:'**[Player]** legally contests **[Defender]**\'s driving shot attempt, and the follow-through contact after the release is considered incidental.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'Arm Follow-Through',callType:'no infraction'},
+  {text:'**[Player]** extends their arm into **[Defender]**\'s front and initiates contact with **[Defender]**\'s front that affects their SQBR during the drive.',playType:'Foul: Personal',subPlayType:'During Drive',detail:'Hand/Forearm To Front',callType:'infraction'},
+  {text:'**[Player]** is moving forward and late to establish a legal guarding position in **[Defender]**\'s path prior to contact.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'Legal Guarding Position',callType:'infraction'},
+  {text:'**[Player]** wraps their arms around **[Defender]**\'s body in an attempt to tie up the ball. A foul should be assessed rather than a jump ball.',playType:'Foul: Loose Ball',subPlayType:'Non-Rebound',detail:'Clamp-Lock-Hold',callType:'infraction'},
+  {text:'**[Player]** slightly extends their arms and some contact occurs with **[Defender]** as **[Defender]** navigates the screen. There is judgement regarding if **[Player]** absorbs the contact and retracts their arms during the screen, or if contact is delivered with the arms.',playType:'Foul: Offensive',subPlayType:'Screener',detail:'Arms',callType:'lean infraction'},
+  {text:'**[Player]** briefly places a hand on **[Defender]**\'s side as they drive, and marginal contact occurs before **[Player]** retracts their hand during **[Defender]**\'s shooting motion. There is judgement regarding the degree and effect of the contact.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'Arm Shooting Motion',callType:'lean infraction'},
+  {text:'**[Player]** briefly places a forearm on **[Defender]**\'s back and releases away as **[Defender]** jumps forward to pursue the rebound. The contact appears marginal.',playType:'Foul: Loose Ball',subPlayType:'Rebound',detail:'Contact to Arm',callType:'lean no'},
+  {text:'Although **[Player]** reaches in and there appears to be some arm contact as **[Defender]** attempts to gather the ball, there is no clear and conclusive video evidence to determine whether a foul occurs or whether the ball is legally dislodged on the play.',playType:'Foul: Personal',subPlayType:'On-Ball',detail:'Contact to Arm',callType:'lean no'},
+  {text:'**[Player]** momentarily applies their forearm to **[Defender]**\'s side and marginal contact occurs. There is judgement in determining if the contact by either player rises to the level of a foul.',playType:'Foul: Personal',subPlayType:'On-Ball',detail:'Contact to Arm',callType:'lean no'},
+  {text:'**[Player]** maintains verticality as they defend **[Defender]**\'s shot attempt. **[Player]** absorbs the contact and play should have continued without a whistle.',playType:'Foul: Shooting',subPlayType:'Jump Shot',detail:'Vertical',callType:'no infraction'},
+  {text:'Replay review of the out of bounds called pursuant to a coach\'s challenge was deemed unsuccessful. **[Player]** is the last to touch the ball before it goes out of bounds.',playType:'Stoppage: Out-of-Bounds',subPlayType:'Ball Out of Bounds',detail:'N/A',callType:'no infraction'},
+  {text:'Contact to an opponent\'s head/face can be deemed marginal when the result of a natural basketball move, provided the contact is not disproportionate or uncontrolled.',playType:'Foul: Personal',subPlayType:'On-Ball',detail:'Head Contact',callType:'lean no'},
+  {text:'**[Player]** makes contact with the part of **[Defender]**\'s hand that is on the ball as they defend the shot attempt. Contact which occurs on the hand of the offensive player, while that part of the hand is in contact with the ball, is legal. Play should have continued without a whistle.',playType:'Foul: Shooting',subPlayType:'Jump Shot',detail:'Arm Shooting Motion',callType:'no infraction'},
+  {text:'**[Player]** jumps from point A to point B and initiates contact with **[Defender]** while they are airborne, which affects their driving shot attempt.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'A -> B Movement',callType:'infraction'},
+  {text:'**[Player]** establishes a legal guarding position prior to **[Defender]**\'s upward shooting motion, and the contact that occurs is the natural result of a legal verticality position rather than an A to B movement into the path of the shooter.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'A -> B Movement',callType:'no infraction'},
+  {text:'**[Player]** is still adjusting and moving from point A to point B as **[Defender]** elevates into their driving shot attempt, but there is judgement as to whether legal guarding position was fully established prior to the airborne contact.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'A -> B Movement',callType:'lean infraction'},
 ];
 
 function openCommentLibrary() {
@@ -1730,23 +1795,28 @@ function openCommentLibrary() {
   } catch(e) {}
   window._clComments = comments;
 
-  // Read current play context
+  // Read current play context — full combination: infraction type, play type, sub play type, rating
   const infrType = document.getElementById('rf-infraction-type')?.value || '';
+  const playType = document.getElementById('rf-play-type')?.value || '';
+  const subPlayType = document.getElementById('rf-sub-play-type')?.value || '';
   const rating = document.getElementById('rf-rating-combined')?.value || '';
 
   // Pre-fill filter to match current rating
-  const ratingMap = {'Infraction':'infraction','Lean Infraction':'lean infraction','Lean No':'lean no','No Infraction':'no infraction'};
+  const ratingMap = {'Infraction':'infraction','Judgement - Lean Infraction':'lean infraction','Judgement - Lean No':'lean no','No Infraction':'no infraction'};
   const ratingKey = ratingMap[rating] || '';
   document.getElementById('cl-filter-rating').value = ratingKey;
   document.getElementById('cl-search').value = '';
 
-  const ctxParts = [infrType, rating].filter(Boolean);
+  const isPlaceholder = v => !v || v === '-- select --';
+  window._clInfrType = isPlaceholder(infrType) ? '' : infrType;
+  window._clPlayType = isPlaceholder(playType) ? '' : playType;
+  window._clSubPlayType = isPlaceholder(subPlayType) ? '' : subPlayType;
+  window._clRating = ratingKey;
+
+  const ctxParts = [window._clInfrType, window._clPlayType, window._clSubPlayType, rating].filter(Boolean);
   document.getElementById('cl-context-line').textContent = ctxParts.length
     ? `Filtered for: ${ctxParts.join(' · ')}`
-    : 'Showing all comments — select an infraction type and rating to narrow results';
-
-  window._clInfrType = infrType;
-  window._clRating = ratingKey;
+    : 'Showing all comments — select an infraction type, play type, and rating to narrow results';
 
   renderCLResults();
   const ov = document.getElementById('cl-overlay');
@@ -1758,30 +1828,29 @@ function renderCLResults() {
   const search = document.getElementById('cl-search').value.toLowerCase();
   const ratingFilter = document.getElementById('cl-filter-rating').value.toLowerCase();
   const infrType = (window._clInfrType || '').toLowerCase();
+  const playType = (window._clPlayType || '').toLowerCase();
+  const subPlayType = (window._clSubPlayType || '').toLowerCase();
 
-  // Score each comment by relevance
-  const scored = comments.map(c => {
-    const text = (c.text||'').toLowerCase();
+  // Strict filter: every selected dropdown must match exactly. Search box still narrows by text.
+  const matched = comments.filter(c => {
     const pt = (c.playType||'').toLowerCase();
+    const spt = (c.subPlayType||'').toLowerCase();
     const ct = (c.callType||'').toLowerCase();
-    let score = 0;
-    if (infrType && pt && pt.includes(infrType.split(':')[0]?.toLowerCase())) score += 3;
-    if (infrType && pt === infrType.toLowerCase()) score += 5;
-    if (ratingFilter && ct === ratingFilter) score += 4;
-    if (search && text.includes(search)) score += 2;
-    if (search && !text.includes(search)) score -= 10;
-    if (ratingFilter && ct !== ratingFilter) score -= 2;
-    return {c, score};
-  })
-  .filter(({score}) => score > -5)
-  .sort((a,b) => b.score - a.score)
-  .slice(0, 20);
+    const text = (c.text||'').toLowerCase();
+    if (infrType && pt !== infrType) return false;
+    if (playType && spt !== playType) return false;
+    if (subPlayType && (c.detail||'').toLowerCase() !== subPlayType) return false;
+    if (ratingFilter && ct !== ratingFilter) return false;
+    if (search && !text.includes(search)) return false;
+    return true;
+  });
 
   const container = document.getElementById('cl-results');
-  if (!scored.length) {
-    container.innerHTML = '<div style="text-align:center;color:#9ca3af;padding:32px;font-size:12px">No matching comments. Try adjusting your search or filters.</div>';
+  if (!matched.length) {
+    container.innerHTML = '<div style="text-align:center;color:#9ca3af;padding:32px;font-size:12px">No comments match this exact combination of dropdowns. Try clearing a filter or adjusting your search.</div>';
     return;
   }
+  const scored = matched.map(c => ({c}));
 
   const ratingChipStyle = {
     'infraction': 'background:#fee2e2;color:#991b1b',
