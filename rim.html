@@ -35,8 +35,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 /* WEEKLY CALENDAR */
 .sched{margin-bottom:32px}
 .sched-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.week-cal{display:grid;grid-template-columns:repeat(7,1fr);gap:10px}
-.week-day{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:10px 8px;min-height:158px;display:flex;flex-direction:column;gap:8px;transition:box-shadow .15s,transform .15s}
+.week-cal{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}
+.week-day{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:8px 6px;min-height:148px;display:flex;flex-direction:column;gap:8px;transition:box-shadow .15s,transform .15s}
 .week-day:hover{box-shadow:0 6px 18px rgba(17,24,39,.08);transform:translateY(-2px)}
 .week-day.today{border-color:#c8102e;background:linear-gradient(180deg,#fff 0%,#fff7f7 100%);box-shadow:0 0 0 1.5px rgba(200,16,46,.35)}
 .week-day-hdr{display:flex;align-items:center;justify-content:space-between}
@@ -46,8 +46,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .week-day.today .week-day-name{color:#c8102e}
 .week-game{border-radius:9px;padding:9px 9px;display:flex;flex-direction:column;gap:3px;flex:1}
 .week-game-time{font-size:9px;font-weight:700;opacity:.75;text-transform:uppercase;letter-spacing:.3px}
-.week-game-teams{font-size:12.5px;font-weight:800}
-.week-game-meta{font-size:9.5px;opacity:.8;display:flex;align-items:center;gap:4px;margin-top:auto}
+.week-game-teams{font-size:11.5px;font-weight:800}
+.week-game-meta{font-size:9px;opacity:.8;display:flex;align-items:center;gap:4px;margin-top:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .week-empty{flex:1;display:flex;align-items:center;justify-content:center;color:#b7bcc6;font-size:10px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;border:1.5px dashed #e5e7eb;border-radius:9px;background:repeating-linear-gradient(135deg,#fafbfc,#fafbfc 6px,#f4f5f7 6px,#f4f5f7 12px)}
 .week-day.weekend{background:#f7f7f8}
 .week-empty.off{border-style:solid;border-color:#eceef1;background:#f0f1f3;color:#c3c7cf}
@@ -82,8 +82,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .section-lbl{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#9ca3af;margin-bottom:12px}
 
 /* FEATURE GRID */
-.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px}
-.feat-card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:18px 18px 14px;cursor:pointer;transition:box-shadow .18s,border-color .18s,transform .18s;display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:28px}
+.feat-card{background:#fff;border:1px solid #e5e7eb;border-radius:13px;padding:15px 15px 12px;cursor:pointer;transition:box-shadow .18s,border-color .18s,transform .18s;display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden}
 .feat-card:hover{box-shadow:0 12px 28px rgba(17,24,39,.10);border-color:#d1d5db;transform:translateY(-3px)}
 .feat-card:hover .fc-arrow{opacity:1;transform:translateX(0)}
 .feat-card-accent{position:absolute;top:0;left:0;right:0;height:4px;border-radius:14px 14px 0 0}
@@ -117,13 +117,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .pr-count{font-size:10.5px;color:#9ca3af;white-space:nowrap}
 
 /* BODY ROW (calendar+cards / scouting report) */
-.body-row{display:grid;grid-template-columns:1fr 240px;gap:18px;align-items:start;margin-bottom:28px}
+.body-row{display:grid;grid-template-columns:1fr 480px;gap:18px;align-items:stretch;margin-bottom:28px}
+.body-left{display:flex;flex-direction:column}
 .body-left .sched{margin-bottom:24px}
 .body-left .feature-grid{margin-bottom:0}
 
 /* SCOUTING REPORT FLIP CARD */
-.scout-card{perspective:1400px;cursor:pointer;user-select:none}
-.scout-card-inner{position:relative;width:100%;height:560px;transition:transform .6s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d}
+.scout-card{perspective:1400px;cursor:pointer;user-select:none;height:100%}
+.scout-card-inner{position:relative;width:100%;height:100%;transition:transform .6s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d}
 .scout-card.flipped .scout-card-inner{transform:rotateY(180deg)}
 .scout-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;display:flex;flex-direction:column;overflow:hidden}
 .scout-front{background:linear-gradient(165deg,#16294f 0%,#1a3a6b 60%,#13284f 100%);color:#fff;padding:24px 20px;align-items:center;text-align:center;box-shadow:0 14px 32px rgba(20,35,70,.3)}
@@ -208,7 +209,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
     <div class="hero-row">
       <div>
         <div class="hero-eyebrow">Review Insights &amp; Messaging Platform</div>
-        <div class="hero-title">Welcome back, <span>Bridget.</span></div>
+        <div class="hero-title">Welcome back, <span>Waheed.</span></div>
         <div class="hero-sub">Your hub for play sharing, reviewer discussions, overturn threads, and calibration playlists.</div>
       </div>
       <div class="hero-stats">
