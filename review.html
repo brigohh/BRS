@@ -525,6 +525,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
               <button class="assist-btn tmpl-assist-btn" onclick="openChatbot()" style="width:100%;justify-content:center"><i class="ti ti-whistle" style="font-size:12px"></i> Help Side Assist</button>
               <button class="tmpl-btn" style="width:100%;justify-content:center;gap:4px" onclick="openAddToPlaylist()"><i class="ti ti-playlist" style="font-size:12px"></i> Add to Playlist</button>
               <button class="tmpl-btn" style="width:100%;justify-content:center;gap:4px" onclick="openSlackModal()"><i class="ti ti-brand-slack" style="font-size:12px"></i> Send to Slack</button>
+              <button class="tmpl-btn" style="width:100%;justify-content:center;gap:4px;background:#fef3c7;color:#92400e;border-color:#fde68a" onclick="openLeagueOpsModal()"><i class="ti ti-send" style="font-size:12px"></i> Send to League Ops</button>
               <div style="display:flex;flex-direction:column;gap:5px;margin-top:auto">
                 <button class="rf-save-btn" onclick="saveRating()" style="width:100%;justify-content:center">Save</button>
                 <button class="rf-cancel-btn" onclick="cancelRating()" style="width:100%;justify-content:center">Cancel</button>
@@ -1595,6 +1596,99 @@ function sendToSlack() {
     ta.value = ta.value ? ta.value + '\n' + note : note;
   }
   showToast(`Sent to ${dest} ✓`);
+}
+
+/* ── SEND TO LEAGUE OPS ── */
+const LO_TO_OPTS = ['Sue Blauch', 'Anmool Singh'];
+const LO_CC = ['Tucker Grady', 'Daniel Foley', 'Michael Abdenour', 'Curtis Oakley Jr.', 'Michael Gargin'];
+
+function buildLeagueOpsMsg() {
+  const ev = currentEv;
+  const poss = currentPoss;
+  const row = selectedInfRow !== null ? infractionRows[selectedInfRow] : (infractionRows[0] || null);
+  const game = 'TOR @ CHI · May 27, 2026';
+  const clock = ev ? ev.time : '';
+  const team = poss ? (poss.team==='TOR' ? 'Raptors' : 'Bulls') : '';
+  const link = window.location.href.split('?')[0];
+
+  const oiwEl = document.getElementById('oiw-comment');
+  const ptiwEl = document.getElementById('ptiw-comment');
+  const oiwText = (oiwEl && oiwEl.textContent.trim() && oiwEl.textContent.trim() !== 'No OIW Comment') ? oiwEl.textContent.trim() : '';
+  const ptiwText = (ptiwEl && ptiwEl.textContent.trim() && ptiwEl.textContent.trim() !== 'No PTIW Comment') ? ptiwEl.textContent.trim() : '';
+  const ogrText = document.getElementById('comment-ta')?.value.trim() || '';
+
+  let lines = [];
+  if (oiwText) lines.push(`OIW: ${oiwText}`);
+  lines.push('');
+  let challengeLine = `${team || 'Team'}: ${clock ? 'Q' + (ev?.q || '') + ' ' + clock : ''}`.trim();
+  if (ptiwText) {
+    lines.push(`${challengeLine} ${ptiwText}`.trim());
+  } else {
+    lines.push(`${challengeLine}`.trim());
+  }
+  lines.push('');
+  lines.push(`Proposed OGR Comment: ${ogrText || '[Enter proposed OGR comment]'}`);
+  lines.push('');
+  lines.push(`Game: ${game}`);
+  if (clock) lines.push(`Timestamp: Q${ev?.q || ''} ${clock}`);
+  if (row && row.type) lines.push(`Play: ${row.type}`);
+  lines.push(`Clip Link: ${link}`);
+  return lines.join('\n');
+}
+
+function openLeagueOpsModal() {
+  closeLeagueOpsModal();
+  const bd = document.createElement('div');
+  bd.id = 'lo-modal-bd';
+  bd.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:799';
+  bd.onclick = closeLeagueOpsModal;
+  document.body.appendChild(bd);
+
+  const autoMsg = buildLeagueOpsMsg();
+
+  const modal = document.createElement('div');
+  modal.id = 'lo-modal-el';
+  modal.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:420px;max-height:85vh;overflow:auto;background:#fff;border-radius:13px;box-shadow:0 16px 48px rgba(0,0,0,.22);z-index:800;padding:20px 22px;border:1px solid #e5e7eb';
+  modal.innerHTML = `
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+      <i class="ti ti-send" style="color:#92400e;font-size:16px"></i>
+      <span style="font-size:13px;font-weight:700;color:#111827;flex:1">Send to League Ops</span>
+      <button onclick="closeLeagueOpsModal()" style="background:none;border:none;font-size:18px;color:#9ca3af;cursor:pointer;line-height:1">×</button>
+    </div>
+    <div style="font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;text-transform:uppercase;margin-bottom:5px">To</div>
+    <select id="lo-to" style="width:100%;padding:8px 10px;border:1px solid #e5e7eb;border-radius:7px;font-size:12px;font-family:inherit;color:#374151;background:#fff;margin-bottom:14px">
+      <option value="" disabled selected>Select recipient…</option>
+      ${LO_TO_OPTS.map(o=>`<option value="${o}">${o}</option>`).join('')}
+    </select>
+    <div style="font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;text-transform:uppercase;margin-bottom:5px">CC</div>
+    <div style="font-size:11.5px;color:#6b7280;line-height:1.6;margin-bottom:14px;padding:8px 10px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:7px">${LO_CC.join(', ')}</div>
+    <div style="font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;text-transform:uppercase;margin-bottom:5px">Message</div>
+    <textarea id="lo-msg" style="width:100%;border:1px solid #e5e7eb;border-radius:7px;padding:8px 10px;font-size:11.5px;font-family:inherit;resize:vertical;color:#374151;line-height:1.6;background:#f9fafb;min-height:220px" onfocus="this.style.borderColor='#92400e';this.style.background='#fff'" onblur="this.style.borderColor='#e5e7eb';this.style.background='#f9fafb'">${autoMsg}</textarea>
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button onclick="closeLeagueOpsModal()" style="flex:1;padding:8px;border-radius:7px;background:#f3f4f6;color:#6b7280;border:none;font-size:12px;font-weight:600;cursor:pointer">Cancel</button>
+      <button onclick="sendToLeagueOps()" style="flex:1;padding:8px;border-radius:7px;background:#92400e;color:#fff;border:none;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px"><i class="ti ti-send"></i> Send</button>
+    </div>`;
+  document.body.appendChild(modal);
+}
+
+function closeLeagueOpsModal() {
+  document.getElementById('lo-modal-el')?.remove();
+  document.getElementById('lo-modal-bd')?.remove();
+}
+
+function sendToLeagueOps() {
+  const to = document.getElementById('lo-to')?.value;
+  if (!to) { showToast('Select a recipient first'); return; }
+  const msg = document.getElementById('lo-msg')?.value.trim();
+  closeLeagueOpsModal();
+  const ta = document.getElementById('notes-ta');
+  if (ta) {
+    const now = new Date();
+    const stamp = `${now.getMonth()+1}/${now.getDate()} ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`;
+    const note = `[Sent to ${to} (CC: ${LO_CC.join(', ')}) at League Ops on ${stamp}]`;
+    ta.value = ta.value ? ta.value + '\n' + note : note;
+  }
+  showToast(`Sent to ${to} ✓`);
 }
 
 /* ── COMMENT LIBRARY POPUP ── */
