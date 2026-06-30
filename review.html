@@ -22,7 +22,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .nl{color:rgba(255,255,255,.55);font-size:10.5px;padding:0 8px;cursor:pointer;font-weight:500;height:48px;display:flex;align-items:center;border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0;transition:color .15s}
 .nl:hover{color:#fff}
 .nl.on{color:#fff;border-bottom-color:#ec4899;font-weight:600}
-.nav-av{width:30px;height:30px;border-radius:50%;background:#2d5aa0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;flex-shrink:0;margin-left:12px;box-shadow:0 0 0 2px rgba(255,255,255,.12)}
+.nav-av{width:30px;height:30px;border-radius:50%;background:#2d5aa0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;flex-shrink:0;margin-left:12px}
 .nav-dropdown{position:relative;display:flex;align-items:center;height:48px}
 .nav-dropdown .nl{gap:4px}
 .nav-dd-caret{font-size:8px;opacity:.7;transition:transform .15s}
@@ -293,7 +293,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
     <div class="nav-dropdown" id="nav-dropdown">
       <span class="nl" onclick="toggleNavDropdown(event)">REVIEWER RESOURCE <span class="nav-dd-caret">&#9662;</span></span>
       <div class="nav-dd-menu">
-        <span class="nav-dd-item" onclick="location='comment-library.html'">Comment Framework</span>
+        <span class="nav-dd-item" onclick="location='comment-library.html'">Comment Library</span>
       </div>
     </div>
     <span class="nl">MY SCHEDULE</span>
@@ -1245,8 +1245,9 @@ function selectEvent(evtId, poss, ev) {
     ];
   } else {
     infractionRows = [{type:'Foul: Shooting', player:'Key, Tiffany (22) — Tempo', opponent:'Diggins, Skylar (4) — Sky',
-      official:REFS[1], location:'Trail', rating:'Judgement - Lean No', observability:'Observable',
-      prefill:{infrType:'Foul: Shooting', player:'Key, Tiffany (22) — Tempo', opponent:'Diggins, Skylar (4) — Sky', rating:'Judgement - Lean No', observability:'Observable'}}];
+      official:REFS[1], location:'Trail', rating:'No Infraction', observability:'Observable',
+      prefill:{infrType:'Foul: Shooting', playType:'Driving Shot Attempt', subPlayType:'Arm Shooting Motion', player:'Key, Tiffany (22) — Tempo', opponent:'Diggins, Skylar (4) — Sky', rating:'No Infraction', observability:'Observable',
+        comment:'Key (TOR) swipes down and initiates illegal contact with Diggins\' (CHI) arm, which affects their shot attempt'}}];
   }
   renderQueue();
   document.getElementById('cp-empty').style.display='none';
@@ -1297,6 +1298,7 @@ function selectInfractionRow(idx) {
   setSelectVal('rf-observability', pf.observability || '');
   document.getElementById('chk-ogr').checked = !!(pf.ogr);
   document.getElementById('chk-called').checked = !!(pf.called);
+  document.getElementById('comment-ta').value = pf.comment || '';
   document.querySelectorAll('#inf-tbody tr').forEach((tr, i) => tr.classList.toggle('inf-sel', i === idx));
   updateSuggestions();
 }
@@ -1458,6 +1460,15 @@ function toggleNavDropdown(e) {
   document.getElementById('nav-dropdown').classList.toggle('open');
 }
 document.addEventListener('click', () => document.getElementById('nav-dropdown').classList.remove('open'));
+
+document.querySelectorAll('.st').forEach(t => {
+  if (!t.getAttribute('onclick')) {
+    t.addEventListener('click', function() {
+      document.querySelectorAll('.st').forEach(x => x.classList.remove('on'));
+      this.classList.add('on');
+    });
+  }
+});
 
 function showToast(msg) {
   const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
@@ -1794,6 +1805,10 @@ const CL_SEED = [
   {text:'{CP} wraps their arms around {DP}\'s body in an attempt to tie up the ball. A foul should be assessed rather than a jump ball.',playType:'Foul: Loose Ball',subPlayType:'Non-Rebound',detail:'Clamp-Lock-Hold',callType:'infraction'},
   {text:'{CP} slightly extends their arms and some contact occurs with {DP} as {DP} navigates the screen. There is judgement regarding if {CP} absorbs the contact and retracts their arms during the screen, or if contact is delivered with the arms.',playType:'Foul: Offensive',subPlayType:'Screener',detail:'Arms',callType:'lean infraction'},
   {text:'{CP} briefly places a hand on {DP}\'s side as they drive, and marginal contact occurs before {CP} retracts their hand during {DP}\'s shooting motion. There is judgement regarding the degree and effect of the contact.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'Arm Shooting Motion',callType:'lean infraction'},
+  {text:'{CP} contests the shot and any contact with {DP}\'s arm during the upward shooting motion is incidental.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'Arm Shooting Motion',callType:'no infraction'},
+  {text:'{CP} contests {DP}\'s driving shot attempt and avoids making any illegal contact during the upward shooting motion.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'Arm Shooting Motion',callType:'no infraction'},
+  {text:'{CP} maintains a legal guarding position as {DP} drives, and any contact to {DP}\'s arm during the shooting motion is marginal.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'Arm Shooting Motion',callType:'lean no'},
+  {text:'{CP} contests the shot and {DP} maintains control of the ball with their SQBR unaffected during the upward shooting motion.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'Arm Shooting Motion',callType:'no infraction'},
   {text:'{CP} briefly places a forearm on {DP}\'s back and releases away as {DP} jumps forward to pursue the rebound. The contact appears marginal.',playType:'Foul: Loose Ball',subPlayType:'Rebound',detail:'Contact to Arm',callType:'lean no'},
   {text:'Although {CP} reaches in and there appears to be some arm contact as {DP} attempts to gather the ball, there is no clear and conclusive video evidence to determine whether a foul occurs or whether the ball is legally dislodged on the play.',playType:'Foul: Personal',subPlayType:'On-Ball',detail:'Contact to Arm',callType:'lean no'},
   {text:'{CP} momentarily applies their forearm to {DP}\'s side and marginal contact occurs. There is judgement in determining if the contact by either player rises to the level of a foul.',playType:'Foul: Personal',subPlayType:'On-Ball',detail:'Contact to Arm',callType:'lean no'},
