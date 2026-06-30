@@ -427,14 +427,23 @@ document.addEventListener('click',()=>{document.getElementById('nav-dropdown').c
 function toggleRimDropdown(e){e.stopPropagation();document.getElementById('rim-dropdown').classList.toggle('open');document.getElementById('nav-dropdown').classList.remove('open');}
 
 const MONTH_GAMES = {
-  2: { teams:'TOR @ CHI', bg:'#fdeaea', col:'#7a1530' },
-  4: { teams:'ATL @ NYL', bg:'#f3e8ff', col:'#5b21b6' },
-  5: { teams:'GSV @ LVA', bg:'#e0f2f1', col:'#0f5e57' },
+  2:  { teams:'NYL @ ATL',  bg:'#f3e8ff', col:'#5b21b6' },
+  4:  { teams:'LVA @ GSV',  bg:'#e0f2f1', col:'#0f5e57' },
+  5:  { teams:'CHI @ TOR',  bg:'#fdeaea', col:'#7a1530' },
+  9:  { teams:'IND @ OKC',  bg:'#fef3e2', col:'#92400e' },
+  11: { teams:'ATL @ NYL',  bg:'#f3e8ff', col:'#5b21b6' },
+  15: { teams:'TOR @ CHI',  bg:'#fdeaea', col:'#7a1530' },
+  17: { teams:'GSV @ LVA',  bg:'#e0f2f1', col:'#0f5e57' },
+  19: { teams:'OKC @ IND',  bg:'#fef3e2', col:'#92400e' },
+  23: { teams:'NYL @ PHX',  bg:'#eef2ff', col:'#3730a3' },
+  25: { teams:'CHI @ CON',  bg:'#fdeaea', col:'#7a1530' },
+  30: { teams:'TOR @ CHI',  bg:'#fdeaea', col:'#7a1530' },
 };
+const PROJECT_DAYS = new Set([1,3,8,10,12,16,18,22,24,26,29]);
 let monthOpen = false;
 function buildMonthCal() {
   const el = document.getElementById('month-cal');
-  const year = 2026, month = 6; // July (0-indexed)
+  const year = 2026, month = 5; // June (0-indexed)
   const first = new Date(Date.UTC(year, month, 1));
   const startDow = (first.getUTCDay() + 6) % 7; // Mon=0
   const daysInMonth = new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
@@ -444,11 +453,16 @@ function buildMonthCal() {
   for (let d = 1; d <= daysInMonth; d++) {
     const dow = (startDow + d - 1) % 7;
     const isWeekend = dow >= 5;
-    const isToday = d === 1;
+    const isToday = d === 30;
     const g = MONTH_GAMES[d];
+    let cell;
+    if (g) cell = `<div class="month-game" style="background:${g.bg};color:${g.col}">${g.teams}</div>`;
+    else if (isWeekend) cell = `<div class="month-game" style="background:#f0f1f3;color:#c3c7cf">Off</div>`;
+    else if (PROJECT_DAYS.has(d)) cell = `<div class="month-game" style="background:#eaf0fb;color:#3f6cb0">Summer Project</div>`;
+    else cell = '';
     html += `<div class="month-day${isWeekend?' weekend':''}${isToday?' today':''}">
       <div class="month-day-num">${d}</div>
-      ${g ? `<div class="month-game" style="background:${g.bg};color:${g.col}">${g.teams}</div>` : ''}
+      ${cell}
     </div>`;
   }
   el.innerHTML = html;
