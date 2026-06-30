@@ -265,14 +265,28 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .nav-dd-item:hover{background:#f0f2f5;color:#1a3a6b}
 .email-preview-btn{background:#fff;border:1px solid #d6dce8;color:#1a3a6b;font-size:11px;font-weight:700;padding:7px 13px;border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:background .12s}
 .email-preview-btn:hover{background:#eff6ff}
-.em-overlay{display:none;position:fixed;inset:0;background:rgba(15,20,35,.55);z-index:900;align-items:flex-start;justify-content:center;overflow-y:auto;padding:40px 20px}
+.em-overlay{display:none;position:fixed;inset:0;background:rgba(15,20,35,.55);z-index:900;align-items:center;justify-content:center;overflow-y:auto;padding:20px}
 .em-overlay.open{display:flex}
-.em-modal{background:#fff;border-radius:14px;max-width:620px;width:100%;box-shadow:0 24px 60px rgba(0,0,0,.3);overflow:hidden;margin-bottom:40px}
-.em-modal-bar{background:#f4f6fa;border-bottom:1px solid #e2e5ec;padding:10px 18px;display:flex;align-items:center;justify-content:space-between}
+.em-modal{background:#fff;border-radius:8px;max-width:1180px;width:96vw;height:94vh;box-shadow:0 24px 60px rgba(0,0,0,.35);overflow:hidden;display:flex;flex-direction:column}
+.em-modal-bar{background:#f4f6fa;border-bottom:1px solid #e2e5ec;padding:10px 18px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .em-modal-bar-lbl{font-size:10.5px;font-weight:800;letter-spacing:.4px;color:#6b7280;text-transform:uppercase}
 .em-close{background:none;border:none;font-size:18px;color:#9ca3af;cursor:pointer;line-height:1;padding:2px 6px;border-radius:6px}
 .em-close:hover{background:#e5e7eb;color:#374151}
-.em-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif}
+.ol-ribbon{background:#fff;border-bottom:1px solid #e1dfdd;padding:10px 22px;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.ol-ribbon i{font-size:15px;color:#605e5c}
+.ol-ribbon-title{font-size:13px;font-weight:600;color:#252423;margin-right:14px}
+.ol-ribbon-btn{font-size:11.5px;color:#252423;display:flex;align-items:center;gap:5px;padding:5px 9px;border-radius:4px}
+.ol-ribbon-btn:hover{background:#f3f2f1}
+.ol-meta{background:#fff;padding:14px 22px;flex-shrink:0}
+.ol-subject{font-size:19px;font-weight:600;color:#252423;margin-bottom:10px}
+.ol-meta-row{display:flex;align-items:flex-start;gap:10px;padding:3px 0}
+.ol-avatar{width:34px;height:34px;border-radius:50%;background:#1a3a6b;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.ol-meta-text{font-size:12.5px;color:#252423;line-height:1.5}
+.ol-meta-text b{font-weight:600}
+.ol-meta-text .ol-sub{color:#605e5c;font-size:11.5px}
+.ol-meta-time{margin-left:auto;font-size:11px;color:#605e5c;flex-shrink:0;padding-top:2px}
+.em-scroll{flex:1;overflow-y:auto;background:#fff;border-top:1px solid #f3f2f1}
+.em-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;max-width:760px;margin:0 auto}
 .em-head{background:#1a3a6b;padding:22px 28px;color:#fff}
 .em-head-brand{font-size:11px;font-weight:800;letter-spacing:.6px;opacity:.85;margin-bottom:8px}
 .em-head-title{font-size:18px;font-weight:800;margin-bottom:4px}
@@ -298,6 +312,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .em-links{display:flex;gap:10px}
 .em-link-btn{flex:1;text-align:center;background:#1a3a6b;color:#fff;font-size:12px;font-weight:700;padding:11px 14px;border-radius:9px;text-decoration:none}
 .em-link-btn.alt{background:#fff;border:1px solid #d6dce8;color:#1a3a6b}
+.em-link-btn.report{background:#166534}
 .em-foot{padding:16px 28px;font-size:10.5px;color:#9ca3af;text-align:center;background:#f8f9fb}
 </style>
 </head>
@@ -1527,6 +1542,9 @@ function openEmailPreview() {
     <div class="em-sec">
       <div class="em-sec-lbl">Game</div>
       <div class="em-game-row"><span>Reviewed by <b>Bridget Ng</b> &nbsp;·&nbsp; Second-checked by <b>Daniel Foley</b></span><span>#1022600050</span></div>
+      <div class="em-links" style="margin-top:10px">
+        <a class="em-link-btn report" href="second-check.html">Open second check report in BRS</a>
+      </div>
     </div>
     <div class="em-sec">
       <div class="em-sec-lbl">Your last 10 games</div>
@@ -1567,7 +1585,26 @@ function closeEmailPreview(e) {
       <span class="em-modal-bar-lbl">Email preview — second check notification (temporary)</span>
       <button class="em-close" onclick="closeEmailPreview()">&times;</button>
     </div>
-    <div class="em-body" id="em-body-content"></div>
+    <div class="ol-ribbon">
+      <span class="ol-ribbon-title">Outlook</span>
+      <span class="ol-ribbon-btn"><i class="ti ti-arrow-back-up"></i>Reply</span>
+      <span class="ol-ribbon-btn"><i class="ti ti-arrow-forward-up"></i>Forward</span>
+      <span class="ol-ribbon-btn"><i class="ti ti-archive"></i>Archive</span>
+      <span class="ol-ribbon-btn"><i class="ti ti-trash"></i>Delete</span>
+      <span class="ol-ribbon-btn"><i class="ti ti-flag"></i>Flag</span>
+    </div>
+    <div class="ol-meta">
+      <div class="ol-subject">Your second check is back — Toronto Tempo @ Chicago Sky</div>
+      <div class="ol-meta-row">
+        <div class="ol-avatar">BRS</div>
+        <div class="ol-meta-text">
+          <div><b>Bridget Review System</b> &lt;noreply@bridgetreview.com&gt;</div>
+          <div class="ol-sub">To: Bridget Ng</div>
+        </div>
+        <div class="ol-meta-time">Fri 5/29/2026 9:14 AM</div>
+      </div>
+    </div>
+    <div class="em-scroll"><div class="em-body" id="em-body-content"></div></div>
   </div>
 </div>
 
