@@ -1228,7 +1228,12 @@ function openPoss(id) {
 function selectEvent(evtId, poss, ev) {
   selectedEvtId = evtId; selectedInfRow = null;
   currentPoss = poss; currentEv = ev;
-  if (ev.type==='whistle') {
+  if (ev.type==='whistle' && (ev.foulType||ev.label)==='Foul: Shooting') {
+    infractionRows = [{type:'Foul: Shooting', player:'Key, Tiffany (22) — Tempo', opponent:'Diggins, Skylar (4) — Sky',
+      official:REFS[1], location:'Trail', rating:'No Infraction', observability:'Observable',
+      prefill:{infrType:'Foul: Shooting', playType:'Driving Shot Attempt', subPlayType:'Arm Shooting Motion', player:'Key, Tiffany (22) — Tempo', opponent:'Diggins, Skylar (4) — Sky', rating:'No Infraction', observability:'Observable',
+        comment:'Key (TOR) swipes down and initiates illegal contact with Diggins\' (CHI) arm, which affects their shot attempt'}}];
+  } else if (ev.type==='whistle') {
     infractionRows = [{type:ev.foulType||ev.label, player:ev.player||(poss.team==='TOR'?TOR_P[0]:CHI_P[0]),
       opponent:poss.team==='TOR'?CHI_P[0]:TOR_P[0], official:REFS[0], location:'Lead', rating:'Called', observability:'Observable'}];
   } else if (ev.prefill && ev.prefill.isDeadBall) {
