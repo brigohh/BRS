@@ -30,6 +30,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 /* PAGE */
 .page{flex:1;overflow-y:auto;padding:36px 48px 40px}
 
+/* WEEKLY SCHEDULE */
+.sched{margin-bottom:32px}
+.sched-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.sched-row{display:flex;gap:14px}
+.sched-card{flex:1;background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;position:relative;overflow:hidden}
+.sched-card.empty{align-items:center;justify-content:center;color:#9ca3af;font-size:11.5px;font-weight:500;background:#fafafa;border-style:dashed}
+.sched-card-accent{position:absolute;top:0;left:0;right:0;height:4px;background:#1a3a6b}
+.sched-date{font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.4px}
+.sched-teams{font-size:15px;font-weight:800;color:#111827}
+.sched-meta{display:flex;align-items:center;gap:6px;font-size:11px;color:#6b7280}
+.sched-meta i{font-size:12px}
+.sched-badge{align-self:flex-start;font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px}
+.sched-badge.upcoming{background:#dbeafe;color:#1e40af}
+.sched-badge.today{background:#fee2e2;color:#b91c1c}
+
 /* HERO */
 .hero{margin-bottom:32px}
 .hero-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#9ca3af;margin-bottom:6px}
@@ -148,6 +163,40 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
           <div class="hero-stat-n">5</div>
           <div class="hero-stat-l">Playlists</div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEKLY SCHEDULE -->
+  <div class="sched">
+    <div class="sched-hdr">
+      <div class="section-lbl" style="margin-bottom:0">This Week's Games</div>
+      <div style="font-size:11px;color:#9ca3af;font-weight:600">Jun 29 – Jul 5</div>
+    </div>
+    <div class="sched-row">
+      <div class="sched-card">
+        <div class="sched-card-accent"></div>
+        <div class="sched-badge today">Today</div>
+        <div class="sched-date">Mon, Jun 30 · 7:00 PM ET</div>
+        <div class="sched-teams">TOR @ CHI</div>
+        <div class="sched-meta"><i class="ti ti-map-pin"></i> Wintrust Arena</div>
+        <div class="sched-meta"><i class="ti ti-users"></i> G. Perrymond, C. Chang, K. Fahy</div>
+      </div>
+      <div class="sched-card">
+        <div class="sched-card-accent" style="background:#7c3aed"></div>
+        <div class="sched-badge upcoming">Upcoming</div>
+        <div class="sched-date">Wed, Jul 2 · 8:00 PM ET</div>
+        <div class="sched-teams">ATL @ NYL</div>
+        <div class="sched-meta"><i class="ti ti-map-pin"></i> Barclays Center</div>
+        <div class="sched-meta"><i class="ti ti-users"></i> T. Grady, M. Abdenour</div>
+      </div>
+      <div class="sched-card">
+        <div class="sched-card-accent" style="background:#0d9488"></div>
+        <div class="sched-badge upcoming">Upcoming</div>
+        <div class="sched-date">Fri, Jul 4 · 9:30 PM ET</div>
+        <div class="sched-teams">GSV @ LVA</div>
+        <div class="sched-meta"><i class="ti ti-map-pin"></i> Michelob Ultra Arena</div>
+        <div class="sched-meta"><i class="ti ti-users"></i> D. Foley, C. Oakley Jr.</div>
       </div>
     </div>
   </div>
