@@ -1525,9 +1525,10 @@ document.querySelectorAll('.st').forEach(t => {
 });
 
 buildSidebar();
-// select first play
-const firstRow = document.querySelector('.sb-row');
-if (firstRow) selectPlay(0, firstRow);
+// select default play: first critical overturn (Q1 06:46)
+const defaultIdx = PLAYS.findIndex(p => p.id === 1);
+const defaultRow = document.querySelector('.sb-row[data-id="1"]') || document.querySelector('.sb-row');
+if (defaultRow) selectPlay(defaultIdx >= 0 ? defaultIdx : 0, defaultRow);
 const _view = new URLSearchParams(location.search).get('view');
 if (_view) {
   const _el = document.querySelector('.st[data-view="' + _view + '"]');
