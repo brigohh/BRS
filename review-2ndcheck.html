@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GRS — Review (2nd Check)</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;color:#111827;background:linear-gradient(180deg,#f6f7fa 0%,#eef0f5 100%);height:100vh;overflow:hidden}
+.page{height:100vh;display:flex;flex-direction:column;overflow:hidden}
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#d4d8e0;border-radius:8px}
+::-webkit-scrollbar-thumb:hover{background:#b8bdc8}
+.nav{background:#1a3a6b;height:48px;display:flex;align-items:center;padding:0 24px;flex-shrink:0;overflow:visible;position:relative;z-index:300;box-shadow:0 1px 0 rgba(0,0,0,.12)}
+.nav-logo{display:flex;align-items:center;gap:8px}
+.nav-brand{color:rgba(255,255,255,.9);font-size:11.5px;font-weight:600;white-space:nowrap;letter-spacing:.5px}
+.nav-whats-new{display:inline-flex;align-items:center;gap:4px;background:rgba(247,184,208,.18);border:1px solid rgba(247,184,208,.55);color:#f7b8d0;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:3px 9px 3px 8px;border-radius:20px;cursor:pointer;white-space:nowrap;margin-left:8px;transition:background .15s,color .15s}
+.nav-whats-new:hover{background:#f7b8d0;color:#1a3a6b}
+.nav-links{display:flex;margin-left:auto;flex-shrink:0;flex-wrap:nowrap;align-items:center}
+.nl{color:rgba(255,255,255,.55);font-size:10.5px;padding:0 8px;cursor:pointer;font-weight:500;height:48px;display:flex;align-items:center;border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0;transition:color .15s}
+.nl:hover{color:#fff}
+.nl.on{color:#fff;border-bottom-color:#fff;font-weight:600}
+.nav-av{width:30px;height:30px;border-radius:50%;background:#2d5aa0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;flex-shrink:0;margin-left:12px}
+.nav-dropdown{position:relative;display:flex;align-items:center;height:48px}
+.nav-dropdown .nl{gap:4px}
+.nav-dd-caret{font-size:8px;opacity:.7;transition:transform .15s}
+.nav-dropdown.open .nav-dd-caret{transform:rotate(180deg)}
+.nav-dd-menu{display:none;position:absolute;top:44px;right:0;background:#fff;border:1px solid #e9ebf0;border-radius:10px;box-shadow:0 12px 28px rgba(16,24,48,.18);min-width:170px;z-index:400;padding:5px 0}
+.nav-dropdown.open .nav-dd-menu{display:block}
+.nav-dd-item{display:block;padding:9px 16px;font-size:11px;font-weight:500;color:#374151;text-decoration:none;white-space:nowrap;cursor:pointer;transition:background .12s}
+.nav-dd-item:hover{background:#f1f4fa;color:#1a3a6b}
+.subnav{background:#fff;border-bottom:1px solid #e9ebf0;height:40px;display:flex;padding:0 20px;flex-shrink:0}
+.st{padding:0 14px;font-size:12px;font-weight:500;color:#6b7280;cursor:pointer;display:flex;align-items:center;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:color .15s}
+.st.on{color:#1a3a6b;border-bottom-color:#1a3a6b;font-weight:700}
+.st:hover:not(.on){color:#111827}
+.game-hdr{background:#fff;border-bottom:1px solid #e9ebf0;padding:7px 20px;display:flex;align-items:center;gap:14px;flex-shrink:0}
+.gh-title{font-size:12.5px;font-weight:700;display:flex;align-items:center;gap:4px;flex-wrap:nowrap;white-space:nowrap}
+.gh-date{font-size:10.5px;color:#6b7280;margin-top:1px}
+.gh-sep{width:1px;height:24px;background:#e9ebf0}
+.stats{display:flex;gap:7px}
+.stat{padding:4px 11px;border-radius:8px;text-align:center;min-width:48px}
+.sn{font-size:14px;font-weight:700;line-height:1}
+.sl{font-size:9.5px;line-height:1.3;margin-top:2px;font-weight:600}
+.s-g{background:#e3f9ea;color:#15803d}
+.s-r{background:#fde8e8;color:#b91c1c}
+.s-t{background:#fef3c7;color:#92400e}
+.gh-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.sc-mode-badge{background:#7c3aed;color:#fff;font-size:10px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:.3px}
+
+/* MAIN */
+.main{flex:1;display:flex;min-height:0;overflow:hidden;padding:14px 32px 0;gap:14px}
+.main-right{flex:1;display:flex;flex-direction:column;overflow:hidden;gap:0}
+.main-bottom{flex:1;display:flex;gap:14px;overflow:hidden;padding:0 0 14px 0;min-height:0}
+
+/* LEFT PANEL — 2nd check: wider to fit rating badges */
+.lp{width:272px;flex-shrink:0;background:#fff;border:1px solid #e9ebf0;border-radius:13px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 1px 3px rgba(17,24,39,.05)}
+.lp-filterbar{padding:9px 11px;border-bottom:1px solid #f0f1f4;display:flex;align-items:center;gap:5px;flex-shrink:0;flex-wrap:wrap}
+.q-tog{padding:3px 8px;font-size:11px;border:1px solid #d8dce3;border-radius:6px;background:#fff;color:#374151;cursor:pointer;font-weight:600;transition:background .12s}
+.q-tog:hover{background:#f6f7fa}
+.q-tog.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
+.poss-list{flex:1;overflow-y:auto}
+.poss-item{border-bottom:1px solid #f4f5f7}
+.poss-hdr{padding:7px 10px;display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:#374151;background:#fafbfc;user-select:none}
+.poss-num{color:#9ca3af;font-size:10px;font-weight:600;min-width:14px}
+.poss-team{color:#1a3a6b;font-weight:700}
+.poss-time{flex:1;color:#374151}
+.poss-events{padding:2px 0}
+/* Flagged event rows in 2nd check queue */
+.sc-ev-row{padding:7px 10px 7px 16px;cursor:pointer;border-left:3px solid transparent;transition:background .12s,border-color .12s;border-bottom:1px solid #f9fafb}
+.sc-ev-row:hover{background:#f5f7ff;border-left-color:#a5b4fc}
+.sc-ev-row.sel{background:#eff6ff;border-left-color:#1a3a6b}
+.sc-ev-label{font-size:11.5px;font-weight:600;color:#374151;margin-bottom:4px;display:flex;align-items:center;gap:5px}
+.sc-ev-label .ev-time{font-size:10px;color:#9ca3af;font-weight:500}
+.sc-ev-rating-row{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.sc-1p-chip{display:inline-block;font-size:9.5px;font-weight:700;padding:2px 8px;border-radius:10px;white-space:nowrap}
+.chip-inc{background:#fde8e8;color:#991b1b;border:1px solid #fca5a5}
+.chip-pil{background:#fef3c7;color:#92400e;border:1px solid #fde68a}
+.chip-pin{background:#dbeafe;color:#1e40af;border:1px solid #93c5fd}
+.chip-look{background:#f3e8ff;color:#7c3aed;border:1px solid #c4b5fd}
+.chip-cc{background:#d1fae5;color:#065f46;border:1px solid #6ee7b7}
+.sc-1p-rating-txt{font-size:10px;color:#6b7280;font-style:italic}
+.lp-footer{padding:11px;border-top:1px solid #f0f1f4;flex-shrink:0}
+.submit-sc-btn{width:100%;padding:9px;background:#7c3aed;color:#fff;border:none;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.4px;transition:background .15s,box-shadow .15s}
+.submit-sc-btn:hover{background:#6d28d9;box-shadow:0 4px 12px rgba(124,58,237,.3)}
+
+/* INFRACTION TABLE */
+.inf-table-outer{display:flex;align-items:flex-start;gap:9px;margin:0 0 10px}
+.inf-table-wrap{flex:1;min-width:0;border:1px solid #e9ebf0;border-radius:13px;background:#fff;overflow:hidden;box-shadow:0 1px 3px rgba(17,24,39,.05)}
+.inf-tbl{width:100%;border-collapse:collapse;font-size:11.5px;table-layout:fixed}
+.inf-tbl th{padding:6px 11px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.4px;color:#9ca3af;background:#fafbfc;border-bottom:1px solid #eceef2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.inf-tbl th:first-child{border-radius:13px 0 0 0}
+.inf-tbl th:last-child{border-radius:0 13px 0 0}
+.inf-tbl td{padding:6px 11px;border-bottom:1px solid #f4f5f7;vertical-align:middle;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transition:background .12s}
+.inf-tbl tbody tr:last-child td{border-bottom:none}
+.inf-tbl tbody tr:hover td{background:#fafbfc}
+.inf-tbl tbody tr.inf-sel td{background:#1a3a6b;color:#fff}
+.inf-tbl tbody tr.inf-sel td .rating-chip{background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.3)}
+.rating-chip{display:inline-block;padding:1px 8px;border-radius:10px;font-size:10px;font-weight:600;background:#f3f4f6;color:#374151;border:1px solid #e5e7eb;white-space:nowrap}
+.inf-side-btns{display:flex;flex-direction:column;gap:6px;flex-shrink:0;padding-top:1px}
+.inf-add-btn{padding:5px 11px;background:#1a3a6b;color:#fff;border:none;border-radius:7px;font-size:10.5px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .15s}
+.inf-add-btn:hover{background:#15306e}
+
+/* CENTER PANEL */
+.cp{flex:1 1 0;min-width:0;display:flex;flex-direction:column;overflow:hidden;background:#fff;border:1px solid #e9ebf0;border-radius:13px;box-shadow:0 1px 3px rgba(17,24,39,.05)}
+.cp-empty{flex:1;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-size:13px;font-style:italic}
+.rating-form{flex-shrink:0;border-bottom:1px solid #eceef2;background:#fafbfc;margin-top:6px;overflow:hidden}
+.rf-inner{display:grid;grid-template-columns:1fr 160px;overflow:hidden}
+.rf-left{padding:16px 18px 16px 26px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.rf-right-col{padding:16px 18px 16px 14px;border-left:1px solid #eceef2;display:flex;flex-direction:column;gap:8px;background:#fafbfc}
+.rf-row{display:flex;align-items:center;gap:10px}
+.rf-label{font-size:10.5px;font-weight:600;color:#6b7280;min-width:110px;flex-shrink:0}
+.rf-clock{padding:4px 10px;border:1px solid #d8dce3;border-radius:7px;font-size:12px;font-weight:700;color:#111827;background:#fff;width:80px;text-align:center}
+.rf-checks{display:flex;gap:8px;flex-wrap:wrap}
+.rf-check{display:flex;align-items:center;gap:4px;font-size:11px;color:#374151;cursor:pointer}
+.rf-check input{width:13px;height:13px;cursor:pointer;accent-color:#1a3a6b}
+.btn-group{display:flex;gap:6px;flex:1}
+.ref-btn,.loc-btn{flex:1;text-align:center;padding:6px 4px;border:1px solid #d8dce3;border-radius:7px;font-size:10.5px;cursor:pointer;background:#fff;color:#374151;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:background .12s,border-color .12s}
+.ref-btn:hover,.loc-btn:hover{background:#f6f7fa}
+.ref-btn.on,.loc-btn.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
+.rf-select{padding:6px 10px;border:1px solid #d8dce3;border-radius:7px;font-size:11.5px;color:#374151;background:#fff;cursor:pointer;transition:border-color .15s,background .15s}
+.rf-select:hover{border-color:#b8bfcc}
+.rf-left .rf-select{flex:1}
+.rf-save-btn{padding:6px 14px;background:#7c3aed;color:#fff;border:none;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:4px;transition:background .15s,box-shadow .15s}
+.rf-save-btn:hover{background:#6d28d9;box-shadow:0 4px 12px rgba(124,58,237,.3)}
+.rf-cancel-btn{padding:6px 10px;border:1px solid #d8dce3;border-radius:7px;font-size:11px;color:#374151;background:#fff;cursor:pointer;transition:background .12s}
+.rf-cancel-btn:hover{background:#f6f7fa}
+
+/* Changed-field highlight */
+.sc-changed{border-color:#d97706 !important;background:#fffbeb !important;box-shadow:0 0 0 2px rgba(217,119,6,.18) !important}
+.sc-changed-ref{border-color:#d97706 !important;background:#fffbeb !important;color:#92400e !important}
+
+/* Overturn banner */
+.sc-overturn-banner{display:none;background:#7c3aed;color:#fff;font-size:11.5px;font-weight:700;padding:7px 16px;border-radius:8px;align-items:center;gap:7px;margin-bottom:10px;flex-shrink:0}
+.sc-overturn-banner.show{display:flex}
+.sc-overturn-banner i{font-size:14px}
+
+/* Comment + notes section */
+.comment-section{flex:1;overflow:hidden;padding:14px 16px;display:flex;flex-direction:column;gap:11px}
+.comment-tmpl-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.tmpl-lbl{font-size:10.5px;font-weight:600;color:#6b7280;white-space:nowrap}
+.tmpl-btn{padding:4px 11px;border:1px solid #d8dce3;border-radius:7px;font-size:11px;cursor:pointer;background:#fff;color:#374151;font-weight:500;display:inline-flex;align-items:center;gap:3px;transition:background .12s}
+.tmpl-btn:hover{background:#f6f7fa}
+.comment-lbl{font-size:10.5px;font-weight:700;color:#374151;letter-spacing:.3px}
+.comment-lbl.sc{color:#7c3aed}
+.comment-ta{width:100%;border:1px solid #d8dce3;border-radius:9px;padding:9px 11px;font-size:12px;color:#374151;background:#fff;resize:none;font-family:inherit;line-height:1.5;transition:border-color .12s,box-shadow .12s}
+.comment-ta:focus{outline:none;border-color:#1a3a6b;box-shadow:0 0 0 3px rgba(26,58,107,.1)}
+.sc-notes-ta{border-color:#e9d5ff}
+.sc-notes-ta:focus{border-color:#7c3aed;box-shadow:0 0 0 3px rgba(124,58,237,.12)}
+
+/* 1st pass read-only banner in form */
+.sc-1p-banner{background:#faf5ff;border:1px solid #e9d5ff;border-radius:9px;padding:8px 14px;margin-bottom:-4px;flex-shrink:0;display:flex;align-items:flex-start;gap:8px}
+.sc-1p-banner-lbl{font-size:9.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#7c3aed;margin-bottom:4px}
+.sc-1p-banner-vals{font-size:11px;color:#4b5563;line-height:1.6}
+.sc-1p-banner-vals strong{color:#111827}
+
+/* RIGHT PANEL */
+.rp-col{flex:0 0 42%;max-width:42%;display:flex;flex-direction:column;gap:11px;min-height:0}
+.rp{flex-shrink:0;background:#fff;display:flex;flex-direction:column;border:1px solid #e9ebf0;border-radius:13px;overflow:hidden;min-height:0;box-shadow:0 1px 3px rgba(17,24,39,.05)}
+.rp-box{padding:9px 11px;border-bottom:1px solid #f4f5f7;flex-shrink:0;background:#fff}
+.rp-lbl{font-size:10px;color:#9ca3af;font-weight:700;margin-bottom:3px;display:flex;align-items:center;gap:5px}
+.rp-lbl i{font-size:13px}
+.rp-val{font-size:11px;color:#6b7280;font-style:italic;line-height:1.5}
+.vid-area{background:#0e1320;padding:7px 7px 0;flex-shrink:0}
+.vid-frame{width:100%;aspect-ratio:16/9;background:#1a1f2e;border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.vid-ph{display:flex;flex-direction:column;align-items:center;gap:6px}
+.vid-ph i{font-size:28px;color:#374151}
+.vid-ph span{font-size:11px;color:#4b5563}
+.ang-row{display:flex;gap:4px;padding:7px 11px;background:#fff;border-bottom:1px solid #f4f5f7;overflow-x:auto;flex-shrink:0}
+.ang{padding:3px 8px;font-size:10px;border:1px solid #e9ebf0;background:#fafbfc;color:#6b7280;cursor:pointer;border-radius:5px;white-space:nowrap;flex-shrink:0;font-weight:500;transition:background .12s}
+.ang:hover{color:#374151;border-color:#d1d5db;background:#f1f3f7}
+.ang.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
+.vid-ctrl{padding:7px 11px;border-bottom:1px solid #f4f5f7;display:flex;align-items:center;gap:6px;flex-shrink:0;background:#fff}
+.vcb{background:none;border:none;color:#9ca3af;cursor:pointer;font-size:15px;display:flex;align-items:center}
+.vcb:hover{color:#111827}
+.vtrack{flex:1;height:4px;background:#e9ebf0;border-radius:3px;position:relative}
+.vfill{width:22%;height:100%;background:#1a3a6b;border-radius:3px}
+.vhead{width:11px;height:11px;background:#1a3a6b;border-radius:50%;position:absolute;right:-5px;top:-4px;border:2px solid #fff;box-shadow:0 0 0 1px #1a3a6b}
+.vtime{color:#9ca3af;font-size:11px;min-width:80px;text-align:right}
+.clip-bar{padding:7px 11px;border-bottom:1px solid #f4f5f7;display:flex;gap:6px;align-items:center;flex-shrink:0;background:#fafbfc}
+.clip-btn{padding:5px 11px;background:#7c3aed;color:#fff;border:none;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:4px;transition:background .15s}
+.clip-btn:hover{background:#6d28d9}
+
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:11px 22px;border-radius:11px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:7px;opacity:0;transition:opacity .18s;z-index:60;white-space:nowrap;pointer-events:none;background:#7c3aed;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.22)}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- NAV -->
+<div class="nav">
+  <div class="nav-logo" onclick="location='home.html'" style="cursor:pointer">
+    <img src="Logos/nba-logo.svg" style="width:16px;height:auto">
+    <div class="nav-brand">BRIDGET REVIEW SYSTEM 1.0</div>
+    <span class="nav-whats-new" onclick="event.stopPropagation();location='whats-new.html'"><i class="ti ti-sparkles" style="font-size:10px"></i> What's New</span>
+  </div>
+  <div class="nav-links">
+    <span class="nl" onclick="location='home.html'">HOME</span>
+    <span class="nl" onclick="location='published-games.html'">PUBLISHED GAMES</span>
+    <div class="nav-dropdown" id="rim-dropdown">
+      <span class="nl" onclick="location='rim.html'">RIM</span>
+    </div>
+    <span class="nl on">RM REVIEW</span>
+    <span class="nl">FINAL L2M REVIEW</span>
+    <span class="nl">INDEPENDENT REVIEW</span>
+    <span class="nl">ADMINISTRATION</span>
+    <div class="nav-dropdown" id="nav-dropdown">
+      <span class="nl" onclick="toggleNavDropdown(event)">REVIEWER RESOURCE <span class="nav-dd-caret">&#9662;</span></span>
+      <div class="nav-dd-menu">
+        <span class="nav-dd-item" onclick="location='comment-library.html'">Comment Library</span>
+      </div>
+    </div>
+    <span class="nl">MY SCHEDULE</span>
+    <div class="nav-av">TG</div>
+  </div>
+</div>
+
+<!-- SUBNAV -->
+<div class="subnav">
+  <span class="st" onclick="location='review.html'">Review (1st Pass)</span>
+  <span class="st on" onclick="location='review-2ndcheck.html'">Review (2nd Check)</span>
+  <span class="st" onclick="location='second-check.html?view=ocr'">OCR</span>
+  <span class="st" onclick="location='second-check.html?view=important'">Important Calls</span>
+  <span class="st" onclick="location='second-check.html'">Second Check</span>
+  <span class="st" onclick="location='second-check.html?view=ptiw'">PTIW</span>
+  <span class="st" onclick="location='second-check.html?view=oiw'">OIW</span>
+</div>
+
+<!-- GAME HEADER -->
+<div class="game-hdr">
+  <div>
+    <div class="gh-title">
+      <span style="display:inline-flex;align-items:center;gap:5px">
+        <img src="Logos/toronto tempo logo.jpg" style="width:20px;height:20px;object-fit:contain" onerror="this.style.display='none'">
+        TOR (111)
+      </span>
+      <span style="color:#9ca3af;margin:0 6px">@</span>
+      <span style="display:inline-flex;align-items:center;gap:5px">
+        <img src="Logos/chicago sky logo.png" style="width:20px;height:20px;object-fit:contain" onerror="this.style.display='none'">
+        CHI (104)
+      </span>
+    </div>
+    <div class="gh-date">Wednesday, May 27, 2026 &nbsp;&middot;&nbsp; 8:00 PM &nbsp;&middot;&nbsp; #1022600050 &nbsp;&middot;&nbsp; 1st Pass: Bridget Ng</div>
+  </div>
+  <div class="gh-sep"></div>
+  <div class="stats">
+    <div class="stat s-r"><div class="sn">5</div><div class="sl">INC Calls</div></div>
+    <div class="stat s-t"><div class="sn">3</div><div class="sl">PIL Events</div></div>
+    <div class="stat s-g"><div class="sn">1</div><div class="sl">CC + Look</div></div>
+  </div>
+  <div class="gh-right">
+    <div class="sc-mode-badge"><i class="ti ti-eye-check" style="font-size:11px"></i> &nbsp;Second Check Mode</div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- LEFT PANEL -->
+  <div class="lp">
+    <div class="lp-filterbar">
+      <button class="q-tog on" id="qtog-Q1" onclick="filterQ('Q1',this)">Q1</button>
+      <button class="q-tog" id="qtog-Q2" onclick="filterQ('Q2',this)">Q2</button>
+      <button class="q-tog" id="qtog-Q3" onclick="filterQ('Q3',this)">Q3</button>
+      <button class="q-tog" id="qtog-Q4" onclick="filterQ('Q4',this)">Q4</button>
+    </div>
+    <div class="poss-list" id="poss-list"></div>
+    <div class="lp-footer">
+      <button class="submit-sc-btn" onclick="toast('Second check submitted')">Submit 2nd Check</button>
+    </div>
+  </div>
+
+  <!-- MAIN RIGHT -->
+  <div class="main-right">
+    <div id="inf-table-wrap" style="display:none">
+      <div class="inf-table-outer">
+        <div class="inf-table-wrap">
+          <table class="inf-tbl" id="inf-tbl">
+            <colgroup>
+              <col style="width:18%"><col style="width:17%"><col style="width:17%"><col style="width:14%"><col style="width:9%"><col style="width:16%"><col style="width:9%">
+            </colgroup>
+            <thead><tr>
+              <th>Infraction Type</th><th>Player</th><th>Opponent</th><th>Official</th><th>Location</th><th>Infraction Rating</th><th>Observability</th>
+            </tr></thead>
+            <tbody id="inf-tbody"></tbody>
+          </table>
+        </div>
+        <div class="inf-side-btns">
+          <button class="inf-add-btn" onclick="addRow()">+ INFRACTION</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="main-bottom">
+      <!-- CENTER PANEL -->
+      <div class="cp" id="center-panel">
+        <div class="cp-empty" id="cp-empty">Select a flagged event from the queue to second-check</div>
+
+        <div class="rating-form" id="rating-form" style="display:none">
+          <div id="sc-overturn-banner" class="sc-overturn-banner">
+            <i class="ti ti-arrow-badge-up"></i> OVERTURN — 2nd check rating differs from 1st pass
+          </div>
+          <div class="rf-inner">
+            <div class="rf-left">
+              <div class="rf-row">
+                <span class="rf-label">Game Clock:</span>
+                <input class="rf-clock" id="rf-clock" value="—" readonly>
+              </div>
+              <div class="rf-row">
+                <span class="rf-label">Responsible Ref:</span>
+                <div class="btn-group" id="ref-btn-group">
+                  <button class="ref-btn" onclick="selectRef(this)">Genesis Perrymond (8)</button>
+                  <button class="ref-btn" onclick="selectRef(this)">Catherine Chang (23)</button>
+                  <button class="ref-btn" onclick="selectRef(this)">Kevin Fahy (86)</button>
+                </div>
+              </div>
+              <div class="rf-row">
+                <span class="rf-label">Ref. Location:</span>
+                <div class="btn-group" id="loc-btn-group">
+                  <button class="loc-btn" onclick="selectLocation(this)">Lead</button>
+                  <button class="loc-btn" onclick="selectLocation(this)">Trail</button>
+                  <button class="loc-btn" onclick="selectLocation(this)">Slot</button>
+                </div>
+              </div>
+              <div class="rf-row">
+                <span class="rf-label">Infraction Type:</span>
+                <select class="rf-select" id="rf-infraction-type" onchange="checkChanged()">
+                  <option>-- select --</option>
+                  <optgroup label="Fouls">
+                    <option>Foul: Away from Play</option><option>Foul: Defense 3 Second</option>
+                    <option>Foul: Loose Ball</option><option>Foul: Offensive</option>
+                    <option>Foul: Personal</option><option>Foul: Shooting</option>
+                    <option>Foul: Transition Take Foul</option>
+                  </optgroup>
+                  <optgroup label="Stoppages">
+                    <option>Stoppage: Inadvertent Whistle</option><option>Stoppage: Out-of-Bounds</option>
+                  </optgroup>
+                  <optgroup label="Turnovers">
+                    <option>Turnover: Lost Ball Out of Bounds</option><option>Turnover: Out of Bounds</option>
+                    <option>Turnover: Traveling</option>
+                  </optgroup>
+                  <optgroup label="Violations">
+                    <option>Violation: Defensive Goaltending</option>
+                  </optgroup>
+                </select>
+              </div>
+              <div class="rf-row">
+                <span class="rf-label">Play Type:</span>
+                <select class="rf-select" id="rf-play-type" onchange="checkChanged()">
+                  <option>-- select --</option>
+                </select>
+              </div>
+              <div class="rf-row">
+                <span class="rf-label">Sub Play Type:</span>
+                <select class="rf-select" id="rf-sub-play-type" onchange="checkChanged()">
+                  <option>-- select --</option>
+                </select>
+              </div>
+              <div class="rf-row">
+                <span class="rf-label">Role:</span>
+                <select class="rf-select" id="rf-role-select" onchange="checkChanged()">
+                  <option>-- select --</option>
+                  <option>Def Player 1 (Primary)</option>
+                  <option>Def Player 2 (Secondary)</option>
+                  <option>Off Player 1 (Ball Handler)</option>
+                  <option>Off Player 2 (Screener/Cutter)</option>
+                </select>
+              </div>
+              <div class="rf-row">
+                <span class="rf-label">Player:</span>
+                <select class="rf-select" id="rf-player" onchange="checkChanged()">
+                  <option>-- select --</option>
+                </select>
+              </div>
+              <div class="rf-row">
+                <span class="rf-label">Opponent:</span>
+                <select class="rf-select" id="rf-opponent" onchange="checkChanged()">
+                  <option>-- select --</option>
+                </select>
+              </div>
+              <div class="rf-row">
+                <span class="rf-label">Rating:</span>
+                <select class="rf-select" id="rf-rating" onchange="checkChanged()">
+                  <option value="">-- select --</option>
+                  <optgroup label="Infraction Rating">
+                    <option>Infraction</option>
+                    <option>Judgement - Lean Infraction</option>
+                    <option>Judgement - Lean No</option>
+                    <option>No Infraction</option>
+                  </optgroup>
+                  <optgroup label="Assessment Rating">
+                    <option>Personal Foul Assessment</option>
+                    <option>Shooting Foul Assessment</option>
+                    <option>Wrong Player Assessment</option>
+                    <option>Block-Charge Assessment</option>
+                  </optgroup>
+                </select>
+              </div>
+              <div class="rf-row">
+                <span class="rf-label">Observability:</span>
+                <select class="rf-select" id="rf-observability" onchange="checkChanged()">
+                  <option>Observable</option><option>Difficult</option><option>Very Difficult</option>
+                </select>
+              </div>
+            </div>
+            <div class="rf-right-col">
+              <div style="font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;margin-bottom:2px">FLAGS</div>
+              <div class="rf-checks" style="flex-direction:column;gap:6px">
+                <label class="rf-check"><input type="checkbox" id="chk-called"> Called</label>
+                <label class="rf-check"><input type="checkbox" id="chk-ptiw"> PTIW</label>
+                <label class="rf-check"><input type="checkbox" id="chk-look"> Look</label>
+                <label class="rf-check"><input type="checkbox" id="chk-ogr"> OGR</label>
+                <label class="rf-check"><input type="checkbox" id="chk-poe"> POE</label>
+              </div>
+              <div style="border-top:1px solid #e5e7eb;margin:4px 0"></div>
+              <div style="display:flex;flex-direction:column;gap:5px;margin-top:auto">
+                <button class="rf-save-btn" onclick="saveRating()" style="width:100%;justify-content:center">Save</button>
+                <button class="rf-cancel-btn" onclick="cancelRating()" style="width:100%;justify-content:center">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div><!-- /.rating-form -->
+
+        <div class="comment-section" id="comment-section" style="display:none">
+          <div>
+            <div class="comment-lbl" style="margin-bottom:5px">1st Pass Comment <span style="font-size:9.5px;color:#9ca3af;font-weight:500">(read-only)</span></div>
+            <textarea class="comment-ta" id="comment-1p" rows="2" readonly style="background:#f9fafb;color:#6b7280;resize:none"></textarea>
+          </div>
+          <div>
+            <div class="comment-lbl" style="margin-bottom:5px">2nd Check Comment</div>
+            <textarea class="comment-ta" id="comment-2p" rows="3" placeholder="Enter 2nd check comment here…"></textarea>
+          </div>
+          <div>
+            <div class="comment-lbl sc" style="margin-bottom:5px"><i class="ti ti-eye-check" style="font-size:12px"></i> 2nd Check Notes <span style="font-size:9.5px;color:#9ca3af;font-weight:500">(internal)</span></div>
+            <textarea class="comment-ta sc-notes-ta" id="sc-notes-ta" rows="3" placeholder="Internal 2nd check notes — not visible to first-pass reviewer…"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT PANEL: video -->
+      <div class="rp-col">
+        <div class="rp" style="flex:1">
+          <div class="rp-box" id="rp-desc-box" style="display:none">
+            <div class="rp-lbl"><i class="ti ti-file-description"></i> Play Description</div>
+            <div class="rp-val" id="rp-desc">—</div>
+          </div>
+          <div class="vid-area">
+            <div class="vid-frame">
+              <div class="vid-ph">
+                <i class="ti ti-player-play-filled"></i>
+                <span>No clip loaded</span>
+              </div>
+            </div>
+          </div>
+          <div class="ang-row">
+            <div class="ang on">Broadcast</div>
+            <div class="ang">Lead Cam</div>
+            <div class="ang">Trail Cam</div>
+            <div class="ang">Overhead</div>
+            <div class="ang">SkyCam</div>
+          </div>
+          <div class="vid-ctrl">
+            <button class="vcb"><i class="ti ti-player-skip-back"></i></button>
+            <button class="vcb"><i class="ti ti-player-play"></i></button>
+            <button class="vcb"><i class="ti ti-player-skip-forward"></i></button>
+            <div class="vtrack"><div class="vfill"></div><div class="vhead"></div></div>
+            <div class="vtime">0:06 / 0:28</div>
+          </div>
+          <div class="clip-bar">
+            <button class="clip-btn"><i class="ti ti-video"></i> Load Clip</button>
+            <button class="clip-btn" style="background:#374151"><i class="ti ti-camera"></i> Snapshot</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const REFS = ['Genesis Perrymond (8)','Catherine Chang (23)','Kevin Fahy (86)'];
+const TOR_P = ['N. Sabally (13)','K. Rice (5)','M. Mabrey (4)','T. Key (22)','N. Conde (0)','L. Juskaite (7)','N. Nurse (10)'];
+const CHI_P = ['S. Diggins (4)','K. Cardoso (10)','E. Williams (1)','B. Sykes (6)','T. Cloud (0)','N. Banham (3)','M. Taylor (23)'];
+const ALL_P = [...TOR_P, ...CHI_P];
+
+// PLAY TYPE MAP (simplified for 2nd check)
+const PLAY_TYPES = {
+  'Foul: Offensive': ['Pick - Screener','Pick - Ball Handler','Charge','Carry'],
+  'Foul: Personal': ['On-Ball','Off-Ball','Transition'],
+  'Foul: Shooting': ['Driving Shot Attempt','Jump Shot','Post Move','Layup'],
+  'Foul: Blocking': ['On-Ball Defense','Help Defense'],
+  'Foul: Holding': ['On-Ball','Off-Ball'],
+  'Foul: Pushing': ['On-Ball','Post','Rebounding'],
+  'Turnover: Traveling': ['Gather Step','Pivot','Jump Stop'],
+  'Stoppage: Out-of-Bounds': ['Deflection','Dribble Out'],
+};
+const SUB_PLAY_TYPES = {
+  'Driving Shot Attempt': ['Arm Shooting Motion','Body Contact','Landing Area'],
+  'Jump Shot': ['Landing Area','Body Contact','Arm Shooting Motion'],
+  'Pick - Screener': ['Deliver/Absorb','Moving Screen','Illegal Contact'],
+  'Pick - Ball Handler': ['Arm Bar','Shoulder','Hip'],
+  'On-Ball': ['Drive','Post','Pull-Up'],
+  'Gather Step': ['Hop Step','Euro Step'],
+};
+
+// 1ST PASS SUBMITTED DATA — keyed by event ID
+// isCC: true = correct call/no-call (not in queue). false = appears in queue.
+// queueReason: why it appears ('inc','pil','pin','look')
+const SC_DATA = {
+  'e1-3':  {clock:'09:41.0', infrType:'Foul: Offensive', playType:'Pick - Screener', subPlayType:'Deliver/Absorb', role:'Off Player 2 (Screener/Cutter)', player:'N. Sabally (13)', opponent:'S. Diggins (4)', ref:REFS[1], loc:'Trail', rating:'Infraction', observability:'Observable', flags:{called:false,ptiw:false,look:false,ogr:true,poe:false}, comment:'Sabally (TOR) extends arms into Diggins\' (CHI) path and does not firm up prior to contact — this is an illegal screen, infraction.', notes:'', isCC:false, queueReason:'pil', queueLabel:'PICK'},
+  'e1-8':  {clock:'09:37.9', infrType:'Foul: Shooting', playType:'Driving Shot Attempt', subPlayType:'Arm Shooting Motion', player:'T. Key (22)', opponent:'S. Diggins (4)', ref:REFS[1], loc:'Trail', rating:'No Infraction', observability:'Observable', flags:{called:true,ptiw:false,look:false,ogr:false,poe:false}, comment:'Key (TOR) swipes down on Diggins\' (CHI) arm — contact is incidental and does not affect shooting motion. Call is incorrect.', notes:'', isCC:false, queueReason:'inc', queueLabel:'Foul: Shooting'},
+  'e2-5':  {clock:'09:25.9', infrType:'Foul: Blocking', playType:'On-Ball Defense', subPlayType:'', role:'Def Player 1 (Primary)', player:'K. Cardoso (10)', opponent:'K. Rice (5)', ref:REFS[0], loc:'Lead', rating:'No Infraction', observability:'Difficult', flags:{called:true,ptiw:false,look:false,ogr:false,poe:false}, comment:'Cardoso (CHI) is set in legal position before Rice (TOR) initiates contact. Call is not supported — blocking foul call is incorrect.', notes:'', isCC:false, queueReason:'inc', queueLabel:'Foul: Blocking'},
+  'e3-4':  {clock:'09:16.2', infrType:'Turnover: Traveling', playType:'Gather Step', subPlayType:'Euro Step', role:'Off Player 1 (Ball Handler)', player:'N. Sabally (13)', opponent:'S. Diggins (4)', ref:REFS[0], loc:'Lead', rating:'Judgement - Lean Infraction', observability:'Difficult', flags:{called:false,ptiw:true,look:false,ogr:false,poe:false}, comment:'Sabally (TOR) appears to take three steps without establishing a gather. Lean toward travel — footwork is borderline.', notes:'', isCC:false, queueReason:'pil', queueLabel:'TRAVEL'},
+  'e5-3':  {clock:'08:52.0', infrType:'Foul: Offensive', playType:'Pick - Screener', subPlayType:'Moving Screen', role:'Off Player 2 (Screener/Cutter)', player:'M. Mabrey (4)', opponent:'T. Cloud (0)', ref:REFS[2], loc:'Slot', rating:'Infraction', observability:'Observable', flags:{called:false,ptiw:false,look:false,ogr:false,poe:true}, comment:'Mabrey (TOR) does not stop prior to contact and has clear lateral movement while screening Cloud (CHI). Illegal screen, infraction.', notes:'', isCC:false, queueReason:'pil', queueLabel:'ILLEGAL SCREEN'},
+  'e7-4':  {clock:'08:30.0', infrType:'Turnover: Traveling', playType:'Gather Step', subPlayType:'Hop Step', role:'Off Player 1 (Ball Handler)', player:'T. Key (22)', opponent:'T. Cloud (0)', ref:REFS[0], loc:'Lead', rating:'No Infraction', observability:'Very Difficult', flags:{called:false,ptiw:false,look:true,ogr:false,poe:false}, comment:'Footwork is legal on replay — hop step gathers at the correct point. No infraction.', notes:'', isCC:true, queueReason:'look', queueLabel:'NO DRIBBLE'},
+  'e7-6':  {clock:'08:29.5', infrType:'Foul: Shooting', playType:'Driving Shot Attempt', subPlayType:'Landing Area', player:'M. Mabrey (4)', opponent:'S. Diggins (4)', ref:REFS[1], loc:'Trail', rating:'No Infraction', observability:'Observable', flags:{called:true,ptiw:false,look:false,ogr:false,poe:false}, comment:'Defender lands outside the shooting arc and does not make contact in the landing area. Call is not supported — no infraction.', notes:'', isCC:false, queueReason:'inc', queueLabel:'Foul: Shooting'},
+  'e9-7':  {clock:'07:58.3', infrType:'Foul: Pushing', playType:'Post', subPlayType:'', role:'Def Player 1 (Primary)', player:'K. Rice (5)', opponent:'S. Diggins (4)', ref:REFS[0], loc:'Lead', rating:'Judgement - Lean No', observability:'Difficult', flags:{called:true,ptiw:false,look:false,ogr:false,poe:false}, comment:'Contact at post position is marginal — lean toward no infraction. Body contact is incidental given Diggins\' movement into Rice.', notes:'', isCC:false, queueReason:'inc', queueLabel:'Foul: Pushing'},
+  'e11-6': {clock:'09:42.8', infrType:'Foul: Shooting', playType:'Jump Shot', subPlayType:'Landing Area', player:'N. Conde (0)', opponent:'K. Cardoso (10)', ref:REFS[1], loc:'Trail', rating:'No Infraction', observability:'Observable', flags:{called:true,ptiw:false,look:false,ogr:false,poe:false}, comment:'No contact in the landing area — defender dips underneath but does not affect the shot. Call is not supported.', notes:'', isCC:false, queueReason:'inc', queueLabel:'Foul: Shooting'},
+  'e13-5': {clock:'09:16.0', infrType:'Foul: Blocking', playType:'On-Ball Defense', subPlayType:'', role:'Def Player 1 (Primary)', player:'L. Juskaite (7)', opponent:'S. Diggins (4)', ref:REFS[2], loc:'Slot', rating:'Judgement - Lean No', observability:'Difficult', flags:{called:true,ptiw:false,look:false,ogr:false,poe:false}, comment:'Juskaite (TOR) is marginally off-balance at contact — lean toward blocking call being correct, but this is borderline.', notes:'', isCC:false, queueReason:'inc', queueLabel:'Foul: Blocking'},
+};
+
+// POSSESSIONS (those with flagged events only)
+const POSSESSIONS = [
+  {id:1, q:1, team:'TOR', time:'09:45.0', events:[
+    {id:'e1-3', q:1}, {id:'e1-8', q:1}
+  ]},
+  {id:2, q:1, team:'CHI', time:'09:30.0', events:[
+    {id:'e2-5', q:1}
+  ]},
+  {id:3, q:1, team:'TOR', time:'09:20.0', events:[
+    {id:'e3-4', q:1}
+  ]},
+  {id:5, q:1, team:'TOR', time:'08:55.0', events:[
+    {id:'e5-3', q:1}
+  ]},
+  {id:7, q:1, team:'TOR', time:'08:35.0', events:[
+    {id:'e7-4', q:1}, {id:'e7-6', q:1}
+  ]},
+  {id:9, q:1, team:'TOR', time:'08:05.0', events:[
+    {id:'e9-7', q:1}
+  ]},
+  {id:11, q:2, team:'TOR', time:'09:48.0', events:[
+    {id:'e11-6', q:2}
+  ]},
+  {id:13, q:2, team:'TOR', time:'09:20.0', events:[
+    {id:'e13-5', q:2}
+  ]},
+];
+
+let activeQ = 'Q1';
+let curEvtId = null;
+let orig = {}; // 1st pass values for change detection
+
+function queueReasonChip(r) {
+  if (r === 'inc')  return '<span class="sc-1p-chip chip-inc">INC</span>';
+  if (r === 'pil')  return '<span class="sc-1p-chip chip-pil">PIL</span>';
+  if (r === 'pin')  return '<span class="sc-1p-chip chip-pin">PIN</span>';
+  if (r === 'look') return '<span class="sc-1p-chip chip-look">CC + Look</span>';
+  return '';
+}
+
+function buildQueue() {
+  const qNum = parseInt(activeQ.replace('Q',''));
+  const poss = POSSESSIONS.filter(p => p.q === qNum);
+  const list = document.getElementById('poss-list');
+  if (!poss.length) { list.innerHTML = '<div style="padding:20px 12px;text-align:center;color:#c9ced8;font-size:11px">No flagged events this quarter.</div>'; return; }
+
+  list.innerHTML = poss.map(p => {
+    const evHtml = p.events.map(e => {
+      const d = SC_DATA[e.id];
+      if (!d) return '';
+      return `<div class="sc-ev-row${e.id===curEvtId?' sel':''}" onclick="selectEvent('${e.id}')">
+        <div class="sc-ev-label">
+          <span>${d.queueLabel}</span>
+          <span class="ev-time">${d.clock}</span>
+        </div>
+        <div class="sc-ev-rating-row">
+          ${queueReasonChip(d.queueReason)}
+          <span class="sc-1p-rating-txt">${d.rating}</span>
+        </div>
+      </div>`;
+    }).join('');
+
+    return `<div class="poss-item">
+      <div class="poss-hdr">
+        <span class="poss-num">#${p.id}</span>
+        <span class="poss-team">${p.team}</span>
+        <span class="poss-time">${p.time}</span>
+      </div>
+      <div class="poss-events">${evHtml}</div>
+    </div>`;
+  }).join('');
+}
+
+function filterQ(q, btn) {
+  activeQ = q;
+  document.querySelectorAll('.q-tog').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  buildQueue();
+}
+
+function selectEvent(evtId) {
+  curEvtId = evtId;
+  const d = SC_DATA[evtId];
+  if (!d) return;
+  buildQueue();
+
+  // Show panels
+  document.getElementById('cp-empty').style.display = 'none';
+  document.getElementById('rating-form').style.display = '';
+  document.getElementById('comment-section').style.display = 'flex';
+  document.getElementById('inf-table-wrap').style.display = 'block';
+  document.getElementById('rp-desc-box').style.display = 'block';
+  document.getElementById('rp-desc').textContent = `${d.queueLabel} — ${d.player} vs ${d.opponent} (${d.clock})`;
+
+  // Populate infraction table
+  const tbody = document.getElementById('inf-tbody');
+  tbody.innerHTML = `<tr class="inf-sel" onclick="void(0)">
+    <td>${d.infrType}</td>
+    <td>${d.player}</td>
+    <td>${d.opponent}</td>
+    <td>${d.ref}</td>
+    <td>${d.loc}</td>
+    <td><span class="rating-chip">${d.rating}</span></td>
+    <td>${d.observability}</td>
+  </tr>`;
+
+  // Clock
+  document.getElementById('rf-clock').value = d.clock;
+
+  // Ref buttons
+  document.querySelectorAll('#ref-btn-group .ref-btn').forEach(b => {
+    b.classList.toggle('on', b.textContent.trim() === d.ref);
+  });
+
+  // Loc buttons
+  document.querySelectorAll('#loc-btn-group .loc-btn').forEach(b => {
+    b.classList.toggle('on', b.textContent.trim() === d.loc);
+  });
+
+  // Selects — pre-fill
+  setSelect('rf-infraction-type', d.infrType);
+  updatePlayTypes(d.infrType, d.playType, d.subPlayType);
+  setSelect('rf-role-select', d.role || '-- select --');
+  populatePlayers('rf-player', d.player);
+  populatePlayers('rf-opponent', d.opponent);
+  setSelect('rf-rating', d.rating);
+  setSelect('rf-observability', d.observability);
+
+  // Checkboxes
+  document.getElementById('chk-called').checked = !!d.flags.called;
+  document.getElementById('chk-ptiw').checked   = !!d.flags.ptiw;
+  document.getElementById('chk-look').checked   = !!d.flags.look;
+  document.getElementById('chk-ogr').checked    = !!d.flags.ogr;
+  document.getElementById('chk-poe').checked    = !!d.flags.poe;
+
+  // 1st pass comment (read-only)
+  document.getElementById('comment-1p').value = d.comment;
+
+  // Store originals for change detection
+  orig = {
+    infrType: d.infrType,
+    playType: d.playType,
+    subPlayType: d.subPlayType,
+    role: d.role || '-- select --',
+    rating: d.rating,
+    observability: d.observability,
+    ref: d.ref,
+    loc: d.loc,
+  };
+
+  // Reset highlights and overturn banner
+  document.querySelectorAll('.sc-changed').forEach(el => el.classList.remove('sc-changed'));
+  document.querySelectorAll('.sc-changed-ref').forEach(el => el.classList.remove('sc-changed-ref'));
+  document.getElementById('sc-overturn-banner').classList.remove('show');
+}
+
+function setSelect(id, val) {
+  const sel = document.getElementById(id);
+  if (!sel) return;
+  for (let i = 0; i < sel.options.length; i++) {
+    if (sel.options[i].value === val || sel.options[i].text === val) {
+      sel.selectedIndex = i; return;
+    }
+  }
+}
+
+function populatePlayers(id, selected) {
+  const sel = document.getElementById(id);
+  sel.innerHTML = ALL_P.map(p => `<option${p===selected?' selected':''}>${p}</option>`).join('');
+}
+
+function updatePlayTypes(infrType, selPlay, selSub) {
+  const playSel = document.getElementById('rf-play-type');
+  const subSel  = document.getElementById('rf-sub-play-type');
+  const types = PLAY_TYPES[infrType] || [];
+  playSel.innerHTML = '<option>-- select --</option>' + types.map(t => `<option${t===selPlay?' selected':''}>${t}</option>`).join('');
+  const subs = SUB_PLAY_TYPES[selPlay] || [];
+  subSel.innerHTML = '<option>-- select --</option>' + subs.map(s => `<option${s===selSub?' selected':''}>${s}</option>`).join('');
+}
+
+function checkChanged() {
+  const cur = {
+    infrType:    document.getElementById('rf-infraction-type').value,
+    playType:    document.getElementById('rf-play-type').value,
+    subPlayType: document.getElementById('rf-sub-play-type').value,
+    role:        document.getElementById('rf-role-select').value,
+    rating:      document.getElementById('rf-rating').value,
+    observability: document.getElementById('rf-observability').value,
+  };
+
+  const fields = ['infrType','playType','subPlayType','role','rating','observability'];
+  const selectIds = ['rf-infraction-type','rf-play-type','rf-sub-play-type','rf-role-select','rf-rating','rf-observability'];
+
+  fields.forEach((f, i) => {
+    const el = document.getElementById(selectIds[i]);
+    el.classList.toggle('sc-changed', orig[f] && cur[f] !== orig[f]);
+  });
+
+  // Overturn: rating changed from original
+  const ratingChanged = orig.rating && cur.rating !== orig.rating && cur.rating && cur.rating !== '-- select --';
+  document.getElementById('sc-overturn-banner').classList.toggle('show', ratingChanged);
+}
+
+function selectRef(btn) {
+  document.querySelectorAll('#ref-btn-group .ref-btn').forEach(b => {
+    b.classList.remove('on','sc-changed-ref');
+  });
+  btn.classList.add('on');
+  if (btn.textContent.trim() !== orig.ref) btn.classList.add('sc-changed-ref');
+}
+
+function selectLocation(btn) {
+  document.querySelectorAll('#loc-btn-group .loc-btn').forEach(b => {
+    b.classList.remove('on','sc-changed-ref');
+  });
+  btn.classList.add('on');
+  if (btn.textContent.trim() !== orig.loc) btn.classList.add('sc-changed-ref');
+}
+
+function saveRating() {
+  showToast('2nd check rating saved');
+}
+function cancelRating() {
+  if (curEvtId) selectEvent(curEvtId); // re-load 1st pass values
+}
+
+function addRow() {
+  const tbody = document.getElementById('inf-tbody');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td><span class="rating-chip">—</span></td><td>—</td>`;
+  tbody.appendChild(tr);
+}
+
+function toast(msg) { showToast(msg); }
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function toggleNavDropdown(e){e.stopPropagation();document.getElementById('nav-dropdown').classList.toggle('open')}
+document.addEventListener('click',()=>{document.getElementById('nav-dropdown').classList.remove('open')});
+
+buildQueue();
+// Auto-select first flagged event
+const firstEvt = POSSESSIONS.find(p => p.q === 1)?.events[0]?.id;
+if (firstEvt) selectEvent(firstEvt);
+</script>
+</body>
+</html>
