@@ -1786,25 +1786,39 @@ function sendToLeagueOps() {
 /* ── COMMENT LIBRARY POPUP ── */
 const CL_STORAGE_KEY = 'brs_comments_v6';
 const CL_SEED = [
-  {text:'**[Player]** firms up in a screening position and absorbs the body contact that occurs while setting the pick on **[Defender]**.',playType:'Foul: Offensive',subPlayType:'Screener',detail:'Deliver/Absorb',callType:'no infraction'},
-  {text:'**[Player]** is moving alongside **[Defender]**\'s path and absorbs the marginal contact that occurs at the start of the drive. **[Defender]**\'s SQBR appears unaffected.',playType:'Foul: Personal',subPlayType:'Start Of Drive',detail:'Freedom Of Movement',callType:'no infraction'},
-  {text:'**[Player]** legally contests **[Defender]**\'s driving shot attempt, and the follow-through contact after the release is considered incidental.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'Arm Follow-Through',callType:'no infraction'},
-  {text:'**[Player]** extends their arm into **[Defender]**\'s front and initiates contact with **[Defender]**\'s front that affects their SQBR during the drive.',playType:'Foul: Personal',subPlayType:'During Drive',detail:'Hand/Forearm To Front',callType:'infraction'},
-  {text:'**[Player]** is moving forward and late to establish a legal guarding position in **[Defender]**\'s path prior to contact.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'Legal Guarding Position',callType:'infraction'},
-  {text:'**[Player]** wraps their arms around **[Defender]**\'s body in an attempt to tie up the ball. A foul should be assessed rather than a jump ball.',playType:'Foul: Loose Ball',subPlayType:'Non-Rebound',detail:'Clamp-Lock-Hold',callType:'infraction'},
-  {text:'**[Player]** slightly extends their arms and some contact occurs with **[Defender]** as **[Defender]** navigates the screen. There is judgement regarding if **[Player]** absorbs the contact and retracts their arms during the screen, or if contact is delivered with the arms.',playType:'Foul: Offensive',subPlayType:'Screener',detail:'Arms',callType:'lean infraction'},
-  {text:'**[Player]** briefly places a hand on **[Defender]**\'s side as they drive, and marginal contact occurs before **[Player]** retracts their hand during **[Defender]**\'s shooting motion. There is judgement regarding the degree and effect of the contact.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'Arm Shooting Motion',callType:'lean infraction'},
-  {text:'**[Player]** briefly places a forearm on **[Defender]**\'s back and releases away as **[Defender]** jumps forward to pursue the rebound. The contact appears marginal.',playType:'Foul: Loose Ball',subPlayType:'Rebound',detail:'Contact to Arm',callType:'lean no'},
-  {text:'Although **[Player]** reaches in and there appears to be some arm contact as **[Defender]** attempts to gather the ball, there is no clear and conclusive video evidence to determine whether a foul occurs or whether the ball is legally dislodged on the play.',playType:'Foul: Personal',subPlayType:'On-Ball',detail:'Contact to Arm',callType:'lean no'},
-  {text:'**[Player]** momentarily applies their forearm to **[Defender]**\'s side and marginal contact occurs. There is judgement in determining if the contact by either player rises to the level of a foul.',playType:'Foul: Personal',subPlayType:'On-Ball',detail:'Contact to Arm',callType:'lean no'},
-  {text:'**[Player]** maintains verticality as they defend **[Defender]**\'s shot attempt. **[Player]** absorbs the contact and play should have continued without a whistle.',playType:'Foul: Shooting',subPlayType:'Jump Shot',detail:'Vertical',callType:'no infraction'},
-  {text:'Replay review of the out of bounds called pursuant to a coach\'s challenge was deemed unsuccessful. **[Player]** is the last to touch the ball before it goes out of bounds.',playType:'Stoppage: Out-of-Bounds',subPlayType:'Ball Out of Bounds',detail:'N/A',callType:'no infraction'},
+  {text:'{CP} firms up in a screening position and absorbs the body contact that occurs while setting the pick on {DP}.',playType:'Foul: Offensive',subPlayType:'Screener',detail:'Deliver/Absorb',callType:'no infraction'},
+  {text:'{CP} is moving alongside {DP}\'s path and absorbs the marginal contact that occurs at the start of the drive. {DP}\'s SQBR appears unaffected.',playType:'Foul: Personal',subPlayType:'Start Of Drive',detail:'Freedom Of Movement',callType:'no infraction'},
+  {text:'{CP} legally contests {DP}\'s driving shot attempt, and the follow-through contact after the release is considered incidental.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'Arm Follow-Through',callType:'no infraction'},
+  {text:'{CP} extends their arm into {DP}\'s front and initiates contact with {DP}\'s front that affects their SQBR during the drive.',playType:'Foul: Personal',subPlayType:'During Drive',detail:'Hand/Forearm To Front',callType:'infraction'},
+  {text:'{CP} is moving forward and late to establish a legal guarding position in {DP}\'s path prior to contact.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'Legal Guarding Position',callType:'infraction'},
+  {text:'{CP} wraps their arms around {DP}\'s body in an attempt to tie up the ball. A foul should be assessed rather than a jump ball.',playType:'Foul: Loose Ball',subPlayType:'Non-Rebound',detail:'Clamp-Lock-Hold',callType:'infraction'},
+  {text:'{CP} slightly extends their arms and some contact occurs with {DP} as {DP} navigates the screen. There is judgement regarding if {CP} absorbs the contact and retracts their arms during the screen, or if contact is delivered with the arms.',playType:'Foul: Offensive',subPlayType:'Screener',detail:'Arms',callType:'lean infraction'},
+  {text:'{CP} briefly places a hand on {DP}\'s side as they drive, and marginal contact occurs before {CP} retracts their hand during {DP}\'s shooting motion. There is judgement regarding the degree and effect of the contact.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'Arm Shooting Motion',callType:'lean infraction'},
+  {text:'{CP} briefly places a forearm on {DP}\'s back and releases away as {DP} jumps forward to pursue the rebound. The contact appears marginal.',playType:'Foul: Loose Ball',subPlayType:'Rebound',detail:'Contact to Arm',callType:'lean no'},
+  {text:'Although {CP} reaches in and there appears to be some arm contact as {DP} attempts to gather the ball, there is no clear and conclusive video evidence to determine whether a foul occurs or whether the ball is legally dislodged on the play.',playType:'Foul: Personal',subPlayType:'On-Ball',detail:'Contact to Arm',callType:'lean no'},
+  {text:'{CP} momentarily applies their forearm to {DP}\'s side and marginal contact occurs. There is judgement in determining if the contact by either player rises to the level of a foul.',playType:'Foul: Personal',subPlayType:'On-Ball',detail:'Contact to Arm',callType:'lean no'},
+  {text:'{CP} maintains verticality as they defend {DP}\'s shot attempt. {CP} absorbs the contact and play should have continued without a whistle.',playType:'Foul: Shooting',subPlayType:'Jump Shot',detail:'Vertical',callType:'no infraction'},
+  {text:'Replay review of the out of bounds called pursuant to a coach\'s challenge was deemed unsuccessful. {CP} is the last to touch the ball before it goes out of bounds.',playType:'Stoppage: Out-of-Bounds',subPlayType:'Ball Out of Bounds',detail:'N/A',callType:'no infraction'},
   {text:'Contact to an opponent\'s head/face can be deemed marginal when the result of a natural basketball move, provided the contact is not disproportionate or uncontrolled.',playType:'Foul: Personal',subPlayType:'On-Ball',detail:'Head Contact',callType:'lean no'},
-  {text:'**[Player]** makes contact with the part of **[Defender]**\'s hand that is on the ball as they defend the shot attempt. Contact which occurs on the hand of the offensive player, while that part of the hand is in contact with the ball, is legal. Play should have continued without a whistle.',playType:'Foul: Shooting',subPlayType:'Jump Shot',detail:'Arm Shooting Motion',callType:'no infraction'},
-  {text:'**[Player]** jumps from point A to point B and initiates contact with **[Defender]** while they are airborne, which affects their driving shot attempt.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'A -> B Movement',callType:'infraction'},
-  {text:'**[Player]** establishes a legal guarding position prior to **[Defender]**\'s upward shooting motion, and the contact that occurs is the natural result of a legal verticality position rather than an A to B movement into the path of the shooter.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'A -> B Movement',callType:'no infraction'},
-  {text:'**[Player]** is still adjusting and moving from point A to point B as **[Defender]** elevates into their driving shot attempt, but there is judgement as to whether legal guarding position was fully established prior to the airborne contact.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'A -> B Movement',callType:'lean infraction'},
+  {text:'{CP} makes contact with the part of {DP}\'s hand that is on the ball as they defend the shot attempt. Contact which occurs on the hand of the offensive player, while that part of the hand is in contact with the ball, is legal. Play should have continued without a whistle.',playType:'Foul: Shooting',subPlayType:'Jump Shot',detail:'Arm Shooting Motion',callType:'no infraction'},
+  {text:'{CP} jumps from point A to point B and makes contact with {DP}, which affects his driving shot attempt.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'A -> B Movement',callType:'infraction'},
+  {text:'{DP} establishes a legal guarding position prior to {CP}\'s upward shooting motion, and the contact that occurs is the natural result of a legal verticality position rather than an A to B movement into the path of the shooter.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'A -> B Movement',callType:'no infraction'},
+  {text:'{DP} is still adjusting and moving from point A to point B as {CP} elevates into their driving shot attempt, but there is judgement as to whether legal guarding position was fully established prior to the airborne contact.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'A -> B Movement',callType:'lean infraction'},
 ];
+
+function shortPlayerName(full) {
+  if (!full) return null;
+  const last = full.split(',')[0].trim();
+  const team = full.includes('— Tempo') ? 'TOR' : (full.includes('— Sky') ? 'CHI' : '');
+  return team ? `${last} (${team})` : last;
+}
+
+function fillCLPlaceholders(text, bold) {
+  const cp = shortPlayerName(document.getElementById('rf-player')?.value) || '{CP}';
+  const dp = shortPlayerName(document.getElementById('rf-opponent')?.value) || '{DP}';
+  const wrap = bold ? (s => `<strong>${s}</strong>`) : (s => s);
+  return text.replace(/\{CP\}/g, wrap(cp)).replace(/\{DP\}/g, wrap(dp));
+}
 
 function openCommentLibrary() {
   // Load from localStorage if available, else use built-in seed
@@ -1883,7 +1897,7 @@ function renderCLResults() {
     const ct = (c.callType||'').toLowerCase();
     const chipStyle = ratingChipStyle[ct] || 'background:#f3f4f6;color:#6b7280';
     const chipLabel = c.callType ? c.callType.replace(/\b\w/g,l=>l.toUpperCase()) : '';
-    const displayText = (c.text||'').replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
+    const displayText = fillCLPlaceholders(c.text||'', true);
     return `<div onclick="insertComment(${JSON.stringify(c.text||'').replace(/"/g,'&quot;')})" style="border:1px solid #e5e7eb;border-radius:10px;padding:12px 14px;cursor:pointer;transition:all .12s;background:#fff" onmouseover="this.style.borderColor='#93c5fd';this.style.background='#f0f9ff'" onmouseout="this.style.borderColor='#e5e7eb';this.style.background='#fff'">
       <div style="display:flex;align-items:center;gap:7px;margin-bottom:7px;flex-wrap:wrap">
         ${c.playType?`<span style="font-size:10px;font-weight:600;color:#6b7280;background:#f3f4f6;padding:2px 8px;border-radius:10px">${c.playType}</span>`:''}
@@ -1896,8 +1910,8 @@ function renderCLResults() {
 }
 
 function insertComment(text) {
-  // Strip markdown bold markers for the textarea
-  const plain = text.replace(/\*\*([^*]+)\*\*/g, '$1');
+  // Substitute {CP}/{DP} with the currently selected player/opponent
+  const plain = fillCLPlaceholders(text, false);
   const ta = document.getElementById('comment-ta');
   if (!ta) return;
   ta.value = ta.value ? ta.value.trimEnd() + '\n' + plain : plain;
