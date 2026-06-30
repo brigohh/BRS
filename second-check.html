@@ -263,6 +263,42 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .nav-dropdown.open .nav-dd-menu{display:block}
 .nav-dd-item{display:block;padding:9px 16px;font-size:11px;font-weight:500;color:#374151;text-decoration:none;white-space:nowrap;cursor:pointer;transition:background .12s}
 .nav-dd-item:hover{background:#f0f2f5;color:#1a3a6b}
+.email-preview-btn{background:#fff;border:1px solid #d6dce8;color:#1a3a6b;font-size:11px;font-weight:700;padding:7px 13px;border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:background .12s}
+.email-preview-btn:hover{background:#eff6ff}
+.em-overlay{display:none;position:fixed;inset:0;background:rgba(15,20,35,.55);z-index:900;align-items:flex-start;justify-content:center;overflow-y:auto;padding:40px 20px}
+.em-overlay.open{display:flex}
+.em-modal{background:#fff;border-radius:14px;max-width:620px;width:100%;box-shadow:0 24px 60px rgba(0,0,0,.3);overflow:hidden;margin-bottom:40px}
+.em-modal-bar{background:#f4f6fa;border-bottom:1px solid #e2e5ec;padding:10px 18px;display:flex;align-items:center;justify-content:space-between}
+.em-modal-bar-lbl{font-size:10.5px;font-weight:800;letter-spacing:.4px;color:#6b7280;text-transform:uppercase}
+.em-close{background:none;border:none;font-size:18px;color:#9ca3af;cursor:pointer;line-height:1;padding:2px 6px;border-radius:6px}
+.em-close:hover{background:#e5e7eb;color:#374151}
+.em-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif}
+.em-head{background:#1a3a6b;padding:22px 28px;color:#fff}
+.em-head-brand{font-size:11px;font-weight:800;letter-spacing:.6px;opacity:.85;margin-bottom:8px}
+.em-head-title{font-size:18px;font-weight:800;margin-bottom:4px}
+.em-head-sub{font-size:12px;opacity:.85}
+.em-sec{padding:20px 28px;border-bottom:1px solid #eef0f4}
+.em-sec:last-child{border-bottom:none}
+.em-sec-lbl{font-size:10.5px;font-weight:800;letter-spacing:.5px;color:#1a3a6b;text-transform:uppercase;margin-bottom:12px}
+.em-game-row{display:flex;align-items:center;justify-content:space-between;background:#f8f9fb;border:1px solid #e2e5ec;border-radius:10px;padding:12px 16px;font-size:12.5px;color:#374151}
+.em-game-row b{color:#1a3a6b}
+.em-chart-wrap{background:#f8f9fb;border:1px solid #e2e5ec;border-radius:10px;padding:16px}
+.em-chart-legend{display:flex;gap:18px;margin-bottom:10px;font-size:11px;color:#5b6373}
+.em-leg-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
+.em-chart-cap{font-size:10.5px;color:#9ca3af;margin-top:8px}
+.em-ot-card{border:1px solid #e2e5ec;border-radius:10px;padding:13px 15px;margin-bottom:10px}
+.em-ot-card:last-child{margin-bottom:0}
+.em-ot-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.em-ot-play{font-size:12.5px;font-weight:700;color:#1f2533}
+.em-ot-tag{font-size:9.5px;font-weight:800;letter-spacing:.3px;padding:2px 8px;border-radius:20px;background:#fee2e2;color:#991b1b}
+.em-ot-ratings{font-size:12px;color:#5b6373;display:flex;align-items:center;gap:8px}
+.em-ot-old{color:#9ca3af;text-decoration:line-through}
+.em-ot-new{color:#166534;font-weight:700}
+.em-summary{background:#eff6ff;border:1px solid #bfdbfe;border-left:4px solid #1a3a6b;border-radius:10px;padding:13px 16px;font-size:12.5px;color:#374151;line-height:1.6;font-style:italic}
+.em-links{display:flex;gap:10px}
+.em-link-btn{flex:1;text-align:center;background:#1a3a6b;color:#fff;font-size:12px;font-weight:700;padding:11px 14px;border-radius:9px;text-decoration:none}
+.em-link-btn.alt{background:#fff;border:1px solid #d6dce8;color:#1a3a6b}
+.em-foot{padding:16px 28px;font-size:10.5px;color:#9ca3af;text-align:center;background:#f8f9fb}
 </style>
 </head>
 <body>
@@ -352,6 +388,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   <div class="tb" data-t="comment" onclick="tf(this)">Comment</div>
   <div class="tb" data-t="ptiw" onclick="tf(this)">PTIW</div>
   <div class="tb" data-t="other" onclick="tf(this)">Other</div>
+  <div class="tsep"></div>
+  <button class="email-preview-btn" onclick="openEmailPreview()"><i class="ti ti-mail"></i> Preview notify email</button>
 </div>
 
 <div id="overview-panel" style="display:none">
@@ -1438,6 +1476,100 @@ if (_view) {
 function toggleNavDropdown(e){e.stopPropagation();document.getElementById('nav-dropdown').classList.toggle('open')}
 document.addEventListener('click',()=>{document.getElementById('nav-dropdown').classList.remove('open');document.getElementById('rim-dropdown')?.classList.remove('open');})
 function toggleRimDropdown(e){e.stopPropagation();document.getElementById("rim-dropdown").classList.toggle("open");document.getElementById("nav-dropdown").classList.remove("open");}
+
+const EM_GAMES = [
+  {label:'5/9', ogr:8, acc:91}, {label:'5/12', ogr:11, acc:88}, {label:'5/14', ogr:6, acc:94},
+  {label:'5/17', ogr:14, acc:85}, {label:'5/19', ogr:9, acc:90}, {label:'5/21', ogr:7, acc:93},
+  {label:'5/23', ogr:12, acc:87}, {label:'5/25', ogr:5, acc:95}, {label:'5/27', ogr:10, acc:89},
+  {label:'5/29', ogr:8, acc:91},
+];
+const EM_OVERTURNS = [
+  {play:'Driving shot attempt — T. Key vs. S. Diggins', tag:'CRITICAL', from:'No Infraction', to:'PCA'},
+  {play:'Post-up contact — K. Cardoso vs. E. Williams', tag:'RATING', from:'Marginal', to:'No Infraction'},
+  {play:'Closeout block attempt — N. Sabally', tag:'CRITICAL', from:'No Infraction', to:'Marginal'},
+];
+
+function emBuildChart() {
+  const w = 540, h = 130, pad = 20;
+  const n = EM_GAMES.length;
+  const xStep = (w - pad * 2) / (n - 1);
+  const ogrPts = EM_GAMES.map((g, i) => [pad + i * xStep, h - pad - (g.ogr / 20) * (h - pad * 2)]);
+  const accPts = EM_GAMES.map((g, i) => [pad + i * xStep, h - pad - ((g.acc - 75) / 25) * (h - pad * 2)]);
+  const toPath = pts => pts.map((p, i) => (i === 0 ? 'M' : 'L') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+  const dots = (pts, color) => pts.map(p => `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2.5" fill="${color}"/>`).join('');
+  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
+    <path d="${toPath(ogrPts)}" fill="none" stroke="#d97706" stroke-width="2"/>
+    <path d="${toPath(accPts)}" fill="none" stroke="#1a3a6b" stroke-width="2"/>
+    ${dots(ogrPts, '#d97706')}
+    ${dots(accPts, '#1a3a6b')}
+  </svg>`;
+}
+
+function emBuildOverturns() {
+  return EM_OVERTURNS.map(o => `
+    <div class="em-ot-card">
+      <div class="em-ot-top">
+        <div class="em-ot-play">${o.play}</div>
+        <div class="em-ot-tag">${o.tag}</div>
+      </div>
+      <div class="em-ot-ratings"><span class="em-ot-old">${o.from}</span><i class="ti ti-arrow-right" style="font-size:11px;color:#9ca3af"></i><span class="em-ot-new">${o.to}</span></div>
+    </div>`).join('');
+}
+
+function openEmailPreview() {
+  const body = document.getElementById('em-body-content');
+  body.innerHTML = `
+    <div class="em-head">
+      <div class="em-head-brand">BRIDGET REVIEW SYSTEM</div>
+      <div class="em-head-title">Your second check is back</div>
+      <div class="em-head-sub">Toronto Tempo @ Chicago Sky &nbsp;·&nbsp; Wed, May 27, 2026</div>
+    </div>
+    <div class="em-sec">
+      <div class="em-sec-lbl">Game</div>
+      <div class="em-game-row"><span>Reviewed by <b>Bridget Ng</b> &nbsp;·&nbsp; Second-checked by <b>Daniel Foley</b></span><span>#1022600050</span></div>
+    </div>
+    <div class="em-sec">
+      <div class="em-sec-lbl">Your last 10 games</div>
+      <div class="em-chart-wrap">
+        <div class="em-chart-legend"><span><span class="em-leg-dot" style="background:#d97706"></span>Overturn rate</span><span><span class="em-leg-dot" style="background:#1a3a6b"></span>Critical play accuracy</span></div>
+        ${emBuildChart()}
+        <div class="em-chart-cap">${EM_GAMES.map(g => g.label).join(' · ')}</div>
+      </div>
+    </div>
+    <div class="em-sec">
+      <div class="em-sec-lbl">Critical plays &amp; overturns</div>
+      ${emBuildOverturns()}
+    </div>
+    <div class="em-sec">
+      <div class="em-sec-lbl">Second checker summary</div>
+      <div class="em-summary">"Great job on this review. Sue downgraded some of the Alabanza errors to PIL that we initially went INC on due to last task force call."</div>
+    </div>
+    <div class="em-sec">
+      <div class="em-links">
+        <a class="em-link-btn" href="rim.html">Open RIM</a>
+        <a class="em-link-btn alt" href="#">Reviewer resources</a>
+      </div>
+    </div>
+    <div class="em-foot">This is an automated notification from Bridget Review System.</div>
+  `;
+  document.getElementById('em-overlay').classList.add('open');
+}
+
+function closeEmailPreview(e) {
+  if (e && e.target !== e.currentTarget) return;
+  document.getElementById('em-overlay').classList.remove('open');
+}
 </script>
+
+<div class="em-overlay" id="em-overlay" onclick="closeEmailPreview(event)">
+  <div class="em-modal">
+    <div class="em-modal-bar">
+      <span class="em-modal-bar-lbl">Email preview — second check notification (temporary)</span>
+      <button class="em-close" onclick="closeEmailPreview()">&times;</button>
+    </div>
+    <div class="em-body" id="em-body-content"></div>
+  </div>
+</div>
+
 </body>
 </html>
