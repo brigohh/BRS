@@ -7,41 +7,53 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;color:#1f2533;background:linear-gradient(160deg,#eef2fb 0%,#fdf1f8 100%);min-height:100vh}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;color:#1f2533;background:#eef0f4;min-height:100vh}
 ::-webkit-scrollbar{width:10px;height:10px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:#c7cee0;border-radius:10px}
 ::-webkit-scrollbar-thumb:hover{background:#aab3cc}
-.nav{background:linear-gradient(135deg,#16294f,#1a3a6b);height:52px;display:flex;align-items:center;padding:0 26px;gap:0;box-shadow:0 2px 10px rgba(0,0,0,.12)}
+.nav{background:#1a3a6b;height:52px;display:flex;align-items:center;padding:0 26px;gap:0;box-shadow:0 2px 10px rgba(0,0,0,.12)}
 .nav-logo{display:flex;align-items:center;gap:10px;cursor:pointer}
 .nav-brand{color:rgba(255,255,255,.92);font-size:12px;font-weight:700;white-space:nowrap;letter-spacing:.7px}
 .nav-tag{background:#f7b8d0;color:#1a3a6b;font-size:9px;font-weight:800;letter-spacing:.4px;padding:3px 9px;border-radius:20px;margin-left:10px;white-space:nowrap}
-.wrap{max-width:880px;margin:0 auto;padding:44px 32px 80px}
-.hero{margin-bottom:38px}
-.eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:800;letter-spacing:.6px;color:#ec4899;background:#fdf2f8;border:1px solid #f7b8d0;padding:5px 12px;border-radius:20px;margin-bottom:16px}
+.wrap{max-width:1400px;margin:0 auto;padding:36px 32px 80px}
+.hero{margin-bottom:32px}
+.eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:800;letter-spacing:.6px;color:#1a3a6b;background:#e7ecf6;border:1px solid #c7d2e6;padding:5px 12px;border-radius:20px;margin-bottom:16px}
 h1{font-size:30px;font-weight:800;color:#1a3a6b;margin-bottom:10px;letter-spacing:-.3px}
-.sub{font-size:14px;color:#5b6373;line-height:1.6;max-width:640px}
-.note{background:#fff;border:1px solid #eef0f5;border-left:4px solid #1a3a6b;border-radius:10px;padding:13px 16px;margin-top:18px;font-size:12px;color:#5b6373;line-height:1.6}
+.sub{font-size:14px;color:#5b6373;line-height:1.6;max-width:760px}
+.note{background:#fff;border:1px solid #e2e5ec;border-left:4px solid #1a3a6b;border-radius:10px;padding:13px 16px;margin-top:18px;font-size:12px;color:#5b6373;line-height:1.6;max-width:760px}
 .note b{color:#1a3a6b}
-.section{margin-bottom:14px}
-.card{background:#fff;border-radius:16px;border:1px solid #eef0f5;box-shadow:0 3px 14px rgba(26,58,107,.08);padding:24px 26px;margin-bottom:18px;transition:box-shadow .15s,transform .15s}
-.card:hover{box-shadow:0 6px 22px rgba(26,58,107,.14);transform:translateY(-1px)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.card{background:#fff;border-radius:16px;border:1px solid #e2e5ec;box-shadow:0 2px 8px rgba(26,58,107,.06);padding:24px 26px;transition:box-shadow .15s,transform .15s}
+.card:hover{box-shadow:0 6px 18px rgba(26,58,107,.12);transform:translateY(-1px)}
+.card.full{grid-column:1/-1}
 .card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:10px}
 .card-title-row{display:flex;align-items:center;gap:10px}
 .card-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;color:#fff}
 .card-title{font-size:16px;font-weight:700;color:#1f2533}
 .card-page{font-size:10.5px;color:#9ca3af;font-weight:600;margin-top:2px}
-.go-link{display:inline-flex;align-items:center;gap:5px;background:#fdf2f8;border:1px solid #f7b8d0;color:#ec4899;font-size:11.5px;font-weight:700;padding:6px 13px;border-radius:20px;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s}
-.go-link:hover{background:#ec4899;color:#fff}
+.tag-new{background:#dcfce7;color:#166534;border:1px solid #86efac;font-size:9.5px;font-weight:800;letter-spacing:.3px;padding:2px 8px;border-radius:20px;margin-left:8px;white-space:nowrap;vertical-align:middle}
+.go-link{display:inline-flex;align-items:center;gap:5px;background:#eff6ff;border:1px solid #bfdbfe;color:#1a3a6b;font-size:11.5px;font-weight:700;padding:6px 13px;border-radius:20px;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s}
+.go-link:hover{background:#1a3a6b;color:#fff;border-color:#1a3a6b}
 .card-body{font-size:13px;color:#475063;line-height:1.65;margin-bottom:12px}
 .feat-list{list-style:none;display:flex;flex-direction:column;gap:7px}
 .feat-list li{font-size:12.5px;color:#374151;display:flex;align-items:flex-start;gap:8px;line-height:1.55}
 .feat-list li i{color:#16a34a;font-size:13px;margin-top:2px;flex-shrink:0}
+.vs-box{background:#f8f9fb;border:1px solid #e2e5ec;border-radius:10px;padding:12px 14px;margin-top:6px}
+.vs-row{display:flex;gap:14px;font-size:12px;line-height:1.6;margin-bottom:6px}
+.vs-row:last-child{margin-bottom:0}
+.vs-lbl{flex:0 0 92px;font-weight:700;font-size:10px;letter-spacing:.3px;text-transform:uppercase;padding-top:1px}
+.vs-old .vs-lbl{color:#9ca3af}
+.vs-new .vs-lbl{color:#1a3a6b}
+.vs-row span:last-child{color:#374151}
 .icon-blue{background:#1a3a6b}
-.icon-pink{background:#ec4899}
+.icon-indigo{background:#3730a3}
 .icon-purple{background:#7c3aed}
 .icon-teal{background:#0d9488}
 .icon-orange{background:#d97706}
+.icon-rose{background:#be185d}
+.section-lbl{font-size:11.5px;font-weight:800;letter-spacing:.6px;color:#6b7280;text-transform:uppercase;margin:34px 0 14px}
+.section-lbl:first-of-type{margin-top:0}
 .foot{text-align:center;margin-top:36px;font-size:11.5px;color:#9ca3af}
 </style>
 </head>
@@ -57,48 +69,31 @@ h1{font-size:30px;font-weight:800;color:#1a3a6b;margin-bottom:10px;letter-spacin
 
 <div class="wrap">
   <div class="hero">
-    <div class="eyebrow"><i class="ti ti-sparkles"></i> RELEASE OVERVIEW</div>
-    <h1>What's new in BRS</h1>
-    <div class="sub">A roundup of the latest updates across the platform — new pages, redesigned layouts, and workflow improvements. Click any card to jump straight to that page.</div>
-    <div class="note"><b>Note:</b> this page is a temporary internal summary for review purposes and won't be part of the live site.</div>
+    <div class="eyebrow"><i class="ti ti-sparkles"></i> SITE OVERVIEW</div>
+    <h1>Welcome to BRS</h1>
+    <div class="sub">BRS (Bridget Review System) is a rebuild of the GRS officiating review tool — same core job of logging, checking, and publishing play reviews, but with new pages and a reworked workflow on top. Here's a tour of what's here and what's changed from the original GRS. Click any card to jump straight to that page.</div>
+    <div class="note"><b>Note:</b> this page is a temporary internal summary and won't be part of the live site.</div>
   </div>
 
-  <div class="section">
-
-    <div class="card" onclick="location='review.html'">
-      <div class="card-top">
-        <div class="card-title-row">
-          <div class="card-icon icon-blue"><i class="ti ti-clipboard-list"></i></div>
-          <div>
-            <div class="card-title">Review page improvements</div>
-            <div class="card-page">review.html</div>
-          </div>
-        </div>
-        <div class="go-link">Open page <i class="ti ti-arrow-right"></i></div>
-      </div>
-      <div class="card-body">Smarter defaults and a much more useful comment library when logging plays.</div>
-      <ul class="feat-list">
-        <li><i class="ti ti-circle-check"></i>Shooting-foul events now auto-fill sensible defaults instead of starting blank</li>
-        <li><i class="ti ti-circle-check"></i>Comment library overhauled with real sample comments and consistent navigation</li>
-      </ul>
-    </div>
+  <div class="section-lbl">Brand new pages</div>
+  <div class="grid">
 
     <div class="card" onclick="location='rim.html'">
       <div class="card-top">
         <div class="card-title-row">
           <div class="card-icon icon-purple"><i class="ti ti-calendar"></i></div>
           <div>
-            <div class="card-title">RIM month view + visual refresh</div>
+            <div class="card-title">RIM <span class="tag-new">NEW</span></div>
             <div class="card-page">rim.html</div>
           </div>
         </div>
         <div class="go-link">Open page <i class="ti ti-arrow-right"></i></div>
       </div>
-      <div class="card-body">RIM now has a full expandable month calendar, plus a lighter, friendlier look.</div>
+      <div class="card-body">RIM (Referee Information &amp; Management) is a brand new landing hub — it didn't exist in GRS at all. It's the home base for everything outside of game review itself.</div>
       <ul class="feat-list">
-        <li><i class="ti ti-circle-check"></i>New "expand month" button reveals a complete calendar with games, Summer Project days, and off days filled in</li>
-        <li><i class="ti ti-circle-check"></i>Feature cards lightened up for better readability</li>
-        <li><i class="ti ti-circle-check"></i>Bridget's name highlighted in pink throughout</li>
+        <li><i class="ti ti-circle-check"></i>Weekly schedule view with an expandable full month calendar — games, Summer Project days, and off days all marked</li>
+        <li><i class="ti ti-circle-check"></i>One place to jump into Interactions, Threads, Message Board, Playlists, Assessments, and Points of Emphasis</li>
+        <li><i class="ti ti-circle-check"></i>Personalized landing cards greeting each reviewer by name</li>
       </ul>
     </div>
 
@@ -107,16 +102,17 @@ h1{font-size:30px;font-weight:800;color:#1a3a6b;margin-bottom:10px;letter-spacin
         <div class="card-title-row">
           <div class="card-icon icon-teal"><i class="ti ti-layout-grid"></i></div>
           <div>
-            <div class="card-title">Published Games layout refresh</div>
+            <div class="card-title">Published Games <span class="tag-new">NEW</span></div>
             <div class="card-page">published-games.html</div>
           </div>
         </div>
         <div class="go-link">Open page <i class="ti ti-arrow-right"></i></div>
       </div>
-      <div class="card-body">Cleaner layout and updated color palette to match the rest of the refreshed pages.</div>
+      <div class="card-body">A dedicated archive of every game that's been fully second-checked and published — GRS had no equivalent searchable history view.</div>
       <ul class="feat-list">
-        <li><i class="ti ti-circle-check"></i>Reworked spacing and card sizing for easier scanning</li>
-        <li><i class="ti ti-circle-check"></i>Updated colors to align with the new design language</li>
+        <li><i class="ti ti-circle-check"></i>Browse and search all published games in one grid, independent of the working queue</li>
+        <li><i class="ti ti-circle-check"></i>See who second-checked each game and when it was published at a glance</li>
+        <li><i class="ti ti-circle-check"></i>Quick access back into any past game's full review</li>
       </ul>
     </div>
 
@@ -125,60 +121,136 @@ h1{font-size:30px;font-weight:800;color:#1a3a6b;margin-bottom:10px;letter-spacin
         <div class="card-title-row">
           <div class="card-icon icon-orange"><i class="ti ti-clipboard-check"></i></div>
           <div>
-            <div class="card-title">Assessments cadence overhaul</div>
+            <div class="card-title">Assessments <span class="tag-new">NEW</span></div>
             <div class="card-page">assessments.html</div>
           </div>
         </div>
         <div class="go-link">Open page <i class="ti ti-arrow-right"></i></div>
       </div>
-      <div class="card-body">Assessment scheduling and review flow reworked for a clearer, more structured cadence.</div>
+      <div class="card-body">A knowledge-check quiz tool for reviewers, with no GRS predecessor.</div>
       <ul class="feat-list">
-        <li><i class="ti ti-circle-check"></i>Switched to 10 questions, on a monthly / 1-week cadence</li>
-        <li><i class="ti ti-circle-check"></i>Answers now hide mid-quiz to prevent peeking</li>
-        <li><i class="ti ti-circle-check"></i>Manager filtering and flagging added for oversight</li>
+        <li><i class="ti ti-circle-check"></i>10-question quizzes on a monthly, 1-week-window cadence</li>
+        <li><i class="ti ti-circle-check"></i>Answers stay hidden mid-quiz so reviewers can't peek ahead</li>
+        <li><i class="ti ti-circle-check"></i>Manager-side filtering and flagging to track who needs follow-up</li>
       </ul>
     </div>
 
-    <div class="card" onclick="location='second-check.html'">
+    <div class="card" onclick="location='comment-library.html'">
       <div class="card-top">
         <div class="card-title-row">
-          <div class="card-icon icon-blue"><i class="ti ti-checkup-list"></i></div>
+          <div class="card-icon icon-indigo"><i class="ti ti-message-2"></i></div>
           <div>
-            <div class="card-title">Second Check — restored color scheme</div>
-            <div class="card-page">second-check.html</div>
+            <div class="card-title">Comment Library <span class="tag-new">NEW</span></div>
+            <div class="card-page">comment-library.html</div>
           </div>
         </div>
         <div class="go-link">Open page <i class="ti ti-arrow-right"></i></div>
       </div>
-      <div class="card-body">Reverted back to the original grey/navy highlight colors after feedback that the pink refresh didn't fit this page.</div>
+      <div class="card-body">A searchable bank of pre-written comments by infraction type, used to speed up writing reviews in the Review tab.</div>
       <ul class="feat-list">
-        <li><i class="ti ti-circle-check"></i>Active tabs, progress bars, and selected rows back to navy/blue</li>
-        <li><i class="ti ti-circle-check"></i>Note bubbles and hover states back to the original light-blue style</li>
+        <li><i class="ti ti-circle-check"></i>Comments organized by infraction and rating so the right note is one click away</li>
+        <li><i class="ti ti-circle-check"></i>Uses the same {CP}/{DP} placeholder convention as the GRS auto-comments sheet, so existing language carries over</li>
       </ul>
     </div>
 
-    <div class="card" onclick="location='home.html'">
+    <div class="card" onclick="location='playlists.html'">
       <div class="card-top">
         <div class="card-title-row">
-          <div class="card-icon icon-pink"><i class="ti ti-home"></i></div>
+          <div class="card-icon icon-rose"><i class="ti ti-playlist"></i></div>
           <div>
-            <div class="card-title">Home page redesign</div>
-            <div class="card-page">home.html</div>
+            <div class="card-title">Playlists <span class="tag-new">NEW</span></div>
+            <div class="card-page">playlists.html</div>
           </div>
         </div>
         <div class="go-link">Open page <i class="ti ti-arrow-right"></i></div>
       </div>
-      <div class="card-body">A lighter, more polished home page — same sections you know, refreshed look.</div>
+      <div class="card-body">A video library for grouping and rewatching clips — by play type, by rating, or curated by hand. GRS had no clip-organization layer at all.</div>
       <ul class="feat-list">
-        <li><i class="ti ti-circle-check"></i>Gradient background and softer card shadows throughout</li>
-        <li><i class="ti ti-circle-check"></i>Pink accent color introduced for hover states and highlights</li>
-        <li><i class="ti ti-circle-check"></i>Rounded corners and spacing tightened up for a cleaner feel</li>
+        <li><i class="ti ti-circle-check"></i>Spotify-style browse grid with curated, by-play-type, and by-rating sections</li>
+        <li><i class="ti ti-circle-check"></i>Queue + video + play info side by side in the detail view</li>
+      </ul>
+    </div>
+
+    <div class="card" onclick="location='poe.html'">
+      <div class="card-top">
+        <div class="card-title-row">
+          <div class="card-icon icon-blue"><i class="ti ti-target"></i></div>
+          <div>
+            <div class="card-title">Points of Emphasis <span class="tag-new">NEW</span></div>
+            <div class="card-page">poe.html</div>
+          </div>
+        </div>
+        <div class="go-link">Open page <i class="ti ti-arrow-right"></i></div>
+      </div>
+      <div class="card-body">A reference page for league-wide points of emphasis for the season, surfaced directly inside the review workflow rather than living in a separate memo.</div>
+      <ul class="feat-list">
+        <li><i class="ti ti-circle-check"></i>Centralized list of current points of emphasis, linked from RIM</li>
       </ul>
     </div>
 
   </div>
 
-  <div class="foot">That's everything for this update. More to come soon.</div>
+  <div class="section-lbl">Reworked from GRS</div>
+  <div class="grid">
+
+    <div class="card full" onclick="location='review.html'">
+      <div class="card-top">
+        <div class="card-title-row">
+          <div class="card-icon icon-blue"><i class="ti ti-clipboard-list"></i></div>
+          <div>
+            <div class="card-title">Review</div>
+            <div class="card-page">review.html</div>
+          </div>
+        </div>
+        <div class="go-link">Open page <i class="ti ti-arrow-right"></i></div>
+      </div>
+      <div class="card-body">This is where individual plays get logged and rated — the core of GRS, rebuilt as a full possession-by-possession workflow instead of a flat entry form.</div>
+      <div class="vs-box">
+        <div class="vs-row vs-old"><span class="vs-lbl">GRS</span><span>A basic first-pass logging form — enter a call, pick a rating, move to the next play, with little structure beyond that.</span></div>
+        <div class="vs-row vs-new"><span class="vs-lbl">BRS</span><span>A full 40-possession queue with a dedicated rating form, comment library suggestions tied to infraction type, a "Help / Side Assist" panel, video synced to each play, one-click Slack and League Ops messaging, and a rating/comment mismatch warning so a written note can't contradict the selected grade. Shooting-foul events now auto-fill sensible defaults instead of starting blank.</span></div>
+      </div>
+    </div>
+
+    <div class="card full" onclick="location='second-check.html'">
+      <div class="card-top">
+        <div class="card-title-row">
+          <div class="card-icon icon-blue"><i class="ti ti-checkup-list"></i></div>
+          <div>
+            <div class="card-title">Second Check</div>
+            <div class="card-page">second-check.html</div>
+          </div>
+        </div>
+        <div class="go-link">Open page <i class="ti ti-arrow-right"></i></div>
+      </div>
+      <div class="card-body">Where a second reviewer verifies the first pass before a game is published — in GRS this was a much thinner QA step.</div>
+      <div class="vs-box">
+        <div class="vs-row vs-old"><span class="vs-lbl">GRS</span><span>A single review list with limited filtering and no dedicated views for special categories of plays.</span></div>
+        <div class="vs-row vs-new"><span class="vs-lbl">BRS</span><span>Split into dedicated tabs — Second Check, PTIW, OIW, and Important Calls — each with its own filtered table. Adds a vertical play-by-play timeline with progress tracking, a wider synced video panel, note bubbles for leaving feedback on specific plays, an accountability flow with pass/fail grading and manager check-ins, and a manager roster view for oversight across reviewers.</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-lbl">Also in BRS</div>
+  <div class="grid">
+
+    <div class="card" onclick="location='home.html'">
+      <div class="card-top">
+        <div class="card-title-row">
+          <div class="card-icon icon-blue"><i class="ti ti-home"></i></div>
+          <div>
+            <div class="card-title">Home</div>
+            <div class="card-page">home.html</div>
+          </div>
+        </div>
+        <div class="go-link">Open page <i class="ti ti-arrow-right"></i></div>
+      </div>
+      <div class="card-body">Your landing dashboard — last modified game, recently published games, and a searchable/filterable table of every game in the system.</div>
+    </div>
+
+  </div>
+
+  <div class="foot">That's everything for now. More to come soon.</div>
 </div>
 
 </body>
