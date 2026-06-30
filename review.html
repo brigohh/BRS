@@ -527,10 +527,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
                 <label class="rf-check"><input type="checkbox" id="chk-poe"> POE</label>
               </div>
               <div style="border-top:1px solid #e5e7eb;margin:2px 0"></div>
-              <button class="assist-btn tmpl-assist-btn" onclick="openChatbot()" style="width:100%;justify-content:center"><i class="ti ti-whistle" style="font-size:12px"></i> Help Side Assist</button>
+              <button class="tmpl-btn" onclick="openChatbot()" style="width:100%;justify-content:center;gap:4px"><i class="ti ti-whistle" style="font-size:12px"></i> Help Side Assist</button>
               <button class="tmpl-btn" style="width:100%;justify-content:center;gap:4px" onclick="openAddToPlaylist()"><i class="ti ti-playlist" style="font-size:12px"></i> Add to Playlist</button>
               <button class="tmpl-btn" style="width:100%;justify-content:center;gap:4px" onclick="openSlackModal()"><i class="ti ti-brand-slack" style="font-size:12px"></i> Send to Slack</button>
-              <button class="tmpl-btn" style="width:100%;justify-content:center;gap:4px;background:#fef3c7;color:#92400e;border-color:#fde68a" onclick="openLeagueOpsModal()"><i class="ti ti-send" style="font-size:12px"></i> Send to League Ops</button>
+              <button class="tmpl-btn" style="width:100%;justify-content:center;gap:4px" onclick="openLeagueOpsModal()"><i class="ti ti-send" style="font-size:12px"></i> Send to League Ops</button>
               <div style="display:flex;flex-direction:column;gap:5px;margin-top:auto">
                 <button class="rf-save-btn" onclick="saveRating()" style="width:100%;justify-content:center">Save</button>
                 <button class="rf-cancel-btn" onclick="cancelRating()" style="width:100%;justify-content:center">Cancel</button>
@@ -1282,6 +1282,7 @@ function selectInfractionRow(idx) {
   const row = infractionRows[idx];
   const r = row.rating;
   setSelectVal('rf-rating-combined', r);
+  ensureSelectDefault('rf-rating-combined', 'No Infraction');
   // apply prefill values to form dropdowns/checkboxes
   const pf = row.prefill || {};
   setSelectVal('rf-infraction-type', pf.infrType || row.type || '');
@@ -1290,6 +1291,7 @@ function selectInfractionRow(idx) {
   updateSubPlayTypes();
   setSelectVal('rf-sub-play-type', pf.subPlayType || '');
   setSelectVal('rf-role-select', pf.role || '');
+  ensureSelectDefault('rf-role-select', 'Def Player 1 (Primary)');
   setSelectVal('rf-player', pf.player || '');
   setSelectVal('rf-opponent', pf.opponent || '');
   setSelectVal('rf-observability', pf.observability || '');
@@ -1305,6 +1307,13 @@ function setSelectVal(id, val) {
   for (let i = 0; i < el.options.length; i++) {
     if (el.options[i].text === val || el.options[i].value === val) { el.selectedIndex = i; return; }
   }
+}
+
+function ensureSelectDefault(id, fallback) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const cur = el.options[el.selectedIndex];
+  if (!cur || !cur.value || cur.text === '-- select --') setSelectVal(id, fallback);
 }
 
 function selectRef(btn) {
@@ -1383,11 +1392,25 @@ function saveRating() {
   const comment = document.getElementById('comment-ta')?.value.trim() || '';
   const mismatchReason = findRatingCommentMismatch(comment, rating);
   if (mismatchReason) {
-    showMismatchAlert(`There appears to be a mismatch between your rating and comment, are you sure? ${mismatchReason}`);
+    showMismatchAlert(`There appears to be a mismatch between your rating and comment. ${mismatchReason}`);
     return;
   }
-  document.getElementById('rating-form').style.display='none';
-  selectedInfRow=null; renderInfractionTable(); showToast('Rating saved');
+  clearRatingForm(); showToast('Rating saved');
+}
+
+function clearRatingForm() {
+  document.getElementById('rating-form').style.display = 'none';
+  document.getElementById('comment-section').style.display = 'none';
+  const ta = document.getElementById('comment-ta'); if (ta) ta.value = '';
+  const notes = document.getElementById('notes-ta'); if (notes) notes.value = '';
+  ['rf-infraction-type','rf-play-type','rf-sub-play-type','rf-role-select','rf-player','rf-opponent','rf-rating-combined','rf-observability'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.selectedIndex = 0;
+  });
+  ['chk-called','chk-ptiw','chk-look','chk-ogr','chk-poe'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.checked = false;
+  });
+  selectedInfRow = null;
+  renderInfractionTable();
 }
 
 function showMismatchAlert(msg) {
@@ -1401,8 +1424,7 @@ function hideMismatchAlert() {
 }
 function mismatchAlertConfirm() {
   hideMismatchAlert();
-  document.getElementById('rating-form').style.display='none';
-  selectedInfRow=null; renderInfractionTable(); showToast('Rating saved');
+  clearRatingForm(); showToast('Rating saved');
 }
 
 function showAssistAlert(msg) {
@@ -1417,13 +1439,11 @@ function hideAssistAlert() {
 function assistAlertYes() {
   hideAssistAlert();
   document.getElementById('chk-called').checked = true;
-  document.getElementById('rating-form').style.display='none';
-  selectedInfRow=null; renderInfractionTable(); showToast('Rating saved');
+  clearRatingForm(); showToast('Rating saved');
 }
 function assistAlertNo() {
   hideAssistAlert();
-  document.getElementById('rating-form').style.display='none';
-  selectedInfRow=null; renderInfractionTable(); showToast('Rating saved');
+  clearRatingForm(); showToast('Rating saved');
 }
 function cancelRating() {
   document.getElementById('rating-form').style.display='none';
