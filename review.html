@@ -271,6 +271,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .chatbot-input:focus{outline:none;border-color:#1a3a6b}
 .chatbot-send{padding:7px 13px;background:#1a3a6b;color:#fff;border:none;border-radius:8px;font-size:11.5px;font-weight:600;cursor:pointer;transition:background .15s}
 .chatbot-send:hover{background:#15306e}
+.chat-fwd-row{display:flex;gap:6px;margin-top:6px}
+.chat-fwd-btn{padding:5px 13px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid #d8dce3;background:#fff;color:#374151;transition:background .12s}
+.chat-fwd-btn:hover{background:#f3f4f6}
+.chat-fwd-btn.yes{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
+.chat-fwd-btn.yes:hover{background:#15306e}
 /* TOAST */
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:11px 22px;border-radius:11px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:7px;opacity:0;transition:opacity .18s;z-index:60;white-space:nowrap;pointer-events:none;background:#166534;color:#dcfce7;box-shadow:0 8px 24px rgba(0,0,0,.22)}
 .toast.show{opacity:1}
@@ -1520,6 +1525,13 @@ function openChatbot() {
 function closeChatbot() {
   document.getElementById('chatbot-window').classList.remove('open');
 }
+const TUCKER_ANSWERABLE = [
+  /positioning|guarding position|contact|foul|infraction|play type|rating|nbp|shooting motion|gather|screen|pick|drive|rebound|block|charge|restricted area|legal|illegal|arm|body|defender|offensive|help/i
+];
+function canTuckerAnswer(msg) {
+  return TUCKER_ANSWERABLE.some(re => re.test(msg));
+}
+
 function sendChat() {
   const input = document.getElementById('chatbot-input');
   const msg = input.value.trim();
@@ -1531,22 +1543,49 @@ function sendChat() {
   userRow.querySelector('.chat-msg').textContent = msg;
   msgs.appendChild(userRow);
   input.value = '';
-  // placeholder response
   setTimeout(() => {
     const botRow = document.createElement('div');
     botRow.className = 'chat-msg-row';
-    botRow.innerHTML = '<div class="chat-msg-name"><div class="chatbot-avatar"><img src="Logos/TuckerGPT Icon.png"></div> Tucker</div><div class="chat-msg bot"></div>';
-    const responses = [
-      'Based on the play, consider the positioning of the defender relative to the offensive player.',
-      'Look at the timing of the contact — was it before, during, or after the gather?',
-      'The key factor here is whether the defender had established legal guarding position.',
-      'Consider the NBP principles: did the contact affect the offensive player\'s natural movement?',
-    ];
-    botRow.querySelector('.chat-msg').textContent = responses[Math.floor(Math.random() * responses.length)];
+    if (canTuckerAnswer(msg)) {
+      const responses = [
+        'Based on the play, consider the positioning of the defender relative to the offensive player.',
+        'Look at the timing of the contact — was it before, during, or after the gather?',
+        'The key factor here is whether the defender had established legal guarding position.',
+        'Consider the NBP principles: did the contact affect the offensive player\'s natural movement?',
+      ];
+      botRow.innerHTML = '<div class="chat-msg-name"><div class="chatbot-avatar"><img src="Logos/TuckerGPT Icon.png"></div> Tucker</div><div class="chat-msg bot"></div>';
+      botRow.querySelector('.chat-msg').textContent = responses[Math.floor(Math.random() * responses.length)];
+    } else {
+      const savedMsg = msg;
+      botRow.innerHTML = `<div class="chat-msg-name"><div class="chatbot-avatar"><img src="Logos/TuckerGPT Icon.png"></div> Tucker</div>
+        <div>
+          <div class="chat-msg bot">Sorry, I am unable to answer this question at this time. Would you like me to forward this to TuckerHuman on Slack for you?</div>
+          <div class="chat-fwd-row">
+            <button class="chat-fwd-btn yes" onclick="tuckerForward(this,'${savedMsg.replace(/'/g,"\\'")}')">Yes</button>
+            <button class="chat-fwd-btn" onclick="tuckerDismiss(this)">No</button>
+          </div>
+        </div>`;
+    }
     msgs.appendChild(botRow);
     msgs.scrollTop = msgs.scrollHeight;
   }, 600);
   msgs.scrollTop = msgs.scrollHeight;
+}
+
+function tuckerForward(btn, originalMsg) {
+  const wrap = btn.closest('.chat-fwd-row');
+  wrap.remove();
+  const msgs = document.getElementById('chatbot-msgs');
+  const confirmRow = document.createElement('div');
+  confirmRow.className = 'chat-msg-row';
+  confirmRow.innerHTML = '<div class="chat-msg-name"><div class="chatbot-avatar"><img src="Logos/TuckerGPT Icon.png"></div> Tucker</div><div class="chat-msg bot">Forwarded to Tucker Grady on Slack ✓</div>';
+  msgs.appendChild(confirmRow);
+  msgs.scrollTop = msgs.scrollHeight;
+  showToast('Question forwarded to TuckerHuman ✓');
+}
+
+function tuckerDismiss(btn) {
+  btn.closest('.chat-fwd-row').remove();
 }
 
 function updateSuggestions() {
