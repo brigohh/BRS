@@ -76,15 +76,28 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .sb-list{flex:1;overflow-y:auto}
 .tier-hdr{padding:7px 12px 4px;font-size:10px;font-weight:700;letter-spacing:.5px;display:flex;align-items:center;gap:5px;position:sticky;top:0;z-index:1;background:#fff;border-bottom:1px solid #f9fafb}
 .tier-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.sb-row{padding:8px 12px;display:flex;align-items:center;gap:7px;cursor:pointer;border-left:3px solid transparent;border-bottom:1px solid #f9fafb;transition:background .12s}
+.sb-row{padding:8px 12px;display:flex;align-items:center;gap:7px;cursor:pointer;border-left:3px solid #e5e7eb;border-bottom:1px solid #f9fafb;transition:background .12s}
 .sb-row:hover{background:#f9fafb}
 .sb-row.sel{background:#eff6ff;border-left-color:#1a3a6b}
 .sb-row.viewed:not(.sel){opacity:0.45}
 .sb-row.hidden{display:none}
+.sb-row.chg-rating{border-left-color:#d97706}
+.sb-row.chg-other{border-left-color:#3b82f6}
+.sb-row.chg-comment{border-left-color:#d1d5db}
 .sb-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 .sb-info{flex:1;min-width:0}
+.sb-event{font-size:10px;font-weight:700;color:#374151;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase}
 .sb-time{font-size:10px;color:#9ca3af}
-.sb-label{font-size:12px;color:#111827;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.sb-label{font-size:11px;color:#374151;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;display:flex;align-items:center;gap:3px}
+.sb-chip{display:inline-block;font-size:9px;font-weight:700;padding:1px 5px;border-radius:6px;white-space:nowrap}
+.sb-chip-inc{background:#fde8e8;color:#991b1b}
+.sb-chip-pil{background:#fef3c7;color:#92400e}
+.sb-chip-pin{background:#dbeafe;color:#1e40af}
+.sb-chip-cc{background:#d1fae5;color:#065f46}
+.sb-chip-cnc{background:#d1fae5;color:#065f46}
+.sb-chip-ic{background:#fde8e8;color:#991b1b}
+.sb-chip-ni{background:#dcfce7;color:#166534}
+.sb-chip-other{background:#f3f4f6;color:#374151}
 .sb-flag{font-size:13px;color:#f59e0b;flex-shrink:0;opacity:0}
 .sb-flag.on{opacity:1}
 .sb-ack{font-size:12px;color:#16a34a;flex-shrink:0;opacity:0}
@@ -1133,13 +1146,18 @@ const ABBR = {
 };
 function abbr(val) { return ABBR[val] || val; }
 
+function chipClass(a) {
+  const m = {INC:'inc',PIL:'pil',PIN:'pin',CC:'cc',CNC:'cnc',IC:'ic','No Infraction':'ni','Infraction':'inc'};
+  return 'sb-chip sb-chip-' + (m[a] || 'other');
+}
+function sbChip(a) { return `<span class="${chipClass(a)}">${a}</span>`; }
 function sbLabel(p) {
-  if (p.changes.length === 0) return 'Comment';
+  if (p.changes.length === 0) return '<span style="color:#9ca3af;font-size:10px;font-style:italic">comment only</span>';
   return p.changes.map(c => {
-    if (c.f === 'Rating') return abbr(c.old) + ' → ' + abbr(c.nw);
-    if (c.f === 'Official') return 'Ref';
-    return c.f;
-  }).join(' · ');
+    if (c.f === 'Rating') return sbChip(abbr(c.old)) + '<span style="color:#9ca3af;font-size:10px;padding:0 1px">→</span>' + sbChip(abbr(c.nw));
+    if (c.f === 'Official') return '<span class="sb-chip sb-chip-other">Ref</span>';
+    return `<span class="sb-chip sb-chip-other">${c.f}</span>`;
+  }).join('<span style="color:#d1d5db;padding:0 2px">·</span>');
 }
 
 let cur = 0, flagged = new Set(), playlist = new Set(), viewed = new Set(), collection = new Set(), activeQ = 'all', activeT = 'all';
@@ -1159,13 +1177,16 @@ function buildSidebar() {
     list.appendChild(hdr);
     plays.forEach(p => {
       const row = document.createElement('div');
-      row.className = 'sb-row' + (p.id === cur ? ' sel' : '');
+      const hasRatingChg = p.changeTags.includes('rating');
+      const hasAnyChg = p.changeTags.length > 0;
+      const borderCls = hasRatingChg ? 'chg-rating' : (hasAnyChg ? 'chg-other' : 'chg-comment');
+      row.className = 'sb-row ' + borderCls + (p.id === cur ? ' sel' : '');
       row.dataset.id = p.id;
       row.dataset.quarter = p.quarter;
       // comment-only plays (no changeTags) get 'comment' tag so the Comment filter shows them
       row.dataset.tags = p.changeTags.length === 0 ? 'comment' : p.changeTags.join(',');
       const isAcked = acked.has(p.id);
-      row.innerHTML = `<span class="sb-dot" style="background:${TIER_META[tier].color}"></span><div class="sb-info"><div class="sb-time">${p.time} · ${p.seg}</div><div class="sb-label">${sbLabel(p)}</div></div><i class="ti ti-circle-check sb-ack${isAcked?' on':''}" id="ack-sb-${p.id}" title="Acknowledged"></i><i class="ti ti-flag sb-flag${flagged.has(p.id)?' on':''}" id="flag-sb-${p.id}"></i>`;
+      row.innerHTML = `<span class="sb-dot" style="background:${TIER_META[tier].color}"></span><div class="sb-info"><div class="sb-event">${p.event}</div><div class="sb-time">${p.time}</div><div class="sb-label">${sbLabel(p)}</div></div><i class="ti ti-circle-check sb-ack${isAcked?' on':''}" id="ack-sb-${p.id}" title="Acknowledged"></i><i class="ti ti-flag sb-flag${flagged.has(p.id)?' on':''}" id="flag-sb-${p.id}"></i>`;
       row.addEventListener('click', () => selectPlay(p.id, row));
       list.appendChild(row);
     });
