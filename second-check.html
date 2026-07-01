@@ -1,0 +1,1738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GRS — Second Check</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;color:#111827;background:linear-gradient(180deg,#f6f7fa 0%,#eef0f5 100%);height:100vh;overflow:hidden}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#cdd2dc;border-radius:6px}
+::-webkit-scrollbar-thumb:hover{background:#b6bcc9}
+.page{height:100vh;display:flex;flex-direction:column;overflow:hidden}
+/* NAV */
+.nav{background:#1a3a6b;height:48px;display:flex;align-items:center;padding:0 24px;flex-shrink:0;overflow:visible;position:relative;z-index:300}
+.nav-logo{display:flex;align-items:center;gap:8px}
+.nav-brand{color:rgba(255,255,255,.9);font-size:11.5px;font-weight:600;white-space:nowrap;letter-spacing:.5px}
+.nav-whats-new{display:inline-flex;align-items:center;gap:4px;background:rgba(247,184,208,.18);border:1px solid rgba(247,184,208,.55);color:#f7b8d0;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:3px 9px 3px 8px;border-radius:20px;cursor:pointer;white-space:nowrap;margin-left:8px;transition:background .15s,color .15s}
+.nav-whats-new:hover{background:#f7b8d0;color:#1a3a6b}
+.nav-links{display:flex;margin-left:auto;flex-shrink:0;flex-wrap:nowrap;align-items:center}
+.nl{color:rgba(255,255,255,.55);font-size:10.5px;padding:0 8px;cursor:pointer;font-weight:500;height:48px;display:flex;align-items:center;border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0;transition:color .15s}
+.nl:hover{color:#fff}
+.nl.on{color:#fff;border-bottom-color:#fff;font-weight:600}
+.nav-av{width:30px;height:30px;border-radius:50%;background:#2d5aa0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;flex-shrink:0;margin-left:12px;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+/* SUBNAV */
+.subnav{background:#fff;border-bottom:1px solid #e9ebf0;height:40px;display:flex;padding:0 20px;flex-shrink:0}
+.st{padding:0 14px;font-size:12px;font-weight:500;color:#6b7280;cursor:pointer;display:flex;align-items:center;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:color .15s}
+.st.on{color:#1a3a6b;border-bottom-color:#1a3a6b;font-weight:600}
+.st:hover:not(.on):not(.disabled){color:#111827}
+.st.disabled{color:#c9ced8;cursor:not-allowed;pointer-events:none}
+/* FILTER DROPDOWN */
+.tb-dd-wrap{position:relative;display:flex;align-items:center}
+.tb-dd-btn{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border:1px solid #d8dce3;border-radius:7px;background:#fff;font-size:11px;font-weight:600;color:#374151;cursor:pointer;white-space:nowrap;transition:background .12s}
+.tb-dd-btn:hover{background:#f1f4fa}
+.tb-dd-btn.active{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
+.tb-dd-menu{display:none;position:absolute;top:calc(100% + 4px);left:0;background:#fff;border:1px solid #e9ebf0;border-radius:9px;box-shadow:0 8px 24px rgba(16,24,48,.15);min-width:140px;z-index:400;padding:4px 0}
+.tb-dd-wrap.open .tb-dd-menu{display:block}
+.tb-dd-item{display:block;padding:8px 14px;font-size:11px;font-weight:500;color:#374151;cursor:pointer;white-space:nowrap;transition:background .12s}
+.tb-dd-item:hover{background:#f1f4fa;color:#1a3a6b}
+.tb-dd-item.on{font-weight:700;color:#1a3a6b;background:#eff6ff}
+/* GAME HEADER */
+.game-hdr{background:#fff;border-bottom:1px solid #e9ebf0;padding:10px 20px;display:flex;align-items:center;gap:14px;flex-shrink:0}
+.gh-title{font-size:13px;font-weight:700;display:flex;align-items:center;gap:4px;flex-wrap:nowrap;white-space:nowrap}
+.gh-date{font-size:11px;color:#6b7280;margin-top:2px}
+.gh-sep{width:1px;height:28px;background:#e5e7eb}
+.stats{display:flex;gap:8px}
+.stat{padding:5px 12px;border-radius:9px;text-align:center;min-width:52px}
+.sn{font-size:17px;font-weight:700;line-height:1}
+.sl{font-size:10px;line-height:1.3;margin-top:2px}
+.s-d{background:#f3f4f6;color:#111827}
+.s-r{background:#fee2e2;color:#991b1b}
+.s-b{background:#dbeafe;color:#1e40af}
+.s-g{background:#dcfce7;color:#166534}
+.s-a{background:#fef9c3;color:#854d0e}
+.gh-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.hbtn{padding:5px 12px;border:1px solid #d8dce3;border-radius:9px;font-size:12px;font-weight:500;background:#fff;color:#374151;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .15s,box-shadow .15s}
+.hbtn:hover{background:#f9fafb;box-shadow:0 1px 3px rgba(17,24,39,.08)}
+.flag-count{padding:4px 10px;border-radius:9px;font-size:12px;font-weight:500;background:#fef9c3;color:#854d0e;border:1px solid #fde68a;display:none;align-items:center;gap:4px}
+.flag-count.show{display:flex}
+/* TOOLBAR */
+.toolbar{padding:8px 20px;display:flex;align-items:center;gap:6px;flex-shrink:0;background:#f3f4f6;border-bottom:1px solid #e9ebf0}
+.qb,.tb{padding:4px 11px;border:1px solid #d8dce3;border-radius:9px;font-size:11px;font-weight:500;background:#fff;color:#6b7280;cursor:pointer;transition:background .15s}
+.qb:hover,.tb:hover{background:#f9fafb}
+.qb.on,.tb.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
+.tsep{width:1px;height:20px;background:#e5e7eb}
+/* MAIN LAYOUT */
+.main{flex:1;display:grid;grid-template-columns:224px 1fr 42%;min-height:0;overflow:hidden;padding:14px 18px;gap:14px;background:#f3f4f6}
+/* SIDEBAR */
+.sb{background:#fff;border:1px solid #e9ebf0;border-radius:13px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 1px 3px rgba(17,24,39,.05)}
+.sb-prog{padding:11px 13px 10px;border-bottom:1px solid #f3f4f6;flex-shrink:0}
+.prog-label{font-size:11px;color:#6b7280;margin-bottom:5px;display:flex;justify-content:space-between}
+.prog-track{height:4px;background:#f0f1f5;border-radius:2px}
+.prog-fill{height:100%;background:#1a3a6b;border-radius:2px;transition:width .3s}
+.sb-list{flex:1;overflow-y:auto}
+.tier-hdr{padding:7px 12px 4px;font-size:10px;font-weight:700;letter-spacing:.5px;display:flex;align-items:center;gap:5px;position:sticky;top:0;z-index:1;background:#fff;border-bottom:1px solid #f9fafb}
+.tier-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.sb-row{padding:8px 12px;display:flex;align-items:center;gap:7px;cursor:pointer;border-left:3px solid transparent;border-bottom:1px solid #f9fafb;transition:background .12s}
+.sb-row:hover{background:#f9fafb}
+.sb-row.sel{background:#eff6ff;border-left-color:#1a3a6b}
+.sb-row.viewed:not(.sel){opacity:0.45}
+.sb-row.hidden{display:none}
+.sb-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.sb-info{flex:1;min-width:0}
+.sb-time{font-size:10px;color:#9ca3af}
+.sb-label{font-size:12px;color:#111827;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.sb-flag{font-size:13px;color:#f59e0b;flex-shrink:0;opacity:0}
+.sb-flag.on{opacity:1}
+.sb-ack{font-size:12px;color:#16a34a;flex-shrink:0;opacity:0}
+.sb-ack.on{opacity:1}
+.tier-hdr.hidden{display:none}
+/* CENTER */
+.center{display:flex;flex-direction:column;overflow:hidden;background:#f3f4f6;border-radius:13px;border:1px solid #e9ebf0;box-shadow:0 1px 3px rgba(17,24,39,.05)}
+.band1{background:#fff;border-bottom:1px solid #e9ebf0;padding:13px 17px;flex-shrink:0}
+.b1-r1{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.ev-badge{padding:2px 9px;border-radius:7px;font-size:11px;font-weight:600;background:#f3f4f6;border:1px solid #e5e7eb;color:#6b7280;white-space:nowrap}
+.b1-time{font-size:11px;color:#6b7280}
+.b1-seg{font-size:11px;color:#9ca3af}
+.b1-desc{font-size:14px;font-weight:700;color:#111827;margin-bottom:7px}
+.b1-r2{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.b1-players{font-size:13px}
+.b1-players b{font-weight:700;color:#1a3a6b}
+.vsep{width:1px;height:14px;background:#e5e7eb}
+.b1-off{font-size:12px;color:#6b7280;display:flex;align-items:center;gap:5px}
+.loc-p{padding:2px 7px;border-radius:20px;font-size:10px;font-weight:600;border:1px solid}
+.lp-lead{background:#eff6ff;border-color:#bfdbfe;color:#1d4ed8}
+.lp-trail{background:#f0fdf4;border-color:#bbf7d0;color:#166534}
+.lp-slot{background:#faf5ff;border-color:#e9d5ff;color:#7e22ce}
+.b1-sub{font-size:12px;color:#9ca3af;font-style:italic}
+.called-pill{padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.3px;border:1px solid}
+.called-c{background:#dcfce7;border-color:#86efac;color:#166534}
+.called-nc{background:#f3f4f6;border-color:#d1d5db;color:#6b7280}
+/* BAND2 */
+.band2{background:#f9fafb;border-bottom:1px solid #e9ebf0;padding:11px 17px;flex-shrink:0}
+.b2-lbl{font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.5px;margin-bottom:8px}
+.ch-grid{display:grid;grid-template-columns:100px 1fr 1fr;gap:0;border:1px solid #e9ebf0;border-radius:10px;overflow:hidden;font-size:12px;box-shadow:0 1px 3px rgba(17,24,39,.04)}
+.ch-col-hdr{padding:5px 12px;font-size:10px;font-weight:700;letter-spacing:.4px;color:#9ca3af;background:#f3f4f6;border-bottom:1px solid #e5e7eb}
+.ch-col-hdr.sc-hdr{color:#1a3a6b;border-left:1px solid #e5e7eb}
+.ch-col-hdr.lbl-hdr{color:#9ca3af}
+.ch-row-lbl{padding:7px 12px;background:#f9fafb;border-top:1px solid #f3f4f6;display:flex;align-items:center}
+.ch-row-fp{padding:7px 12px;background:#fff;border-top:1px solid #f3f4f6;border-left:1px solid #e5e7eb;display:flex;align-items:center;gap:6px}
+.ch-row-sc{padding:7px 12px;background:#fff;border-top:1px solid #f3f4f6;border-left:1px solid #e5e7eb;display:flex;align-items:center;gap:6px}
+.ch-row-unch .ch-field{font-size:10px;font-weight:600;color:#6b7280;letter-spacing:.2px}
+.ch-row-unch .ch-fp-val{color:#374151}
+.ch-row-unch .ch-sc-val{color:#374151;font-size:12px}
+.ch-field{font-size:10px;font-weight:600;color:#6b7280;letter-spacing:.2px}
+.ch-fp-val{color:#111827}
+.ch-sc-pill{font-size:12px;font-weight:600;padding:2px 9px;border-radius:7px}
+/* BAND3 */
+.band3{background:#fff;border-bottom:1px solid #e9ebf0;padding:13px 17px;flex:1;overflow-y:auto}
+.cb-lbl{font-size:10px;font-weight:700;letter-spacing:.4px;color:#374151;margin-bottom:4px}
+.cb-lbl.sc-lbl-c{color:#1a3a6b}
+.cb-fp{border-left:3px solid #374151;padding-left:10px}
+.cb-sc{border-left:3px solid #1a3a6b;padding-left:10px}
+.cb-unch{border-left:3px solid #f3f4f6;padding-left:10px}
+.cb-na{font-size:11px;color:#9ca3af;font-style:italic;background:#f9fafb;border:1px dashed #d8dce3;border-radius:7px;padding:5px 10px;display:inline-block;margin-top:2px}
+.cb-text{font-size:11.5px;color:#1a3a6b;line-height:1.65;font-weight:600}
+.cb-text.muted{color:#111827;font-weight:400}
+.rev-connector{display:flex;align-items:center;gap:7px;font-size:11px;color:#9ca3af;margin:9px 0}
+.rev-connector::before{content:'';height:1px;background:#f3f4f6;flex:1}
+/* NOTE BUBBLES */
+.note-bubble{background:#f8fafc;border:1px solid #dcdcdc;border-radius:11px;padding:9px 13px;margin-top:6px;margin-left:16px;font-size:11px;color:#111827;line-height:1.6;font-style:italic}
+.note-bubble.note-sc{background:#eff6ff;border-color:#bfdbfe;color:#1a3a6b}
+.note-lbl{display:block;font-size:9px;font-weight:700;letter-spacing:.5px;color:#94a3b8;font-style:normal;margin-bottom:3px;text-transform:uppercase}
+.note-bubble.note-sc .note-lbl{color:#93c5fd}
+/* ADD TO COLLECTION */
+.add-col-btn{padding:2px 8px;border:1px solid #e5e7eb;border-radius:7px;font-size:10px;font-weight:500;cursor:pointer;background:#f9fafb;color:#6b7280;display:inline-flex;align-items:center;gap:3px;transition:background .15s}
+.add-col-btn:hover{background:#eff6ff;border-color:#bfdbfe;color:#1d4ed8}
+.add-col-btn.saved{background:#dcfce7;border-color:#86efac;color:#166534}
+.fc-hdr-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+/* OVERVIEW PANEL */
+.ov-table{width:100%;border-collapse:collapse;font-size:12px}
+.ov-table th{padding:8px 12px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.4px;color:#9ca3af;background:#f9fafb;border-bottom:2px solid #e5e7eb;white-space:nowrap}
+.ov-table td{padding:8px 12px;border-bottom:1px solid #f3f4f6;vertical-align:top}
+.ov-table tr:nth-child(even) td{background:#fafafa}
+.ov-table tr:hover td{background:#eff6ff;cursor:pointer}
+.ov-num{font-weight:700;color:#9ca3af;font-size:11px}
+.ov-time{color:#6b7280;white-space:nowrap;font-size:11px}
+.ov-seg{color:#9ca3af;font-size:11px}
+.ov-called-c{display:inline-block;padding:1px 6px;border-radius:10px;font-size:10px;font-weight:700;background:#dcfce7;border:1px solid #86efac;color:#166534}
+.ov-called-nc{display:inline-block;padding:1px 6px;border-radius:10px;font-size:10px;font-weight:700;background:#f3f4f6;border:1px solid #d1d5db;color:#6b7280}
+.ov-rating-arrow{color:#9ca3af;font-size:10px;margin:0 3px}
+.ov-notes-icon{font-size:13px;color:#f59e0b}
+/* FOOTER */
+.footer{padding:9px 16px;display:flex;align-items:center;gap:6px;background:#fff;flex-shrink:0}
+.fbtn{padding:6px 12px;border:1px solid #d8dce3;border-radius:9px;font-size:12px;font-weight:500;cursor:pointer;background:#fff;color:#6b7280;display:inline-flex;align-items:center;gap:5px;transition:background .15s,box-shadow .15s}
+.fbtn:hover{background:#f9fafb;color:#111827;box-shadow:0 1px 3px rgba(17,24,39,.08)}
+.fbtn.slack-btn{color:#1d4ed8;border-color:#bfdbfe;background:#eff6ff}
+.fbtn.slack-btn:hover{background:#dbeafe}
+.fbtn.flag-on{color:#d97706;border-color:#fde68a;background:#fef9c3}
+.fbtn.playlist-on{color:#7c3aed;border-color:#e9d5ff;background:#faf5ff}
+.fsep{width:1px;height:18px;background:#e5e7eb}
+.slack-dd{padding:5px 8px;border:1px solid #bfdbfe;border-radius:9px;background:#eff6ff;color:#6b7280;cursor:pointer;font-size:12px;margin-left:-4px}
+.slack-dd:hover{background:#dbeafe}
+/* VIDEO PANEL — clean/seamless */
+.rp{background:#fff;display:flex;flex-direction:column;border:1px solid #e9ebf0;border-radius:13px;overflow:hidden;box-shadow:0 1px 3px rgba(17,24,39,.05)}
+.vid-area{background:#0f1117;padding:6px 6px 0;flex-shrink:0}
+.vid-frame{width:100%;aspect-ratio:16/9;background:#1a1f2e;border-radius:8px;display:flex;align-items:center;justify-content:center}
+.vid-ph{display:flex;flex-direction:column;align-items:center;gap:6px}
+.vid-ph i{font-size:28px;color:#374151}
+.vid-ph span{font-size:11px;color:#4b5563}
+.ang-row{display:flex;gap:4px;padding:7px 11px;background:#fff;border-bottom:1px solid #f3f4f6;overflow-x:auto;flex-shrink:0}
+.ang{padding:3px 8px;font-size:10px;border:1px solid #e5e7eb;background:#f9fafb;color:#6b7280;cursor:pointer;border-radius:6px;white-space:nowrap;flex-shrink:0;font-weight:500;transition:background .15s}
+.ang:hover{color:#374151;border-color:#d1d5db;background:#f3f4f6}
+.ang.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
+.vid-ctrl{padding:7px 11px;border-bottom:1px solid #f3f4f6;display:flex;align-items:center;gap:6px;flex-shrink:0;background:#fff}
+.vcb{background:none;border:none;color:#9ca3af;cursor:pointer;font-size:15px;display:flex;align-items:center}
+.vcb:hover{color:#111827}
+.vtrack{flex:1;height:3px;background:#e5e7eb;border-radius:2px;position:relative}
+.vfill{width:38%;height:100%;background:#1a3a6b;border-radius:2px}
+.vhead{width:10px;height:10px;background:#1a3a6b;border-radius:50%;position:absolute;right:-5px;top:-3.5px;border:2px solid #fff;box-shadow:0 0 0 1px #1a3a6b}
+.vtime{color:#9ca3af;font-size:11px;min-width:56px;text-align:right}
+.clip-bar{padding:6px 11px;border-bottom:1px solid #f3f4f6;display:flex;gap:4px;flex-wrap:wrap;flex-shrink:0;background:#f9fafb}
+.ctag{padding:2px 7px;border-radius:6px;font-size:10px;font-weight:500}
+.ct-b{background:#dbeafe;border:1px solid #bfdbfe;color:#1e40af}
+.ct-r{background:#fee2e2;border:1px solid #fca5a5;color:#991b1b}
+.ct-g{background:#dcfce7;border:1px solid #86efac;color:#166534}
+.ct-a{background:#fef9c3;border:1px solid #fde68a;color:#854d0e}
+.rp-box{padding:9px 11px;border-bottom:1px solid #f3f4f6;flex-shrink:0;background:#fff}
+.rp-lbl{font-size:10px;color:#9ca3af;font-weight:700;margin-bottom:3px;display:flex;align-items:center;gap:5px}
+.rp-lbl i{font-size:13px}
+.rp-val{font-size:11px;color:#6b7280;font-style:italic;line-height:1.5}
+/* MODAL */
+.overlay{position:fixed;inset:0;background:rgba(15,20,35,.5);z-index:40;display:none}
+.overlay.open{display:block}
+.slack-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:500px;background:#fff;border-radius:14px;border:1px solid #e5e7eb;overflow:hidden;z-index:50;display:none;box-shadow:0 24px 64px rgba(15,20,35,.28)}
+.slack-modal.open{display:block}
+.sm-hd{background:#4A154B;padding:14px 18px;display:flex;align-items:center;justify-content:space-between}
+.sm-title{color:#fff;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px}
+.sm-x{background:none;border:none;color:rgba(255,255,255,.7);font-size:18px;cursor:pointer;display:flex;line-height:1}
+.sm-x:hover{color:#fff}
+.sm-body{padding:17px 19px;display:flex;flex-direction:column;gap:13px}
+.sm-lbl{font-size:12px;font-weight:600;color:#374151;margin-bottom:4px}
+.sm-sel{width:100%;height:32px;font-size:13px;padding:0 8px;border:1px solid #d1d5db;border-radius:9px;background:#fff;color:#111827}
+.sm-types{display:flex;gap:5px}
+.sm-type{flex:1;padding:7px 10px;border:1px solid #e5e7eb;border-radius:9px;font-size:12px;font-weight:500;cursor:pointer;background:#f9fafb;color:#6b7280;text-align:center;transition:background .15s}
+.sm-type:hover{background:#f3f4f6}
+.sm-type.sel{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
+.sm-prev{background:#f9fafb;border:1px solid #e5e7eb;border-radius:9px;padding:13px 15px;font-size:12px;color:#111827;line-height:1.9;font-family:'Courier New',monospace;white-space:pre-wrap}
+.sm-prev b{font-weight:700}
+.sm-prev .sp-l{color:#1d4ed8}
+.sm-ft{padding:13px 19px 15px;border-top:1px solid #e5e7eb;display:flex;gap:8px}
+.sm-send{flex:1;padding:9px;background:#4A154B;color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:background .15s}
+.sm-send:hover{background:#3D1140}
+.sm-can{padding:9px 16px;border:1px solid #e5e7eb;border-radius:9px;background:#f9fafb;font-size:13px;cursor:pointer;color:#6b7280}
+/* PLAYLIST MODAL */
+.pl-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:320px;background:#fff;border-radius:14px;border:1px solid #e5e7eb;z-index:50;display:none;box-shadow:0 24px 64px rgba(15,20,35,.28)}
+.pl-modal.open{display:block}
+.pl-hd{padding:14px 16px;border-bottom:1px solid #f3f4f6;display:flex;align-items:center;justify-content:space-between}
+.pl-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px}
+.pl-lbl{font-size:11px;font-weight:600;color:#6b7280;letter-spacing:.3px;text-transform:uppercase}
+.pl-opt{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;border:1px solid #e5e7eb;border-radius:9px;cursor:pointer;font-size:13px;color:#111827;font-weight:500;transition:background .12s}
+.pl-opt:hover{background:#f9fafb}
+.pl-opt.selected{background:#eff6ff;border-color:#bfdbfe;color:#1a3a6b}
+.pl-opt-check{font-size:14px;color:#1a3a6b;display:none}
+.pl-opt.selected .pl-opt-check{display:block}
+.pl-new{display:none;gap:6px;flex-direction:row}
+.pl-new.show{display:flex}
+.pl-input{flex:1;padding:7px 10px;border:1px solid #d1d5db;border-radius:9px;font-size:13px;outline:none;transition:box-shadow .15s}
+.pl-input:focus{border-color:#1a3a6b;box-shadow:0 0 0 3px rgba(26,58,107,.1)}
+.pl-create-btn{padding:7px 12px;background:#1a3a6b;color:#fff;border:none;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer}
+.pl-add-new-btn{background:none;border:1px dashed #d1d5db;border-radius:9px;padding:7px 12px;font-size:12px;color:#6b7280;cursor:pointer;display:flex;align-items:center;gap:5px;justify-content:center;transition:border-color .15s}
+.pl-add-new-btn:hover{border-color:#9ca3af;color:#374151}
+.pl-footer{padding:12px 16px;border-top:1px solid #f3f4f6;display:flex;justify-content:flex-end;gap:8px}
+.pl-done{padding:8px 18px;background:#1a3a6b;color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;transition:background .15s}
+.pl-done:hover{background:#15306e}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:10px 20px;border-radius:11px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:7px;opacity:0;transition:opacity .18s;z-index:60;white-space:nowrap;pointer-events:none;background:#166534;color:#dcfce7;box-shadow:0 4px 20px rgba(0,0,0,.2)}
+.toast.show{opacity:1}
+/* OIW PANEL */
+#oiw-panel{display:none;flex:1;overflow-y:auto;background:#f3f4f6;padding:24px 32px;flex-direction:column;gap:28px}
+.oiw-section{display:flex;flex-direction:column;align-items:center;gap:10px}
+.oiw-section-title{font-size:15px;font-weight:700;color:#111827;letter-spacing:.3px;text-align:center}
+.oiw-title-rule{width:48px;height:2px;background:#1a3a6b;border-radius:2px;margin-top:-6px}
+.oiw-table-wrap{width:100%;background:#fff;border:1px solid #d8dce3;border-radius:10px;overflow:hidden;box-shadow:0 1px 3px rgba(17,24,39,.05)}
+.oiw-tbl{width:100%;border-collapse:collapse;table-layout:fixed;font-size:11.5px}
+.oiw-tbl th{padding:7px 10px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.4px;color:#fff;background:#1a3a6b;border-right:1px solid rgba(255,255,255,.15);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.oiw-tbl th:last-child{border-right:none}
+.oiw-tbl td{padding:7px 10px;border-bottom:1px solid #e5e7eb;border-right:1px solid #f3f4f6;vertical-align:top;word-break:break-word;line-height:1.45}
+.oiw-tbl td:last-child{border-right:none}
+.oiw-tbl tr:last-child td{border-bottom:none}
+.oiw-tbl tbody tr{cursor:pointer;transition:background .12s}
+.oiw-tbl tbody tr:hover td{background:#fdf2f8}
+.oiw-tbl tbody tr.oiw-sel td{background:#fce7f3 !important}
+.oiw-tbl tr.oiw-q-div td{padding:0;height:3px;background:#d1d5db;border:none;cursor:default;pointer-events:none}
+.oiw-tbl tr.oiw-q-div:hover td{background:#d1d5db}
+.oiw-comm-hdr{display:grid;grid-template-columns:1fr 80px;background:#1a3a6b;color:#fff;font-size:10px;font-weight:700;letter-spacing:.4px}
+.oiw-comm-hdr div{padding:7px 10px;border-right:1px solid rgba(255,255,255,.15)}
+.oiw-comm-hdr div:last-child{border-right:none}
+.oiw-comm-body{padding:12px;display:flex;align-items:center;justify-content:center;min-height:44px;font-size:11.5px;color:#9ca3af;font-style:italic}
+.nav-dropdown{position:relative;display:flex;align-items:center;height:48px}
+.nav-dropdown .nl{gap:4px}
+.nav-dd-caret{font-size:8px;opacity:.7;transition:transform .15s}
+.nav-dropdown.open .nav-dd-caret{transform:rotate(180deg)}
+.nav-dd-menu{display:none;position:absolute;top:44px;right:0;background:#fff;border:1px solid #e5e7eb;border-radius:10px;box-shadow:0 10px 28px rgba(15,20,35,.18);min-width:170px;z-index:400;padding:4px 0}
+.nav-dropdown.open .nav-dd-menu{display:block}
+.nav-dd-item{display:block;padding:9px 16px;font-size:11px;font-weight:500;color:#374151;text-decoration:none;white-space:nowrap;cursor:pointer;transition:background .12s}
+.nav-dd-item:hover{background:#f0f2f5;color:#1a3a6b}
+.email-preview-btn{background:#fff;border:1px solid #d6dce8;color:#1a3a6b;font-size:11px;font-weight:700;padding:7px 13px;border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:background .12s}
+.email-preview-btn:hover{background:#eff6ff}
+.em-overlay{display:none;position:fixed;inset:0;background:rgba(15,20,35,.55);z-index:900;align-items:center;justify-content:center;overflow-y:auto;padding:20px}
+.em-overlay.open{display:flex}
+.em-modal{background:#fff;border-radius:8px;max-width:1180px;width:96vw;height:94vh;box-shadow:0 24px 60px rgba(0,0,0,.35);overflow:hidden;display:flex;flex-direction:column}
+.em-modal-bar{background:#f4f6fa;border-bottom:1px solid #e2e5ec;padding:10px 18px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.em-modal-bar-lbl{font-size:10.5px;font-weight:800;letter-spacing:.4px;color:#6b7280;text-transform:uppercase}
+.em-close{background:none;border:none;font-size:18px;color:#9ca3af;cursor:pointer;line-height:1;padding:2px 6px;border-radius:6px}
+.em-close:hover{background:#e5e7eb;color:#374151}
+.ol-ribbon{background:#fff;border-bottom:1px solid #e1dfdd;padding:10px 22px;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.ol-ribbon i{font-size:15px;color:#605e5c}
+.ol-ribbon-title{font-size:13px;font-weight:600;color:#252423;margin-right:14px}
+.ol-ribbon-btn{font-size:11.5px;color:#252423;display:flex;align-items:center;gap:5px;padding:5px 9px;border-radius:4px}
+.ol-ribbon-btn:hover{background:#f3f2f1}
+.ol-meta{background:#fff;padding:14px 22px;flex-shrink:0}
+.ol-subject{font-size:19px;font-weight:600;color:#252423;margin-bottom:10px}
+.ol-meta-row{display:flex;align-items:flex-start;gap:10px;padding:3px 0}
+.ol-avatar{width:34px;height:34px;border-radius:50%;background:#1a3a6b;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.ol-meta-text{font-size:12.5px;color:#252423;line-height:1.5}
+.ol-meta-text b{font-weight:600}
+.ol-meta-text .ol-sub{color:#605e5c;font-size:11.5px}
+.ol-meta-time{margin-left:auto;font-size:11px;color:#605e5c;flex-shrink:0;padding-top:2px}
+.em-scroll{flex:1;overflow-y:auto;background:#fff;border-top:1px solid #f3f2f1}
+.em-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;max-width:760px;margin:0 auto}
+.em-head{background:#1a3a6b;padding:22px 28px;color:#fff}
+.em-head-brand{font-size:11px;font-weight:800;letter-spacing:.6px;opacity:.85;margin-bottom:8px}
+.em-head-title{font-size:18px;font-weight:800;margin-bottom:4px}
+.em-head-sub{font-size:12px;opacity:.85}
+.em-sec{padding:20px 28px;border-bottom:1px solid #eef0f4}
+.em-sec:last-child{border-bottom:none}
+.em-sec-lbl{font-size:10.5px;font-weight:800;letter-spacing:.5px;color:#1a3a6b;text-transform:uppercase;margin-bottom:12px}
+.em-game-row{display:flex;align-items:center;justify-content:space-between;background:#f8f9fb;border:1px solid #e2e5ec;border-radius:10px;padding:12px 16px;font-size:12.5px;color:#374151}
+.em-game-row b{color:#1a3a6b}
+.em-chart-wrap{background:#f8f9fb;border:1px solid #e2e5ec;border-radius:10px;padding:16px}
+.em-chart-legend{display:flex;gap:18px;margin-bottom:10px;font-size:11px;color:#5b6373}
+.em-leg-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
+.em-chart-cap{font-size:10.5px;color:#9ca3af;margin-top:8px}
+.em-ot-card{border:1px solid #e2e5ec;border-radius:10px;padding:13px 15px;margin-bottom:10px}
+.em-ot-card:last-child{margin-bottom:0}
+.em-ot-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.em-ot-play{font-size:12.5px;font-weight:700;color:#1f2533}
+.em-ot-tag{font-size:9.5px;font-weight:800;letter-spacing:.3px;padding:2px 8px;border-radius:20px;background:#fee2e2;color:#991b1b}
+.em-ot-ratings{font-size:12px;color:#5b6373;display:flex;align-items:center;gap:8px}
+.em-ot-old{color:#9ca3af;text-decoration:line-through}
+.em-ot-new{color:#166534;font-weight:700}
+.em-summary{background:#eff6ff;border:1px solid #bfdbfe;border-left:4px solid #1a3a6b;border-radius:10px;padding:13px 16px;font-size:12.5px;color:#374151;line-height:1.6;font-style:italic}
+.em-links{display:flex;gap:10px}
+.em-link-btn{flex:1;text-align:center;background:#1a3a6b;color:#fff;font-size:12px;font-weight:700;padding:11px 14px;border-radius:9px;text-decoration:none}
+.em-link-btn.alt{background:#fff;border:1px solid #d6dce8;color:#1a3a6b}
+.em-link-btn.report{background:#166534}
+.em-foot{padding:16px 28px;font-size:10.5px;color:#9ca3af;text-align:center;background:#f8f9fb}
+.ack-banner{display:flex;align-items:center;justify-content:space-between;gap:14px;background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:11px 16px;margin:0 0 14px}
+.ack-banner.done{background:#f0fdf4;border-color:#bbf7d0}
+.ack-banner-txt{font-size:12px;color:#991b1b;font-weight:600;display:flex;align-items:center;gap:7px}
+.ack-banner.done .ack-banner-txt{color:#166534}
+.ack-btn{background:#dc2626;color:#fff;border:none;font-size:11.5px;font-weight:700;padding:7px 14px;border-radius:8px;cursor:pointer;flex-shrink:0}
+.ack-btn:hover{background:#b91c1c}
+.ar-overlay{display:none;position:fixed;inset:0;background:rgba(15,20,35,.55);z-index:900;align-items:center;justify-content:center;padding:20px}
+.ar-overlay.open{display:flex}
+.ar-modal{background:#fff;border-radius:14px;width:560px;max-width:94vw;max-height:80vh;display:flex;flex-direction:column;box-shadow:0 24px 60px rgba(0,0,0,.3);overflow:hidden}
+.ar-hdr{background:#1a3a6b;color:#fff;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.ar-hdr-title{font-size:14px;font-weight:800}
+.ar-hdr-sub{font-size:11px;opacity:.8;margin-top:2px}
+.ar-close{background:none;border:none;font-size:18px;color:rgba(255,255,255,.75);cursor:pointer;line-height:1}
+.ar-close:hover{color:#fff}
+.ar-summary{padding:14px 22px;background:#f8f9fb;border-bottom:1px solid #e2e5ec;font-size:12.5px;color:#374151;flex-shrink:0}
+.ar-summary b{color:#1a3a6b}
+.ar-list{overflow-y:auto;padding:10px 16px}
+.ar-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 10px;border-bottom:1px solid #f0f1f5}
+.ar-row:last-child{border-bottom:none}
+.ar-row-play{font-size:12px;color:#1f2533;font-weight:600}
+.ar-row-meta{font-size:10.5px;color:#9ca3af;margin-top:2px}
+.ar-status{font-size:10px;font-weight:800;letter-spacing:.3px;padding:3px 9px;border-radius:20px;white-space:nowrap}
+.ar-status.ok{background:#dcfce7;color:#166534}
+.ar-status.pending{background:#fee2e2;color:#991b1b}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="nav">
+  <div class="nav-logo" onclick="location='home.html'" style="cursor:pointer">
+    <img src="Logos/nba-logo.svg" style="width:16px;height:auto">
+    <div class="nav-brand">BRIDGET REVIEW SYSTEM 1.0</div>
+    <span class="nav-whats-new" onclick="event.stopPropagation();location='whats-new.html'"><i class="ti ti-sparkles" style="font-size:10px"></i> What's New</span>
+  </div>
+  <div class="nav-links">
+    <span class="nl" onclick="location='home.html'">HOME</span>
+    <span class="nl" onclick="location='published-games.html'">PUBLISHED GAMES</span>
+    <div class="nav-dropdown" id="rim-dropdown">
+      <span class="nl" onclick="location='rim.html'">RIM</span>
+      <span class="nl" style="padding-left:0;padding-right:6px;font-size:9px;opacity:.6;cursor:pointer" onclick="toggleRimDropdown(event)">▾</span>
+      <div class="nav-dd-menu" id="rim-dd-menu" style="min-width:190px;left:0;right:auto">
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-home" style="margin-right:7px;font-size:12px"></i>RIM Home</span>
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-inbox" style="margin-right:7px;font-size:12px"></i>Interactions</span>
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-messages" style="margin-right:7px;font-size:12px"></i>Threads</span>
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-layout-board" style="margin-right:7px;font-size:12px"></i>Message Board</span>
+        <span class="nav-dd-item" onclick="location='playlists.html'"><i class="ti ti-playlist" style="margin-right:7px;font-size:12px"></i>Playlists</span>
+        <span class="nav-dd-item" onclick="location='assessments.html'"><i class="ti ti-clipboard-check" style="margin-right:7px;font-size:12px"></i>Assessments</span>
+        <span class="nav-dd-item" onclick="location='poe.html'"><i class="ti ti-target" style="margin-right:7px;font-size:12px"></i>Points of Education</span>
+      </div>
+    </div>
+    <span class="nl">RM REVIEW</span>
+    <span class="nl">FINAL L2M REVIEW</span>
+    <span class="nl">INDEPENDENT REVIEW</span>
+    <span class="nl">ADMINISTRATION</span>
+    <div class="nav-dropdown" id="nav-dropdown">
+      <span class="nl" onclick="toggleNavDropdown(event)">REVIEWER RESOURCE <span class="nav-dd-caret">▾</span></span>
+      <div class="nav-dd-menu">
+        <span class="nav-dd-item" onclick="location='comment-library.html'">Comment Library</span>
+      </div>
+    </div>
+    <span class="nl">MY SCHEDULE</span>
+    <div class="nav-av">BN</div>
+  </div>
+</div>
+
+<div class="subnav">
+  <span class="st" onclick="location='review.html'">Review (1st Pass)</span>
+  <span class="st" onclick="location='review-2ndcheck.html'">Review (2nd Check)</span>
+  <span class="st disabled">OGR</span>
+  <span class="st disabled">Important Calls</span>
+  <span class="st on" data-tab="secondcheck" data-view="secondcheck" onclick="showTab('secondcheck',this)">Second Check</span>
+  <span class="st" data-view="ptiw" onclick="goSub('ptiw',this)">PTIW</span>
+  <span class="st" data-view="oiw" onclick="showTab('oiw',this)">OIW</span>
+</div>
+
+<div class="game-hdr" id="game-hdr">
+  <div>
+    <div class="gh-title">
+      <span style="display:inline-flex;align-items:center;gap:5px"><img src="Logos/toronto tempo logo.jpg" style="width:20px;height:20px;object-fit:contain" onerror="this.style.display='none'"> Toronto Tempo (111)</span>
+      <span style="color:#9ca3af;margin:0 6px">@</span>
+      <span style="display:inline-flex;align-items:center;gap:5px"><img src="Logos/chicago sky logo.png" style="width:20px;height:20px;object-fit:contain" onerror="this.style.display='none'"> Chicago Sky (104)</span>
+    </div>
+    <div class="gh-date">Wednesday, May 27, 2026 &nbsp;·&nbsp; 8:00 PM &nbsp;·&nbsp; #1022600050</div>
+  </div>
+  <div class="gh-sep"></div>
+  <div class="stats">
+    <div class="stat s-d"><div class="sn">18</div><div class="sl">total</div></div>
+    <div class="stat s-r"><div class="sn">5</div><div class="sl">critical</div></div>
+    <div class="stat s-b"><div class="sn">8</div><div class="sl">rating</div></div>
+    <div class="stat s-g"><div class="sn">3</div><div class="sl">notable</div></div>
+    <div class="stat s-a"><div class="sn">5</div><div class="sl">comment</div></div>
+  </div>
+  <div class="gh-right">
+    <div class="flag-count" id="flag-count"><i class="ti ti-flag"></i><span id="flag-num">0</span> flagged</div>
+    <button class="hbtn"><i class="ti ti-table-export"></i> Export</button>
+    <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:6px 12px;font-size:11px;color:#0369a1;display:flex;gap:8px;align-items:center">
+      <span style="font-weight:700">SC:</span>
+      <span>Daniel Foley</span>
+      <span style="color:#7dd3fc">·</span>
+      <span style="font-style:italic;color:#0284c7">"Great job on this review. Sue downgraded some of the Alabanza errors to PIL that we initially went INC on due to last task force call."</span>
+    </div>
+  </div>
+</div>
+
+<div class="toolbar" id="sc-toolbar">
+  <div class="qb on" data-q="all" onclick="qf(this)">All</div>
+  <div class="qb" data-q="Q1" onclick="qf(this)">Q1</div>
+  <div class="qb" data-q="Q2" onclick="qf(this)">Q2</div>
+  <div class="qb" data-q="Q3" onclick="qf(this)">Q3</div>
+  <div class="qb" data-q="Q4" onclick="qf(this)">Q4</div>
+  <div class="tsep"></div>
+  <div class="tb-dd-wrap" id="tb-dd-wrap">
+    <button class="tb-dd-btn" id="tb-dd-btn" onclick="toggleFilterDd(event)">
+      <span id="tb-dd-label">All changes</span> <i class="ti ti-chevron-down" style="font-size:10px"></i>
+    </button>
+    <div class="tb-dd-menu" id="tb-dd-menu">
+      <div class="tb-dd-item on" data-t="all" onclick="tf_dd(this)">All changes</div>
+      <div class="tb-dd-item" data-t="rating" onclick="tf_dd(this)">Rating</div>
+      <div class="tb-dd-item" data-t="playtype" onclick="tf_dd(this)">Play type</div>
+      <div class="tb-dd-item" data-t="official" onclick="tf_dd(this)">Coverage</div>
+      <div class="tb-dd-item" data-t="comment" onclick="tf_dd(this)">Comment</div>
+      <div class="tb-dd-item" data-t="ptiw" onclick="tf_dd(this)">PTIW</div>
+      <div class="tb-dd-item" data-t="other" onclick="tf_dd(this)">Other</div>
+    </div>
+  </div>
+  <div class="tsep"></div>
+  <button class="email-preview-btn" onclick="openEmailPreview()"><i class="ti ti-mail"></i> Preview notify email</button>
+</div>
+
+<div id="overview-panel" style="display:none">
+  <table class="ov-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Time</th>
+        <th>Seg</th>
+        <th>Called</th>
+        <th>Description</th>
+        <th>Rating (FP → SC)</th>
+        <th>Play type change</th>
+        <th>Official</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody id="ov-tbody"></tbody>
+  </table>
+</div>
+
+<div id="oiw-panel" style="display:none;flex:1;overflow-y:auto;background:#f3f4f6;padding:24px 32px;flex-direction:column;gap:28px">
+
+  <div style="display:flex;justify-content:flex-end">
+    <button onclick="window.open(window.location.href.replace(/#.*/,'')+'oiw-standalone.html','_blank','width=1400,height=900')" style="padding:5px 13px;border:1px solid #d1d5db;border-radius:7px;font-size:12px;font-weight:500;background:#fff;color:#374151;cursor:pointer;display:flex;align-items:center;gap:5px"><i class="ti ti-external-link" style="font-size:13px"></i> Open in New Window</button>
+  </div>
+
+  <!-- Critical Plays for Review -->
+  <div class="oiw-section">
+    <div class="oiw-section-title">CRITICAL PLAYS FOR REVIEW</div>
+    <div class="oiw-title-rule"></div>
+    <div class="oiw-table-wrap">
+      <table class="oiw-tbl" style="table-layout:fixed">
+        <colgroup>
+          <col style="width:52px">
+          <col style="width:52px">
+          <col style="width:150px">
+          <col style="width:130px">
+          <col style="width:140px">
+          <col style="width:90px">
+          <col style="width:130px">
+          <col style="width:70px">
+          <col style="width:55px">
+          <col>
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Period</th>
+            <th>Clock</th>
+            <th>Team</th>
+            <th>Player</th>
+            <th>Call Type</th>
+            <th>Concern</th>
+            <th>Official</th>
+            <th>Ejection</th>
+            <th>RPTG</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody id="oiw-critical-tbody">
+          <tr onclick="oiwSelRow(this)">
+            <td>3</td>
+            <td>06:16</td>
+            <td>Toronto Tempo</td>
+            <td>Mabrey, Marina</td>
+            <td>Foul: Flagrant Type 1 (Flagrant 1)</td>
+            <td></td>
+            <td>Fahy, Kevin</td>
+            <td></td>
+            <td></td>
+            <td style="font-size:10.5px;line-height:1.5">The flagrant foul was assessed to Marina Mabrey, when she did not allow the shooter, Sydney Taylor, to land following Sydney's unsuccessful 3 point field goal attempt. Upon review the officials deemed the reckless close out by Marina met the criteria for a Flagrant Foul Penalty 1. Sydney received 3 free throws and Chicago was awarded the ball at the FTLE and 24 on the Shot Clock.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Game Replays -->
+  <div class="oiw-section">
+    <div class="oiw-section-title">GAME REPLAYS</div>
+    <div class="oiw-title-rule"></div>
+    <div class="oiw-table-wrap">
+      <table class="oiw-tbl" style="table-layout:fixed">
+        <colgroup>
+          <col style="width:52px">
+          <col style="width:52px">
+          <col style="width:160px">
+          <col style="width:120px">
+          <col>
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Period</th>
+            <th>Clock</th>
+            <th>Trigger</th>
+            <th>Ruling</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody id="oiw-replays-tbody">
+          <tr onclick="oiwSelRow(this)">
+            <td>3</td>
+            <td>06:16</td>
+            <td>* Flagrants</td>
+            <td>Flagrant 1</td>
+            <td style="font-size:10.5px;line-height:1.5">Instant Replay: Overturn Ruling The defensive foul was assessed to Marina Mabrey, when she did not allow the shooter, Sydney Taylor, to land following Sydney's unsuccessful 3 point field goal attempt. Upon review the officials deemed the reckless close out by Marina met the criteria for a Flagrant Foul Penalty 1. Sydney received 3 free throws and Chicago was awarded the ball at the FTLE and 24 on the Shot Clock.</td>
+          </tr>
+          <tr onclick="oiwSelRow(this)">
+            <td>3</td>
+            <td>05:06</td>
+            <td>* * Coach's Challenge Foul</td>
+            <td>Successful</td>
+            <td style="font-size:10.5px;line-height:1.5">A defensive foul was assessed to Skylar Diggins. Chicago called the 2nd timeout of the 3rd period to challenge the called foul. After review of the left below the camera and left slash camera, the officials deem the defender makes contact with the ball and no illegal contact with the shooter. Therefore the call is overturned to a no call, at the timing of our whistle the ball was loose with no imminent possession which resulted in a jump ball center circle any 2 players in the game at the time of the called foul, shot clock 24. Chicago received their timeout back as well as the opportunity to challenge again.</td>
+          </tr>
+          <tr onclick="oiwSelRow(this)">
+            <td>4</td>
+            <td>03:51</td>
+            <td>* Coach's Challenge Out of Bounds</td>
+            <td>Unsuccessful</td>
+            <td style="font-size:10.5px;line-height:1.5">The out of bounds call on the floor was awarded to Chicago. Toronto called the 3rd timeout of the 4th period to challenge the out of bounds. Upon review of left handheld, left slam, and left slash, the crew deemed the contact from Sydney Taylor to Kiki to be marginal as her left forearm makes contact with the ball, causing it to come loose, bouncing off of Sydney's left knee then last touching Kiki's left hand prior to going out of bounds. The call in the floor stand, unsuccessful, loss of timeout and ability to challenge again.</td>
+          </tr>
+          <tr onclick="oiwSelRow(this)">
+            <td>4</td>
+            <td>02:53</td>
+            <td>* Coach's Challenge Out of Bounds</td>
+            <td>Unsuccessful</td>
+            <td style="font-size:10.5px;line-height:1.5">The out of bounds call on the floor was awarded to Toronto. Chicago called the 4th timeout of the 4th period to call timeout and challenge the out of bounds. After review of the game, left handheld held, left slash, and left slam, the crew determined that Skylar Diggins did in fact touch the ball last, resulting in Toronto basketball, unsuccessful challenge, charged a timeout and due to it being the 2nd Chicago Challenge, they will have no challenges remaining regardless.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Other Notable Plays -->
+  <div class="oiw-section">
+    <div class="oiw-section-title">OTHER NOTABLE PLAYS</div>
+    <div class="oiw-title-rule"></div>
+    <div class="oiw-table-wrap">
+      <table class="oiw-tbl" style="table-layout:fixed">
+        <colgroup>
+          <col style="width:42px">
+          <col style="width:52px">
+          <col style="width:140px">
+          <col style="width:130px">
+          <col style="width:140px">
+          <col style="width:100px">
+          <col style="width:50px">
+          <col>
+        </colgroup>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Clock</th>
+            <th>Team</th>
+            <th>Player</th>
+            <th>Call Type</th>
+            <th>Call Evaluation</th>
+            <th>RPTG</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody id="oiw-notable-tbody">
+          <tr onclick="oiwSelRow(this)">
+            <td>1</td><td>09:04</td><td>Toronto Tempo</td><td>Juskaite, Laura</td><td>Foul: Shooting</td><td>Correct Call</td><td></td>
+            <td style="font-size:10.5px;line-height:1.5">Pathway Play. The defender does not maintain her line and move A to B into the path of the dribbler/shooter. Trail has single whistle, good coverage play.</td>
+          </tr>
+          <tr onclick="oiwSelRow(this)">
+            <td>1</td><td>05:34</td><td>Chicago Sky</td><td>Sheldon, Jacy</td><td>Foul: Personal</td><td>Correct Call</td><td></td>
+            <td style="font-size:10.5px;line-height:1.5">As Mabrey sets a screen and attempts to roll to the basket, she is held by Sheldon, which causes the pass to be fumbled by Mabrey. The defensive foul by Sheldon was correctly called by Trail with the open look.</td>
+          </tr>
+          <tr onclick="oiwSelRow(this)">
+          <tr class="oiw-q-div"><td colspan="8"></td></tr>
+            <tr onclick="oiwSelRow(this)"><td>2</td><td>09:54</td><td>Chicago Sky</td><td>Cloud, Natasha</td><td>Foul: Personal</td><td>Correct Call</td><td></td>
+            <td style="font-size:10.5px;line-height:1.5">As the ball enters the front court, Cloud wraps Mabrey off ball causing a collision and multiple players falling to the floor. The illegal contact by Cloud was correctly called to prevent rough play.</td>
+          </tr>
+          <tr onclick="oiwSelRow(this)">
+            <td>2</td><td>06:26</td><td>Toronto Tempo</td><td>Juskaite, Laura</td><td>Foul: Personal</td><td>Correct Call</td><td></td>
+            <td style="font-size:10.5px;line-height:1.5">POE. Freedom of movement in the most, the defender delivers a blow when she does not beat the offensive player to the spot and get legally in her path in time prior to contact off ball. The defensive foul for chucking the cutter under the basket was properly called by Laura.</td>
+          </tr>
+          <tr onclick="oiwSelRow(this)">
+            <td>2</td><td>01:20</td><td>Toronto Tempo</td><td>Sabally, Nyara</td><td>Rebound</td><td>NCC</td><td></td>
+            <td style="font-size:10.5px;line-height:1.5">POE. The Legal Screen set by Nyara Sabally on the defender Alisha Coulibaly who runs into said legal screen and falls to the floor in attempt to garner an offensive foul. This play was neither an offensive nor a defensive foul as the defender does not take the screener out of normal basketball play. No call correct.</td>
+          </tr>
+          <tr onclick="oiwSelRow(this)">
+          <tr class="oiw-q-div"><td colspan="8"></td></tr>
+            <tr onclick="oiwSelRow(this)"><td>3</td><td>07:13</td><td>Toronto Tempo</td><td>Sabally, Nyara</td><td>Turnaround Jump: Missed</td><td>NCI</td><td></td>
+            <td style="font-size:10.5px;line-height:1.5">CHI #10 Cardoso turns and shoots a mid range jump shot, Cardoso is met by TOR defender #8 Nyara Sabally who is short of the ball. A POC foul is needed here.</td>
+          </tr>
+          <tr onclick="oiwSelRow(this)">
+            <td>3</td><td>06:27</td><td>Toronto Tempo</td><td>Mabrey, Marina</td><td>Foul: Loose Ball</td><td>Correct Call</td><td></td>
+            <td style="font-size:10.5px;line-height:1.5">Loose Ball Foul correctly assessed to Mabrey as Cloud is about to gain imminent possession of the loose ball, the illegal contact by Mabrey who's coming from a perpendicular angle when she fouls Cloud preventing Cloud from getting to the ball as they ball go crashing to the floor.</td>
+          </tr>
+          <tr onclick="oiwSelRow(this)">
+          <tr class="oiw-q-div"><td colspan="8"></td></tr>
+            <tr onclick="oiwSelRow(this)"><td>4</td><td>05:04</td><td>Toronto Tempo</td><td>Mabrey, Marina</td><td>Foul: Offensive Charge</td><td>Incorrect Call</td><td></td>
+            <td style="font-size:10.5px;line-height:1.5">The offensive foul was assessed to Marina Mabrey when it was deemed on the floor that during her shooting motion, Marina voluntarily launched to her right in attempt to veer into the oncoming defender and seek out the contact. However after post game video review the call on the floor should have been a defensive foul for the oncoming defender's momentum carries her into Marina from the side initiating the defensive foul, while Marina is merely bracing to absorb the contact by Sydney.</td>
+          </tr>
+          <tr onclick="oiwSelRow(this)">
+            <td>4</td><td>02:26</td><td>Toronto Tempo</td><td>Rice, Kiki</td><td>Driving Floating Bank Jump Shot: Made</td><td>NCC</td><td></td>
+            <td style="font-size:10.5px;line-height:1.5">On this drive to the basket by CHI #9 Natasha Cloud, defender TOR #1 Kiki Rice establishes and maintains her path on the drive to the basket. The contact on this play is deemed marginal and this is a no call correct.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Comments -->
+  <div class="oiw-section">
+    <div class="oiw-section-title">COMMENTS</div>
+    <div class="oiw-title-rule"></div>
+    <div class="oiw-comm-wrap">
+      <div class="oiw-comm-hdr">
+        <div>Comments</div>
+        <div>Urgent?</div>
+      </div>
+      <div class="oiw-comm-body">No Comments Found</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="main" id="main-panel">
+  <div class="sb">
+    <div class="sb-prog">
+      <div class="prog-label"><span>Progress</span><span id="prog-txt">0 / 18 reviewed</span></div>
+      <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    </div>
+    <div class="sb-list" id="sb-list"></div>
+  </div>
+
+  <div class="center">
+    <div class="band1">
+      <div class="b1-r1">
+        <span class="ev-badge" id="b1-event"></span>
+        <span class="b1-time" id="b1-time"></span>
+        <span class="b1-seg" id="b1-seg"></span>
+        <span class="called-pill" id="b1-called"></span>
+      </div>
+      <div class="b1-desc" id="b1-desc"></div>
+      <div class="b1-r2">
+        <div class="b1-players" id="b1-players"></div>
+        <div class="vsep"></div>
+        <div class="b1-off"><i class="ti ti-user" style="font-size:12px"></i><span id="b1-official"></span><span class="loc-p" id="b1-loc"></span></div>
+        <div class="vsep"></div>
+        <span class="b1-sub" id="b1-sub"></span>
+      </div>
+    </div>
+    <div id="ack-banner"></div>
+    <div class="band2" id="band2"></div>
+    <div class="band3" id="band3"></div>
+    <div class="footer">
+      <button class="fbtn" onclick="simLink('clip')"><i class="ti ti-player-play" style="font-size:13px"></i> Watch clip</button>
+      <button class="fbtn" onclick="simLink('grs')"><i class="ti ti-external-link" style="font-size:13px"></i> Open in GRS</button>
+      <div class="fsep"></div>
+      <button class="fbtn" id="flag-btn" onclick="toggleFlag()"><i class="ti ti-flag" style="font-size:13px"></i> Flag</button>
+      <button class="fbtn" id="playlist-btn" onclick="togglePlaylist()"><i class="ti ti-playlist" style="font-size:13px"></i> Add to playlist</button>
+      <div class="fsep"></div>
+      <button class="fbtn slack-btn" onclick="openSlack('share')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M5.042 15.165a2.528 2.528 0 01-2.52 2.52 2.528 2.528 0 01-2.522-2.52 2.528 2.528 0 012.522-2.52h2.52v2.52zm1.271 0a2.528 2.528 0 012.52-2.52 2.528 2.528 0 012.52 2.52v6.313A2.528 2.528 0 018.833 24a2.528 2.528 0 01-2.52-2.522v-6.313zM8.833 5.042a2.528 2.528 0 01-2.52-2.52A2.528 2.528 0 018.833 0a2.528 2.528 0 012.52 2.522v2.52H8.833zm0 1.271a2.528 2.528 0 012.52 2.52 2.528 2.528 0 01-2.52 2.52H2.522A2.528 2.528 0 010 8.833a2.528 2.528 0 012.522-2.52h6.311zm10.122 2.52a2.528 2.528 0 012.522-2.52A2.528 2.528 0 0124 8.833a2.528 2.528 0 01-2.522 2.52h-2.522V8.833zm-1.268 0a2.528 2.528 0 01-2.52 2.52 2.528 2.528 0 01-2.522-2.52V2.522A2.528 2.528 0 0115.167 0a2.528 2.528 0 012.52 2.522v6.311zm-2.52 10.122a2.528 2.528 0 012.52 2.522A2.528 2.528 0 0115.167 24a2.528 2.528 0 01-2.522-2.522v-2.52h2.522zm0-1.268a2.528 2.528 0 01-2.522-2.52 2.528 2.528 0 012.522-2.522h6.313A2.528 2.528 0 0124 15.167a2.528 2.528 0 01-2.522 2.52h-6.311z"/></svg>
+        Share
+      </button>
+      <button class="slack-dd" onclick="openSlack('question')"><i class="ti ti-chevron-down" style="font-size:12px"></i></button>
+    </div>
+  </div>
+
+  <div class="rp">
+    <div class="vid-area"><div class="vid-frame"><img src="Logos/video player placeholder.png" style="width:100%;height:100%;object-fit:cover;border-radius:6px;display:block"></div></div>
+    <div class="ang-row">
+      <span class="ang on" onclick="selAng(this)">LLB</span><span class="ang" onclick="selAng(this)">RLB</span><span class="ang" onclick="selAng(this)">LAR</span><span class="ang" onclick="selAng(this)">RAR</span><span class="ang" onclick="selAng(this)">RLS</span><span class="ang" onclick="selAng(this)">ABP</span><span class="ang" onclick="selAng(this)">HBP</span><span class="ang" onclick="selAng(this)">INA</span><span class="ang" onclick="selAng(this)">DF BCAST</span>
+    </div>
+    <div class="vid-ctrl">
+      <button class="vcb"><i class="ti ti-rewind"></i></button>
+      <button class="vcb"><i class="ti ti-player-play"></i></button>
+      <button class="vcb"><i class="ti ti-fast-forward"></i></button>
+      <div class="vtrack"><div class="vfill"><div class="vhead"></div></div></div>
+      <span class="vtime" id="v-time">0:00</span>
+      <button class="vcb"><i class="ti ti-maximize"></i></button>
+    </div>
+    <div class="rp-box"><div class="rp-lbl"><i class="ti ti-bell" style="color:#f59e0b"></i> PTIW comment</div><div class="rp-val" id="rp-ptiw">No PTIW comment</div></div>
+    <div class="rp-box"><div class="rp-lbl"><i class="ti ti-message-circle" style="color:#f97316"></i> OIW comment</div><div class="rp-val" id="rp-oiw">No OIW comment</div></div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay" onclick="closeModal()"></div>
+
+<div class="pl-modal" id="pl-modal">
+  <div class="pl-hd">
+    <span style="font-size:14px;font-weight:600;color:#111827">Add to playlist</span>
+    <button class="sm-x" style="color:#6b7280" onclick="closePlModal()">✕</button>
+  </div>
+  <div class="pl-body">
+    <div class="pl-lbl">Select a playlist</div>
+    <div id="pl-options"></div>
+    <div class="pl-new" id="pl-new-row">
+      <input class="pl-input" id="pl-input" placeholder="New playlist name…" onkeydown="if(event.key==='Enter')createPlaylist()">
+      <button class="pl-create-btn" onclick="createPlaylist()">Create</button>
+    </div>
+    <button class="pl-add-new-btn" id="pl-add-new-btn" onclick="toggleNewPlaylist()"><i class="ti ti-plus" style="font-size:11px"></i> New playlist</button>
+    <div style="border-top:1px solid #f3f4f6;margin:10px 0 8px"></div>
+    <div class="pl-lbl">Playlist Note</div>
+    <textarea id="pl-note" placeholder="Add a note about why you're saving this play…" style="width:100%;border:1px solid #e5e7eb;border-radius:7px;padding:8px 10px;font-size:12px;font-family:inherit;resize:none;color:#374151;line-height:1.5;background:#f9fafb;min-height:60px" onfocus="this.style.borderColor='#1a3a6b';this.style.background='#fff'" onblur="this.style.borderColor='#e5e7eb';this.style.background='#f9fafb'"></textarea>
+  </div>
+  <div class="pl-footer">
+    <button class="sm-can" onclick="closePlModal()">Cancel</button>
+    <button class="pl-done" onclick="confirmPlaylist()">Add to playlist</button>
+  </div>
+</div>
+
+<div class="slack-modal" id="slack-modal">
+  <div class="sm-hd">
+    <div class="sm-title">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#E01E5A"><path d="M5.042 15.165a2.528 2.528 0 01-2.52 2.52 2.528 2.528 0 01-2.522-2.52 2.528 2.528 0 012.522-2.52h2.52v2.52zm1.271 0a2.528 2.528 0 012.52-2.52 2.528 2.528 0 012.52 2.52v6.313A2.528 2.528 0 018.833 24a2.528 2.528 0 01-2.52-2.522v-6.313zM8.833 5.042a2.528 2.528 0 01-2.52-2.52A2.528 2.528 0 018.833 0a2.528 2.528 0 012.52 2.522v2.52H8.833zm0 1.271a2.528 2.528 0 012.52 2.52 2.528 2.528 0 01-2.52 2.52H2.522A2.528 2.528 0 010 8.833a2.528 2.528 0 012.522-2.52h6.311zm10.122 2.52a2.528 2.528 0 012.522-2.52A2.528 2.528 0 0124 8.833a2.528 2.528 0 01-2.522 2.52h-2.522V8.833zm-1.268 0a2.528 2.528 0 01-2.52 2.52 2.528 2.528 0 01-2.522-2.52V2.522A2.528 2.528 0 0115.167 0a2.528 2.528 0 012.52 2.522v6.311zm-2.52 10.122a2.528 2.528 0 012.52 2.522A2.528 2.528 0 0115.167 24a2.528 2.528 0 01-2.522-2.522v-2.52h2.522zm0-1.268a2.528 2.528 0 01-2.522-2.52 2.528 2.528 0 012.522-2.522h6.313A2.528 2.528 0 0124 15.167a2.528 2.528 0 01-2.522 2.52h-6.311z"/></svg>
+      Share via Slack
+    </div>
+    <button class="sm-x" onclick="closeModal()">✕</button>
+  </div>
+  <div class="sm-body">
+    <div><div class="sm-lbl">Send to</div><select class="sm-sel"><option>@Bridget Ng</option><option>@Sarah Chen</option><option>@David Foley (manager)</option><option>#grs-review-team</option></select></div>
+    <div>
+      <div class="sm-lbl" style="margin-bottom:6px">Type</div>
+      <div class="sm-types">
+        <div class="sm-type sel" id="st-share" onclick="sType('share')">Share play</div>
+        <div class="sm-type" id="st-q" onclick="sType('question')">Ask a question</div>
+      </div>
+    </div>
+    <div><div class="sm-lbl">Preview</div><div class="sm-prev" id="sm-prev"></div></div>
+  </div>
+  <div class="sm-ft">
+    <button class="sm-can" onclick="closeModal()">Cancel</button>
+    <button class="sm-send" onclick="sendSlack()">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M5.042 15.165a2.528 2.528 0 01-2.52 2.52 2.528 2.528 0 01-2.522-2.52 2.528 2.528 0 012.522-2.52h2.52v2.52zm1.271 0a2.528 2.528 0 012.52-2.52 2.528 2.528 0 012.52 2.52v6.313A2.528 2.528 0 018.833 24a2.528 2.528 0 01-2.52-2.522v-6.313zM8.833 5.042a2.528 2.528 0 01-2.52-2.52A2.528 2.528 0 018.833 0a2.528 2.528 0 012.52 2.522v2.52H8.833zm0 1.271a2.528 2.528 0 012.52 2.52 2.528 2.528 0 01-2.52 2.52H2.522A2.528 2.528 0 010 8.833a2.528 2.528 0 012.522-2.52h6.311zm10.122 2.52a2.528 2.528 0 012.522-2.52A2.528 2.528 0 0124 8.833a2.528 2.528 0 01-2.522 2.52h-2.522V8.833zm-1.268 0a2.528 2.528 0 01-2.52 2.52 2.528 2.528 0 01-2.522-2.52V2.522A2.528 2.528 0 0115.167 0a2.528 2.528 0 012.52 2.522v6.311zm-2.52 10.122a2.528 2.528 0 012.52 2.522A2.528 2.528 0 0115.167 24a2.528 2.528 0 01-2.522-2.522v-2.52h2.522zm0-1.268a2.528 2.528 0 01-2.522-2.52 2.528 2.528 0 012.522-2.522h6.313A2.528 2.528 0 0124 15.167a2.528 2.528 0 01-2.522 2.52h-6.311z"/></svg>
+      Send to Slack
+    </button>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+</div>
+
+<script>
+const RATING_COL = {
+  'Infraction':                     {bg:'#FEE2E2', txt:'#991B1B'},
+  'Judgment — Lean Infraction':     {bg:'#FEF9C3', txt:'#854D0E'},
+  'Judgment — Lean No Infraction':  {bg:'#FEF3CD', txt:'#92400E'},
+  'No Infraction':                  {bg:'#DCFCE7', txt:'#166534'},
+  'Enhanced Review':                {bg:'#E0E7FF', txt:'#3730A3'},
+};
+function ratingPill(val) {
+  const r = RATING_COL[val];
+  if (!r) return `<span style="font-size:12px;font-weight:600;color:#374151">${val}</span>`;
+  return `<span class="ch-sc-pill" style="background:${r.bg};color:${r.txt}">${val}</span>`;
+}
+
+const COL = {
+  rating:        {bg:'#DBEAFE', txt:'#1E40AF', dot:'#2563EB'},
+  location:      {bg:'#F3E8FF', txt:'#7C3AED', dot:'#7C3AED'},
+  official:      {bg:'#FCE7F3', txt:'#BE185D', dot:'#BE185D'},
+  playtype:      {bg:'#DCFCE7', txt:'#166534', dot:'#16A34A'},
+  infractiontype:{bg:'#FEF9C3', txt:'#854D0E', dot:'#D97706'},
+  observability: {bg:'#F3F4F6', txt:'#374151', dot:'#9CA3AF'}
+};
+
+const ALL_FIELDS = ['Rating','Infraction type','Play type','Official','Location','Observability'];
+
+// tier: 'critical' | 'notable' | 'standard' | 'comment'
+// changeTags: array of tag strings for filter matching
+const PLAYS = [
+  {
+    id:2, called:'NC', tier:'standard', quarter:'Q1',
+    event:'FOUL: LOOSE BALL', time:'Q1 09:33.7', seg:'Segment 1',
+    desc:'M. Mabrey rebounds the missed attempt',
+    player:'N. Sabally', opp:'K. Cardoso',
+    official:'Genesis Perrymond', loc:'Lead', locC:'lp-lead',
+    sub:'Foul: Loose Ball · Rebound',
+    changes:[{f:'Rating', old:'No Infraction', nw:'Judgment — Lean No Infraction', tag:'rating'}],
+    unchanged:{'Infraction type':'Foul: Loose Ball','Play type':'Rebound','Official':'Genesis Perrymond','Location':'Lead','Observability':'Observable'},
+    changeTags:['rating'],
+    fpComment:'', scComment:'', commentChanged:false,
+    yourNotes:'the tempo bench wanted a foul? but I don\'t think Cardoso did anything illegal here',
+    managerNotes:'I dont think Sabally does anything illegal here either and I think Cardoso going through her back a bit on the way to the ball so good with PIN but would also be fine with CNC tbh',
+    clip:['Q1','Loose Ball','N. Sabally (TOR)','K. Cardoso (CHI)','Qualified'], vt:'9:33 / 11:00', ptiw:'No PTIW comment', oiw:'No OIW comment'
+  },
+  {
+    id:1, called:'NC', tier:'critical', quarter:'Q1',
+    event:'FOUL: OFFENSIVE', time:'Q1 06:46', seg:'Segment 13',
+    desc:'S. Diggins drives toward the basket defended by M. Conde',
+    player:'S. Diggins', opp:'M. Conde',
+    official:'Catherine Chang', loc:'Lead', locC:'lp-lead',
+    sub:'Foul: Offensive · End Of Drive',
+    changes:[
+      {f:'Rating', old:'Judgment — Lean No Infraction', nw:'Infraction', tag:'rating'},
+      {f:'Official', old:'Kevin Fahy', nw:'Catherine Chang', tag:'official'}
+    ],
+    unchanged:{'Infraction type':'Foul: Offensive','Play type':'End Of Drive','Location':'Lead','Observability':'Observable'},
+    changeTags:['rating','official'],
+    fpComment:'', scComment:'Diggins (CHI) initiates contact with Conde (TOR), who has established a legal guarding position in Diggins\' path and outside the restricted area prior to Diggins\' upward motion.', commentChanged:true,
+    yourNotes:'Conde ends up getting dislodged so I put PIN but I think Diggins still is considered to be "going to" Conde\'s space?',
+    managerNotes:'PTIW, I was leaning more PIL but find it kind of hard to defend a PI with a team asking for an INC',
+    clip:['Q1','Offensive','S. Diggins (CHI)','M. Conde (TOR)','Qualified'], vt:'6:46 / 8:20', ptiw:'PTIW comment available', oiw:'No OIW comment'
+  },
+  {
+    id:0, called:'NC', tier:'standard', quarter:'Q1',
+    event:'FOUL: PERSONAL', time:'Q1 04:46.1', seg:'Segment 22',
+    desc:'B. Sykes drives toward the basket defended by K. Cardoso',
+    player:'K. Cardoso', opp:'B. Sykes',
+    official:'Kevin Fahy', loc:'Slot', locC:'lp-slot',
+    sub:'Foul: Personal · During Drive',
+    changes:[{f:'Rating', old:'Judgment — Lean No Infraction', nw:'No Infraction', tag:'rating'}],
+    unchanged:{'Infraction type':'Foul: Personal','Play type':'During Drive','Official':'Kevin Fahy','Location':'Slot','Observability':'Observable'},
+    changeTags:['rating'],
+    fpComment:'', scComment:'', commentChanged:false,
+    yourNotes:'mutual engage/hook? contact/effect looks quite marginal either way',
+    managerNotes:'I actually think Sykes reaches out and initiates the contact',
+    clip:['Q1','Personal','K. Cardoso (CHI)','B. Sykes (CHI)','Qualified'], vt:'4:46 / 6:10', ptiw:'No PTIW comment', oiw:'No OIW comment'
+  },
+  {
+    id:3, called:'NC', tier:'standard', quarter:'Q1',
+    event:'FOUL: SHOOTING', time:'Q1 03:57.5', seg:'Segment 25',
+    desc:'K. Cardoso attempts a shot and is defended by T. Key',
+    player:'T. Key', opp:'K. Cardoso',
+    official:'Catherine Chang', loc:'Lead', locC:'lp-lead',
+    sub:'Foul: Shooting · Floater → Post Shot',
+    changes:[{f:'Play type', old:'Floater', nw:'Post Shot', tag:'playtype'}],
+    unchanged:{'Rating':'No Infraction','Infraction type':'Foul: Shooting','Official':'Catherine Chang','Location':'Lead','Observability':'Observable'},
+    changeTags:['playtype'],
+    fpComment:'', scComment:'There is no clear or conclusive video evidence to determine if Key (TOR) makes contact with Cardoso\'s (CHI) arm as Key contests the shot attempt.', commentChanged:true,
+    yourNotes:'think there might have been some A-B / blocking action here but no angles, so just CC?',
+    managerNotes:'',
+    clip:['Q1','Shooting','T. Key (TOR)','K. Cardoso (CHI)','Qualified'], vt:'3:57 / 5:30', ptiw:'No PTIW comment', oiw:'No OIW comment'
+  },
+  {
+    id:4, called:'NC', tier:'critical', quarter:'Q1',
+    event:'FOUL: OFFENSIVE', time:'Q1 03:03.5', seg:'Segment 28',
+    desc:'K. Rice attempts a shot and is defended by E. Williams',
+    player:'K. Rice', opp:'E. Williams',
+    official:'Catherine Chang', loc:'Lead', locC:'lp-lead',
+    sub:'Foul: Offensive · Layup Or Dunk',
+    changes:[{f:'Rating', old:'Judgment — Lean No Infraction', nw:'Infraction', tag:'rating'}],
+    unchanged:{'Infraction type':'Foul: Offensive','Play type':'Layup Or Dunk','Official':'Catherine Chang','Location':'Lead','Observability':'Observable'},
+    changeTags:['rating'],
+    fpComment:'After releasing the shot, Rice\'s (TOR) right arm comes down and some contact occurs with Williams\' (CHI) head/face. Contact to an opponent\'s head/face can be deemed marginal when the result of a natural basketball move, provided the contact is not disproportionate or uncontrolled.',
+    scComment:'After releasing the shot, Rice\'s (TOR) left arm comes down and grabs Williams\' (CHI) shoulder. Subsequently, Rice\'s right arm initiates contact with Williams\' head.', commentChanged:true,
+    yourNotes:'',
+    managerNotes:'I think the combination of the shoulder grab into the head contact is enough for an INC under the POEs of not wanting to promote rough play',
+    clip:['Q1','Offensive','K. Rice (TOR)','E. Williams (CHI)','Qualified'], vt:'3:03 / 4:45', ptiw:'No PTIW comment', oiw:'No OIW comment'
+  },
+  {
+    id:5, called:'C', tier:'standard', quarter:'Q1',
+    event:'FOUL: SHOOTING', time:'Q1 02:21.4', seg:'Segment 30',
+    desc:'R. Banham is called for fouling M. Conde',
+    player:'R. Banham', opp:'M. Conde',
+    official:'Catherine Chang', loc:'Lead', locC:'lp-lead',
+    sub:'Foul: Shooting · Driving Shot Attempt',
+    changes:[{f:'Rating', old:'Judgment — Lean Infraction', nw:'Judgment — Lean No Infraction', tag:'rating'}],
+    unchanged:{'Infraction type':'Foul: Shooting','Play type':'Driving Shot Attempt','Official':'Catherine Chang','Location':'Lead','Observability':'Observable'},
+    changeTags:['rating'],
+    fpComment:'Banham (CHI) lowers their arm slightly and some contact occurs with Conde\'s (TOR) non-shooting arm during their shooting motion. Conde is able to move through the contact to finish at the rim, and there is judgement regarding the degree and effect of the contact.',
+    scComment:'Banham (CHI) lowers their arm slightly and some contact occurs with Conde\'s (TOR) off-arm during their shooting motion. Conde is able to move through the contact to finish at the rim, and there is judgement regarding the degree and effect of the contact.', commentChanged:true,
+    yourNotes:'replay at 49:17 on HBP, Banham doesn\'t get Conde\'s shooting arm, feel like this could\'ve been a PIN in the NBA?',
+    managerNotes:'Agree',
+    clip:['Q1','Shooting','R. Banham (CHI)','M. Conde (TOR)','Qualified'], vt:'2:21 / 3:55', ptiw:'No PTIW comment', oiw:'No OIW comment'
+  },
+  {
+    id:6, called:'NC', tier:'notable', quarter:'Q1',
+    event:'FOUL: PERSONAL', time:'Q1 00:53.5', seg:'Segment 37',
+    desc:'S. Taylor attempts a shot and is defended by L. Held',
+    player:'L. Held', opp:'S. Taylor',
+    official:'Kevin Fahy', loc:'Slot', locC:'lp-slot',
+    sub:'Foul: Shooting · Driving Shot Attempt',
+    changes:[
+      {f:'Infraction type', old:'Foul: Personal', nw:'Foul: Shooting', tag:'infractiontype'},
+      {f:'Play type', old:'During Drive', nw:'Driving Shot Attempt', tag:'playtype'}
+    ],
+    unchanged:{'Rating':'Judgment — Lean Infraction','Official':'Kevin Fahy','Location':'Slot','Observability':'Observable'},
+    changeTags:['infractiontype','playtype'],
+    fpComment:'Held (TOR) briefly places their arm on Taylor\'s (CHI) front and some contact occurs during the drive. There is judgement in determining if the contact is more than marginal.',
+    scComment:'Held (TOR) briefly places their arm on Taylor\'s (CHI) front and some contact occurs during the drive. There is judgement in determining if the contact is more than marginal.', commentChanged:true,
+    yourNotes:'replay at 52:51 on HBP, contact/effect doesn\'t look more than marginal?',
+    managerNotes:'agree with rating but she is gathered when the contact occurs so going shooting',
+    clip:['Q1','Shooting','L. Held (TOR)','S. Taylor (CHI)','Qualified'], vt:'0:53 / 2:20', ptiw:'No PTIW comment', oiw:'No OIW comment'
+  },
+  {
+    id:7, called:'NC', tier:'standard', quarter:'Q1',
+    event:'FOUL: SHOOTING', time:'Q1 00:04.7', seg:'Segment 40',
+    desc:'B. Sykes attempts a shot and is defended by N. Cloud',
+    player:'N. Cloud', opp:'B. Sykes',
+    official:'Genesis Perrymond', loc:'Trail', locC:'lp-trail',
+    sub:'Foul: Shooting · Jump Shot',
+    changes:[{f:'Rating', old:'Judgment — Lean No Infraction', nw:'No Infraction', tag:'rating'}],
+    unchanged:{'Infraction type':'Foul: Shooting','Play type':'Jump Shot','Official':'Genesis Perrymond','Location':'Trail','Observability':'Observable'},
+    changeTags:['rating'],
+    fpComment:'',scComment:'', commentChanged:false,
+    yourNotes:'Sykes wanted a foul for this one but Cloud has her hand on Sykes\' back right before the gather and retracts it pretty quickly, I think Cloud sells it by jumping forward.',
+    managerNotes:'this one I have nothing on the shot and going PIN on the contact coming over the pick. I think she feels that contact and tries to immediately shoot thinking she is going to get a shooting foul that would clearly be on the floor',
+    clip:['Q1','Shooting','N. Cloud (CHI)','B. Sykes (CHI)','Qualified'], vt:'0:04 / 1:30', ptiw:'No PTIW comment', oiw:'No OIW comment'
+  },
+  {
+    id:8, called:'NC', tier:'notable', quarter:'Q2',
+    event:'CONTACT', time:'Q2 09:20.7', seg:'Segment 503',
+    desc:'Contact involving M. Mabrey and K. Cardoso',
+    player:'K. Cardoso', opp:'M. Mabrey',
+    official:'Catherine Chang', loc:'Trail', locC:'lp-trail',
+    sub:'Foul: Personal · On-Ball',
+    changes:[
+      {f:'Play type', old:'Secondary Defender', nw:'On-Ball', tag:'playtype'},
+      {f:'Rating', old:'Judgment — Lean No Infraction', nw:'Judgment — Lean Infraction', tag:'rating'}
+    ],
+    unchanged:{'Infraction type':'Foul: Personal','Official':'Catherine Chang','Location':'Trail','Observability':'Observable'},
+    changeTags:['playtype','rating'],
+    fpComment:'', scComment:'', commentChanged:false,
+    yourNotes:'some arm contact but Mabrey makes the pass',
+    managerNotes:'To me a lot of contact but I like the no whistle as it leads to an open 3. I think refs are right for letting this play out.',
+    clip:['Q2','Contact','K. Cardoso (CHI)','M. Mabrey (TOR)','Qualified'], vt:'9:20 / 11:00', ptiw:'No PTIW comment', oiw:'No OIW comment'
+  },
+  {
+    id:9, called:'C', tier:'standard', quarter:'Q2',
+    event:'FOUL: PERSONAL', time:'Q2 06:30.4', seg:'Segment 514',
+    desc:'K. Nurse is called for fouling N. Cloud',
+    player:'K. Nurse', opp:'N. Cloud',
+    official:'Kevin Fahy', loc:'Slot', locC:'lp-slot',
+    sub:'Foul: Personal · Contact - Off-Ball',
+    changes:[],
+    unchanged:{'Rating':'Judgment — Lean No Infraction','Infraction type':'Foul: Personal','Play type':'Contact - Off-Ball','Official':'Kevin Fahy','Location':'Slot','Observability':'Observable'},
+    changeTags:[],
+    fpComment:'Nurse (TOR) and Cloud (CHI) come together at the same spot off-ball and some foot-to-foot contact occurs. The contact appears incidental.',
+    scComment:'Nurse (TOR) and Cloud (CHI) come together at the same spot off-ball and some foot-to-foot contact occurs. There is judgement by the referee if the contact is marginal or incidental. Although a whistle is not technically incorrect, not having a whistle would not be incorrect either.', commentChanged:true,
+    yourNotes:'sent in slack/foley',
+    managerNotes:'PTIW',
+    clip:['Q2','Personal','K. Nurse (TOR)','N. Cloud (CHI)','Qualified'], vt:'6:30 / 8:00', ptiw:'PTIW comment available', oiw:'No OIW comment'
+  },
+  {
+    id:10, called:'C', tier:'standard', quarter:'Q2',
+    event:'FOUL: SHOOTING', time:'Q2 01:50.6', seg:'Segment 532',
+    desc:'K. Rice is called for fouling A. Coulibaly',
+    player:'K. Rice', opp:'A. Coulibaly',
+    official:'Kevin Fahy', loc:'Lead', locC:'lp-lead',
+    sub:'Foul: Shooting · Layup Or Dunk',
+    changes:[{f:'Rating', old:'Judgment — Lean No Infraction', nw:'Judgment — Lean Infraction', tag:'rating'}],
+    unchanged:{'Infraction type':'Foul: Shooting','Play type':'Layup Or Dunk','Official':'Kevin Fahy','Location':'Lead','Observability':'Observable'},
+    changeTags:['rating'],
+    fpComment:'Rice (TOR) gets to the ball and some contact occurs with Coulibaly (CHI) hand as Rice is sliding their hand off the ball. The contact is considered incidental.',
+    scComment:'Broadcast replay shows Rice\'s (TOR) right hand initially makes clean contact with the ball. As Rice\'s hand slides off the ball, some arm-to-arm contact occurs with Coulibaly (CHI).', commentChanged:true,
+    yourNotes:'replay at 1:20:33, Coulibaly also makes the shot',
+    managerNotes:'cant be incidental since she doesnt dislodge it, looks like some forearm to forearm so going PIL',
+    clip:['Q2','Shooting','K. Rice (TOR)','A. Coulibaly (CHI)','Qualified'], vt:'1:50 / 3:20', ptiw:'No PTIW comment', oiw:'No OIW comment'
+  },
+  {
+    id:11, called:'NC', tier:'standard', quarter:'Q2',
+    event:'FOUL: OFFENSIVE', time:'Q2 01:06.7', seg:'Segment 535',
+    desc:'N. Sabally sets a screen for M. Conde defended by A. Coulibaly',
+    player:'N. Sabally', opp:'A. Coulibaly',
+    official:'Catherine Chang', loc:'Trail', locC:'lp-trail',
+    sub:'Foul: Offensive · Screener',
+    changes:[],
+    unchanged:{'Rating':'No Infraction','Infraction type':'Foul: Offensive','Play type':'Screener','Official':'Catherine Chang','Location':'Trail','Observability':'Observable'},
+    changeTags:[],
+    fpComment:'Sabally (TOR) is firming up on their left foot and absorbs the body contact that occurs as they set the pick on Coulibaly (CHI).',
+    scComment:'Sabally (TOR) firms up on their left foot and absorbs the body contact that occurs while setting the pick on Coulibaly (CHI). Additionally, Coulibaly does not go through Sabally\'s space, therefore, the contact as the players come together is considered incidental.', commentChanged:true,
+    yourNotes:'CNC? huge bench reaction',
+    managerNotes:'',
+    clip:['Q2','Offensive','N. Sabally (TOR)','A. Coulibaly (CHI)','Qualified'], vt:'1:06 / 2:40', ptiw:'No PTIW comment', oiw:'No OIW comment'
+  },
+  {
+    id:12, called:'NC', tier:'critical', quarter:'Q2',
+    event:'TURNOVER: TRAVELING', time:'Q2 01:04', seg:'Segment 535',
+    desc:'M. Conde starts her dribble defended by E. Williams',
+    player:'M. Conde', opp:'Sky',
+    official:'Genesis Perrymond', loc:'Slot', locC:'lp-slot',
+    sub:'Turnover: Traveling · Stationary Movement',
+    changes:[
+      {f:'Rating', old:'Infraction', nw:'No Infraction', tag:'rating'},
+      {f:'Official', old:'Kevin Fahy', nw:'Genesis Perrymond', tag:'official'},
+      {f:'Location', old:'Lead', nw:'Slot', tag:'location'}
+    ],
+    unchanged:{'Infraction type':'Turnover: Traveling','Play type':'Stationary Movement','Observability':'Observable'},
+    changeTags:['rating','official','location'],
+    fpComment:'Conde (TOR) establishes their right foot as her pivot, which they move from heel to toe to create distance.',
+    scComment:'Conde (TOR) gathers the ball on their left foot and establishes their right foot as the pivot foot, which Conde maintains prior to passing.', commentChanged:true,
+    yourNotes:'',
+    managerNotes:'I see the bench reaction but I think this is ugly but legal',
+    clip:['Q2','Traveling','M. Conde (TOR)','—','Qualified'], vt:'1:04 / 2:38', ptiw:'No PTIW comment', oiw:'No OIW comment'
+  },
+  {
+    id:13, called:'NC', tier:'standard', quarter:'Q3',
+    event:'FOUL: SHOOTING', time:'Q3 04:32.4', seg:'Segment 1022',
+    desc:'S. Taylor attempts a shot and is defended by T. Key',
+    player:'T. Key', opp:'S. Taylor',
+    official:'Catherine Chang', loc:'Lead', locC:'lp-lead',
+    sub:'Foul: Shooting · Driving Shot Attempt',
+    changes:[],
+    unchanged:{'Rating':'No Infraction','Infraction type':'Foul: Shooting','Play type':'Driving Shot Attempt','Official':'Catherine Chang','Location':'Lead','Observability':'Observable'},
+    changeTags:[],
+    fpComment:'Key (TOR) establishes a legal guarding position in Taylor\'s (CHI) path prior to the contact during the driving shot attempt.',
+    scComment:'Key (TOR) appears to legally contest Taylor\'s (CHI) driving shot attempt, and the follow-through contact after the release is considered incidental.', commentChanged:true,
+    yourNotes:'angry bench',
+    managerNotes:'',
+    clip:['Q3','Shooting','T. Key (TOR)','S. Taylor (CHI)','Qualified'], vt:'4:32 / 6:05', ptiw:'No PTIW comment', oiw:'No OIW comment'
+  },
+  {
+    id:14, called:'C', tier:'standard', quarter:'Q3',
+    event:'FOUL: SHOOTING', time:'Q3 02:03.0', seg:'Segment 1034',
+    desc:'K. Rice is called for fouling E. Williams',
+    player:'K. Rice', opp:'E. Williams',
+    official:'Catherine Chang', loc:'Lead', locC:'lp-lead',
+    sub:'Foul: Shooting · Layup Or Dunk',
+    changes:[],
+    unchanged:{'Rating':'No Infraction','Infraction type':'Foul: Shooting','Play type':'Layup Or Dunk','Official':'Catherine Chang','Location':'Lead','Observability':'Observable'},
+    changeTags:[],
+    fpComment:'Rice (TOR) makes clean contact with the ball and dislodges it from Williams\' (CHI) control during their shot attempt near the rim. Any ensuing arm contact is considered incidental.',
+    scComment:'Broadcast replay shows Rice (TOR) makes clean contact with the ball and dislodges it from Williams\' (CHI) control during their shot attempt near the rim. Any ensuing arm contact is considered incidental.', commentChanged:true,
+    yourNotes:'replay at 2:02:55',
+    managerNotes:'',
+    clip:['Q3','Shooting','K. Rice (TOR)','E. Williams (CHI)','Qualified'], vt:'2:03 / 3:35', ptiw:'No PTIW comment', oiw:'No OIW comment'
+  },
+  {
+    id:15, called:'NC', tier:'critical', quarter:'Q3',
+    event:'FOUL: SHOOTING', time:'Q3 01:51.9', seg:'Segment 1035',
+    desc:'K. Rice attempts a shot and is defended by S. Taylor',
+    player:'S. Taylor', opp:'K. Rice',
+    official:'Catherine Chang', loc:'Lead', locC:'lp-lead',
+    sub:'Foul: Shooting · Layup Or Dunk',
+    changes:[{f:'Rating', old:'Infraction', nw:'Judgment — Lean No Infraction', tag:'rating'}],
+    unchanged:{'Infraction type':'Foul: Shooting','Play type':'Layup Or Dunk','Official':'Catherine Chang','Location':'Lead','Observability':'Observable'},
+    changeTags:['rating'],
+    fpComment:'Taylor (CHI) lowers their arms and initiates illegal contact with Rice\'s (TOR) arm, which affects their shot attempt near the rim.',
+    scComment:'', commentChanged:false,
+    yourNotes:'point of contact, replay at 2:05:29 on HBP',
+    managerNotes:'I think she is pretty vertical and absorbs, arms arent perfect so going PIN but I think it is a good no call and good defense',
+    clip:['Q3','Shooting','S. Taylor (CHI)','K. Rice (TOR)','Qualified'], vt:'1:51 / 3:25', ptiw:'No PTIW comment', oiw:'No OIW comment'
+  },
+  {
+    id:16, called:'NC', tier:'notable', quarter:'Q4',
+    event:'FOUL: OFFENSIVE', time:'Q4 04:56.2', seg:'Segment 1521',
+    desc:'E. Williams sets a screen for S. Diggins defended by M. Conde',
+    player:'E. Williams', opp:'M. Conde',
+    official:'Catherine Chang', loc:'Trail', locC:'lp-trail',
+    sub:'Foul: Offensive · Screener',
+    changes:[],
+    unchanged:{'Rating':'No Infraction','Infraction type':'Foul: Offensive','Play type':'Screener','Official':'Catherine Chang','Location':'Trail','Observability':'Observable'},
+    changeTags:[],
+    fpComment:'Williams (CHI) is firmed up in their stance and absorbs the marginal body contact that occurs as they set the pick on Conde (TOR).',
+    scComment:'', commentChanged:false,
+    yourNotes:'flop? lol replay at 2:26:10 on HBP',
+    managerNotes:'',
+    clip:['Q4','Offensive','E. Williams (CHI)','M. Conde (TOR)','Qualified'], vt:'4:56 / 6:30', ptiw:'No PTIW comment', oiw:'No OIW comment'
+  },
+  {
+    id:17, called:'C', tier:'standard', quarter:'Q4',
+    event:'TURNOVER: LOST BALL OOB', time:'Q4 03:50.8', seg:'Segment 1524',
+    desc:'Turnover: Lost Ball Out of Bounds',
+    player:'K. Rice', opp:'S. Taylor',
+    official:'Genesis Perrymond', loc:'Slot', locC:'lp-slot',
+    sub:'Out-of-Bounds · Ball Out of Bounds',
+    changes:[{f:'Location', old:'Lead', nw:'Slot', tag:'location'}],
+    unchanged:{'Rating':'Infraction','Infraction type':'Turnover: Lost Ball OOB','Play type':'Ball Out of Bounds','Official':'Genesis Perrymond','Observability':'Observable'},
+    changeTags:['location'],
+    fpComment:'Replay review of the out of bounds called on Rice (TOR) pursuant to a coach\'s challenge was deemed unsuccessful. Replay shows Rice is the last to touch the ball before it goes out of bounds.',
+    scComment:'Replay review of the out of bounds called on Rice (TOR) pursuant to a coach\'s challenge was deemed unsuccessful. Replay did not show clear and conclusive video evidence to overturn the on court ruling that Rice is the last to touch the ball before it goes out of bounds.', commentChanged:true,
+    yourNotes:'',
+    managerNotes:'PTIW',
+    clip:['Q4','OOB','K. Rice (TOR)','S. Taylor (CHI)','Qualified'], vt:'3:50 / 5:25', ptiw:'PTIW comment available', oiw:'No OIW comment'
+  }
+];
+
+const TIER_ORDER = ['critical','notable','standard'];
+const TIER_META = {
+  critical: {label:'Critical', color:'#dc2626'},
+  notable:  {label:'Notable',  color:'#7c3aed'},
+  standard: {label:'Standard', color:'#1d4ed8'}
+};
+
+const ABBR = {
+  'Infraction':                    'INC',
+  'Judgment — Lean Infraction':    'PIL',
+  'Judgment — Lean No Infraction': 'PIN',
+  'No Infraction':                 'CNC',
+};
+function abbr(val) { return ABBR[val] || val; }
+
+function sbLabel(p) {
+  if (p.changes.length === 0) return 'Comment';
+  return p.changes.map(c => {
+    if (c.f === 'Rating') return abbr(c.old) + ' → ' + abbr(c.nw);
+    if (c.f === 'Official') return 'Ref';
+    return c.f;
+  }).join(' · ');
+}
+
+let cur = 0, flagged = new Set(), playlist = new Set(), viewed = new Set(), collection = new Set(), activeQ = 'all', activeT = 'all';
+let acked = new Map(); // play id -> ack timestamp string, critical-tier overturns only
+
+function buildSidebar() {
+  const list = document.getElementById('sb-list');
+  list.innerHTML = '';
+  TIER_ORDER.forEach(tier => {
+    const plays = PLAYS.filter(p => p.tier === tier);
+    if (!plays.length) return;
+    const hdr = document.createElement('div');
+    hdr.className = 'tier-hdr';
+    hdr.dataset.tier = tier;
+    hdr.style.color = TIER_META[tier].color;
+    hdr.innerHTML = `<span class="tier-dot" style="background:${TIER_META[tier].color}"></span>${TIER_META[tier].label} <span style="color:#9ca3af;font-weight:400;margin-left:2px">(${plays.length})</span>`;
+    list.appendChild(hdr);
+    plays.forEach(p => {
+      const row = document.createElement('div');
+      row.className = 'sb-row' + (p.id === cur ? ' sel' : '');
+      row.dataset.id = p.id;
+      row.dataset.quarter = p.quarter;
+      // comment-only plays (no changeTags) get 'comment' tag so the Comment filter shows them
+      row.dataset.tags = p.changeTags.length === 0 ? 'comment' : p.changeTags.join(',');
+      const isAcked = acked.has(p.id);
+      row.innerHTML = `<span class="sb-dot" style="background:${TIER_META[tier].color}"></span><div class="sb-info"><div class="sb-time">${p.time} · ${p.seg}</div><div class="sb-label">${sbLabel(p)}</div></div><i class="ti ti-circle-check sb-ack${isAcked?' on':''}" id="ack-sb-${p.id}" title="Acknowledged"></i><i class="ti ti-flag sb-flag${flagged.has(p.id)?' on':''}" id="flag-sb-${p.id}"></i>`;
+      row.addEventListener('click', () => selectPlay(p.id, row));
+      list.appendChild(row);
+    });
+  });
+  applyFilters();
+}
+
+function applyFilters() {
+  const rows = document.querySelectorAll('.sb-row');
+  rows.forEach(row => {
+    const q = row.dataset.quarter;
+    const tags = (row.dataset.tags || '').split(',').filter(Boolean);
+    const qMatch = activeQ === 'all' || q === activeQ;
+    let tMatch = true;
+    if (activeT === 'rating') tMatch = tags.includes('rating');
+    else if (activeT === 'playtype') tMatch = tags.some(t => t === 'playtype' || t === 'infractiontype');
+    else if (activeT === 'official') tMatch = tags.some(t => t === 'official' || t === 'location');
+    else if (activeT === 'comment') tMatch = tags.includes('comment');
+    else if (activeT === 'ptiw') tMatch = tags.includes('ptiw');
+    else if (activeT === 'other') tMatch = tags.includes('other');
+    row.classList.toggle('hidden', !(qMatch && tMatch));
+  });
+  // hide tier headers if all rows hidden
+  document.querySelectorAll('.tier-hdr').forEach(hdr => {
+    const tier = hdr.dataset.tier;
+    const visibleRows = document.querySelectorAll(`.sb-row:not(.hidden)[data-id]`);
+    const tierRows = document.querySelectorAll(`.sb-row[data-id]`);
+    // find rows in this tier
+    const plays = PLAYS.filter(p => p.tier === tier);
+    const anyVisible = plays.some(p => {
+      const row = document.querySelector(`.sb-row[data-id="${p.id}"]`);
+      return row && !row.classList.contains('hidden');
+    });
+    hdr.classList.toggle('hidden', !anyVisible);
+  });
+  updateProgress();
+}
+
+function updateProgress() {
+  const total = PLAYS.length;
+  const n = viewed.size;
+  document.getElementById('prog-txt').textContent = n + ' / ' + total + ' reviewed';
+  document.getElementById('prog-fill').style.width = Math.round(n / total * 100) + '%';
+}
+
+function renderBand2(p) {
+  const changeMap = {};
+  p.changes.forEach(c => { changeMap[c.f] = c; });
+  let html = '<div class="b2-lbl">CHANGES</div><div class="ch-grid">';
+  html += '<div class="ch-col-hdr lbl-hdr"></div><div class="ch-col-hdr">First pass</div><div class="ch-col-hdr sc-hdr">Second check</div>';
+  ALL_FIELDS.forEach(f => {
+    const c = changeMap[f];
+    if (c) {
+      const col = COL[c.tag] || COL.rating;
+      const fpVal = c.tag === 'rating' ? ratingPill(c.old) : `<span class="ch-fp-val">${c.old}</span>`;
+      const scVal = c.tag === 'rating' ? ratingPill(c.nw) : `<span class="ch-sc-pill" style="background:${col.bg};color:${col.txt}">${c.nw}</span>`;
+      html += `<div class="ch-row-lbl"><span class="ch-field">${f}</span></div>`;
+      html += `<div class="ch-row-fp">${fpVal}</div>`;
+      html += `<div class="ch-row-sc">${scVal}</div>`;
+    } else {
+      const val = (p.unchanged && p.unchanged[f]) ? p.unchanged[f] : '—';
+      html += `<div class="ch-row-lbl ch-row-unch"><span class="ch-field">${f}</span></div>`;
+      html += `<div class="ch-row-fp ch-row-unch"><span class="ch-fp-val">${val}</span></div>`;
+      html += `<div class="ch-row-sc ch-row-unch"><span class="ch-sc-val">${val}</span></div>`;
+    }
+  });
+  html += '</div>';
+  return html;
+}
+
+function renderBand3(p) {
+  const isSaved = [...collection].some(x => x.id === p.id);
+  const hasFinalComment = !!(p.scComment || (p.fpComment && !p.commentChanged));
+  const saveBtn = hasFinalComment ? `<button class="add-col-btn${isSaved?' saved':''}" id="add-col-btn-${p.id}" onclick="addToCollection(${p.id})"><i class="ti ti-bookmark"></i> ${isSaved?'Saved':'Save'}</button>` : '';
+
+  let html = '';
+
+  if (!p.fpComment && !p.scComment) {
+    // no comments — still show note bubbles and save button
+    html += `<div style="margin-bottom:10px"><div class="cb-lbl">FIRST PASS COMMENT</div><div class="cb-na">N/A</div>`;
+    if (p.yourNotes) {
+      html += `<div class="note-bubble"><span class="note-lbl">First pass notes</span>${p.yourNotes}</div>`;
+    }
+    html += '</div>';
+    html += `<div><div class="fc-hdr-row"><div class="cb-lbl sc-lbl-c">FINAL COMMENT</div>${saveBtn}</div><div class="cb-na">N/A</div>`;
+    if (p.managerNotes) {
+      html += `<div class="note-bubble note-sc"><span class="note-lbl">Second pass notes</span>${p.managerNotes}</div>`;
+    }
+    html += '</div>';
+    return html;
+  }
+
+  // FIRST PASS COMMENT block
+  if (p.fpComment) {
+    html += `<div style="margin-bottom:10px"><div class="cb-lbl">FIRST PASS COMMENT</div><div class="cb-fp"><div class="cb-text muted">${p.fpComment}</div></div>`;
+    if (p.yourNotes) {
+      html += `<div class="note-bubble"><span class="note-lbl">First pass notes</span>${p.yourNotes}</div>`;
+    }
+    html += '</div>';
+  } else {
+    html += `<div style="margin-bottom:10px"><div class="cb-lbl">FIRST PASS COMMENT</div><div class="cb-na">N/A</div>`;
+    if (p.yourNotes) {
+      html += `<div class="note-bubble"><span class="note-lbl">First pass notes</span>${p.yourNotes}</div>`;
+    }
+    html += '</div>';
+  }
+
+  // connector
+  const scDeleted = p.fpComment && !p.scComment && p.commentChanged;
+  if (p.commentChanged && p.scComment) {
+    html += `<div class="rev-connector"><i class="ti ti-arrow-down" style="font-size:12px"></i> revised by second check</div>`;
+  } else if (scDeleted) {
+    html += `<div class="rev-connector"><i class="ti ti-x" style="font-size:12px"></i> removed by final check</div>`;
+  } else if (p.fpComment) {
+    html += `<div class="rev-connector"><i class="ti ti-check" style="font-size:12px"></i> comment unchanged</div>`;
+  }
+
+  // FINAL COMMENT block
+  html += `<div><div class="fc-hdr-row"><div class="cb-lbl sc-lbl-c">FINAL COMMENT</div>${saveBtn}</div>`;
+  if (p.commentChanged && p.scComment) {
+    html += `<div class="cb-sc"><div class="cb-text">${p.scComment}</div></div>`;
+  } else if (!p.fpComment && p.scComment) {
+    html += `<div class="cb-sc"><div class="cb-text">${p.scComment}</div></div>`;
+  } else if (scDeleted || (!p.fpComment && !p.scComment)) {
+    html += `<div class="cb-na">N/A</div>`;
+  }
+  if (p.managerNotes) {
+    html += `<div class="note-bubble note-sc"><span class="note-lbl">Second pass notes</span>${p.managerNotes}</div>`;
+  }
+  html += '</div>';
+
+  return html;
+}
+
+function redactComment(text, p) {
+  let t = text;
+  [p.player, p.opp].forEach(name => {
+    name.split(' ').forEach(part => {
+      if (part.length > 1) t = t.replace(new RegExp('\\b' + part + '\\b', 'gi'), '[PLAYER]');
+    });
+  });
+  t = t.replace(/\b(TOR|CHI)\b/g, '[TEAM]');
+  return t;
+}
+
+function addToCollection(id) {
+  const p = PLAYS.find(x => x.id === id);
+  if (!p) return;
+  const text = redactComment(p.scComment || p.fpComment || '', p);
+  collection.add({id, text});
+  const btn = document.getElementById('add-col-btn-' + id);
+  if (btn) {
+    btn.className = 'add-col-btn saved';
+    btn.innerHTML = '<i class="ti ti-bookmark"></i> Saved';
+  }
+  toast('Saved to collection');
+}
+
+function renderCenter(p) {
+  document.getElementById('b1-event').textContent = p.event;
+  document.getElementById('b1-time').textContent = p.time;
+  document.getElementById('b1-seg').textContent = '· ' + p.seg;
+  const cp = document.getElementById('b1-called');
+  cp.textContent = p.called === 'C' ? 'Called' : 'No Call';
+  cp.className = 'called-pill ' + (p.called === 'C' ? 'called-c' : 'called-nc');
+  document.getElementById('b1-desc').textContent = p.desc;
+  document.getElementById('b1-players').innerHTML = '<b>'+p.player+'</b> <span style="color:#9ca3af;font-size:10px">vs</span> <b>'+p.opp+'</b>';
+  document.getElementById('b1-official').textContent = p.official;
+  const lEl = document.getElementById('b1-loc');
+  lEl.textContent = p.loc; lEl.className = 'loc-p ' + p.locC;
+  document.getElementById('b1-sub').textContent = p.sub;
+  document.getElementById('ack-banner').innerHTML = renderAckBanner(p);
+  document.getElementById('band2').innerHTML = renderBand2(p);
+  document.getElementById('band3').innerHTML = renderBand3(p);
+  document.getElementById('v-time').textContent = p.vt;
+  document.getElementById('rp-ptiw').textContent = p.ptiw;
+  document.getElementById('rp-oiw').textContent = p.oiw;
+  const fb = document.getElementById('flag-btn');
+  fb.className = flagged.has(p.id) ? 'fbtn flag-on' : 'fbtn';
+  fb.innerHTML = '<i class="ti ti-flag" style="font-size:13px"></i> ' + (flagged.has(p.id) ? 'Flagged' : 'Flag');
+  const pb = document.getElementById('playlist-btn');
+  pb.className = playlist.has(p.id) ? 'fbtn playlist-on' : 'fbtn';
+  pb.innerHTML = '<i class="ti ti-playlist" style="font-size:13px"></i> ' + (playlist.has(p.id) ? 'In playlist' : 'Add to playlist');
+}
+
+function selectPlay(idx, row) {
+  cur = idx;
+  viewed.add(idx);
+  document.querySelectorAll('.sb-row').forEach(r => r.classList.remove('sel'));
+  row.classList.add('sel');
+  row.classList.add('viewed');
+  renderCenter(PLAYS[idx]);
+  updateProgress();
+}
+
+function renderAckBanner(p) {
+  if (p.tier !== 'critical') return '';
+  const ts = acked.get(p.id);
+  if (ts) {
+    return `<div class="ack-banner done"><span class="ack-banner-txt"><i class="ti ti-circle-check"></i> Acknowledged · ${ts}</span></div>`;
+  }
+  return `<div class="ack-banner"><span class="ack-banner-txt"><i class="ti ti-alert-triangle"></i> Critical overturn — review required</span><button class="ack-btn" onclick="ackOverturn(${p.id})">Acknowledge</button></div>`;
+}
+
+function ackOverturn(id) {
+  acked.set(id, 'just now');
+  const p = PLAYS.find(x => x.id === id);
+  if (p && p.id === cur) renderCenter(p);
+  const ackEl = document.getElementById('ack-sb-' + id);
+  if (ackEl) ackEl.classList.add('on');
+  toast('Overturn acknowledged');
+  updateProgress();
+}
+
+function toggleFlag() {
+  const p = PLAYS[cur];
+  if (flagged.has(p.id)) flagged.delete(p.id); else flagged.add(p.id);
+  const sf = document.getElementById('flag-sb-'+p.id);
+  if (sf) sf.className = 'ti ti-flag sb-flag' + (flagged.has(p.id) ? ' on' : '');
+  const fc = document.getElementById('flag-count');
+  document.getElementById('flag-num').textContent = flagged.size;
+  flagged.size > 0 ? fc.classList.add('show') : fc.classList.remove('show');
+  renderCenter(p);
+}
+
+let playlists = ['Drives', 'Ref Assignment', 'Travels'];
+let playlistMap = {}; // id -> playlist name
+
+function togglePlaylist() {
+  const p = PLAYS[cur];
+  if (playlistMap[p.id]) {
+    delete playlistMap[p.id];
+    playlist.delete(p.id);
+    toast('Removed from playlist');
+    renderCenter(p);
+  } else {
+    openPlModal();
+  }
+}
+
+function openPlModal() {
+  const p = PLAYS[cur];
+  const sel = playlistMap[p.id] || null;
+  const container = document.getElementById('pl-options');
+  container.innerHTML = '';
+  playlists.forEach(name => {
+    const d = document.createElement('div');
+    d.className = 'pl-opt' + (sel === name ? ' selected' : '');
+    d.innerHTML = `<span>${name}</span><i class="ti ti-check pl-opt-check"></i>`;
+    d.onclick = () => {
+      document.querySelectorAll('.pl-opt').forEach(x => x.classList.remove('selected'));
+      d.classList.add('selected');
+    };
+    container.appendChild(d);
+  });
+  document.getElementById('pl-new-row').classList.remove('show');
+  document.getElementById('pl-input').value = '';
+  document.getElementById('pl-modal').classList.add('open');
+  document.getElementById('overlay').classList.add('open');
+}
+
+function closePlModal() {
+  document.getElementById('pl-modal').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+function toggleNewPlaylist() {
+  document.getElementById('pl-new-row').classList.toggle('show');
+  if (document.getElementById('pl-new-row').classList.contains('show')) {
+    document.getElementById('pl-input').focus();
+  }
+}
+
+function createPlaylist() {
+  const val = document.getElementById('pl-input').value.trim();
+  if (!val) return;
+  if (!playlists.includes(val)) playlists.push(val);
+  document.getElementById('pl-input').value = '';
+  document.getElementById('pl-new-row').classList.remove('show');
+  openPlModal();
+  setTimeout(() => {
+    const opts = document.querySelectorAll('.pl-opt');
+    opts[opts.length - 1].click();
+  }, 10);
+}
+
+function confirmPlaylist() {
+  const sel = document.querySelector('.pl-opt.selected');
+  if (!sel) { toast('Select a playlist first'); return; }
+  const p = PLAYS[cur];
+  playlistMap[p.id] = sel.querySelector('span').textContent;
+  playlist.add(p.id);
+  closePlModal();
+  toast('Added to ' + playlistMap[p.id]);
+  renderCenter(p);
+}
+
+function qf(el) {
+  document.querySelectorAll('.qb').forEach(b => b.classList.remove('on'));
+  el.classList.add('on');
+  activeQ = el.dataset.q;
+  applyFilters();
+}
+
+function tf(el) {
+  document.querySelectorAll('.tb').forEach(b => b.classList.remove('on'));
+  el.classList.add('on');
+  activeT = el.dataset.t;
+  applyFilters();
+}
+function tf_dd(el) {
+  document.querySelectorAll('.tb-dd-item').forEach(b => b.classList.remove('on'));
+  el.classList.add('on');
+  activeT = el.dataset.t;
+  document.getElementById('tb-dd-label').textContent = el.textContent.trim();
+  const btn = document.getElementById('tb-dd-btn');
+  btn.classList.toggle('active', activeT !== 'all');
+  document.getElementById('tb-dd-wrap').classList.remove('open');
+  applyFilters();
+}
+function toggleFilterDd(e) {
+  e.stopPropagation();
+  document.getElementById('tb-dd-wrap').classList.toggle('open');
+}
+document.addEventListener('click', () => {
+  const w = document.getElementById('tb-dd-wrap');
+  if (w) w.classList.remove('open');
+});
+
+function openSlack(t) {
+  slackType = t;
+  document.getElementById('st-share').className = 'sm-type' + (t==='share'?' sel':'');
+  document.getElementById('st-q').className = 'sm-type' + (t==='question'?' sel':'');
+  buildPreview();
+  document.getElementById('overlay').classList.add('open');
+  document.getElementById('slack-modal').classList.add('open');
+}
+
+let slackType = 'share';
+function sType(t) {
+  slackType = t;
+  document.getElementById('st-share').className = 'sm-type' + (t==='share'?' sel':'');
+  document.getElementById('st-q').className = 'sm-type' + (t==='question'?' sel':'');
+  buildPreview();
+}
+
+function buildPreview() {
+  const p = PLAYS[cur];
+  const link = 'grs.nba.com/game/1022600050/event/' + Math.floor(Math.random()*9000+1000);
+  const ch = p.changes.length ? p.changes.map(c=>c.f+': '+c.old+' → '+c.nw).join(', ') : 'Comment revised';
+  const msg = slackType==='share'
+    ? '🏀 <b>Second Check — '+p.time+'</b>\n<b>Game:</b> TOR (111) @ CHI (104)\n<b>Play:</b> '+p.desc+'\n<b>Change:</b> '+ch+'\n<b>Official:</b> '+p.official+' ('+p.loc+')\n\n🔗 <span class="sp-l">View in GRS → '+link+'</span>'
+    : '🏀 <b>Question — '+p.time+'</b>\n<b>Game:</b> TOR (111) @ CHI (104)\n<b>Play:</b> '+p.desc+'\n<b>Change:</b> '+ch+'\n\nCan you walk me through your thinking on this one?\n\n🔗 <span class="sp-l">View in GRS → '+link+'</span>';
+  document.getElementById('sm-prev').innerHTML = msg;
+}
+
+function closeModal() {
+  document.getElementById('overlay').classList.remove('open');
+  document.getElementById('slack-modal').classList.remove('open');
+  document.getElementById('pl-modal').classList.remove('open');
+}
+function sendSlack() { closeModal(); toast('Sent to Slack'); }
+function simLink(t) { toast(t==='clip' ? 'Opening video clip…' : 'Opening event in GRS…'); }
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+function selAng(el) { document.querySelectorAll('.ang').forEach(a=>a.classList.remove('on')); el.classList.add('on'); }
+
+function showTab(tab, el) {
+  document.querySelectorAll('.st').forEach(x => x.classList.remove('on'));
+  if (el) el.classList.add('on');
+  const isOiw = tab === 'oiw';
+  document.getElementById('oiw-panel').style.display = isOiw ? 'flex' : 'none';
+  document.getElementById('main-panel').style.display = isOiw ? 'none' : '';
+  document.getElementById('game-hdr').style.display = isOiw ? 'none' : '';
+  document.getElementById('sc-toolbar').style.display = isOiw ? 'none' : '';
+}
+
+function goSub(view, el) {
+  showTab('secondcheck', el);
+  const map = {ocr:'all', important:'other', ptiw:'ptiw'};
+  const key = map[view];
+  if (key) {
+    const btn = document.querySelector('.tb[data-t="' + key + '"]');
+    if (btn) tf(btn);
+  }
+}
+
+function oiwSelRow(tr) {
+  document.querySelectorAll('#oiw-panel tbody tr').forEach(r => r.classList.remove('oiw-sel'));
+  tr.classList.add('oiw-sel');
+}
+
+document.querySelectorAll('.st').forEach(t => {
+  if (!t.getAttribute('onclick')) {
+    t.addEventListener('click', function() {
+      document.querySelectorAll('.st').forEach(x => x.classList.remove('on'));
+      this.classList.add('on');
+    });
+  }
+});
+
+buildSidebar();
+// select default play: first critical overturn (Q1 06:46)
+const defaultIdx = PLAYS.findIndex(p => p.id === 1);
+const defaultRow = document.querySelector('.sb-row[data-id="1"]') || document.querySelector('.sb-row');
+if (defaultRow) selectPlay(defaultIdx >= 0 ? defaultIdx : 0, defaultRow);
+const _view = new URLSearchParams(location.search).get('view');
+if (_view) {
+  const _el = document.querySelector('.st[data-view="' + _view + '"]');
+  if (_el) _el.click();
+}
+function toggleNavDropdown(e){e.stopPropagation();document.getElementById('nav-dropdown').classList.toggle('open')}
+document.addEventListener('click',()=>{document.getElementById('nav-dropdown').classList.remove('open');document.getElementById('rim-dropdown')?.classList.remove('open');})
+function toggleRimDropdown(e){e.stopPropagation();document.getElementById("rim-dropdown").classList.toggle("open");document.getElementById("nav-dropdown").classList.remove("open");}
+
+const EM_GAMES = [
+  {label:'5/9', ogr:8, acc:91}, {label:'5/12', ogr:11, acc:88}, {label:'5/14', ogr:6, acc:94},
+  {label:'5/17', ogr:14, acc:85}, {label:'5/19', ogr:9, acc:90}, {label:'5/21', ogr:7, acc:93},
+  {label:'5/23', ogr:12, acc:87}, {label:'5/25', ogr:5, acc:95}, {label:'5/27', ogr:10, acc:89},
+  {label:'5/29', ogr:8, acc:91},
+];
+const EM_OVERTURNS = [
+  {play:'Driving shot attempt — T. Key vs. S. Diggins', tag:'CRITICAL', from:'No Infraction', to:'PCA'},
+  {play:'Post-up contact — K. Cardoso vs. E. Williams', tag:'RATING', from:'Marginal', to:'No Infraction'},
+  {play:'Closeout block attempt — N. Sabally', tag:'CRITICAL', from:'No Infraction', to:'Marginal'},
+];
+
+function emBuildChart() {
+  const w = 540, h = 130, pad = 20;
+  const n = EM_GAMES.length;
+  const xStep = (w - pad * 2) / (n - 1);
+  const ogrPts = EM_GAMES.map((g, i) => [pad + i * xStep, h - pad - (g.ogr / 20) * (h - pad * 2)]);
+  const accPts = EM_GAMES.map((g, i) => [pad + i * xStep, h - pad - ((g.acc - 75) / 25) * (h - pad * 2)]);
+  const toPath = pts => pts.map((p, i) => (i === 0 ? 'M' : 'L') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+  const dots = (pts, color) => pts.map(p => `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2.5" fill="${color}"/>`).join('');
+  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
+    <path d="${toPath(ogrPts)}" fill="none" stroke="#d97706" stroke-width="2"/>
+    <path d="${toPath(accPts)}" fill="none" stroke="#1a3a6b" stroke-width="2"/>
+    ${dots(ogrPts, '#d97706')}
+    ${dots(accPts, '#1a3a6b')}
+  </svg>`;
+}
+
+function emBuildOverturns() {
+  return EM_OVERTURNS.map(o => `
+    <div class="em-ot-card">
+      <div class="em-ot-top">
+        <div class="em-ot-play">${o.play}</div>
+        <div class="em-ot-tag">${o.tag}</div>
+      </div>
+      <div class="em-ot-ratings"><span class="em-ot-old">${o.from}</span><i class="ti ti-arrow-right" style="font-size:11px;color:#9ca3af"></i><span class="em-ot-new">${o.to}</span></div>
+    </div>`).join('');
+}
+
+function openEmailPreview() {
+  const body = document.getElementById('em-body-content');
+  body.innerHTML = `
+    <div class="em-head">
+      <div class="em-head-brand">BRIDGET REVIEW SYSTEM</div>
+      <div class="em-head-title">Your second check is back</div>
+      <div class="em-head-sub">Toronto Tempo @ Chicago Sky &nbsp;·&nbsp; Wed, May 27, 2026</div>
+    </div>
+    <div class="em-sec">
+      <div class="em-sec-lbl">Game</div>
+      <div class="em-game-row"><span>Reviewed by <b>Bridget Ng</b> &nbsp;·&nbsp; Second-checked by <b>Daniel Foley</b></span><span>#1022600050</span></div>
+      <div class="em-links" style="margin-top:10px">
+        <a class="em-link-btn report" href="second-check.html">Open second check report in BRS</a>
+      </div>
+    </div>
+    <div class="em-sec">
+      <div class="em-sec-lbl">Your last 10 games</div>
+      <div class="em-chart-wrap">
+        <div class="em-chart-legend"><span><span class="em-leg-dot" style="background:#d97706"></span>Overturn rate</span><span><span class="em-leg-dot" style="background:#1a3a6b"></span>Critical play accuracy</span></div>
+        ${emBuildChart()}
+        <div class="em-chart-cap">${EM_GAMES.map(g => g.label).join(' · ')}</div>
+      </div>
+    </div>
+    <div class="em-sec">
+      <div class="em-sec-lbl">Critical plays &amp; overturns</div>
+      ${emBuildOverturns()}
+    </div>
+    <div class="em-sec">
+      <div class="em-sec-lbl">Second checker summary</div>
+      <div class="em-summary">"Great job on this review. Sue downgraded some of the Alabanza errors to PIL that we initially went INC on due to last task force call."</div>
+    </div>
+    <div class="em-sec">
+      <div class="em-links">
+        <a class="em-link-btn" href="rim.html">Open RIM</a>
+        <a class="em-link-btn alt" href="#">Reviewer resources</a>
+      </div>
+    </div>
+    <div class="em-foot">This is an automated notification from Bridget Review System.</div>
+  `;
+  document.getElementById('em-overlay').classList.add('open');
+}
+
+function openAckRollup() {
+  const critical = PLAYS.filter(p => p.tier === 'critical');
+  const ackedCount = critical.filter(p => acked.has(p.id)).length;
+  document.getElementById('ar-summary').innerHTML =
+    `<b>${ackedCount} / ${critical.length}</b> critical overturns acknowledged by Bridget Ng`;
+  document.getElementById('ar-list').innerHTML = critical.map(p => {
+    const ts = acked.get(p.id);
+    return `<div class="ar-row">
+      <div><div class="ar-row-play">${p.event} — ${p.desc}</div><div class="ar-row-meta">${p.time} · ${p.player} vs ${p.opp}</div></div>
+      ${ts ? `<span class="ar-status ok">ACKNOWLEDGED</span>` : `<span class="ar-status pending">PENDING</span>`}
+    </div>`;
+  }).join('') || '<div class="ar-row-meta" style="padding:14px 10px">No critical overturns in this game.</div>';
+  document.getElementById('ar-overlay').classList.add('open');
+}
+
+function closeAckRollup(e) {
+  if (e && e.target !== e.currentTarget) return;
+  document.getElementById('ar-overlay').classList.remove('open');
+}
+
+function closeEmailPreview(e) {
+  if (e && e.target !== e.currentTarget) return;
+  document.getElementById('em-overlay').classList.remove('open');
+}
+</script>
+
+<div class="ar-overlay" id="ar-overlay" onclick="closeAckRollup(event)">
+  <div class="ar-modal">
+    <div class="ar-hdr">
+      <div>
+        <div class="ar-hdr-title">Critical overturn acknowledgments</div>
+        <div class="ar-hdr-sub">Toronto Tempo @ Chicago Sky &nbsp;·&nbsp; Bridget Ng</div>
+      </div>
+      <button class="ar-close" onclick="closeAckRollup()">&times;</button>
+    </div>
+    <div class="ar-summary" id="ar-summary"></div>
+    <div class="ar-list" id="ar-list"></div>
+  </div>
+</div>
+
+<div class="em-overlay" id="em-overlay" onclick="closeEmailPreview(event)">
+  <div class="em-modal">
+    <div class="em-modal-bar">
+      <span class="em-modal-bar-lbl">Email preview — second check notification (temporary)</span>
+      <button class="em-close" onclick="closeEmailPreview()">&times;</button>
+    </div>
+    <div class="ol-ribbon">
+      <span class="ol-ribbon-title">Outlook</span>
+      <span class="ol-ribbon-btn"><i class="ti ti-arrow-back-up"></i>Reply</span>
+      <span class="ol-ribbon-btn"><i class="ti ti-arrow-forward-up"></i>Forward</span>
+      <span class="ol-ribbon-btn"><i class="ti ti-archive"></i>Archive</span>
+      <span class="ol-ribbon-btn"><i class="ti ti-trash"></i>Delete</span>
+      <span class="ol-ribbon-btn"><i class="ti ti-flag"></i>Flag</span>
+    </div>
+    <div class="ol-meta">
+      <div class="ol-subject">Your second check is back — Toronto Tempo @ Chicago Sky</div>
+      <div class="ol-meta-row">
+        <div class="ol-avatar">BRS</div>
+        <div class="ol-meta-text">
+          <div><b>Bridget Review System</b> &lt;noreply@bridgetreview.com&gt;</div>
+          <div class="ol-sub">To: Bridget Ng</div>
+        </div>
+        <div class="ol-meta-time">Fri 5/29/2026 9:14 AM</div>
+      </div>
+    </div>
+    <div class="em-scroll"><div class="em-body" id="em-body-content"></div></div>
+  </div>
+</div>
+
+</body>
+</html>

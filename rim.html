@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BRS — RIM</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;color:#111827;background:linear-gradient(180deg,#f5f6fa 0%,#eef1f7 45%,#eef2f9 100%);height:100vh;overflow:hidden;display:flex;flex-direction:column}
+
+/* NAV */
+.nav{background:#1a3a6b;height:48px;display:flex;align-items:center;padding:0 24px;flex-shrink:0;overflow:visible;position:relative;z-index:300}
+.nav-logo{display:flex;align-items:center;gap:8px;cursor:pointer}
+.nav-brand{color:rgba(255,255,255,.9);font-size:11.5px;font-weight:600;white-space:nowrap;letter-spacing:.5px}
+.nav-whats-new{display:inline-flex;align-items:center;gap:4px;background:rgba(247,184,208,.18);border:1px solid rgba(247,184,208,.55);color:#f7b8d0;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:3px 9px 3px 8px;border-radius:20px;cursor:pointer;white-space:nowrap;margin-left:8px;transition:background .15s,color .15s}
+.nav-whats-new:hover{background:#f7b8d0;color:#1a3a6b}
+.nav-links{display:flex;align-items:center;margin-left:auto;flex-shrink:0;flex-wrap:nowrap;gap:0}
+.nl{color:rgba(255,255,255,.55);font-size:10.5px;padding:0 8px;cursor:pointer;font-weight:500;height:48px;display:flex;align-items:center;border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0}
+.nl:hover{color:#fff}
+.nl.on{color:#fff;border-bottom-color:#fff;font-weight:600}
+.nav-av{width:30px;height:30px;border-radius:50%;background:#2d5aa0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;flex-shrink:0;margin-left:12px;cursor:pointer}
+.nav-dropdown{position:relative;display:flex;align-items:center;height:48px}
+.nav-dropdown .nl{gap:4px}
+.nav-dd-caret{font-size:8px;opacity:.7;transition:transform .15s}
+.nav-dropdown.open .nav-dd-caret{transform:rotate(180deg)}
+.nav-dd-menu{display:none;position:absolute;top:44px;right:0;background:#fff;border:1px solid #e5e7eb;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.14);min-width:170px;z-index:400;padding:4px 0}
+.nav-dropdown.open .nav-dd-menu{display:block}
+.nav-dd-item{display:block;padding:9px 16px;font-size:11px;font-weight:500;color:#374151;text-decoration:none;white-space:nowrap;cursor:pointer}
+.nav-dd-item:hover{background:#f0f2f5;color:#1a3a6b}
+
+/* PAGE */
+.page{flex:1;overflow-y:auto;padding:36px 48px 40px}
+
+/* WEEKLY CALENDAR */
+.sched{margin-bottom:32px}
+.sched-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.week-cal{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}
+.week-day{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:8px 6px;min-height:148px;display:flex;flex-direction:column;gap:8px;transition:box-shadow .15s,transform .15s}
+.week-day:hover{box-shadow:0 6px 18px rgba(17,24,39,.08);transform:translateY(-2px)}
+.week-day.today{border-color:#c8102e;background:linear-gradient(180deg,#fff 0%,#fff7f7 100%);box-shadow:0 0 0 1.5px rgba(200,16,46,.35)}
+.week-day-hdr{display:flex;align-items:center;justify-content:space-between}
+.week-day-name{font-size:9.5px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px}
+.week-day-num{font-size:14px;font-weight:800;color:#111827;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.week-day.today .week-day-num{background:#c8102e;color:#fff}
+.week-day.today .week-day-name{color:#c8102e}
+.week-game{border-radius:9px;padding:9px 9px;display:flex;flex-direction:column;gap:3px;flex:1}
+.week-game-time{font-size:9px;font-weight:700;opacity:.75;text-transform:uppercase;letter-spacing:.3px}
+.week-game-teams{font-size:11.5px;font-weight:800}
+.week-game-meta{font-size:9px;opacity:.8;display:flex;align-items:center;gap:4px;margin-top:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.week-empty{flex:1;display:flex;align-items:center;justify-content:center;color:#b7bcc6;font-size:10px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;border:1.5px dashed #e5e7eb;border-radius:9px;background:repeating-linear-gradient(135deg,#fafbfc,#fafbfc 6px,#f4f5f7 6px,#f4f5f7 12px)}
+.week-day.weekend{background:#f7f7f8}
+.week-empty.off{border-style:solid;border-color:#eceef1;background:#f0f1f3;color:#c3c7cf}
+.sched-expand-btn{font-size:10.5px;font-weight:700;color:#2d5aa0;background:#eaf0fb;border:1px solid #d6e2f5;border-radius:7px;padding:6px 12px;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .12s}
+.sched-expand-btn:hover{background:#dde9f9;border-color:#c3d6f0}
+.month-cal{display:none;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:14px}
+.month-cal.open{display:grid}
+.month-day-name{font-size:9px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;text-align:center;padding-bottom:4px}
+.month-day{background:#fff;border:1px solid #e5e7eb;border-radius:9px;padding:6px;min-height:62px;display:flex;flex-direction:column;gap:3px}
+.month-day.blank{background:transparent;border-color:transparent}
+.month-day.weekend{background:#f7f7f8}
+.month-day.today{border-color:#c8102e;box-shadow:0 0 0 1.5px rgba(200,16,46,.3)}
+.month-day-num{font-size:10.5px;font-weight:700;color:#374151}
+.month-day.today .month-day-num{color:#c8102e}
+.month-game{font-size:8.5px;font-weight:700;border-radius:4px;padding:2px 4px;line-height:1.3}
+
+/* HERO */
+.hero{margin-bottom:32px;background:#1a3a6b;border-radius:20px;padding:26px 32px;box-shadow:0 14px 36px rgba(20,35,70,.28);position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.10) 0%,rgba(255,255,255,0) 70%)}
+.hero-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:6px}
+.hero-title{font-size:26px;font-weight:800;color:#fff;letter-spacing:-.3px;margin-bottom:4px}
+.hero-title span{color:#ffc2fe}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.78);max-width:500px;line-height:1.55}
+.hero-row{display:flex;align-items:flex-end;gap:0;justify-content:space-between;position:relative;z-index:1}
+.hero-stats{display:flex;gap:10px}
+.hero-stat{background:rgba(255,255,255,.1);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:10px 20px;text-align:center}
+.hero-stat-n{font-size:22px;font-weight:800;color:#fff;line-height:1}
+.hero-stat-n.red{color:#ff8a8a}
+.hero-stat-l{font-size:10px;font-weight:600;color:rgba(255,255,255,.62);text-transform:uppercase;letter-spacing:.4px;margin-top:3px}
+
+/* SECTION LABEL */
+.section-lbl{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#9ca3af;margin-bottom:12px}
+
+/* FEATURE GRID */
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:28px}
+.feat-card{background:#fff;border:1px solid #e5e7eb;border-radius:13px;padding:15px 15px 12px;cursor:pointer;transition:box-shadow .18s,border-color .18s,transform .18s;display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden}
+.feat-card:hover{box-shadow:0 12px 28px rgba(17,24,39,.10);border-color:#d1d5db;transform:translateY(-3px)}
+.feat-card:hover .fc-arrow{opacity:1;transform:translateX(0)}
+.feat-card-accent{position:absolute;top:0;left:0;right:0;height:4px;border-radius:14px 14px 0 0}
+.fc-top{display:flex;align-items:flex-start;justify-content:space-between}
+.fc-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.fc-badge{padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700}
+.fc-title{font-size:14px;font-weight:700;color:#111827;margin-bottom:4px}
+.fc-desc{font-size:11.5px;color:#6b7280;line-height:1.5}
+.fc-footer{display:flex;align-items:center;justify-content:space-between;border-top:1px solid #f3f4f6;padding-top:12px}
+.fc-meta{font-size:10.5px;color:#9ca3af;display:flex;align-items:center;gap:5px}
+.fc-arrow{font-size:14px;color:#d1d5db;opacity:0;transform:translateX(-4px);transition:all .15s}
+
+/* RECENT STRIP */
+.recent-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.recent-card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:18px 20px;box-shadow:0 2px 10px rgba(17,24,39,.04)}
+.rc-title{font-size:11px;font-weight:700;color:#6b7280;letter-spacing:.4px;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.rc-title a{font-size:10.5px;color:#1a3a6b;font-weight:500;text-transform:none;letter-spacing:0;cursor:pointer;text-decoration:none}
+.rc-title a:hover{text-decoration:underline}
+.int-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid #f3f4f6;cursor:pointer}
+.int-row:last-child{border-bottom:none}
+.int-row:hover .ir-subject{color:#1a3a6b}
+.ir-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.ir-from{font-size:11.5px;font-weight:600;color:#111827;white-space:nowrap;flex-shrink:0;min-width:110px}
+.ir-subject{font-size:11px;color:#6b7280;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ir-date{font-size:10px;color:#d1d5db;white-space:nowrap;flex-shrink:0}
+.pl-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid #f3f4f6;cursor:pointer}
+.pl-row:last-child{border-bottom:none}
+.pl-row:hover .pr-name{color:#1a3a6b}
+.pr-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.pr-name{font-size:12px;font-weight:600;color:#111827;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pr-count{font-size:10.5px;color:#9ca3af;white-space:nowrap}
+
+/* BODY ROW (calendar+cards / scouting report) */
+.body-row{display:grid;grid-template-columns:1fr 360px;gap:18px;align-items:stretch;margin-bottom:28px}
+.body-left{display:flex;flex-direction:column}
+.body-left .sched{margin-bottom:24px}
+.body-left .feature-grid{margin-bottom:0}
+
+/* SCOUTING REPORT FLIP CARD */
+.scout-card{perspective:1400px;cursor:pointer;user-select:none;height:100%}
+.scout-card-inner{position:relative;width:100%;height:100%;transition:transform .6s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d}
+.scout-card.flipped .scout-card-inner{transform:rotateY(180deg)}
+.scout-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:20px;display:flex;flex-direction:column;overflow:hidden}
+.scout-front{background:linear-gradient(165deg,#16294f 0%,#1a3a6b 60%,#13284f 100%);color:#fff;padding:36px 32px;align-items:center;justify-content:center;text-align:center;box-shadow:0 14px 32px rgba(20,35,70,.3)}
+.scout-eyebrow{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:24px;flex-shrink:0}
+.scout-avatar{width:96px;height:96px;border-radius:50%;background:#2d5aa0;border:3px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:800;color:#fff;margin-bottom:20px;flex-shrink:0}
+.scout-name{font-size:27px;font-weight:800;margin-bottom:7px;flex-shrink:0}
+.scout-role{font-size:14px;color:rgba(255,255,255,.78);margin-bottom:4px;flex-shrink:0}
+.scout-years{font-size:12px;color:rgba(255,255,255,.5);flex-shrink:0}
+.scout-divider{width:44px;height:1px;background:rgba(255,255,255,.25);margin:24px 0;flex-shrink:0}
+.scout-sec-lbl{font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:11px;flex-shrink:0}
+.scout-pills{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-bottom:20px;flex-shrink:0}
+.scout-pill{font-size:11.5px;font-weight:600;padding:7px 14px;border-radius:22px;border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.9);background:rgba(255,255,255,.06)}
+.scout-pill.warm{background:rgba(217,119,6,.18);border-color:rgba(217,119,6,.4);color:#fcd9a8}
+.scout-pill.teal{background:rgba(13,148,136,.18);border-color:rgba(13,148,136,.4);color:#9ce8df}
+.scout-tap{margin-top:auto;font-size:11px;color:rgba(255,255,255,.4);letter-spacing:.5px;padding-top:20px;flex-shrink:0}
+.scout-back{background:#fff;border:1px solid #e5e7eb;transform:rotateY(180deg);padding:30px 28px;box-shadow:0 14px 32px rgba(17,24,39,.12)}
+.scout-back-hdr{display:flex;align-items:center;gap:13px;margin-bottom:24px;flex-shrink:0}
+.scout-back-av{width:44px;height:44px;border-radius:50%;background:#1a3a6b;color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;flex-shrink:0}
+.scout-back-name{font-size:16px;font-weight:700;color:#111827}
+.scout-back-meta{font-size:11.5px;color:#9ca3af;margin-top:2px}
+.scout-back-lbl{font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#9ca3af;margin-bottom:13px;flex-shrink:0}
+.scout-metrics{display:grid;grid-template-columns:1fr 1fr;gap:15px 14px;margin-bottom:22px;flex-shrink:0}
+.scout-metric-lbl{font-size:11.5px;color:#374151;font-weight:600;margin-bottom:6px}
+.scout-status{font-size:10.5px;font-weight:700;padding:3px 10px;border-radius:11px;display:inline-block}
+.scout-status.leading{background:#dcfce7;color:#15803d}
+.scout-status.doing{background:#dbeafe;color:#1d4ed8}
+.scout-learning{background:#fffbeb;border:1px solid #fde68a;border-radius:11px;padding:13px 16px;margin-bottom:22px;flex-shrink:0}
+.scout-learning-lbl{font-size:9.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:#92400e;margin-bottom:5px}
+.scout-learning-txt{font-size:13px;color:#78350f;font-weight:600}
+.scout-twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px;flex-shrink:0}
+.scout-twocol-lbl{font-size:9.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:#9ca3af;margin-bottom:5px}
+.scout-twocol-txt{font-size:12px;color:#374151;font-weight:600}
+.scout-notes-lbl{font-size:9.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:#9ca3af;margin-bottom:7px;flex-shrink:0}
+.scout-notes-txt{font-size:12px;color:#4b5563;line-height:1.6}
+.scout-back .scout-tap{color:#c7cbd3;margin-top:auto;padding-top:6px;flex-shrink:0}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav">
+  <div class="nav-logo" onclick="location='home.html'">
+    <img src="Logos/nba-logo.svg" style="width:16px;height:auto">
+    <div class="nav-brand">BRIDGET REVIEW SYSTEM 1.0</div>
+    <span class="nav-whats-new" onclick="event.stopPropagation();location='whats-new.html'"><i class="ti ti-sparkles" style="font-size:10px"></i> What's New</span>
+  </div>
+  <div class="nav-links">
+    <span class="nl" onclick="location='home.html'">HOME</span>
+    <span class="nl" onclick="location='published-games.html'">PUBLISHED GAMES</span>
+    <div class="nav-dropdown" id="rim-dropdown">
+      <span class="nl on" onclick="location='rim.html'">RIM</span>
+      <span class="nl" style="padding-left:0;padding-right:6px;font-size:9px;opacity:.8;cursor:pointer" onclick="toggleRimDropdown(event)">▾</span>
+      <div class="nav-dd-menu" id="rim-dd-menu" style="min-width:190px;left:0;right:auto">
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-home" style="margin-right:7px;font-size:12px"></i>RIM Home</span>
+        <span class="nav-dd-item" onclick="location='interactions.html'"><i class="ti ti-inbox" style="margin-right:7px;font-size:12px"></i>Interactions</span>
+        <span class="nav-dd-item"><i class="ti ti-messages" style="margin-right:7px;font-size:12px"></i>Threads</span>
+        <span class="nav-dd-item"><i class="ti ti-layout-board" style="margin-right:7px;font-size:12px"></i>Message Board</span>
+        <span class="nav-dd-item" onclick="location='playlists.html'" style="background:linear-gradient(180deg,#fff 0%,#f4f6fb 100%)"><i class="ti ti-playlist" style="margin-right:7px;font-size:12px"></i>Playlists</span>
+        <span class="nav-dd-item" onclick="location='assessments.html'" style="background:linear-gradient(180deg,#fff 0%,#f4f6fb 100%)"><i class="ti ti-clipboard-check" style="margin-right:7px;font-size:12px"></i>Assessments</span>
+        <span class="nav-dd-item" onclick="location='poe.html'" style="background:linear-gradient(180deg,#fff 0%,#f4f6fb 100%)"><i class="ti ti-target" style="margin-right:7px;font-size:12px"></i>Points of Education</span>
+      </div>
+    </div>
+    <span class="nl">RM REVIEW</span>
+    <span class="nl">FINAL L2M REVIEW</span>
+    <span class="nl">INDEPENDENT REVIEW</span>
+    <span class="nl">ADMINISTRATION</span>
+    <div class="nav-dropdown" id="nav-dropdown">
+      <span class="nl" onclick="toggleNavDropdown(event)">REVIEWER RESOURCE <span class="nav-dd-caret">▾</span></span>
+      <div class="nav-dd-menu">
+        <span class="nav-dd-item" onclick="location='comment-library.html'">Comment Library</span>
+      </div>
+    </div>
+    <span class="nl">MY SCHEDULE</span>
+    <div class="nav-av">BN</div>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-row">
+      <div>
+        <div class="hero-eyebrow">Review Insights &amp; Messaging Platform</div>
+        <div class="hero-title">Welcome back, <span>Waheed.</span></div>
+        <div class="hero-sub">Your hub for play sharing, reviewer discussions, overturn threads, and calibration playlists.</div>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-n red">7</div>
+          <div class="hero-stat-l">Unread</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-n">23</div>
+          <div class="hero-stat-l">Interactions</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-n">12</div>
+          <div class="hero-stat-l">Threads</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-n">5</div>
+          <div class="hero-stat-l">Playlists</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BODY ROW: calendar + cards (left) / scouting report (right) -->
+  <div class="body-row">
+  <div class="body-left">
+
+  <!-- WEEKLY CALENDAR -->
+  <div class="sched">
+    <div class="sched-hdr">
+      <div class="section-lbl" style="margin-bottom:0">This Week's Games</div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="font-size:11px;color:#9ca3af;font-weight:600">Jun 29 – Jul 5</div>
+        <button class="sched-expand-btn" id="sched-expand-btn" onclick="toggleMonthView()"><i class="ti ti-calendar"></i> <span id="sched-expand-label">View Full Month</span></button>
+      </div>
+    </div>
+    <div class="week-cal" id="week-cal">
+      <div class="week-day">
+        <div class="week-day-hdr"><span class="week-day-name">Mon</span><span class="week-day-num">29</span></div>
+        <div class="week-empty">Summer Project</div>
+      </div>
+      <div class="week-day today">
+        <div class="week-day-hdr"><span class="week-day-name">Tue</span><span class="week-day-num">30</span></div>
+        <div class="week-game" style="background:#fdeaea;color:#7a1530">
+          <div class="week-game-time">7:00 PM ET</div>
+          <div class="week-game-teams">TOR @ CHI</div>
+          <div class="week-game-meta"><i class="ti ti-map-pin"></i> Wintrust Arena</div>
+          <div class="week-game-meta"><i class="ti ti-users"></i> Perrymond, Chang, Fahy</div>
+        </div>
+      </div>
+      <div class="week-day">
+        <div class="week-day-hdr"><span class="week-day-name">Wed</span><span class="week-day-num">1</span></div>
+        <div class="week-empty">Summer Project</div>
+      </div>
+      <div class="week-day">
+        <div class="week-day-hdr"><span class="week-day-name">Thu</span><span class="week-day-num">2</span></div>
+        <div class="week-game" style="background:#f3e8ff;color:#5b21b6">
+          <div class="week-game-time">8:00 PM ET</div>
+          <div class="week-game-teams">ATL @ NYL</div>
+          <div class="week-game-meta"><i class="ti ti-map-pin"></i> Barclays Center</div>
+          <div class="week-game-meta"><i class="ti ti-users"></i> Grady, Abdenour</div>
+        </div>
+      </div>
+      <div class="week-day">
+        <div class="week-day-hdr"><span class="week-day-name">Fri</span><span class="week-day-num">3</span></div>
+        <div class="week-game" style="background:#e0f2f1;color:#0f5e57">
+          <div class="week-game-time">9:30 PM ET</div>
+          <div class="week-game-teams">GSV @ LVA</div>
+          <div class="week-game-meta"><i class="ti ti-map-pin"></i> Michelob Ultra Arena</div>
+          <div class="week-game-meta"><i class="ti ti-users"></i> Foley, Oakley Jr.</div>
+        </div>
+      </div>
+      <div class="week-day weekend">
+        <div class="week-day-hdr"><span class="week-day-name">Sat</span><span class="week-day-num">4</span></div>
+        <div class="week-empty off">Off</div>
+      </div>
+      <div class="week-day weekend">
+        <div class="week-day-hdr"><span class="week-day-name">Sun</span><span class="week-day-num">5</span></div>
+        <div class="week-empty off">Off</div>
+      </div>
+    </div>
+    <div class="month-cal" id="month-cal"></div>
+  </div>
+
+  <!-- FEATURE GRID -->
+  <div class="section-lbl">Sections</div>
+  <div class="feature-grid">
+
+    <div class="feat-card" onclick="location='interactions.html'" style="background:linear-gradient(180deg,#fff 0%,#f4f6fb 100%)">
+      <div class="feat-card-accent" style="background:#3f6cb0"></div>
+      <div class="fc-top">
+        <div class="fc-icon" style="background:#e8eef9;color:#3f6cb0"><i class="ti ti-inbox"></i></div>
+        <div class="fc-badge" style="background:#dbeafe;color:#1e40af">7 unread</div>
+      </div>
+      <div>
+        <div class="fc-title">Interactions</div>
+        <div class="fc-desc">User-to-user messages, play shares, and direct feedback from reviewers and supervisors.</div>
+      </div>
+      <div class="fc-footer">
+        <div class="fc-meta"><i class="ti ti-clock" style="font-size:12px"></i> Last: 5/27/2026</div>
+        <i class="ti ti-arrow-right fc-arrow"></i>
+      </div>
+    </div>
+
+    <div class="feat-card" onclick="alert('Threads — coming soon')" style="background:linear-gradient(180deg,#fff 0%,#f4f6fb 100%)">
+      <div class="feat-card-accent" style="background:#3f6cb0"></div>
+      <div class="fc-top">
+        <div class="fc-icon" style="background:#e8eef9;color:#3f6cb0"><i class="ti ti-messages"></i></div>
+        <div class="fc-badge" style="background:#f3e8ff;color:#6d28d9">3 active</div>
+      </div>
+      <div>
+        <div class="fc-title">Threads</div>
+        <div class="fc-desc">Threaded conversations on overturns, rulings, and officiating situations. Comparable to TIW discussions.</div>
+      </div>
+      <div class="fc-footer">
+        <div class="fc-meta"><i class="ti ti-message-circle" style="font-size:12px"></i> 3 new replies</div>
+        <i class="ti ti-arrow-right fc-arrow"></i>
+      </div>
+    </div>
+
+    <div class="feat-card" onclick="alert('Message Board — coming soon')" style="background:linear-gradient(180deg,#fff 0%,#f4f6fb 100%)">
+      <div class="feat-card-accent" style="background:#3f6cb0"></div>
+      <div class="fc-top">
+        <div class="fc-icon" style="background:#e8eef9;color:#3f6cb0"><i class="ti ti-layout-board"></i></div>
+        <div class="fc-badge" style="background:#cffafe;color:#0e7490">Open</div>
+      </div>
+      <div>
+        <div class="fc-title">Message Board</div>
+        <div class="fc-desc">Broadcast announcements, performance issues, and reviewer-wide posts. Comparable to REPS boards.</div>
+      </div>
+      <div class="fc-footer">
+        <div class="fc-meta"><i class="ti ti-users" style="font-size:12px"></i> All reviewers</div>
+        <i class="ti ti-arrow-right fc-arrow"></i>
+      </div>
+    </div>
+
+    <div class="feat-card" onclick="location='playlists.html'" style="background:linear-gradient(180deg,#fff 0%,#f4f6fb 100%)">
+      <div class="feat-card-accent" style="background:#3f6cb0"></div>
+      <div class="fc-top">
+        <div class="fc-icon" style="background:#e8eef9;color:#3f6cb0"><i class="ti ti-playlist"></i></div>
+        <div class="fc-badge" style="background:#fff7ed;color:#c2410c">5 playlists</div>
+      </div>
+      <div>
+        <div class="fc-title">Playlists</div>
+        <div class="fc-desc">Curated collections of plays organized by theme, trend, or calibration purpose. Share with other reviewers.</div>
+      </div>
+      <div class="fc-footer">
+        <div class="fc-meta"><i class="ti ti-player-play" style="font-size:12px"></i> 57 plays total</div>
+        <i class="ti ti-arrow-right fc-arrow"></i>
+      </div>
+    </div>
+
+    <div class="feat-card" onclick="location='assessments.html'" style="background:linear-gradient(180deg,#fff 0%,#f4f6fb 100%)">
+      <div class="feat-card-accent" style="background:#3f6cb0"></div>
+      <div class="fc-top">
+        <div class="fc-icon" style="background:#e8eef9;color:#3f6cb0"><i class="ti ti-clipboard-check"></i></div>
+        <div class="fc-badge" style="background:#eef2ff;color:#4338ca">Open</div>
+      </div>
+      <div>
+        <div class="fc-title">Assessments</div>
+        <div class="fc-desc">AI-generated quizzes based on your last 10–20 games. Rate plays and get a score with learning areas to focus on.</div>
+      </div>
+      <div class="fc-footer">
+        <div class="fc-meta"><i class="ti ti-clock" style="font-size:12px"></i> June Assessment due Jul 1</div>
+        <i class="ti ti-arrow-right fc-arrow"></i>
+      </div>
+    </div>
+
+    <div class="feat-card" onclick="location='poe.html'" style="background:linear-gradient(180deg,#fff 0%,#f4f6fb 100%)">
+      <div class="feat-card-accent" style="background:#3f6cb0"></div>
+      <div class="fc-top">
+        <div class="fc-icon" style="background:#e8eef9;color:#3f6cb0"><i class="ti ti-target"></i></div>
+        <div class="fc-badge" style="background:#fffbeb;color:#92400e">3 POEs</div>
+      </div>
+      <div>
+        <div class="fc-title">Points of Education</div>
+        <div class="fc-desc">Rate plays for each 2026–27 season POE — Clear Space, Landing Area, Illegal Screens — then calibrate with the group.</div>
+      </div>
+      <div class="fc-footer">
+        <div class="fc-meta"><i class="ti ti-users" style="font-size:12px"></i> Landing Area in calibration</div>
+        <i class="ti ti-arrow-right fc-arrow"></i>
+      </div>
+    </div>
+
+  </div>
+
+  </div>
+
+  <!-- SCOUTING REPORT FLIP CARD -->
+  <div class="scout-card" id="scout-card" onclick="document.getElementById('scout-card').classList.toggle('flipped')">
+    <div class="scout-card-inner">
+      <div class="scout-face scout-front">
+        <div class="scout-eyebrow">Scouting Report</div>
+        <div class="scout-avatar">W</div>
+        <div class="scout-name">Waheed</div>
+        <div class="scout-role">Game Review Analyst</div>
+        <div class="scout-years">9 years of service</div>
+        <div class="scout-divider"></div>
+        <div class="scout-sec-lbl">Receives Info Via</div>
+        <div class="scout-pills"><span class="scout-pill">In-person</span></div>
+        <div class="scout-sec-lbl">Coaching Style</div>
+        <div class="scout-pills">
+          <span class="scout-pill warm">Direct and to the point</span>
+          <span class="scout-pill teal">Topic in advance</span>
+        </div>
+        <div class="scout-tap">tap to flip</div>
+      </div>
+      <div class="scout-face scout-back">
+        <div class="scout-back-hdr">
+          <div class="scout-back-av">W</div>
+          <div>
+            <div class="scout-back-name">Waheed</div>
+            <div class="scout-back-meta">Game Review Analyst &nbsp;·&nbsp; Monthly 1:1s</div>
+          </div>
+        </div>
+        <div class="scout-back-lbl">Reviewer Metrics</div>
+        <div class="scout-metrics">
+          <div><div class="scout-metric-lbl">Volume</div><span class="scout-status leading">Leading</span></div>
+          <div><div class="scout-metric-lbl">INCs</div><span class="scout-status leading">Leading</span></div>
+          <div><div class="scout-metric-lbl">ICs</div><span class="scout-status doing">Doing</span></div>
+          <div><div class="scout-metric-lbl">PIs</div><span class="scout-status doing">Doing</span></div>
+          <div><div class="scout-metric-lbl">Looks</div><span class="scout-status leading">Leading</span></div>
+          <div><div class="scout-metric-lbl">Violation events</div><span class="scout-status doing">Doing</span></div>
+        </div>
+        <div class="scout-learning">
+          <div class="scout-learning-lbl">Currently Learning</div>
+          <div class="scout-learning-txt">Loose ball fouls</div>
+        </div>
+        <div class="scout-twocol">
+          <div><div class="scout-twocol-lbl">After Feedback</div><div class="scout-twocol-txt">Written action items</div></div>
+          <div><div class="scout-twocol-lbl">Recognition</div><div class="scout-twocol-txt">More complex work</div></div>
+        </div>
+        <div class="scout-notes-lbl">Manager Notes</div>
+        <div class="scout-notes-txt">Excited to watch Waheed lean on his experience and support our new hires further.</div>
+        <div class="scout-tap">tap to flip</div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+  <!-- RECENT ACTIVITY -->
+  <div class="section-lbl">Recent Activity</div>
+  <div class="recent-grid">
+
+    <div class="recent-card">
+      <div class="rc-title">
+        Latest Interactions
+        <a>View all →</a>
+      </div>
+      <div class="int-row">
+        <div class="ir-dot" style="background:#ef4444"></div>
+        <div class="ir-from">Maeve Carroll</div>
+        <div class="ir-subject">Maeve sent you a play - 5/25 NYK @ CLE</div>
+        <div class="ir-date">5/27</div>
+      </div>
+      <div class="int-row">
+        <div class="ir-dot" style="background:#ef4444"></div>
+        <div class="ir-from">Tucker Grady</div>
+        <div class="ir-subject">Tucker added you to 'Plays for 2026-27 Training'</div>
+        <div class="ir-date">5/25</div>
+      </div>
+      <div class="int-row">
+        <div class="ir-dot" style="background:#ef4444"></div>
+        <div class="ir-from">Dan Foley</div>
+        <div class="ir-subject">Dan added a play to 'WNBA DHO Examples'</div>
+        <div class="ir-date">5/20</div>
+      </div>
+      <div class="int-row">
+        <div class="ir-dot" style="background:#e5e7eb"></div>
+        <div class="ir-from">Curtis Oakley, Jr.</div>
+        <div class="ir-subject">Re: Re: Re: Your Interaction Created 5/24</div>
+        <div class="ir-date">5/26</div>
+      </div>
+      <div class="int-row">
+        <div class="ir-dot" style="background:#e5e7eb"></div>
+        <div class="ir-from">Waheed Ameen</div>
+        <div class="ir-subject">L2M Completed - 5/13 CLE @ DET</div>
+        <div class="ir-date">5/14</div>
+      </div>
+    </div>
+
+    <div class="recent-card">
+      <div class="rc-title">
+        My Playlists
+        <a>Manage →</a>
+      </div>
+      <div class="pl-row">
+        <div class="pr-icon" style="background:#f3e8ff;color:#7c3aed"><i class="ti ti-player-play"></i></div>
+        <div class="pr-name">Plays for 2026-27 Training</div>
+        <div class="pr-count">22 plays</div>
+      </div>
+      <div class="pl-row">
+        <div class="pr-icon" style="background:#dbeafe;color:#2563eb"><i class="ti ti-player-play"></i></div>
+        <div class="pr-name">WNBA DHO Examples</div>
+        <div class="pr-count">14 plays</div>
+      </div>
+      <div class="pl-row">
+        <div class="pr-icon" style="background:#dcfce7;color:#16a34a"><i class="ti ti-player-play"></i></div>
+        <div class="pr-name">Block-Charge 2026</div>
+        <div class="pr-count">9 plays</div>
+      </div>
+      <div class="pl-row">
+        <div class="pr-icon" style="background:#fff7ed;color:#ea580c"><i class="ti ti-player-play"></i></div>
+        <div class="pr-name">3Q Defense Examples</div>
+        <div class="pr-count">7 plays</div>
+      </div>
+      <div class="pl-row">
+        <div class="pr-icon" style="background:#dbeafe;color:#2563eb"><i class="ti ti-player-play"></i></div>
+        <div class="pr-name">Flagrant Foul Reviews</div>
+        <div class="pr-count">5 plays</div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function toggleNavDropdown(e){e.stopPropagation();document.getElementById('nav-dropdown').classList.toggle('open')}
+document.addEventListener('click',()=>{document.getElementById('nav-dropdown').classList.remove('open');document.getElementById('rim-dropdown')?.classList.remove('open');});
+function toggleRimDropdown(e){e.stopPropagation();document.getElementById('rim-dropdown').classList.toggle('open');document.getElementById('nav-dropdown').classList.remove('open');}
+
+const MONTH_GAMES = {
+  2:  { teams:'NYL @ ATL',  bg:'#f3e8ff', col:'#5b21b6' },
+  4:  { teams:'LVA @ GSV',  bg:'#e0f2f1', col:'#0f5e57' },
+  5:  { teams:'CHI @ TOR',  bg:'#fdeaea', col:'#7a1530' },
+  9:  { teams:'IND @ OKC',  bg:'#fef3e2', col:'#92400e' },
+  11: { teams:'ATL @ NYL',  bg:'#f3e8ff', col:'#5b21b6' },
+  15: { teams:'TOR @ CHI',  bg:'#fdeaea', col:'#7a1530' },
+  17: { teams:'GSV @ LVA',  bg:'#e0f2f1', col:'#0f5e57' },
+  19: { teams:'OKC @ IND',  bg:'#fef3e2', col:'#92400e' },
+  23: { teams:'NYL @ PHX',  bg:'#eef2ff', col:'#3730a3' },
+  25: { teams:'CHI @ CON',  bg:'#fdeaea', col:'#7a1530' },
+  30: { teams:'TOR @ CHI',  bg:'#fdeaea', col:'#7a1530' },
+};
+const PROJECT_DAYS = new Set([1,3,8,10,12,16,18,22,24,26,29]);
+let monthOpen = false;
+function buildMonthCal() {
+  const el = document.getElementById('month-cal');
+  const year = 2026, month = 5; // June (0-indexed)
+  const first = new Date(Date.UTC(year, month, 1));
+  const startDow = (first.getUTCDay() + 6) % 7; // Mon=0
+  const daysInMonth = new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
+  const dayNames = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  let html = dayNames.map(d => `<div class="month-day-name">${d}</div>`).join('');
+  for (let i = 0; i < startDow; i++) html += `<div class="month-day blank"></div>`;
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dow = (startDow + d - 1) % 7;
+    const isWeekend = dow >= 5;
+    const isToday = d === 30;
+    const g = MONTH_GAMES[d];
+    let cell;
+    if (g) cell = `<div class="month-game" style="background:${g.bg};color:${g.col}">${g.teams}</div>`;
+    else if (isWeekend) cell = `<div class="month-game" style="background:#f0f1f3;color:#c3c7cf">Off</div>`;
+    else if (PROJECT_DAYS.has(d)) cell = `<div class="month-game" style="background:#eaf0fb;color:#3f6cb0">Summer Project</div>`;
+    else cell = '';
+    html += `<div class="month-day${isWeekend?' weekend':''}${isToday?' today':''}">
+      <div class="month-day-num">${d}</div>
+      ${cell}
+    </div>`;
+  }
+  el.innerHTML = html;
+}
+function toggleMonthView() {
+  monthOpen = !monthOpen;
+  document.getElementById('week-cal').style.display = monthOpen ? 'none' : 'grid';
+  const monthEl = document.getElementById('month-cal');
+  if (monthOpen && !monthEl.dataset.built) { buildMonthCal(); monthEl.dataset.built = '1'; }
+  monthEl.classList.toggle('open', monthOpen);
+  document.getElementById('sched-expand-label').textContent = monthOpen ? 'View Week' : 'View Full Month';
+}
+</script>
+</body>
+</html>

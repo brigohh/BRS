@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BRS — Second Check Hub</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;color:#1f2533;background:#eef0f4;min-height:100vh}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#c7cee0;border-radius:10px}
+::-webkit-scrollbar-thumb:hover{background:#aab3cc}
+.nav{background:#1a3a6b;height:52px;display:flex;align-items:center;padding:0 26px;gap:0;flex-shrink:0;overflow:visible;position:relative;z-index:300;box-shadow:0 2px 10px rgba(0,0,0,.12)}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-brand{color:rgba(255,255,255,.92);font-size:12px;font-weight:700;white-space:nowrap;letter-spacing:.7px}
+.nav-whats-new{display:inline-flex;align-items:center;gap:4px;background:rgba(247,184,208,.18);border:1px solid rgba(247,184,208,.55);color:#f7b8d0;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:3px 9px 3px 8px;border-radius:20px;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s}
+.nav-whats-new:hover{background:#f7b8d0;color:#1a3a6b}
+.nav-links{display:flex;align-items:center;margin-left:auto;gap:0;flex-shrink:0;flex-wrap:nowrap}
+.nl{color:rgba(255,255,255,.55);font-size:10.5px;padding:0 8px;cursor:pointer;font-weight:500;height:52px;display:flex;align-items:center;border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0;transition:color .15s,border-color .15s}
+.nl:hover{color:#fff}
+.nl.on{color:#fff;border-bottom-color:#fff;font-weight:600}
+.nav-av{width:30px;height:30px;border-radius:50%;background:#2d5aa0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;flex-shrink:0;box-shadow:0 0 0 2px rgba(255,255,255,.2)}
+/* HERO */
+.hero{background:#d6e2f5;padding:32px 0 32px}
+.hero-inner{max-width:1400px;margin:0 auto;padding:0 32px}
+.hero-row{display:flex;gap:26px;align-items:stretch}
+.hero-lm{flex:0 0 300px;display:flex;flex-direction:column}
+.hero-sc{flex:1;display:flex;flex-direction:column}
+.sec-lbl{font-size:11px;font-weight:800;color:#4b5563;letter-spacing:.7px;margin-bottom:11px;text-transform:uppercase}
+/* LAST MODIFIED CARD */
+.lm-card{background:#fff;border-radius:16px;padding:19px 21px;cursor:pointer;transition:box-shadow .15s,transform .15s;box-shadow:0 3px 14px rgba(26,58,107,.14);display:flex;flex-direction:column;flex:1;border:1px solid #eef0f5}
+.lm-card:hover{box-shadow:0 6px 22px rgba(26,58,107,.2);transform:translateY(-1px)}
+.lm-matchup{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+.lm-logo{width:28px;height:28px;object-fit:contain;flex-shrink:0}
+.lm-logo-ph{width:28px;height:28px;border-radius:50%;background:#f3f4f6;border:1px solid #e5e7eb;display:inline-flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#6b7280;flex-shrink:0}
+.lm-team{font-size:13px;font-weight:700;color:#111827}
+.lm-score{font-size:11px;color:#6b7280;margin-top:1px}
+.lm-vs{font-size:10px;color:#d1d5db;padding:0 2px}
+.lm-meta{font-size:11px;color:#9ca3af;margin-bottom:10px}
+.lm-status{display:inline-flex;align-items:center;gap:5px;margin-top:4px}
+.lm-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.lm-status-txt{font-size:11px;font-weight:600}
+/* HERO Q CHIPS (pills style) */
+.q-row-hero{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-bottom:10px}
+.q-chip-h{font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;white-space:nowrap;border:1px solid}
+.qh-done{color:#166534;background:#dcfce7;border-color:#86efac}
+.qh-progress{color:#9a3412;background:#ffedd5;border-color:#fdba74}
+.qh-sep{color:rgba(0,0,0,.3);font-size:10px}
+/* RECENT SC CARDS */
+.recent-sc{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;flex:1;align-content:start}
+.rc-card{background:#fff;border-radius:13px;border-left:4px solid #ec4899;padding:14px 16px;cursor:pointer;transition:box-shadow .15s,transform .15s;box-shadow:0 2px 10px rgba(26,58,107,.1);display:flex;flex-direction:column;gap:6px;border-top:1px solid #f3f0f5;border-right:1px solid #f3f0f5;border-bottom:1px solid #f3f0f5}
+.rc-card:hover{box-shadow:0 5px 16px rgba(26,58,107,.18);transform:translateY(-1px)}
+.rc-matchup{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#111827;flex-wrap:wrap}
+.rc-logo{width:18px;height:18px;object-fit:contain;flex-shrink:0;vertical-align:middle}
+.rc-at{color:#d1d5db;font-size:10px;font-weight:400}
+.rc-meta{font-size:11px;color:#9ca3af}
+.rc-pills{display:flex;gap:4px;flex-wrap:wrap}
+.rc-pill{padding:2px 7px;border-radius:20px;font-size:10px;font-weight:600;border:1px solid}
+.rp-total{background:#f3f4f6;border-color:#e5e7eb;color:#374151}
+.rp-crit{background:#fee2e2;border-color:#fca5a5;color:#991b1b}
+.rc-sc-info{font-size:11px;color:#6b7280}
+.rc-sc-info b{color:#374151;font-weight:600}
+.rc-done{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:700;color:#166534}
+.view-all-link{display:inline-flex;align-items:center;gap:5px;color:rgba(0,0,0,.5);font-size:12px;font-weight:600;cursor:pointer;transition:color .15s;margin-top:12px}
+.view-all-link:hover{color:#000}
+/* SEARCH */
+.search-bar{background:#fff;border-bottom:1px solid #eef0f5;padding:15px 0;box-shadow:0 1px 6px rgba(26,58,107,.05)}
+.search-inner{max-width:1400px;margin:0 auto;padding:0 32px;display:flex;align-items:center;gap:12px;justify-content:center}
+.sb-field{display:flex;flex-direction:column;gap:4px}
+.sb-lbl{font-size:9px;font-weight:700;letter-spacing:.4px;color:#9ca3af;text-transform:uppercase}
+.sb-input{height:33px;padding:0 11px;border:1px solid #dde1ea;border-radius:9px;font-size:12px;color:#111827;background:#fff;outline:none;min-width:120px;transition:border-color .15s}
+.sb-input:focus{border-color:#ec4899}
+.sb-sep{width:1px;height:32px;background:#e5e7eb;margin:0 4px;flex-shrink:0;align-self:center}
+.sb-checks{display:flex;align-items:center;gap:14px;align-self:center}
+.sb-check{display:flex;align-items:center;gap:6px;font-size:12px;color:#374151;cursor:pointer}
+.sb-check input{accent-color:#ec4899;width:14px;height:14px}
+.search-btn{height:33px;padding:0 19px;background:#1a3a6b;color:#fff;border:none;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:5px;align-self:flex-end;transition:background .15s}
+.search-btn:hover{background:#ec4899}
+.clear-btn{height:33px;padding:0 13px;border:1px solid #dde1ea;border-radius:9px;font-size:12px;background:#fff;color:#6b7280;cursor:pointer;align-self:flex-end}
+/* LEAGUE BUTTONS */
+.league-btns{display:flex;gap:5px;align-items:center}
+.lg-btn{display:flex;align-items:center;gap:7px;padding:5px 14px;border:1px solid #dde1ea;border-radius:9px;font-size:11.5px;font-weight:600;background:#fff;color:#6b7280;cursor:pointer;height:36px;transition:background .15s,border-color .15s,color .15s}
+.lg-btn:hover{background:#fdf2f8;border-color:#f7b8d0}
+.lg-btn.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
+.lg-btn img{width:20px;height:20px;object-fit:contain}
+/* TABLE */
+.table-wrap{max-width:1400px;margin:0 auto;padding:26px 32px 36px}
+.tbl-top{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:14px}
+.tbl-count{font-size:12px;color:#6b7280;margin-top:5px}
+.qb-row{display:flex;gap:6px;align-items:center}
+.qb{padding:5px 14px;border:1px solid #dde1ea;border-radius:9px;font-size:12px;font-weight:500;background:#fff;color:#6b7280;cursor:pointer;transition:background .15s,border-color .15s,color .15s}
+.qb:hover{background:#fdf2f8;border-color:#f7b8d0}
+.qb.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
+.qb-sep{width:1px;height:18px;background:#e5e7eb;margin:0 2px}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #eef0f5;border-radius:14px;overflow:hidden;box-shadow:0 2px 10px rgba(26,58,107,.06)}
+thead{background:#f8fafc}
+th{padding:10px 14px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.3px;color:#6b7280;text-transform:uppercase;border-bottom:1px solid #eef0f5;white-space:nowrap}
+td{padding:9px 14px;border-bottom:1px solid #f5f6f9;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#fdf2f8;cursor:pointer}
+/* Game cell */
+.game-matchup{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:#111827}
+.game-matchup .t-logo{width:18px;height:18px;object-fit:contain;flex-shrink:0;vertical-align:middle}
+.game-matchup .t-ph{width:18px;height:18px;border-radius:50%;background:#f3f4f6;border:1px solid #e5e7eb;display:inline-flex;align-items:center;justify-content:center;font-size:6px;font-weight:700;color:#6b7280;flex-shrink:0}
+.game-at{color:#d1d5db;font-size:10px;font-weight:400}
+.game-date{font-size:11px;color:#9ca3af;margin-top:2px}
+/* QUARTER STATUS — plain colored text for table */
+.q-txt-row{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:5px}
+.qt-done{font-size:11px;font-weight:600;color:#16a34a}
+.qt-progress{font-size:11px;font-weight:600;color:#d97706}
+.qt-sep{font-size:10px;color:#d1d5db}
+.td-num{font-size:13px;font-weight:600;color:#374151;text-align:center}
+.td-person{font-size:12px;color:#374151;font-weight:500;white-space:nowrap}
+.td-date-s{font-size:11px;color:#9ca3af;margin-top:2px}
+.td-actions{text-align:center}
+.open-btn{padding:4px 12px;border:1px solid #f7b8d0;border-radius:8px;font-size:12px;font-weight:600;background:#fdf2f8;color:#1a3a6b;cursor:pointer;white-space:nowrap}
+.open-btn:hover{background:#f7b8d0;color:#fff}
+.nav-dropdown{position:relative;display:flex;align-items:center;height:48px}
+.nav-dropdown .nl{gap:4px}
+.nav-dd-caret{font-size:8px;opacity:.7;transition:transform .15s}
+.nav-dropdown.open .nav-dd-caret{transform:rotate(180deg)}
+.nav-dd-menu{display:none;position:absolute;top:44px;right:0;background:#fff;border:1px solid #e5e7eb;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.14);min-width:170px;z-index:400;padding:4px 0}
+.nav-dropdown.open .nav-dd-menu{display:block}
+.nav-dd-item{display:block;padding:9px 16px;font-size:11px;font-weight:500;color:#374151;text-decoration:none;white-space:nowrap;cursor:pointer}
+.nav-dd-item:hover{background:#f0f2f5;color:#1a3a6b}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-logo" onclick="location='home.html'" style="cursor:pointer">
+    <img src="Logos/nba-logo.svg" style="width:16px;height:auto">
+    <div class="nav-brand">BRIDGET REVIEW SYSTEM 1.0</div>
+    <span class="nav-whats-new" onclick="event.stopPropagation();location='whats-new.html'"><i class="ti ti-sparkles" style="font-size:10px"></i> What's New</span>
+  </div>
+  <div class="nav-links">
+    <span class="nl on">HOME</span>
+    <span class="nl" onclick="location='published-games.html'">PUBLISHED GAMES</span>
+    <div class="nav-dropdown" id="rim-dropdown">
+      <span class="nl" onclick="location='rim.html'">RIM</span>
+      <span class="nl" style="padding-left:0;padding-right:6px;font-size:9px;opacity:.6;cursor:pointer" onclick="toggleRimDropdown(event)">▾</span>
+      <div class="nav-dd-menu" id="rim-dd-menu" style="min-width:190px;left:0;right:auto">
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-home" style="margin-right:7px;font-size:12px"></i>RIM Home</span>
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-inbox" style="margin-right:7px;font-size:12px"></i>Interactions</span>
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-messages" style="margin-right:7px;font-size:12px"></i>Threads</span>
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-layout-board" style="margin-right:7px;font-size:12px"></i>Message Board</span>
+        <span class="nav-dd-item" onclick="location='playlists.html'"><i class="ti ti-playlist" style="margin-right:7px;font-size:12px"></i>Playlists</span>
+        <span class="nav-dd-item" onclick="location='assessments.html'"><i class="ti ti-clipboard-check" style="margin-right:7px;font-size:12px"></i>Assessments</span>
+        <span class="nav-dd-item" onclick="location='poe.html'"><i class="ti ti-target" style="margin-right:7px;font-size:12px"></i>Points of Education</span>
+      </div>
+    </div>
+    <span class="nl">RM REVIEW</span>
+    <span class="nl">FINAL L2M REVIEW</span>
+    <span class="nl">INDEPENDENT REVIEW</span>
+    <span class="nl">ADMINISTRATION</span>
+    <div class="nav-dropdown" id="nav-dropdown">
+      <span class="nl" onclick="toggleNavDropdown(event)">REVIEWER RESOURCE <span class="nav-dd-caret">▾</span></span>
+      <div class="nav-dd-menu">
+        <span class="nav-dd-item" onclick="location='comment-library.html'">Comment Library</span>
+      </div>
+    </div>
+    <span class="nl">MY SCHEDULE</span>
+    <div class="nav-av" style="margin-left:12px">BN</div>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-row">
+
+      <!-- LAST MODIFIED: first pass in-progress, no SC -->
+      <div class="hero-lm">
+        <div class="sec-lbl">LAST MODIFIED</div>
+        <div class="lm-card" onclick="void(0)">
+          <div class="lm-matchup">
+            <img src="Logos/Dallas_Wings_logo.svg.png" class="lm-logo" onerror="this.style.display='none'">
+            <div><div class="lm-team">Dallas Wings</div><div class="lm-score">76</div></div>
+            <div class="lm-vs">@</div>
+            <img src="Logos/Minnesota_Lynx_logo.svg.png" class="lm-logo" onerror="this.style.display='none'">
+            <div><div class="lm-team">Minnesota Lynx</div><div class="lm-score">100</div></div>
+          </div>
+          <div class="lm-meta">Mon, Jun 9, 2026 &nbsp;·&nbsp; 8:00 PM</div>
+          <div class="q-row-hero">
+            <span class="q-chip-h qh-done">Q1 (BN)</span><span class="qh-sep">,</span>
+            <span class="q-chip-h qh-done">Q2 (BN)</span><span class="qh-sep">,</span>
+            <span class="q-chip-h qh-progress">Q3 (BN)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RECENTLY SECOND CHECKED -->
+      <div class="hero-sc">
+        <div class="sec-lbl">RECENTLY PUBLISHED</div>
+        <div class="recent-sc">
+          <div class="rc-card" onclick="location='review.html'">
+            <div class="rc-matchup">
+              <img src="Logos/toronto tempo logo.jpg" class="rc-logo" onerror="this.style.display='none'"> Toronto Tempo
+              <span class="rc-at">@</span>
+              <img src="Logos/chicago sky logo.png" class="rc-logo" onerror="this.style.display='none'"> Chicago Sky
+            </div>
+            <div class="rc-meta">05/27/2026</div>
+            <div class="rc-pills">
+              <span class="rc-pill rp-total">18 plays</span>
+              <span class="rc-pill rp-crit">5 critical</span>
+            </div>
+            <div class="rc-sc-info">Second checked by <b>Daniel Foley</b> &nbsp;·&nbsp; 06/01/2026</div>
+            <div class="rc-done"><i class="ti ti-circle-check" style="font-size:10px"></i> Published</div>
+          </div>
+          <div class="rc-card" onclick="void(0)">
+            <div class="rc-matchup">
+              <img src="Logos/New_Las_Vegas_Aces_WNBA_logo_2024.svg.png" class="rc-logo" onerror="this.style.display='none'"> Las Vegas Aces
+              <span class="rc-at">@</span>
+              <img src="Logos/Los_Angeles_Sparks_logo.svg.png" class="rc-logo" onerror="this.style.display='none'"> Los Angeles Sparks
+            </div>
+            <div class="rc-meta">06/02/2026</div>
+            <div class="rc-pills">
+              <span class="rc-pill rp-total">23 plays</span>
+              <span class="rc-pill rp-crit">7 critical</span>
+            </div>
+            <div class="rc-sc-info">Second checked by <b>Curtis Oakley Jr.</b> &nbsp;·&nbsp; 06/09/2026</div>
+            <div class="rc-done"><i class="ti ti-circle-check" style="font-size:10px"></i> Published</div>
+          </div>
+          <div class="rc-card" onclick="void(0)">
+            <div class="rc-matchup">
+              <img src="Logos/Connecticut_Sun_logo.svg.png" class="rc-logo" onerror="this.style.display='none'"> Connecticut Sun
+              <span class="rc-at">@</span>
+              <img src="Logos/chicago sky logo.png" class="rc-logo" onerror="this.style.display='none'"> Chicago Sky
+            </div>
+            <div class="rc-meta">06/05/2026</div>
+            <div class="rc-pills">
+              <span class="rc-pill rp-total">8 plays</span>
+              <span class="rc-pill rp-crit">2 critical</span>
+            </div>
+            <div class="rc-sc-info">Second checked by <b>Michael Gargin</b> &nbsp;·&nbsp; 06/08/2026</div>
+            <div class="rc-done"><i class="ti ti-circle-check" style="font-size:10px"></i> Published</div>
+          </div>
+        </div>
+        <div class="view-all-link" onclick="location='published-games.html'">
+          View all published games <i class="ti ti-arrow-right" style="font-size:13px"></i>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- SEARCH -->
+<div class="search-bar">
+  <div class="search-inner">
+    <div class="sb-field">
+      <div class="sb-lbl">League</div>
+      <div class="league-btns">
+        <button class="lg-btn on" data-lg="all">All</button>
+        <button class="lg-btn" data-lg="WNBA"><img src="Logos/WNBA LOGO.png" onerror="this.style.display='none'"> WNBA</button>
+        <button class="lg-btn" data-lg="NBA"><img src="Logos/nba-logo.svg" onerror="this.style.display='none'"> NBA</button>
+        <button class="lg-btn" data-lg="GL"><img src="Logos/g league logo.png" onerror="this.style.display='none'"> G-League</button>
+        <button class="lg-btn" data-lg="BAL"><img src="Logos/basketball-africa-league-logo-png_seeklogo-510470.png" onerror="this.style.display='none'"> BAL</button>
+      </div>
+    </div>
+    <div class="sb-sep"></div>
+    <div class="sb-field">
+      <div class="sb-lbl">Date from</div>
+      <input type="date" class="sb-input" value="2026-05-12">
+    </div>
+    <div class="sb-field">
+      <div class="sb-lbl">To</div>
+      <input type="date" class="sb-input" value="2026-06-12">
+    </div>
+    <div class="sb-sep"></div>
+    <div class="sb-field">
+      <div class="sb-lbl">&nbsp;</div>
+      <div class="sb-checks">
+        <label class="sb-check"><input type="checkbox" checked> My games</label>
+        <label class="sb-check"><input type="checkbox"> PTIW</label>
+      </div>
+    </div>
+    <div class="sb-sep"></div>
+    <button class="search-btn"><i class="ti ti-search" style="font-size:12px"></i> Search</button>
+    <button class="clear-btn">Clear</button>
+  </div>
+</div>
+
+<!-- TABLE -->
+<div class="table-wrap" id="all-section">
+  <div class="tbl-top">
+    <div>
+      <div class="qb-row">
+        <div class="qb on">All</div>
+        <div class="qb">In Progress</div>
+        <div class="qb">Complete</div>
+        <div class="qb">Published</div>
+      </div>
+      <div class="tbl-count">Showing 11 games</div>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Game</th>
+        <th>Status</th>
+        <th style="text-align:center">Look</th>
+        <th>Last Modified By</th>
+        <th>First Modified By</th>
+        <th>Published Date</th>
+        <th>Second Checked By</th>
+      </tr>
+    </thead>
+    <tbody id="game-tbody"></tbody>
+  </table>
+</div>
+
+<script>
+const LOGOS = {
+  ATL:'Logos/Atlanta_Dream_logo.svg.png',
+  CON:'Logos/Connecticut_Sun_logo.svg.png',
+  DAL:'Logos/Dallas_Wings_logo.svg.png',
+  GSV:'Logos/Golden_State_Valkyries_logo.svg.png',
+  IND:'Logos/Indiana_Fever_logo.svg.png',
+  LAS:'Logos/Los_Angeles_Sparks_logo.svg.png',
+  LVA:'Logos/New_Las_Vegas_Aces_WNBA_logo_2024.svg.png',
+  MIN:'Logos/Minnesota_Lynx_logo.svg.png',
+  NYL:'Logos/New_York_Liberty_logo.svg.png',
+  PHX:'Logos/Phoenix_Mercury_logo_2025.svg.png',
+  PDX:'Logos/Portland_Fire_logo.svg.png',
+  SEA:'Logos/Seattle_Storm_(2021)_logo.svg.png',
+  CHI:'Logos/chicago sky logo.png',
+  TOR:'Logos/toronto tempo logo.jpg',
+};
+
+function teamLogo(abbr, cls) {
+  const src = LOGOS[abbr];
+  if (!src) return `<span class="t-ph">${abbr}</span>`;
+  return `<img src="${src}" class="${cls}" onerror="this.style.display='none'">`;
+}
+
+function qTextRow(quarters) {
+  if (!quarters) return '';
+  const visible = quarters.filter(q => q.status !== 'pending');
+  if (!visible.length) return '';
+  return '<div class="q-txt-row">' + visible.map((q, i) =>
+    `<span class="qt-${q.status}">${q.q} (${q.by})</span>${i < visible.length-1 ? '<span class="qt-sep">,</span>' : ''}`
+  ).join('') + '</div>';
+}
+
+const GAMES = [
+  {id:'1022600087',date:'06/09/2026',away:'DAL',home:'MIN',plays:14,crit:3,status:'progress',lastBy:'Bridget Ng',lastDate:'6/11/2026 8:03 AM',firstBy:'Bridget Ng',firstDate:'6/10/2026 8:04 AM',published:'',sc:'',
+   quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'progress'},{q:'Q4',by:'BN',status:'pending'}]},
+  {id:'1022600080',date:'06/06/2026',away:'IND',home:'NYL',plays:18,crit:5,status:'done',lastBy:'Daniel Foley',lastDate:'6/10/2026 9:08 AM',firstBy:'Bridget Ng',firstDate:'6/8/2026 8:47 AM',published:'',sc:'Daniel Foley',
+   quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'done'},{q:'Q4',by:'BN',status:'done'}]},
+  {id:'1022600074',date:'06/05/2026',away:'CON',home:'CHI',plays:8,crit:2,status:'done',lastBy:'Michael Gargin',lastDate:'6/8/2026 11:02 AM',firstBy:'Bridget Ng',firstDate:'6/6/2026 6:51 AM',published:'6/8/2026 11:03 AM',sc:'Michael Gargin',
+   quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'done'},{q:'Q4',by:'BN',status:'done'}]},
+  {id:'1022600069',date:'06/02/2026',away:'LVA',home:'LAS',plays:23,crit:7,status:'done',lastBy:'Curtis Oakley Jr.',lastDate:'6/9/2026 1:59 PM',firstBy:'Bridget Ng',firstDate:'6/3/2026 8:14 AM',published:'6/9/2026 1:59 PM',sc:'Curtis Oakley Jr.',
+   quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'done'},{q:'Q4',by:'BN',status:'done'}]},
+  {id:'1022600059',date:'05/29/2026',away:'ATL',home:'PDX',plays:4,crit:1,status:'done',lastBy:'Michael Abdenour',lastDate:'6/2/2026 1:26 PM',firstBy:'Bridget Ng',firstDate:'6/1/2026 7:42 AM',published:'6/2/2026 1:32 PM',sc:'Michael Abdenour',
+   quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'done'},{q:'Q4',by:'BN',status:'done'}]},
+  {id:'1022600056',date:'05/29/2026',away:'PHX',home:'NYL',plays:7,crit:3,status:'done',lastBy:'Michael Gargin',lastDate:'6/4/2026 5:41 PM',firstBy:'Bridget Ng',firstDate:'5/30/2026 7:59 AM',published:'6/4/2026 5:51 PM',sc:'Michael Gargin',
+   quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'done'},{q:'Q4',by:'BN',status:'done'}]},
+  {id:'1022600050',date:'05/27/2026',away:'TOR',home:'CHI',plays:18,crit:5,status:'done',lastBy:'Daniel Foley',lastDate:'6/1/2026 10:43 AM',firstBy:'Bridget Ng',firstDate:'5/28/2026 8:09 AM',published:'6/9/2026 10:44 AM',sc:'Daniel Foley',link:'review.html',
+   quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'done'},{q:'Q4',by:'BN',status:'done'}]},
+  {id:'1022600045',date:'05/24/2026',away:'DAL',home:'NYL',plays:10,crit:2,status:'done',lastBy:'Michael Abdenour',lastDate:'5/29/2026 3:22 PM',firstBy:'Bridget Ng',firstDate:'5/26/2026 8:02 AM',published:'5/29/2026 3:23 PM',sc:'Michael Abdenour',
+   quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'done'},{q:'Q4',by:'BN',status:'done'}]},
+  {id:'1022600039',date:'05/22/2026',away:'GSV',home:'IND',plays:17,crit:6,status:'done',lastBy:'Michael Gargin',lastDate:'6/2/2026 11:54 AM',firstBy:'Bridget Ng',firstDate:'5/23/2026 6:49 AM',published:'6/2/2026 11:54 AM',sc:'Michael Gargin',
+   quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'done'},{q:'Q4',by:'BN',status:'done'}]},
+  {id:'1022600037',date:'05/21/2026',away:'LAS',home:'PHX',plays:7,crit:2,status:'done',lastBy:'Tucker Grady',lastDate:'5/26/2026 10:35 PM',firstBy:'Bridget Ng',firstDate:'5/22/2026 7:33 AM',published:'5/26/2026 10:36 PM',sc:'Tucker Grady',
+   quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'done'},{q:'Q4',by:'BN',status:'done'}]},
+  {id:'1022600025',date:'05/17/2026',away:'CHI',home:'MIN',plays:4,crit:0,status:'done',lastBy:'Daniel Foley',lastDate:'5/19/2026 2:56 PM',firstBy:'Bridget Ng',firstDate:'5/18/2026 8:13 AM',published:'5/19/2026 4:58 PM',sc:'Daniel Foley',
+   quarters:[{q:'Q1',by:'BN',status:'done'},{q:'Q2',by:'BN',status:'done'},{q:'Q3',by:'BN',status:'done'},{q:'Q4',by:'BN',status:'done'}]},
+];
+
+function renderTable(games) {
+  const tbody = document.getElementById('game-tbody');
+  tbody.innerHTML = '';
+  games.forEach(g => {
+    const statusPill = g.published
+      ? '<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;background:#e0e7ff;color:#3730a3;border:1px solid #a5b4fc"><span style="width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.7;flex-shrink:0"></span>Published</span>'
+      : g.status === 'done'
+      ? '<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;background:#dcfce7;color:#166534;border:1px solid #86efac"><span style="width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.7;flex-shrink:0"></span>Complete</span>'
+      : g.status === 'progress'
+      ? '<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;background:#fef9c3;color:#854d0e;border:1px solid #fde68a"><span style="width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.7;flex-shrink:0"></span>In progress</span>'
+      : '<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;background:#f3f4f6;color:#9ca3af;border:1px solid #e5e7eb">Pending</span>';
+    const tr = document.createElement('tr');
+    if (g.link) { tr.style.cursor = 'pointer'; tr.onclick = () => location = g.link; }
+    tr.innerHTML = `
+      <td>
+        <div class="game-matchup">${teamLogo(g.away,'t-logo')} ${g.away} <span class="game-at">@</span> ${teamLogo(g.home,'t-logo')} ${g.home}</div>
+        <div class="game-date">${g.date}</div>
+      </td>
+      <td>${statusPill}${qTextRow(g.quarters)}</td>
+      <td class="td-num">${g.plays}</td>
+      <td><div class="td-person">${g.lastBy}</div><div class="td-date-s">${g.lastDate}</div></td>
+      <td><div class="td-person">${g.firstBy}</div><div class="td-date-s">${g.firstDate}</div></td>
+      <td><div class="td-date-s" style="font-size:12px;color:#374151">${g.published||'—'}</div></td>
+      <td><div class="td-person">${g.sc||'—'}</div></td>
+    `;
+    tbody.appendChild(tr);
+  });
+  document.querySelector('.tbl-count').textContent = 'Showing ' + games.length + ' game' + (games.length!==1?'s':'');
+}
+
+document.querySelectorAll('.qb').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.qb').forEach(b => b.classList.remove('on'));
+    this.classList.add('on');
+    const f = this.textContent.trim().toLowerCase();
+    let filtered = GAMES;
+    if (f==='in progress') filtered = GAMES.filter(g=>g.status==='progress');
+    else if (f==='complete') filtered = GAMES.filter(g=>g.status==='done'&&!g.published);
+    else if (f==='published') filtered = GAMES.filter(g=>!!g.published);
+    renderTable(filtered);
+    document.querySelector('.tbl-count').textContent = 'Showing ' + filtered.length + ' game' + (filtered.length!==1?'s':'');
+  });
+});
+
+document.querySelectorAll('.lg-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.lg-btn').forEach(b => b.classList.remove('on'));
+    this.classList.add('on');
+  });
+});
+
+renderTable(GAMES);
+function toggleNavDropdown(e){e.stopPropagation();document.getElementById('nav-dropdown').classList.toggle('open')}
+document.addEventListener('click',()=>{document.getElementById('nav-dropdown').classList.remove('open');document.getElementById('rim-dropdown')?.classList.remove('open');})
+function toggleRimDropdown(e){e.stopPropagation();document.getElementById("rim-dropdown").classList.toggle("open");document.getElementById("nav-dropdown").classList.remove("open");}
+</script>
+</body>
+</html>

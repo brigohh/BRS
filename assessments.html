@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BRS — Assessments</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;color:#111827;background:#f3f4f6;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+
+/* NAV */
+.nav{background:#1a3a6b;height:48px;display:flex;align-items:center;padding:0 24px;flex-shrink:0;z-index:300;position:relative}
+.nav-logo{display:flex;align-items:center;gap:8px;cursor:pointer}
+.nav-brand{color:rgba(255,255,255,.9);font-size:11.5px;font-weight:600;letter-spacing:.5px}
+.nav-whats-new{display:inline-flex;align-items:center;gap:4px;background:rgba(247,184,208,.18);border:1px solid rgba(247,184,208,.55);color:#f7b8d0;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:3px 9px 3px 8px;border-radius:20px;cursor:pointer;white-space:nowrap;margin-left:8px;transition:background .15s,color .15s}
+.nav-whats-new:hover{background:#f7b8d0;color:#1a3a6b}
+.nav-links{display:flex;align-items:center;margin-left:auto;flex-shrink:0}
+.nl{color:rgba(255,255,255,.55);font-size:10.5px;padding:0 8px;cursor:pointer;font-weight:500;height:48px;display:flex;align-items:center;border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0}
+.nl:hover{color:#fff}
+.nl.on{color:#fff;border-bottom-color:#fff;font-weight:600}
+.nav-av{width:30px;height:30px;border-radius:50%;background:#2d5aa0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;flex-shrink:0;margin-left:12px}
+.nav-dropdown{position:relative;display:flex;align-items:center;height:48px}
+.nav-dd-caret{font-size:8px;opacity:.7;transition:transform .15s}
+.nav-dropdown.open .nav-dd-caret{transform:rotate(180deg)}
+.nav-dd-menu{display:none;position:absolute;top:44px;right:0;background:#fff;border:1px solid #e5e7eb;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.14);min-width:170px;z-index:400;padding:4px 0}
+.nav-dropdown.open .nav-dd-menu{display:block}
+.nav-dd-item{display:block;padding:9px 16px;font-size:11px;font-weight:500;color:#374151;cursor:pointer}
+.nav-dd-item:hover{background:#f0f2f5;color:#1a3a6b}
+
+/* VIEWS */
+#landing{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+#quiz,#results{flex:1;display:none;flex-direction:column;overflow:hidden}
+
+/* LANDING */
+.landing-hero{background:linear-gradient(135deg,#1a3a6b,#0f2347);padding:28px 40px 24px;flex-shrink:0}
+.lh-eyebrow{font-size:10px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:6px}
+.lh-title{font-size:24px;font-weight:800;color:#fff;letter-spacing:-.2px;margin-bottom:6px}
+.lh-sub{font-size:12.5px;color:rgba(255,255,255,.55);margin-bottom:16px;line-height:1.5}
+.lh-actions{display:flex;gap:8px;align-items:center}
+.lh-btn{padding:7px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;border:none;display:flex;align-items:center;gap:6px;transition:opacity .15s}
+.lh-btn:hover{opacity:.85}
+.lh-btn.ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2)}
+.lh-btn.manager-toggle{background:#fce7f3;color:#9d174d}
+.lh-btn.manager-toggle.on{background:#f9a8d4;color:#831843}
+.landing-body{padding:24px 40px 40px;flex:1}
+
+/* CALLOUT */
+.callout{background:#eef2ff;border:1px solid #c7d2fe;border-radius:12px;padding:14px 18px;margin-bottom:24px;display:flex;gap:13px;align-items:flex-start}
+.callout-icon{width:34px;height:34px;border-radius:9px;background:#6366f1;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.callout-icon i{color:#fff;font-size:16px}
+.callout-text{font-size:12px;color:#3730a3;line-height:1.6}
+.callout-title{font-size:12.5px;font-weight:700;color:#312e81;margin-bottom:3px}
+
+/* CHECK-IN CARD */
+.checkin-card{background:#fff;border:1.5px solid #f59e0b;border-radius:14px;padding:18px 22px;margin-bottom:20px;position:relative;overflow:hidden}
+.checkin-card-accent{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#f59e0b,#fbbf24)}
+.ci-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
+.ci-badge{padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;background:#fef3c7;color:#92400e;display:flex;align-items:center;gap:4px}
+.ci-name{font-size:15px;font-weight:800;color:#111827;margin-bottom:3px}
+.ci-meta{font-size:11.5px;color:#6b7280;margin-bottom:10px;line-height:1.5}
+.ci-areas{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.ci-area{padding:3px 10px;border-radius:20px;font-size:10.5px;font-weight:600;background:#fef3c7;color:#92400e;border:1px solid #fde68a}
+.ci-actions{display:flex;gap:8px;align-items:center}
+.ci-btn{padding:7px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;transition:opacity .15s;border:none}
+.ci-btn:hover{opacity:.85}
+.ci-btn.cal{background:#1a3a6b;color:#fff}
+.ci-btn.complete{background:#dcfce7;color:#166534;border:1px solid #86efac}
+.ci-note{font-size:11px;color:#9ca3af;margin-top:8px;display:flex;align-items:center;gap:5px}
+
+/* ACTIVE ASSESSMENT CARD */
+.active-card{background:#fff;border:1.5px solid #1a3a6b;border-radius:14px;padding:22px 24px;margin-bottom:20px;position:relative;overflow:hidden}
+.active-card-accent{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#1a3a6b,#2563eb)}
+.ac-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
+.ac-badge{padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;background:#dcfce7;color:#166534;display:flex;align-items:center;gap:4px}
+.ac-name{font-size:17px;font-weight:800;color:#111827;letter-spacing:-.2px;margin-bottom:4px}
+.ac-meta{font-size:11.5px;color:#6b7280;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.ac-dot{width:3px;height:3px;border-radius:50%;background:#d1d5db}
+.ac-deadline{font-size:11.5px;color:#d97706;font-weight:600;display:flex;align-items:center;gap:4px;margin-top:6px}
+.ac-progress{margin:14px 0}
+.ac-prog-lbl{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:#9ca3af;margin-bottom:5px}
+.prog-bar{height:5px;background:#f3f4f6;border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;background:#1a3a6b;border-radius:3px;transition:width .3s}
+.ac-areas{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.area-tag{padding:3px 10px;border-radius:20px;font-size:10.5px;font-weight:600;background:#f3f4f6;color:#6b7280;border:1px solid #e5e7eb}
+.ac-footer{display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:14px;border-top:1px solid #f3f4f6}
+.start-btn{padding:9px 22px;background:#1a3a6b;color:#fff;border:none;border-radius:8px;font-size:12.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;transition:background .15s}
+.start-btn:hover{background:#15306e}
+
+/* PAST ASSESSMENTS */
+.past-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px}
+.past-card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:16px 18px;cursor:pointer;transition:border-color .15s;position:relative}
+.past-card:hover{border-color:#d1d5db}
+.past-score{font-size:22px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
+.past-score.great{color:#16a34a}
+.past-score.good{color:#1a3a6b}
+.past-score.work{color:#d97706}
+.past-score.fail{color:#dc2626}
+.past-name{font-size:12px;font-weight:700;color:#111827;margin-bottom:3px}
+.past-date{font-size:10.5px;color:#9ca3af;margin-bottom:10px}
+.past-areas{display:flex;gap:4px;flex-wrap:wrap}
+.past-area{padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;background:#fef3c7;color:#92400e}
+.past-area.ok{background:#dcfce7;color:#166534}
+.past-status{position:absolute;top:14px;right:14px;padding:2px 8px;border-radius:20px;font-size:9.5px;font-weight:700}
+.ps-pass{background:#dcfce7;color:#166534}
+.ps-fail{background:#fee2e2;color:#991b1b}
+.ps-checkin{background:#fef3c7;color:#92400e}
+
+/* SECTION HEADER */
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.sec-title{font-size:14px;font-weight:800;color:#111827}
+.sec-link{font-size:11.5px;color:#1a3a6b;cursor:pointer;font-weight:500}
+.sec-link:hover{text-decoration:underline}
+
+/* MANAGER ROSTER TABLE */
+.roster-wrap{background:#fff;border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;margin-bottom:28px}
+.roster-header{padding:14px 20px;background:#f9fafb;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between}
+.roster-title{font-size:13px;font-weight:800;color:#111827}
+.roster-meta{font-size:11px;color:#9ca3af}
+table.roster-table{width:100%;border-collapse:collapse}
+.roster-table th{padding:9px 16px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#6b7280;border-bottom:1px solid #f3f4f6;text-align:left;background:#fafafa}
+.roster-table td{padding:12px 16px;font-size:12px;color:#374151;border-bottom:1px solid #f9fafb;vertical-align:middle}
+.roster-table tr:last-child td{border-bottom:none}
+.roster-table tr:hover td{background:#f9fafb}
+.r-name{font-weight:700;color:#111827;margin-bottom:1px}
+.r-sub{font-size:10.5px;color:#9ca3af}
+.r-status{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:10.5px;font-weight:700}
+.rs-not-started{background:#f3f4f6;color:#6b7280}
+.rs-in-progress{background:#dbeafe;color:#1e40af}
+.rs-passed{background:#dcfce7;color:#166534}
+.rs-failed{background:#fee2e2;color:#991b1b}
+.rs-checkin{background:#fef3c7;color:#92400e}
+.rs-assign{padding:5px 12px;border:1px solid #d1d5db;border-radius:7px;font-size:11px;font-weight:600;color:#374151;background:#fff;cursor:pointer;transition:all .15s;white-space:nowrap}
+.rs-assign:hover{border-color:#1a3a6b;color:#1a3a6b}
+.rs-assigned-label{font-size:11px;color:#92400e;font-weight:600;display:flex;align-items:center;gap:4px}
+
+/* ── QUIZ VIEW ── */
+.quiz-header{background:linear-gradient(135deg,#1a3a6b,#0f2347);height:54px;display:flex;align-items:center;padding:0 20px;gap:14px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.08)}
+.qh-back{font-size:11px;color:rgba(255,255,255,.5);cursor:pointer;display:flex;align-items:center;gap:4px;font-weight:500;flex-shrink:0;padding-right:12px;border-right:1px solid rgba(255,255,255,.12)}
+.qh-back:hover{color:#fff}
+.qh-name{font-size:13px;font-weight:700;color:#fff;flex:1}
+.qh-counter{font-size:11.5px;color:rgba(255,255,255,.55);white-space:nowrap}
+.qh-prog{width:120px;height:4px;background:rgba(255,255,255,.15);border-radius:2px;flex-shrink:0}
+.qh-prog-fill{height:100%;background:#60a5fa;border-radius:2px;transition:width .3s}
+.quiz-body{flex:1;display:flex;overflow:hidden;min-height:0}
+
+/* QUIZ LEFT — video */
+.quiz-vid-col{width:55%;display:flex;flex-direction:column;overflow:hidden;background:#0f1117;border-right:1px solid rgba(255,255,255,.06)}
+.qv-section{flex:1;position:relative;overflow:hidden;min-height:0}
+.qv-frame{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#0f1117}
+.qv-play-btn{width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(4px);transition:background .2s,transform .15s}
+.qv-play-btn:hover{background:rgba(255,255,255,.3);transform:scale(1.08)}
+.qv-play-btn i{font-size:22px;color:#fff;margin-left:3px}
+.qv-ang{display:flex;gap:3px;padding:5px 10px;background:#1a1f2e;border-top:1px solid rgba(255,255,255,.06);overflow-x:auto;flex-shrink:0}
+.ang{padding:2px 7px;font-size:10px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.07);color:rgba(255,255,255,.55);cursor:pointer;border-radius:4px;white-space:nowrap;font-weight:500}
+.ang:hover{color:#fff;background:rgba(255,255,255,.12)}
+.ang.on{background:#2563eb;border-color:#3b82f6;color:#fff}
+.qv-ctrl{padding:6px 12px;background:#111827;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:6px;flex-shrink:0}
+.vcb{background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;font-size:15px;display:flex;align-items:center}
+.vcb:hover{color:#fff}
+.vtrack{flex:1;height:3px;background:rgba(255,255,255,.15);border-radius:2px}
+.vfill{width:30%;height:100%;background:#60a5fa;border-radius:2px}
+.vtime{font-size:10.5px;color:rgba(255,255,255,.4);white-space:nowrap}
+.qv-info{background:#1a1f2e;border-top:1px solid rgba(255,255,255,.06);padding:10px 14px;flex-shrink:0}
+.qv-info-game{font-size:12px;font-weight:700;color:#fff;margin-bottom:2px}
+.qv-info-sub{font-size:10.5px;color:rgba(255,255,255,.45)}
+
+/* QUIZ RIGHT — question */
+.quiz-q-col{flex:1;display:flex;flex-direction:column;overflow-y:auto;padding:28px 32px;background:#fff}
+.q-num{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#9ca3af;margin-bottom:10px}
+.q-text{font-size:16px;font-weight:800;color:#111827;letter-spacing:-.2px;line-height:1.4;margin-bottom:24px}
+.q-options{display:flex;flex-direction:column;gap:10px}
+.q-opt{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1.5px solid #e5e7eb;border-radius:12px;cursor:pointer;transition:all .15s;position:relative}
+.q-opt:hover{border-color:#d1d5db;background:#f9fafb}
+.q-opt.selected{border-color:#1a3a6b;background:#eff6ff}
+.q-opt.correct{border-color:#16a34a;background:#dcfce7}
+.q-opt.wrong{border-color:#dc2626;background:#fee2e2}
+.q-opt-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.q-opt-label{font-size:13px;font-weight:700;color:#111827;margin-bottom:2px}
+.q-opt-desc{font-size:11px;color:#9ca3af;line-height:1.4}
+.q-opt-check{margin-left:auto;font-size:18px;flex-shrink:0}
+.q-next-row{margin-top:28px;display:flex;justify-content:flex-end}
+.q-next{padding:10px 26px;background:#1a3a6b;color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:7px;transition:background .15s}
+.q-next:hover{background:#15306e}
+.q-next:disabled{opacity:.4;cursor:default}
+
+/* ── RESULTS VIEW ── */
+.results-header{background:linear-gradient(135deg,#1a3a6b,#0f2347);height:54px;display:flex;align-items:center;padding:0 20px;gap:14px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.08)}
+.results-body{flex:1;overflow-y:auto;padding:32px 40px 48px}
+
+/* PASS/FAIL BANNER */
+.result-banner{border-radius:12px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px}
+.result-banner.pass{background:#dcfce7;border:1px solid #86efac}
+.result-banner.fail{background:#fee2e2;border:1px solid #fca5a5}
+.rb-icon{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.rb-icon.pass{background:#16a34a;color:#fff}
+.rb-icon.fail{background:#dc2626;color:#fff}
+.rb-text{flex:1}
+.rb-title{font-size:14px;font-weight:800;margin-bottom:2px}
+.rb-title.pass{color:#14532d}
+.rb-title.fail{color:#7f1d1d}
+.rb-sub{font-size:12px;line-height:1.5}
+.rb-sub.pass{color:#166534}
+.rb-sub.fail{color:#991b1b}
+.rb-actions{display:flex;gap:8px;flex-shrink:0}
+.rb-btn{padding:7px 16px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;border:none;display:flex;align-items:center;gap:6px;transition:opacity .15s;white-space:nowrap}
+.rb-btn:hover{opacity:.85}
+.rb-btn.retake{background:#dc2626;color:#fff}
+.rb-btn.assign{background:#1a3a6b;color:#fff}
+
+.score-card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:28px 32px;display:flex;align-items:center;gap:32px;margin-bottom:24px}
+.score-ring{width:100px;height:100px;position:relative;flex-shrink:0}
+.score-ring svg{transform:rotate(-90deg)}
+.score-ring-num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.score-big{font-size:22px;font-weight:900;color:#111827;line-height:1}
+.score-denom{font-size:11px;color:#9ca3af;font-weight:600}
+.score-msg{font-size:18px;font-weight:800;color:#111827;letter-spacing:-.2px;margin-bottom:4px}
+.score-pct{font-size:13px;color:#6b7280;margin-bottom:12px}
+.score-areas{display:flex;gap:6px;flex-wrap:wrap}
+
+.breakdown-list{display:flex;flex-direction:column;gap:8px;margin-bottom:28px}
+.bk-row{display:flex;align-items:center;gap:12px;padding:12px 16px;background:#fff;border:1px solid #e5e7eb;border-radius:10px}
+.bk-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.bk-icon.correct{background:#dcfce7;color:#16a34a}
+.bk-icon.wrong{background:#fee2e2;color:#dc2626}
+.bk-play{flex:1;min-width:0}
+.bk-type{font-size:12px;font-weight:700;color:#111827;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bk-game{font-size:10.5px;color:#9ca3af}
+.bk-ans{text-align:right;flex-shrink:0}
+.bk-your{font-size:10.5px;color:#9ca3af}
+.bk-correct{font-size:11px;font-weight:600;color:#374151}
+
+.rc-infraction{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5}
+.rc-lean-infraction{background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+.rc-lean-no{background:#dbeafe;color:#1e40af;border:1px solid #bfdbfe}
+.rc-no-infraction{background:#dcfce7;color:#166534;border:1px solid #86efac}
+.chip{padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700}
+
+/* MODALS */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:900;display:none;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:16px;padding:24px;width:460px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.modal-title{font-size:16px;font-weight:800;color:#111827;margin-bottom:4px}
+.modal-sub{font-size:12px;color:#6b7280;margin-bottom:20px;line-height:1.5}
+.modal-field{margin-bottom:14px}
+.modal-lbl{font-size:11px;font-weight:700;color:#374151;margin-bottom:5px;text-transform:uppercase;letter-spacing:.4px}
+.modal-input{width:100%;padding:9px 12px;border:1px solid #e5e7eb;border-radius:8px;font-size:12.5px;color:#111827;font-family:inherit;outline:none;transition:border .15s}
+.modal-input:focus{border-color:#93c5fd}
+.modal-ta{width:100%;padding:9px 12px;border:1px solid #e5e7eb;border-radius:8px;font-size:12.5px;color:#111827;font-family:inherit;outline:none;resize:vertical;min-height:80px;transition:border .15s;line-height:1.5}
+.modal-ta:focus{border-color:#93c5fd}
+.modal-select{width:100%;padding:9px 12px;border:1px solid #e5e7eb;border-radius:8px;font-size:12.5px;color:#111827;background:#fff;outline:none}
+.modal-cal-preview{background:#eef2ff;border:1px solid #c7d2fe;border-radius:10px;padding:12px 14px;margin-bottom:14px;font-size:11.5px;color:#3730a3;line-height:1.6}
+.modal-cal-preview strong{color:#312e81}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:4px}
+.modal-btn{padding:8px 20px;border-radius:8px;font-size:12.5px;font-weight:700;cursor:pointer;border:none;display:flex;align-items:center;gap:6px;transition:opacity .15s}
+.modal-btn:hover{opacity:.85}
+.modal-btn.primary{background:#1a3a6b;color:#fff}
+.modal-btn.cancel{background:#f3f4f6;color:#374151}
+.modal-btn.success{background:#16a34a;color:#fff}
+.modal-divider{height:1px;background:#f3f4f6;margin:16px 0}
+.areas-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:5px}
+.area-chip-sel{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;border:1.5px solid #e5e7eb;background:#fff;color:#6b7280;cursor:pointer;transition:all .15s}
+.area-chip-sel.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav">
+  <div class="nav-logo" onclick="location='home.html'">
+    <img src="Logos/nba-logo.svg" style="width:16px;height:auto">
+    <div class="nav-brand">BRIDGET REVIEW SYSTEM 1.0</div>
+    <span class="nav-whats-new" onclick="event.stopPropagation();location='whats-new.html'"><i class="ti ti-sparkles" style="font-size:10px"></i> What's New</span>
+  </div>
+  <div class="nav-links">
+    <span class="nl" onclick="location='home.html'">HOME</span>
+    <span class="nl" onclick="location='published-games.html'">PUBLISHED GAMES</span>
+    <div class="nav-dropdown" id="rim-dropdown">
+      <span class="nl on" onclick="location='rim.html'">RIM</span>
+      <span class="nl" style="padding-left:0;padding-right:6px;font-size:9px;opacity:.8;cursor:pointer" onclick="toggleRimDropdown(event)">▾</span>
+      <div class="nav-dd-menu" id="rim-dd-menu" style="min-width:200px;left:0;right:auto">
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-home" style="margin-right:7px;font-size:12px"></i>RIM Home</span>
+        <span class="nav-dd-item" onclick="location='interactions.html'"><i class="ti ti-inbox" style="margin-right:7px;font-size:12px"></i>Interactions</span>
+        <span class="nav-dd-item"><i class="ti ti-messages" style="margin-right:7px;font-size:12px"></i>Threads</span>
+        <span class="nav-dd-item"><i class="ti ti-layout-board" style="margin-right:7px;font-size:12px"></i>Message Board</span>
+        <span class="nav-dd-item" onclick="location='playlists.html'"><i class="ti ti-playlist" style="margin-right:7px;font-size:12px"></i>Playlists</span>
+        <span class="nav-dd-item" onclick="location='assessments.html'"><i class="ti ti-clipboard-check" style="margin-right:7px;font-size:12px"></i>Assessments</span>
+        <span class="nav-dd-item" onclick="location='poe.html'"><i class="ti ti-target" style="margin-right:7px;font-size:12px"></i>Points of Education</span>
+      </div>
+    </div>
+    <span class="nl">RM REVIEW</span>
+    <span class="nl">FINAL L2M REVIEW</span>
+    <span class="nl">INDEPENDENT REVIEW</span>
+    <span class="nl">ADMINISTRATION</span>
+    <div class="nav-dropdown" id="nav-dropdown">
+      <span class="nl" onclick="toggleNavDropdown(event)">REVIEWER RESOURCE <span class="nav-dd-caret">▾</span></span>
+      <div class="nav-dd-menu">
+        <span class="nav-dd-item" onclick="location='comment-library.html'">Comment Library</span>
+      </div>
+    </div>
+    <span class="nl">MY SCHEDULE</span>
+    <div class="nav-av">BN</div>
+  </div>
+</div>
+
+<!-- ══ LANDING ══ -->
+<div id="landing">
+  <div class="landing-hero">
+    <div class="lh-eyebrow">RIM · Review Insights &amp; Messaging Platform</div>
+    <div class="lh-title">Assessments</div>
+    <div class="lh-sub">AI-generated evaluations based on your recent game performance — test your rating accuracy and coverage judgment.</div>
+    <div class="lh-actions">
+      <button class="lh-btn ghost" onclick="location='rim.html'"><i class="ti ti-arrow-left"></i> Back to RIM</button>
+      <button class="lh-btn manager-toggle" id="mgr-toggle-btn" onclick="toggleManagerView()"><i class="ti ti-layout-dashboard"></i> Manager View</button>
+    </div>
+  </div>
+
+  <div class="landing-body">
+
+    <!-- REVIEWER VIEW -->
+    <div id="reviewer-view">
+      <div class="callout">
+        <div class="callout-icon"><i class="ti ti-sparkles"></i></div>
+        <div>
+          <div class="callout-title">How Assessments Work</div>
+          <div class="callout-text">Assessments are auto-generated every month — 10 questions based on your last 15–20 games. Each assessment tests your infraction rating accuracy and ref coverage judgment using real plays from your reviews. Pass with 70%+ to complete — below that, you'll take a focused retake on areas you missed. Assessments are open for 1 week, and the correct answers are only revealed in your final score so you can retake without memorizing them.</div>
+        </div>
+      </div>
+
+      <!-- Check-in card (shown when assigned) -->
+      <div id="checkin-card" style="display:none">
+        <div class="checkin-card">
+          <div class="checkin-card-accent"></div>
+          <div class="ci-top">
+            <div>
+              <div class="ci-name">Check-in Required</div>
+              <div class="ci-meta">Assigned by Curtis Oakley Jr. · Due Jul 8, 2026<br>Based on your March Assessment — below passing threshold on 2 areas.</div>
+            </div>
+            <div class="ci-badge"><i class="ti ti-clock" style="font-size:11px"></i> Pending</div>
+          </div>
+          <div class="ci-areas">
+            <div class="ci-area">Shooting Fouls</div>
+            <div class="ci-area">Ref Coverage</div>
+          </div>
+          <div class="ci-actions">
+            <button class="ci-btn cal" onclick="openCalLink()"><i class="ti ti-calendar"></i> Schedule with Manager</button>
+          </div>
+          <div class="ci-note"><i class="ti ti-info-circle" style="font-size:12px"></i> Your manager will mark this complete after your session.</div>
+        </div>
+      </div>
+
+      <!-- Active -->
+      <div class="sec-hdr"><div class="sec-title">Active Assessment</div></div>
+      <div class="active-card">
+        <div class="active-card-accent"></div>
+        <div class="ac-top">
+          <div>
+            <div class="ac-name">June Assessment · 2026-27 Season</div>
+            <div class="ac-meta">
+              <span>10 questions</span><div class="ac-dot"></div>
+              <span>Generated from last 15 games</span><div class="ac-dot"></div>
+              <span>Monthly cadence · 1 week to complete</span>
+            </div>
+            <div class="ac-deadline"><i class="ti ti-clock" style="font-size:12px"></i> Open until Jul 7, 2026 &nbsp;·&nbsp; 7 days left</div>
+          </div>
+          <div class="ac-badge"><i class="ti ti-circle-check" style="font-size:11px"></i> OPEN</div>
+        </div>
+        <div class="ac-progress">
+          <div class="ac-prog-lbl"><span>Progress</span><span id="prog-label">0 of 10 completed</span></div>
+          <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+        </div>
+        <div style="font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;text-transform:uppercase;margin-bottom:6px">Areas Tested</div>
+        <div class="ac-areas">
+          <div class="area-tag">Shooting Fouls</div>
+          <div class="area-tag">Ref Coverage</div>
+          <div class="area-tag">Block-Charge</div>
+          <div class="area-tag">Personal Fouls</div>
+          <div class="area-tag">Loose Ball</div>
+        </div>
+        <div class="ac-footer">
+          <div style="font-size:11px;color:#9ca3af"><i class="ti ti-lock-open" style="font-size:12px"></i> Responses are private until the assessment closes</div>
+          <button class="start-btn" onclick="startQuiz()"><i class="ti ti-player-play"></i> Start Assessment</button>
+        </div>
+      </div>
+
+      <!-- Past -->
+      <div class="sec-hdr">
+        <div class="sec-title">Past Assessments</div>
+        <div class="sec-link">View all</div>
+      </div>
+      <div class="past-grid">
+        <div class="past-card" onclick="showResults(6,8,['Block-Charge'],false)">
+          <div class="past-status ps-pass">Passed</div>
+          <div class="past-score good">6/8</div>
+          <div class="past-name">May Assessment · 2026-27</div>
+          <div class="past-date">Completed May 31, 2026 · 75%</div>
+          <div class="past-areas">
+            <div class="past-area">Block-Charge</div>
+          </div>
+        </div>
+        <div class="past-card" onclick="showResults(7,8,[],false)">
+          <div class="past-status ps-pass">Passed</div>
+          <div class="past-score great">7/8</div>
+          <div class="past-name">April Assessment · 2026-27</div>
+          <div class="past-date">Completed Apr 28, 2026 · 87%</div>
+          <div class="past-areas">
+            <div class="past-area ok">Strong performance</div>
+          </div>
+        </div>
+        <div class="past-card" onclick="showResults(5,8,['Shooting Fouls','Ref Coverage'],true)">
+          <div class="past-status ps-checkin">Check-in</div>
+          <div class="past-score fail">5/8</div>
+          <div class="past-name">March Assessment · 2026-27</div>
+          <div class="past-date">Completed Mar 30, 2026 · 62%</div>
+          <div class="past-areas">
+            <div class="past-area">Shooting Fouls</div>
+            <div class="past-area">Ref Coverage</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MANAGER VIEW -->
+    <div id="manager-view" style="display:none">
+      <div class="callout" style="background:#fffbeb;border-color:#fde68a">
+        <div class="callout-icon" style="background:#f59e0b"><i class="ti ti-layout-dashboard"></i></div>
+        <div>
+          <div class="callout-title" style="color:#78350f">Manager View</div>
+          <div class="callout-text" style="color:#92400e">See all reviewers' status for the current assessment. Assign check-ins for reviewers who scored below 70%. Only you can see this view.</div>
+        </div>
+      </div>
+
+      <div class="sec-hdr"><div class="sec-title">June Assessment · Reviewer Status</div><div class="sec-link">Export report</div></div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <div class="modal-lbl" style="margin-bottom:0">Filter by reviewer</div>
+        <select class="modal-select" id="roster-filter" style="width:220px;padding:7px 10px" onchange="renderRoster()">
+          <option value="">All Reviewers</option>
+        </select>
+      </div>
+      <div class="roster-wrap">
+        <div class="roster-header">
+          <div class="roster-title">All Reviewers</div>
+          <div class="roster-meta" id="roster-meta">4 reviewers · 2 completed · 1 check-in assigned · 1 not started</div>
+        </div>
+        <table class="roster-table">
+          <thead>
+            <tr>
+              <th>Reviewer</th>
+              <th>Status</th>
+              <th>Score</th>
+              <th>Weak Areas</th>
+              <th>Retakes</th>
+              <th>Flagged Pattern</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="roster-body"></tbody>
+        </table>
+      </div>
+
+      <div class="sec-hdr" style="margin-top:4px"><div class="sec-title">Past Assessments — Team Overview</div></div>
+      <div class="past-grid">
+        <div class="past-card" style="cursor:default">
+          <div class="past-score good" style="font-size:16px">May 2026</div>
+          <div class="past-name" style="margin-bottom:6px">Team avg: 79%</div>
+          <div class="past-areas">
+            <div class="past-area">Block-Charge (2)</div>
+          </div>
+        </div>
+        <div class="past-card" style="cursor:default">
+          <div class="past-score great" style="font-size:16px">April 2026</div>
+          <div class="past-name" style="margin-bottom:6px">Team avg: 85%</div>
+          <div class="past-areas">
+            <div class="past-area ok">All passed</div>
+          </div>
+        </div>
+        <div class="past-card" style="cursor:default">
+          <div class="past-score work" style="font-size:16px">March 2026</div>
+          <div class="past-name" style="margin-bottom:6px">Team avg: 71%</div>
+          <div class="past-areas">
+            <div class="past-area">Ref Coverage (3)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ QUIZ VIEW ══ -->
+<div id="quiz">
+  <div class="quiz-header">
+    <div class="qh-back" onclick="showLanding()"><i class="ti ti-chevron-left"></i> Assessments</div>
+    <div class="qh-name">June Assessment · 2026-27</div>
+    <div class="qh-counter" id="q-counter">Question 1 of 10</div>
+    <div class="qh-prog"><div class="qh-prog-fill" id="q-prog-fill" style="width:12.5%"></div></div>
+  </div>
+  <div class="quiz-body">
+    <div class="quiz-vid-col">
+      <div class="qv-section">
+        <div class="qv-frame">
+          <div class="qv-play-btn"><i class="ti ti-player-play"></i></div>
+        </div>
+      </div>
+      <div class="qv-ang">
+        <span class="ang on">LL5</span><span class="ang">LR5</span><span class="ang">LS5</span><span class="ang">RS5</span><span class="ang">ABP</span><span class="ang">HBP</span><span class="ang">INA</span><span class="ang">DF BCAST</span>
+      </div>
+      <div class="qv-ctrl">
+        <button class="vcb"><i class="ti ti-player-skip-back"></i></button>
+        <button class="vcb"><i class="ti ti-player-play"></i></button>
+        <button class="vcb"><i class="ti ti-player-skip-forward"></i></button>
+        <div class="vtrack"><div class="vfill"></div></div>
+        <span class="vtime" id="q-vtime">09:40.2</span>
+        <button class="vcb"><i class="ti ti-volume"></i></button>
+        <button class="vcb"><i class="ti ti-arrows-maximize"></i></button>
+      </div>
+      <div class="qv-info">
+        <div class="qv-info-game" id="q-game">TOR @ CHI · May 27, 2026</div>
+        <div class="qv-info-sub" id="q-playtype">Foul: Shooting · Driving Shot Attempt &nbsp;·&nbsp; Perrymond (8) · Lead</div>
+      </div>
+    </div>
+    <div class="quiz-q-col">
+      <div class="q-num" id="q-num">Question 1 of 8 — Infraction Rating</div>
+      <div class="q-text" id="q-text">What is the correct infraction rating for this play?</div>
+      <div class="q-options" id="q-options"></div>
+      <div class="q-next-row">
+        <button class="q-next" id="q-next-btn" onclick="nextQuestion()" disabled>Next <i class="ti ti-arrow-right"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ RESULTS VIEW ══ -->
+<div id="results">
+  <div class="results-header">
+    <div class="qh-back" onclick="showLanding()"><i class="ti ti-chevron-left"></i> Assessments</div>
+    <div class="qh-name" id="results-header-title">June Assessment · 2026-27 — Results</div>
+  </div>
+  <div class="results-body">
+    <div id="result-banner"></div>
+    <div class="score-card" id="score-card"></div>
+    <div class="sec-hdr" style="margin-bottom:12px"><div class="sec-title">Question Breakdown</div></div>
+    <div class="breakdown-list" id="breakdown-list"></div>
+    <div class="sec-hdr" style="margin-bottom:12px"><div class="sec-title">Learning Areas</div></div>
+    <div id="learning-areas" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px"></div>
+    <button onclick="showToast('Practice playlist created ✓')" style="padding:9px 20px;background:#1a3a6b;color:#fff;border:none;border-radius:9px;font-size:12.5px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:7px"><i class="ti ti-playlist"></i> Create Practice Playlist from Missed Plays</button>
+  </div>
+</div>
+
+<!-- ══ ASSIGN CHECK-IN MODAL ══ -->
+<div class="modal-overlay" id="assign-modal">
+  <div class="modal">
+    <div class="modal-title">Assign Check-in</div>
+    <div class="modal-sub">Schedule a 1:1 with this reviewer to go over their assessment results and reinforce the areas they missed.</div>
+    <div class="modal-field">
+      <div class="modal-lbl">Reviewer</div>
+      <input class="modal-input" id="ci-reviewer" type="text" readonly>
+    </div>
+    <div class="modal-field">
+      <div class="modal-lbl">Focus Areas</div>
+      <div class="areas-chips" id="ci-areas-chips"></div>
+    </div>
+    <div class="modal-field">
+      <div class="modal-lbl">Due Date</div>
+      <input class="modal-input" id="ci-due" type="date">
+    </div>
+    <div class="modal-field">
+      <div class="modal-lbl">Notes for Reviewer</div>
+      <textarea class="modal-ta" id="ci-notes" placeholder="e.g. Let's walk through the block-charge plays and talk through the clear space rule…"></textarea>
+    </div>
+    <div class="modal-divider"></div>
+    <div class="modal-field">
+      <div class="modal-lbl">Schedule 1:1</div>
+      <div class="modal-cal-preview" id="ci-cal-preview">
+        <strong>Outlook invite will include:</strong><br>
+        Agenda: Assessment Check-in · <span id="ci-cal-name"></span><br>
+        Areas: <span id="ci-cal-areas"></span><br>
+        Description: BRS June Assessment — focused review of missed areas.
+      </div>
+      <button class="modal-btn primary" onclick="openCalLink()" style="width:100%;justify-content:center"><i class="ti ti-calendar"></i> Open Outlook Calendar</button>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn cancel" onclick="closeModal('assign-modal')">Cancel</button>
+      <button class="modal-btn primary" onclick="saveCheckin()"><i class="ti ti-check"></i> Assign Check-in</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ COMPLETE CHECK-IN MODAL ══ -->
+<div class="modal-overlay" id="complete-modal">
+  <div class="modal">
+    <div class="modal-title">Mark Check-in Complete</div>
+    <div class="modal-sub">Record the outcome of your session with <strong id="cm-reviewer-name"></strong>.</div>
+    <div class="modal-field">
+      <div class="modal-lbl">Outcome</div>
+      <select class="modal-select" id="cm-outcome">
+        <option value="cleared">Reviewer demonstrated understanding — cleared</option>
+        <option value="retake">Needs another retake before clearing</option>
+        <option value="follow-up">Follow-up session needed</option>
+      </select>
+    </div>
+    <div class="modal-field">
+      <div class="modal-lbl">Session Notes</div>
+      <textarea class="modal-ta" id="cm-notes" placeholder="Notes from your conversation — what was covered, what clicked, what still needs work…"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn cancel" onclick="closeModal('complete-modal')">Cancel</button>
+      <button class="modal-btn success" onclick="completeCheckin()"><i class="ti ti-circle-check"></i> Mark Complete</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const QUESTIONS = [
+  {id:1,type:'infraction',play:{game:'TOR @ CHI',date:'May 27, 2026',time:'09:40.2',type:'Foul: Shooting',sub:'Driving Shot Attempt',ref:'Perrymond (8)',loc:'Lead'},correct:'No Infraction',area:'Shooting Fouls'},
+  {id:2,type:'coverage',play:{game:'IND @ OKC',date:'Jun 22, 2026',time:'00:34.2',type:'Foul: Shooting',sub:'Block-Charge Situation',ref:'Fahy (86)',loc:'Slot'},correct:'Slot',area:'Ref Coverage'},
+  {id:3,type:'infraction',play:{game:'TOR @ CHI',date:'May 27, 2026',time:'04:18.7',type:'Foul: Loose Ball',sub:'Clamp-Lock-Hold',ref:'Chang (23)',loc:'Trail'},correct:'Infraction',area:'Loose Ball'},
+  {id:4,type:'coverage',play:{game:'PHX @ NYL',date:'May 29, 2026',time:'03:21.8',type:'Foul: Personal',sub:'DHO Screen',ref:'Chang (23)',loc:'Trail'},correct:'Trail',area:'Ref Coverage'},
+  {id:5,type:'infraction',play:{game:'OKC @ IND',date:'Jun 19, 2026',time:'00:34.2',type:'Foul: Shooting',sub:'Block-Charge Situation',ref:'Fahy (86)',loc:'Slot'},correct:'Lean Infraction',area:'Block-Charge'},
+  {id:6,type:'infraction',play:{game:'CON @ CHI',date:'Jun 05, 2026',time:'07:33.1',type:'Foul: Personal',sub:'',ref:'Perrymond (8)',loc:'Lead'},correct:'Lean No',area:'Personal Fouls'},
+  {id:7,type:'coverage',play:{game:'GSV @ IND',date:'May 22, 2026',time:'01:29.0',type:'Violation: Defensive Goaltending',sub:'',ref:'Perrymond (8)',loc:'Lead'},correct:'Lead',area:'Ref Coverage'},
+  {id:8,type:'infraction',play:{game:'LVA @ LAS',date:'Jun 02, 2026',time:'05:44.1',type:'Foul: Personal',sub:'DHO Screen',ref:'Perrymond (8)',loc:'Lead'},correct:'Infraction',area:'Shooting Fouls'},
+  {id:9,type:'coverage',play:{game:'CHI @ TOR',date:'Jun 10, 2026',time:'02:11.5',type:'Foul: Shooting',sub:'Jump Shot',ref:'Chang (23)',loc:'Trail'},correct:'Trail',area:'Ref Coverage'},
+  {id:10,type:'infraction',play:{game:'NYL @ ATL',date:'Jun 14, 2026',time:'06:02.9',type:'Foul: Loose Ball',sub:'Dislodge from Position',ref:'Fahy (86)',loc:'Slot'},correct:'Lean Infraction',area:'Loose Ball'},
+];
+
+const INF_OPTS = [
+  {val:'Infraction',      short:'INF',      desc:'Clear, unambiguous violation',          cls:'rc-infraction',      bg:'#fee2e2',ic:'#991b1b'},
+  {val:'Lean Infraction', short:'LEAN INF', desc:'More likely an infraction than not',    cls:'rc-lean-infraction', bg:'#fef3c7',ic:'#92400e'},
+  {val:'Lean No',         short:'LEAN NO',  desc:'More likely correct than infraction',   cls:'rc-lean-no',         bg:'#dbeafe',ic:'#1e40af'},
+  {val:'No Infraction',   short:'NO INF',   desc:'Correct call — no violation',           cls:'rc-no-infraction',   bg:'#dcfce7',ic:'#166634'},
+];
+const COV_OPTS = [
+  {val:'Lead',  desc:'Ball-side low, primary on paint contact and near-side cuts'},
+  {val:'Trail', desc:'Top of the arc, primary on perimeter and off-ball off screens'},
+  {val:'Slot',  desc:'Weak-side elbow, rotation and secondary coverage'},
+];
+
+const ROSTER = [
+  {name:'Bridget N.',   initials:'BN', score:75, status:'passed',     areas:[],                   retakes:0, checkin:false,
+    history:[{month:'Apr',areas:[]},{month:'May',areas:['Block-Charge']},{month:'Jun',areas:[]}]},
+  {name:'Tucker G.',    initials:'TG', score:62, status:'failed',     areas:['Block-Charge','Ref Coverage'], retakes:1, checkin:false,
+    history:[{month:'Apr',areas:['Block-Charge']},{month:'May',areas:['Block-Charge','Ref Coverage']},{month:'Jun',areas:['Block-Charge','Ref Coverage']}]},
+  {name:'Michael A.',   initials:'MA', score:null,status:'in-progress',areas:[],                  retakes:0, checkin:false,
+    history:[{month:'Apr',areas:['Ref Coverage']},{month:'May',areas:[]},{month:'Jun',areas:[]}]},
+  {name:'Curtis O.',    initials:'CO', score:null,status:'not-started',areas:[],                  retakes:0, checkin:false,
+    history:[{month:'Apr',areas:[]},{month:'May',areas:[]},{month:'Jun',areas:[]}]},
+];
+
+// Flag any area that shows up as a weak area in 2+ of the reviewer's last 3 assessments
+function flaggedAreas(r) {
+  const counts = {};
+  (r.history||[]).forEach(h => h.areas.forEach(a => { counts[a] = (counts[a]||0) + 1; }));
+  return Object.entries(counts).filter(([,n]) => n >= 2).map(([a]) => a);
+}
+
+const PASS_THRESHOLD = 70;
+let curQ = 0, answers = [], revealed = false;
+let isManagerView = false;
+let currentCheckinTarget = null;
+
+/* ── NAV ── */
+function toggleNavDropdown(e){e.stopPropagation();document.getElementById('nav-dropdown').classList.toggle('open')}
+function toggleRimDropdown(e){e.stopPropagation();document.getElementById('rim-dropdown').classList.toggle('open');document.getElementById('nav-dropdown').classList.remove('open');}
+document.addEventListener('click',()=>{document.getElementById('nav-dropdown').classList.remove('open');document.getElementById('rim-dropdown')?.classList.remove('open');});
+
+/* ── MANAGER VIEW TOGGLE ── */
+function toggleManagerView() {
+  isManagerView = !isManagerView;
+  const btn = document.getElementById('mgr-toggle-btn');
+  btn.classList.toggle('on', isManagerView);
+  btn.innerHTML = isManagerView
+    ? '<i class="ti ti-user"></i> First Pass View'
+    : '<i class="ti ti-layout-dashboard"></i> Manager View';
+  document.getElementById('reviewer-view').style.display = isManagerView ? 'none' : 'block';
+  document.getElementById('manager-view').style.display = isManagerView ? 'block' : 'none';
+  if (isManagerView) renderRoster();
+}
+
+function renderRoster() {
+  const statusLabel = {
+    'passed':       ['rs-passed',      'Passed'],
+    'failed':       ['rs-failed',      'Failed'],
+    'in-progress':  ['rs-in-progress', 'In Progress'],
+    'not-started':  ['rs-not-started', 'Not Started'],
+    'checkin':      ['rs-checkin',     'Check-in Assigned'],
+  };
+
+  const filterSel = document.getElementById('roster-filter');
+  if (filterSel.options.length === 1) {
+    filterSel.innerHTML += ROSTER.map(r => `<option value="${r.name}">${r.name}</option>`).join('');
+  }
+  const filterVal = filterSel.value;
+
+  const completed = ROSTER.filter(r=>r.status==='passed'||r.status==='failed').length;
+  const checkinCt = ROSTER.filter(r=>r.checkin).length;
+  const notStarted = ROSTER.filter(r=>r.status==='not-started').length;
+  document.getElementById('roster-meta').textContent = `${ROSTER.length} reviewers · ${completed} completed · ${checkinCt} check-in assigned · ${notStarted} not started`;
+
+  const rows = ROSTER.map((r,i) => ({r,i})).filter(({r}) => !filterVal || r.name === filterVal);
+
+  document.getElementById('roster-body').innerHTML = rows.map(({r,i}) => {
+    const [cls, lbl] = statusLabel[r.checkin ? 'checkin' : r.status];
+    const scoreTxt = r.score !== null ? `${r.score}%` : '—';
+    const scoreColor = r.score===null?'#9ca3af':r.score>=PASS_THRESHOLD?'#16a34a':'#dc2626';
+    const areas = r.areas.length ? r.areas.map(a=>`<span style="font-size:10px;padding:2px 7px;border-radius:10px;background:#fef3c7;color:#92400e;font-weight:600">${a}</span>`).join(' ') : '<span style="color:#9ca3af;font-size:11px">—</span>';
+    const flags = flaggedAreas(r);
+    const flagCell = flags.length
+      ? `<span style="display:inline-flex;align-items:center;gap:4px"><i class="ti ti-flag-3" style="color:#dc2626;font-size:12px"></i>${flags.map(a=>`<span style="font-size:10px;padding:2px 7px;border-radius:10px;background:#fee2e2;color:#991b1b;font-weight:700">${a}</span>`).join(' ')}</span>`
+      : '<span style="color:#9ca3af;font-size:11px">—</span>';
+    let action = '';
+    if (r.checkin) {
+      action = `<span class="rs-assigned-label"><i class="ti ti-clock" style="font-size:11px"></i> Check-in pending</span>
+                <button class="rs-assign" style="margin-left:6px" onclick="openCompleteModal(${i})">Mark Complete</button>`;
+    } else if (r.status === 'failed' || flags.length) {
+      action = `<button class="rs-assign" onclick="openAssignModal(${i})"><i class="ti ti-user-check" style="font-size:11px;margin-right:3px"></i>Assign Check-in</button>`;
+    } else {
+      action = '<span style="color:#9ca3af;font-size:11px">—</span>';
+    }
+    return `<tr>
+      <td>
+        <div style="display:flex;align-items:center;gap:9px">
+          <div style="width:30px;height:30px;border-radius:50%;background:#1a3a6b;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0">${r.initials}</div>
+          <div><div class="r-name">${r.name}</div></div>
+        </div>
+      </td>
+      <td><span class="r-status ${cls}">${lbl}</span></td>
+      <td><span style="font-weight:700;color:${scoreColor}">${scoreTxt}</span></td>
+      <td>${areas}</td>
+      <td style="color:#9ca3af;font-size:11.5px">${r.retakes > 0 ? r.retakes : '—'}</td>
+      <td>${flagCell}</td>
+      <td>${action}</td>
+    </tr>`;
+  }).join('');
+}
+
+/* ── ASSIGN CHECK-IN MODAL ── */
+function openAssignModal(idx) {
+  currentCheckinTarget = idx;
+  const r = ROSTER[idx];
+  document.getElementById('ci-reviewer').value = r.name;
+  document.getElementById('ci-cal-name').textContent = r.name;
+  document.getElementById('ci-cal-areas').textContent = r.areas.join(', ') || 'General review';
+  const allAreas = ['Shooting Fouls','Ref Coverage','Block-Charge','Personal Fouls','Loose Ball'];
+  document.getElementById('ci-areas-chips').innerHTML = allAreas.map(a => {
+    const on = r.areas.includes(a) ? ' on' : '';
+    return `<span class="area-chip-sel${on}" onclick="toggleAreaChip(this)">${a}</span>`;
+  }).join('');
+  // default due date to 2 weeks out
+  const due = new Date(); due.setDate(due.getDate()+14);
+  document.getElementById('ci-due').value = due.toISOString().split('T')[0];
+  document.getElementById('assign-modal').classList.add('open');
+}
+
+function toggleAreaChip(el) {
+  el.classList.toggle('on');
+  const selected = [...document.querySelectorAll('#ci-areas-chips .area-chip-sel.on')].map(e=>e.textContent);
+  document.getElementById('ci-cal-areas').textContent = selected.join(', ') || 'General review';
+}
+
+function saveCheckin() {
+  if (currentCheckinTarget === null) return;
+  ROSTER[currentCheckinTarget].checkin = true;
+  closeModal('assign-modal');
+  renderRoster();
+  showToast('Check-in assigned ✓');
+}
+
+/* ── COMPLETE CHECK-IN MODAL ── */
+function openCompleteModal(idx) {
+  currentCheckinTarget = idx;
+  document.getElementById('cm-reviewer-name').textContent = ROSTER[idx].name;
+  document.getElementById('complete-modal').classList.add('open');
+}
+
+function completeCheckin() {
+  if (currentCheckinTarget === null) return;
+  ROSTER[currentCheckinTarget].checkin = false;
+  ROSTER[currentCheckinTarget].status = 'passed';
+  closeModal('complete-modal');
+  renderRoster();
+  showToast('Check-in marked complete ✓');
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+function openCalLink() {
+  const reviewer = (document.getElementById('ci-reviewer')||{}).value || 'Reviewer';
+  const areas = document.getElementById('ci-cal-areas')?.textContent || '';
+  const title = encodeURIComponent(`BRS Check-in · ${reviewer} — Assessment Follow-up`);
+  const body = encodeURIComponent(`Assessment check-in for ${reviewer}\nFocus areas: ${areas}\n\nSource: BRS Assessments`);
+  window.open(`https://outlook.office.com/calendar/deeplink/compose?subject=${title}&body=${body}`, '_blank');
+}
+
+/* ── QUIZ ── */
+function startQuiz() {
+  curQ = 0; answers = []; revealed = false;
+  document.getElementById('landing').style.display = 'none';
+  document.getElementById('quiz').style.display = 'flex';
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[curQ];
+  revealed = false;
+  document.getElementById('q-counter').textContent = `Question ${curQ+1} of ${QUESTIONS.length}`;
+  document.getElementById('q-prog-fill').style.width = `${((curQ)/QUESTIONS.length)*100}%`;
+  document.getElementById('q-num').textContent = `Question ${curQ+1} of ${QUESTIONS.length} — ${q.type==='infraction'?'Infraction Rating':'Ref Coverage'}`;
+  document.getElementById('q-text').textContent = q.type==='infraction'
+    ? 'What is the correct infraction rating for this play?'
+    : 'Which official has primary coverage responsibility for this play?';
+  document.getElementById('q-vtime').textContent = q.play.time;
+  document.getElementById('q-game').textContent = `${q.play.game} · ${q.play.date}`;
+  document.getElementById('q-playtype').textContent = `${q.play.type}${q.play.sub?' · '+q.play.sub:''} · ${q.play.ref} · ${q.play.loc}`;
+  document.getElementById('q-next-btn').disabled = true;
+  document.getElementById('q-next-btn').innerHTML = curQ < QUESTIONS.length-1 ? 'Next <i class="ti ti-arrow-right"></i>' : 'Submit Assessment <i class="ti ti-check"></i>';
+
+  const opts = q.type === 'infraction' ? INF_OPTS : COV_OPTS.map(o=>({...o,cls:'',bg:'#f3f4f6',ic:'#6b7280'}));
+  document.getElementById('q-options').innerHTML = opts.map(o=>`
+    <div class="q-opt" id="opt-${o.val.replace(/ /g,'_')}" onclick="selectOpt('${o.val.replace(/'/g,"\\'")}')">
+      <div class="q-opt-icon" style="background:${o.bg};color:${o.ic}"><i class="ti ${q.type==='infraction'?'ti-clipboard-check':'ti-whistle'}"></i></div>
+      <div>
+        <div class="q-opt-label">${o.val}</div>
+        <div class="q-opt-desc">${o.desc}</div>
+      </div>
+      <div class="q-opt-check" id="chk-${o.val.replace(/ /g,'_')}"></div>
+    </div>`).join('');
+}
+
+function selectOpt(val) {
+  if (revealed) return;
+  const q = QUESTIONS[curQ];
+  answers[curQ] = val;
+  const opts = q.type === 'infraction' ? INF_OPTS : COV_OPTS;
+  opts.forEach(o => {
+    const el = document.getElementById('opt-'+o.val.replace(/ /g,'_'));
+    if (!el) return;
+    el.classList.toggle('selected', o.val === val);
+  });
+  document.getElementById('q-next-btn').disabled = false;
+}
+
+function nextQuestion() {
+  if (answers[curQ] === undefined) return;
+  if (curQ < QUESTIONS.length - 1) { curQ++; renderQuestion(); }
+  else { showResults(); }
+}
+
+/* ── RESULTS ── */
+function showResults(correct, total, areas, hasCheckin) {
+  if (correct === undefined) {
+    correct = answers.filter((a,i)=>a===QUESTIONS[i].correct).length;
+    total = QUESTIONS.length;
+    areas = [...new Set(QUESTIONS.filter((_,i)=>answers[i]&&answers[i]!==QUESTIONS[i].correct).map(q=>q.area))];
+    hasCheckin = false;
+  }
+  const pct = Math.round((correct/total)*100);
+  const passed = pct >= PASS_THRESHOLD;
+  const msg = pct>=87?'Strong performance':pct>=PASS_THRESHOLD?'Good — a few areas to revisit':'Needs improvement';
+  const msgColor = pct>=87?'#16a34a':pct>=PASS_THRESHOLD?'#1a3a6b':'#dc2626';
+
+  document.getElementById('quiz').style.display='none';
+  document.getElementById('landing').style.display='none';
+  document.getElementById('results').style.display='flex';
+
+  // pass/fail banner
+  if (passed) {
+    document.getElementById('result-banner').innerHTML = `
+      <div class="result-banner pass">
+        <div class="rb-icon pass"><i class="ti ti-trophy"></i></div>
+        <div class="rb-text">
+          <div class="rb-title pass">Assessment Passed · ${pct}%</div>
+          <div class="rb-sub pass">You met the 70% threshold. ${pct>=87?'Great work — no areas flagged.':'A few areas to keep an eye on are listed below.'}</div>
+        </div>
+      </div>`;
+  } else {
+    document.getElementById('result-banner').innerHTML = `
+      <div class="result-banner fail">
+        <div class="rb-icon fail"><i class="ti ti-alert-triangle"></i></div>
+        <div class="rb-text">
+          <div class="rb-title fail">Below Passing Threshold · ${pct}%</div>
+          <div class="rb-sub fail">You need 70% to pass. A focused retake on ${areas.join(' and ')||'your missed areas'} has been generated.${hasCheckin?' Your manager has also assigned a check-in.':''}</div>
+        </div>
+        <div class="rb-actions">
+          <button class="rb-btn retake" onclick="startQuiz()"><i class="ti ti-refresh"></i> Take Retake</button>
+        </div>
+      </div>`;
+  }
+
+  const r = 42, c = 2*Math.PI*r, fill = c*(correct/total);
+  document.getElementById('score-card').innerHTML = `
+    <div class="score-ring">
+      <svg width="100" height="100" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="${r}" fill="none" stroke="#f3f4f6" stroke-width="8"/>
+        <circle cx="50" cy="50" r="${r}" fill="none" stroke="${msgColor}" stroke-width="8"
+          stroke-dasharray="${fill} ${c}" stroke-linecap="round"/>
+      </svg>
+      <div class="score-ring-num"><div class="score-big">${correct}/${total}</div><div class="score-denom">${pct}%</div></div>
+    </div>
+    <div class="score-right">
+      <div class="score-msg" style="color:${msgColor}">${msg}</div>
+      <div class="score-pct">June Assessment · 2026-27 Season · Pass mark: 70%</div>
+      ${areas.length?`<div class="score-areas">${areas.map(a=>`<span class="area-tag" style="background:#fef3c7;color:#92400e;border-color:#fcd34d">${a}</span>`).join('')}</div>`:'<div style="font-size:12px;color:#16a34a"><i class="ti ti-check"></i> No areas to flag</div>'}
+    </div>`;
+
+  const bk = document.getElementById('breakdown-list');
+  bk.innerHTML = QUESTIONS.map((q,i)=>{
+    const ans = answers[i]||'—';
+    const ok = ans===q.correct;
+    const rc = q.correct==='Infraction'?'rc-infraction':q.correct==='Lean Infraction'?'rc-lean-infraction':q.correct==='Lean No'?'rc-lean-no':q.correct==='No Infraction'?'rc-no-infraction':'';
+    return `<div class="bk-row">
+      <div class="bk-icon ${ok?'correct':'wrong'}"><i class="ti ti-${ok?'check':'x'}"></i></div>
+      <div class="bk-play">
+        <div class="bk-type">${q.play.type}${q.play.sub?' · '+q.play.sub:''}</div>
+        <div class="bk-game">${q.play.game} · ${q.play.date} · ${q.play.time}</div>
+      </div>
+      <div class="bk-ans">
+        ${!ok?`<div class="bk-your" style="color:#dc2626">Your answer: ${ans}</div>`:''}
+        <div class="bk-correct"><span class="chip ${rc}" style="${!rc?'background:#f3f4f6;color:#374151;border:1px solid #e5e7eb':''}">${q.correct}</span></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('learning-areas').innerHTML = areas.length
+    ? areas.map(a=>`<div class="area-tag" style="font-size:12px;padding:5px 14px;background:#fef3c7;color:#92400e;border-color:#fcd34d">${a}</div>`).join('')
+    : '<div style="font-size:12px;color:#16a34a;font-weight:600"><i class="ti ti-circle-check"></i> No learning areas flagged — great work!</div>';
+}
+
+function showLanding() {
+  document.getElementById('quiz').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('landing').style.display='flex';
+  if (answers.length > 0) {
+    const done = answers.filter(Boolean).length;
+    document.getElementById('prog-label').textContent = `${done} of ${QUESTIONS.length} completed`;
+    document.getElementById('prog-fill').style.width = `${(done/QUESTIONS.length)*100}%`;
+  }
+}
+
+function showToast(msg){const t=document.createElement('div');t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:9px 20px;border-radius:8px;font-size:12px;font-weight:500;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,.3);opacity:0;transition:opacity .2s';t.textContent=msg;document.body.appendChild(t);requestAnimationFrame(()=>{t.style.opacity='1';setTimeout(()=>{t.style.opacity='0';setTimeout(()=>t.remove(),200)},2200)});}
+</script>
+</body>
+</html>

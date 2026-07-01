@@ -1,0 +1,2020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GRS — Review</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;color:#111827;background:linear-gradient(180deg,#f6f7fa 0%,#eef0f5 100%);height:100vh;overflow:hidden}
+.page{height:100vh;display:flex;flex-direction:column;overflow:hidden}
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#d4d8e0;border-radius:8px}
+::-webkit-scrollbar-thumb:hover{background:#b8bdc8}
+
+/* NAV */
+.nav{background:#1a3a6b;height:48px;display:flex;align-items:center;padding:0 24px;flex-shrink:0;overflow:visible;position:relative;z-index:300;box-shadow:0 1px 0 rgba(0,0,0,.12)}
+.nav-logo{display:flex;align-items:center;gap:8px}
+.nav-brand{color:rgba(255,255,255,.9);font-size:11.5px;font-weight:600;white-space:nowrap;letter-spacing:.5px}
+.nav-whats-new{display:inline-flex;align-items:center;gap:4px;background:rgba(247,184,208,.18);border:1px solid rgba(247,184,208,.55);color:#f7b8d0;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:3px 9px 3px 8px;border-radius:20px;cursor:pointer;white-space:nowrap;margin-left:8px;transition:background .15s,color .15s}
+.nav-whats-new:hover{background:#f7b8d0;color:#1a3a6b}
+.nav-links{display:flex;margin-left:auto;flex-shrink:0;flex-wrap:nowrap;align-items:center}
+.nl{color:rgba(255,255,255,.55);font-size:10.5px;padding:0 8px;cursor:pointer;font-weight:500;height:48px;display:flex;align-items:center;border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0;transition:color .15s}
+.nl:hover{color:#fff}
+.nl.on{color:#fff;border-bottom-color:#fff;font-weight:600}
+.nav-av{width:30px;height:30px;border-radius:50%;background:#2d5aa0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;flex-shrink:0;margin-left:12px}
+.nav-dropdown{position:relative;display:flex;align-items:center;height:48px}
+.nav-dropdown .nl{gap:4px}
+.nav-dd-caret{font-size:8px;opacity:.7;transition:transform .15s}
+.nav-dropdown.open .nav-dd-caret{transform:rotate(180deg)}
+.nav-dd-menu{display:none;position:absolute;top:44px;right:0;background:#fff;border:1px solid #e9ebf0;border-radius:10px;box-shadow:0 12px 28px rgba(16,24,48,.18);min-width:170px;z-index:400;padding:5px 0}
+.nav-dropdown.open .nav-dd-menu{display:block}
+.nav-dd-item{display:block;padding:9px 16px;font-size:11px;font-weight:500;color:#374151;text-decoration:none;white-space:nowrap;cursor:pointer;transition:background .12s}
+.nav-dd-item:hover{background:#f1f4fa;color:#1a3a6b}
+
+/* SUBNAV */
+.subnav{background:#fff;border-bottom:1px solid #e9ebf0;height:40px;display:flex;padding:0 20px;flex-shrink:0}
+.st{padding:0 14px;font-size:12px;font-weight:500;color:#6b7280;cursor:pointer;display:flex;align-items:center;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:color .15s}
+.st.on{color:#1a3a6b;border-bottom-color:#1a3a6b;font-weight:700}
+.st:hover:not(.on){color:#111827}
+
+/* GAME HEADER */
+.game-hdr{background:#fff;border-bottom:1px solid #e9ebf0;padding:7px 20px;display:flex;align-items:center;gap:14px;flex-shrink:0}
+.gh-title{font-size:12.5px;font-weight:700;display:flex;align-items:center;gap:4px;flex-wrap:nowrap;white-space:nowrap}
+.gh-date{font-size:10.5px;color:#6b7280;margin-top:1px}
+.gh-sep{width:1px;height:24px;background:#e9ebf0}
+.stats{display:flex;gap:7px}
+.stat{padding:4px 11px;border-radius:8px;text-align:center;min-width:48px}
+.sn{font-size:14px;font-weight:700;line-height:1}
+.sl{font-size:9.5px;line-height:1.3;margin-top:2px;font-weight:600}
+.s-g{background:#e3f9ea;color:#15803d}
+.s-r{background:#fde8e8;color:#b91c1c}
+.s-t{background:#d6f5f1;color:#0d7d72}
+.gh-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.ncc-counter{border-radius:9px;padding:4px 11px;display:flex;flex-direction:column;align-items:center;gap:1px}
+.ncc-counter.ncc-q{background:#fcfcd4;border:1px solid #e8e86a}
+.ncc-counter.ncc-game{background:#fcfcd4;border:1px solid #e8e86a}
+.ncc-lbl{font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;white-space:nowrap}
+.ncc-counter.ncc-q .ncc-lbl{color:#5a5a00}
+.ncc-counter.ncc-game .ncc-lbl{color:#5a5a00}
+.ncc-stats{display:flex;gap:6px}
+.ncc-stat{text-align:center;min-width:40px}
+.ncc-n{font-size:14px;font-weight:700;line-height:1}
+.ncc-counter.ncc-q .ncc-n{color:#5a5a00}
+.ncc-counter.ncc-game .ncc-n{color:#5a5a00}
+.ncc-sl{font-size:9px;line-height:1.3;white-space:nowrap}
+.ncc-counter.ncc-q .ncc-sl{color:#5a5a00}
+.ncc-counter.ncc-game .ncc-sl{color:#5a5a00}
+
+/* MAIN LAYOUT */
+.main{flex:1;display:flex;min-height:0;overflow:hidden;padding:14px 32px 0;gap:14px;background:transparent}
+.main-right{flex:1;display:flex;flex-direction:column;overflow:hidden;gap:0}
+.main-bottom{flex:1;display:flex;gap:14px;overflow:hidden;padding:0 0 14px 0;min-height:0}
+
+/* LEFT PANEL */
+.lp{width:230px;flex-shrink:0;background:#fff;border:1px solid #e9ebf0;border-radius:13px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 1px 3px rgba(17,24,39,.05)}
+.lp-filterbar{padding:9px 11px 7px;border-bottom:1px solid #f0f1f4;display:flex;flex-direction:column;gap:6px;flex-shrink:0}
+.lp-filterbar-top{display:flex;align-items:center;gap:6px}
+.lp-filterbar-qtogs{display:flex;gap:5px}
+.filter-ev-btn{padding:3px 9px;font-size:11px;border:1px solid #d8dce3;border-radius:7px;background:#fff;color:#374151;cursor:pointer;font-weight:500;white-space:nowrap;transition:background .12s}
+.filter-ev-btn:hover{background:#f6f7fa}
+.q-tog{padding:3px 8px;font-size:11px;border:1px solid #d8dce3;border-radius:6px;background:#fff;color:#374151;cursor:pointer;font-weight:600;transition:background .12s}
+.q-tog:hover{background:#f6f7fa}
+.q-tog.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
+.buf-label{font-size:10.5px;color:#6b7280;margin-left:4px;white-space:nowrap}
+.poss-list{flex:1;overflow-y:auto}
+.poss-item{border-bottom:1px solid #f4f5f7}
+.poss-hdr{padding:8px 11px;display:flex;align-items:center;gap:6px;cursor:pointer;font-size:11.5px;font-weight:600;color:#374151;background:#fafbfc;user-select:none;transition:background .12s}
+.poss-hdr:hover:not(.static){background:#f1f3f7}
+.poss-num{color:#9ca3af;font-size:10.5px;font-weight:600;min-width:16px}
+.poss-team{color:#1a3a6b;font-weight:700}
+.poss-time{flex:1;color:#374151}
+.poss-warn{color:#f59e0b;font-size:12px;flex-shrink:0}
+.poss-chevron{color:#9ca3af;font-size:11px;transition:transform .15s;flex-shrink:0}
+.poss-item.open .poss-chevron{transform:rotate(90deg)}
+.poss-events{display:none;padding:2px 0}
+.poss-item.open .poss-events{display:block}
+.ev-row{padding:5px 12px 5px 21px;font-size:11.5px;cursor:default;display:flex;align-items:center;gap:4px;line-height:1.3;transition:background .12s}
+.ev-row.reviewable{cursor:pointer;color:#2563eb}
+.ev-row.reviewable:hover{background:#eef4ff}
+.ev-row.whistled{color:#16a34a;font-weight:600}
+.ev-row.plain{color:#374151}
+.ev-row.sel{border-left:3px solid #1a3a6b;background:#eef4ff;padding-left:18px}
+.ev-check{flex-shrink:0}
+.ev-warn{flex-shrink:0;color:#f59e0b;font-size:11px}
+.lp-footer{padding:11px;border-top:1px solid #f0f1f4;flex-shrink:0}
+.submit-qi-btn{width:100%;padding:9px;background:#1a3a6b;color:#fff;border:none;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.4px;transition:background .15s,box-shadow .15s}
+.submit-qi-btn:hover{background:#15306e;box-shadow:0 4px 12px rgba(26,58,107,.28)}
+
+/* INFRACTION TABLE (standalone, full width) */
+.inf-table-outer{display:flex;align-items:flex-start;gap:9px;margin:0 0 10px}
+.inf-table-wrap{flex:1;min-width:0;border:1px solid #e9ebf0;border-radius:13px;background:#fff;overflow:hidden;box-shadow:0 1px 3px rgba(17,24,39,.05)}
+.inf-tbl{width:100%;border-collapse:collapse;font-size:11.5px;table-layout:fixed}
+.inf-tbl th{padding:6px 11px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.4px;color:#9ca3af;background:#fafbfc;border-bottom:1px solid #eceef2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.inf-tbl th:first-child{border-radius:13px 0 0 0}
+.inf-tbl th:last-child{border-radius:0 13px 0 0}
+.inf-tbl td{padding:6px 11px;border-bottom:1px solid #f4f5f7;vertical-align:middle;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transition:background .12s}
+.inf-tbl tbody tr:last-child td{border-bottom:none}
+.inf-tbl tbody tr:hover td{background:#fafbfc}
+.inf-tbl tbody tr.inf-sel td{background:#1a3a6b;color:#fff}
+.inf-tbl tbody tr.inf-sel td .rating-chip{background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.3)}
+.rating-chip{display:inline-block;padding:1px 8px;border-radius:10px;font-size:10px;font-weight:600;background:#f3f4f6;color:#374151;border:1px solid #e5e7eb;white-space:nowrap}
+.inf-side-btns{display:flex;flex-direction:column;gap:6px;flex-shrink:0;padding-top:1px}
+.inf-add-btn{padding:5px 11px;background:#1a3a6b;color:#fff;border:none;border-radius:7px;font-size:10.5px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .15s}
+.inf-add-btn:hover{background:#15306e}
+.inf-ev-btn{padding:5px 11px;background:#fff;color:#374151;border:1px solid #d8dce3;border-radius:7px;font-size:10.5px;font-weight:500;cursor:pointer;white-space:nowrap;transition:background .12s}
+.inf-ev-btn:hover{background:#f6f7fa}
+
+/* CENTER PANEL */
+.cp{flex:1 1 0;min-width:0;display:flex;flex-direction:column;overflow:hidden;background:#fff;border:1px solid #e9ebf0;border-radius:13px;box-shadow:0 1px 3px rgba(17,24,39,.05)}
+.cp-empty{flex:1;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-size:13px;font-style:italic}
+.rating-form{flex-shrink:0;border-bottom:1px solid #eceef2;background:#fafbfc;margin-top:6px;overflow:hidden}
+.rf-inner{display:grid;grid-template-columns:1fr 160px;overflow:hidden}
+.rf-left{padding:16px 18px 16px 26px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.rf-right-col{padding:16px 18px 16px 14px;border-left:1px solid #eceef2;display:flex;flex-direction:column;gap:8px;background:#fafbfc}
+.rf-row{display:flex;align-items:center;gap:10px}
+.rf-label{font-size:10.5px;font-weight:600;color:#6b7280;min-width:100px;flex-shrink:0}
+.rf-clock{padding:4px 10px;border:1px solid #d8dce3;border-radius:7px;font-size:12px;font-weight:700;color:#111827;background:#fff;width:80px;text-align:center}
+.rf-checks{display:flex;gap:8px;flex-wrap:wrap}
+.rf-check{display:flex;align-items:center;gap:4px;font-size:11px;color:#374151;cursor:pointer}
+.rf-check input{width:13px;height:13px;cursor:pointer;accent-color:#1a3a6b}
+.btn-group{display:flex;gap:6px;flex:1}
+.ref-btn,.loc-btn{flex:1;text-align:center;padding:6px 4px;border:1px solid #d8dce3;border-radius:7px;font-size:10.5px;cursor:pointer;background:#fff;color:#374151;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:background .12s,border-color .12s}
+.ref-btn:hover,.loc-btn:hover{background:#f6f7fa}
+.ref-btn.on,.loc-btn.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
+.rating-btn{display:block;width:100%;text-align:left;padding:8px 11px;font-size:11px;border:1px solid #d8dce3;border-radius:7px;cursor:pointer;background:#fff;color:#374151;margin-bottom:4px;transition:background .12s}
+.rating-btn:hover{background:#f3f4f6}
+.rating-btn.on{background:#e5e7eb;border-color:#9ca3af;color:#374151}
+.rating-btn.on[data-rating="infraction"]{background:#fecaca;border-color:#f87171;color:#7f1d1d}
+.rating-btn.on[data-rating="lean-infraction"]{background:#fbcfe8;border-color:#f472b6;color:#831843}
+.rating-btn.on[data-rating="lean-no"]{background:#fef9c3;border-color:#facc15;color:#713f12}
+.rating-btn.on[data-rating="no-infraction"]{background:#e5e7eb;border-color:#9ca3af;color:#1f2937}
+.rc-infraction{background:#fde2e2;color:#991b1b;border-color:#f5a3a3}
+.rc-lean-infraction{background:#fdf0c8;color:#92400e;border-color:#f3cb6a}
+.rc-lean-no{background:#dbeafe;color:#1e40af;border-color:#a9c8f7}
+.rc-no-infraction{background:#d6f3e0;color:#166534;border-color:#86efac}
+.rf-select{padding:6px 10px;border:1px solid #d8dce3;border-radius:7px;font-size:11.5px;color:#374151;background:#fff;cursor:pointer;transition:border-color .12s}
+.rf-select:hover{border-color:#b8bfcc}
+.rf-left .rf-select{flex:1}
+.rf-right .rf-select{width:100%}
+.rf-section-lbl{font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;margin-bottom:2px}
+.rating-btn.disabled{opacity:.35;pointer-events:none;cursor:not-allowed}
+.assist-alert-backdrop{display:none;position:fixed;inset:0;background:rgba(15,20,35,.45);z-index:699;backdrop-filter:blur(1px)}
+.assist-alert-backdrop.show{display:block}
+.assist-alert{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:360px;background:#fff;border:1px solid #fca5a5;border-radius:14px;box-shadow:0 20px 56px rgba(0,0,0,.3);z-index:700;padding:22px 24px}
+.assist-alert.show{display:block}
+.assist-alert-hdr{display:flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700;color:#dc2626;margin-bottom:8px}
+.assist-alert-body{font-size:11.5px;color:#374151;line-height:1.5;margin-bottom:10px}
+.assist-alert-btns{display:flex;gap:7px}
+.assist-alert-btns button{flex:1;padding:6px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer}
+.assist-alert-yes{background:#1a3a6b;color:#fff;border:none}
+.assist-alert-yes:hover{background:#15306e}
+.assist-alert-no{background:#fff;color:#374151;border:1px solid #d8dce3}
+.assist-alert-no:hover{background:#f6f7fa}
+.rf-save-btn{padding:6px 14px;background:#fabfff;color:#5a1870;border:none;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:4px;transition:background .15s,box-shadow .15s}
+.rf-save-btn:hover{background:#f0a8ff;box-shadow:0 4px 12px rgba(250,191,255,.55)}
+.rf-cancel-btn{padding:6px 10px;border:1px solid #d8dce3;border-radius:7px;font-size:11px;color:#374151;background:#fff;cursor:pointer;transition:background .12s}
+.rf-cancel-btn:hover{background:#f6f7fa}
+.comment-section{flex:1;overflow:hidden;padding:14px 16px;display:flex;flex-direction:column;gap:11px}
+.comment-tmpl-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.tmpl-lbl{font-size:10.5px;font-weight:600;color:#6b7280;white-space:nowrap}
+.tmpl-btn{padding:0 11px;height:28px;border:1px solid #d8dce3;border-radius:7px;font-size:11px;cursor:pointer;background:#fff;color:#374151;font-weight:500;display:inline-flex;align-items:center;gap:4px;transition:background .12s}
+.tucker-avatar{width:15px;height:15px;border-radius:50%;object-fit:cover;flex-shrink:0}
+.tmpl-btn:hover{background:#f6f7fa}
+.tmpl-btn.special{background:#1a3a6b;color:#fff;border-color:#1a3a6b}
+.comment-lbl{font-size:10.5px;font-weight:700;color:#374151;letter-spacing:.3px}
+.comment-ta{width:100%;border:1px solid #d8dce3;border-radius:9px;padding:9px 11px;font-size:12px;color:#374151;background:#fff;resize:none;font-family:inherit;line-height:1.5;transition:border-color .12s,box-shadow .12s}
+.comment-ta:focus{outline:none;border-color:#1a3a6b;box-shadow:0 0 0 3px rgba(26,58,107,.1)}
+.note-bubble{background:#f8fafc;border:1px solid #dcdcdc;border-radius:11px;padding:9px 13px;margin-top:4px;margin-left:16px;font-size:11px;color:#111827;line-height:1.6;font-style:italic}
+.note-lbl{display:block;font-size:9px;font-weight:700;letter-spacing:.5px;color:#94a3b8;font-style:normal;margin-bottom:3px;text-transform:uppercase}
+.note-text{outline:none;display:block;width:100%}
+.note-text:empty:before{content:attr(data-placeholder);opacity:.6;pointer-events:none}
+
+/* RIGHT PANEL */
+.rp-col{flex:0 0 42%;max-width:42%;display:flex;flex-direction:column;gap:11px;min-height:0}
+.rp{flex-shrink:0;background:#fff;display:flex;flex-direction:column;border:1px solid #e9ebf0;border-radius:13px;overflow:hidden;min-height:0;box-shadow:0 1px 3px rgba(17,24,39,.05)}
+.rp-card{background:#fff;border:1px solid #e9ebf0;border-radius:13px;padding:11px 15px;flex-shrink:0;box-shadow:0 1px 3px rgba(17,24,39,.05)}
+.rp-card-lbl{font-size:10px;color:#9ca3af;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:5px}
+.rp-card-lbl i{font-size:13px}
+.rp-card-val{font-size:11px;color:#6b7280;font-style:italic;line-height:1.5}
+.rp-card-ptiw{color:#f59e0b;font-weight:700}
+.vid-area{background:#0e1320;padding:7px 7px 0;flex-shrink:0}
+.vid-frame{width:100%;aspect-ratio:16/9;background:#1a1f2e;border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.vid-frame img{width:100%;height:100%;object-fit:cover;border-radius:8px}
+.vid-ph{display:flex;flex-direction:column;align-items:center;gap:6px}
+.vid-ph i{font-size:28px;color:#374151}
+.vid-ph span{font-size:11px;color:#4b5563}
+.ang-row{display:flex;gap:4px;padding:7px 11px;background:#fff;border-bottom:1px solid #f4f5f7;overflow-x:auto;flex-shrink:0}
+.ang{padding:3px 8px;font-size:10px;border:1px solid #e9ebf0;background:#fafbfc;color:#6b7280;cursor:pointer;border-radius:5px;white-space:nowrap;flex-shrink:0;font-weight:500;transition:background .12s}
+.ang:hover{color:#374151;border-color:#d1d5db;background:#f1f3f7}
+.ang.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
+.vid-ctrl{padding:7px 11px;border-bottom:1px solid #f4f5f7;display:flex;align-items:center;gap:6px;flex-shrink:0;background:#fff}
+.vcb{background:none;border:none;color:#9ca3af;cursor:pointer;font-size:15px;display:flex;align-items:center}
+.vcb:hover{color:#111827}
+.vtrack{flex:1;height:4px;background:#e9ebf0;border-radius:3px;position:relative}
+.vfill{width:22%;height:100%;background:#1a3a6b;border-radius:3px}
+.vhead{width:11px;height:11px;background:#1a3a6b;border-radius:50%;position:absolute;right:-5px;top:-4px;border:2px solid #fff;box-shadow:0 0 0 1px #1a3a6b}
+.vtime{color:#9ca3af;font-size:11px;min-width:80px;text-align:right}
+.clip-bar{padding:7px 11px;border-bottom:1px solid #f4f5f7;display:flex;gap:6px;align-items:center;flex-shrink:0;background:#fafbfc}
+.clip-btn{padding:5px 11px;background:#1a3a6b;color:#fff;border:none;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:4px;transition:background .15s}
+.clip-btn:hover{background:#15306e}
+.hotkeys-btn{padding:5px 11px;border:1px solid #d8dce3;border-radius:7px;font-size:11px;cursor:pointer;background:#fff;color:#374151;display:inline-flex;align-items:center;gap:3px;transition:background .12s}
+.hotkeys-btn:hover{background:#f6f7fa}
+.rp-box{padding:9px 11px;border-bottom:1px solid #f4f5f7;flex-shrink:0;background:#fff}
+.rp-lbl{font-size:10px;color:#9ca3af;font-weight:700;margin-bottom:3px;display:flex;align-items:center;gap:5px}
+.rp-lbl i{font-size:13px}
+.rp-val{font-size:11px;color:#6b7280;font-style:italic;line-height:1.5}
+.rp-ptiw-lbl{color:#f59e0b;font-weight:700}
+
+/* ASSIST PANEL */
+.assist-panel{width:220px;flex-shrink:0;display:flex;flex-direction:column;gap:9px;min-height:0}
+.assist-card{border:1px solid #e9ebf0;border-radius:13px;padding:11px 13px;flex-shrink:0;background:#fff;box-shadow:0 1px 3px rgba(17,24,39,.05)}
+.assist-card-red{background:#fff3f3;border-color:#fbc6c6}
+.assist-action-row{display:flex;gap:6px}
+.assist-action-row .rf-cancel-btn,.assist-action-row .rf-save-btn{flex:1;justify-content:center}
+.assist-btn{width:100%;padding:9px 11px;background:#ef4444;color:#fff;border:none;border-radius:9px;font-size:11px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;transition:background .15s,box-shadow .15s}
+.assist-btn:hover{background:#dc2626;box-shadow:0 4px 12px rgba(239,68,68,.3)}
+.tmpl-assist-btn{width:auto;padding:4px 11px;background:#fde2e2;color:#7f1d1d;border:1px solid #f5a3a3;border-radius:7px;font-weight:600}
+.suggestions-card{background:#fff;border:1px solid #e9ebf0;border-radius:13px;padding:11px 13px;flex:1;overflow-y:auto;min-height:0;box-shadow:0 1px 3px rgba(17,24,39,.05)}
+.suggestions-lbl{font-size:10px;font-weight:700;color:#374151;letter-spacing:.4px;margin-bottom:2px;text-transform:uppercase}
+.suggestions-sub{font-size:9.5px;color:#9ca3af;margin-bottom:8px;line-height:1.4}
+.suggestion-item{padding:7px 9px;border:1px solid #eceef2;border-radius:7px;font-size:10.5px;color:#374151;cursor:pointer;margin-bottom:5px;line-height:1.4;background:#fafbfc;transition:background .12s,border-color .12s}
+.suggestion-item:hover{background:#eef4ff;border-color:#bfdbfe;color:#1e40af}
+.suggestions-empty{font-size:11px;color:#9ca3af;font-style:italic;line-height:1.5}
+.under-construction{display:flex;flex-direction:column;overflow:hidden;padding:0;background:repeating-linear-gradient(45deg,#fbbf24 0px,#fbbf24 14px,#1c1917 14px,#1c1917 28px)}
+.caution-tape{display:none}
+.uc-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 10px;text-align:center;margin:12px;background:rgba(255,255,255,.88);border-radius:9px;border:1px solid rgba(0,0,0,.08)}
+.uc-title{font-size:11px;font-weight:700;color:#374151;margin-bottom:2px}
+.uc-sub{font-size:10.5px;color:#6b7280;margin-bottom:4px}
+.uc-credit{font-size:10px;color:#9ca3af;font-style:italic}
+/* CHATBOT FLOATING WINDOW */
+.chatbot-window{display:none;position:fixed;bottom:20px;right:20px;width:480px;max-height:340px;height:35vh;background:#fff;border-radius:14px;box-shadow:0 12px 40px rgba(16,24,48,.22);border:1px solid #e9ebf0;flex-direction:column;z-index:500;overflow:hidden}
+.chatbot-window.open{display:flex}
+.chatbot-hdr{background:#16294f;color:#fff;padding:11px 15px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.chatbot-title{font-size:12px;font-weight:700;display:flex;align-items:center;gap:6px}
+.chatbot-avatar{width:24px;height:24px;border-radius:50%;background:#fff;color:#16294f;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;overflow:hidden}
+.chatbot-avatar img{width:100%;height:100%;object-fit:cover}
+.chat-msg-row{display:flex;flex-direction:column;gap:3px;align-self:flex-start;max-width:88%}
+.chat-msg-row.user{align-self:flex-end}
+.chat-msg-name{font-size:10px;font-weight:700;color:#6b7280;display:flex;align-items:center;gap:5px;margin-left:2px}
+.chat-msg-name .chatbot-avatar{width:16px;height:16px;font-size:9px}
+.chatbot-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:16px;cursor:pointer;line-height:1;padding:0}
+.chatbot-close:hover{color:#fff}
+.chatbot-msgs{flex:1;overflow-y:auto;padding:13px;display:flex;flex-direction:column;gap:8px;min-height:150px}
+.chat-msg{padding:8px 11px;border-radius:11px;font-size:11.5px;line-height:1.5;max-width:88%}
+.chat-msg.bot{background:#f3f4f6;color:#111827;align-self:flex-start;border-bottom-left-radius:3px}
+.chat-msg.user{background:#1a3a6b;color:#fff;align-self:flex-end;border-bottom-right-radius:3px}
+.chatbot-input-row{display:flex;gap:6px;padding:9px 13px;border-top:1px solid #eceef2;flex-shrink:0;background:#fafbfc}
+.chatbot-input{flex:1;padding:7px 10px;border:1px solid #d8dce3;border-radius:8px;font-size:11.5px;font-family:inherit;color:#374151;background:#fff}
+.chatbot-input:focus{outline:none;border-color:#1a3a6b}
+.chatbot-send{padding:7px 13px;background:#1a3a6b;color:#fff;border:none;border-radius:8px;font-size:11.5px;font-weight:600;cursor:pointer;transition:background .15s}
+.chatbot-send:hover{background:#15306e}
+.chat-fwd-row{display:flex;gap:6px;margin-top:6px}
+.chat-fwd-btn{padding:5px 13px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid #d8dce3;background:#fff;color:#374151;transition:background .12s}
+.chat-fwd-btn:hover{background:#f3f4f6}
+.chat-fwd-btn.yes{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
+.chat-fwd-btn.yes:hover{background:#15306e}
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:11px 22px;border-radius:11px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:7px;opacity:0;transition:opacity .18s;z-index:60;white-space:nowrap;pointer-events:none;background:#166534;color:#dcfce7;box-shadow:0 8px 24px rgba(0,0,0,.22)}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- NAV -->
+<div class="nav">
+  <div class="nav-logo" onclick="location='home.html'" style="cursor:pointer">
+    <img src="Logos/nba-logo.svg" style="width:16px;height:auto" onerror="this.style.display='none'">
+    <div class="nav-brand">BRIDGET REVIEW SYSTEM 1.0</div>
+    <span class="nav-whats-new" onclick="event.stopPropagation();location='whats-new.html'"><i class="ti ti-sparkles" style="font-size:10px"></i> What's New</span>
+  </div>
+  <div class="nav-links">
+    <span class="nl" onclick="location='home.html'">HOME</span>
+    <span class="nl" onclick="location='published-games.html'">PUBLISHED GAMES</span>
+    <div class="nav-dropdown" id="rim-dropdown">
+      <span class="nl" onclick="location='rim.html'">RIM</span>
+      <span class="nl" style="padding-left:0;padding-right:6px;font-size:9px;opacity:.6;cursor:pointer" onclick="toggleRimDropdown(event)">▾</span>
+      <div class="nav-dd-menu" id="rim-dd-menu" style="min-width:190px;left:0;right:auto">
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-home" style="margin-right:7px;font-size:12px"></i>RIM Home</span>
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-inbox" style="margin-right:7px;font-size:12px"></i>Interactions</span>
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-messages" style="margin-right:7px;font-size:12px"></i>Threads</span>
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-layout-board" style="margin-right:7px;font-size:12px"></i>Message Board</span>
+        <span class="nav-dd-item" onclick="location='playlists.html'"><i class="ti ti-playlist" style="margin-right:7px;font-size:12px"></i>Playlists</span>
+        <span class="nav-dd-item" onclick="location='assessments.html'"><i class="ti ti-clipboard-check" style="margin-right:7px;font-size:12px"></i>Assessments</span>
+        <span class="nav-dd-item" onclick="location='poe.html'"><i class="ti ti-target" style="margin-right:7px;font-size:12px"></i>Points of Education</span>
+      </div>
+    </div>
+    <span class="nl">RM REVIEW</span>
+    <span class="nl">FINAL L2M REVIEW</span>
+    <span class="nl">INDEPENDENT REVIEW</span>
+    <span class="nl">ADMINISTRATION</span>
+    <div class="nav-dropdown" id="nav-dropdown">
+      <span class="nl" onclick="toggleNavDropdown(event)">REVIEWER RESOURCE <span class="nav-dd-caret">&#9662;</span></span>
+      <div class="nav-dd-menu">
+        <span class="nav-dd-item" onclick="location='comment-library.html'">Comment Library</span>
+      </div>
+    </div>
+    <span class="nl">MY SCHEDULE</span>
+    <div class="nav-av">BN</div>
+  </div>
+</div>
+
+<!-- SUBNAV -->
+<div class="subnav">
+  <span class="st on" onclick="location='review.html'">Review (1st Pass)</span>
+  <span class="st" onclick="location='review-2ndcheck.html'">Review (2nd Check)</span>
+  <span class="st disabled" style="color:#c9ced8;cursor:not-allowed;pointer-events:none">OGR</span>
+  <span class="st disabled" style="color:#c9ced8;cursor:not-allowed;pointer-events:none">Important Calls</span>
+  <span class="st" onclick="location='second-check.html'">Second Check</span>
+  <span class="st" onclick="location='second-check.html?view=ptiw'">PTIW</span>
+  <span class="st" onclick="location='second-check.html?view=oiw'">OIW</span>
+</div>
+
+<!-- GAME HEADER -->
+<div class="game-hdr">
+  <div>
+    <div class="gh-title">
+      <span style="display:inline-flex;align-items:center;gap:5px">
+        <img src="Logos/toronto tempo logo.jpg" style="width:20px;height:20px;object-fit:contain" onerror="this.style.display='none'">
+        TOR (111)
+      </span>
+      <span style="color:#9ca3af;margin:0 6px">@</span>
+      <span style="display:inline-flex;align-items:center;gap:5px">
+        <img src="Logos/chicago sky logo.png" style="width:20px;height:20px;object-fit:contain" onerror="this.style.display='none'">
+        CHI (104)
+      </span>
+    </div>
+    <div class="gh-date">Wednesday, May 27, 2026 &nbsp;&middot;&nbsp; 8:00 PM &nbsp;&middot;&nbsp; #1022600050 &nbsp;&middot;&nbsp; Refs: Genesis Perrymond (8) &middot; Catherine Chang (23) &middot; Kevin Fahy (86)</div>
+  </div>
+  <div class="gh-sep"></div>
+  <div class="stats">
+    <div class="stat s-g"><div class="sn">65</div><div class="sl">Whistles</div></div>
+    <div class="stat s-r"><div class="sn">60</div><div class="sl">Infractions</div></div>
+    <div class="stat s-t"><div class="sn">4</div><div class="sl">PTIW Events</div></div>
+  </div>
+  <div class="gh-right">
+    <div style="display:flex;gap:8px">
+      <div class="ncc-counter ncc-q">
+        <div class="ncc-lbl">Non-Call — Q1</div>
+        <div class="ncc-stats">
+          <div class="ncc-stat"><div class="ncc-n">1</div><div class="ncc-sl">Deemed Infr.</div></div>
+          <div class="ncc-stat"><div class="ncc-n">3</div><div class="ncc-sl">PI Calls</div></div>
+        </div>
+      </div>
+      <div class="ncc-counter ncc-game">
+        <div class="ncc-lbl">Non-Call — Game</div>
+        <div class="ncc-stats">
+          <div class="ncc-stat"><div class="ncc-n">4</div><div class="ncc-sl">Deemed Infr.</div></div>
+          <div class="ncc-stat"><div class="ncc-n">12</div><div class="ncc-sl">PI Calls</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- LEFT PANEL -->
+  <div class="lp">
+    <div class="lp-filterbar">
+      <div class="lp-filterbar-top">
+        <button class="filter-ev-btn">Filter Events</button>
+        <span class="buf-label">Buffer: <b id="buf-val">0</b></span>
+      </div>
+      <div class="lp-filterbar-qtogs">
+        <button class="q-tog on" id="qtog-Q1" onclick="filterQ('Q1',this)">Q1</button>
+        <button class="q-tog" id="qtog-Q2" onclick="filterQ('Q2',this)">Q2</button>
+        <button class="q-tog" id="qtog-Q3" onclick="filterQ('Q3',this)">Q3</button>
+        <button class="q-tog" id="qtog-Q4" onclick="filterQ('Q4',this)">Q4</button>
+      </div>
+    </div>
+    <div class="poss-list" id="poss-list"></div>
+    <div class="lp-footer">
+      <button class="submit-qi-btn">Submit QI</button>
+    </div>
+  </div>
+
+  <!-- MAIN RIGHT (infraction table above, then bottom row) -->
+  <div class="main-right">
+
+    <!-- INFRACTION TABLE (full width, above form+video) -->
+    <div id="inf-table-wrap" style="display:none">
+      <div class="inf-table-outer">
+        <div class="inf-table-wrap">
+          <table class="inf-tbl" id="inf-tbl">
+            <colgroup>
+              <col style="width:18%"><col style="width:17%"><col style="width:17%"><col style="width:14%"><col style="width:9%"><col style="width:16%"><col style="width:9%">
+            </colgroup>
+            <thead>
+              <tr>
+                <th>Infraction Type</th><th>Player</th><th>Opponent</th><th>Official</th><th>Location</th><th>Infraction Rating</th><th>Observability</th>
+              </tr>
+            </thead>
+            <tbody id="inf-tbody"></tbody>
+          </table>
+        </div>
+        <div class="inf-side-btns">
+          <button class="inf-add-btn" onclick="addInfractionRow()">+ INFRACTION</button>
+          <button class="inf-ev-btn"><i class="ti ti-pencil" style="font-size:11px"></i> Edit Event</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM ROW: center panel + right panel -->
+    <div class="main-bottom">
+
+      <!-- CENTER PANEL -->
+      <div class="cp" id="center-panel">
+        <div class="cp-empty" id="cp-empty">Select an event from the queue to review</div>
+
+        <div class="rating-form" id="rating-form" style="display:none">
+          <div class="rf-inner">
+            <div class="rf-left">
+              <div class="rf-row">
+                <span class="rf-label">Game Clock:</span>
+                <input class="rf-clock" id="rf-clock" value="09:37.9" readonly>
+              </div>
+              <div class="rf-row">
+                <span class="rf-label">Responsible Ref:</span>
+                <div class="btn-group">
+                  <button class="ref-btn on" onclick="selectRef(this)">Genesis Perrymond (8)</button>
+                  <button class="ref-btn" onclick="selectRef(this)">Catherine Chang (23)</button>
+                  <button class="ref-btn" onclick="selectRef(this)">Kevin Fahy (86)</button>
+                </div>
+              </div>
+              <div class="rf-row">
+                <span class="rf-label">Resp. Ref. Location:</span>
+                <div class="btn-group">
+                  <button class="loc-btn on" onclick="selectLocation(this)">Lead</button>
+                  <button class="loc-btn" onclick="selectLocation(this)">Trail</button>
+                  <button class="loc-btn" onclick="selectLocation(this)">Slot</button>
+                </div>
+              </div>
+              <div class="rf-row">
+                <span class="rf-label">Infraction Type:</span>
+                <select class="rf-select" id="rf-infraction-type" onchange="updateInfrType()">
+                  <option>-- select --</option>
+                  <optgroup label="Fouls">
+                    <option>Foul: Away from Play</option>
+                    <option>Foul: Defense 3 Second</option>
+                    <option>Foul: Double Technical</option>
+                    <option>Foul: Loose Ball</option>
+                    <option>Foul: Non-Unsportsmanlike Tech Flopping</option>
+                    <option>Foul: Offensive</option>
+                    <option>Foul: Personal</option>
+                    <option>Foul: Shooting</option>
+                    <option>Foul: Transition Take Foul</option>
+                  </optgroup>
+                  <optgroup label="Stoppages">
+                    <option>Stoppage: Inadvertent Whistle</option>
+                    <option>Stoppage: Out-of-Bounds</option>
+                  </optgroup>
+                  <optgroup label="Turnovers">
+                    <option>Turnover: 3 Second Violation</option>
+                    <option>Turnover: Defensive Goaltending</option>
+                    <option>Turnover: Lost Ball Out of Bounds</option>
+                    <option>Turnover: Offensive Goaltending</option>
+                    <option>Turnover: Out of Bounds</option>
+                    <option>Turnover: Out of Bounds &#8211; Bad Pass Turn</option>
+                    <option>Turnover: Stepped out of Bounds</option>
+                    <option>Turnover: Traveling</option>
+                  </optgroup>
+                  <optgroup label="Violations">
+                    <option>Violation: Defensive Goaltending</option>
+                  </optgroup>
+                </select>
+              </div>
+              <div class="rf-row">
+                <span class="rf-label">Play Type:</span>
+                <select class="rf-select" id="rf-play-type" onchange="updateSubPlayTypes()">
+                  <option>-- select --</option>
+                </select>
+              </div>
+              <div class="rf-row">
+                <span class="rf-label">Sub Play Type:</span>
+                <select class="rf-select" id="rf-sub-play-type">
+                  <option>-- select --</option>
+                </select>
+              </div>
+              <div class="rf-row">
+                <span class="rf-label">Role:</span>
+                <select class="rf-select" id="rf-role-select">
+                  <option>-- select --</option>
+                  <option>Def Player 1 (Primary)</option>
+                  <option>Def Player 2 (Secondary)</option>
+                  <option>Off Player 1 (Ball Handler)</option>
+                  <option>Off Player 2 (Screener/Cutter)</option>
+                </select>
+              </div>
+              <div class="rf-row">
+                <span class="rf-label">Player:</span>
+                <select class="rf-select" id="rf-player"></select>
+              </div>
+              <div class="rf-row">
+                <span class="rf-label">Opponent:</span>
+                <select class="rf-select" id="rf-opponent"></select>
+              </div>
+              <div class="rf-row">
+                <span class="rf-label">Rating:</span>
+                <select class="rf-select" id="rf-rating-combined" onchange="onRatingCombinedChange()">
+                  <option value="">-- select --</option>
+                  <optgroup label="Infraction Rating">
+                    <option value="Infraction">Infraction</option>
+                    <option value="Judgement - Lean Infraction">Judgement - Lean Infraction</option>
+                    <option value="Judgement - Lean No">Judgement - Lean No</option>
+                    <option value="No Infraction">No Infraction</option>
+                  </optgroup>
+                  <optgroup label="Assessment Rating">
+                    <option value="Personal Foul Assessment">Personal Foul Assessment</option>
+                    <option value="Shooting Foul Assessment">Shooting Foul Assessment</option>
+                    <option value="Wrong Player Assessment">Wrong Player Assessment</option>
+                    <option value="Block-Charge Assessment">Block-Charge Assessment</option>
+                  </optgroup>
+                </select>
+              </div>
+              <div class="rf-row">
+                <span class="rf-label">Observability:</span>
+                <select class="rf-select" id="rf-observability">
+                  <option>Observable</option><option>Difficult</option><option>Very Difficult</option>
+                </select>
+              </div>
+            </div>
+            <div class="rf-right-col">
+              <div style="font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;margin-bottom:2px">FLAGS</div>
+              <div class="rf-checks" style="flex-direction:column;gap:6px">
+                <label class="rf-check"><input type="checkbox" id="chk-called"> Called</label>
+                <label class="rf-check"><input type="checkbox" id="chk-ptiw"> PTIW</label>
+                <label class="rf-check"><input type="checkbox" id="chk-look"> Look</label>
+                <label class="rf-check"><input type="checkbox" id="chk-ogr"> OGR</label>
+                <label class="rf-check"><input type="checkbox" id="chk-poe"> POE</label>
+              </div>
+              <div style="border-top:1px solid #e5e7eb;margin:2px 0"></div>
+              <button class="tmpl-btn" onclick="openChatbot()" style="width:100%;justify-content:center"><img class="tucker-avatar" src="Logos/TuckerGPT Icon.png" onerror="this.style.display='none'"> TuckerGPT</button>
+              <button class="tmpl-btn" style="width:100%;justify-content:center" onclick="openAddToPlaylist()"><i class="ti ti-playlist" style="font-size:12px"></i> Add to Playlist</button>
+              <button class="tmpl-btn" style="width:100%;justify-content:center" onclick="openSlackModal()"><i class="ti ti-brand-slack" style="font-size:12px"></i> Send to Slack</button>
+              <button class="tmpl-btn" style="width:100%;justify-content:center" onclick="openLeagueOpsModal()"><i class="ti ti-send" style="font-size:12px"></i> Send to League Ops</button>
+              <div style="display:flex;flex-direction:column;gap:5px;margin-top:auto">
+                <button class="rf-save-btn" onclick="saveRating()" style="width:100%;justify-content:center">Save</button>
+                <button class="rf-cancel-btn" onclick="cancelRating()" style="width:100%;justify-content:center">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div><!-- /.rating-form -->
+
+        <div class="comment-section" id="comment-section" style="display:none">
+          <div class="comment-tmpl-row">
+            <span class="tmpl-lbl">Comment Templates:</span>
+            <button class="tmpl-btn special"><i class="ti ti-diamond"></i> Auto Comments</button>
+            <button class="tmpl-btn">Coach's Challenge &#9662;</button>
+            <button class="tmpl-btn">Take Fouls &#9662;</button>
+            <button class="tmpl-btn">Head/Face Contact</button>
+            <button class="tmpl-btn">Enhanced Review</button>
+            <button class="tmpl-btn" style="background:#dbeafe;color:#1e40af;border-color:#93c5fd" onclick="openCommentLibrary()"><i class="ti ti-books" style="font-size:11px"></i> Comment Library</button>
+          </div>
+          <div>
+            <div class="comment-lbl" style="margin-bottom:5px">FIRST PASS COMMENT</div>
+            <textarea class="comment-ta" id="comment-ta" rows="3" placeholder="Enter comment here"></textarea>
+          </div>
+          <div>
+            <div class="note-bubble">
+              <span class="note-lbl">First Pass Notes</span>
+              <span class="note-text" id="notes-ta" contenteditable="true" data-placeholder="Enter internal notes here…"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<!-- RIGHT PANEL COLUMN -->
+      <div class="rp-col">
+        <div class="rp">
+          <div class="vid-area">
+            <div class="vid-frame">
+              <img src="Logos/video player placeholder.png" alt="Video"
+                onerror="this.parentElement.innerHTML='<div class=&quot;vid-ph&quot;><i class=&quot;ti ti-player-play&quot;></i><span>Video Placeholder</span></div>'">
+            </div>
+          </div>
+          <div class="ang-row">
+            <div class="ang on" onclick="angClick(this)">LL5</div>
+            <div class="ang" onclick="angClick(this)">LL5</div>
+            <div class="ang" onclick="angClick(this)">LR5</div>
+            <div class="ang" onclick="angClick(this)">LR5</div>
+            <div class="ang" onclick="angClick(this)">LS5</div>
+            <div class="ang" onclick="angClick(this)">RS5</div>
+            <div class="ang" onclick="angClick(this)">ABP</div>
+            <div class="ang" onclick="angClick(this)">HBP</div>
+            <div class="ang" onclick="angClick(this)">INA</div>
+            <div class="ang" onclick="angClick(this)">DF BCAST</div>
+          </div>
+          <div class="vid-ctrl">
+            <button class="vcb"><i class="ti ti-player-play"></i></button>
+            <button class="vcb"><i class="ti ti-volume"></i></button>
+            <div class="vtrack"><div class="vfill"></div><div class="vhead"></div></div>
+            <span class="vtime">40:51 / 3:12:27</span>
+            <button class="vcb"><i class="ti ti-arrows-maximize"></i></button>
+          </div>
+          <div class="clip-bar">
+            <button class="clip-btn"><i class="ti ti-paperclip"></i> CLIP VIDEO <span style="font-size:10px;opacity:.7">(ctrl+v)</span></button>
+            <button class="hotkeys-btn">Video Hotkeys &#9662;</button>
+          </div>
+        </div>
+        <div class="rp-card">
+          <div class="rp-card-lbl"><i class="ti ti-alert-triangle" style="color:#f59e0b"></i> <span class="rp-card-ptiw">PTIW Comment</span></div>
+          <div class="rp-card-val" id="ptiw-comment">No PTIW Comment</div>
+        </div>
+        <div class="rp-card">
+          <div class="rp-card-lbl"><i class="ti ti-info-circle"></i> OIW Comment</div>
+          <div class="rp-card-val" id="oiw-comment">No OIW Comment</div>
+        </div>
+      </div>
+
+    </div><!-- /.main-bottom -->
+  </div><!-- /.main-right -->
+
+</div><!-- /.main -->
+</div><!-- /.page -->
+
+<div class="assist-alert-backdrop" id="assist-alert-backdrop"></div>
+<div class="assist-alert" id="assist-alert">
+  <div class="assist-alert-hdr"><i class="ti ti-whistle"></i> TuckerGPT</div>
+  <div class="assist-alert-body" id="assist-alert-body"></div>
+  <div class="assist-alert-btns">
+    <button class="assist-alert-yes" onclick="assistAlertYes()">Yes, check and save</button>
+    <button class="assist-alert-no" onclick="assistAlertNo()">Save anyway</button>
+  </div>
+</div>
+<div class="assist-alert-backdrop" id="mismatch-alert-backdrop"></div>
+<div class="assist-alert" id="mismatch-alert">
+  <div class="assist-alert-hdr"><i class="ti ti-alert-triangle"></i> Rating / Comment Mismatch</div>
+  <div class="assist-alert-body" id="mismatch-alert-body"></div>
+  <div class="assist-alert-btns">
+    <button class="assist-alert-no" onclick="hideMismatchAlert()">Go back and check</button>
+    <button class="assist-alert-yes" onclick="mismatchAlertConfirm()">Save anyway</button>
+  </div>
+</div>
+<div class="chatbot-window" id="chatbot-window">
+  <div class="chatbot-hdr">
+    <div class="chatbot-title"><div class="chatbot-avatar"><img src="Logos/TuckerGPT Icon.png"></div> TuckerGPT</div>
+    <button class="chatbot-close" onclick="closeChatbot()">&#10005;</button>
+  </div>
+  <div class="chatbot-msgs" id="chatbot-msgs">
+    <div class="chat-msg-row">
+      <div class="chat-msg-name"><div class="chatbot-avatar"><img src="Logos/TuckerGPT Icon.png"></div> Tucker</div>
+      <div class="chat-msg bot">How can I help you with this play?</div>
+    </div>
+  </div>
+  <div class="chatbot-input-row">
+    <input class="chatbot-input" id="chatbot-input" type="text" placeholder="Ask about this play..." onkeydown="if(event.key==='Enter')sendChat()">
+    <button class="chatbot-send" onclick="sendChat()">Send</button>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<!-- COMMENT LIBRARY MODAL -->
+<div id="cl-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:800;align-items:flex-start;justify-content:center;padding-top:60px">
+  <div style="background:#fff;border-radius:16px;width:600px;max-height:80vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25);overflow:hidden">
+    <div style="padding:18px 22px 14px;border-bottom:1px solid #f3f4f6;flex-shrink:0">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+        <div style="font-size:15px;font-weight:800;color:#111827;display:flex;align-items:center;gap:8px"><i class="ti ti-books" style="color:#1e40af"></i> Comment Library</div>
+        <button onclick="closeCommentLibrary()" style="border:none;background:none;cursor:pointer;color:#9ca3af;font-size:18px">&#10005;</button>
+      </div>
+      <div style="font-size:11.5px;color:#6b7280" id="cl-context-line">Showing suggestions based on current play</div>
+      <div style="display:flex;gap:8px;margin-top:12px;align-items:center">
+        <input id="cl-search" type="text" placeholder="Search comments…" oninput="renderCLResults()" style="flex:1;padding:7px 12px;border:1px solid #e5e7eb;border-radius:8px;font-size:12px;outline:none;font-family:inherit">
+        <select id="cl-filter-rating" onchange="renderCLResults()" style="padding:7px 10px;border:1px solid #e5e7eb;border-radius:8px;font-size:12px;color:#374151;background:#fff;outline:none">
+          <option value="">All ratings</option>
+          <option value="infraction">Infraction</option>
+          <option value="lean infraction">Lean Infraction</option>
+          <option value="lean no">Lean No</option>
+          <option value="no infraction">No Infraction</option>
+        </select>
+      </div>
+    </div>
+    <div id="cl-results" style="flex:1;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:8px"></div>
+    <div style="padding:12px 18px;border-top:1px solid #f3f4f6;font-size:11px;color:#9ca3af;flex-shrink:0">Click a comment to insert it · <a href="comment-library.html" style="color:#1a3a6b;font-weight:600;text-decoration:none">Open full library →</a></div>
+  </div>
+</div>
+
+<script>
+const REFS = ['Genesis Perrymond (8)','Catherine Chang (23)','Kevin Fahy (86)'];
+
+const TAXONOMY = {
+  'Foul: Loose Ball': {
+    'Non-Rebound': ['Clamp-Lock-Hold','Contact to Arm','Dislodge From Position','Engage/Disengage','Head Contact','Impede','Jersey','Other','Trip','Legal Guarding Position'],
+    'Rebound': ['Clamp-Lock-Hold','Contact to Arm','Dislodge From Position','Engage/Disengage','Head Contact','Impede','Jersey','Other'],
+    'TTFS - Off Ball': ['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul','Transition Opportunity Ended'],
+    'TTFS - On Ball': ['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul','Transition Opportunity Ended'],
+    'N/A': ['N/A'],
+  },
+  'Foul: Offensive': {
+    'During Drive': ['Block-Charge Situation','Clear Space','Dislodge From Position','Flail','Head Contact','Hook','Initiates Contact','Jersey','Lead Unnaturally','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Pass & Crash','Trip','Wipe Away','NBP: Kick-Out','NBP: Launch Angle'],
+    'End Of Drive': ['Block-Charge Situation','Clear Space','Dislodge From Position','Flail','Head Contact','Hook','Initiates Contact','Jersey','Lead Unnaturally','NBP: Kick-Out','NBP: Launch Angle','NBP: Veer Into Defender','Other','Pass & Crash','Trip','Wipe Away','NBP: Off-Arm Contact','NBP: Rip-Through'],
+    'Off-Ball': ['Affect Defender Defend The Pass','Affect Defender Defend The Shot','Clamp-Lock-Hold','Dislodge From Position','Engage/Disengage','Head Contact','Hook','Jersey','Other','Pass & Crash','Seal','Trip','W - Three-Quarter Defense','Wrap'],
+    'On-Ball': ['Clamp-Lock-Hold','Clear Space','Dislodge From Position','Head Contact','Hook','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Pass & Crash','Trip','Wipe Away','Other'],
+    'Start Of Drive': ['Block-Charge Situation','Clear Space','Dislodge From Position','Flail','Head Contact','Hook','Initiates Contact','Jersey','Lead Unnaturally','NBP: Kick-Out','NBP: Launch Angle','NBP: Veer Into Defender','Other','Trip','Wipe Away','NBP: Off-Arm Contact','NBP: Rip-Through','Pass & Crash'],
+    'Ball Handler': ['Clear Space','Dislodge From Position','Head Contact','Hook','Jersey','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Trip','Wipe Away'],
+    'Screener': ['Arms','Delay','Deliver/Absorb','Distance','Head Contact','Other','Push Off','Rolls to Basket','W - DHO','Wide Stance','Push Play'],
+    'Cutter': ['Dislodge From Position','Head Contact','Hook','Jersey','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Push Off','Push Play','Trip','Wipe Away'],
+    'Driving Shot Attempt': ['Affect Defender Defend The Shot','Block-Charge Situation','Clear Space','Flail','Head Contact','Hook','Lead Unnaturally','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Restricted Area'],
+    'Floater': ['Affect Defender Defend The Shot','Block-Charge Situation','Clear Space','Flail','Head Contact','Hook','Lead Unnaturally','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Restricted Area'],
+    'Jump Shot': ['Affect Defender Defend The Shot','Clear Space','Flail','Head Contact','Hook','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other'],
+    'Layup Or Dunk': ['Affect Defender Defend The Shot','Block-Charge Situation','Clear Space','Flail','Head Contact','Hook','Lead Unnaturally','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Restricted Area'],
+    'Post Shot': ['Affect Defender Defend The Shot','Block-Charge Situation','Clear Space','Flail','Head Contact','Hook','Lead Unnaturally','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Restricted Area'],
+    'Pick - Ball Handler': ['Clear Space','Dislodge From Position','Head Contact','Hook','Jersey','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Trip','Wipe Away'],
+    'Pick - Screener': ['Arms','Delay','Deliver/Absorb','Distance','Head Contact','Other','Push Off','Rolls to Basket','W - DHO','Wide Stance','Push Play'],
+    'Screen - Cutter': ['Dislodge From Position','Head Contact','Hook','Jersey','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Push Off','Push Play','Trip','Wipe Away'],
+    'Screen - Screener': ['Arms','Delay','Deliver/Absorb','Distance','Head Contact','Other','Push Off','Rolls to Basket','W - DHO','Wide Stance'],
+    'Steal': ['Other'],
+    'Contact - Off-Ball': ['Affect Defender Defend The Pass','Affect Defender Defend The Shot','Clamp-Lock-Hold','Dislodge From Position','Engage/Disengage','Head Contact','Hook','Jersey','Other','Pass & Crash','Seal','Trip','W - Three-Quarter Defense','Wrap'],
+    'Contact - On-Ball': ['Clamp-Lock-Hold','Clear Space','Dislodge From Position','Head Contact','Hook','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Pass & Crash','Trip','Wipe Away','Other'],
+    'TTFS - Off Ball': ['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul','Transition Opportunity Ended'],
+    'TTFS - On Ball': ['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul','Transition Opportunity Ended'],
+    'N/A': ['N/A'],
+  },
+  'Foul: Personal': {
+    'Off-Ball': ['Clamp-Lock-Hold','Dislodge From Position','Engage/Disengage','Freedom Of Movement','Get To The Pass','Hand/Forearm To Front','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Trip','Two Hands','W - Three-Quarter Defense','Wrap'],
+    'On-Ball': ['Body Contact/Check','Clamp-Lock-Hold','Contact to Arm','Freedom Of Movement','Hand/Forearm To Front','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Pass','Trip','Two Hands','Wrap'],
+    'During Drive': ['Body Contact/Check','Clamp-Lock-Hold','Contact to Arm','Freedom Of Movement','Hand/Forearm To Front','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Trip','Two Hands','Wrap'],
+    'End Of Drive': ['Body Contact/Check','Clamp-Lock-Hold','Contact to Arm','Freedom Of Movement','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Trip','Two Hands','Wrap'],
+    'Start Of Drive': ['Body Contact/Check','Clamp-Lock-Hold','Contact to Arm','Freedom Of Movement','Hand/Forearm To Front','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Trip','Two Hands','Wrap'],
+    'Primary Defender': ['Body Contact/Check','Clamp-Lock-Hold','Contact to Arm','Freedom Of Movement','Hand/Forearm To Front','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Trip','Two Hands','Wrap'],
+    'Secondary Defender': ['Body Contact/Check','Clamp-Lock-Hold','Contact to Arm','Freedom Of Movement','Hand/Forearm To Front','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Trip','Two Hands','Wrap'],
+    'Pick - Primary Defender': ['Body Contact/Check','Clamp-Lock-Hold','Contact to Arm','Freedom Of Movement','Hand/Forearm To Front','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Trip','Two Hands','Wrap'],
+    'Pick - Secondary Defender': ['Body Contact/Check','Clamp-Lock-Hold','Contact to Arm','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Trip','Two Hands'],
+    'Post': ['Body Contact/Check','Clamp-Lock-Hold','Contact to Arm','Freedom Of Movement','Hand/Forearm To Front','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Off-Arm Contact','NBP: Rip-Through','Other','Trip','Two Hands','Wrap'],
+    'Screen - Primary Defender': ['Body Contact/Check','Clamp-Lock-Hold','Contact to Arm','Head Contact','Impede','Jersey','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Trip','Two Hands'],
+    'Screen - Secondary Defender': ['Body Contact/Check','Clamp-Lock-Hold','Contact to Arm','Head Contact','Impede','Jersey','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Trip','Two Hands'],
+    'Steal': ['Other'],
+    'Contact - Off-Ball': ['Clamp-Lock-Hold','Dislodge From Position','Engage/Disengage','Freedom Of Movement','Get To The Pass','Hand/Forearm To Front','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Trip','Two Hands','W - Three-Quarter Defense','Wrap'],
+    'Contact - On-Ball': ['Body Contact/Check','Clamp-Lock-Hold','Contact to Arm','Freedom Of Movement','Hand/Forearm To Front','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Pass','Trip','Two Hands','Wrap'],
+    'TTFS - Off Ball': ['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul','Transition Opportunity Ended'],
+    'TTFS - On Ball': ['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul','Transition Opportunity Ended'],
+  },
+  'Foul: Shooting': {
+    'Driving Shot Attempt': ['A -> B Movement','Arm Follow-Through','Arm Shooting Motion','Block-Charge Situation','Body Follow-Through','Body Shooting Motion','Head Contact','High-Five','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Restricted Area','Vertical'],
+    'Floater': ['A -> B Movement','Arm Follow-Through','Arm Shooting Motion','Block-Charge Situation','Body Follow-Through','Body Shooting Motion','Head Contact','High-Five','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Restricted Area','Vertical'],
+    'Jump Shot': ['Arm Follow-Through','Arm Shooting Motion','Body Follow-Through','Body Shooting Motion','Head Contact','High-Five','Landing Area','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Launch Angle','NBP: Rip-Through','Other','Vertical','A -> B Movement'],
+    'Layup Or Dunk': ['A -> B Movement','Arm Follow-Through','Arm Shooting Motion','Block-Charge Situation','Body Follow-Through','Body Shooting Motion','Head Contact','High-Five','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Veer Into Defender','Other','Restricted Area','Vertical'],
+    'Post Shot': ['A -> B Movement','Arm Follow-Through','Arm Shooting Motion','Block-Charge Situation','Body Follow-Through','Body Shooting Motion','Head Contact','High-Five','Landing Area','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Restricted Area','Vertical'],
+    'TTFS - Off Ball': ['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul'],
+    'TTFS - On Ball': ['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul'],
+  },
+  'Foul: Transition Take Foul': {
+    'TTFS - Off Ball': ['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul'],
+    'TTFS - On Ball': ['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul'],
+  },
+  'Foul: Away from Play': { 'Off-Ball': ['Clamp-Lock-Hold','Dislodge From Position','Engage/Disengage','Freedom Of Movement','Head Contact','Impede','Jersey','Other','Trip','Wrap'] },
+  'Foul: Defense 3 Second': { 'Imminently Legal': ['Actively Guarding','Exit','Shot'], 'Legal': ['Actively Guarding','Exit','Loss Of Control','Shot'], 'Violation': ['Fail To Clear','Foot On Line','Longer Than 3 Seconds','N/A','Straddle'] },
+  'Foul: Double Technical': { 'N/A': ['N/A'] },
+  'Foul: Non-Unsportsmanlike Tech Flopping': { 'N/A': ['N/A'] },
+  'Stoppage: Inadvertent Whistle': { "Coach's Challenge": ['Foul','Goaltending/Basket Interference','Out of Bounds'], 'Inadvertent Whistle': ['N/A'] },
+  'Stoppage: Out-of-Bounds': { 'Ball Out of Bounds': ['N/A'], 'Player Out of Bounds': ['N/A'] },
+  'Turnover: Traveling': { 'Gather': ['Changes Pivot Foot','First to Touch','Gather And Steps','Other','Pivot Foot Moves','Slide','Stutter Step'], 'Receives Pass': ['Changes Pivot Foot','First to Touch','Gather And Steps','Other','Pivot Foot Moves'], 'Start Of Dribble': ['Changes Pivot Foot','Gather And Steps','Other'], 'Stationary Movement': ['Other','Pivot Foot Moves'] },
+  'Turnover: 3 Second Violation': { 'Imminently Legal': ['Actively Guarding','Exit'], 'Legal': ['Actively Guarding','Exit'], 'Violation': ['Fail To Clear','Foot On Line','Longer Than 3 Seconds','N/A'] },
+  'Turnover: Defensive Goaltending': { 'Defensive Goaltending': ['N/A'], 'N/A': ['N/A'] },
+  'Turnover: Offensive Goaltending': { 'Offensive Goaltending': ['N/A'] },
+  'Turnover: Out of Bounds': { 'Ball Out of Bounds': ['N/A'], 'Player Out of Bounds': ['N/A'] },
+  'Turnover: Out of Bounds – Bad Pass Turn': { 'Ball Out of Bounds': ['N/A'], 'Player Out of Bounds': ['N/A'] },
+  'Turnover: Stepped out of Bounds': { 'Ball Out of Bounds': ['N/A'], 'Player Out of Bounds': ['N/A'] },
+  'Turnover: Lost Ball Out of Bounds': { 'Ball Out of Bounds': ['N/A'], 'Player Out of Bounds': ['N/A'] },
+  'Violation: Defensive Goaltending': { 'Defensive Goaltending': ['N/A'] },
+};
+
+const TOR_PLAYERS = [
+  'Sabally, Nyara (13) — Tempo','Rice, Kahleah (5) — Tempo','Mabrey, Marina (4) — Tempo',
+  'Key, Tiffany (22) — Tempo','Conde, Natasha (11) — Tempo','Juskaite, Laurita (7) — Tempo','Nurse, Natalie (21) — Tempo'
+];
+const CHI_PLAYERS = [
+  'Diggins, Skylar (4) — Sky','Cardoso, Kamilla (10) — Sky','Williams, Eartha (3) — Sky',
+  'Sykes, Brianna (15) — Sky','Cloud, Tianna (2) — Sky','Banham, Natalie (9) — Sky','Taylor, Maya (14) — Sky'
+];
+const ALL_PLAYERS = [...TOR_PLAYERS, ...CHI_PLAYERS];
+
+function updatePlayerDropdowns() {
+  const it = document.getElementById('rf-infraction-type').value;
+  const offTeam = currentPoss ? (currentPoss.team === 'TOR' ? TOR_PLAYERS : CHI_PLAYERS) : ALL_PLAYERS;
+  const defTeam = currentPoss ? (currentPoss.team === 'TOR' ? CHI_PLAYERS : TOR_PLAYERS) : ALL_PLAYERS;
+  let playerPool, opponentPool;
+  if (it === 'Foul: Personal') {
+    playerPool = defTeam; opponentPool = offTeam;
+  } else if (it === 'Foul: Offensive') {
+    playerPool = offTeam; opponentPool = defTeam;
+  } else {
+    playerPool = ALL_PLAYERS; opponentPool = ALL_PLAYERS;
+  }
+  const pSel = document.getElementById('rf-player');
+  const oSel = document.getElementById('rf-opponent');
+  const pVal = pSel.value, oVal = oSel.value;
+  pSel.innerHTML = playerPool.map(p=>`<option>${p}</option>`).join('');
+  oSel.innerHTML = opponentPool.map(p=>`<option>${p}</option>`).join('');
+  // restore previous values if still valid
+  setSelectVal('rf-player', pVal);
+  setSelectVal('rf-opponent', oVal);
+}
+
+function updateInfrType() {
+  const it = document.getElementById('rf-infraction-type').value;
+  const ptSel = document.getElementById('rf-play-type');
+  ptSel.innerHTML = '<option>-- select --</option>';
+  if (TAXONOMY[it]) {
+    Object.keys(TAXONOMY[it]).forEach(pt => {
+      const o = document.createElement('option'); o.textContent = pt; ptSel.appendChild(o);
+    });
+  }
+  updateSubPlayTypes();
+  updatePlayerDropdowns();
+  if (it === 'Foul: Shooting') {
+    setSelectVal('rf-player', 'Key, Tiffany (22) — Tempo');
+    setSelectVal('rf-opponent', 'Diggins, Skylar (4) — Sky');
+  }
+}
+
+function updateSubPlayTypes() {
+  const it = document.getElementById('rf-infraction-type').value;
+  const pt = document.getElementById('rf-play-type').value;
+  const sel = document.getElementById('rf-sub-play-type');
+  sel.innerHTML = '<option>-- select --</option>';
+  const spts = (TAXONOMY[it] || {})[pt] || [];
+  spts.forEach(s => { const o = document.createElement('option'); o.textContent = s; sel.appendChild(o); });
+}
+
+const TOR_P = ['N. Sabally','K. Rice','M. Mabrey','T. Key','N. Conde','L. Juskaite','N. Nurse'];
+const CHI_P = ['S. Diggins','K. Cardoso','E. Williams','B. Sykes','T. Cloud','N. Banham','M. Taylor'];
+
+// Initialize player dropdowns to all players on page load
+document.addEventListener('DOMContentLoaded', () => updatePlayerDropdowns());
+
+const POSSESSIONS = [
+  {id:1,q:1,team:'TOR',time:'09:45.0',ptiw:false,events:[
+    {id:'e1-1',time:'09:44.8',label:'INBOUND',type:'plain'},
+    {id:'e1-2',time:'09:43.2',label:'DRIVE',type:'plain'},
+    {id:'e1-3',time:'09:41.0',label:'PICK',type:'reviewable',prefill:{infrType:'Foul: Offensive',playType:'Pick - Screener',subPlayType:'Deliver/Absorb',role:'Off Player 2 (Screener/Cutter)',player:'Sabally, Nyara (13) — Tempo',opponent:'Diggins, Skylar (4) — Sky',rating:'No Infraction',observability:'Observable',ogr:true}},
+    {id:'e1-4',time:'09:40.5',label:'NO DRIBBLE',type:'plain'},
+    {id:'e1-4b',time:'09:40.2',label:'DEAD BALL',type:'reviewable',prefill:{isDeadBall:true}},
+    {id:'e1-5',time:'09:39.8',label:'DRIBBLE',type:'plain'},
+    {id:'e1-6',time:'09:38.1',label:'SHOT',type:'plain'},
+    {id:'e1-7',time:'09:37.9',label:'DEAD BALL',type:'plain'},
+    {id:'e1-8',time:'09:37.9',label:'Foul: Shooting',type:'whistle',player:'T. Key',foulType:'Foul: Shooting'},
+    {id:'e1-9',time:'09:37.9',label:'FREE THROW',type:'plain'},
+    {id:'e1-10',time:'09:37.9',label:'FREE THROW',type:'plain'},
+  ]},
+  {id:2,q:1,team:'CHI',time:'09:30.0',ptiw:false,events:[
+    {id:'e2-1',time:'09:29.5',label:'INBOUND',type:'plain'},
+    {id:'e2-2',time:'09:28.0',label:'DRIVE',type:'plain'},
+    {id:'e2-3',time:'09:26.5',label:'SHOT',type:'plain'},
+    {id:'e2-4',time:'09:25.9',label:'DEAD BALL',type:'plain'},
+    {id:'e2-5',time:'09:25.9',label:'Foul: Blocking',type:'whistle',player:'K. Cardoso',foulType:'Foul: Blocking'},
+    {id:'e2-6',time:'09:25.9',label:'FREE THROW',type:'plain'},
+  ]},
+  {id:3,q:1,team:'TOR',time:'09:20.0',ptiw:true,events:[
+    {id:'e3-1',time:'09:19.7',label:'INBOUND',type:'plain'},
+    {id:'e3-2',time:'09:18.0',label:'PICK',type:'plain'},
+    {id:'e3-3',time:'09:17.1',label:'DRIVE',type:'plain'},
+    {id:'e3-4',time:'09:16.2',label:'TRAVEL',type:'reviewable'},
+    {id:'e3-5',time:'09:15.8',label:'DEAD BALL',type:'plain'},
+    {id:'e3-6',time:'09:15.8',label:'OOB: TOR',type:'whistle',player:'N. Sabally',foulType:'OOB: TOR'},
+  ]},
+  {id:4,q:1,team:'CHI',time:'09:10.0',ptiw:false,events:[
+    {id:'e4-1',time:'09:09.8',label:'INBOUND',type:'plain'},
+    {id:'e4-2',time:'09:08.2',label:'DRIBBLE',type:'plain'},
+    {id:'e4-3',time:'09:07.0',label:'PICK',type:'plain'},
+    {id:'e4-4',time:'09:05.5',label:'DRIVE',type:'plain'},
+    {id:'e4-5',time:'09:04.0',label:'SHOT',type:'plain'},
+    {id:'e4-6',time:'09:03.8',label:'REBOUND',type:'plain'},
+    {id:'e4-7',time:'09:03.0',label:'SHOT',type:'plain'},
+    {id:'e4-8',time:'09:02.9',label:'DEAD BALL',type:'plain'},
+    {id:'e4-9',time:'09:02.9',label:'Foul: Holding',type:'whistle',player:'E. Williams',foulType:'Foul: Holding'},
+  ]},
+  {id:5,q:1,team:'TOR',time:'08:55.0',ptiw:false,events:[
+    {id:'e5-1',time:'08:54.7',label:'INBOUND',type:'plain'},
+    {id:'e5-2',time:'08:53.5',label:'DRIVE',type:'plain'},
+    {id:'e5-3',time:'08:52.0',label:'ILLEGAL SCREEN',type:'reviewable'},
+    {id:'e5-4',time:'08:51.0',label:'SHOT',type:'plain'},
+    {id:'e5-5',time:'08:50.9',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:6,q:1,team:'CHI',time:'08:45.0',ptiw:false,events:[
+    {id:'e6-1',time:'08:44.8',label:'INBOUND',type:'plain'},
+    {id:'e6-2',time:'08:43.0',label:'DRIBBLE',type:'plain'},
+    {id:'e6-3',time:'08:41.5',label:'OOB: CHI',type:'whistle',player:'S. Diggins',foulType:'OOB: CHI'},
+    {id:'e6-4',time:'08:41.5',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:7,q:1,team:'TOR',time:'08:35.0',ptiw:false,events:[
+    {id:'e7-1',time:'08:34.5',label:'INBOUND',type:'plain'},
+    {id:'e7-2',time:'08:33.0',label:'PICK',type:'plain'},
+    {id:'e7-3',time:'08:31.5',label:'DRIVE',type:'plain'},
+    {id:'e7-4',time:'08:30.0',label:'NO DRIBBLE',type:'reviewable'},
+    {id:'e7-5',time:'08:29.5',label:'DEAD BALL',type:'plain'},
+    {id:'e7-6',time:'08:29.5',label:'Foul: Shooting',type:'whistle',player:'M. Mabrey',foulType:'Foul: Shooting'},
+    {id:'e7-7',time:'08:29.5',label:'FREE THROW',type:'plain'},
+    {id:'e7-8',time:'08:29.5',label:'FREE THROW',type:'plain'},
+  ]},
+  {id:8,q:1,team:'CHI',time:'08:20.0',ptiw:false,events:[
+    {id:'e8-1',time:'08:19.8',label:'INBOUND',type:'plain'},
+    {id:'e8-2',time:'08:18.0',label:'DRIVE',type:'plain'},
+    {id:'e8-3',time:'08:16.5',label:'SHOT',type:'plain'},
+    {id:'e8-4',time:'08:16.3',label:'REBOUND',type:'plain'},
+    {id:'e8-5',time:'08:15.0',label:'TRAVEL',type:'reviewable'},
+    {id:'e8-6',time:'08:14.5',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:9,q:1,team:'TOR',time:'08:05.0',ptiw:true,events:[
+    {id:'e9-1',time:'08:04.7',label:'INBOUND',type:'plain'},
+    {id:'e9-2',time:'08:03.0',label:'DRIBBLE',type:'plain'},
+    {id:'e9-3',time:'08:01.5',label:'PICK',type:'plain'},
+    {id:'e9-4',time:'08:00.0',label:'DRIVE',type:'plain'},
+    {id:'e9-5',time:'07:58.5',label:'SHOT',type:'plain'},
+    {id:'e9-6',time:'07:58.3',label:'DEAD BALL',type:'plain'},
+    {id:'e9-7',time:'07:58.3',label:'Foul: Pushing',type:'whistle',player:'K. Rice',foulType:'Foul: Pushing'},
+    {id:'e9-8',time:'07:58.3',label:'FREE THROW',type:'plain'},
+  ]},
+  {id:10,q:1,team:'CHI',time:'07:50.0',ptiw:false,events:[
+    {id:'e10-1',time:'07:49.7',label:'INBOUND',type:'plain'},
+    {id:'e10-2',time:'07:48.0',label:'DRIVE',type:'plain'},
+    {id:'e10-3',time:'07:46.5',label:'OOB: TOR',type:'whistle',player:'N. Banham',foulType:'OOB: TOR'},
+    {id:'e10-4',time:'07:46.5',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:11,q:2,team:'TOR',time:'09:48.0',ptiw:false,events:[
+    {id:'e11-1',time:'09:47.8',label:'INBOUND',type:'plain'},
+    {id:'e11-2',time:'09:46.0',label:'DRIVE',type:'plain'},
+    {id:'e11-3',time:'09:44.5',label:'PICK',type:'plain'},
+    {id:'e11-4',time:'09:43.0',label:'SHOT',type:'plain'},
+    {id:'e11-5',time:'09:42.8',label:'DEAD BALL',type:'plain'},
+    {id:'e11-6',time:'09:42.8',label:'Foul: Shooting',type:'whistle',player:'N. Conde',foulType:'Foul: Shooting'},
+    {id:'e11-7',time:'09:42.8',label:'FREE THROW',type:'plain'},
+  ]},
+  {id:12,q:2,team:'CHI',time:'09:35.0',ptiw:false,events:[
+    {id:'e12-1',time:'09:34.8',label:'INBOUND',type:'plain'},
+    {id:'e12-2',time:'09:33.0',label:'DRIVE',type:'plain'},
+    {id:'e12-3',time:'09:31.5',label:'ILLEGAL SCREEN',type:'reviewable'},
+    {id:'e12-4',time:'09:30.0',label:'SHOT',type:'plain'},
+    {id:'e12-5',time:'09:29.8',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:13,q:2,team:'TOR',time:'09:20.0',ptiw:false,events:[
+    {id:'e13-1',time:'09:19.7',label:'INBOUND',type:'plain'},
+    {id:'e13-2',time:'09:18.0',label:'DRIBBLE',type:'plain'},
+    {id:'e13-3',time:'09:16.5',label:'TRAVEL',type:'reviewable'},
+    {id:'e13-4',time:'09:16.0',label:'DEAD BALL',type:'plain'},
+    {id:'e13-5',time:'09:16.0',label:'Foul: Blocking',type:'whistle',player:'L. Juskaite',foulType:'Foul: Blocking'},
+  ]},
+  {id:14,q:2,team:'CHI',time:'09:05.0',ptiw:false,events:[
+    {id:'e14-1',time:'09:04.7',label:'INBOUND',type:'plain'},
+    {id:'e14-2',time:'09:03.0',label:'PICK',type:'plain'},
+    {id:'e14-3',time:'09:01.5',label:'DRIVE',type:'plain'},
+    {id:'e14-4',time:'09:00.0',label:'SHOT',type:'plain'},
+    {id:'e14-5',time:'08:59.8',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:15,q:2,team:'TOR',time:'08:50.0',ptiw:true,events:[
+    {id:'e15-1',time:'08:49.7',label:'INBOUND',type:'plain'},
+    {id:'e15-2',time:'08:48.0',label:'DRIVE',type:'plain'},
+    {id:'e15-3',time:'08:46.5',label:'OOB: CHI',type:'whistle',player:'T. Key',foulType:'OOB: CHI'},
+    {id:'e15-4',time:'08:46.5',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:16,q:2,team:'CHI',time:'08:38.0',ptiw:false,events:[
+    {id:'e16-1',time:'08:37.8',label:'INBOUND',type:'plain'},
+    {id:'e16-2',time:'08:36.0',label:'PICK',type:'plain'},
+    {id:'e16-3',time:'08:34.5',label:'NO DRIBBLE',type:'reviewable'},
+    {id:'e16-4',time:'08:33.0',label:'SHOT',type:'plain'},
+    {id:'e16-5',time:'08:32.8',label:'DEAD BALL',type:'plain'},
+    {id:'e16-6',time:'08:32.8',label:'Foul: Holding',type:'whistle',player:'T. Cloud',foulType:'Foul: Holding'},
+    {id:'e16-7',time:'08:32.8',label:'FREE THROW',type:'plain'},
+  ]},
+  {id:17,q:2,team:'TOR',time:'08:20.0',ptiw:false,events:[
+    {id:'e17-1',time:'08:19.7',label:'INBOUND',type:'plain'},
+    {id:'e17-2',time:'08:18.0',label:'DRIVE',type:'plain'},
+    {id:'e17-3',time:'08:16.5',label:'SHOT',type:'plain'},
+    {id:'e17-4',time:'08:16.3',label:'REBOUND',type:'plain'},
+    {id:'e17-5',time:'08:15.0',label:'SHOT',type:'plain'},
+    {id:'e17-6',time:'08:14.8',label:'DEAD BALL',type:'plain'},
+    {id:'e17-7',time:'08:14.8',label:'Foul: Pushing',type:'whistle',player:'N. Sabally',foulType:'Foul: Pushing'},
+    {id:'e17-8',time:'08:14.8',label:'FREE THROW',type:'plain'},
+    {id:'e17-9',time:'08:14.8',label:'FREE THROW',type:'plain'},
+  ]},
+  {id:18,q:2,team:'CHI',time:'08:00.0',ptiw:false,events:[
+    {id:'e18-1',time:'07:59.7',label:'INBOUND',type:'plain'},
+    {id:'e18-2',time:'07:58.0',label:'DRIBBLE',type:'plain'},
+    {id:'e18-3',time:'07:56.5',label:'TRAVEL',type:'reviewable'},
+    {id:'e18-4',time:'07:56.0',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:19,q:2,team:'TOR',time:'07:48.0',ptiw:false,events:[
+    {id:'e19-1',time:'07:47.7',label:'INBOUND',type:'plain'},
+    {id:'e19-2',time:'07:46.0',label:'PICK',type:'plain'},
+    {id:'e19-3',time:'07:44.5',label:'DRIVE',type:'plain'},
+    {id:'e19-4',time:'07:43.0',label:'OOB: TOR',type:'whistle',player:'M. Mabrey',foulType:'OOB: TOR'},
+    {id:'e19-5',time:'07:43.0',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:20,q:2,team:'CHI',time:'07:35.0',ptiw:false,events:[
+    {id:'e20-1',time:'07:34.8',label:'INBOUND',type:'plain'},
+    {id:'e20-2',time:'07:33.0',label:'DRIVE',type:'plain'},
+    {id:'e20-3',time:'07:31.5',label:'SHOT',type:'plain'},
+    {id:'e20-4',time:'07:31.3',label:'DEAD BALL',type:'plain'},
+    {id:'e20-5',time:'07:31.3',label:'Foul: Shooting',type:'whistle',player:'B. Sykes',foulType:'Foul: Shooting'},
+    {id:'e20-6',time:'07:31.3',label:'FREE THROW',type:'plain'},
+    {id:'e20-7',time:'07:31.3',label:'FREE THROW',type:'plain'},
+  ]},
+  {id:21,q:3,team:'TOR',time:'09:50.0',ptiw:false,events:[
+    {id:'e21-1',time:'09:49.7',label:'INBOUND',type:'plain'},
+    {id:'e21-2',time:'09:48.0',label:'DRIVE',type:'plain'},
+    {id:'e21-3',time:'09:46.5',label:'PICK',type:'plain'},
+    {id:'e21-4',time:'09:45.0',label:'SHOT',type:'plain'},
+    {id:'e21-5',time:'09:44.8',label:'DEAD BALL',type:'plain'},
+    {id:'e21-6',time:'09:44.8',label:'Foul: Blocking',type:'whistle',player:'K. Rice',foulType:'Foul: Blocking'},
+  ]},
+  {id:22,q:3,team:'CHI',time:'09:38.0',ptiw:false,events:[
+    {id:'e22-1',time:'09:37.8',label:'INBOUND',type:'plain'},
+    {id:'e22-2',time:'09:36.0',label:'DRIBBLE',type:'plain'},
+    {id:'e22-3',time:'09:34.5',label:'ILLEGAL SCREEN',type:'reviewable'},
+    {id:'e22-4',time:'09:33.0',label:'DRIVE',type:'plain'},
+    {id:'e22-5',time:'09:31.5',label:'SHOT',type:'plain'},
+    {id:'e22-6',time:'09:31.3',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:23,q:3,team:'TOR',time:'09:20.0',ptiw:false,events:[
+    {id:'e23-1',time:'09:19.7',label:'INBOUND',type:'plain'},
+    {id:'e23-2',time:'09:18.0',label:'DRIVE',type:'plain'},
+    {id:'e23-3',time:'09:16.5',label:'OOB: CHI',type:'whistle',player:'N. Nurse',foulType:'OOB: CHI'},
+    {id:'e23-4',time:'09:16.5',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:24,q:3,team:'CHI',time:'09:08.0',ptiw:true,events:[
+    {id:'e24-1',time:'09:07.7',label:'INBOUND',type:'plain'},
+    {id:'e24-2',time:'09:06.0',label:'PICK',type:'plain'},
+    {id:'e24-3',time:'09:04.5',label:'DRIVE',type:'plain'},
+    {id:'e24-4',time:'09:03.0',label:'NO DRIBBLE',type:'reviewable'},
+    {id:'e24-5',time:'09:02.5',label:'DEAD BALL',type:'plain'},
+    {id:'e24-6',time:'09:02.5',label:'Foul: Holding',type:'whistle',player:'N. Banham',foulType:'Foul: Holding'},
+    {id:'e24-7',time:'09:02.5',label:'FREE THROW',type:'plain'},
+  ]},
+  {id:25,q:3,team:'TOR',time:'08:52.0',ptiw:false,events:[
+    {id:'e25-1',time:'08:51.7',label:'INBOUND',type:'plain'},
+    {id:'e25-2',time:'08:50.0',label:'DRIBBLE',type:'plain'},
+    {id:'e25-3',time:'08:48.5',label:'PICK',type:'plain'},
+    {id:'e25-4',time:'08:47.0',label:'SHOT',type:'plain'},
+    {id:'e25-5',time:'08:46.8',label:'REBOUND',type:'plain'},
+    {id:'e25-6',time:'08:45.5',label:'TRAVEL',type:'reviewable'},
+    {id:'e25-7',time:'08:45.0',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:26,q:3,team:'CHI',time:'08:38.0',ptiw:false,events:[
+    {id:'e26-1',time:'08:37.7',label:'INBOUND',type:'plain'},
+    {id:'e26-2',time:'08:36.0',label:'DRIVE',type:'plain'},
+    {id:'e26-3',time:'08:34.5',label:'SHOT',type:'plain'},
+    {id:'e26-4',time:'08:34.3',label:'DEAD BALL',type:'plain'},
+    {id:'e26-5',time:'08:34.3',label:'Foul: Shooting',type:'whistle',player:'K. Cardoso',foulType:'Foul: Shooting'},
+    {id:'e26-6',time:'08:34.3',label:'FREE THROW',type:'plain'},
+    {id:'e26-7',time:'08:34.3',label:'FREE THROW',type:'plain'},
+  ]},
+  {id:27,q:3,team:'TOR',time:'08:22.0',ptiw:false,events:[
+    {id:'e27-1',time:'08:21.7',label:'INBOUND',type:'plain'},
+    {id:'e27-2',time:'08:20.0',label:'DRIVE',type:'plain'},
+    {id:'e27-3',time:'08:18.5',label:'PICK',type:'plain'},
+    {id:'e27-4',time:'08:17.0',label:'OOB: TOR',type:'whistle',player:'N. Conde',foulType:'OOB: TOR'},
+    {id:'e27-5',time:'08:17.0',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:28,q:3,team:'CHI',time:'08:08.0',ptiw:false,events:[
+    {id:'e28-1',time:'08:07.7',label:'INBOUND',type:'plain'},
+    {id:'e28-2',time:'08:06.0',label:'DRIBBLE',type:'plain'},
+    {id:'e28-3',time:'08:04.5',label:'DRIVE',type:'plain'},
+    {id:'e28-4',time:'08:03.0',label:'SHOT',type:'plain'},
+    {id:'e28-5',time:'08:02.8',label:'DEAD BALL',type:'plain'},
+    {id:'e28-6',time:'08:02.8',label:'Foul: Pushing',type:'whistle',player:'M. Taylor',foulType:'Foul: Pushing'},
+  ]},
+  {id:29,q:3,team:'TOR',time:'07:54.0',ptiw:false,events:[
+    {id:'e29-1',time:'07:53.7',label:'INBOUND',type:'plain'},
+    {id:'e29-2',time:'07:52.0',label:'PICK',type:'plain'},
+    {id:'e29-3',time:'07:50.5',label:'DRIVE',type:'plain'},
+    {id:'e29-4',time:'07:49.0',label:'ILLEGAL SCREEN',type:'reviewable'},
+    {id:'e29-5',time:'07:48.5',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:30,q:3,team:'CHI',time:'07:40.0',ptiw:false,events:[
+    {id:'e30-1',time:'07:39.7',label:'INBOUND',type:'plain'},
+    {id:'e30-2',time:'07:38.0',label:'DRIVE',type:'plain'},
+    {id:'e30-3',time:'07:36.5',label:'SHOT',type:'plain'},
+    {id:'e30-4',time:'07:36.3',label:'DEAD BALL',type:'plain'},
+    {id:'e30-5',time:'07:36.3',label:'Foul: Shooting',type:'whistle',player:'E. Williams',foulType:'Foul: Shooting'},
+    {id:'e30-6',time:'07:36.3',label:'FREE THROW',type:'plain'},
+  ]},
+  {id:31,q:4,team:'TOR',time:'09:47.0',ptiw:false,events:[
+    {id:'e31-1',time:'09:46.7',label:'INBOUND',type:'plain'},
+    {id:'e31-2',time:'09:45.0',label:'DRIVE',type:'plain'},
+    {id:'e31-3',time:'09:43.5',label:'PICK',type:'plain'},
+    {id:'e31-4',time:'09:42.0',label:'SHOT',type:'plain'},
+    {id:'e31-5',time:'09:41.8',label:'DEAD BALL',type:'plain'},
+    {id:'e31-6',time:'09:41.8',label:'Foul: Blocking',type:'whistle',player:'N. Sabally',foulType:'Foul: Blocking'},
+    {id:'e31-7',time:'09:41.8',label:'FREE THROW',type:'plain'},
+    {id:'e31-8',time:'09:41.8',label:'FREE THROW',type:'plain'},
+  ]},
+  {id:32,q:4,team:'CHI',time:'09:34.0',ptiw:false,events:[
+    {id:'e32-1',time:'09:33.7',label:'INBOUND',type:'plain'},
+    {id:'e32-2',time:'09:32.0',label:'DRIBBLE',type:'plain'},
+    {id:'e32-3',time:'09:30.5',label:'TRAVEL',type:'reviewable'},
+    {id:'e32-4',time:'09:30.0',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:33,q:4,team:'TOR',time:'09:22.0',ptiw:false,events:[
+    {id:'e33-1',time:'09:21.7',label:'INBOUND',type:'plain'},
+    {id:'e33-2',time:'09:20.0',label:'PICK',type:'plain'},
+    {id:'e33-3',time:'09:18.5',label:'DRIVE',type:'plain'},
+    {id:'e33-4',time:'09:17.0',label:'OOB: CHI',type:'whistle',player:'K. Rice',foulType:'OOB: CHI'},
+    {id:'e33-5',time:'09:17.0',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:34,q:4,team:'CHI',time:'09:08.0',ptiw:true,events:[
+    {id:'e34-1',time:'09:07.7',label:'INBOUND',type:'plain'},
+    {id:'e34-2',time:'09:06.0',label:'DRIVE',type:'plain'},
+    {id:'e34-3',time:'09:04.5',label:'ILLEGAL SCREEN',type:'reviewable'},
+    {id:'e34-4',time:'09:03.0',label:'SHOT',type:'plain'},
+    {id:'e34-5',time:'09:02.8',label:'DEAD BALL',type:'plain'},
+    {id:'e34-6',time:'09:02.8',label:'Foul: Pushing',type:'whistle',player:'S. Diggins',foulType:'Foul: Pushing'},
+    {id:'e34-7',time:'09:02.8',label:'FREE THROW',type:'plain'},
+  ]},
+  {id:35,q:4,team:'TOR',time:'08:54.0',ptiw:false,events:[
+    {id:'e35-1',time:'08:53.7',label:'INBOUND',type:'plain'},
+    {id:'e35-2',time:'08:52.0',label:'DRIBBLE',type:'plain'},
+    {id:'e35-3',time:'08:50.5',label:'PICK',type:'plain'},
+    {id:'e35-4',time:'08:49.0',label:'NO DRIBBLE',type:'reviewable'},
+    {id:'e35-5',time:'08:48.5',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:36,q:4,team:'CHI',time:'08:40.0',ptiw:false,events:[
+    {id:'e36-1',time:'08:39.7',label:'INBOUND',type:'plain'},
+    {id:'e36-2',time:'08:38.0',label:'DRIVE',type:'plain'},
+    {id:'e36-3',time:'08:36.5',label:'SHOT',type:'plain'},
+    {id:'e36-4',time:'08:36.3',label:'DEAD BALL',type:'plain'},
+    {id:'e36-5',time:'08:36.3',label:'Foul: Shooting',type:'whistle',player:'N. Banham',foulType:'Foul: Shooting'},
+    {id:'e36-6',time:'08:36.3',label:'FREE THROW',type:'plain'},
+    {id:'e36-7',time:'08:36.3',label:'FREE THROW',type:'plain'},
+  ]},
+  {id:37,q:4,team:'TOR',time:'08:25.0',ptiw:false,events:[
+    {id:'e37-1',time:'08:24.7',label:'INBOUND',type:'plain'},
+    {id:'e37-2',time:'08:23.0',label:'PICK',type:'plain'},
+    {id:'e37-3',time:'08:21.5',label:'DRIVE',type:'plain'},
+    {id:'e37-4',time:'08:20.0',label:'SHOT',type:'plain'},
+    {id:'e37-5',time:'08:19.8',label:'REBOUND',type:'plain'},
+    {id:'e37-6',time:'08:18.5',label:'TRAVEL',type:'reviewable'},
+    {id:'e37-7',time:'08:18.0',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:38,q:4,team:'CHI',time:'08:10.0',ptiw:false,events:[
+    {id:'e38-1',time:'08:09.7',label:'INBOUND',type:'plain'},
+    {id:'e38-2',time:'08:08.0',label:'DRIVE',type:'plain'},
+    {id:'e38-3',time:'08:06.5',label:'OOB: TOR',type:'whistle',player:'T. Cloud',foulType:'OOB: TOR'},
+    {id:'e38-4',time:'08:06.5',label:'DEAD BALL',type:'plain'},
+  ]},
+  {id:39,q:4,team:'TOR',time:'07:58.0',ptiw:false,events:[
+    {id:'e39-1',time:'07:57.7',label:'INBOUND',type:'plain'},
+    {id:'e39-2',time:'07:56.0',label:'DRIBBLE',type:'plain'},
+    {id:'e39-3',time:'07:54.5',label:'DRIVE',type:'plain'},
+    {id:'e39-4',time:'07:53.0',label:'SHOT',type:'plain'},
+    {id:'e39-5',time:'07:52.8',label:'DEAD BALL',type:'plain'},
+    {id:'e39-6',time:'07:52.8',label:'Foul: Holding',type:'whistle',player:'M. Mabrey',foulType:'Foul: Holding'},
+    {id:'e39-7',time:'07:52.8',label:'FREE THROW',type:'plain'},
+  ]},
+  {id:40,q:4,team:'CHI',time:'07:44.0',ptiw:false,events:[
+    {id:'e40-1',time:'07:43.7',label:'INBOUND',type:'plain'},
+    {id:'e40-2',time:'07:42.0',label:'PICK',type:'plain'},
+    {id:'e40-3',time:'07:40.5',label:'DRIVE',type:'plain'},
+    {id:'e40-4',time:'07:39.0',label:'SHOT',type:'plain'},
+    {id:'e40-5',time:'07:38.8',label:'DEAD BALL',type:'plain'},
+    {id:'e40-6',time:'07:38.8',label:'Foul: Pushing',type:'whistle',player:'B. Sykes',foulType:'Foul: Pushing'},
+    {id:'e40-7',time:'07:38.8',label:'FREE THROW',type:'plain'},
+    {id:'e40-8',time:'07:38.8',label:'FREE THROW',type:'plain'},
+  ]},
+];
+
+let activeQ = 'Q1';
+let openPossId = null;
+let selectedEvtId = null;
+let selectedInfRow = null;
+let infractionRows = [];
+let currentPoss = null;
+let currentEv = null;
+
+function renderQueue() {
+  const list = document.getElementById('poss-list');
+  list.innerHTML = '';
+  const qNum = parseInt(activeQ[1]);
+  const qPoss = POSSESSIONS.filter(p => 'Q'+p.q === activeQ);
+
+  // render real possessions — only poss id===1 is expandable
+  qPoss.forEach((p, qi) => {
+    const isExpandable = (p.id === 1);
+    const item = document.createElement('div');
+    item.className = 'poss-item' + (isExpandable && p.id === openPossId ? ' open' : '');
+    const hdr = document.createElement('div');
+    hdr.className = 'poss-hdr' + (isExpandable ? '' : ' static');
+    hdr.style.cursor = isExpandable ? 'pointer' : 'default';
+    if (isExpandable) hdr.onclick = () => openPoss(p.id);
+    const localNum = qi + 1;
+    hdr.innerHTML = '<span class="poss-num">'+localNum+'</span><span class="poss-team">'+p.team+'</span><span class="poss-time">'+p.time+'</span>'+(p.ptiw?'<span class="poss-warn">&#9888;</span>':'')+(isExpandable?'<span class="poss-chevron">&#9654;</span>':'');
+    item.appendChild(hdr);
+    if (isExpandable) {
+      const evWrap = document.createElement('div');
+      evWrap.className = 'poss-events';
+      p.events.forEach(ev => {
+        const row = document.createElement('div');
+        let cls = 'ev-row ';
+        cls += ev.type==='whistle' ? 'whistled' : ev.type==='reviewable' ? 'reviewable' : 'plain';
+        if (ev.id === selectedEvtId) cls += ' sel';
+        row.className = cls;
+        if (ev.type==='whistle') row.innerHTML='<span class="ev-check">&#10003;</span><span>'+ev.time+' — '+ev.label+'</span><span class="ev-warn">&#9888;</span>';
+        else row.innerHTML='<span>'+ev.time+' — '+ev.label+'</span>';
+        if (ev.type!=='plain') row.onclick = () => selectEvent(ev.id, p, ev);
+        evWrap.appendChild(row);
+      });
+      item.appendChild(evWrap);
+    }
+    list.appendChild(item);
+  });
+
+  // fill static placeholders up to 35
+  const teams = ['TOR','CHI'];
+  const baseMin = 10 - (qNum-1)*0; // 10 min per quarter
+  for (let i = qPoss.length + 1; i <= 35; i++) {
+    const secFromStart = i * 16;
+    const mins = Math.floor((600 - secFromStart) / 60);
+    const secs = (600 - secFromStart) % 60;
+    const timeStr = String(mins).padStart(2,'0')+':'+String(secs).padStart(2,'0')+'.0';
+    const team = teams[i % 2];
+    const item = document.createElement('div');
+    item.className = 'poss-item';
+    const hdr = document.createElement('div');
+    hdr.className = 'poss-hdr static';
+    hdr.style.cursor = 'default';
+    hdr.innerHTML = '<span class="poss-num">'+i+'</span><span class="poss-team">'+team+'</span><span class="poss-time">'+timeStr+'</span>';
+    item.appendChild(hdr);
+    list.appendChild(item);
+  }
+}
+
+function filterQ(q, btn) {
+  activeQ = q;
+  document.querySelectorAll('.q-tog').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  renderQueue();
+}
+
+function openPoss(id) {
+  openPossId = (openPossId === id) ? null : id;
+  renderQueue();
+}
+
+function selectEvent(evtId, poss, ev) {
+  selectedEvtId = evtId; selectedInfRow = null;
+  currentPoss = poss; currentEv = ev;
+  if (ev.type==='whistle' && (ev.foulType||ev.label)==='Foul: Shooting') {
+    infractionRows = [{type:'Foul: Shooting', player:'Key, Tiffany (22) — Tempo', opponent:'Diggins, Skylar (4) — Sky',
+      official:REFS[1], location:'Trail', rating:'No Infraction', observability:'Observable',
+      prefill:{infrType:'Foul: Shooting', playType:'Driving Shot Attempt', subPlayType:'Arm Shooting Motion', player:'Key, Tiffany (22) — Tempo', opponent:'Diggins, Skylar (4) — Sky', rating:'No Infraction', observability:'Observable',
+        comment:'Key (TOR) swipes down and initiates illegal contact with Diggins\' (CHI) arm, which affects their shot attempt'}}];
+  } else if (ev.type==='whistle') {
+    infractionRows = [{type:ev.foulType||ev.label, player:ev.player||(poss.team==='TOR'?TOR_P[0]:CHI_P[0]),
+      opponent:poss.team==='TOR'?CHI_P[0]:TOR_P[0], official:REFS[0], location:'Lead', rating:'Called', observability:'Observable'}];
+  } else if (ev.prefill && ev.prefill.isDeadBall) {
+    infractionRows = [
+      {type:'Stoppage: Inadvertent Whistle', player:'Sabally, Nyara (13) — Tempo', opponent:'Diggins, Skylar (4) — Sky', official:REFS[0], location:'Lead', rating:'No Infraction', observability:'Observable'},
+      {type:'Stoppage: Out-of-Bounds', player:'Sabally, Nyara (13) — Tempo', opponent:'Diggins, Skylar (4) — Sky', official:REFS[0], location:'Lead', rating:'No Infraction', observability:'Observable',
+       prefill:{infrType:'Stoppage: Out-of-Bounds', playType:'', subPlayType:'', role:'Off Player 1 (Ball Handler)', player:'Sabally, Nyara (13) — Tempo', opponent:'Diggins, Skylar (4) — Sky', rating:'No Infraction', observability:'Observable'}},
+      {type:'Turnover: Lost Ball Out of Bounds', player:'Sabally, Nyara (13) — Tempo', opponent:'Diggins, Skylar (4) — Sky', official:REFS[0], location:'Lead', rating:'No Infraction', observability:'Observable'},
+    ];
+  } else if (ev.prefill) {
+    infractionRows = [
+      {type:'Foul: Offensive', player:'Sabally, Nyara (13) — Tempo', opponent:'Diggins, Skylar (4) — Sky', official:REFS[0], location:'Lead', rating:'No Infraction', observability:'Observable',
+       prefill:{infrType:'Foul: Offensive', playType:'Pick - Screener', subPlayType:'Deliver/Absorb', role:'Off Player 2 (Screener/Cutter)', player:'Sabally, Nyara (13) — Tempo', opponent:'Diggins, Skylar (4) — Sky', rating:'No Infraction', observability:'Observable', ogr:true}},
+      {type:'Foul: Offensive', player:'Sabally, Nyara (13) — Tempo', opponent:'Cardoso, Kamilla (10) — Sky', official:REFS[1], location:'Trail', rating:'No Infraction', observability:'Observable'},
+      {type:'Foul: Personal', player:'Diggins, Skylar (4) — Sky', opponent:'Rice, Kahleah (5) — Tempo', official:REFS[0], location:'Lead', rating:'No Infraction', observability:'Observable'},
+      {type:'Foul: Personal', player:'Cardoso, Kamilla (10) — Sky', opponent:'Mabrey, Marina (4) — Tempo', official:REFS[2], location:'Slot', rating:'No Infraction', observability:'Observable'},
+    ];
+  } else {
+    infractionRows = [{type:'Foul: Shooting', player:'Key, Tiffany (22) — Tempo', opponent:'Diggins, Skylar (4) — Sky',
+      official:REFS[1], location:'Trail', rating:'No Infraction', observability:'Observable',
+      prefill:{infrType:'Foul: Shooting', playType:'Driving Shot Attempt', subPlayType:'Arm Shooting Motion', player:'Key, Tiffany (22) — Tempo', opponent:'Diggins, Skylar (4) — Sky', rating:'No Infraction', observability:'Observable',
+        comment:'Key (TOR) swipes down and initiates illegal contact with Diggins\' (CHI) arm, which affects their shot attempt'}}];
+  }
+  renderQueue();
+  document.getElementById('cp-empty').style.display='none';
+  document.getElementById('inf-table-wrap').style.display='block';
+  document.getElementById('comment-section').style.display='flex';
+  document.getElementById('rf-clock').value = ev.time;
+  document.getElementById('ptiw-comment').textContent = poss.ptiw ? 'PTIW flagged on this possession' : 'No PTIW Comment';
+  renderInfractionTable();
+  selectInfractionRow(0);
+}
+
+function renderInfractionTable() {
+  const tbody = document.getElementById('inf-tbody');
+  tbody.innerHTML = '';
+  infractionRows.forEach((row, idx) => {
+    const tr = document.createElement('tr');
+    if (idx===selectedInfRow) tr.className='inf-sel';
+    tr.onclick = () => selectInfractionRow(idx);
+    tr.innerHTML='<td>'+row.type+'</td><td>'+row.player+'</td><td>'+row.opponent+'</td><td>'+row.official+'</td><td>'+row.location+'</td><td><span class="rating-chip '+ratingClass(row.rating)+'">'+row.rating+'</span></td><td>'+row.observability+'</td>';
+    tbody.appendChild(tr);
+  });
+}
+
+function addInfractionRow() {
+  infractionRows.push({type:'Blocking Foul',player:TOR_P[0],opponent:CHI_P[0],official:REFS[0],location:'Lead',rating:'No Infraction',observability:'Observable'});
+  renderInfractionTable();
+}
+
+function selectInfractionRow(idx) {
+  selectedInfRow = idx;
+  document.getElementById('rating-form').style.display='block';
+  if (currentEv) document.getElementById('rf-clock').value = currentEv.time;
+  const row = infractionRows[idx];
+  const r = row.rating;
+  setSelectVal('rf-rating-combined', r);
+  ensureSelectDefault('rf-rating-combined', 'No Infraction');
+  // apply prefill values to form dropdowns/checkboxes
+  const pf = row.prefill || {};
+  setSelectVal('rf-infraction-type', pf.infrType || row.type || '');
+  updateInfrType();
+  setSelectVal('rf-play-type', pf.playType || '');
+  updateSubPlayTypes();
+  setSelectVal('rf-sub-play-type', pf.subPlayType || '');
+  setSelectVal('rf-role-select', pf.role || '');
+  ensureSelectDefault('rf-role-select', 'Def Player 1 (Primary)');
+  setSelectVal('rf-player', pf.player || '');
+  setSelectVal('rf-opponent', pf.opponent || '');
+  setSelectVal('rf-observability', pf.observability || '');
+  document.getElementById('chk-ogr').checked = !!(pf.ogr);
+  document.getElementById('chk-called').checked = !!(pf.called);
+  document.getElementById('comment-ta').value = pf.comment || '';
+  document.querySelectorAll('#inf-tbody tr').forEach((tr, i) => tr.classList.toggle('inf-sel', i === idx));
+  updateSuggestions();
+}
+
+function setSelectVal(id, val) {
+  const el = document.getElementById(id);
+  if (!el || !val) return;
+  for (let i = 0; i < el.options.length; i++) {
+    if (el.options[i].text === val || el.options[i].value === val) { el.selectedIndex = i; return; }
+  }
+}
+
+function ensureSelectDefault(id, fallback) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const cur = el.options[el.selectedIndex];
+  if (!cur || !cur.value || cur.text === '-- select --') setSelectVal(id, fallback);
+}
+
+function selectRef(btn) {
+  btn.closest('.rf-row').querySelectorAll('.ref-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+}
+function selectLocation(btn) {
+  btn.closest('.rf-row').querySelectorAll('.loc-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+}
+function onRatingCombinedChange() {
+  const val = document.getElementById('rf-rating-combined').value;
+  if (selectedInfRow !== null && infractionRows[selectedInfRow]) {
+    infractionRows[selectedInfRow].rating = val;
+    const rows = document.querySelectorAll('#inf-tbody tr');
+    if (rows[selectedInfRow]) {
+      const chip = rows[selectedInfRow].querySelectorAll('td')[5]?.querySelector('.rating-chip');
+      if (chip) {
+        chip.textContent = val;
+        chip.className = 'rating-chip ' + ratingClass(val);
+      }
+    }
+  }
+  updateSuggestions();
+}
+
+function ratingClass(rating) {
+  if (rating === 'Infraction') return 'rc-infraction';
+  if (rating === 'Judgement - Lean Infraction') return 'rc-lean-infraction';
+  if (rating === 'Judgement - Lean No') return 'rc-lean-no';
+  if (rating === 'No Infraction') return 'rc-no-infraction';
+  return '';
+}
+// Phrases that imply illegal/infraction-level contact occurred and affected the play
+const INFRACTION_LANGUAGE = [
+  /illegal(ly)? (contact|screen|pick|use of (hands|arms))/i,
+  /initiates? (illegal )?contact[^.]*affect/i,
+  /affects? (their|the)? ?(shot attempt|sqbr|driving shot|shooting motion)/i,
+  /should be assessed/i,
+  /clear (foul|violation)/i,
+];
+// Phrases that imply no foul / legal contact occurred
+const NO_INFRACTION_LANGUAGE = [
+  /no foul/i,
+  /legal(ly)? (contests?|guarding position|verticality)/i,
+  /considered incidental/i,
+  /natural basketball move/i,
+  /play should have continued without a whistle/i,
+  /absorbs? the contact/i,
+  /marginal contact/i,
+];
+const NO_INFRACTION_RATINGS = ['No Infraction', 'Judgement - Lean No'];
+const INFRACTION_RATINGS = ['Infraction', 'Judgement - Lean Infraction'];
+
+function findRatingCommentMismatch(comment, rating) {
+  if (!comment || !rating) return null;
+  if (NO_INFRACTION_RATINGS.includes(rating) && INFRACTION_LANGUAGE.some(re => re.test(comment))) {
+    return `Your comment describes contact that sounds like an infraction, but the rating is "${rating}".`;
+  }
+  if (INFRACTION_RATINGS.includes(rating) && NO_INFRACTION_LANGUAGE.some(re => re.test(comment))) {
+    return `Your comment sounds like it describes legal/no-call contact, but the rating is "${rating}".`;
+  }
+  return null;
+}
+
+function saveRating() {
+  const rating = document.getElementById('rf-rating-combined').value;
+  const isAssessment = rating.includes('Assessment');
+  const called = document.getElementById('chk-called').checked;
+  const rowType = (selectedInfRow !== null && infractionRows[selectedInfRow]) ? infractionRows[selectedInfRow].type.toLowerCase() : '';
+  const isOOB = rowType.includes('out-of-bounds') || rowType.includes('out of bounds');
+  if (isAssessment && !called && isOOB) {
+    showAssistAlert('You appear to be entering an incorrectly assessed Out of Bounds play — would you like to check the Called box?');
+    return;
+  }
+  const comment = document.getElementById('comment-ta')?.value.trim() || '';
+  const mismatchReason = findRatingCommentMismatch(comment, rating);
+  if (mismatchReason) {
+    showMismatchAlert(`There appears to be a mismatch between your rating and comment. ${mismatchReason}`);
+    return;
+  }
+  clearRatingForm(); showToast('Rating saved');
+}
+
+function clearRatingForm() {
+  document.getElementById('rating-form').style.display = 'none';
+  document.getElementById('comment-section').style.display = 'none';
+  const ta = document.getElementById('comment-ta'); if (ta) ta.value = '';
+  const notes = document.getElementById('notes-ta'); if (notes) notes.textContent = '';
+  ['rf-infraction-type','rf-play-type','rf-sub-play-type','rf-role-select','rf-player','rf-opponent','rf-rating-combined','rf-observability'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.selectedIndex = 0;
+  });
+  ['chk-called','chk-ptiw','chk-look','chk-ogr','chk-poe'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.checked = false;
+  });
+  selectedInfRow = null;
+  renderInfractionTable();
+}
+
+function showMismatchAlert(msg) {
+  document.getElementById('mismatch-alert-body').textContent = msg;
+  document.getElementById('mismatch-alert').classList.add('show');
+  document.getElementById('mismatch-alert-backdrop').classList.add('show');
+}
+function hideMismatchAlert() {
+  document.getElementById('mismatch-alert').classList.remove('show');
+  document.getElementById('mismatch-alert-backdrop').classList.remove('show');
+}
+function mismatchAlertConfirm() {
+  hideMismatchAlert();
+  clearRatingForm(); showToast('Rating saved');
+}
+
+function showAssistAlert(msg) {
+  document.getElementById('assist-alert-body').textContent = msg;
+  document.getElementById('assist-alert').classList.add('show');
+  document.getElementById('assist-alert-backdrop').classList.add('show');
+}
+function hideAssistAlert() {
+  document.getElementById('assist-alert').classList.remove('show');
+  document.getElementById('assist-alert-backdrop').classList.remove('show');
+}
+function assistAlertYes() {
+  hideAssistAlert();
+  document.getElementById('chk-called').checked = true;
+  clearRatingForm(); showToast('Rating saved');
+}
+function assistAlertNo() {
+  hideAssistAlert();
+  clearRatingForm(); showToast('Rating saved');
+}
+function cancelRating() {
+  document.getElementById('rating-form').style.display='none';
+  selectedInfRow=null; renderInfractionTable();
+}
+function angClick(el) {
+  document.querySelectorAll('.ang').forEach(a=>a.classList.remove('on'));
+  el.classList.add('on');
+}
+function toggleNavDropdown(e) {
+  e.stopPropagation();
+  document.getElementById('nav-dropdown').classList.toggle('open');
+}
+document.addEventListener('click', () => document.getElementById('nav-dropdown').classList.remove('open'));
+
+document.querySelectorAll('.st').forEach(t => {
+  if (!t.getAttribute('onclick')) {
+    t.addEventListener('click', function() {
+      document.querySelectorAll('.st').forEach(x => x.classList.remove('on'));
+      this.classList.add('on');
+    });
+  }
+});
+
+function showToast(msg) {
+  const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2000);
+}
+
+// INIT
+openPossId = 1; renderQueue();
+const fp = POSSESSIONS[0];
+const fe = fp.events.find(e=>e.id==='e1-8');
+if(fe){selectEvent(fe.id,fp,fe);renderQueue();}
+
+function openChatbot() {
+  document.getElementById('chatbot-window').classList.toggle('open');
+  if (document.getElementById('chatbot-window').classList.contains('open'))
+    document.getElementById('chatbot-input').focus();
+}
+function closeChatbot() {
+  document.getElementById('chatbot-window').classList.remove('open');
+}
+const TUCKER_ANSWERABLE = [
+  /positioning|guarding position|contact|foul|infraction|play type|rating|nbp|shooting motion|gather|screen|pick|drive|rebound|block|charge|restricted area|legal|illegal|arm|body|defender|offensive|help/i
+];
+function canTuckerAnswer(msg) {
+  return TUCKER_ANSWERABLE.some(re => re.test(msg));
+}
+
+function sendChat() {
+  const input = document.getElementById('chatbot-input');
+  const msg = input.value.trim();
+  if (!msg) return;
+  const msgs = document.getElementById('chatbot-msgs');
+  const userRow = document.createElement('div');
+  userRow.className = 'chat-msg-row user';
+  userRow.innerHTML = '<div class="chat-msg user"></div>';
+  userRow.querySelector('.chat-msg').textContent = msg;
+  msgs.appendChild(userRow);
+  input.value = '';
+  setTimeout(() => {
+    const botRow = document.createElement('div');
+    botRow.className = 'chat-msg-row';
+    if (canTuckerAnswer(msg)) {
+      const responses = [
+        'Based on the play, consider the positioning of the defender relative to the offensive player.',
+        'Look at the timing of the contact — was it before, during, or after the gather?',
+        'The key factor here is whether the defender had established legal guarding position.',
+        'Consider the NBP principles: did the contact affect the offensive player\'s natural movement?',
+      ];
+      botRow.innerHTML = '<div class="chat-msg-name"><div class="chatbot-avatar"><img src="Logos/TuckerGPT Icon.png"></div> Tucker</div><div class="chat-msg bot"></div>';
+      botRow.querySelector('.chat-msg').textContent = responses[Math.floor(Math.random() * responses.length)];
+    } else {
+      const savedMsg = msg;
+      botRow.innerHTML = `<div class="chat-msg-name"><div class="chatbot-avatar"><img src="Logos/TuckerGPT Icon.png"></div> Tucker</div>
+        <div>
+          <div class="chat-msg bot">Sorry, I am unable to answer this question at this time. Would you like me to forward this to TuckerHuman on Slack for you?</div>
+          <div class="chat-fwd-row">
+            <button class="chat-fwd-btn yes" onclick="tuckerForward(this,'${savedMsg.replace(/'/g,"\\'")}')">Yes</button>
+            <button class="chat-fwd-btn" onclick="tuckerDismiss(this)">No</button>
+          </div>
+        </div>`;
+    }
+    msgs.appendChild(botRow);
+    msgs.scrollTop = msgs.scrollHeight;
+  }, 600);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function tuckerForward(btn, originalMsg) {
+  const wrap = btn.closest('.chat-fwd-row');
+  wrap.remove();
+  const msgs = document.getElementById('chatbot-msgs');
+  const confirmRow = document.createElement('div');
+  confirmRow.className = 'chat-msg-row';
+  confirmRow.innerHTML = '<div class="chat-msg-name"><div class="chatbot-avatar"><img src="Logos/TuckerGPT Icon.png"></div> Tucker</div><div class="chat-msg bot">Forwarded to Tucker Grady on Slack ✓</div>';
+  msgs.appendChild(confirmRow);
+  msgs.scrollTop = msgs.scrollHeight;
+  showToast('Question forwarded to TuckerHuman ✓');
+}
+
+function tuckerDismiss(btn) {
+  btn.closest('.chat-fwd-row').remove();
+}
+
+function updateSuggestions() {
+  const infrType = document.getElementById('rf-infraction-type')?.value || '';
+  const playType = document.getElementById('rf-play-type')?.value || '';
+  const rating = selectedInfRow !== null && infractionRows[selectedInfRow] ? infractionRows[selectedInfRow].rating : '';
+  const listEl = document.getElementById('suggestions-list');
+  if (!listEl) return;
+  if (!infrType || infrType === '-- select --' || !playType || playType === '-- select --' || !rating) {
+    listEl.innerHTML = '<div class="suggestions-empty">Select infraction type, play type, and rating to see suggestions.</div>';
+    return;
+  }
+  const MOCK_COMMENTS = [
+    {infractionType:'Foul: Offensive',playType:'Pick - Screener',rating:'No Infraction',comment:'Sabally (TOR) firms up on their left foot and absorbs the body contact that occurs while setting the pick on Diggins (CHI). Additionally, Sabally does not go through Diggins\'s space, therefore, the contact as the players come together is considered incidental.'},
+    {infractionType:'Foul: Offensive',playType:'Pick - Screener',rating:'No Infraction',comment:'Sabally (TOR) establishes themselves in Diggins\'s (CHI) path and absorbs the contact during the pick. Diggins then loses their balance on their own and not as a result of any contact from Sabally.'},
+    {infractionType:'Foul: Offensive',playType:'Pick - Screener',rating:'Judgement - Lean No',comment:'Sabally (TOR) firms up prior to contact but their arms are slightly extended at impact on Diggins (CHI). The contact as the players come together is borderline — lean toward incidental given Sabally\'s established position.'},
+    {infractionType:'Foul: Offensive',playType:'Pick - Ball Handler',rating:'No Infraction',comment:'Ball handler uses a normal change of direction without creating space through illegal contact. No use of arm bar or shoulder to impede the defender.'},
+    {infractionType:'Foul: Personal',playType:'On-Ball',rating:'No Infraction',comment:'Defender maintains legal guarding position throughout the possession. Contact is incidental and does not impede the offensive player\'s progress.'},
+    {infractionType:'Foul: Personal',playType:'On-Ball',rating:'Judgement - Lean Infraction',comment:'Defender\'s arm contact on the drive marginally impedes the offensive player\'s path — lean toward infraction given the defender\'s positioning outside the restricted area.'},
+    {infractionType:'Foul: Shooting',playType:'Driving Shot Attempt',rating:'No Infraction',comment:'Defender is in a legal vertical position at the time of the shot. Contact is minimal and does not affect the shooting motion or gather.'},
+    {infractionType:'Foul: Shooting',playType:'Jump Shot',rating:'Infraction',comment:'Defender lands on the shooter\'s foot after leaving the vertical plane, creating dangerous contact that affects the shooting motion. Infraction.'},
+  ];
+  try {
+    const stored = localStorage.getItem('brs_comments_v6');
+    const savedComments = stored ? JSON.parse(stored) : [];
+    const allComments = [...savedComments, ...MOCK_COMMENTS];
+    const matches = allComments.filter(c =>
+      c.infractionType === infrType && c.playType === playType && c.rating === rating
+    );
+    if (matches.length === 0) {
+      listEl.innerHTML = '<div class="suggestions-empty">No suggestions for this combination.</div>';
+      return;
+    }
+    listEl.innerHTML = '';
+    matches.forEach(c => {
+      const div = document.createElement('div');
+      div.className = 'suggestion-item';
+      div.textContent = c.comment;
+      div.onclick = () => {
+        const ta = document.getElementById('comment-ta');
+        if (ta) { ta.value = c.comment; }
+      };
+      listEl.appendChild(div);
+    });
+  } catch(e) {
+    listEl.innerHTML = '<div class="suggestions-empty">No suggestions available.</div>';
+  }
+}
+
+function openAddToPlaylist() {
+  const playlists = [
+    {name:'Plays for 2026-27 Training', count:5},
+    {name:'WNBA DHO Examples', count:2},
+    {name:'Block-Charge 2026', count:1},
+    {name:'3Q Defense Examples', count:0},
+    {name:'Flagrant Foul Reviews', count:0},
+  ];
+  const existing = document.getElementById('atp-modal');
+  if (existing) existing.remove();
+  const modal = document.createElement('div');
+  modal.id = 'atp-modal';
+  modal.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:360px;background:#fff;border-radius:12px;box-shadow:0 16px 48px rgba(0,0,0,.22);z-index:800;padding:18px 20px;border:1px solid #e5e7eb';
+  modal.innerHTML = `
+    <div style="font-size:13px;font-weight:700;color:#111827;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between">
+      Add to Playlist <button onclick="this.closest('#atp-modal').remove()" style="background:none;border:none;font-size:18px;color:#9ca3af;cursor:pointer;line-height:1">×</button>
+    </div>
+    ${playlists.map((p,i)=>`
+    <div onclick="selectAtp(${i})" id="atp-${i}" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid #e5e7eb;border-radius:8px;cursor:pointer;margin-bottom:6px;transition:background .1s" onmouseover="this.style.background='#f9fafb'" onmouseout="if(!this.dataset.sel)this.style.background=''">
+      <div style="width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,#1e40af,#3b82f6);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ti-playlist" style="color:rgba(255,255,255,.7);font-size:13px"></i></div>
+      <div style="flex:1;font-size:12px;font-weight:600;color:#111827">${p.name}</div>
+      <div style="font-size:11px;color:#9ca3af">${p.count} plays</div>
+    </div>`).join('')}
+    <div style="border-top:1px solid #f3f4f6;margin:8px 0 10px"></div>
+    <div style="font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;text-transform:uppercase;margin-bottom:5px">Playlist Note</div>
+    <textarea id="atp-note" placeholder="Add a note about why you're saving this play…" style="width:100%;border:1px solid #e5e7eb;border-radius:7px;padding:8px 10px;font-size:12px;font-family:inherit;resize:none;color:#374151;line-height:1.5;background:#f9fafb;min-height:64px" onfocus="this.style.borderColor='#1a3a6b';this.style.background='#fff'" onblur="this.style.borderColor='#e5e7eb';this.style.background='#f9fafb'"></textarea>
+    <div style="margin-top:10px;display:flex;gap:8px">
+      <button onclick="document.getElementById('atp-modal').remove();document.getElementById('atp-bd')?.remove()" style="flex:1;padding:7px;border-radius:7px;background:#f3f4f6;color:#6b7280;border:none;font-size:11.5px;font-weight:600;cursor:pointer">Cancel</button>
+      <button onclick="confirmAtp()" style="flex:1;padding:7px;border-radius:7px;background:#1a3a6b;color:#fff;border:none;font-size:11.5px;font-weight:600;cursor:pointer">Add to Playlist</button>
+    </div>`;
+  document.body.appendChild(modal);
+  // backdrop
+  const bd = document.createElement('div');
+  bd.id = 'atp-bd';
+  bd.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.25);z-index:799';
+  bd.onclick = () => { modal.remove(); bd.remove(); };
+  document.body.appendChild(bd);
+}
+let atpSel = null;
+function selectAtp(i) {
+  document.querySelectorAll('[id^=atp-]').forEach(el=>{ el.style.background=''; el.dataset.sel=''; });
+  const el = document.getElementById('atp-'+i);
+  if (el) { el.style.background='#eff6ff'; el.dataset.sel='1'; }
+  atpSel = i;
+}
+function confirmAtp() {
+  document.getElementById('atp-modal')?.remove();
+  document.getElementById('atp-bd')?.remove();
+  showToast('Play added to playlist ✓');
+}
+
+/* ─── SLACK MODAL ─── */
+const SLACK_OPTS = [
+  {label:'Tucker Grady',        value:'Tucker Grady',       icon:'user', group:'People'},
+  {label:'Michael Abdenour',    value:'Michael Abdenour',   icon:'user', group:'People'},
+  {label:'Curtis Oakley Jr.',   value:'Curtis Oakley Jr.',  icon:'user', group:'People'},
+  {label:'#first-pass',         value:'#first-pass',        icon:'hash', group:'Channels'},
+  {label:'#wnba-calibration',   value:'#wnba-calibration',  icon:'hash', group:'Channels'},
+  {label:'#gamereviewers',      value:'#gamereviewers',     icon:'hash', group:'Channels'},
+];
+
+function buildSlackAutoMsg() {
+  const row = selectedInfRow !== null ? infractionRows[selectedInfRow] : (infractionRows[0] || null);
+  const ev = currentEv;
+  const game = 'TOR @ CHI · May 27, 2026';
+  const clock = ev ? ev.time : (row ? '' : '');
+  const playType = row ? row.type : '';
+  const link = window.location.href.split('?')[0];
+  let lines = [`Game: ${game}`];
+  if (clock) lines.push(`Timestamp: ${clock}`);
+  if (playType) lines.push(`Play: ${playType}`);
+  lines.push(`Link: ${link}`);
+  return lines.join('\n');
+}
+
+function openSlackModal() {
+  closeSlackModal();
+  const bd = document.createElement('div');
+  bd.id = 'slack-modal-bd';
+  bd.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:799';
+  bd.onclick = closeSlackModal;
+  document.body.appendChild(bd);
+
+  const autoMsg = buildSlackAutoMsg();
+
+  const modal = document.createElement('div');
+  modal.id = 'slack-modal-el';
+  modal.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:520px;max-height:85vh;overflow:auto;background:#fff;border-radius:13px;box-shadow:0 16px 48px rgba(0,0,0,.22);z-index:800;padding:24px 26px;border:1px solid #e5e7eb';
+  modal.innerHTML = `
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#E01E5A" style="flex-shrink:0"><path d="M5.042 15.165a2.528 2.528 0 01-2.52 2.52 2.528 2.528 0 01-2.522-2.52 2.528 2.528 0 012.522-2.52h2.52v2.52zm1.271 0a2.528 2.528 0 012.52-2.52 2.528 2.528 0 012.52 2.52v6.313A2.528 2.528 0 018.833 24a2.528 2.528 0 01-2.52-2.522v-6.313zM8.833 5.042a2.528 2.528 0 01-2.52-2.52A2.528 2.528 0 018.833 0a2.528 2.528 0 012.52 2.522v2.52H8.833zm0 1.271a2.528 2.528 0 012.52 2.52 2.528 2.528 0 01-2.52 2.52H2.522A2.528 2.528 0 010 8.833a2.528 2.528 0 012.522-2.52h6.311zm10.122 2.52a2.528 2.528 0 012.522-2.52A2.528 2.528 0 0124 8.833a2.528 2.528 0 01-2.522 2.52h-2.522V8.833zm-1.268 0a2.528 2.528 0 01-2.52 2.52 2.528 2.528 0 01-2.522-2.52V2.522A2.528 2.528 0 0115.167 0a2.528 2.528 0 012.52 2.522v6.311zm-2.52 10.122a2.528 2.528 0 012.52 2.522A2.528 2.528 0 0115.167 24a2.528 2.528 0 01-2.522-2.522v-2.52h2.522zm0-1.268a2.528 2.528 0 01-2.522-2.52 2.528 2.528 0 012.522-2.522h6.313A2.528 2.528 0 0124 15.167a2.528 2.528 0 01-2.522 2.52h-6.311z"/></svg>
+      <span style="font-size:13px;font-weight:700;color:#111827;flex:1">Send to Slack</span>
+      <button onclick="closeSlackModal()" style="background:none;border:none;font-size:18px;color:#9ca3af;cursor:pointer;line-height:1">×</button>
+    </div>
+    <div style="font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;text-transform:uppercase;margin-bottom:5px">Send to</div>
+    <select id="slack-dest" style="width:100%;padding:8px 10px;border:1px solid #e5e7eb;border-radius:7px;font-size:12px;font-family:inherit;color:#374151;background:#fff;margin-bottom:14px">
+      <option value="" disabled selected>Select a person or channel…</option>
+      <optgroup label="People">
+        ${SLACK_OPTS.filter(o=>o.group==='People').map(o=>`<option value="${o.value}">${o.label}</option>`).join('')}
+      </optgroup>
+      <optgroup label="Channels">
+        ${SLACK_OPTS.filter(o=>o.group==='Channels').map(o=>`<option value="${o.value}">${o.label}</option>`).join('')}
+      </optgroup>
+    </select>
+    <div style="font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;text-transform:uppercase;margin-bottom:5px">Message</div>
+    <textarea id="slack-msg" style="width:100%;border:1px solid #e5e7eb;border-radius:7px;padding:10px 12px;font-size:12px;font-family:inherit;resize:vertical;color:#374151;line-height:1.6;background:#f9fafb;min-height:200px" onfocus="this.style.borderColor='#4A154B';this.style.background='#fff'" onblur="this.style.borderColor='#e5e7eb';this.style.background='#f9fafb'">${autoMsg}</textarea>
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button onclick="closeSlackModal()" style="flex:1;padding:8px;border-radius:7px;background:#f3f4f6;color:#6b7280;border:none;font-size:12px;font-weight:600;cursor:pointer">Cancel</button>
+      <button onclick="sendToSlack()" style="flex:1;padding:8px;border-radius:7px;background:#4A154B;color:#fff;border:none;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px"><i class="ti ti-send"></i> Send</button>
+    </div>`;
+  document.body.appendChild(modal);
+}
+
+function closeSlackModal() {
+  document.getElementById('slack-modal-el')?.remove();
+  document.getElementById('slack-modal-bd')?.remove();
+}
+
+function sendToSlack() {
+  const dest = document.getElementById('slack-dest')?.value;
+  if (!dest) { showToast('Select a person or channel first'); return; }
+  const msg = document.getElementById('slack-msg')?.value.trim();
+  closeSlackModal();
+  const ta = document.getElementById('notes-ta');
+  if (ta) {
+    const now = new Date();
+    const stamp = `${now.getMonth()+1}/${now.getDate()} ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`;
+    const note = `[Sent to ${dest} in Slack on ${stamp}]`;
+    ta.textContent = ta.textContent ? ta.textContent + '\n' + note : note;
+  }
+  showToast(`Sent to ${dest} ✓`);
+}
+
+/* ── SEND TO LEAGUE OPS ── */
+const LO_TO_OPTS = ['Sue Blauch', 'Anmool Singh'];
+const LO_CC = ['Tucker Grady', 'Daniel Foley', 'Michael Abdenour', 'Curtis Oakley Jr.', 'Michael Gargin'];
+
+function buildLeagueOpsMsg(toName) {
+  const ev = currentEv;
+  const poss = currentPoss;
+  const game = 'TOR @ CHI 5/27';
+  const clock = ev ? ev.time : '';
+  const q = poss ? poss.q : '';
+  const link = 'https://clips.nba.com?gameNo=1022600138&inTime=14052701&outTime=14053701&source=grs&angle=df%20bcast';
+
+  const oiwEl = document.getElementById('oiw-comment');
+  const ptiwEl = document.getElementById('ptiw-comment');
+  const oiwText = (oiwEl && oiwEl.textContent.trim() && oiwEl.textContent.trim() !== 'No OIW Comment') ? oiwEl.textContent.trim() : '[Enter OIW comment]';
+  const ptiwText = (ptiwEl && ptiwEl.textContent.trim() && ptiwEl.textContent.trim() !== 'No PTIW Comment') ? ptiwEl.textContent.trim() : 'We strongly disagree with the final ruling. Can you please clarify the specific timing and point of contact that triggered this foul call?';
+  const ogrText = document.getElementById('comment-ta')?.value.trim() || '[Enter proposed OGR comment]';
+
+  const greeting = toName ? `Hi ${toName.split(' ')[0]},` : 'Hi Sue/Anmool,';
+
+  let lines = [];
+  lines.push(greeting);
+  lines.push('');
+  lines.push('I wanted to get your thoughts on / send this play along for your review because _____________');
+  lines.push('');
+  lines.push(`<b>Game:</b> ${game}`);
+  lines.push(`<b>Play:</b> Q${q || ''} ${clock}`.trim());
+  lines.push(`<b>Link:</b> ${link}`);
+  lines.push(`<b>OIW:</b> ${oiwText}`);
+  lines.push(`<b>PTIW:</b> ${ptiwText}`);
+  lines.push('');
+  lines.push(`<b>Proposed OGR Comment:</b> ${ogrText}`);
+  lines.push('');
+  lines.push('Best,');
+  lines.push('Bridget');
+  return lines.join('<br>');
+}
+
+function updateLeagueOpsMsg() {
+  const dest = document.getElementById('lo-to')?.value;
+  const el = document.getElementById('lo-msg');
+  if (el) el.innerHTML = buildLeagueOpsMsg(dest);
+}
+
+function openLeagueOpsModal() {
+  closeLeagueOpsModal();
+  const bd = document.createElement('div');
+  bd.id = 'lo-modal-bd';
+  bd.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:799';
+  bd.onclick = closeLeagueOpsModal;
+  document.body.appendChild(bd);
+
+  const autoMsg = buildLeagueOpsMsg();
+
+  const modal = document.createElement('div');
+  modal.id = 'lo-modal-el';
+  modal.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:560px;max-height:88vh;overflow:auto;background:#fff;border-radius:13px;box-shadow:0 16px 48px rgba(0,0,0,.22);z-index:800;padding:24px 26px;border:1px solid #e5e7eb';
+  modal.innerHTML = `
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+      <i class="ti ti-send" style="color:#92400e;font-size:16px"></i>
+      <span style="font-size:13px;font-weight:700;color:#111827;flex:1">Send to League Ops</span>
+      <button onclick="closeLeagueOpsModal()" style="background:none;border:none;font-size:18px;color:#9ca3af;cursor:pointer;line-height:1">×</button>
+    </div>
+    <div style="font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;text-transform:uppercase;margin-bottom:5px">To</div>
+    <select id="lo-to" onchange="updateLeagueOpsMsg()" style="width:100%;padding:8px 10px;border:1px solid #e5e7eb;border-radius:7px;font-size:12px;font-family:inherit;color:#374151;background:#fff;margin-bottom:14px">
+      <option value="" disabled selected>Select recipient…</option>
+      ${LO_TO_OPTS.map(o=>`<option value="${o}">${o}</option>`).join('')}
+    </select>
+    <div style="font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;text-transform:uppercase;margin-bottom:5px">CC</div>
+    <div style="font-size:11.5px;color:#6b7280;line-height:1.6;margin-bottom:14px;padding:8px 10px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:7px">${LO_CC.join(', ')}</div>
+    <div style="font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;text-transform:uppercase;margin-bottom:5px">Message</div>
+    <div id="lo-msg" contenteditable="true" style="width:100%;border:1px solid #e5e7eb;border-radius:7px;padding:10px 12px;font-size:12px;font-family:inherit;color:#374151;line-height:1.6;background:#f9fafb;min-height:320px;max-height:50vh;overflow:auto" onfocus="this.style.borderColor='#92400e';this.style.background='#fff'" onblur="this.style.borderColor='#e5e7eb';this.style.background='#f9fafb'">${autoMsg}</div>
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button onclick="closeLeagueOpsModal()" style="flex:1;padding:8px;border-radius:7px;background:#f3f4f6;color:#6b7280;border:none;font-size:12px;font-weight:600;cursor:pointer">Cancel</button>
+      <button onclick="sendToLeagueOps()" style="flex:1;padding:8px;border-radius:7px;background:#f7b8d0;color:#7a1f44;border:none;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px"><i class="ti ti-send"></i> Send</button>
+    </div>`;
+  document.body.appendChild(modal);
+}
+
+function closeLeagueOpsModal() {
+  document.getElementById('lo-modal-el')?.remove();
+  document.getElementById('lo-modal-bd')?.remove();
+}
+
+function sendToLeagueOps() {
+  const to = document.getElementById('lo-to')?.value;
+  if (!to) { showToast('Select a recipient first'); return; }
+  closeLeagueOpsModal();
+  const ta = document.getElementById('notes-ta');
+  if (ta) {
+    const now = new Date();
+    const stamp = `${now.getMonth()+1}/${now.getDate()} ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`;
+    const note = `[Sent to ${to} (CC: ${LO_CC.join(', ')}) at League Ops on ${stamp}]`;
+    ta.textContent = ta.textContent ? ta.textContent + '\n' + note : note;
+  }
+  showToast(`Sent to ${to} ✓`);
+}
+
+/* ── COMMENT LIBRARY POPUP ── */
+const CL_STORAGE_KEY = 'brs_comments_v6';
+const CL_SEED = [
+  {text:'{CP} firms up in a screening position and absorbs the body contact that occurs while setting the pick on {DP}.',playType:'Foul: Offensive',subPlayType:'Screener',detail:'Deliver/Absorb',callType:'no infraction'},
+  {text:'{CP} is moving alongside {DP}\'s path and absorbs the marginal contact that occurs at the start of the drive. {DP}\'s SQBR appears unaffected.',playType:'Foul: Personal',subPlayType:'Start Of Drive',detail:'Freedom Of Movement',callType:'no infraction'},
+  {text:'{CP} legally contests {DP}\'s driving shot attempt, and the follow-through contact after the release is considered incidental.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'Arm Follow-Through',callType:'no infraction'},
+  {text:'{CP} extends their arm into {DP}\'s front and initiates contact with {DP}\'s front that affects their SQBR during the drive.',playType:'Foul: Personal',subPlayType:'During Drive',detail:'Hand/Forearm To Front',callType:'infraction'},
+  {text:'{CP} is moving forward and late to establish a legal guarding position in {DP}\'s path prior to contact.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'Legal Guarding Position',callType:'infraction'},
+  {text:'{CP} wraps their arms around {DP}\'s body in an attempt to tie up the ball. A foul should be assessed rather than a jump ball.',playType:'Foul: Loose Ball',subPlayType:'Non-Rebound',detail:'Clamp-Lock-Hold',callType:'infraction'},
+  {text:'{CP} slightly extends their arms and some contact occurs with {DP} as {DP} navigates the screen. There is judgement regarding if {CP} absorbs the contact and retracts their arms during the screen, or if contact is delivered with the arms.',playType:'Foul: Offensive',subPlayType:'Screener',detail:'Arms',callType:'lean infraction'},
+  {text:'{CP} briefly places a hand on {DP}\'s side as they drive, and marginal contact occurs before {CP} retracts their hand during {DP}\'s shooting motion. There is judgement regarding the degree and effect of the contact.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'Arm Shooting Motion',callType:'lean infraction'},
+  {text:'{CP} contests the shot and any contact with {DP}\'s arm during the upward shooting motion is incidental.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'Arm Shooting Motion',callType:'no infraction'},
+  {text:'{CP} contests {DP}\'s driving shot attempt and avoids making any illegal contact during the upward shooting motion.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'Arm Shooting Motion',callType:'no infraction'},
+  {text:'{CP} maintains a legal guarding position as {DP} drives, and any contact to {DP}\'s arm during the shooting motion is marginal.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'Arm Shooting Motion',callType:'lean no'},
+  {text:'{CP} contests the shot and {DP} maintains control of the ball with their SQBR unaffected during the upward shooting motion.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'Arm Shooting Motion',callType:'no infraction'},
+  {text:'{CP} briefly places a forearm on {DP}\'s back and releases away as {DP} jumps forward to pursue the rebound. The contact appears marginal.',playType:'Foul: Loose Ball',subPlayType:'Rebound',detail:'Contact to Arm',callType:'lean no'},
+  {text:'Although {CP} reaches in and there appears to be some arm contact as {DP} attempts to gather the ball, there is no clear and conclusive video evidence to determine whether a foul occurs or whether the ball is legally dislodged on the play.',playType:'Foul: Personal',subPlayType:'On-Ball',detail:'Contact to Arm',callType:'lean no'},
+  {text:'{CP} momentarily applies their forearm to {DP}\'s side and marginal contact occurs. There is judgement in determining if the contact by either player rises to the level of a foul.',playType:'Foul: Personal',subPlayType:'On-Ball',detail:'Contact to Arm',callType:'lean no'},
+  {text:'{CP} maintains verticality as they defend {DP}\'s shot attempt. {CP} absorbs the contact and play should have continued without a whistle.',playType:'Foul: Shooting',subPlayType:'Jump Shot',detail:'Vertical',callType:'no infraction'},
+  {text:'Replay review of the out of bounds called pursuant to a coach\'s challenge was deemed unsuccessful. {CP} is the last to touch the ball before it goes out of bounds.',playType:'Stoppage: Out-of-Bounds',subPlayType:'Ball Out of Bounds',detail:'N/A',callType:'no infraction'},
+  {text:'Contact to an opponent\'s head/face can be deemed marginal when the result of a natural basketball move, provided the contact is not disproportionate or uncontrolled.',playType:'Foul: Personal',subPlayType:'On-Ball',detail:'Head Contact',callType:'lean no'},
+  {text:'{CP} makes contact with the part of {DP}\'s hand that is on the ball as they defend the shot attempt. Contact which occurs on the hand of the offensive player, while that part of the hand is in contact with the ball, is legal. Play should have continued without a whistle.',playType:'Foul: Shooting',subPlayType:'Jump Shot',detail:'Arm Shooting Motion',callType:'no infraction'},
+  {text:'{CP} jumps from point A to point B and makes contact with {DP}, which affects his driving shot attempt.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'A -> B Movement',callType:'infraction'},
+  {text:'{DP} establishes a legal guarding position prior to {CP}\'s upward shooting motion, and the contact that occurs is the natural result of a legal verticality position rather than an A to B movement into the path of the shooter.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'A -> B Movement',callType:'no infraction'},
+  {text:'{DP} is still adjusting and moving from point A to point B as {CP} elevates into their driving shot attempt, but there is judgement as to whether legal guarding position was fully established prior to the airborne contact.',playType:'Foul: Shooting',subPlayType:'Driving Shot Attempt',detail:'A -> B Movement',callType:'lean infraction'},
+];
+
+function shortPlayerName(full) {
+  if (!full) return null;
+  const last = full.split(',')[0].trim();
+  const team = full.includes('— Tempo') ? 'TOR' : (full.includes('— Sky') ? 'CHI' : '');
+  return team ? `${last} (${team})` : last;
+}
+
+function fillCLPlaceholders(text, bold) {
+  const cp = shortPlayerName(document.getElementById('rf-player')?.value) || '{CP}';
+  const dp = shortPlayerName(document.getElementById('rf-opponent')?.value) || '{DP}';
+  const wrap = bold ? (s => `<strong>${s}</strong>`) : (s => s);
+  return text.replace(/\{CP\}/g, wrap(cp)).replace(/\{DP\}/g, wrap(dp));
+}
+
+function openCommentLibrary() {
+  // Load from localStorage if available, else use built-in seed
+  let comments = CL_SEED;
+  try {
+    const stored = localStorage.getItem(CL_STORAGE_KEY);
+    if (stored) comments = JSON.parse(stored);
+  } catch(e) {}
+  window._clComments = comments;
+
+  // Read current play context — full combination: infraction type, play type, sub play type, rating
+  const infrType = document.getElementById('rf-infraction-type')?.value || '';
+  const playType = document.getElementById('rf-play-type')?.value || '';
+  const subPlayType = document.getElementById('rf-sub-play-type')?.value || '';
+  const rating = document.getElementById('rf-rating-combined')?.value || '';
+
+  // Pre-fill filter to match current rating
+  const ratingMap = {'Infraction':'infraction','Judgement - Lean Infraction':'lean infraction','Judgement - Lean No':'lean no','No Infraction':'no infraction'};
+  const ratingKey = ratingMap[rating] || '';
+  document.getElementById('cl-filter-rating').value = ratingKey;
+  document.getElementById('cl-search').value = '';
+
+  const isPlaceholder = v => !v || v === '-- select --';
+  window._clInfrType = isPlaceholder(infrType) ? '' : infrType;
+  window._clPlayType = isPlaceholder(playType) ? '' : playType;
+  window._clSubPlayType = isPlaceholder(subPlayType) ? '' : subPlayType;
+  window._clRating = ratingKey;
+
+  const ctxParts = [window._clInfrType, window._clPlayType, window._clSubPlayType, rating].filter(Boolean);
+  document.getElementById('cl-context-line').textContent = ctxParts.length
+    ? `Filtered for: ${ctxParts.join(' · ')}`
+    : 'Showing all comments — select an infraction type, play type, and rating to narrow results';
+
+  renderCLResults();
+  const ov = document.getElementById('cl-overlay');
+  ov.style.display = 'flex';
+}
+
+function renderCLResults() {
+  const comments = window._clComments || CL_SEED;
+  const search = document.getElementById('cl-search').value.toLowerCase();
+  const ratingFilter = document.getElementById('cl-filter-rating').value.toLowerCase();
+  const infrType = (window._clInfrType || '').toLowerCase();
+  const playType = (window._clPlayType || '').toLowerCase();
+  const subPlayType = (window._clSubPlayType || '').toLowerCase();
+
+  // Strict filter: every selected dropdown must match exactly. Search box still narrows by text.
+  const matched = comments.filter(c => {
+    const pt = (c.playType||'').toLowerCase();
+    const spt = (c.subPlayType||'').toLowerCase();
+    const ct = (c.callType||'').toLowerCase();
+    const text = (c.text||'').toLowerCase();
+    if (infrType && pt !== infrType) return false;
+    if (playType && spt !== playType) return false;
+    if (subPlayType && (c.detail||'').toLowerCase() !== subPlayType) return false;
+    if (ratingFilter && ct !== ratingFilter) return false;
+    if (search && !text.includes(search)) return false;
+    return true;
+  });
+
+  const container = document.getElementById('cl-results');
+  if (!matched.length) {
+    container.innerHTML = '<div style="text-align:center;color:#9ca3af;padding:32px;font-size:12px">No comments match this exact combination of dropdowns. Try clearing a filter or adjusting your search.</div>';
+    return;
+  }
+  const scored = matched.map(c => ({c}));
+
+  const ratingChipStyle = {
+    'infraction': 'background:#fee2e2;color:#991b1b',
+    'lean infraction': 'background:#fef3c7;color:#92400e',
+    'lean no': 'background:#dbeafe;color:#1e40af',
+    'no infraction': 'background:#dcfce7;color:#166534',
+  };
+
+  container.innerHTML = scored.map(({c}) => {
+    const ct = (c.callType||'').toLowerCase();
+    const chipStyle = ratingChipStyle[ct] || 'background:#f3f4f6;color:#6b7280';
+    const chipLabel = c.callType ? c.callType.replace(/\b\w/g,l=>l.toUpperCase()) : '';
+    const displayText = fillCLPlaceholders(c.text||'', true);
+    return `<div onclick="insertComment(${JSON.stringify(c.text||'').replace(/"/g,'&quot;')})" style="border:1px solid #e5e7eb;border-radius:10px;padding:12px 14px;cursor:pointer;transition:all .12s;background:#fff" onmouseover="this.style.borderColor='#93c5fd';this.style.background='#f0f9ff'" onmouseout="this.style.borderColor='#e5e7eb';this.style.background='#fff'">
+      <div style="display:flex;align-items:center;gap:7px;margin-bottom:7px;flex-wrap:wrap">
+        ${c.playType?`<span style="font-size:10px;font-weight:600;color:#6b7280;background:#f3f4f6;padding:2px 8px;border-radius:10px">${c.playType}</span>`:''}
+        ${chipLabel?`<span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;${chipStyle}">${chipLabel}</span>`:''}
+        <span style="margin-left:auto;font-size:10px;color:#bfdbfe;font-weight:600"><i class="ti ti-plus" style="font-size:10px"></i> Insert</span>
+      </div>
+      <div style="font-size:11.5px;color:#374151;line-height:1.6">${displayText}</div>
+    </div>`;
+  }).join('');
+}
+
+function insertComment(text) {
+  // Substitute {CP}/{DP} with the currently selected player/opponent
+  const plain = fillCLPlaceholders(text, false);
+  const ta = document.getElementById('comment-ta');
+  if (!ta) return;
+  ta.value = ta.value ? ta.value.trimEnd() + '\n' + plain : plain;
+  // Ensure the comment section is visible
+  const cs = document.getElementById('comment-section');
+  if (cs) cs.style.display = '';
+  closeCommentLibrary();
+  showToast('Comment inserted ✓');
+}
+
+function closeCommentLibrary() {
+  document.getElementById('cl-overlay').style.display = 'none';
+}
+document.getElementById('cl-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeCommentLibrary();
+});
+</script>
+</body>
+</html>

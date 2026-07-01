@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BRS — Interactions</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;color:#111827;background:linear-gradient(180deg,#f5f6fa 0%,#eef1f7 45%,#eef2f9 100%);height:100vh;overflow:hidden;display:flex;flex-direction:column}
+
+/* NAV */
+.nav{background:#1a3a6b;height:48px;display:flex;align-items:center;padding:0 24px;flex-shrink:0;overflow:visible;position:relative;z-index:300}
+.nav-logo{display:flex;align-items:center;gap:8px;cursor:pointer}
+.nav-brand{color:rgba(255,255,255,.9);font-size:11.5px;font-weight:600;white-space:nowrap;letter-spacing:.5px}
+.nav-whats-new{display:inline-flex;align-items:center;gap:4px;background:rgba(247,184,208,.18);border:1px solid rgba(247,184,208,.55);color:#f7b8d0;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:3px 9px 3px 8px;border-radius:20px;cursor:pointer;white-space:nowrap;margin-left:8px;transition:background .15s,color .15s}
+.nav-whats-new:hover{background:#f7b8d0;color:#1a3a6b}
+.nav-links{display:flex;align-items:center;margin-left:auto;flex-shrink:0;flex-wrap:nowrap;gap:0}
+.nl{color:rgba(255,255,255,.55);font-size:10.5px;padding:0 8px;cursor:pointer;font-weight:500;height:48px;display:flex;align-items:center;border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0}
+.nl:hover{color:#fff}
+.nl.on{color:#fff;border-bottom-color:#fff;font-weight:600}
+.nav-av{width:30px;height:30px;border-radius:50%;background:#2d5aa0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;flex-shrink:0;margin-left:12px;cursor:pointer}
+.nav-dropdown{position:relative;display:flex;align-items:center;height:48px}
+.nav-dropdown .nl{gap:4px}
+.nav-dd-caret{font-size:8px;opacity:.7;transition:transform .15s}
+.nav-dropdown.open .nav-dd-caret{transform:rotate(180deg)}
+.nav-dd-menu{display:none;position:absolute;top:44px;right:0;background:#fff;border:1px solid #e5e7eb;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.14);min-width:170px;z-index:400;padding:4px 0}
+.nav-dropdown.open .nav-dd-menu{display:block}
+.nav-dd-item{display:block;padding:9px 16px;font-size:11px;font-weight:500;color:#374151;text-decoration:none;white-space:nowrap;cursor:pointer}
+.nav-dd-item:hover{background:#f0f2f5;color:#1a3a6b}
+.nav-dd-item.active{color:#1a3a6b;font-weight:700;background:#f0f2f5}
+
+/* LAYOUT */
+.ix-page{flex:1;display:flex;overflow:hidden;gap:0}
+
+/* SIDEBAR */
+.ix-side{width:320px;flex-shrink:0;display:flex;flex-direction:column;border-right:1px solid #e5e7eb;background:#fff}
+.ix-side-hdr{padding:18px 18px 12px;border-bottom:1px solid #f3f4f6;flex-shrink:0}
+.ix-side-title{font-size:15px;font-weight:800;color:#111827;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.ix-side-title span{font-size:10px;background:#dbeafe;color:#1e40af;font-weight:700;padding:3px 9px;border-radius:20px}
+.ix-filters{display:flex;gap:6px;flex-wrap:wrap}
+.ix-filter{font-size:10.5px;font-weight:600;padding:5px 11px;border-radius:20px;border:1px solid #e5e7eb;color:#6b7280;background:#fff;cursor:pointer;transition:all .12s;white-space:nowrap}
+.ix-filter:hover{border-color:#c3d6f0;color:#1a3a6b;background:#f0f4fb}
+.ix-filter.on{background:#1a3a6b;color:#fff;border-color:#1a3a6b}
+.ix-list{flex:1;overflow-y:auto}
+.ix-row{display:flex;align-items:flex-start;gap:11px;padding:13px 16px;cursor:pointer;border-bottom:1px solid #f3f4f6;transition:background .1s;position:relative}
+.ix-row:hover{background:#f9fafb}
+.ix-row.sel{background:#eff6ff;border-left:3px solid #1a3a6b;padding-left:13px}
+.ix-row.unread .ix-row-name{font-weight:700;color:#111827}
+.ix-row.unread .ix-row-preview{color:#374151}
+.ix-av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;flex-shrink:0}
+.ix-av.mgr{background:#1a3a6b}
+.ix-av.fp{background:#3f6cb0}
+.ix-row-body{flex:1;min-width:0}
+.ix-row-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:3px}
+.ix-row-name{font-size:12.5px;font-weight:600;color:#374151;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ix-row-time{font-size:10px;color:#9ca3af;flex-shrink:0;margin-left:6px}
+.ix-row-preview{font-size:11.5px;color:#9ca3af;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px}
+.ix-row-meta{display:flex;align-items:center;gap:6px}
+.ix-type-badge{font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:10px}
+.ix-type-badge.share{background:#eff6ff;color:#1d4ed8}
+.ix-type-badge.playlist{background:#f3e8ff;color:#7c3aed}
+.ix-type-badge.reply{background:#f0fdf4;color:#15803d}
+.ix-unread-dot{width:7px;height:7px;border-radius:50%;background:#c8102e;flex-shrink:0;margin-left:auto}
+
+/* MAIN AREA */
+.ix-main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.ix-main-hdr{padding:16px 24px;border-bottom:1px solid #e5e7eb;background:#fff;flex-shrink:0;display:flex;align-items:center;gap:14px}
+.ix-main-av{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#fff;flex-shrink:0}
+.ix-main-name{font-size:15px;font-weight:700;color:#111827}
+.ix-main-sub{font-size:11.5px;color:#9ca3af;margin-top:2px}
+.ix-main-role-badge{margin-left:auto;font-size:10px;font-weight:700;padding:4px 10px;border-radius:12px}
+.ix-main-role-badge.mgr{background:#e8eef9;color:#1a3a6b}
+.ix-main-role-badge.fp{background:#f0f4fb;color:#3f6cb0}
+
+/* THREAD */
+.ix-thread{flex:1;overflow-y:auto;padding:20px 24px;display:flex;flex-direction:column;gap:16px}
+.ix-day-sep{text-align:center;font-size:10px;font-weight:700;color:#c9ced8;letter-spacing:.4px;text-transform:uppercase;position:relative;margin:4px 0}
+.ix-day-sep::before,.ix-day-sep::after{content:'';position:absolute;top:50%;width:calc(50% - 60px);height:1px;background:#f0f0f0}
+.ix-day-sep::before{left:0}
+.ix-day-sep::after{right:0}
+.ix-msg-row{display:flex;align-items:flex-end;gap:9px}
+.ix-msg-row.me{flex-direction:row-reverse}
+.ix-msg-av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#fff;flex-shrink:0}
+.ix-msg-av.mgr{background:#1a3a6b}
+.ix-msg-av.fp{background:#3f6cb0}
+.ix-msg-av.me{background:#9ca3af}
+.ix-bubble-col{display:flex;flex-direction:column;gap:3px;max-width:62%}
+.ix-msg-row.me .ix-bubble-col{align-items:flex-end}
+.ix-bubble-name{font-size:10px;font-weight:700;color:#9ca3af;padding:0 4px;margin-bottom:1px}
+.ix-bubble{background:#fff;border:1px solid #e5e7eb;border-radius:16px 16px 16px 4px;padding:10px 14px;font-size:12.5px;color:#111827;line-height:1.5;box-shadow:0 1px 4px rgba(17,24,39,.05)}
+.ix-msg-row.me .ix-bubble{background:#1a3a6b;color:#fff;border-color:#1a3a6b;border-radius:16px 16px 4px 16px;box-shadow:none}
+.ix-bubble-time{font-size:9.5px;color:#c9ced8;padding:0 4px}
+
+/* PLAY CARD */
+.ix-play-card{background:#f8faff;border:1.5px solid #d6e2f5;border-radius:12px;padding:12px 14px;margin-top:6px;cursor:pointer;transition:box-shadow .15s,border-color .15s}
+.ix-play-card:hover{box-shadow:0 4px 14px rgba(27,58,107,.12);border-color:#a3bfe8}
+.ix-play-card-eyebrow{font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#3f6cb0;margin-bottom:6px;display:flex;align-items:center;gap:5px}
+.ix-play-card-title{font-size:13px;font-weight:700;color:#111827;margin-bottom:4px}
+.ix-play-card-meta{font-size:11px;color:#6b7280;display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.ix-play-card-meta span{display:flex;align-items:center;gap:3px}
+.ix-play-card-footer{margin-top:10px;padding-top:8px;border-top:1px solid #dde8f5;font-size:10.5px;font-weight:600;color:#2d5aa0;display:flex;align-items:center;gap:4px}
+
+/* PLAYLIST CARD */
+.ix-pl-card{background:#faf5ff;border:1.5px solid #e9d5ff;border-radius:12px;padding:12px 14px;margin-top:6px;cursor:pointer;transition:box-shadow .15s,border-color .15s}
+.ix-pl-card:hover{box-shadow:0 4px 14px rgba(109,40,217,.1);border-color:#c4b5fd}
+.ix-pl-card-eyebrow{font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#7c3aed;margin-bottom:6px;display:flex;align-items:center;gap:5px}
+.ix-pl-card-name{font-size:13px;font-weight:700;color:#111827;margin-bottom:3px}
+.ix-pl-card-meta{font-size:11px;color:#7c3aed;font-weight:600}
+.ix-pl-card-footer{margin-top:10px;padding-top:8px;border-top:1px solid #e9d5ff;font-size:10.5px;font-weight:600;color:#7c3aed;display:flex;align-items:center;gap:4px}
+
+/* COMPOSER */
+.ix-composer{padding:14px 20px;border-top:1px solid #e5e7eb;background:#fff;flex-shrink:0;display:flex;align-items:center;gap:10px}
+.ix-input{flex:1;border:1px solid #e5e7eb;border-radius:22px;padding:10px 16px;font-size:12.5px;color:#111827;outline:none;resize:none;font-family:inherit;line-height:1.4;transition:border-color .15s;background:#f9fafb}
+.ix-input:focus{border-color:#3f6cb0;background:#fff}
+.ix-send{width:36px;height:36px;border-radius:50%;background:#1a3a6b;border:none;color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;transition:background .15s;flex-shrink:0}
+.ix-send:hover{background:#2d5aa0}
+
+/* EMPTY STATE */
+.ix-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#9ca3af;gap:12px;padding:40px}
+.ix-empty-icon{font-size:48px;opacity:.25}
+.ix-empty-txt{font-size:13px;font-weight:600;text-align:center}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav">
+  <div class="nav-logo" onclick="location='home.html'">
+    <img src="Logos/nba-logo.svg" style="width:16px;height:auto">
+    <div class="nav-brand">BRIDGET REVIEW SYSTEM 1.0</div>
+    <span class="nav-whats-new" onclick="event.stopPropagation();location='whats-new.html'"><i class="ti ti-sparkles" style="font-size:10px"></i> What's New</span>
+  </div>
+  <div class="nav-links">
+    <span class="nl" onclick="location='home.html'">HOME</span>
+    <span class="nl" onclick="location='published-games.html'">PUBLISHED GAMES</span>
+    <div class="nav-dropdown" id="rim-dropdown">
+      <span class="nl on" onclick="location='rim.html'">RIM</span>
+      <span class="nl" style="padding-left:0;padding-right:6px;font-size:9px;opacity:.8;cursor:pointer" onclick="toggleRimDropdown(event)">▾</span>
+      <div class="nav-dd-menu" id="rim-dd-menu" style="min-width:190px;left:0;right:auto">
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-home" style="margin-right:7px;font-size:12px"></i>RIM Home</span>
+        <span class="nav-dd-item active"><i class="ti ti-inbox" style="margin-right:7px;font-size:12px"></i>Interactions</span>
+        <span class="nav-dd-item"><i class="ti ti-messages" style="margin-right:7px;font-size:12px"></i>Threads</span>
+        <span class="nav-dd-item"><i class="ti ti-layout-board" style="margin-right:7px;font-size:12px"></i>Message Board</span>
+        <span class="nav-dd-item" onclick="location='playlists.html'"><i class="ti ti-playlist" style="margin-right:7px;font-size:12px"></i>Playlists</span>
+        <span class="nav-dd-item" onclick="location='assessments.html'"><i class="ti ti-clipboard-check" style="margin-right:7px;font-size:12px"></i>Assessments</span>
+        <span class="nav-dd-item" onclick="location='poe.html'"><i class="ti ti-target" style="margin-right:7px;font-size:12px"></i>Points of Education</span>
+      </div>
+    </div>
+    <span class="nl">RM REVIEW</span>
+    <span class="nl">FINAL L2M REVIEW</span>
+    <span class="nl">INDEPENDENT REVIEW</span>
+    <span class="nl">ADMINISTRATION</span>
+    <div class="nav-dropdown" id="nav-dropdown">
+      <span class="nl" onclick="toggleNavDropdown(event)">REVIEWER RESOURCE <span class="nav-dd-caret">▾</span></span>
+      <div class="nav-dd-menu">
+        <span class="nav-dd-item" onclick="location='comment-library.html'">Comment Library</span>
+      </div>
+    </div>
+    <span class="nl">MY SCHEDULE</span>
+    <div class="nav-av">BN</div>
+  </div>
+</div>
+
+<div class="ix-page">
+
+  <!-- SIDEBAR -->
+  <div class="ix-side">
+    <div class="ix-side-hdr">
+      <div class="ix-side-title">Interactions <span id="unread-badge">7 unread</span></div>
+      <div class="ix-filters">
+        <button class="ix-filter on" onclick="setFilter('all',this)">All</button>
+        <button class="ix-filter" onclick="setFilter('unread',this)">Unread</button>
+        <button class="ix-filter" onclick="setFilter('share',this)">Play Shares</button>
+        <button class="ix-filter" onclick="setFilter('playlist',this)">Playlist Adds</button>
+        <button class="ix-filter" onclick="setFilter('reply',this)">Replies</button>
+      </div>
+    </div>
+    <div class="ix-list" id="ix-list"></div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="ix-main" id="ix-main">
+    <div class="ix-empty">
+      <i class="ti ti-inbox ix-empty-icon"></i>
+      <div class="ix-empty-txt">Select a conversation</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const ME = {name:'Bridget Ng', initials:'BN', role:'fp'};
+
+const PEOPLE = {
+  tucker:   {name:'Tucker Grady',     initials:'TG', role:'mgr'},
+  curtis:   {name:'Curtis Oakley Jr.',initials:'CO', role:'mgr'},
+  abdenour: {name:'Michael Abdenour', initials:'MA', role:'mgr'},
+  gargin:   {name:'Michael Gargin',   initials:'MG', role:'mgr'},
+  foley:    {name:'Daniel Foley',     initials:'DF', role:'mgr'},
+  erica:    {name:'Erica Cabrera',    initials:'EC', role:'fp'},
+  ruth:     {name:'Ruth Kaiser',      initials:'RK', role:'fp'},
+  waheed:   {name:'Waheed Ameen',     initials:'WA', role:'fp'},
+  myron:    {name:'Myron Hickman',    initials:'MH', role:'fp'},
+  jaden:    {name:'Jaden Walker',     initials:'JW', role:'fp'},
+  maeve:    {name:'Maeve Carroll',    initials:'MC', role:'fp'},
+  sofia:    {name:'Sofia Carillo',    initials:'SC', role:'fp'},
+  joel:     {name:'Joel Joseph',      initials:'JJ', role:'fp'},
+  radjiv:   {name:'Radjiv Sanon',     initials:'RS', role:'fp'},
+};
+
+const CONVOS = [
+  {
+    id: 1, person: 'maeve', type: 'share', unread: true,
+    preview: 'Maeve sent you a play — 5/25 NYK @ CLE',
+    time: '5/27',
+    messages: [
+      {from:'maeve', text:'Hey Bridget — wanted to flag this one from the NYK @ CLE game. Curious what you think about the defender\'s positioning on the drive.', time:'5/27 9:04 AM'},
+      {from:'maeve', playCard:{eyebrow:'Play Share', title:'Player drives baseline, contact at rim', game:'NYK @ CLE · 5/25/2026', detail:'Q3 02:14 · Lead position', official:'Catherine Chang', tag:'Block/Charge'}, time:'5/27 9:04 AM'},
+      {from:'me', text:'Thanks for sending this over! Looks like a clean block to me — defender established position well before the drive got there. Agree it\'s a tough look from the trail angle though.', time:'5/27 9:22 AM'},
+      {from:'maeve', text:'Yeah exactly. The replays make it clearer. Tucker said the same thing on the calibration call — good we\'re aligned.', time:'5/27 9:31 AM'},
+    ]
+  },
+  {
+    id: 2, person: 'tucker', type: 'reply', unread: true,
+    preview: 'Tucker: Great work on the TOR @ CHI game.',
+    time: '5/26',
+    messages: [
+      {from:'tucker', text:'Bridget — just finished the second check on your TOR @ CHI report. Really solid work this cycle. Your notes on the Diggins drive situation were well-reasoned.', time:'5/26 4:12 PM'},
+      {from:'tucker', text:'One thing for next time: when you\'re noting a foul type change, make sure the "body part initiating" field is filled in — we\'re tracking that for the end-of-year data pull.', time:'5/26 4:13 PM'},
+      {from:'me', text:'Appreciate the feedback Tucker! Will make sure to include that going forward. Is there a specific field in the form or is it part of the notes section?', time:'5/26 4:28 PM'},
+      {from:'tucker', text:'It\'s in the sub-type row — should auto-populate but double check it when you\'re on a shooting foul. Sometimes it needs a manual entry.', time:'5/26 4:35 PM'},
+    ]
+  },
+  {
+    id: 3, person: 'tucker', type: 'playlist', unread: true,
+    preview: 'Tucker added you to \'Plays for 2026-27 Training\'',
+    time: '5/25',
+    messages: [
+      {from:'tucker', text:'Added you to this playlist — 22 plays we\'re using for the pre-season training deck. Good mix of block/charges, DHOs, and off-ball fouls. Take a look before the July calibration.', time:'5/25 11:30 AM'},
+      {from:'tucker', playlistCard:{name:'Plays for 2026-27 Training', count:'22 plays', desc:'Pre-season calibration deck · Block/Charge, DHO, Off-Ball'}, time:'5/25 11:30 AM'},
+      {from:'me', text:'Got it, thanks! I\'ll go through these this week. Is there a recommended order or just watch through them all?', time:'5/25 12:02 PM'},
+      {from:'tucker', text:'No specific order — but I\'d do the block/charges first, they\'re the ones the group had the most variance on last season.', time:'5/25 12:18 PM'},
+    ]
+  },
+  {
+    id: 4, person: 'foley', type: 'share', unread: true,
+    preview: 'Dan sent you a play — GSV @ LVA',
+    time: '5/20',
+    messages: [
+      {from:'foley', text:'Bridget, wanted to get your eyes on this one from Friday night. It\'s a DHO situation — defender trails and there\'s contact. I had it as a foul but curious if you see it differently.', time:'5/20 8:14 AM'},
+      {from:'foley', playCard:{eyebrow:'Play Share', title:'DHO — defender trails, arm contact on pull-up', game:'GSV @ LVA · 5/17/2026', detail:'Q4 00:48 · Trail position', official:'Dan Foley', tag:'Foul: Shooting'}, time:'5/20 8:14 AM'},
+      {from:'me', text:'I see the contact but I think the defender\'s arm gets there on the way down from a set position — I\'d have this as NC. The shooter sells it pretty hard too.', time:'5/20 9:05 AM'},
+    ]
+  },
+  {
+    id: 5, person: 'curtis', type: 'reply', unread: true,
+    preview: 'Curtis: Re: Re: Re: Your Interaction Created 5/24',
+    time: '5/26',
+    messages: [
+      {from:'me', text:'Hey Curtis — wanted to follow up on the off-ball screen situation from the CLE @ DET game. Did you get a chance to look at the clip I sent?', time:'5/24 2:10 PM'},
+      {from:'curtis', text:'Just watched it. I think you\'re right that it\'s an illegal screen — the screener never sets before the ball handler gets there. Good catch.', time:'5/25 10:30 AM'},
+      {from:'me', text:'Thanks! Should I flag this in my next report or is this one more of a training note?', time:'5/25 10:48 AM'},
+      {from:'curtis', text:'Flag it in your report and note that it was a recurring pattern in that game — saw two other similar screens in Q3. Helps the data team.', time:'5/26 9:12 AM'},
+      {from:'me', text:'Will do, thanks Curtis.', time:'5/26 9:20 AM'},
+      {from:'curtis', text:'Also — nice job on the TOR @ CHI game. Tucker mentioned it on our call.', time:'5/26 9:21 AM'},
+    ]
+  },
+  {
+    id: 6, person: 'waheed', type: 'share', unread: false,
+    preview: 'You sent Waheed a play — TOR @ CHI',
+    time: '5/22',
+    messages: [
+      {from:'me', text:'Hey Waheed — sent you a play from the TOR @ CHI game I had last week. Want your read on the contact situation at the rim.', time:'5/22 3:40 PM'},
+      {from:'me', playCard:{eyebrow:'Play Share', title:'S. Diggins drives toward the basket, contact at rim', game:'TOR @ CHI · 5/20/2026', detail:'Q1 06:46 · Lead position', official:'Catherine Chang', tag:'Foul: Offensive'}, time:'5/22 3:40 PM'},
+      {from:'waheed', text:'Looked at this — I\'d actually flip this. Diggins initiates the contact pushing into the defender before the gather. Offensive foul is the right call imo.', time:'5/22 5:15 PM'},
+      {from:'me', text:'Interesting, I had it as NC. The defender\'s feet looked like they were still moving on the gather. Good to flag for the calibration.', time:'5/22 5:42 PM'},
+      {from:'waheed', text:'Yeah it\'s close. I\'d bring it to Tucker\'s attention — worth a second check discussion.', time:'5/22 5:50 PM'},
+    ]
+  },
+  {
+    id: 7, person: 'abdenour', type: 'reply', unread: false,
+    preview: 'Abdenour: L2M Completed — 5/13 CLE @ DET',
+    time: '5/14',
+    messages: [
+      {from:'abdenour', text:'Just finished the L2M for the 5/13 CLE @ DET game. A few things worth noting for your records — two plays in Q4 where your ratings aligned with the L2M outcome, which is great.', time:'5/14 11:05 AM'},
+      {from:'abdenour', text:'One area to revisit: the end-of-drive foul calls in the 4th. We\'re seeing some variance across the group on these and will do a calibration next week.', time:'5/14 11:06 AM'},
+      {from:'me', text:'Thanks for the heads up — I\'ll review those Q4 plays before the calibration. Any clips posted?', time:'5/14 11:22 AM'},
+      {from:'abdenour', text:'I\'ll add them to the training playlist this afternoon.', time:'5/14 11:30 AM'},
+    ]
+  },
+  {
+    id: 8, person: 'ruth', type: 'playlist', unread: false,
+    preview: 'Ruth added you to \'Block-Charge 2026\'',
+    time: '5/18',
+    messages: [
+      {from:'ruth', text:'Hey Bridget! Added you to my block-charge playlist — put together 9 plays from this season that had interesting positioning situations. Would love your take.', time:'5/18 7:30 PM'},
+      {from:'ruth', playlistCard:{name:'Block-Charge 2026', count:'9 plays', desc:'Interesting positioning situations from 2026 season'}, time:'5/18 7:30 PM'},
+      {from:'me', text:'Love this — block/charges are my biggest area to improve. Will watch through this week.', time:'5/18 8:05 PM'},
+      {from:'ruth', text:'Same! I\'ve been struggling with the semi-circle rule situations specifically. Play 4 in the list is a good example of the tricky ones.', time:'5/18 8:18 PM'},
+    ]
+  },
+  {
+    id: 9, person: 'erica', type: 'reply', unread: false,
+    preview: 'You: Will do, thanks!',
+    time: '5/15',
+    messages: [
+      {from:'erica', text:'Hey Bridget — heads up, the June Assessment deadline got pushed to July 1st. Saw you hadn\'t started yet (I checked since I hadn\'t either lol).', time:'5/15 2:00 PM'},
+      {from:'me', text:'Oh thank goodness! I completely forgot. Thank you for the heads up Erica.', time:'5/15 2:12 PM'},
+      {from:'erica', text:'No worries! The plays in it are mostly from CLE games so hopefully not too bad.', time:'5/15 2:18 PM'},
+      {from:'me', text:'Will do, thanks!', time:'5/15 2:20 PM'},
+    ]
+  },
+];
+
+let currentFilter = 'all';
+let currentId = null;
+
+function visibleConvos(filter) {
+  if (filter === 'all') return CONVOS;
+  if (filter === 'unread') return CONVOS.filter(c => c.unread);
+  return CONVOS.filter(c => c.type === filter);
+}
+
+function initials(key) { return PEOPLE[key].initials; }
+function roleClass(key) { return PEOPLE[key].role; }
+
+function renderList(filter) {
+  const list = document.getElementById('ix-list');
+  const convos = visibleConvos(filter);
+  if (!convos.length) {
+    list.innerHTML = '<div style="padding:32px 20px;text-align:center;color:#c9ced8;font-size:12px;font-weight:600;">No conversations here yet.</div>';
+    return;
+  }
+  list.innerHTML = convos.map(c => {
+    const p = PEOPLE[c.person];
+    const typeLbl = c.type === 'share' ? 'Play Share' : c.type === 'playlist' ? 'Playlist' : 'Reply';
+    return `<div class="ix-row${c.unread?' unread':''}${c.id===currentId?' sel':''}" onclick="selectConvo(${c.id})">
+      <div class="ix-av ${p.role}">${p.initials}</div>
+      <div class="ix-row-body">
+        <div class="ix-row-top">
+          <div class="ix-row-name">${p.name}</div>
+          <div class="ix-row-time">${c.time}</div>
+        </div>
+        <div class="ix-row-preview">${c.preview}</div>
+        <div class="ix-row-meta">
+          <span class="ix-type-badge ${c.type}">${typeLbl}</span>
+          ${c.unread ? '<span class="ix-unread-dot"></span>' : ''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderPlayCard(card) {
+  return `<div class="ix-play-card" onclick="alert('Opens play in review.html')">
+    <div class="ix-play-card-eyebrow"><i class="ti ti-video"></i> ${card.eyebrow}</div>
+    <div class="ix-play-card-title">${card.title}</div>
+    <div class="ix-play-card-meta">
+      <span><i class="ti ti-calendar-event"></i> ${card.game}</span>
+      <span><i class="ti ti-clock"></i> ${card.detail}</span>
+      <span><i class="ti ti-user"></i> ${card.official}</span>
+    </div>
+    <div class="ix-play-card-footer"><i class="ti ti-tag"></i> ${card.tag} &nbsp;·&nbsp; <span>Open in review</span> <i class="ti ti-arrow-right" style="font-size:11px"></i></div>
+  </div>`;
+}
+
+function renderPlaylistCard(card) {
+  return `<div class="ix-pl-card" onclick="alert('Opens playlist')">
+    <div class="ix-pl-card-eyebrow"><i class="ti ti-playlist"></i> Playlist</div>
+    <div class="ix-pl-card-name">${card.name}</div>
+    <div class="ix-pl-card-meta">${card.count} &nbsp;·&nbsp; ${card.desc}</div>
+    <div class="ix-pl-card-footer"><i class="ti ti-arrow-right" style="font-size:11px"></i> View playlist</div>
+  </div>`;
+}
+
+function renderMessage(msg, convoPersonKey) {
+  const isMe = msg.from === 'me';
+  const person = isMe ? ME : PEOPLE[convoPersonKey];
+  const avClass = isMe ? 'me' : person.role;
+  const nameLabel = isMe ? 'You' : person.name.split(' ')[0];
+
+  let content = '';
+  if (msg.playCard) {
+    content = renderPlayCard(msg.playCard);
+  } else if (msg.playlistCard) {
+    content = renderPlaylistCard(msg.playlistCard);
+  } else {
+    content = `<div class="ix-bubble">${msg.text}</div>`;
+  }
+
+  return `<div class="ix-msg-row${isMe?' me':''}">
+    <div class="ix-msg-av ${avClass}">${person.initials}</div>
+    <div class="ix-bubble-col">
+      <div class="ix-bubble-name">${nameLabel}</div>
+      ${content}
+      <div class="ix-bubble-time">${msg.time}</div>
+    </div>
+  </div>`;
+}
+
+function selectConvo(id) {
+  currentId = id;
+  const convo = CONVOS.find(c => c.id === id);
+  convo.unread = false;
+
+  const unreadCount = CONVOS.filter(c => c.unread).length;
+  document.getElementById('unread-badge').textContent = unreadCount > 0 ? `${unreadCount} unread` : 'all read';
+
+  renderList(currentFilter);
+
+  const p = PEOPLE[convo.person];
+  const roleLbl = p.role === 'mgr' ? 'Manager / Second Checker' : 'First Pass Reviewer';
+
+  document.getElementById('ix-main').innerHTML = `
+    <div class="ix-main-hdr">
+      <div class="ix-main-av ${p.role}">${p.initials}</div>
+      <div>
+        <div class="ix-main-name">${p.name}</div>
+        <div class="ix-main-sub">${convo.messages.length} messages &nbsp;·&nbsp; ${convo.type === 'share' ? 'Play Share' : convo.type === 'playlist' ? 'Playlist' : 'Reply thread'}</div>
+      </div>
+      <div class="ix-main-role-badge ${p.role}">${roleLbl}</div>
+    </div>
+    <div class="ix-thread" id="ix-thread">
+      ${convo.messages.map(m => renderMessage(m, convo.person)).join('')}
+    </div>
+    <div class="ix-composer">
+      <input class="ix-input" id="ix-input" placeholder="Reply to ${p.name.split(' ')[0]}…" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendReply(${id})}">
+      <button class="ix-send" onclick="sendReply(${id})"><i class="ti ti-send"></i></button>
+    </div>`;
+
+  const thread = document.getElementById('ix-thread');
+  thread.scrollTop = thread.scrollHeight;
+}
+
+function sendReply(id) {
+  const input = document.getElementById('ix-input');
+  const text = input.value.trim();
+  if (!text) return;
+
+  const convo = CONVOS.find(c => c.id === id);
+  const now = new Date();
+  const timeStr = `${now.getMonth()+1}/${now.getDate()} ${now.getHours() % 12 || 12}:${String(now.getMinutes()).padStart(2,'0')} ${now.getHours() >= 12 ? 'PM' : 'AM'}`;
+
+  convo.messages.push({from:'me', text, time: timeStr});
+  convo.preview = `You: ${text.slice(0,50)}${text.length>50?'…':''}`;
+
+  input.value = '';
+
+  const thread = document.getElementById('ix-thread');
+  const msgEl = document.createElement('div');
+  msgEl.innerHTML = renderMessage({from:'me', text, time:timeStr}, convo.person);
+  thread.appendChild(msgEl.firstElementChild);
+  thread.scrollTop = thread.scrollHeight;
+}
+
+function setFilter(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll('.ix-filter').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  renderList(filter);
+}
+
+function toggleNavDropdown(e){e.stopPropagation();document.getElementById('nav-dropdown').classList.toggle('open')}
+function toggleRimDropdown(e){e.stopPropagation();document.getElementById('rim-dropdown').classList.toggle('open');document.getElementById('nav-dropdown').classList.remove('open');}
+document.addEventListener('click',()=>{document.getElementById('nav-dropdown').classList.remove('open');document.getElementById('rim-dropdown')?.classList.remove('open');});
+
+renderList('all');
+selectConvo(1);
+</script>
+</body>
+</html>

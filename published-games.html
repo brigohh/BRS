@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BRS — Second Check Hub</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;color:#111827;background:linear-gradient(180deg,#f6f7fa 0%,#eef0f5 100%);min-height:100vh}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:6px}
+::-webkit-scrollbar-thumb:hover{background:#b8bec9}
+/* NAV */
+.nav{background:#1a3a6b;height:48px;display:flex;align-items:center;padding:0 24px;gap:0;flex-shrink:0;overflow:visible;position:relative;z-index:300}
+.nav-logo{display:flex;align-items:center;gap:8px}
+.nav-brand{color:rgba(255,255,255,.9);font-size:11.5px;font-weight:600;white-space:nowrap;letter-spacing:.5px}
+.nav-whats-new{display:inline-flex;align-items:center;gap:4px;background:rgba(247,184,208,.18);border:1px solid rgba(247,184,208,.55);color:#f7b8d0;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:3px 9px 3px 8px;border-radius:20px;cursor:pointer;white-space:nowrap;margin-left:8px;transition:background .15s,color .15s}
+.nav-whats-new:hover{background:#f7b8d0;color:#1a3a6b}
+.nav-links{display:flex;align-items:center;margin-left:auto;gap:0;flex-shrink:0;flex-wrap:nowrap}
+.nl{color:rgba(255,255,255,.55);font-size:10.5px;padding:0 8px;cursor:pointer;font-weight:500;height:48px;display:flex;align-items:center;border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0}
+.nl:hover{color:#fff}
+.nl.on{color:#fff;border-bottom-color:#fff;font-weight:600}
+.nav-av{width:30px;height:30px;border-radius:50%;background:#2d5aa0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;flex-shrink:0}
+/* PAGE WRAP */
+.page{max-width:1680px;margin:0 auto;padding:28px 20px}
+/* SECTION LABELS */
+.section-title{font-size:11px;font-weight:700;letter-spacing:.5px;color:#9ca3af;text-transform:uppercase;margin-bottom:14px}
+/* HERO STATS ROW */
+.hero-stats{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;margin-bottom:28px}
+.stat-card{background:rgba(255,255,255,.97);border-radius:13px;padding:20px 22px;box-shadow:0 1px 3px rgba(17,24,39,.07);border:1px solid rgba(255,255,255,.15);border-left:4px solid rgba(255,255,255,.25);transition:box-shadow .15s,transform .15s}
+.stat-card:hover{box-shadow:0 6px 16px rgba(17,24,39,.1);transform:translateY(-1px)}
+.stat-card.primary{background:#ffffff;border-color:transparent;border-left-color:#f9a8d4}
+.stat-card.accent-orange{border-left-color:#f9a8d4}
+.stat-card.accent-teal{border-left-color:#f9a8d4}
+.stat-card.accent-purple{border-left-color:#f9a8d4}
+.stat-label{font-size:10px;font-weight:700;letter-spacing:.4px;color:#9ca3af;text-transform:uppercase;margin-bottom:6px}
+.stat-card.primary .stat-label{color:#9ca3af}
+.stat-val{font-size:32px;font-weight:800;color:#111827;line-height:1}
+.stat-card.primary .stat-val{color:#111827}
+.stat-sub{font-size:11px;color:#9ca3af;margin-top:5px;display:flex;align-items:center;gap:4px}
+.stat-card.primary .stat-sub{color:#9ca3af}
+.trend-up{color:#16a34a;font-weight:700}
+.trend-down{color:#dc2626;font-weight:700}
+.trend-badge{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:700}
+.tb-up{background:#dcfce7;color:#166534}
+.tb-down{background:#fee2e2;color:#991b1b}
+/* MAIN GRID */
+.main-grid{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:16px;align-items:stretch}
+.bottom-grid{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:28px;align-items:start}
+/* CHART CARD */
+.chart-card{background:#fff;border-radius:13px;padding:22px 24px;box-shadow:0 1px 3px rgba(17,24,39,.07);border:1px solid #e9ebf0}
+.chart-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px}
+.chart-title{font-size:14px;font-weight:700;color:#111827}
+.chart-desc{font-size:11px;color:#9ca3af;margin-top:2px}
+.chart-legend{display:flex;gap:14px;align-items:center}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:#6b7280}
+.leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+/* SVG chart */
+.chart-svg{width:100%;overflow:visible}
+/* SIDEBAR CARDS */
+.side-stack{display:flex;flex-direction:column;gap:16px;height:100%}
+.side-card{background:#fff;border-radius:13px;padding:18px 20px;box-shadow:0 1px 3px rgba(17,24,39,.07);border:1px solid #e9ebf0;flex:1;display:flex;flex-direction:column;min-height:0}
+/* PLAY TYPES */
+.play-rows-wrap{display:flex;flex-direction:column;gap:0;flex:1;overflow-y:auto;min-height:0}
+.play-type-group{display:flex;flex-direction:column;gap:3px}
+.play-type-name{font-size:11px;font-weight:600;color:#374151;margin-bottom:2px}
+.play-row{display:flex;align-items:center;gap:8px}
+.play-bar-wrap{flex:1;height:7px;background:#f3f4f6;border-radius:4px;overflow:hidden}
+.play-bar{height:100%;border-radius:4px}
+.play-pct{font-size:10px;font-weight:700;color:#6b7280;width:30px;text-align:right;flex-shrink:0}
+/* RECENT GAMES */
+.game-list{display:flex;flex-direction:column;gap:8px}
+.gl-row{display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:8px;background:#f8fafc;border:1px solid #e5e7eb;cursor:pointer;transition:background .12s}
+.gl-row:hover{background:#f0f4ff}
+.gl-logos{display:flex;align-items:center;gap:4px;flex-shrink:0}
+.gl-logo{width:16px;height:16px;object-fit:contain}
+.gl-teams{font-size:12px;font-weight:600;color:#111827;flex:1}
+.gl-date{font-size:10px;color:#9ca3af;flex-shrink:0}
+.gl-agree{font-size:12px;font-weight:700;flex-shrink:0;width:38px;text-align:right}
+.agree-hi{color:#16a34a}
+.agree-mid{color:#d97706}
+.agree-lo{color:#dc2626}
+/* MILESTONE CARDS */
+.milestone-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px}
+.milestone-card{background:#fff;border-radius:12px;padding:18px 20px;box-shadow:0 1px 4px rgba(0,0,0,.07);border:1px solid #e5e7eb;display:flex;align-items:flex-start;gap:14px}
+.milestone-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.mi-gold{background:#fef9c3}
+.mi-blue{background:#dbeafe}
+.milestone-body{}
+.milestone-label{font-size:10px;font-weight:700;letter-spacing:.4px;color:#9ca3af;text-transform:uppercase;margin-bottom:4px}
+.milestone-val{font-size:20px;font-weight:800;color:#111827;line-height:1.1}
+.milestone-sub{font-size:11px;color:#9ca3af;margin-top:3px}
+/* BOTTOM TABLE */
+.lg-filter-bar{display:flex;align-items:center;gap:6px;margin-bottom:12px}
+.lg-chip{padding:6px 16px;border:1px solid #d1d5db;border-radius:20px;font-size:11.5px;font-weight:600;background:#fff;color:#6b7280;cursor:pointer;display:flex;align-items:center;gap:8px;transition:all .12s;height:36px}
+.lg-chip:hover{background:#f3f4f6;border-color:#c0c8d4}
+.lg-chip.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
+.lg-chip img{width:20px;height:20px;object-fit:contain}
+.lg-filter-top{display:flex;align-items:center;gap:8px;margin-bottom:20px;padding-top:4px}
+.analytics-toggle{display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:700;letter-spacing:.4px;color:#fff;cursor:pointer;user-select:none;background:transparent;border:none;padding:18px 24px;width:100%;text-align:left;transition:opacity .12s}
+.analytics-toggle:hover{opacity:.85}
+.analytics-toggle .at-label{display:flex;align-items:center;gap:8px;color:#fff}
+.analytics-toggle .at-chevron{font-size:14px;color:rgba(255,255,255,.7);transition:transform .2s}
+.analytics-card{background:#1a3a6b;border-radius:14px;margin-bottom:24px;overflow:hidden;box-shadow:0 4px 16px rgba(26,58,107,.18);transition:background .25s}
+.analytics-card.lg-wnba{background:#f59e4a}
+.analytics-card.lg-nba{background:#1a3a6b}
+.analytics-card.lg-gleague{background:#111827}
+.analytics-card.lg-bal{background:#166534}
+.analytics-card-body{padding:0 20px 20px}
+#analytics-section{transition:none}
+.bottom-card{background:#fff;border-radius:13px;box-shadow:0 1px 3px rgba(17,24,39,.07);border:1px solid #e9ebf0;overflow:hidden}
+.bottom-card.standalone{box-shadow:0 1px 4px rgba(0,0,0,.07);border:1px solid #e5e7eb}
+.bottom-card table{width:100%;border-collapse:collapse}
+.bottom-card thead{background:#f8fafc}
+.bottom-card th{padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.3px;color:#9ca3af;text-transform:uppercase;border-bottom:1px solid #e5e7eb;white-space:nowrap}
+.bottom-card td{padding:13px 14px;border-bottom:1px solid #f3f4f6;font-size:12px;color:#374151;vertical-align:middle}
+.bottom-card tr:last-child td{border-bottom:none}
+.bottom-card tr:hover td{background:#eff6ff;cursor:pointer}
+.agree-pill{display:inline-flex;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;border:1px solid}
+.ap-hi{background:#dcfce7;color:#166534;border-color:#86efac}
+.ap-mid{background:#fef9c3;color:#854d0e;border-color:#fde68a}
+.ap-lo{background:#fee2e2;color:#991b1b;border-color:#fca5a5}
+.tl{display:flex;align-items:center;gap:6px}
+.tl img{width:16px;height:16px;object-fit:contain}
+.pt-type-row td{background:#f8fafc;font-weight:700;font-size:12px;color:#111827;border-bottom:1px solid #e5e7eb;border-top:2px solid #e5e7eb;cursor:pointer;user-select:none}
+.pt-type-row:hover td{background:#f0f4ff}
+.pt-type-row td:first-child{padding-left:14px}
+.pt-sub-row td{background:#fff;font-size:11.5px;color:#374151;border-bottom:1px solid #f3f4f6}
+.pt-sub-row td:first-child{padding-left:30px;color:#6b7280}
+.pt-sub-row.hidden{display:none}
+.pt-bar-wrap{flex:1;height:7px;background:#f3f4f6;border-radius:4px;overflow:hidden;max-width:200px}
+.pt-bar{height:100%;border-radius:4px}
+.pt-rate-cell{display:flex;align-items:center;gap:10px;padding:0}
+.pt-pct{font-size:11px;font-weight:700;min-width:34px}
+.pt-chevron{font-size:10px;color:#9ca3af;margin-left:6px;transition:transform .15s;display:inline-block}
+.pt-type-row.open .pt-chevron{transform:rotate(90deg)}
+.published-badge{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;background:#e0e7ff;color:#3730a3;border:1px solid #a5b4fc}
+.complete-badge{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;background:#dcfce7;color:#166534;border:1px solid #86efac}
+/* SLIDE-OUT PANEL */
+.rc-panel{position:fixed;top:0;right:-440px;width:420px;height:100vh;background:#fff;box-shadow:-4px 0 24px rgba(0,0,0,.12);z-index:1000;transition:right .25s ease;display:flex;flex-direction:column}
+.rc-panel.open{right:0}
+.rc-overlay{position:fixed;inset:0;background:rgba(0,0,0,.15);z-index:999;display:none;cursor:pointer}
+.rc-overlay.open{display:block}
+.rc-panel-hdr{padding:20px 20px 16px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:flex-start;flex-shrink:0}
+.rc-panel-title{font-size:14px;font-weight:700;color:#111827;display:flex;align-items:center;gap:6px}
+.rc-panel-meta{font-size:11px;color:#9ca3af;margin-top:4px}
+.rc-close{width:28px;height:28px;border:none;background:#f3f4f6;border-radius:6px;cursor:pointer;font-size:13px;color:#6b7280;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.rc-close:hover{background:#e5e7eb}
+.rc-panel-body{flex:1;overflow-y:auto;padding:12px 20px 20px}
+.rc-row{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid #f3f4f6}
+.rc-row:last-child{border-bottom:none}
+.rc-time{font-size:10px;font-weight:600;color:#9ca3af;flex:0 0 54px;padding-top:2px}
+.rc-change{display:flex;align-items:center;gap:4px;flex-shrink:0;padding-top:1px}
+.rc-badge{padding:2px 6px;border-radius:4px;font-size:9.5px;font-weight:700;letter-spacing:.1px}
+.rc-arr{color:#c4c4c4;font-size:10px;line-height:1}
+.rc-detail{flex:1;min-width:0}
+.rc-type{font-size:11.5px;font-weight:600;color:#111827}
+.rc-sub{font-size:10.5px;color:#9ca3af;margin-top:1px}
+#chart-tip{position:fixed;display:none;background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:10px 14px;box-shadow:0 4px 16px rgba(0,0,0,.12);font-size:11.5px;color:#374151;pointer-events:none;z-index:2000;min-width:160px}
+.nav-dropdown{position:relative;display:flex;align-items:center;height:48px}
+.nav-dropdown .nl{gap:4px}
+.nav-dd-caret{font-size:8px;opacity:.7;transition:transform .15s}
+.nav-dropdown.open .nav-dd-caret{transform:rotate(180deg)}
+.nav-dd-menu{display:none;position:absolute;top:44px;right:0;background:#fff;border:1px solid #e5e7eb;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.14);min-width:170px;z-index:400;padding:4px 0}
+.nav-dropdown.open .nav-dd-menu{display:block}
+.nav-dd-item{display:block;padding:9px 16px;font-size:11px;font-weight:500;color:#374151;text-decoration:none;white-space:nowrap;cursor:pointer}
+.nav-dd-item:hover{background:#f0f2f5;color:#1a3a6b}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-logo" onclick="location='home.html'" style="cursor:pointer">
+    <img src="Logos/nba-logo.svg" style="width:16px;height:auto">
+    <div class="nav-brand">BRIDGET REVIEW SYSTEM 1.0</div>
+    <span class="nav-whats-new" onclick="event.stopPropagation();location='whats-new.html'"><i class="ti ti-sparkles" style="font-size:10px"></i> What's New</span>
+  </div>
+  <div class="nav-links">
+    <span class="nl" onclick="location='home.html'">HOME</span>
+    <span class="nl on">PUBLISHED GAMES</span>
+    <div class="nav-dropdown" id="rim-dropdown">
+      <span class="nl" onclick="location='rim.html'">RIM</span>
+      <span class="nl" style="padding-left:0;padding-right:6px;font-size:9px;opacity:.6;cursor:pointer" onclick="toggleRimDropdown(event)">▾</span>
+      <div class="nav-dd-menu" id="rim-dd-menu" style="min-width:190px;left:0;right:auto">
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-home" style="margin-right:7px;font-size:12px"></i>RIM Home</span>
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-inbox" style="margin-right:7px;font-size:12px"></i>Interactions</span>
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-messages" style="margin-right:7px;font-size:12px"></i>Threads</span>
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-layout-board" style="margin-right:7px;font-size:12px"></i>Message Board</span>
+        <span class="nav-dd-item" onclick="location='playlists.html'"><i class="ti ti-playlist" style="margin-right:7px;font-size:12px"></i>Playlists</span>
+        <span class="nav-dd-item" onclick="location='assessments.html'"><i class="ti ti-clipboard-check" style="margin-right:7px;font-size:12px"></i>Assessments</span>
+        <span class="nav-dd-item" onclick="location='poe.html'"><i class="ti ti-target" style="margin-right:7px;font-size:12px"></i>Points of Education</span>
+      </div>
+    </div>
+    <span class="nl">RM REVIEW</span>
+    <span class="nl">FINAL L2M REVIEW</span>
+    <span class="nl">INDEPENDENT REVIEW</span>
+    <span class="nl">ADMINISTRATION</span>
+    <div class="nav-dropdown" id="nav-dropdown">
+      <span class="nl" onclick="toggleNavDropdown(event)">REVIEWER RESOURCE <span class="nav-dd-caret">▾</span></span>
+      <div class="nav-dd-menu">
+        <span class="nav-dd-item" onclick="location='comment-library.html'">Comment Library</span>
+      </div>
+    </div>
+    <span class="nl">MY SCHEDULE</span>
+    <div class="nav-av" style="margin-left:12px">BN</div>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- LEAGUE FILTER ROW -->
+  <div class="lg-filter-top">
+    <div class="lg-chip on" data-lg="" onclick="lgFilter(this)">All Leagues</div>
+    <div class="lg-chip" data-lg="WNBA" onclick="lgFilter(this)">
+      <img src="Logos/WNBA LOGO.png"> WNBA
+    </div>
+    <div class="lg-chip" data-lg="NBA" onclick="lgFilter(this)">
+      <img src="Logos/nba-logo.svg"> NBA
+    </div>
+    <div class="lg-chip" data-lg="G-League" onclick="lgFilter(this)"><img src="Logos/g league logo.png"> G-League</div>
+    <div class="lg-chip" data-lg="BAL" onclick="lgFilter(this)"><img src="Logos/basketball-africa-league-logo-png_seeklogo-510470.png"> BAL</div>
+  </div>
+
+  <!-- ANALYTICS CARD -->
+  <div class="analytics-card">
+    <button class="analytics-toggle" onclick="toggleAnalytics()" id="analytics-btn">
+      <div class="at-label"><i class="ti ti-chart-bar"></i> <span>Analytics</span><span style="font-size:10px;font-weight:400;opacity:.6;margin-left:6px" id="analytics-btn-txt">Season overview · 2026</span></div>
+      <i class="ti ti-chevron-up at-chevron" id="analytics-chevron"></i>
+    </button>
+
+    <div id="analytics-section" class="analytics-card-body">
+
+    <!-- HEADLINE STATS -->
+    <div style="font-size:10px;font-weight:700;letter-spacing:.5px;color:rgba(255,255,255,.45);text-transform:uppercase;margin-bottom:14px" id="analytics-section-title">Season overview · 2026 · All Leagues</div>
+    <div class="hero-stats">
+      <div class="stat-card primary">
+        <div class="stat-label">First Pass Accuracy</div>
+        <div class="stat-val" id="stat-accuracy">82<span style="font-size:18px;font-weight:600">%</span></div>
+        <div class="stat-sub">
+          <span class="trend-badge tb-up"><i class="ti ti-trending-up" style="font-size:9px"></i> +4.1%</span>
+          vs last 5 games
+        </div>
+      </div>
+      <div class="stat-card accent-orange">
+        <div class="stat-label">Games Reviewed</div>
+        <div class="stat-val" id="stat-games">10</div>
+        <div class="stat-sub">9 published · 1 in progress</div>
+      </div>
+      <div class="stat-card accent-teal">
+        <div class="stat-label">Total Important Calls</div>
+        <div class="stat-val" id="stat-calls">290</div>
+        <div class="stat-sub">avg 29 per game</div>
+      </div>
+      <div class="stat-card accent-purple">
+        <div class="stat-label">Avg Overturn Rate</div>
+        <div class="stat-val" id="stat-overturn">32<span style="font-size:18px;font-weight:600">%</span></div>
+        <div class="stat-sub">
+          <span class="trend-badge tb-up"><i class="ti ti-trending-down" style="font-size:9px"></i> –3.1%</span>
+          fewer overturns trending
+        </div>
+      </div>
+    </div>
+
+  <!-- MAIN: TREND CHART + SIDEBAR -->
+  <div class="main-grid">
+    <!-- TREND CHART -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title" style="font-size:12px">First Pass Accuracy — Last 10 Games</div>
+          <div class="chart-desc">% of first-pass calls upheld after second check</div>
+        </div>
+        <div class="chart-legend">
+          <div class="leg-item"><div class="leg-dot" style="background:#f472b6"></div>Called</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#fce7f3;border:1px solid #fbb6ce"></div>Non-Call</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#d1d5db;border-radius:0;width:18px;height:2px"></div>Avg (82%)</div>
+        </div>
+      </div>
+      <svg id="trend-chart" class="chart-svg" height="220" viewBox="0 0 800 220" preserveAspectRatio="none"></svg>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="side-stack">
+      <!-- OVERTURN RATE BY PLAY TYPE -->
+      <div class="side-card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+          <div class="section-title" style="margin-bottom:0">Overturn Rate by Play Type</div>
+          <div id="pt-toggle" style="display:flex;background:#f3f4f6;border-radius:6px;padding:2px;gap:2px">
+            <button id="pt-toggle-season" onclick="setPtMode('season')" style="font-size:9.5px;font-weight:600;padding:3px 8px;border-radius:4px;border:none;cursor:pointer;background:#fff;color:#374151;box-shadow:0 1px 2px rgba(0,0,0,.08)">Season</button>
+            <button id="pt-toggle-10" onclick="setPtMode('10g')" style="font-size:9.5px;font-weight:600;padding:3px 8px;border-radius:4px;border:none;cursor:pointer;background:transparent;color:#9ca3af">Last 10</button>
+          </div>
+        </div>
+        <div id="pt-sidebar-desc" style="font-size:10px;color:#9ca3af;margin-bottom:12px">% of included plays changed by SC · sorted by overturn rate</div>
+        <div class="play-rows-wrap" id="pt-sidebar"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- OVERTURN RATE TABLE + RC CHART ROW -->
+  <div class="bottom-grid">
+    <div>
+      <div class="bottom-card" style="margin-bottom:0;padding:0">
+        <div class="chart-header" style="padding:16px 20px 12px;border-bottom:1px solid #f3f4f6;margin-bottom:0;display:flex;align-items:center;justify-content:space-between">
+          <div><div class="chart-title" style="font-size:12px" id="pt-table-title">Overturn Rate by Play Type &amp; Sub Play Type · Season</div></div>
+          <div style="display:flex;background:#f3f4f6;border-radius:6px;padding:2px;gap:2px">
+            <button id="pt-tbl-season" onclick="setPtTableMode('season')" style="font-size:9.5px;font-weight:600;padding:3px 8px;border-radius:4px;border:none;cursor:pointer;background:#fff;color:#374151;box-shadow:0 1px 2px rgba(0,0,0,.08)">Season</button>
+            <button id="pt-tbl-10" onclick="setPtTableMode('10g')" style="font-size:9.5px;font-weight:600;padding:3px 8px;border-radius:4px;border:none;cursor:pointer;background:transparent;color:#9ca3af">Last 10</button>
+          </div>
+        </div>
+        <table style="width:100%;border-collapse:collapse">
+          <thead>
+            <tr>
+              <th style="padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.3px;color:#9ca3af;text-transform:uppercase;border-bottom:1px solid #e5e7eb;background:#f8fafc">Play Type / Sub Play Type</th>
+              <th style="padding:9px 14px;text-align:center;font-size:10px;font-weight:700;letter-spacing:.3px;color:#9ca3af;text-transform:uppercase;border-bottom:1px solid #e5e7eb;background:#f8fafc;white-space:nowrap">Included</th>
+              <th style="padding:9px 14px;text-align:center;font-size:10px;font-weight:700;letter-spacing:.3px;color:#9ca3af;text-transform:uppercase;border-bottom:1px solid #e5e7eb;background:#f8fafc;white-space:nowrap">Overturned</th>
+              <th style="padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.3px;color:#9ca3af;text-transform:uppercase;border-bottom:1px solid #e5e7eb;background:#f8fafc">Overturn Rate</th>
+            </tr>
+          </thead>
+          <tbody id="pt-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+    <!-- RATING CHANGES CHART -->
+    <div>
+      <div class="side-card">
+        <div class="chart-header" style="margin-bottom:12px">
+          <div><div class="chart-title" style="font-size:12px">Rating Changes — Last 10 Games</div><div class="chart-desc">Total changes per rating type</div></div>
+        </div>
+        <div id="rc-chart" style="display:flex;flex-direction:column;gap:7px"></div>
+      </div>
+    </div>
+  </div>
+
+    </div><!-- /analytics-section -->
+  </div><!-- /analytics-card -->
+
+  <!-- GAME BY GAME TABLE -->
+  <div class="section-title">All published games</div>
+  <div class="bottom-card standalone">
+    <table>
+      <thead>
+        <tr>
+          <th>Game</th>
+          <th>Date</th>
+          <th>Second Checked By</th>
+          <th style="text-align:center">Important Calls</th>
+          <th style="text-align:center">Edits</th>
+          <th style="text-align:center">First Pass Accuracy</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="sc-tbody"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- RATING CHANGES PANEL -->
+<div id="chart-tip"></div>
+<div id="rc-overlay" class="rc-overlay" onclick="closePanel()"></div>
+<div id="rc-panel" class="rc-panel">
+  <div class="rc-panel-hdr">
+    <div>
+      <div class="rc-panel-title" id="rc-panel-title"></div>
+      <div class="rc-panel-meta" id="rc-panel-meta"></div>
+    </div>
+    <button class="rc-close" onclick="closePanel()">✕</button>
+  </div>
+  <div class="rc-panel-body" id="rc-panel-body"></div>
+</div>
+
+<script>
+const LOGOS = {
+  ATL:'Logos/Atlanta_Dream_logo.svg.png', CON:'Logos/Connecticut_Sun_logo.svg.png',
+  DAL:'Logos/Dallas_Wings_logo.svg.png', GSV:'Logos/Golden_State_Valkyries_logo.svg.png',
+  IND:'Logos/Indiana_Fever_logo.svg.png', LAS:'Logos/Los_Angeles_Sparks_logo.svg.png',
+  LVA:'Logos/New_Las_Vegas_Aces_WNBA_logo_2024.svg.png', MIN:'Logos/Minnesota_Lynx_logo.svg.png',
+  NYL:'Logos/New_York_Liberty_logo.svg.png', PHX:'Logos/Phoenix_Mercury_logo_2025.svg.png',
+  PDX:'Logos/Portland_Fire_logo.svg.png', SEA:'Logos/Seattle_Storm_(2021)_logo.svg.png',
+  CHI:'Logos/chicago sky logo.png', TOR:'Logos/toronto tempo logo.jpg',
+};
+
+function logo(abbr, size=16) {
+  const src = LOGOS[abbr];
+  if (!src) return `<span style="display:inline-flex;width:${size}px;height:${size}px;border-radius:50%;background:#f3f4f6;border:1px solid #e5e7eb;align-items:center;justify-content:center;font-size:6px;font-weight:700;color:#6b7280">${abbr}</span>`;
+  return `<img src="${src}" style="width:${size}px;height:${size}px;object-fit:contain;vertical-align:middle" onerror="this.style.display='none'">`;
+}
+
+const SC_GAMES = [
+  {away:'IND',home:'NYL',date:'06/06/2026',sc:'Daniel Foley',plays:31,changes:11,agree:83,called:87,nc:76,published:false,link:'',league:'WNBA',rc:[
+    {q:4,time:'1:24',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'3:08',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:3,time:'2:51',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:3,time:'5:17',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:3,time:'9:44',from:'CC',to:'IC',type:'Foul: Offensive',sub:'Hook'},
+    {q:2,time:'1:03',from:'PIN',to:'INC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:2,time:'4:38',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:2,time:'7:22',from:'IC',to:'CC',type:'Foul: Personal',sub:'Hand/Forearm to Front'},
+    {q:1,time:'2:19',from:'PII',to:'CNC',type:'Foul: Loose Ball',sub:'Clamp-Lock-Hold'},
+    {q:1,time:'6:45',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:1,time:'10:31',from:'CC',to:'IC',type:'Goaltending',sub:'Defensive Goaltending'},
+  ]},
+  {away:'CON',home:'CHI',date:'06/05/2026',sc:'Michael Gargin',plays:27,changes:8,agree:88,called:92,nc:81,published:true,link:'',league:'WNBA',rc:[
+    {q:4,time:'0:48',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'2:33',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Body Contact/Check'},
+    {q:3,time:'4:12',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Dislodge from Position'},
+    {q:3,time:'8:57',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Landing Area'},
+    {q:2,time:'1:44',from:'PIN',to:'CNC',type:'Foul: Loose Ball',sub:'Contact to Arm'},
+    {q:2,time:'6:20',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:1,time:'3:55',from:'IC',to:'CC',type:'Travel',sub:'Pivot Foot'},
+    {q:1,time:'9:10',from:'PII',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+  ]},
+  {away:'LVA',home:'LAS',date:'06/02/2026',sc:'Curtis Oakley Jr.',plays:34,changes:12,agree:83,called:88,nc:75,published:true,link:'',league:'WNBA',rc:[
+    {q:4,time:'0:31',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Shooting Motion'},
+    {q:4,time:'2:14',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:4,time:'4:47',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Pass & Crash'},
+    {q:3,time:'1:08',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Body Follow-Through'},
+    {q:3,time:'3:52',from:'CC',to:'IC',type:'Foul: Loose Ball',sub:'Clamp-Lock-Hold'},
+    {q:3,time:'7:19',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:2,time:'0:58',from:'PII',to:'INC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:2,time:'3:41',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+    {q:2,time:'6:25',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:1,time:'2:07',from:'PIN',to:'CNC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:1,time:'5:33',from:'CNC',to:'INC',type:'Foul: Offensive',sub:'Hook'},
+    {q:1,time:'9:48',from:'CC',to:'IC',type:'Goaltending',sub:'Offensive Goaltending'},
+  ]},
+  {away:'ATL',home:'PDX',date:'05/29/2026',sc:'Tucker Grady',plays:25,changes:7,agree:80,called:85,nc:72,published:true,link:'',league:'WNBA',rc:[
+    {q:4,time:'1:52',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:3,time:'3:28',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Hand/Forearm to Front'},
+    {q:3,time:'7:41',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Dislodge from Position'},
+    {q:2,time:'2:09',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:2,time:'5:54',from:'PIN',to:'INC',type:'Out of Bounds',sub:''},
+    {q:1,time:'4:17',from:'CNC',to:'INC',type:'Travel',sub:'Gather Step'},
+    {q:1,time:'8:33',from:'IC',to:'CC',type:'Foul: Loose Ball',sub:'Dislodge from Position'},
+  ]},
+  {away:'PHX',home:'NYL',date:'05/29/2026',sc:'Michael Gargin',plays:29,changes:11,agree:71,called:76,nc:63,published:true,link:'',league:'WNBA',rc:[
+    {q:4,time:'0:22',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'1:47',from:'CC',to:'IC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:4,time:'3:59',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:3,time:'2:14',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Hook'},
+    {q:3,time:'5:38',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:3,time:'8:52',from:'PII',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:2,time:'1:06',from:'CNC',to:'INC',type:'Foul: Loose Ball',sub:'Clamp-Lock-Hold'},
+    {q:2,time:'4:29',from:'PIN',to:'CNC',type:'Foul: Personal',sub:'Body Contact/Check'},
+    {q:2,time:'7:44',from:'IC',to:'CC',type:'Travel',sub:'Pivot Foot'},
+    {q:1,time:'3:11',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:1,time:'7:58',from:'CC',to:'IC',type:'Goaltending',sub:'Defensive Goaltending'},
+  ]},
+  {away:'TOR',home:'CHI',date:'05/27/2026',sc:'Daniel Foley',plays:33,changes:10,agree:83,called:87,nc:77,published:true,link:'second-check.html',league:'WNBA',rc:[
+    {q:4,time:'2:03',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Body Follow-Through'},
+    {q:4,time:'4:18',from:'IC',to:'CC',type:'Foul: Loose Ball',sub:'Contact to Arm'},
+    {q:3,time:'1:37',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+    {q:3,time:'6:52',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:2,time:'0:44',from:'CC',to:'IC',type:'Foul: Offensive',sub:'Dislodge from Position'},
+    {q:2,time:'3:19',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:2,time:'8:06',from:'PII',to:'CNC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:1,time:'2:28',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Landing Area'},
+    {q:1,time:'5:51',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:1,time:'9:14',from:'PIN',to:'INC',type:'Foul: Personal',sub:'Hand/Forearm to Front'},
+  ]},
+  {away:'DAL',home:'NYL',date:'05/24/2026',sc:'Tucker Grady',plays:28,changes:9,agree:90,called:93,nc:85,published:true,link:'',league:'WNBA',rc:[
+    {q:4,time:'1:18',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'3:44',from:'IC',to:'CC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:3,time:'2:57',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:3,time:'7:22',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Pass & Crash'},
+    {q:2,time:'1:09',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:2,time:'5:33',from:'PIN',to:'CNC',type:'Foul: Loose Ball',sub:'Clamp-Lock-Hold'},
+    {q:1,time:'3:48',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Body Contact/Check'},
+    {q:1,time:'6:17',from:'PII',to:'INC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:1,time:'10:02',from:'CC',to:'IC',type:'Travel',sub:'Gather Step'},
+  ]},
+  {away:'GSV',home:'IND',date:'05/22/2026',sc:'Michael Gargin',plays:32,changes:10,agree:82,called:87,nc:74,published:true,link:'',league:'WNBA',rc:[
+    {q:4,time:'0:55',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'2:41',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+    {q:3,time:'1:19',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Hook'},
+    {q:3,time:'4:38',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Body Follow-Through'},
+    {q:3,time:'8:13',from:'CC',to:'IC',type:'Out of Bounds',sub:''},
+    {q:2,time:'2:06',from:'PIN',to:'INC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:2,time:'5:49',from:'CNC',to:'INC',type:'Foul: Loose Ball',sub:'Dislodge from Position'},
+    {q:1,time:'1:33',from:'IC',to:'CC',type:'Travel',sub:'Pivot Foot'},
+    {q:1,time:'4:58',from:'PII',to:'CNC',type:'Foul: Shooting',sub:'NBP: Drawn Into Air/Closeout'},
+    {q:1,time:'8:27',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Contact to Arm'},
+  ]},
+  {away:'LAS',home:'PHX',date:'05/21/2026',sc:'Tucker Grady',plays:26,changes:11,agree:71,called:75,nc:64,published:true,link:'',league:'WNBA',rc:[
+    {q:4,time:'0:17',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:4,time:'1:52',from:'IC',to:'CC',type:'Foul: Personal',sub:'Hand/Forearm to Front'},
+    {q:4,time:'3:36',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:3,time:'2:44',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:3,time:'5:09',from:'CC',to:'IC',type:'Foul: Offensive',sub:'Dislodge from Position'},
+    {q:3,time:'9:31',from:'PII',to:'INC',type:'Foul: Shooting',sub:'Arm Shooting Motion'},
+    {q:2,time:'1:22',from:'CNC',to:'INC',type:'Foul: Loose Ball',sub:'Clamp-Lock-Hold'},
+    {q:2,time:'4:47',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:2,time:'7:58',from:'PIN',to:'CNC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:1,time:'3:14',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:1,time:'8:42',from:'CC',to:'IC',type:'Goaltending',sub:'Defensive Goaltending'},
+  ]},
+  {away:'CHI',home:'MIN',date:'05/17/2026',sc:'Daniel Foley',plays:25,changes:7,agree:80,called:84,nc:73,published:true,link:'',league:'WNBA',rc:[
+    {q:4,time:'2:28',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Body Follow-Through'},
+    {q:3,time:'4:11',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Hook'},
+    {q:3,time:'8:39',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Body Contact/Check'},
+    {q:2,time:'1:55',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:2,time:'6:07',from:'PIN',to:'INC',type:'Out of Bounds',sub:''},
+    {q:1,time:'3:42',from:'IC',to:'CC',type:'Travel',sub:'Pivot Foot'},
+    {q:1,time:'9:16',from:'PII',to:'CNC',type:'Foul: Loose Ball',sub:'Contact to Arm'},
+  ]},
+  // NBA 2025-26 (2024-25 season data, years shifted +1)
+  {away:'OKC',home:'IND',date:'06/22/2026',sc:'Daniel Foley',plays:41,changes:14,agree:78,called:83,nc:70,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'0:38',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'1:54',from:'IC',to:'CC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:4,time:'3:22',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:4,time:'4:47',from:'CC',to:'IC',type:'Foul: Offensive',sub:'Dislodge from Position'},
+    {q:3,time:'1:09',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:3,time:'3:38',from:'PIN',to:'INC',type:'Foul: Personal',sub:'Hand/Forearm to Front'},
+    {q:3,time:'6:14',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:3,time:'9:52',from:'CNC',to:'INC',type:'Foul: Loose Ball',sub:'Clamp-Lock-Hold'},
+    {q:2,time:'0:44',from:'PII',to:'INC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:2,time:'2:19',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+    {q:2,time:'5:33',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Pass & Crash'},
+    {q:1,time:'1:27',from:'CC',to:'IC',type:'Goaltending',sub:'Defensive Goaltending'},
+    {q:1,time:'4:48',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:1,time:'8:17',from:'PIN',to:'CNC',type:'Foul: Loose Ball',sub:'Contact to Arm'},
+  ]},
+  {away:'IND',home:'OKC',date:'06/19/2026',sc:'Michael Gargin',plays:38,changes:12,agree:80,called:85,nc:73,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'1:12',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'2:48',from:'IC',to:'CC',type:'Foul: Personal',sub:'Body Contact/Check'},
+    {q:3,time:'0:57',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Landing Area'},
+    {q:3,time:'3:31',from:'CC',to:'IC',type:'Foul: Offensive',sub:'Hook'},
+    {q:3,time:'7:06',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:2,time:'1:43',from:'PII',to:'CNC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:2,time:'4:18',from:'CNC',to:'INC',type:'Foul: Loose Ball',sub:'Dislodge from Position'},
+    {q:2,time:'8:52',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:1,time:'2:24',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:1,time:'5:37',from:'PIN',to:'INC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:1,time:'7:59',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Dislodge from Position'},
+    {q:1,time:'10:14',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Shooting Motion'},
+  ]},
+  {away:'OKC',home:'IND',date:'06/15/2026',sc:'Michael Abdenour',plays:43,changes:16,agree:75,called:80,nc:68,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'0:29',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'1:44',from:'IC',to:'CC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:4,time:'3:08',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:4,time:'4:53',from:'CC',to:'IC',type:'Out of Bounds',sub:''},
+    {q:3,time:'0:38',from:'PII',to:'INC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:3,time:'2:17',from:'CNC',to:'INC',type:'Foul: Loose Ball',sub:'Clamp-Lock-Hold'},
+    {q:3,time:'5:42',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Pass & Crash'},
+    {q:3,time:'9:19',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+    {q:2,time:'1:06',from:'PIN',to:'CNC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:2,time:'3:48',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Body Follow-Through'},
+    {q:2,time:'7:23',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:1,time:'1:54',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Hand/Forearm to Front'},
+    {q:1,time:'4:29',from:'CC',to:'IC',type:'Goaltending',sub:'Defensive Goaltending'},
+    {q:1,time:'6:51',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'NBP: Drawn Into Air/Closeout'},
+    {q:1,time:'8:37',from:'PII',to:'INC',type:'Foul: Offensive',sub:'Dislodge from Position'},
+    {q:1,time:'10:44',from:'CNC',to:'INC',type:'Foul: Loose Ball',sub:'Contact to Arm'},
+  ]},
+  {away:'IND',home:'OKC',date:'06/12/2026',sc:'Curtis Oakley Jr.',plays:39,changes:13,agree:79,called:84,nc:72,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'0:51',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'2:27',from:'IC',to:'CC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:4,time:'4:03',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:3,time:'1:38',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:3,time:'5:14',from:'CC',to:'IC',type:'Foul: Offensive',sub:'Hook'},
+    {q:2,time:'0:49',from:'PII',to:'CNC',type:'Foul: Shooting',sub:'Body Follow-Through'},
+    {q:2,time:'3:22',from:'CNC',to:'INC',type:'Foul: Loose Ball',sub:'Dislodge from Position'},
+    {q:2,time:'6:57',from:'IC',to:'CC',type:'Travel',sub:'Pivot Foot'},
+    {q:2,time:'9:33',from:'PIN',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+    {q:1,time:'2:08',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:1,time:'4:44',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Pass & Crash'},
+    {q:1,time:'7:19',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Body Contact/Check'},
+    {q:1,time:'10:06',from:'CC',to:'IC',type:'Goaltending',sub:'Offensive Goaltending'},
+  ]},
+  {away:'MIN',home:'OKC',date:'05/27/2026',sc:'Daniel Foley',plays:37,changes:11,agree:81,called:86,nc:74,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'1:33',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'3:47',from:'IC',to:'CC',type:'Foul: Personal',sub:'Hand/Forearm to Front'},
+    {q:3,time:'0:52',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:3,time:'4:18',from:'CC',to:'IC',type:'Out of Bounds',sub:''},
+    {q:3,time:'8:44',from:'CNC',to:'INC',type:'Foul: Loose Ball',sub:'Clamp-Lock-Hold'},
+    {q:2,time:'1:29',from:'PII',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:2,time:'5:03',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Dislodge from Position'},
+    {q:2,time:'8:37',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:1,time:'2:14',from:'PIN',to:'CNC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:1,time:'5:48',from:'CNC',to:'INC',type:'Travel',sub:'Gather Step'},
+    {q:1,time:'9:22',from:'IC',to:'CC',type:'Foul: Loose Ball',sub:'Contact to Arm'},
+  ]},
+  {away:'OKC',home:'MIN',date:'05/24/2026',sc:'Michael Abdenour',plays:40,changes:15,agree:76,called:81,nc:69,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'0:24',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'1:58',from:'IC',to:'CC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:4,time:'3:33',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:4,time:'5:09',from:'CC',to:'IC',type:'Foul: Offensive',sub:'Hook'},
+    {q:3,time:'0:44',from:'PII',to:'INC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:3,time:'2:19',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:3,time:'5:53',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:3,time:'9:28',from:'CNC',to:'INC',type:'Foul: Loose Ball',sub:'Dislodge from Position'},
+    {q:2,time:'1:03',from:'PIN',to:'CNC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:2,time:'3:38',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+    {q:2,time:'7:12',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Pass & Crash'},
+    {q:1,time:'0:57',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Body Follow-Through'},
+    {q:1,time:'3:31',from:'CC',to:'IC',type:'Goaltending',sub:'Defensive Goaltending'},
+    {q:1,time:'6:48',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Hand/Forearm to Front'},
+    {q:1,time:'10:22',from:'PII',to:'INC',type:'Foul: Loose Ball',sub:'Clamp-Lock-Hold'},
+  ]},
+  {away:'NYK',home:'IND',date:'05/26/2026',sc:'Michael Gargin',plays:35,changes:10,agree:83,called:88,nc:76,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'2:16',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'4:52',from:'IC',to:'CC',type:'Foul: Personal',sub:'Body Contact/Check'},
+    {q:3,time:'1:07',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:3,time:'5:43',from:'CC',to:'IC',type:'Foul: Offensive',sub:'Dislodge from Position'},
+    {q:2,time:'0:38',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:2,time:'3:14',from:'PIN',to:'INC',type:'Foul: Loose Ball',sub:'Clamp-Lock-Hold'},
+    {q:2,time:'6:49',from:'IC',to:'CC',type:'Travel',sub:'Pivot Foot'},
+    {q:1,time:'1:24',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+    {q:1,time:'4:58',from:'PII',to:'CNC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:1,time:'8:33',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Pass & Crash'},
+  ]},
+  {away:'IND',home:'NYK',date:'05/22/2026',sc:'Curtis Oakley Jr.',plays:33,changes:9,agree:84,called:89,nc:77,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'1:09',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'3:44',from:'IC',to:'CC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:3,time:'2:28',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:3,time:'7:13',from:'CC',to:'IC',type:'Out of Bounds',sub:''},
+    {q:2,time:'0:53',from:'PII',to:'INC',type:'Foul: Loose Ball',sub:'Dislodge from Position'},
+    {q:2,time:'4:27',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Hand/Forearm to Front'},
+    {q:1,time:'1:38',from:'PIN',to:'CNC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:1,time:'5:02',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:1,time:'8:47',from:'CNC',to:'INC',type:'Foul: Offensive',sub:'Hook'},
+  ]},
+  {away:'DEN',home:'OKC',date:'05/10/2026',sc:'Daniel Foley',plays:42,changes:15,agree:77,called:82,nc:70,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'0:33',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'2:08',from:'IC',to:'CC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:4,time:'3:44',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:4,time:'5:19',from:'CC',to:'IC',type:'Foul: Offensive',sub:'Hook'},
+    {q:3,time:'1:03',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:3,time:'3:38',from:'PII',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+    {q:3,time:'6:14',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:3,time:'9:49',from:'CNC',to:'INC',type:'Foul: Loose Ball',sub:'Clamp-Lock-Hold'},
+    {q:2,time:'0:48',from:'PIN',to:'CNC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:2,time:'3:23',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Body Contact/Check'},
+    {q:2,time:'7:58',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Dislodge from Position'},
+    {q:1,time:'2:07',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:1,time:'4:42',from:'CC',to:'IC',type:'Goaltending',sub:'Defensive Goaltending'},
+    {q:1,time:'7:17',from:'CNC',to:'INC',type:'Foul: Loose Ball',sub:'Contact to Arm'},
+    {q:1,time:'9:52',from:'PII',to:'INC',type:'Foul: Shooting',sub:'Arm Shooting Motion'},
+  ]},
+  {away:'CLE',home:'IND',date:'05/09/2026',sc:'Michael Gargin',plays:36,changes:11,agree:82,called:87,nc:75,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'1:16',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'3:52',from:'IC',to:'CC',type:'Foul: Personal',sub:'Hand/Forearm to Front'},
+    {q:3,time:'0:41',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Landing Area'},
+    {q:3,time:'4:17',from:'CC',to:'IC',type:'Out of Bounds',sub:''},
+    {q:3,time:'8:52',from:'CNC',to:'INC',type:'Foul: Loose Ball',sub:'Dislodge from Position'},
+    {q:2,time:'1:26',from:'PII',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:2,time:'5:03',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:2,time:'8:38',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+    {q:1,time:'2:14',from:'PIN',to:'CNC',type:'Foul: Offensive',sub:'Pass & Crash'},
+    {q:1,time:'5:49',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:1,time:'9:23',from:'IC',to:'CC',type:'Foul: Loose Ball',sub:'Contact to Arm'},
+  ]},
+  {away:'MEM',home:'OKC',date:'04/20/2026',sc:'Michael Abdenour',plays:34,changes:10,agree:83,called:88,nc:76,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'2:04',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'4:39',from:'IC',to:'CC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:3,time:'1:18',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:3,time:'5:54',from:'CC',to:'IC',type:'Foul: Offensive',sub:'Dislodge from Position'},
+    {q:2,time:'0:33',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:2,time:'3:07',from:'PII',to:'CNC',type:'Foul: Loose Ball',sub:'Clamp-Lock-Hold'},
+    {q:2,time:'7:42',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:1,time:'1:27',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+    {q:1,time:'4:53',from:'PIN',to:'INC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:1,time:'8:28',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Hook'},
+  ]},
+  {away:'CLE',home:'OKC',date:'01/14/2026',sc:'Curtis Oakley Jr.',plays:38,changes:12,agree:81,called:86,nc:74,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'1:47',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'3:22',from:'IC',to:'CC',type:'Foul: Personal',sub:'Body Contact/Check'},
+    {q:3,time:'2:08',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:3,time:'5:43',from:'CC',to:'IC',type:'Out of Bounds',sub:''},
+    {q:2,time:'0:58',from:'CNC',to:'INC',type:'Foul: Loose Ball',sub:'Dislodge from Position'},
+    {q:2,time:'4:33',from:'PII',to:'INC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:2,time:'8:09',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:1,time:'1:44',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+    {q:1,time:'4:18',from:'PIN',to:'CNC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:1,time:'6:53',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Pass & Crash'},
+    {q:1,time:'9:28',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Body Follow-Through'},
+    {q:1,time:'11:03',from:'CC',to:'IC',type:'Goaltending',sub:'Defensive Goaltending'},
+  ]},
+  {away:'NYK',home:'BOS',date:'12/25/2025',sc:'Daniel Foley',plays:36,changes:11,agree:80,called:85,nc:73,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'0:52',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'2:28',from:'IC',to:'CC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:3,time:'1:13',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:3,time:'4:49',from:'CC',to:'IC',type:'Foul: Offensive',sub:'Hook'},
+    {q:3,time:'8:24',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:2,time:'1:08',from:'PII',to:'INC',type:'Foul: Personal',sub:'Hand/Forearm to Front'},
+    {q:2,time:'4:43',from:'IC',to:'CC',type:'Foul: Loose Ball',sub:'Dislodge from Position'},
+    {q:2,time:'8:19',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:1,time:'2:54',from:'PIN',to:'CNC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:1,time:'6:28',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:1,time:'10:03',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+  ]},
+  {away:'GSW',home:'LAL',date:'12/25/2025',sc:'Michael Gargin',plays:39,changes:14,agree:78,called:83,nc:71,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'0:36',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'2:11',from:'IC',to:'CC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:4,time:'3:47',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:4,time:'5:22',from:'CC',to:'IC',type:'Out of Bounds',sub:''},
+    {q:3,time:'1:07',from:'PII',to:'INC',type:'Foul: Loose Ball',sub:'Clamp-Lock-Hold'},
+    {q:3,time:'3:42',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:3,time:'7:18',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Dislodge from Position'},
+    {q:2,time:'0:53',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Body Contact/Check'},
+    {q:2,time:'3:28',from:'PIN',to:'CNC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:2,time:'7:04',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:1,time:'1:39',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Shooting Motion'},
+    {q:1,time:'4:14',from:'CC',to:'IC',type:'Goaltending',sub:'Defensive Goaltending'},
+    {q:1,time:'6:49',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+    {q:1,time:'9:24',from:'PII',to:'INC',type:'Foul: Offensive',sub:'Hook'},
+  ]},
+  {away:'OKC',home:'SAS',date:'10/24/2025',sc:'Michael Abdenour',plays:31,changes:8,agree:86,called:90,nc:80,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'2:17',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:3,time:'4:52',from:'IC',to:'CC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:3,time:'8:28',from:'CNC',to:'INC',type:'Out of Bounds',sub:''},
+    {q:2,time:'1:03',from:'CC',to:'IC',type:'Foul: Offensive',sub:'Dislodge from Position'},
+    {q:2,time:'5:39',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:1,time:'2:14',from:'PII',to:'CNC',type:'Foul: Loose Ball',sub:'Clamp-Lock-Hold'},
+    {q:1,time:'6:48',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:1,time:'10:23',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+  ]},
+  {away:'BOS',home:'NYK',date:'10/22/2025',sc:'Curtis Oakley Jr.',plays:37,changes:13,agree:79,called:84,nc:72,published:true,link:'',league:'NBA',rc:[
+    {q:4,time:'0:44',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Arm Follow-Through'},
+    {q:4,time:'2:19',from:'IC',to:'CC',type:'Foul: Personal',sub:'Contact to Arm'},
+    {q:4,time:'3:55',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Block-Charge Situation'},
+    {q:3,time:'1:30',from:'CC',to:'IC',type:'Out of Bounds',sub:''},
+    {q:3,time:'5:06',from:'CNC',to:'INC',type:'Foul: Loose Ball',sub:'Dislodge from Position'},
+    {q:3,time:'8:41',from:'PII',to:'INC',type:'Foul: Shooting',sub:'Legal Guarding Position'},
+    {q:2,time:'1:16',from:'IC',to:'CC',type:'Foul: Offensive',sub:'Hook'},
+    {q:2,time:'4:52',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Rip-Through'},
+    {q:2,time:'8:27',from:'PIN',to:'CNC',type:'Foul: Shooting',sub:'Vertical'},
+    {q:1,time:'2:02',from:'IC',to:'CC',type:'Travel',sub:'Gather Step'},
+    {q:1,time:'5:37',from:'CNC',to:'INC',type:'Foul: Shooting',sub:'Body Follow-Through'},
+    {q:1,time:'7:12',from:'CC',to:'IC',type:'Goaltending',sub:'Defensive Goaltending'},
+    {q:1,time:'9:48',from:'CNC',to:'INC',type:'Foul: Personal',sub:'Hand/Forearm to Front'},
+  ]},
+];
+
+// TREND CHART
+function drawChart() {
+  const games = SC_GAMES.slice(0, 10).reverse();
+  const svg = document.getElementById('trend-chart');
+  const W = 800, H = 220, padL = 36, padR = 16, padT = 12, padB = 8;
+  const cW = W - padL - padR, cH = H - padT - padB;
+  const n = games.length;
+  const minV = 55, maxV = 105;
+  const xStep = cW / (n - 1);
+  const yScale = v => padT + cH - ((v - minV) / (maxV - minV)) * cH;
+  const xScale = i => padL + i * xStep;
+  const bottom = padT + cH;
+
+  let html = '';
+
+  // Grid lines
+  [60,70,80,90,100].forEach(v => {
+    const y = yScale(v);
+    html += `<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" stroke="#f3f4f6" stroke-width="1"/>`;
+    html += `<text x="${padL-4}" y="${y+4}" text-anchor="end" font-size="9" fill="#d1d5db">${v}%</text>`;
+  });
+
+  // Average line (82%)
+  const avgY = yScale(82);
+  html += `<line x1="${padL}" y1="${avgY}" x2="${W-padR}" y2="${avgY}" stroke="#d1d5db" stroke-width="1" stroke-dasharray="4 3"/>`;
+
+  // Called fill + line
+  const calledPts = games.map((g,i) => `${xScale(i)},${yScale(g.called)}`).join(' ');
+  html += `<polygon points="${xScale(0)},${bottom} ${calledPts} ${xScale(n-1)},${bottom}" fill="#f472b6" opacity="0.08"/>`;
+  html += `<polyline points="${calledPts}" fill="none" stroke="#f472b6" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+
+  // Non-call fill + line
+  const ncPts = games.map((g,i) => `${xScale(i)},${yScale(g.nc)}`).join(' ');
+  html += `<polygon points="${xScale(0)},${bottom} ${ncPts} ${xScale(n-1)},${bottom}" fill="#fce7f3" opacity="0.18"/>`;
+  html += `<polyline points="${ncPts}" fill="none" stroke="#fce7f3" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="5 3"/>`;
+
+  // Dots + invisible hit areas for hover tooltip
+  _chartGames = games;
+  games.forEach((g, i) => {
+    const x = xScale(i);
+    html += `<circle cx="${x}" cy="${yScale(g.called)}" r="3.5" fill="#f472b6"/>`;
+    html += `<circle cx="${x}" cy="${yScale(g.nc)}" r="3" fill="#fce7f3" stroke="#fbb6ce" stroke-width="1"/>`;
+    html += `<circle cx="${x}" cy="${yScale(g.called)}" r="12" fill="transparent" onmouseenter="showChartTip(event,${i})" onmouseleave="hideChartTip()"/>`;
+    html += `<circle cx="${x}" cy="${yScale(g.nc)}" r="12" fill="transparent" onmouseenter="showChartTip(event,${i})" onmouseleave="hideChartTip()"/>`;
+  });
+
+  svg.innerHTML = html;
+}
+
+function drawRcChart() {
+  const el = document.getElementById('rc-chart');
+  if (!el) return;
+
+  const RC_DATA = [
+    { type: 'PI-No → PI-Lean', pct: 35, color: '#ec4899' },
+    { type: 'PI-Lean → PI-No', pct: 25, color: '#f06db3' },
+    { type: 'CC → IC',         pct: 15, color: '#f472b6' },
+    { type: 'IC → CC',         pct: 10, color: '#f78fc3' },
+    { type: 'CNC → INC',       pct:  8, color: '#f9a8d4' },
+    { type: 'INC → CNC',       pct:  5, color: '#fbb6ce' },
+    { type: 'Other',           pct:  2, color: '#fce7f3' },
+  ];
+  const maxPct = RC_DATA[0].pct;
+
+  el.innerHTML = RC_DATA.map(({ type, pct, color }) => {
+    const barW = Math.round(pct / maxPct * 100);
+    return `<div style="display:flex;flex-direction:column;gap:2px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:11px;font-weight:600;color:#374151">${type}</span>
+        <span style="font-size:10px;font-weight:700;color:${color}">${pct}%</span>
+      </div>
+      <div style="height:7px;background:#f3f4f6;border-radius:4px;overflow:hidden">
+        <div style="height:100%;width:${barW}%;background:${color};border-radius:4px"></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// RECENT GAMES
+function renderRecent() {
+  const list = document.getElementById('recent-games-list');
+  SC_GAMES.slice(0, 5).forEach(g => {
+    const agreeClass = g.agree >= 85 ? 'agree-hi' : g.agree >= 75 ? 'agree-mid' : 'agree-lo';
+    list.innerHTML += `
+      <div class="gl-row" onclick="location='${g.link||'#'}'">
+        <div class="gl-logos">${logo(g.away)} <span style="color:#d1d5db;font-size:9px;margin:0 1px">@</span> ${logo(g.home)}</div>
+        <div class="gl-teams">${g.away} @ ${g.home}</div>
+        <div class="gl-date">${g.date}</div>
+        <div class="gl-agree ${agreeClass}">${g.agree}%</div>
+      </div>`;
+  });
+}
+
+const RATING_COLORS = {
+  CC:  {bg:'#dcfce7',color:'#166534'},
+  IC:  {bg:'#fee2e2',color:'#991b1b'},
+  CNC: {bg:'#f3f4f6',color:'#374151'},
+  INC: {bg:'#fce7f3',color:'#9d174d'},
+  PII: {bg:'#fef9c3',color:'#854d0e'},
+  PIN: {bg:'#fff7ed',color:'#92400e'},
+};
+
+function rcBadge(code) {
+  const c = RATING_COLORS[code] || {bg:'#f3f4f6',color:'#374151'};
+  return `<span style="background:${c.bg};color:${c.color};padding:2px 6px;border-radius:4px;font-size:9.5px;font-weight:700">${code}</span>`;
+}
+
+function rcSummary(rc) {
+  if (!rc || !rc.length) return '<span style="color:#d1d5db">—</span>';
+  const counts = {};
+  rc.forEach(r => { const k=`${r.from}|||${r.to}`; counts[k]=(counts[k]||0)+1; });
+  return Object.entries(counts).slice(0,3).map(([k,n]) => {
+    const [from,to] = k.split('|||');
+    return `<span style="display:inline-flex;align-items:center;gap:3px">${rcBadge(from)}<span style="color:#c4c4c4;font-size:9px">→</span>${rcBadge(to)}${n>1?`<span style="color:#9ca3af;font-size:9px"> ×${n}</span>`:''}</span>`;
+  }).join('<span style="color:#e5e7eb;margin:0 3px">·</span>');
+}
+
+function openPanel(g) {
+  document.getElementById('rc-panel-title').innerHTML = `${logo(g.away,14)} ${g.away} <span style="color:#d1d5db;font-size:11px">@</span> ${logo(g.home,14)} ${g.home}`;
+  document.getElementById('rc-panel-meta').textContent = `${g.date} · ${g.sc} · ${(g.rc||[]).length} rating changes`;
+  const body = document.getElementById('rc-panel-body');
+  body.innerHTML = (g.rc||[]).map(r => `
+    <div class="rc-row">
+      <div class="rc-time">Q${r.q} ${r.time}</div>
+      <div class="rc-change">${rcBadge(r.from)}<span class="rc-arr">→</span>${rcBadge(r.to)}</div>
+      <div class="rc-detail">
+        <div class="rc-type">${r.type}</div>
+        ${r.sub?`<div class="rc-sub">${r.sub}</div>`:''}
+      </div>
+    </div>`).join('') || '<div style="color:#9ca3af;font-size:12px;padding:20px 0">No rating changes recorded</div>';
+  document.getElementById('rc-panel').classList.add('open');
+  document.getElementById('rc-overlay').classList.add('open');
+}
+
+function closePanel() {
+  document.getElementById('rc-panel').classList.remove('open');
+  document.getElementById('rc-overlay').classList.remove('open');
+}
+
+let _chartGames = [];
+
+function showChartTip(e, idx) {
+  const g = _chartGames[idx];
+  if (!g) return;
+  const tip = document.getElementById('chart-tip');
+  tip.innerHTML = `
+    <div style="font-weight:700;margin-bottom:3px">${g.away} @ ${g.home}</div>
+    <div style="color:#9ca3af;font-size:10px;margin-bottom:6px">${g.date} · ${g.sc}</div>
+    <div style="display:flex;gap:12px">
+      <div><div style="font-size:9px;color:#9ca3af;margin-bottom:1px">CALLED</div><div style="font-weight:700;color:#f472b6">${g.called}%</div></div>
+      <div><div style="font-size:9px;color:#9ca3af;margin-bottom:1px">NON-CALL</div><div style="font-weight:700;color:#fbb6ce">${g.nc}%</div></div>
+      <div><div style="font-size:9px;color:#9ca3af;margin-bottom:1px">CHANGES</div><div style="font-weight:700;color:#374151">${g.changes}</div></div>
+    </div>`;
+  tip.style.display = 'block';
+  tip.style.left = (e.clientX + 14) + 'px';
+  tip.style.top = (e.clientY - 10) + 'px';
+}
+function hideChartTip() { document.getElementById('chart-tip').style.display = 'none'; }
+
+let activeLg = '';
+let analyticsOpen = true;
+
+function toggleAnalytics() {
+  analyticsOpen = !analyticsOpen;
+  document.getElementById('analytics-section').style.display = analyticsOpen ? '' : 'none';
+  const chev = document.getElementById('analytics-chevron');
+  chev.className = analyticsOpen ? 'ti ti-chevron-up at-chevron' : 'ti ti-chevron-down at-chevron';
+}
+
+const LEAGUE_STATS = {
+  '':        { accuracy:81, games:26, calls:888, overturnRate:32, trend:'+3.2%', overturnTrend:'-2.1%' },
+  'WNBA':    { accuracy:82, games:10, calls:290, overturnRate:32, trend:'+4.1%', overturnTrend:'-3.1%' },
+  'NBA':     { accuracy:80, games:16, calls:598, overturnRate:33, trend:'+2.1%', overturnTrend:'-1.2%' },
+  'G-League':{ accuracy:85, games:0,  calls:0,   overturnRate:28, trend:'+6.2%', overturnTrend:'-4.0%' },
+  'BAL':     { accuracy:88, games:0,  calls:0,   overturnRate:22, trend:'+8.0%', overturnTrend:'-5.5%' },
+};
+
+function updateHeroStats(lg) {
+  const s = LEAGUE_STATS[lg] || LEAGUE_STATS[''];
+  const lgLabel = lg || 'All Leagues';
+  const st = document.getElementById('analytics-section-title');
+  if (st) st.textContent = `Season overview · 2026 · ${lgLabel}`;
+  const els = {
+    accuracy: document.getElementById('stat-accuracy'),
+    games: document.getElementById('stat-games'),
+    calls: document.getElementById('stat-calls'),
+    overturn: document.getElementById('stat-overturn'),
+  };
+  if (els.accuracy) els.accuracy.innerHTML = `${s.accuracy}<span style="font-size:18px;font-weight:600">%</span>`;
+  if (els.games) els.games.textContent = s.games;
+  if (els.calls) els.calls.textContent = s.calls;
+  if (els.overturn) els.overturn.innerHTML = `${s.overturnRate}<span style="font-size:18px;font-weight:600">%</span>`;
+}
+
+function lgFilter(el) {
+  document.querySelectorAll('.lg-chip').forEach(c => c.classList.remove('on'));
+  el.classList.add('on');
+  activeLg = el.dataset.lg;
+  updateHeroStats(activeLg);
+  renderTable();
+  const card = document.querySelector('.analytics-card');
+  card.classList.remove('lg-wnba','lg-nba','lg-gleague','lg-bal');
+  if (activeLg === 'WNBA') card.classList.add('lg-wnba');
+  else if (activeLg === 'NBA') card.classList.add('lg-nba');
+  else if (activeLg === 'G-League') card.classList.add('lg-gleague');
+  else if (activeLg === 'BAL') card.classList.add('lg-bal');
+  renderPlayTypeTable();
+}
+
+// BOTTOM TABLE
+function renderTable() {
+  const tbody = document.getElementById('sc-tbody');
+  tbody.innerHTML = '';
+  const games = activeLg ? SC_GAMES.filter(g => g.league === activeLg) : SC_GAMES;
+  games.forEach(g => {
+    const agreeClass = g.agree >= 85 ? 'ap-hi' : g.agree >= 75 ? 'ap-mid' : 'ap-lo';
+    const status = g.published
+      ? '<span class="published-badge"><i class="ti ti-circle-check" style="font-size:9px"></i> Published</span>'
+      : '<span class="complete-badge">Complete</span>';
+    const leagueBadge = `<span style="padding:1px 6px;border-radius:20px;font-size:9.5px;font-weight:700;background:#f3f4f6;color:#6b7280;border:1px solid #e5e7eb;margin-left:6px">${g.league}</span>`;
+    tbody.innerHTML += `<tr style="cursor:${g.link?'pointer':'default'}" onclick="if(this.dataset.link)location=this.dataset.link" data-link="${g.link||''}">
+      <td><div class="tl">${logo(g.away)} ${g.away} <span style="color:#d1d5db;font-size:10px">@</span> ${logo(g.home)} ${g.home}${leagueBadge}</div></td>
+      <td style="color:#9ca3af">${g.date}</td>
+      <td style="font-weight:500">${g.sc}</td>
+      <td style="text-align:center;font-weight:600">${g.plays}</td>
+      <td style="text-align:center;color:${g.changes===0?'#16a34a':'#374151'};font-weight:600">${g.changes}</td>
+      <td style="text-align:center"><span class="agree-pill ${agreeClass}">${g.agree}%</span></td>
+      <td>${status}</td>
+    </tr>`;
+  });
+  if (!games.length) tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:24px;color:#9ca3af;font-size:12px">No games found for this league</td></tr>`;
+}
+
+const PLAY_TYPE_STATS = [
+  // ── Foul: Shooting ─────────────────────────────────────────
+  { group:'Foul: Shooting', type:'Driving Shot Attempt', included:18, changed:9, subs:[
+    { name:'Arm Follow-Through',           included:4, changed:3 },
+    { name:'Block-Charge Situation',       included:3, changed:2 },
+    { name:'Arm Shooting Motion',          included:3, changed:1 },
+    { name:'Legal Guarding Position',      included:2, changed:1 },
+    { name:'NBP: Drawn Into Air/Closeout', included:2, changed:1 },
+    { name:'Body Follow-Through',          included:2, changed:1 },
+    { name:'Vertical',                     included:1, changed:0 },
+    { name:'NBP: Kick-Out',               included:1, changed:0 },
+    { name:'A → B Movement',              included:0, changed:0 },
+    { name:'Body Shooting Motion',         included:0, changed:0 },
+    { name:'Head Contact',                 included:0, changed:0 },
+    { name:'High-Five',                    included:0, changed:0 },
+    { name:'NBP: Off-Arm Contact',         included:0, changed:0 },
+    { name:'NBP: Veer Into Defender',      included:0, changed:0 },
+    { name:'Other',                        included:0, changed:0 },
+    { name:'Restricted Area',              included:0, changed:0 },
+  ]},
+  { group:'Foul: Shooting', type:'Jump Shot', included:14, changed:6, subs:[
+    { name:'Arm Follow-Through',           included:4, changed:2 },
+    { name:'Landing Area',                 included:3, changed:2 },
+    { name:'Legal Guarding Position',      included:2, changed:1 },
+    { name:'NBP: Rip-Through',            included:2, changed:1 },
+    { name:'Body Follow-Through',          included:2, changed:0 },
+    { name:'NBP: Kick-Out',               included:1, changed:0 },
+    { name:'Arm Shooting Motion',          included:0, changed:0 },
+    { name:'Body Shooting Motion',         included:0, changed:0 },
+    { name:'Head Contact',                 included:0, changed:0 },
+    { name:'High-Five',                    included:0, changed:0 },
+    { name:'NBP: Drawn Into Air/Closeout', included:0, changed:0 },
+    { name:'NBP: Launch Angle',           included:0, changed:0 },
+    { name:'Other',                        included:0, changed:0 },
+    { name:'Vertical',                     included:0, changed:0 },
+  ]},
+  { group:'Foul: Shooting', type:'Layup or Dunk', included:9, changed:3, subs:[
+    { name:'Block-Charge Situation',       included:3, changed:1 },
+    { name:'Arm Follow-Through',           included:2, changed:1 },
+    { name:'Restricted Area',              included:2, changed:1 },
+    { name:'Body Follow-Through',          included:1, changed:0 },
+    { name:'Legal Guarding Position',      included:1, changed:0 },
+    { name:'A → B Movement',              included:0, changed:0 },
+    { name:'Arm Shooting Motion',          included:0, changed:0 },
+    { name:'Body Shooting Motion',         included:0, changed:0 },
+    { name:'Head Contact',                 included:0, changed:0 },
+    { name:'High-Five',                    included:0, changed:0 },
+    { name:'NBP: Drawn Into Air/Closeout', included:0, changed:0 },
+    { name:'NBP: Kick-Out',               included:0, changed:0 },
+    { name:'NBP: Off-Arm Contact',         included:0, changed:0 },
+    { name:'NBP: Veer Into Defender',      included:0, changed:0 },
+    { name:'Other',                        included:0, changed:0 },
+    { name:'Vertical',                     included:0, changed:0 },
+  ]},
+  { group:'Foul: Shooting', type:'Floater', included:4, changed:2, subs:[
+    { name:'Arm Follow-Through',           included:2, changed:1 },
+    { name:'Block-Charge Situation',       included:1, changed:1 },
+    { name:'NBP: Drawn Into Air/Closeout', included:1, changed:0 },
+    { name:'A → B Movement',              included:0, changed:0 },
+    { name:'Arm Shooting Motion',          included:0, changed:0 },
+    { name:'Body Follow-Through',          included:0, changed:0 },
+    { name:'Body Shooting Motion',         included:0, changed:0 },
+    { name:'Head Contact',                 included:0, changed:0 },
+    { name:'High-Five',                    included:0, changed:0 },
+    { name:'Legal Guarding Position',      included:0, changed:0 },
+    { name:'NBP: Kick-Out',               included:0, changed:0 },
+    { name:'NBP: Off-Arm Contact',         included:0, changed:0 },
+    { name:'NBP: Veer Into Defender',      included:0, changed:0 },
+    { name:'Other',                        included:0, changed:0 },
+    { name:'Restricted Area',              included:0, changed:0 },
+    { name:'Vertical',                     included:0, changed:0 },
+  ]},
+  { group:'Foul: Shooting', type:'Post Shot', included:3, changed:1, subs:[
+    { name:'Body Shooting Motion',         included:1, changed:1 },
+    { name:'Legal Guarding Position',      included:1, changed:0 },
+    { name:'Body Follow-Through',          included:1, changed:0 },
+    { name:'A → B Movement',              included:0, changed:0 },
+    { name:'Arm Follow-Through',           included:0, changed:0 },
+    { name:'Arm Shooting Motion',          included:0, changed:0 },
+    { name:'Block-Charge Situation',       included:0, changed:0 },
+    { name:'Head Contact',                 included:0, changed:0 },
+    { name:'High-Five',                    included:0, changed:0 },
+    { name:'NBP: Drawn Into Air/Closeout', included:0, changed:0 },
+    { name:'NBP: Kick-Out',               included:0, changed:0 },
+    { name:'NBP: Off-Arm Contact',         included:0, changed:0 },
+    { name:'NBP: Veer Into Defender',      included:0, changed:0 },
+    { name:'Other',                        included:0, changed:0 },
+    { name:'Restricted Area',              included:0, changed:0 },
+    { name:'Vertical',                     included:0, changed:0 },
+  ]},
+  // ── Other play types ───────────────────────────────────────
+  { group:'Foul: Offensive', type:'Foul: Offensive', included:29, changed:11, subs:[
+    { name:'Dislodge from Position', included:10, changed:5 },
+    { name:'Hook',                   included:8,  changed:3 },
+    { name:'Pass & Crash',           included:6,  changed:2 },
+    { name:'Clamp-Lock-Hold',        included:5,  changed:1 },
+  ]},
+  { group:'Foul: Loose Ball', type:'Foul: Loose Ball', included:26, changed:8, subs:[
+    { name:'Clamp-Lock-Hold',        included:10, changed:4 },
+    { name:'Dislodge from Position', included:9,  changed:3 },
+    { name:'Contact to Arm',         included:7,  changed:1 },
+  ]},
+  { group:'Foul: Personal', type:'Foul: Personal', included:38, changed:10, subs:[
+    { name:'Contact to Arm',         included:12, changed:4 },
+    { name:'Hand/Forearm to Front',  included:10, changed:3 },
+    { name:'Body Contact/Check',     included:8,  changed:2 },
+    { name:'Rip-Through',            included:5,  changed:1 },
+    { name:'Two Hands',              included:3,  changed:0 },
+  ]},
+  { group:'Out of Bounds', type:'Out of Bounds', included:20, changed:5, subs:[
+    { name:'Dislodge from Position', included:9,  changed:3 },
+    { name:'Other',                  included:11, changed:2 },
+  ]},
+  { group:'Travel', type:'Travel', included:18, changed:3, subs:[
+    { name:'Gather Step',            included:11, changed:2 },
+    { name:'Pivot Foot',             included:7,  changed:1 },
+  ]},
+  { group:'Goaltending', type:'Goaltending', included:14, changed:2, subs:[
+    { name:'Defensive Goaltending',  included:9,  changed:1 },
+    { name:'Offensive Goaltending',  included:5,  changed:1 },
+  ]},
+];
+
+function ptColor(pct) {
+  if (pct >= 40) return '#ec4899';
+  if (pct >= 25) return '#f472b6';
+  return '#f9a8d4';
+}
+
+// Section groupings for the play type table
+const PT_SECTIONS = [
+  { label: 'Shooting Fouls', groups: ['Foul: Shooting'] },
+  { label: 'Other Fouls & Violations', groups: ['Foul: Offensive','Foul: Loose Ball','Foul: Personal','Out of Bounds','Travel','Goaltending'] },
+];
+
+function renderPlayTypeTable() {
+  const tbody = document.getElementById('pt-tbody');
+  tbody.innerHTML = '';
+  const is10g = _ptTableMode === '10g';
+
+  PT_SECTIONS.forEach(section => {
+    // Section header row — full-width navy band
+    const sh = document.createElement('tr');
+    const lgColors = {'WNBA':'#f59e4a','NBA':'#1a3a6b','G-League':'#111827','BAL':'#166534','':'#1a3a6b'};
+    const shBg = lgColors[activeLg] || '#1a3a6b';
+    sh.innerHTML = `<td colspan="4" style="padding:10px 14px 8px;background:${shBg};color:#fff;font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase">${section.label}</td>`;
+    tbody.appendChild(sh);
+
+    const sectionPts = PLAY_TYPE_STATS.filter(pt => section.groups.includes(pt.group));
+
+    sectionPts.forEach(pt => {
+      const included = is10g ? Math.round(pt.included * 0.32) : pt.included;
+      const changed = is10g ? Math.min(included, Math.round(pt.changed * 0.30 + (pt.included > 0 ? (pt.changed/pt.included - 0.3) * 1.5 : 0))) : pt.changed;
+      const pct = included > 0 ? Math.round(changed / included * 100) : 0;
+      const col = ptColor(pct);
+
+      // Play type row — bold, prominent
+      const tr = document.createElement('tr');
+      tr.className = 'pt-type-row';
+      tr.style.cssText = 'background:#f8fafc;cursor:default';
+      tr.innerHTML = `
+        <td style="padding:10px 14px;font-weight:700;font-size:12px;color:#111827;border-bottom:1px solid #e5e7eb">${pt.type}</td>
+        <td style="padding:10px 14px;text-align:center;font-weight:600;color:#374151;border-bottom:1px solid #e5e7eb">${included}</td>
+        <td style="padding:10px 14px;text-align:center;font-weight:700;color:${col};border-bottom:1px solid #e5e7eb">${changed}</td>
+        <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb">
+          <div class="pt-rate-cell">
+            <span style="font-size:12px;font-weight:800;color:${col};min-width:34px">${pct}%</span>
+            <div class="pt-bar-wrap"><div class="pt-bar" style="width:${pct}%;background:${col}"></div></div>
+          </div>
+        </td>`;
+      tbody.appendChild(tr);
+
+      // Sub rows — collapsed by default, expand on click
+      const subGroupId = `sg-${Math.random().toString(36).slice(2)}`;
+      const activeSubs = pt.subs.filter(s => {
+        const si = is10g ? Math.round(s.included * 0.32) : s.included;
+        return si > 0;
+      });
+      const emptySubs = [];
+
+      // Make play type row clickable to toggle subs
+      tr.style.cursor = 'pointer';
+      const chevronSpan = document.createElement('span');
+      chevronSpan.className = 'pt-chevron';
+      chevronSpan.style.cssText = 'font-size:9px;color:#9ca3af;margin-left:6px;transition:transform .15s;display:inline-block';
+      chevronSpan.textContent = '▶';
+      tr.querySelector('td').appendChild(chevronSpan);
+      tr.onclick = () => {
+        const isOpen = tr.classList.toggle('open');
+        chevronSpan.style.transform = isOpen ? 'rotate(90deg)' : '';
+        document.querySelectorAll(`.${subGroupId}`).forEach(r => r.style.display = isOpen ? '' : 'none');
+      };
+
+      activeSubs.forEach(sub => {
+        const si = is10g ? Math.round(sub.included * 0.32) : sub.included;
+        const sc = is10g ? Math.min(si, Math.round(sub.changed * 0.30)) : sub.changed;
+        const spct = si > 0 ? Math.round(sc / si * 100) : 0;
+        const scol = ptColor(spct);
+        const sr = document.createElement('tr');
+        sr.className = subGroupId;
+        sr.style.display = 'none';
+        sr.innerHTML = `
+          <td style="padding:5px 14px 5px 28px;font-size:11px;color:#374151;border-bottom:1px solid #f3f4f6">
+            <span style="color:#d1d5db;margin-right:5px">└</span>${sub.name}
+          </td>
+          <td style="padding:5px 14px;text-align:center;font-size:11px;color:#6b7280;border-bottom:1px solid #f3f4f6">${si}</td>
+          <td style="padding:5px 14px;text-align:center;font-size:11px;font-weight:600;color:${scol};border-bottom:1px solid #f3f4f6">${sc}</td>
+          <td style="padding:5px 14px;border-bottom:1px solid #f3f4f6">
+            <div class="pt-rate-cell">
+              <span style="font-size:10.5px;font-weight:700;color:${scol};min-width:34px">${spct}%</span>
+              <div class="pt-bar-wrap"><div class="pt-bar" style="width:${spct}%;background:${scol}"></div></div>
+            </div>
+          </td>`;
+        tbody.appendChild(sr);
+      });
+
+      if (emptySubs.length) {
+        const emptyId = `empty-${Math.random().toString(36).slice(2)}`;
+        const toggleRow = document.createElement('tr');
+        toggleRow.className = subGroupId;
+        toggleRow.style.display = 'none';
+        toggleRow.innerHTML = `<td colspan="4" style="padding:3px 14px 5px 28px;border-bottom:1px solid #f3f4f6">
+          <span onclick="toggleEmptySubs('${emptyId}',this)" style="font-size:10px;color:#9ca3af;cursor:pointer;user-select:none">
+            <span class="empty-toggle-icon">▶</span> ${emptySubs.length} sub type${emptySubs.length>1?'s':''} with no data
+          </span>
+        </td>`;
+        tbody.appendChild(toggleRow);
+        emptySubs.forEach(sub => {
+          const sr = document.createElement('tr');
+          sr.className = `${subGroupId} ${emptyId}`;
+          sr.style.display = 'none';
+          sr.innerHTML = `
+            <td style="padding:4px 14px 4px 36px;font-size:10.5px;color:#c4c4c4;border-bottom:1px solid #f9fafb">└ ${sub.name}</td>
+            <td style="padding:4px 14px;text-align:center;font-size:10.5px;color:#d1d5db;border-bottom:1px solid #f9fafb">—</td>
+            <td style="padding:4px 14px;text-align:center;font-size:10.5px;color:#d1d5db;border-bottom:1px solid #f9fafb">—</td>
+            <td style="padding:4px 14px;border-bottom:1px solid #f9fafb"><span style="color:#e5e7eb;font-size:10px">—</span></td>`;
+          tbody.appendChild(sr);
+        });
+      }
+    });
+  });
+}
+
+function toggleEmptySubs(id, btn) {
+  const rows = document.querySelectorAll(`.${id}`);
+  const hidden = rows[0]?.style.display === 'none';
+  rows.forEach(r => r.style.display = hidden ? '' : 'none');
+  btn.querySelector('.empty-toggle-icon').textContent = hidden ? '▼' : '▶';
+}
+
+// Per-play-type overturn rates for last 10 games (oldest→newest)
+const PT_TRENDS = {
+  'Foul: Shooting':   [38, 50, 40, 55, 42, 48, 36, 52, 45, 44],
+  'Foul: Offensive':  [30, 42, 35, 44, 38, 40, 33, 42, 36, 38],
+  'Foul: Loose Ball': [25, 36, 28, 38, 30, 33, 27, 35, 29, 31],
+  'Foul: Personal':   [20, 30, 22, 32, 26, 28, 21, 30, 24, 26],
+  'Out of Bounds':    [18, 28, 20, 30, 24, 27, 19, 29, 22, 25],
+  'Travel':           [12, 20, 14, 22, 16, 19, 11, 21, 15, 17],
+  'Goaltending':      [10, 18, 12, 20, 13, 17, 9, 18, 12, 14],
+};
+
+const PT_SIDEBAR = [
+  {name:'Foul: Shooting',   pct:44, frac:'20/45', frac10:'9/21'},
+  {name:'Foul: Offensive',  pct:38, frac:'11/29', frac10:'5/13'},
+  {name:'Foul: Loose Ball', pct:31, frac:'8/26',  frac10:'4/12'},
+  {name:'Foul: Personal',   pct:26, frac:'10/38', frac10:'4/17'},
+  {name:'Out of Bounds',    pct:25, frac:'5/20',  frac10:'2/9'},
+  {name:'Travel',           pct:17, frac:'3/18',  frac10:'1/8'},
+  {name:'Goaltending',      pct:14, frac:'2/14',  frac10:'1/6'},
+];
+
+function sparkline(data, color) {
+  const W = 60, H = 24, pad = 2;
+  const mn = Math.min(...data), mx = Math.max(...data);
+  const range = mx - mn || 1;
+  const pts = data.map((v, i) => {
+    const x = pad + (i / (data.length - 1)) * (W - pad * 2);
+    const y = H - pad - ((v - mn) / range) * (H - pad * 2);
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(' ');
+  const last = data[data.length - 1], prev = data[data.length - 2];
+  const trend = last > prev ? '↑' : last < prev ? '↓' : '→';
+  const trendCol = last > prev ? '#ec4899' : last < prev ? '#16a34a' : '#9ca3af';
+  return `<div style="display:flex;align-items:center;gap:4px">
+    <svg width="${W}" height="${H}" style="overflow:visible">
+      <polyline points="${pts}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+      <circle cx="${pts.split(' ').pop().split(',')[0]}" cy="${pts.split(' ').pop().split(',')[1]}" r="2.5" fill="${color}"/>
+    </svg>
+    <span style="font-size:9px;font-weight:700;color:${trendCol}">${trend}</span>
+  </div>`;
+}
+
+let _ptMode = 'season';
+let _ptTableMode = 'season';
+
+function setPtTableMode(mode) {
+  _ptTableMode = mode;
+  const btnS = document.getElementById('pt-tbl-season');
+  const btn10 = document.getElementById('pt-tbl-10');
+  const title = document.getElementById('pt-table-title');
+  if (mode === 'season') {
+    btnS.style.background = '#fff'; btnS.style.color = '#374151'; btnS.style.boxShadow = '0 1px 2px rgba(0,0,0,.08)';
+    btn10.style.background = 'transparent'; btn10.style.color = '#9ca3af'; btn10.style.boxShadow = 'none';
+    if (title) title.textContent = 'Overturn Rate by Play Type & Sub Play Type · Season';
+  } else {
+    btn10.style.background = '#fff'; btn10.style.color = '#374151'; btn10.style.boxShadow = '0 1px 2px rgba(0,0,0,.08)';
+    btnS.style.background = 'transparent'; btnS.style.color = '#9ca3af'; btnS.style.boxShadow = 'none';
+    if (title) title.textContent = 'Overturn Rate by Play Type & Sub Play Type · Last 10 Games';
+  }
+  renderPlayTypeTable();
+}
+
+function setPtMode(mode) {
+  _ptMode = mode;
+  const btnS = document.getElementById('pt-toggle-season');
+  const btn10 = document.getElementById('pt-toggle-10');
+  const desc = document.getElementById('pt-sidebar-desc');
+  if (mode === 'season') {
+    btnS.style.background = '#fff'; btnS.style.color = '#374151'; btnS.style.boxShadow = '0 1px 2px rgba(0,0,0,.08)';
+    btn10.style.background = 'transparent'; btn10.style.color = '#9ca3af'; btn10.style.boxShadow = 'none';
+    desc.textContent = '% of included plays changed by SC · sorted by overturn rate';
+  } else {
+    btn10.style.background = '#fff'; btn10.style.color = '#374151'; btn10.style.boxShadow = '0 1px 2px rgba(0,0,0,.08)';
+    btnS.style.background = 'transparent'; btnS.style.color = '#9ca3af'; btnS.style.boxShadow = 'none';
+    desc.textContent = 'Overturn rate trend · last 10 games';
+  }
+  renderPtSidebar();
+}
+
+function renderPtSidebar() {
+  const el = document.getElementById('pt-sidebar');
+  if (!el) return;
+  el.innerHTML = PT_SIDEBAR.map(pt => {
+    const col = pt.pct >= 40 ? '#ec4899' : pt.pct >= 25 ? '#f472b6' : '#fbb6ce';
+    const textCol = pt.pct >= 40 ? '#9d174d' : pt.pct >= 25 ? '#db2777' : '#f472b6';
+    const trend = PT_TRENDS[pt.name] || [];
+    const avg10 = trend.length ? Math.round(trend.reduce((a,b)=>a+b,0)/trend.length) : pt.pct;
+    const col10 = avg10 >= 40 ? '#ec4899' : avg10 >= 25 ? '#f472b6' : '#fbb6ce';
+    const textCol10 = avg10 >= 40 ? '#9d174d' : avg10 >= 25 ? '#db2777' : '#f472b6';
+
+    if (_ptMode === 'season') {
+      return `<div class="play-type-group">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
+          <div class="play-type-name">${pt.name}</div>
+          <div style="font-size:10px;color:${col};font-weight:700">${pt.pct}%</div>
+        </div>
+        <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:${pt.pct}%;background:${col}"></div></div><div class="play-pct" style="color:${textCol}">${pt.frac}</div></div>
+      </div>`;
+    } else {
+      return `<div class="play-type-group">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
+          <div class="play-type-name">${pt.name}</div>
+          <div style="font-size:10px;color:${col10};font-weight:700">${avg10}%</div>
+        </div>
+        <div class="play-row"><div class="play-bar-wrap"><div class="play-bar" style="width:${avg10}%;background:${col10}"></div></div><div class="play-pct" style="color:${textCol10}">${pt.frac10}</div></div>
+      </div>`;
+    }
+  }).join('');
+}
+
+function toggleNavDropdown(e){e.stopPropagation();document.getElementById('nav-dropdown').classList.toggle('open')}
+document.addEventListener('click',()=>{document.getElementById('nav-dropdown').classList.remove('open');document.getElementById('rim-dropdown')?.classList.remove('open');})
+function toggleRimDropdown(e){e.stopPropagation();document.getElementById("rim-dropdown").classList.toggle("open");document.getElementById("nav-dropdown").classList.remove("open");}
+renderPlayTypeTable();
+drawChart();
+drawRcChart();
+renderTable();
+renderPtSidebar();
+</script>
+</body>
+</html>
