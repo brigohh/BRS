@@ -13,6 +13,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:#d4d8e0;border-radius:8px}
 ::-webkit-scrollbar-thumb:hover{background:#b8bdc8}
+
+/* NAV */
 .nav{background:#1a3a6b;height:48px;display:flex;align-items:center;padding:0 24px;flex-shrink:0;overflow:visible;position:relative;z-index:300;box-shadow:0 1px 0 rgba(0,0,0,.12)}
 .nav-logo{display:flex;align-items:center;gap:8px}
 .nav-brand{color:rgba(255,255,255,.9);font-size:11.5px;font-weight:600;white-space:nowrap;letter-spacing:.5px}
@@ -31,10 +33,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .nav-dropdown.open .nav-dd-menu{display:block}
 .nav-dd-item{display:block;padding:9px 16px;font-size:11px;font-weight:500;color:#374151;text-decoration:none;white-space:nowrap;cursor:pointer;transition:background .12s}
 .nav-dd-item:hover{background:#f1f4fa;color:#1a3a6b}
+
+/* SUBNAV */
 .subnav{background:#fff;border-bottom:1px solid #e9ebf0;height:40px;display:flex;padding:0 20px;flex-shrink:0}
 .st{padding:0 14px;font-size:12px;font-weight:500;color:#6b7280;cursor:pointer;display:flex;align-items:center;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:color .15s}
-.st.on{color:#1a3a6b;border-bottom-color:#1a3a6b;font-weight:700}
-.st:hover:not(.on){color:#111827}
+.st.on{color:#7c3aed;border-bottom-color:#7c3aed;font-weight:700}
+.st:hover:not(.on):not(.disabled){color:#111827}
+.st.disabled{color:#c9ced8;cursor:not-allowed;pointer-events:none}
+
+/* GAME HEADER */
 .game-hdr{background:#fff;border-bottom:1px solid #e9ebf0;padding:7px 20px;display:flex;align-items:center;gap:14px;flex-shrink:0}
 .gh-title{font-size:12.5px;font-weight:700;display:flex;align-items:center;gap:4px;flex-wrap:nowrap;white-space:nowrap}
 .gh-date{font-size:10.5px;color:#6b7280;margin-top:1px}
@@ -45,48 +52,49 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .sl{font-size:9.5px;line-height:1.3;margin-top:2px;font-weight:600}
 .s-g{background:#e3f9ea;color:#15803d}
 .s-r{background:#fde8e8;color:#b91c1c}
-.s-t{background:#fef3c7;color:#92400e}
+.s-t{background:#d6f5f1;color:#0d7d72}
 .gh-right{margin-left:auto;display:flex;align-items:center;gap:8px}
 .sc-mode-badge{background:#7c3aed;color:#fff;font-size:10px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:.3px}
 
-/* MAIN */
-.main{flex:1;display:flex;min-height:0;overflow:hidden;padding:14px 32px 0;gap:14px}
+/* MAIN LAYOUT */
+.main{flex:1;display:flex;min-height:0;overflow:hidden;padding:14px 32px 0;gap:14px;background:transparent}
 .main-right{flex:1;display:flex;flex-direction:column;overflow:hidden;gap:0}
 .main-bottom{flex:1;display:flex;gap:14px;overflow:hidden;padding:0 0 14px 0;min-height:0}
 
 /* LEFT PANEL */
-.lp{width:280px;flex-shrink:0;background:#fff;border:1px solid #e9ebf0;border-radius:13px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 1px 3px rgba(17,24,39,.05)}
-.lp-filterbar{padding:8px 10px 6px;border-bottom:1px solid #f0f1f4;flex-shrink:0}
-.filter-row{display:flex;gap:5px;margin-bottom:7px}
-.f-pill{flex:1;padding:4px 6px;font-size:11px;font-weight:600;border:1px solid #d8dce3;border-radius:7px;background:#fff;color:#374151;cursor:pointer;text-align:center;transition:background .12s,border-color .12s}
-.f-pill.on{background:#7c3aed;border-color:#7c3aed;color:#fff}
+.lp{width:230px;flex-shrink:0;background:#fff;border:1px solid #e9ebf0;border-radius:13px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 1px 3px rgba(17,24,39,.05)}
+.lp-filterbar{padding:9px 11px;border-bottom:1px solid #f0f1f4;display:flex;flex-direction:column;gap:7px;flex-shrink:0}
+.lp-filter-select{width:100%;padding:5px 8px;font-size:11px;font-weight:600;border:1px solid #d8dce3;border-radius:7px;background:#fff;color:#374151;cursor:pointer}
+.lp-filter-select:focus{outline:none;border-color:#7c3aed}
 .q-row{display:flex;gap:5px}
-.q-tog{flex:1;padding:3px 5px;font-size:11px;border:1px solid #d8dce3;border-radius:6px;background:#fff;color:#374151;cursor:pointer;font-weight:600;text-align:center;transition:background .12s}
+.q-tog{padding:3px 8px;font-size:11px;border:1px solid #d8dce3;border-radius:6px;background:#fff;color:#374151;cursor:pointer;font-weight:600;transition:background .12s;flex:1;text-align:center}
 .q-tog:hover{background:#f6f7fa}
 .q-tog.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
 .poss-list{flex:1;overflow-y:auto}
-.poss-item{border-bottom:1px solid #eceef2}
-.poss-hdr{padding:6px 10px;display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:#374151;background:#f0f1f5;user-select:none}
-.poss-seg{color:#9ca3af;font-size:9.5px;font-weight:600;min-width:38px}
+.poss-item{border-bottom:1px solid #f4f5f7}
+.poss-hdr{padding:8px 11px;display:flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;color:#374151;background:#eef0f4;user-select:none}
+.poss-num{color:#9ca3af;font-size:10.5px;font-weight:600;min-width:16px}
 .poss-team{color:#1a3a6b;font-weight:700}
 .poss-time{flex:1;color:#374151}
 .poss-events{padding:2px 0}
-.sc-ev-row{padding:7px 10px 7px 16px;cursor:pointer;border-left:3px solid transparent;transition:background .12s,border-color .12s;border-bottom:1px solid #f4f5f7;user-select:none}
-.sc-ev-row:hover{background:#f5f7ff;border-left-color:#a5b4fc}
-.sc-ev-row.sel{background:#eff6ff;border-left-color:#1a3a6b}
-.sc-ev-row.placeholder{opacity:.65;cursor:default;border-left-color:transparent !important}
-.sc-ev-row.placeholder:hover{background:transparent}
-.sc-ev-label{font-size:11.5px;font-weight:600;color:#374151;margin-bottom:3px;display:flex;align-items:center;gap:5px}
-.sc-ev-label .ev-time{font-size:10px;color:#9ca3af;font-weight:500}
-.sc-ev-rating-row{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
-.sc-1p-chip{display:inline-block;font-size:9.5px;font-weight:700;padding:2px 8px;border-radius:10px;white-space:nowrap}
+.ev-row{padding:7px 12px 7px 21px;font-size:11.5px;cursor:default;display:flex;flex-direction:column;gap:3px;line-height:1.3;transition:background .12s;border-left:3px solid transparent}
+.ev-row.reviewable{cursor:pointer}
+.ev-row.reviewable:hover{background:#f5f7ff}
+.ev-row.sel{border-left-color:#7c3aed;background:#f5f3ff}
+.ev-row.plain{color:#9ca3af;opacity:.7;cursor:default}
+.ev-top{display:flex;align-items:center;gap:5px}
+.ev-top .ev-time{font-size:10px;color:#9ca3af;font-weight:500;margin-left:auto}
+.whistle-ic{font-size:11px;color:#d97706;flex-shrink:0}
+.no-whistle-ic{font-size:11px;color:#c9ced8;flex-shrink:0}
+.ev-chiprow{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.chip{display:inline-block;font-size:9.5px;font-weight:700;padding:2px 8px;border-radius:10px;white-space:nowrap}
 .chip-inc{background:#fde8e8;color:#991b1b;border:1px solid #fca5a5}
 .chip-pil{background:#fef3c7;color:#92400e;border:1px solid #fde68a}
 .chip-pin{background:#dbeafe;color:#1e40af;border:1px solid #93c5fd}
-.chip-look{background:#f3e8ff;color:#7c3aed;border:1px solid #c4b5fd}
 .chip-cc{background:#d1fae5;color:#065f46;border:1px solid #6ee7b7}
-.chip-ni{background:#f3f4f6;color:#6b7280;border:1px solid #e5e7eb}
-.sc-1p-rating-txt{font-size:10px;color:#6b7280;font-style:italic}
+.chip-cnc{background:#d1fae5;color:#065f46;border:1px solid #6ee7b7}
+.chip-ic{background:#fde8e8;color:#991b1b;border:1px solid #fca5a5}
+.ev-rating-txt{font-size:10px;color:#6b7280;font-style:italic}
 .lp-footer{padding:11px;border-top:1px solid #f0f1f4;flex-shrink:0}
 .submit-sc-btn{width:100%;padding:9px;background:#7c3aed;color:#fff;border:none;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.4px;transition:background .15s,box-shadow .15s}
 .submit-sc-btn:hover{background:#6d28d9;box-shadow:0 4px 12px rgba(124,58,237,.3)}
@@ -96,6 +104,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .inf-table-wrap{flex:1;min-width:0;border:1px solid #e9ebf0;border-radius:13px;background:#fff;overflow:hidden;box-shadow:0 1px 3px rgba(17,24,39,.05)}
 .inf-tbl{width:100%;border-collapse:collapse;font-size:11.5px;table-layout:fixed}
 .inf-tbl th{padding:6px 11px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.4px;color:#9ca3af;background:#fafbfc;border-bottom:1px solid #eceef2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.inf-tbl th:first-child{border-radius:13px 0 0 0}
+.inf-tbl th:last-child{border-radius:0 13px 0 0}
 .inf-tbl td{padding:6px 11px;border-bottom:1px solid #f4f5f7;vertical-align:middle;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .inf-tbl tbody tr:last-child td{border-bottom:none}
 .rating-chip{display:inline-block;padding:1px 8px;border-radius:10px;font-size:10px;font-weight:600;background:#f3f4f6;color:#374151;border:1px solid #e5e7eb;white-space:nowrap}
@@ -103,12 +113,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 /* CENTER PANEL */
 .cp{flex:1 1 0;min-width:0;display:flex;flex-direction:column;overflow:hidden;background:#fff;border:1px solid #e9ebf0;border-radius:13px;box-shadow:0 1px 3px rgba(17,24,39,.05)}
 .cp-empty{flex:1;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-size:13px;font-style:italic}
-.rating-form{flex-shrink:0;border-bottom:1px solid #eceef2;background:#fafbfc;overflow:hidden}
+.rating-form{flex-shrink:0;border-bottom:1px solid #eceef2;background:#fafbfc;margin-top:6px;overflow:hidden}
 .rf-inner{display:grid;grid-template-columns:1fr 160px;overflow:hidden}
 .rf-left{padding:16px 18px 16px 26px;display:flex;flex-direction:column;gap:10px;min-width:0}
-.rf-right-col{padding:14px 14px 14px 14px;border-left:1px solid #eceef2;display:flex;flex-direction:column;gap:5px;background:#fafbfc}
+.rf-right-col{padding:16px 18px 16px 14px;border-left:1px solid #eceef2;display:flex;flex-direction:column;gap:8px;background:#fafbfc}
 .rf-row{display:flex;align-items:center;gap:10px}
-.rf-label{font-size:10.5px;font-weight:600;color:#6b7280;min-width:110px;flex-shrink:0}
+.rf-label{font-size:10.5px;font-weight:600;color:#6b7280;min-width:100px;flex-shrink:0}
 .rf-clock{padding:4px 10px;border:1px solid #d8dce3;border-radius:7px;font-size:12px;font-weight:700;color:#111827;background:#fff;width:80px;text-align:center}
 .rf-checks{display:flex;gap:8px;flex-wrap:wrap}
 .rf-check{display:flex;align-items:center;gap:4px;font-size:11px;color:#374151;cursor:pointer}
@@ -117,36 +127,34 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .ref-btn,.loc-btn{flex:1;text-align:center;padding:6px 4px;border:1px solid #d8dce3;border-radius:7px;font-size:10.5px;cursor:pointer;background:#fff;color:#374151;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:background .12s,border-color .12s}
 .ref-btn:hover,.loc-btn:hover{background:#f6f7fa}
 .ref-btn.on,.loc-btn.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
-.rf-select{padding:6px 10px;border:1px solid #d8dce3;border-radius:7px;font-size:11.5px;color:#374151;background:#fff;cursor:pointer;transition:border-color .15s,background .15s}
+.rf-select{padding:6px 10px;border:1px solid #d8dce3;border-radius:7px;font-size:11.5px;color:#374151;background:#fff;cursor:pointer;transition:border-color .12s}
 .rf-select:hover{border-color:#b8bfcc}
 .rf-left .rf-select{flex:1}
-.rf-save-btn{padding:6px 14px;background:#7c3aed;color:#fff;border:none;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:4px;transition:background .15s}
-.rf-save-btn:hover{background:#6d28d9}
+.rf-section-lbl{font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.4px;margin-bottom:2px}
+.rf-save-btn{padding:6px 14px;background:#7c3aed;color:#fff;border:none;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:4px;transition:background .15s,box-shadow .15s}
+.rf-save-btn:hover{background:#6d28d9;box-shadow:0 4px 12px rgba(124,58,237,.3)}
 .rf-cancel-btn{padding:6px 10px;border:1px solid #d8dce3;border-radius:7px;font-size:11px;color:#374151;background:#fff;cursor:pointer;transition:background .12s}
 .rf-cancel-btn:hover{background:#f6f7fa}
-.tmpl-btn{padding:4px 8px;border:1px solid #d8dce3;border-radius:7px;font-size:10.5px;cursor:pointer;background:#fff;color:#374151;font-weight:500;display:inline-flex;align-items:center;gap:3px;transition:background .12s;width:100%;justify-content:center}
-.tmpl-btn:hover{background:#f6f7fa}
-.rf-sec-lbl{font-size:9.5px;font-weight:700;color:#9ca3af;letter-spacing:.4px;text-transform:uppercase;margin-top:2px}
 
 /* Changed-field highlight */
 .sc-changed{border-color:#d97706 !important;background:#fffbeb !important;box-shadow:0 0 0 2px rgba(217,119,6,.18) !important}
 .sc-changed-ref{border-color:#d97706 !important;background:#fffbeb !important;color:#92400e !important}
 
 /* Overturn banner */
-.sc-overturn-banner{display:none;background:#7c3aed;color:#fff;font-size:11.5px;font-weight:700;padding:7px 16px;border-radius:8px;align-items:center;gap:7px;margin:10px 16px 0;flex-shrink:0}
+.sc-overturn-banner{display:none;background:#7c3aed;color:#fff;font-size:11.5px;font-weight:700;padding:7px 16px;align-items:center;gap:7px;flex-shrink:0}
 .sc-overturn-banner.show{display:flex}
 .sc-overturn-banner i{font-size:14px}
 
 /* Comment section */
-.comment-section{flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:10px}
-.comment-tmpl-row{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.comment-section{flex:1;overflow:hidden;padding:14px 16px;display:flex;flex-direction:column;gap:11px}
+.comment-tmpl-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 .tmpl-lbl{font-size:10.5px;font-weight:600;color:#6b7280;white-space:nowrap}
-.ctmpl-btn{padding:4px 10px;border:1px solid #d8dce3;border-radius:7px;font-size:11px;cursor:pointer;background:#fff;color:#374151;font-weight:500;display:inline-flex;align-items:center;gap:3px;transition:background .12s}
-.ctmpl-btn:hover{background:#f6f7fa}
-.ctmpl-btn.special{background:#1a3a6b;color:#fff;border-color:#1a3a6b}
+.tmpl-btn{padding:4px 11px;border:1px solid #d8dce3;border-radius:7px;font-size:11px;cursor:pointer;background:#fff;color:#374151;font-weight:500;display:inline-flex;align-items:center;gap:3px;transition:background .12s}
+.tmpl-btn:hover{background:#f6f7fa}
+.tmpl-btn.special{background:#1a3a6b;color:#fff;border-color:#1a3a6b}
 .comment-lbl{font-size:10.5px;font-weight:700;color:#374151;letter-spacing:.3px}
 .comment-lbl.sc{color:#7c3aed}
-.comment-ta{width:100%;border:1px solid #d8dce3;border-radius:9px;padding:9px 11px;font-size:12px;color:#374151;background:#fff;resize:none;font-family:inherit;line-height:1.5;transition:border-color .12s}
+.comment-ta{width:100%;border:1px solid #d8dce3;border-radius:9px;padding:9px 11px;font-size:12px;color:#374151;background:#fff;resize:none;font-family:inherit;line-height:1.5;transition:border-color .12s,box-shadow .12s}
 .comment-ta:focus{outline:none;border-color:#1a3a6b;box-shadow:0 0 0 3px rgba(26,58,107,.1)}
 .sc-notes-ta{border-color:#e9d5ff}
 .sc-notes-ta:focus{border-color:#7c3aed;box-shadow:0 0 0 3px rgba(124,58,237,.12)}
@@ -154,17 +162,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 /* RIGHT PANEL */
 .rp-col{flex:0 0 42%;max-width:42%;display:flex;flex-direction:column;gap:11px;min-height:0}
 .rp{flex-shrink:0;background:#fff;display:flex;flex-direction:column;border:1px solid #e9ebf0;border-radius:13px;overflow:hidden;min-height:0;box-shadow:0 1px 3px rgba(17,24,39,.05)}
-.rp-box{padding:9px 11px;border-bottom:1px solid #f4f5f7;flex-shrink:0;background:#fff}
-.rp-lbl{font-size:10px;color:#9ca3af;font-weight:700;margin-bottom:3px;display:flex;align-items:center;gap:5px}
-.rp-lbl i{font-size:13px}
-.rp-val{font-size:11px;color:#6b7280;font-style:italic;line-height:1.5}
+.rp-card{background:#fff;border:1px solid #e9ebf0;border-radius:13px;padding:11px 15px;flex-shrink:0;box-shadow:0 1px 3px rgba(17,24,39,.05)}
+.rp-card-lbl{font-size:10px;color:#9ca3af;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:5px}
+.rp-card-lbl i{font-size:13px}
+.rp-card-val{font-size:11px;color:#6b7280;font-style:italic;line-height:1.5}
+.rp-card-ptiw{color:#f59e0b;font-weight:700}
 .vid-area{background:#0e1320;padding:7px 7px 0;flex-shrink:0}
-.vid-frame{width:100%;aspect-ratio:16/9;background:#1a1f2e;border-radius:8px;display:flex;align-items:center;justify-content:center}
+.vid-frame{width:100%;aspect-ratio:16/9;background:#1a1f2e;border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.vid-frame img{width:100%;height:100%;object-fit:cover;border-radius:8px}
 .vid-ph{display:flex;flex-direction:column;align-items:center;gap:6px}
 .vid-ph i{font-size:28px;color:#374151}
 .vid-ph span{font-size:11px;color:#4b5563}
 .ang-row{display:flex;gap:4px;padding:7px 11px;background:#fff;border-bottom:1px solid #f4f5f7;overflow-x:auto;flex-shrink:0}
 .ang{padding:3px 8px;font-size:10px;border:1px solid #e9ebf0;background:#fafbfc;color:#6b7280;cursor:pointer;border-radius:5px;white-space:nowrap;flex-shrink:0;font-weight:500;transition:background .12s}
+.ang:hover{color:#374151;border-color:#d1d5db;background:#f1f3f7}
 .ang.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
 .vid-ctrl{padding:7px 11px;border-bottom:1px solid #f4f5f7;display:flex;align-items:center;gap:6px;flex-shrink:0;background:#fff}
 .vcb{background:none;border:none;color:#9ca3af;cursor:pointer;font-size:15px;display:flex;align-items:center}
@@ -176,13 +187,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .clip-bar{padding:7px 11px;border-bottom:1px solid #f4f5f7;display:flex;gap:6px;align-items:center;flex-shrink:0;background:#fafbfc}
 .clip-btn{padding:5px 11px;background:#7c3aed;color:#fff;border:none;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:4px;transition:background .15s}
 .clip-btn:hover{background:#6d28d9}
-
-/* Context menu */
-.ctx-menu{position:fixed;background:#fff;border:1px solid #e5e7eb;border-radius:9px;box-shadow:0 8px 24px rgba(0,0,0,.14);padding:5px 0;z-index:900;min-width:170px;display:none}
-.ctx-menu.show{display:block}
-.ctx-item{padding:8px 14px;font-size:11.5px;font-weight:500;color:#374151;cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .1s}
-.ctx-item:hover{background:#f5f7ff;color:#1a3a6b}
-.ctx-item i{font-size:13px;color:#7c3aed}
+.hotkeys-btn{padding:5px 11px;border:1px solid #d8dce3;border-radius:7px;font-size:11px;cursor:pointer;background:#fff;color:#374151;display:inline-flex;align-items:center;gap:3px;transition:background .12s}
+.hotkeys-btn:hover{background:#f6f7fa}
 
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:11px 22px;border-radius:11px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:7px;opacity:0;transition:opacity .18s;z-index:60;white-space:nowrap;pointer-events:none;background:#7c3aed;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.22)}
 .toast.show{opacity:1}
@@ -191,6 +197,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 <body>
 <div class="page">
 
+<!-- NAV -->
 <div class="nav">
   <div class="nav-logo" onclick="location='home.html'" style="cursor:pointer">
     <img src="Logos/nba-logo.svg" style="width:16px;height:auto">
@@ -216,16 +223,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   </div>
 </div>
 
+<!-- SUBNAV -->
 <div class="subnav">
   <span class="st" onclick="location='review.html'">Review (1st Pass)</span>
   <span class="st on">Review (2nd Check)</span>
-  <span class="st" onclick="location='second-check.html?view=ocr'">OCR</span>
-  <span class="st" onclick="location='second-check.html?view=important'">Important Calls</span>
+  <span class="st disabled">OGR</span>
+  <span class="st disabled">Important Calls</span>
   <span class="st" onclick="location='second-check.html'">Second Check</span>
   <span class="st" onclick="location='second-check.html?view=ptiw'">PTIW</span>
   <span class="st" onclick="location='second-check.html?view=oiw'">OIW</span>
 </div>
 
+<!-- GAME HEADER -->
 <div class="game-hdr">
   <div>
     <div class="gh-title">
@@ -243,28 +252,28 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   </div>
   <div class="gh-sep"></div>
   <div class="stats">
-    <div class="stat s-r"><div class="sn">5</div><div class="sl">INC Calls</div></div>
-    <div class="stat s-t"><div class="sn">9</div><div class="sl">PIL Events</div></div>
-    <div class="stat s-g"><div class="sn">5</div><div class="sl">NI Events</div></div>
+    <div class="stat s-r"><div class="sn">4</div><div class="sl">INC / IC</div></div>
+    <div class="stat s-t"><div class="sn">9</div><div class="sl">PIL / PIN</div></div>
+    <div class="stat s-g"><div class="sn">2</div><div class="sl">CC / CNC</div></div>
   </div>
   <div class="gh-right">
     <div class="sc-mode-badge"><i class="ti ti-eye-check" style="font-size:11px"></i> &nbsp;Second Check Mode</div>
   </div>
 </div>
 
+<!-- MAIN -->
 <div class="main">
+
   <!-- LEFT PANEL -->
   <div class="lp">
     <div class="lp-filterbar">
-      <div class="filter-row">
-        <button class="f-pill on" id="fpill-imp" onclick="setFilter('important',this)">Important Calls</button>
-        <button class="f-pill" id="fpill-all" onclick="setFilter('all',this)">All Calls</button>
-      </div>
+      <select class="lp-filter-select" id="filter-select" onchange="setFilter(this.value)">
+        <option value="important" selected>Important Calls</option>
+        <option value="all">All Calls</option>
+      </select>
       <div class="q-row">
         <button class="q-tog on" id="qtog-Q1" onclick="filterQ('Q1',this)">Q1</button>
         <button class="q-tog" id="qtog-Q2" onclick="filterQ('Q2',this)">Q2</button>
-        <button class="q-tog" id="qtog-Q3" onclick="filterQ('Q3',this)">Q3</button>
-        <button class="q-tog" id="qtog-Q4" onclick="filterQ('Q4',this)">Q4</button>
       </div>
     </div>
     <div class="poss-list" id="poss-list"></div>
@@ -275,7 +284,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 
   <!-- MAIN RIGHT -->
   <div class="main-right">
-    <div id="inf-table-wrap" style="display:none;margin-bottom:10px">
+    <div id="inf-table-wrap" style="display:none">
       <div class="inf-table-outer">
         <div class="inf-table-wrap">
           <table class="inf-tbl" id="inf-tbl">
@@ -296,11 +305,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       <div class="cp" id="center-panel">
         <div class="cp-empty" id="cp-empty">Select a flagged event from the queue to second-check</div>
 
-        <div id="sc-overturn-banner" class="sc-overturn-banner">
-          <i class="ti ti-arrow-badge-up"></i> OVERTURN — 2nd check rating differs from 1st pass
-        </div>
-
         <div class="rating-form" id="rating-form" style="display:none">
+          <div id="sc-overturn-banner" class="sc-overturn-banner">
+            <i class="ti ti-arrow-badge-up"></i> OVERTURN — 2nd check rating differs from 1st pass
+          </div>
           <div class="rf-inner">
             <div class="rf-left">
               <div class="rf-row">
@@ -310,9 +318,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
               <div class="rf-row">
                 <span class="rf-label">Responsible Ref:</span>
                 <div class="btn-group" id="ref-btn-group">
-                  <button class="ref-btn" onclick="selectRef(this)">Genesis Perrymond (8)</button>
-                  <button class="ref-btn" onclick="selectRef(this)">Catherine Chang (23)</button>
-                  <button class="ref-btn" onclick="selectRef(this)">Kevin Fahy (86)</button>
+                  <button class="ref-btn" onclick="selectRef(this)">Genesis Perrymond</button>
+                  <button class="ref-btn" onclick="selectRef(this)">Catherine Chang</button>
+                  <button class="ref-btn" onclick="selectRef(this)">Kevin Fahy</button>
                 </div>
               </div>
               <div class="rf-row">
@@ -325,30 +333,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
               </div>
               <div class="rf-row">
                 <span class="rf-label">Infraction Type:</span>
-                <select class="rf-select" id="rf-infraction-type" onchange="checkChanged()">
+                <select class="rf-select" id="rf-infraction-type" onchange="updateInfrType();checkChanged()">
                   <option>-- select --</option>
-                  <optgroup label="Fouls">
-                    <option>Foul: Away from Play</option><option>Foul: Blocking</option>
-                    <option>Foul: Defense 3 Second</option><option>Foul: Holding</option>
-                    <option>Foul: Loose Ball</option><option>Foul: Offensive</option>
-                    <option>Foul: Personal</option><option>Foul: Pushing</option>
-                    <option>Foul: Shooting</option><option>Foul: Transition Take Foul</option>
-                  </optgroup>
-                  <optgroup label="Stoppages">
-                    <option>Stoppage: Inadvertent Whistle</option><option>Stoppage: Out-of-Bounds</option>
-                  </optgroup>
-                  <optgroup label="Turnovers">
-                    <option>Turnover: Double Dribble</option><option>Turnover: Lost Ball Out of Bounds</option>
-                    <option>Turnover: Out of Bounds</option><option>Turnover: Traveling</option>
-                  </optgroup>
-                  <optgroup label="Violations">
-                    <option>Violation: Defensive Goaltending</option>
-                  </optgroup>
+                  <option>Foul: Loose Ball</option>
+                  <option>Foul: Offensive</option>
+                  <option>Foul: Personal</option>
+                  <option>Foul: Shooting</option>
                 </select>
               </div>
               <div class="rf-row">
                 <span class="rf-label">Play Type:</span>
-                <select class="rf-select" id="rf-play-type" onchange="checkChanged()">
+                <select class="rf-select" id="rf-play-type" onchange="updateSubPlayTypes();checkChanged()">
                   <option>-- select --</option>
                 </select>
               </div>
@@ -382,55 +377,49 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
                   <option value="">-- select --</option>
                   <optgroup label="Infraction Rating">
                     <option>Infraction</option>
-                    <option>Judgement - Lean Infraction</option>
-                    <option>Judgement - Lean No</option>
+                    <option>Judgment - Lean Infraction</option>
+                    <option>Judgment - Lean No Infraction</option>
                     <option>No Infraction</option>
-                  </optgroup>
-                  <optgroup label="Assessment Rating">
-                    <option>Personal Foul Assessment</option>
-                    <option>Shooting Foul Assessment</option>
-                    <option>Wrong Player Assessment</option>
-                    <option>Block-Charge Assessment</option>
                   </optgroup>
                 </select>
               </div>
               <div class="rf-row">
                 <span class="rf-label">Observability:</span>
                 <select class="rf-select" id="rf-observability" onchange="checkChanged()">
-                  <option>Observable</option><option>Difficult</option><option>Very Difficult</option>
+                  <option>Observable</option><option>Difficult</option><option>Very Difficult</option><option>Undetectable</option>
                 </select>
               </div>
             </div>
             <div class="rf-right-col">
-              <div class="rf-sec-lbl">FLAGS</div>
-              <div class="rf-checks" style="flex-direction:column;gap:5px">
+              <div class="rf-section-lbl">FLAGS</div>
+              <div class="rf-checks" style="flex-direction:column;gap:6px">
                 <label class="rf-check"><input type="checkbox" id="chk-called"> Called</label>
                 <label class="rf-check"><input type="checkbox" id="chk-ptiw"> PTIW</label>
                 <label class="rf-check"><input type="checkbox" id="chk-look"> Look</label>
                 <label class="rf-check"><input type="checkbox" id="chk-ogr"> OGR</label>
                 <label class="rf-check"><input type="checkbox" id="chk-poe"> POE</label>
               </div>
-              <div style="border-top:1px solid #e5e7eb;margin:3px 0"></div>
-              <div class="rf-sec-lbl">ACTIONS</div>
-              <button class="tmpl-btn" onclick="openChatbot()" style="gap:4px"><i class="ti ti-whistle" style="font-size:11px"></i> TuckerGPT</button>
-              <button class="tmpl-btn" onclick="openAddToPlaylist()" style="gap:4px"><i class="ti ti-playlist" style="font-size:11px"></i> Add to Playlist</button>
-              <button class="tmpl-btn" onclick="openSlackModal()" style="gap:4px"><i class="ti ti-brand-slack" style="font-size:11px"></i> Send to Slack</button>
-              <button class="tmpl-btn" onclick="openLeagueOpsModal()" style="gap:4px"><i class="ti ti-send" style="font-size:11px"></i> League Ops</button>
-              <div style="border-top:1px solid #e5e7eb;margin:3px 0;margin-top:auto"></div>
-              <button class="rf-save-btn" onclick="saveRating()" style="width:100%;justify-content:center">Save</button>
-              <button class="rf-cancel-btn" onclick="cancelRating()" style="width:100%;justify-content:center">Cancel</button>
+              <div style="border-top:1px solid #e5e7eb;margin:4px 0"></div>
+              <button class="tmpl-btn" onclick="openChatbot()" style="width:100%;justify-content:center;gap:4px"><i class="ti ti-whistle" style="font-size:12px"></i> TuckerGPT</button>
+              <button class="tmpl-btn" style="width:100%;justify-content:center;gap:4px" onclick="openAddToPlaylist()"><i class="ti ti-playlist" style="font-size:12px"></i> Add to Playlist</button>
+              <button class="tmpl-btn" style="width:100%;justify-content:center;gap:4px" onclick="openSlackModal()"><i class="ti ti-brand-slack" style="font-size:12px"></i> Send to Slack</button>
+              <button class="tmpl-btn" style="width:100%;justify-content:center;gap:4px" onclick="openLeagueOpsModal()"><i class="ti ti-send" style="font-size:12px"></i> Send to League Ops</button>
+              <div style="display:flex;flex-direction:column;gap:5px;margin-top:auto">
+                <button class="rf-save-btn" onclick="saveRating()" style="width:100%;justify-content:center">Save</button>
+                <button class="rf-cancel-btn" onclick="cancelRating()" style="width:100%;justify-content:center">Cancel</button>
+              </div>
             </div>
           </div>
-        </div>
+        </div><!-- /.rating-form -->
 
         <div class="comment-section" id="comment-section" style="display:none">
           <div class="comment-tmpl-row">
-            <span class="tmpl-lbl">Templates:</span>
-            <button class="ctmpl-btn special"><i class="ti ti-diamond"></i> Auto Comments</button>
-            <button class="ctmpl-btn">Coach's Challenge &#9662;</button>
-            <button class="ctmpl-btn">Take Fouls &#9662;</button>
-            <button class="ctmpl-btn">Head/Face Contact</button>
-            <button class="ctmpl-btn" style="background:#dbeafe;color:#1e40af;border-color:#93c5fd" onclick="openCommentLibrary()"><i class="ti ti-books" style="font-size:11px"></i> Library</button>
+            <span class="tmpl-lbl">Comment Templates:</span>
+            <button class="tmpl-btn special"><i class="ti ti-diamond"></i> Auto Comments</button>
+            <button class="tmpl-btn">Coach's Challenge &#9662;</button>
+            <button class="tmpl-btn">Take Fouls &#9662;</button>
+            <button class="tmpl-btn">Head/Face Contact</button>
+            <button class="tmpl-btn" style="background:#dbeafe;color:#1e40af;border-color:#93c5fd" onclick="openCommentLibrary()"><i class="ti ti-books" style="font-size:11px"></i> Comment Library</button>
           </div>
           <div>
             <div class="comment-lbl" style="margin-bottom:5px">1st Pass Comment <span style="font-size:9.5px;color:#9ca3af;font-weight:500">(read-only)</span></div>
@@ -447,165 +436,148 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
         </div>
       </div>
 
-      <!-- RIGHT PANEL -->
+      <!-- RIGHT PANEL COLUMN -->
       <div class="rp-col">
-        <div class="rp" style="flex:1">
-          <div class="rp-box" id="rp-desc-box" style="display:none">
-            <div class="rp-lbl"><i class="ti ti-file-description"></i> Play Description</div>
-            <div class="rp-val" id="rp-desc">—</div>
-          </div>
+        <div class="rp">
           <div class="vid-area">
             <div class="vid-frame">
-              <div class="vid-ph">
-                <i class="ti ti-player-play-filled"></i>
-                <span>No clip loaded</span>
-              </div>
+              <img src="Logos/video player placeholder.png" alt="Video"
+                onerror="this.parentElement.innerHTML='<div class=&quot;vid-ph&quot;><i class=&quot;ti ti-player-play&quot;></i><span>Video Placeholder</span></div>'">
             </div>
           </div>
           <div class="ang-row">
-            <div class="ang on">Broadcast</div>
-            <div class="ang">Lead Cam</div>
-            <div class="ang">Trail Cam</div>
-            <div class="ang">Overhead</div>
-            <div class="ang">SkyCam</div>
+            <div class="ang on" onclick="angClick(this)">LL5</div>
+            <div class="ang" onclick="angClick(this)">LL5</div>
+            <div class="ang" onclick="angClick(this)">LR5</div>
+            <div class="ang" onclick="angClick(this)">LR5</div>
+            <div class="ang" onclick="angClick(this)">LS5</div>
+            <div class="ang" onclick="angClick(this)">RS5</div>
+            <div class="ang" onclick="angClick(this)">ABP</div>
+            <div class="ang" onclick="angClick(this)">HBP</div>
+            <div class="ang" onclick="angClick(this)">INA</div>
+            <div class="ang" onclick="angClick(this)">DF BCAST</div>
           </div>
           <div class="vid-ctrl">
-            <button class="vcb"><i class="ti ti-player-skip-back"></i></button>
             <button class="vcb"><i class="ti ti-player-play"></i></button>
-            <button class="vcb"><i class="ti ti-player-skip-forward"></i></button>
+            <button class="vcb"><i class="ti ti-volume"></i></button>
             <div class="vtrack"><div class="vfill"></div><div class="vhead"></div></div>
-            <div class="vtime">0:06 / 0:28</div>
+            <span class="vtime">40:51 / 3:12:27</span>
+            <button class="vcb"><i class="ti ti-arrows-maximize"></i></button>
           </div>
           <div class="clip-bar">
-            <button class="clip-btn"><i class="ti ti-video"></i> Load Clip</button>
-            <button class="clip-btn" style="background:#374151"><i class="ti ti-camera"></i> Snapshot</button>
+            <button class="clip-btn"><i class="ti ti-paperclip"></i> CLIP VIDEO <span style="font-size:10px;opacity:.7">(ctrl+v)</span></button>
+            <button class="hotkeys-btn">Video Hotkeys &#9662;</button>
           </div>
         </div>
+        <div class="rp-card">
+          <div class="rp-card-lbl"><i class="ti ti-alert-triangle" style="color:#f59e0b"></i> <span class="rp-card-ptiw">PTIW Comment</span></div>
+          <div class="rp-card-val" id="ptiw-comment">No PTIW Comment</div>
+        </div>
+        <div class="rp-card">
+          <div class="rp-card-lbl"><i class="ti ti-info-circle"></i> OIW Comment</div>
+          <div class="rp-card-val" id="oiw-comment">No OIW Comment</div>
+        </div>
       </div>
-    </div>
-  </div>
-</div>
 
-<!-- Context Menu -->
-<div class="ctx-menu" id="ctx-menu">
-  <div class="ctx-item" onclick="expandPossession()"><i class="ti ti-layout-list"></i> Expand Possession</div>
-  <div class="ctx-item" onclick="openAddToPlaylist()"><i class="ti ti-playlist"></i> Add to Playlist</div>
-  <div class="ctx-item" onclick="openSlackModal()"><i class="ti ti-brand-slack"></i> Send to Slack</div>
-</div>
+    </div><!-- /.main-bottom -->
+  </div><!-- /.main-right -->
+
+</div><!-- /.main -->
+</div><!-- /.page -->
 
 <div class="toast" id="toast"></div>
 
 <script>
-const REFS = ['Genesis Perrymond (8)','Catherine Chang (23)','Kevin Fahy (86)'];
-const TOR_P = ['N. Sabally (13)','K. Rice (5)','M. Mabrey (4)','T. Kay (22)','N. Conde (0)','L. Juskaite (7)','N. Nurse (10)','S. Taylor (23)','N. Mills (14)'];
-const CHI_P = ['S. Diggins (4)','K. Cardoso (10)','E. Williams (1)','B. Sykes (6)','T. Cloud (0)','N. Banham (3)','M. Taylor (23)','M. Conde (0)','B. Bonham (3)','L. Held (7)','N. Cloud (0)','A. CoulButy (21)','K. Rue (8)'];
-const ALL_P = [...new Set([...TOR_P, ...CHI_P])];
+/* ── ROSTER ── */
+const TOR_P = ['N. Sabally','K. Rice','M. Conde','T. Key','L. Held','M. Mabrey','K. Nurse'];
+const CHI_P = ['K. Cardoso','S. Diggins','E. Williams','R. Banham','S. Taylor','N. Cloud','B. Sykes','A. Coulibaly'];
+const ALL_P = [...TOR_P, ...CHI_P];
+const REFS = ['Genesis Perrymond','Catherine Chang','Kevin Fahy'];
 
 const PLAY_TYPES = {
-  'Foul: Offensive':['Pick - Screener','Pick - Ball Handler','Charge','Carry','Post Move'],
-  'Foul: Personal':['On-Ball','Off-Ball','Transition','Rebounding'],
-  'Foul: Shooting':['Driving Shot Attempt','Jump Shot','Post Move','Layup'],
-  'Foul: Blocking':['On-Ball Defense','Help Defense'],
-  'Foul: Holding':['On-Ball','Off-Ball'],
-  'Foul: Pushing':['On-Ball','Post','Rebounding'],
-  'Foul: Loose Ball':['Rebounding','Loose Ball'],
-  'Turnover: Double Dribble':['Dribble','Gather'],
-  'Turnover: Traveling':['Gather Step','Pivot','Jump Stop'],
-  'Stoppage: Out-of-Bounds':['Deflection','Dribble Out'],
-  'Stoppage: Inadvertent Whistle':['Inadvertent Whistle'],
+  'Foul: Loose Ball': ['Rebound'],
+  'Foul: Offensive': ['Screener','End Of Drive','Start Of Drive'],
+  'Foul: Personal': ['On-Ball','Primary Defender'],
+  'Foul: Shooting': ['Post Shot','Layup Or Dunk','Driving Shot Attempt'],
 };
 const SUB_PLAY_TYPES = {
-  'Driving Shot Attempt':['Arm Shooting Motion','Body Contact','Landing Area'],
-  'Jump Shot':['Landing Area','Body Contact','Arm Shooting Motion'],
-  'Pick - Screener':['Deliver/Absorb','Moving Screen','Illegal Contact'],
-  'Pick - Ball Handler':['Arm Bar','Shoulder','Hip'],
-  'On-Ball':['Drive','Post','Pull-Up'],
-  'Gather Step':['Hop Step','Euro Step'],
-  'Off-Ball':['Screen','Cut','Post'],
+  'Rebound': ['Impede'],
+  'Screener': ['Wide Stance','Deliver/Absorb'],
+  'End Of Drive': ['Pass & Crash'],
+  'Start Of Drive': ['Arm Contact'],
+  'On-Ball': ['Pass'],
+  'Primary Defender': ['Contact to Arm'],
+  'Post Shot': ['Arm Shooting Motion'],
+  'Layup Or Dunk': ['Head Contact','Arm Shooting Motion'],
+  'Driving Shot Attempt': ['Arm Shooting Motion','Body Shooting Motion'],
 };
 
+/* ── 1ST PASS DATA — Q1 & Q2 important calls (from ImpCalls export) ── */
 const SC_DATA = {
-  'e1':{seg:'Seg 1',   q:1, clock:'02:57.0',callType:'REBOUND',     infrType:'Foul: Loose Ball',            playType:'Rebounding',       subPlayType:'',               role:'Def Player 1 (Primary)',         player:'N. Cardoso (10)',  opponent:'N. Sabally (13)',  ref:REFS[0],loc:'Lead', rating:'Judgement - Lean No',       observability:'Difficult',  flags:{called:false,ptiw:false,look:false,ogr:false,poe:false},comment:'',                                                                                                                                                                                                                                                                                                                           notes:'the bumper bench wanted a foul? but I don\'t think Cardoso did anything illegal here',queueReason:'pil',queueLabel:'REBOUND'},
-  'e2':{seg:'Seg 6',   q:1, clock:'01:44.0',callType:'PICK',        infrType:'Foul: Offensive',             playType:'Pick - Screener',  subPlayType:'',               role:'Off Player 2 (Screener/Cutter)', player:'N. Cardoso (10)',  opponent:'K. Rice (5)',      ref:REFS[1],loc:'Trail',rating:'Judgement - Lean No',       observability:'Difficult',  flags:{called:false,ptiw:false,look:false,ogr:false,poe:false},comment:'',                                                                                                                                                                                                                                                                                                                           notes:'Illegal screen contact looks quite marginal',queueReason:'pil',queueLabel:'PICK'},
-  'e3':{seg:'Seg 15',  q:1, clock:'01:31.0',callType:'REBOUND',     infrType:'Foul: Loose Ball',            playType:'Rebounding',       subPlayType:'',               role:'Def Player 1 (Primary)',         player:'N. Cardoso (10)',  opponent:'N. Sabally (13)',  ref:REFS[1],loc:'Trail',rating:'No Infraction',              observability:'Observable', flags:{called:false,ptiw:false,look:false,ogr:false,poe:false},comment:'',                                                                                                                                                                                                                                                                                                                           notes:'bench reaction - think Sabally\'s arm gets pulled away slightly as Cardoso secures the rebound, but it looks incidental',queueReason:'ni',queueLabel:'REBOUND'},
-  'e4':{seg:'Seg 19',  q:1, clock:'01:26.0',callType:'DRIVE',       infrType:'Foul: Offensive',             playType:'Charge',           subPlayType:'',               role:'Off Player 1 (Ball Handler)',    player:'S. Diggins (4)',   opponent:'M. Conde (0)',     ref:REFS[1],loc:'Trail',rating:'Infraction',                 observability:'Observable', flags:{called:false,ptiw:false,look:false,ogr:false,poe:false},comment:'Diggins (CHI) initiates contact with Conde (TOR), who has established a legal guarding position in Diggins\' path and outside the restricted area prior to Diggins\' upward motion.',                                                                                                                                        notes:'Conde also was positioned in/out the lane area, but Diggins definitely led with her right shoulder into Conde\'s body.',queueReason:'inc',queueLabel:'DRIVE'},
-  'e5':{seg:'Seg 103', q:1, clock:'01:16.5',callType:'SHOT',        infrType:'Foul: Shooting',              playType:'Jump Shot',        subPlayType:'Body Contact',   role:'Def Player 1 (Primary)',         player:'N. Sabally (13)', opponent:'K. Cardoso (10)', ref:REFS[1],loc:'Trail',rating:'Infraction',                 observability:'Observable', flags:{called:false,ptiw:false,look:false,ogr:false,poe:false},comment:'Sabally (TOR) makes contact with Cardoso\'s (CHI) arm, which affects their jump shot attempt.',                                                                                                                                                                                                            notes:'OVR - MC W-10 Cardoso fouls and shoots a mid-range jump shot. Cardoso is beat by TOR defender. A FOG foul is needed here.',queueReason:'inc',queueLabel:'SHOT'},
-  'e6':{seg:'Seg 109', q:1, clock:'01:00.9',callType:'DRIBBLE',     infrType:'Turnover: Double Dribble',    playType:'Dribble',          subPlayType:'',               role:'Off Player 1 (Ball Handler)',    player:'S. Taylor (23)',  opponent:'',                 ref:REFS[0],loc:'Lead', rating:'Judgement - Lean No',       observability:'Difficult',  flags:{called:false,ptiw:false,look:false,ogr:false,poe:false},comment:'Taylor (TOR) fumbles the ball after gathering and tips the loose ball back to themselves before the shot attempt. There is referee judgement in determining whether this is considered a controlled tip and additional dribble or fumbling a loose ball.',                                                   notes:'',queueReason:'pil',queueLabel:'DOUBLE DRIBBLE'},
-  'e7':{seg:'Seg 102', q:1, clock:'00:30.5',callType:'SHOT',        infrType:'Foul: Shooting',              playType:'Driving Shot Attempt',subPlayType:'Arm Shooting Motion',role:'Def Player 1 (Primary)', player:'T. Kay (22)',      opponent:'S. Taylor (23)',   ref:REFS[1],loc:'Trail',rating:'No Infraction',              observability:'Observable', flags:{called:false,ptiw:false,look:false,ogr:false,poe:false},comment:'Kay (TOR) appears to legally contact Taylor\'s (CHI) driving shot attempt, and the follow-through contact after the release is considered incidental.',                                                                                                                                                         notes:'empty bench',queueReason:'ni',queueLabel:'SHOT'},
-  'e8':{seg:'Seg 107', q:1, clock:'00:15.1',callType:'DEAD BALL',   infrType:'Stoppage: Inadvertent Whistle',playType:'Inadvertent Whistle',subPlayType:'',             role:'',                               player:'S. Diggins (4)',   opponent:'N. Mills (14)',    ref:REFS[0],loc:'Lead', rating:'No Infraction',              observability:'Observable', flags:{called:false,ptiw:false,look:false,ogr:false,poe:false},comment:'Replay review of the foul called on Diggins (CHI) pursuant to a coach\'s challenge was deemed successful. Replay shows Diggins makes clean contact with the ball and any ensuing arm contact with Mills (TOR) is considered incidental. The call on the floor is overturned and play resumes with a jump ball to determine possession.',notes:'',queueReason:'ni',queueLabel:'DEAD BALL'},
-  'e9':{seg:'Seg 52S', q:2, clock:'09:30.1',callType:'CONTACT',     infrType:'Foul: Personal',              playType:'Off-Ball',         subPlayType:'',               role:'Def Player 1 (Primary)',         player:'K. Cardoso (10)', opponent:'M. Mabrey (4)',    ref:REFS[1],loc:'Trail',rating:'Judgement - Lean Infraction', observability:'Difficult',  flags:{called:false,ptiw:false,look:false,ogr:false,poe:false},comment:'',                                                                                                                                                                                                                                                                                                                           notes:'same arm contact but Mabrey makes the pass.',queueReason:'pil',queueLabel:'CONTACT'},
-  'e10':{seg:'Seg 51e',q:2, clock:'03:20.4',callType:'PERSONAL FOUL',infrType:'Foul: Personal',             playType:'Off-Ball',         subPlayType:'',               role:'Def Player 1 (Primary)',         player:'N. Nurse (10)',   opponent:'N. Cloud (0)',     ref:REFS[2],loc:'Slot', rating:'Judgement - Lean No',       observability:'Difficult',  flags:{called:true, ptiw:false,look:false,ogr:false,poe:false},comment:'Nurse(TOR) and Cloud (CHI) come together at the same spot off ball and come front to front contact occurs. There is judgement by the referee if this contact is marginal or incidental, although a whistle is not technically incorrect, not having a whistle would not be incorrect either.',                                notes:'went in place/Pikey',queueReason:'inc',queueLabel:'PERSONAL FOUL ↑'},
-  'e11':{seg:'Seg 36', q:2, clock:'03:09.0',callType:'SHOT',        infrType:'Foul: Offensive',             playType:'Post Move',        subPlayType:'',               role:'Off Player 1 (Ball Handler)',    player:'K. Rice (5)',     opponent:'E. Williams (1)', ref:REFS[1],loc:'Trail',rating:'Infraction',                 observability:'Observable', flags:{called:false,ptiw:false,look:false,ogr:false,poe:false},comment:'After releasing the shot, Rice\'s (TOR) right arm comes down and grabs Williams\' (CHI) shoulder. Subsequently, Rice\'s right arm initiates contact with Williams\' head.',                                                                                                                                  notes:'',queueReason:'inc',queueLabel:'SHOT'},
-  'e12':{seg:'Seg 28', q:2, clock:'03:07.3',callType:'SHOT',        infrType:'Foul: Shooting',              playType:'Driving Shot Attempt',subPlayType:'Arm Shooting Motion',role:'Def Player 1 (Primary)', player:'T. Kay (22)',      opponent:'K. Cardoso (10)', ref:REFS[1],loc:'Trail',rating:'No Infraction',              observability:'Observable', flags:{called:false,ptiw:false,look:false,ogr:false,poe:false},comment:'There is no clear or conclusive video evidence to determine if Kay (TOR) makes contact with Cardoso\'s (CHI) arm as Kay contests the shot attempt.',                                                                                                                                                            notes:'think there might have been some elbow A-K / blocking action here but no angles, so just CC?',queueReason:'ni',queueLabel:'SHOT'},
-  'e13':{seg:'Seg 40', q:2, clock:'02:31.0',callType:'SHOOTING FOUL',infrType:'Foul: Shooting',             playType:'Driving Shot Attempt',subPlayType:'Body Contact', role:'Def Player 1 (Primary)',         player:'B. Bonham (3)',   opponent:'M. Conde (0)',     ref:REFS[1],loc:'Trail',rating:'Judgement - Lean Infraction', observability:'Difficult',  flags:{called:true, ptiw:false,look:false,ogr:false,poe:false},comment:'Bonham (CHI) lowers their arm slightly and some contact occurs with Conde\'s (TOR) off-arm during their shooting motion. Conde is slow to move through the contact to finals at the rim, and there is judgement regarding the degree and effect of the contact.',                          notes:'replay at 02:11 on HBF. Bonham doesn\'t just pull Conde\'s arm, feel like this could have been a PIN in the NBA?',queueReason:'pil',queueLabel:'SHOOTING FOUL ↑'},
-  'e14':{seg:'Seg 51', q:2, clock:'02:22.9',callType:'SHOT',        infrType:'Foul: Shooting',              playType:'Driving Shot Attempt',subPlayType:'Body Contact', role:'Def Player 1 (Primary)',         player:'L. Held (7)',     opponent:'S. Taylor (23)',   ref:REFS[2],loc:'Slot', rating:'Judgement - Lean Infraction', observability:'Difficult',  flags:{called:false,ptiw:false,look:false,ogr:false,poe:false},comment:'Held (TOR) briefly places their arm on Taylor\'s (CHI) front and some contact occurs during the drive. There is judgement in determining if the contact is more than marginal.',                                                                                                                        notes:'replay at 02:21 on HBF, contact/effect doesn\'t look more than marginal?',queueReason:'pil',queueLabel:'SHOT'},
-  'e15':{seg:'Seg 15S',q:2, clock:'02:08.7',callType:'PICK',        infrType:'Foul: Offensive',             playType:'Pick - Screener',  subPlayType:'Deliver/Absorb', role:'Off Player 2 (Screener/Cutter)', player:'N. Sabally (13)', opponent:'A. CoulButy (21)', ref:REFS[1],loc:'Trail',rating:'No Infraction',              observability:'Observable', flags:{called:false,ptiw:false,look:false,ogr:false,poe:false},comment:'Sabally (TOR) firms up on their left foot and absorbs the body contact that occurs while setting the pick on CoulButy (CHI). Additionally, CoulButy does not go through Sabally\'s space, therefore, the contact as the players come together is considered incidental.',                                    notes:'CHI\'s huge bench reaction',queueReason:'ni',queueLabel:'PICK'},
-  'e16':{seg:'Seg 15S',q:2, clock:'02:05.9',callType:'DRIVE FOUL',  infrType:'Foul: Personal',              playType:'On-Ball',          subPlayType:'Drive',          role:'Def Player 1 (Primary)',         player:'K. Rue (8)',      opponent:'S. Diggins (4)',   ref:REFS[2],loc:'Slot', rating:'Judgement - Lean Infraction', observability:'Difficult',  flags:{called:true, ptiw:false,look:false,ogr:false,poe:false},comment:'',                                                                                                                                                                                                                                                                                                                           notes:'arm hook but Diggins\' SQBB didn\'t seem to be affected much at all.',queueReason:'pil',queueLabel:'DRIVE FOUL ↑'},
-  'e17':{seg:'Seg 152',q:2, clock:'01:30.0',callType:'SHOOTING FOUL',infrType:'Foul: Shooting',             playType:'Jump Shot',        subPlayType:'Arm Shooting Motion',role:'Def Player 1 (Primary)',      player:'K. Rice (5)',     opponent:'A. CoulButy (21)', ref:REFS[1],loc:'Trail',rating:'Judgement - Lean Infraction', observability:'Difficult',  flags:{called:true, ptiw:false,look:false,ogr:false,poe:false},comment:'Broadcast replay shows Rice\'s (TOR) right hand initially makes clean contact with the ball. As Rice\'s hand slides off the ball, some arm-to-arm contact occurs with CoulButy (CHI).',                                                                                                      notes:'sent in alerts/Pikey',queueReason:'pil',queueLabel:'SHOOTING FOUL ↑'},
-  'e18':{seg:'Seg 40C',q:3, clock:'03:00.0',callType:'PICK',        infrType:'Foul: Personal',              playType:'Off-Ball',         subPlayType:'',               role:'Def Player 1 (Primary)',         player:'N. Cloud (0)',    opponent:'B. Sykes (6)',     ref:REFS[0],loc:'Lead', rating:'Judgement - Lean No',       observability:'Difficult',  flags:{called:false,ptiw:false,look:false,ogr:false,poe:false},comment:'',                                                                                                                                                                                                                                                                                                                           notes:'',queueReason:'pil',queueLabel:'PICK'},
-  'e19':{seg:'Seg 40C',q:3, clock:'03:00.0',callType:'SHOOTING FOUL',infrType:'Foul: Shooting',             playType:'Driving Shot Attempt',subPlayType:'Body Contact', role:'Def Player 1 (Primary)',         player:'N. Cloud (0)',    opponent:'B. Sykes (6)',     ref:REFS[0],loc:'Lead', rating:'Judgement - Lean No',       observability:'Difficult',  flags:{called:true, ptiw:false,look:false,ogr:false,poe:false},comment:'Cloud (CHI) brings their arm toward the ball and some contact occurs with Sykes\' (TOR) non-shooting arm as they splinter into their upward shooting motion. The contact appears marginal.',                                                                                              notes:'this should be a personal foul too? contact happens before the gather',queueReason:'inc',queueLabel:'SHOOTING FOUL ↑'},
+  e1:{clock:'09:33.7',callLabel:'REBOUND',   infrType:'Foul: Loose Ball', playType:'Rebound',      subPlayType:'Impede',           role:'Def Player 1 (Primary)', player:'K. Cardoso', opponent:'N. Sabally', ref:'Genesis Perrymond',loc:'Lead', rating:'Judgment - Lean No Infraction', obs:'Observable', called:false, comment:'', notes:"the tempo bench wanted a foul? but I don't think Cardoso did anything illegal here"},
+  e2:{clock:'07:44.7',callLabel:'PICK',      infrType:'Foul: Offensive', playType:'Screener',      subPlayType:'Wide Stance',      role:'Off Player 2 (Screener/Cutter)', player:'K. Cardoso', opponent:'K. Rice', ref:'Catherine Chang',loc:'Slot', rating:'Judgment - Lean No Infraction', obs:'Observable', called:false, comment:'', notes:'illegal screen but contact looks quite marginal'},
+  e3:{clock:'06:51.3',callLabel:'REBOUND',   infrType:'Foul: Loose Ball', playType:'Rebound',      subPlayType:'Impede',           role:'Def Player 1 (Primary)', player:'K. Cardoso', opponent:'N. Sabally', ref:'Catherine Chang',loc:'Lead', rating:'No Infraction', obs:'Observable', called:false, comment:'', notes:"bench reaction - think Sabally's arm gets pulled away slightly as Cardoso secures the rebound, but it looks incidental"},
+  e4:{clock:'06:46.0',callLabel:'DRIVE',     infrType:'Foul: Offensive', playType:'End Of Drive',  subPlayType:'Pass & Crash',     role:'Off Player 1 (Ball Handler)', player:'S. Diggins', opponent:'M. Conde', ref:'Catherine Chang',loc:'Lead', rating:'Infraction', obs:'Observable', called:false, comment:'Diggins (CHI) initiates contact with Conde (TOR), who has established a legal guarding position in Diggins’ path and outside the restricted area prior to Diggins’ upward motion.', notes:'Conde ends up getting dislodged so I put PIN but I think Diggins still is considered to be "going to" Conde\'s space?'},
+  e5:{clock:'03:57.5',callLabel:'SHOT',      infrType:'Foul: Shooting',  playType:'Post Shot',     subPlayType:'Arm Shooting Motion', role:'Def Player 1 (Primary)', player:'T. Key', opponent:'K. Cardoso', ref:'Catherine Chang',loc:'Lead', rating:'No Infraction', obs:'Observable', called:false, comment:"There is no clear or conclusive video evidence to determine if Key (TOR) makes contact with Cardoso's (CHI) arm as Key contests the shot attempt.", notes:'think there might have been some A-B / blocking action here but no angles, so just CC?'},
+  e6:{clock:'03:03.5',callLabel:'SHOT',      infrType:'Foul: Offensive', playType:'Layup Or Dunk', subPlayType:'Head Contact',     role:'Off Player 1 (Ball Handler)', player:'K. Rice', opponent:'E. Williams', ref:'Catherine Chang',loc:'Lead', rating:'Infraction', obs:'Observable', called:false, comment:'After releasing the shot, Rice’s (TOR) left arm comes down and grabs Williams’ (CHI) shoulder. Subsequently, Rice’s right arm initiates contact with Williams’ head.', notes:''},
+  e7:{clock:'02:21.4',callLabel:'SHOOTING FOUL', infrType:'Foul: Shooting', playType:'Driving Shot Attempt', subPlayType:'Arm Shooting Motion', role:'Def Player 1 (Primary)', player:'R. Banham', opponent:'M. Conde', ref:'Catherine Chang',loc:'Lead', rating:'Judgment - Lean No Infraction', obs:'Observable', called:true, comment:"Banham (CHI) lowers their arm slightly and some contact occurs with Conde's (TOR) off-arm during their shooting motion. Conde is able to move through the contact to finish at the rim, and there is judgement regarding the degree and effect of the contact.", notes:"replay at 49:17 on HBP, Banham doesn't get Conde's shooting arm, feel like this could've been a PIN in the NBA?"},
+  e8:{clock:'00:53.5',callLabel:'SHOT',      infrType:'Foul: Shooting',  playType:'Driving Shot Attempt', subPlayType:'Body Shooting Motion', role:'Def Player 1 (Primary)', player:'L. Held', opponent:'S. Taylor', ref:'Kevin Fahy',loc:'Slot', rating:'Judgment - Lean Infraction', obs:'Observable', called:false, comment:"Held (TOR) briefly places their arm on Taylor's (CHI) front and some contact occurs during the drive. There is judgement in determining if the contact is more than marginal.", notes:"replay at 52:51 on HBP, contact/effect doesn't look more than marginal?"},
+  e9:{clock:'00:05.6',callLabel:'PICK',      infrType:'Foul: Personal',  playType:'Primary Defender', subPlayType:'Contact to Arm', role:'Def Player 1 (Primary)', player:'N. Cloud', opponent:'B. Sykes', ref:'Genesis Perrymond',loc:'Trail', rating:'Judgment - Lean No Infraction', obs:'Observable', called:false, comment:'', notes:''},
+  e10:{clock:'00:00.4',callLabel:'SHOOTING FOUL', infrType:'Foul: Shooting', playType:'Driving Shot Attempt', subPlayType:'Arm Shooting Motion', role:'Def Player 1 (Primary)', player:'N. Cloud', opponent:'B. Sykes', ref:'Genesis Perrymond',loc:'Trail', rating:'Judgment - Lean No Infraction', obs:'Observable', called:true, comment:"Cloud (CHI) brings their arm toward the ball and some contact occurs with Sykes' (TOR) non-shooting arm as they gather into their upward shooting motion. The contact appears marginal.", notes:"this should've been a personal foul too? contact happens before the gather"},
+  e11:{clock:'09:20.7',callLabel:'CONTACT',  infrType:'Foul: Personal',  playType:'On-Ball',       subPlayType:'Pass',             role:'Def Player 1 (Primary)', player:'K. Cardoso', opponent:'M. Mabrey', ref:'Catherine Chang',loc:'Trail', rating:'Judgment - Lean Infraction', obs:'Observable', called:false, comment:'', notes:'some arm contact but Mabrey makes the pass.'},
+  e12:{clock:'06:30.4',callLabel:'PERSONAL FOUL', infrType:'Foul: Personal', playType:'On-Ball',   subPlayType:'Pass',             role:'Def Player 1 (Primary)', player:'K. Nurse', opponent:'N. Cloud', ref:'Kevin Fahy',loc:'Slot', rating:'Judgment - Lean No Infraction', obs:'Observable', called:true, comment:'Nurse (TOR) and Cloud (CHI) come together at the same spot off-ball and some foot-to-foot contact occurs. There is judgement by the referee if the contact is marginal or incidental. Although a whistle is not technically incorrect, not having a whistle would not be incorrect either.', notes:'sent in slack/foley'},
+  e13:{clock:'01:50.6',callLabel:'SHOOTING FOUL', infrType:'Foul: Shooting', playType:'Layup Or Dunk', subPlayType:'Arm Shooting Motion', role:'Def Player 1 (Primary)', player:'K. Rice', opponent:'A. Coulibaly', ref:'Kevin Fahy',loc:'Lead', rating:'Judgment - Lean Infraction', obs:'Observable', called:true, comment:'Broadcast replay shows Rice’s (TOR) right hand initially makes clean contact with the ball. As Rice’s hand slides off the ball, some arm-to-arm contact occurs with Coulibaly (CHI).', notes:'replay at 1:20:33, Coulibaly also makes the shot'},
+  e14:{clock:'01:06.7',callLabel:'PICK',     infrType:'Foul: Offensive', playType:'Screener',      subPlayType:'Deliver/Absorb',   role:'Off Player 2 (Screener/Cutter)', player:'N. Sabally', opponent:'A. Coulibaly', ref:'Catherine Chang',loc:'Trail', rating:'No Infraction', obs:'Observable', called:false, comment:'Sabally (TOR) firms up on their left foot and absorbs the body contact that occurs while setting the pick on Coulibaly (CHI). Additionally, Coulibaly does not go through Sabally’s space, therefore, the contact as the players come together is considered incidental.', notes:'CNC? huge bench reaction'},
+  e15:{clock:'00:49.0',callLabel:'DRIVE',    infrType:'Foul: Personal',  playType:'Start Of Drive',subPlayType:'Arm Contact',      role:'Def Player 1 (Primary)', player:'K. Rice', opponent:'S. Diggins', ref:'Kevin Fahy',loc:'Trail', rating:'Judgment - Lean No Infraction', obs:'Observable', called:false, comment:'', notes:"arm hook but Diggins' SQBR didn't seem to be affected much at all"},
 };
+
+const PLACEHOLDER_TYPES = ['Drive','Dribble','Non Dribble','Pick','Screen','Shot','Rebound'];
+function placeholdersFor(seed) {
+  const n = 1 + (seed % 2);
+  const out = [];
+  for (let i=0;i<n;i++) out.push(PLACEHOLDER_TYPES[(seed+i*3)%PLACEHOLDER_TYPES.length]);
+  return out;
+}
 
 const POSSESSIONS = [
-  {id:1, q:1,seg:'Seg 1',  team:'CHI',time:'02:57.0',evtId:'e1',
-   fullEvents:[{label:'DRIVE',clock:'03:01.2'},{label:'SCREEN',clock:'02:59.4'},{label:'REBOUND',clock:'02:57.0',evtId:'e1'}]},
-  {id:2, q:1,seg:'Seg 6',  team:'TOR',time:'01:44.0',evtId:'e2',
-   fullEvents:[{label:'DRIBBLE',clock:'01:47.0'},{label:'PICK',clock:'01:44.0',evtId:'e2'}]},
-  {id:3, q:1,seg:'Seg 15', team:'CHI',time:'01:31.0',evtId:'e3',
-   fullEvents:[{label:'SHOT',clock:'01:34.2'},{label:'REBOUND',clock:'01:31.0',evtId:'e3'}]},
-  {id:4, q:1,seg:'Seg 19', team:'CHI',time:'01:26.0',evtId:'e4',
-   fullEvents:[{label:'SCREEN',clock:'01:28.8'},{label:'DRIVE',clock:'01:26.0',evtId:'e4'}]},
-  {id:5, q:1,seg:'Seg 103',team:'TOR',time:'01:16.5',evtId:'e5',
-   fullEvents:[{label:'DRIBBLE',clock:'01:19.5'},{label:'SCREEN',clock:'01:18.2'},{label:'SHOT',clock:'01:16.5',evtId:'e5'}]},
-  {id:6, q:1,seg:'Seg 109',team:'TOR',time:'01:00.9',evtId:'e6',
-   fullEvents:[{label:'REBOUND',clock:'01:04.8'},{label:'DRIBBLE',clock:'01:00.9',evtId:'e6'}]},
-  {id:7, q:1,seg:'Seg 102',team:'CHI',time:'00:30.5',evtId:'e7',
-   fullEvents:[{label:'PICK',clock:'00:33.8'},{label:'SHOT',clock:'00:30.5',evtId:'e7'}]},
-  {id:8, q:1,seg:'Seg 107',team:'CHI',time:'00:15.1',evtId:'e8',
-   fullEvents:[{label:'SCREEN',clock:'00:18.4'},{label:'DEAD BALL',clock:'00:15.1',evtId:'e8'}]},
-  {id:9, q:2,seg:'Seg 52S',team:'TOR',time:'09:30.1',evtId:'e9',
-   fullEvents:[{label:'DRIVE',clock:'09:34.2'},{label:'PASS',clock:'09:31.8'},{label:'CONTACT',clock:'09:30.1',evtId:'e9'}]},
-  {id:10,q:2,seg:'Seg 51e',team:'CHI',time:'03:20.4',evtId:'e10',
-   fullEvents:[{label:'REBOUND',clock:'03:23.5'},{label:'SHOT',clock:'03:21.8'},{label:'PERSONAL FOUL',clock:'03:20.4',evtId:'e10'}]},
-  {id:11,q:2,seg:'Seg 36', team:'TOR',time:'03:09.0',evtId:'e11',
-   fullEvents:[{label:'PICK',clock:'03:12.4'},{label:'SHOT',clock:'03:09.0',evtId:'e11'}]},
-  {id:12,q:2,seg:'Seg 28', team:'TOR',time:'03:07.3',evtId:'e12',
-   fullEvents:[{label:'DRIBBLE',clock:'03:10.8'},{label:'SCREEN',clock:'03:09.1'},{label:'SHOT',clock:'03:07.3',evtId:'e12'}]},
-  {id:13,q:2,seg:'Seg 40', team:'CHI',time:'02:31.0',evtId:'e13',
-   fullEvents:[{label:'DRIVE',clock:'02:34.5'},{label:'SHOOTING FOUL',clock:'02:31.0',evtId:'e13'}]},
-  {id:14,q:2,seg:'Seg 51', team:'TOR',time:'02:22.9',evtId:'e14',
-   fullEvents:[{label:'REBOUND',clock:'02:26.8'},{label:'SCREEN',clock:'02:25.1'},{label:'SHOT',clock:'02:22.9',evtId:'e14'}]},
-  {id:15,q:2,seg:'Seg 15S',team:'TOR',time:'02:08.7',evtId:'e15',
-   fullEvents:[{label:'DRIBBLE',clock:'02:11.8'},{label:'PICK',clock:'02:08.7',evtId:'e15'}]},
-  {id:16,q:2,seg:'Seg 15S',team:'CHI',time:'02:05.9',evtId:'e16',
-   fullEvents:[{label:'PICK',clock:'02:08.4'},{label:'DRIVE',clock:'02:05.9',evtId:'e16'}]},
-  {id:17,q:2,seg:'Seg 152',team:'TOR',time:'01:30.0',evtId:'e17',
-   fullEvents:[{label:'SCREEN',clock:'01:33.8'},{label:'SHOT',clock:'01:31.8'},{label:'SHOOTING FOUL',clock:'01:30.0',evtId:'e17'}]},
-  {id:18,q:3,seg:'Seg 40C',team:'CHI',time:'03:00.0',evtId:'e18',
-   fullEvents:[{label:'DRIVE',clock:'03:04.5'},{label:'PICK',clock:'03:00.0',evtId:'e18'}]},
-  {id:19,q:3,seg:'Seg 40C',team:'CHI',time:'03:00.0',evtId:'e19',
-   fullEvents:[{label:'REBOUND',clock:'03:03.1'},{label:'SHOOTING FOUL',clock:'03:00.0',evtId:'e19'}]},
+  {id:1, q:1, team:'CHI', time:'09:33.7', evtId:'e1'},
+  {id:2, q:1, team:'CHI', time:'07:44.7', evtId:'e2'},
+  {id:3, q:1, team:'CHI', time:'06:51.3', evtId:'e3'},
+  {id:4, q:1, team:'CHI', time:'06:46.0', evtId:'e4'},
+  {id:5, q:1, team:'TOR', time:'03:57.5', evtId:'e5'},
+  {id:6, q:1, team:'TOR', time:'03:03.5', evtId:'e6'},
+  {id:7, q:1, team:'CHI', time:'02:21.4', evtId:'e7'},
+  {id:8, q:1, team:'TOR', time:'00:53.5', evtId:'e8'},
+  {id:9, q:1, team:'CHI', time:'00:05.6', evtId:'e9'},
+  {id:10,q:1, team:'CHI', time:'00:00.4', evtId:'e10'},
+  {id:11,q:2, team:'CHI', time:'09:20.7', evtId:'e11'},
+  {id:12,q:2, team:'TOR', time:'06:30.4', evtId:'e12'},
+  {id:13,q:2, team:'TOR', time:'01:50.6', evtId:'e13'},
+  {id:14,q:2, team:'TOR', time:'01:06.7', evtId:'e14'},
+  {id:15,q:2, team:'TOR', time:'00:49.0', evtId:'e15'},
 ];
 
 let activeQ = 'Q1';
-let activeFilter = 'important'; // 'important' | 'all'
+let activeFilter = 'important';
 let curEvtId = null;
 let orig = {};
-let ctxPossId = null;
-let expandedPoss = new Set();
 
-function queueReasonChip(r, called) {
-  if (called) {
-    if (r === 'pil') return '<span class="sc-1p-chip chip-pil">CALLED · PIL</span>';
-    if (r === 'inc') return '<span class="sc-1p-chip chip-inc">CALLED · INC</span>';
-    return '<span class="sc-1p-chip chip-cc">CALLED · CC</span>';
-  }
-  if (r === 'inc')  return '<span class="sc-1p-chip chip-inc">INC</span>';
-  if (r === 'pil')  return '<span class="sc-1p-chip chip-pil">PIL</span>';
-  if (r === 'pin')  return '<span class="sc-1p-chip chip-pin">PIN</span>';
-  if (r === 'look') return '<span class="sc-1p-chip chip-look">CC + Look</span>';
-  if (r === 'ni')   return '<span class="sc-1p-chip chip-ni">NI</span>';
-  return '';
+/* rating + call/no-call -> badge label/class, per spec:
+   PIL = Judgment - Lean Infraction
+   PIN = Judgment - Lean No Infraction
+   No Infraction + NC = CNC (correct no-call) | No Infraction + C = IC (incorrect call)
+   Infraction + NC = INC (incorrect no-call) | Infraction + C = CC (correct call) */
+function ratingBadge(rating, called) {
+  if (rating === 'Judgment - Lean Infraction') return {label:'PIL', cls:'chip-pil'};
+  if (rating === 'Judgment - Lean No Infraction') return {label:'PIN', cls:'chip-pin'};
+  if (rating === 'Infraction') return called ? {label:'CC', cls:'chip-cc'} : {label:'INC', cls:'chip-inc'};
+  if (rating === 'No Infraction') return called ? {label:'IC', cls:'chip-ic'} : {label:'CNC', cls:'chip-cnc'};
+  return {label:rating, cls:'chip-pin'};
+}
+function whistleIcon(called) {
+  return called
+    ? '<i class="ti ti-whistle whistle-ic" title="Whistled call"></i>'
+    : '<i class="ti ti-whistle-off no-whistle-ic" title="Non-whistle event"></i>';
 }
 
 function buildQueue() {
@@ -614,53 +586,37 @@ function buildQueue() {
   const list = document.getElementById('poss-list');
   if (!poss.length) { list.innerHTML = '<div style="padding:20px 12px;text-align:center;color:#c9ced8;font-size:11px">No events this quarter.</div>'; return; }
 
-  list.innerHTML = poss.map(p => {
+  list.innerHTML = poss.map((p, i) => {
     const d = SC_DATA[p.evtId];
     if (!d) return '';
-    const isExpanded = activeFilter === 'all' || expandedPoss.has(p.id);
+    const badge = ratingBadge(d.rating, d.called);
 
-    let evHtml = '';
-    if (isExpanded) {
-      evHtml = p.fullEvents.map(fe => {
-        if (fe.evtId) {
-          // flagged event
-          return `<div class="sc-ev-row${fe.evtId===curEvtId?' sel':''}" data-evt="${fe.evtId}" data-poss="${p.id}" onclick="selectEvent('${fe.evtId}')" oncontextmenu="showCtx(event,'${fe.evtId}',${p.id})">
-            <div class="sc-ev-label"><span>${d.queueLabel}</span><span class="ev-time">${d.clock}</span></div>
-            <div class="sc-ev-rating-row">${queueReasonChip(d.queueReason,d.flags.called)}<span class="sc-1p-rating-txt">${d.rating}</span></div>
-          </div>`;
-        } else {
-          // placeholder
-          return `<div class="sc-ev-row placeholder">
-            <div class="sc-ev-label"><span style="color:#9ca3af">${fe.label}</span><span class="ev-time">${fe.clock}</span></div>
-            <div style="font-size:9.5px;color:#c9ced8;font-style:italic">Not rated in 1st pass</div>
-          </div>`;
-        }
-      }).join('');
-    } else {
-      evHtml = `<div class="sc-ev-row${p.evtId===curEvtId?' sel':''}" data-evt="${p.evtId}" data-poss="${p.id}" onclick="selectEvent('${p.evtId}')" oncontextmenu="showCtx(event,'${p.evtId}',${p.id})">
-        <div class="sc-ev-label"><span>${d.queueLabel}</span><span class="ev-time">${d.clock}</span></div>
-        <div class="sc-ev-rating-row">${queueReasonChip(d.queueReason,d.flags.called)}<span class="sc-1p-rating-txt">${d.rating}</span></div>
-      </div>`;
+    let placeholderHtml = '';
+    if (activeFilter === 'all') {
+      placeholderHtml = placeholdersFor(p.id).map(lbl =>
+        `<div class="ev-row plain">
+          <div class="ev-top"><i class="ti ti-whistle-off no-whistle-ic"></i><span>${lbl}</span><span class="ev-time">not rated</span></div>
+        </div>`
+      ).join('');
     }
+
+    const evRow = `<div class="ev-row reviewable${p.evtId===curEvtId?' sel':''}" onclick="selectEvent('${p.evtId}')">
+      <div class="ev-top">${whistleIcon(d.called)}<span>${d.callLabel}</span><span class="ev-time">${d.clock}</span></div>
+      <div class="ev-chiprow"><span class="chip ${badge.cls}">${badge.label}</span><span class="ev-rating-txt">${d.rating}</span></div>
+    </div>`;
 
     return `<div class="poss-item">
       <div class="poss-hdr">
-        <span class="poss-seg">${p.seg}</span>
+        <span class="poss-num">#${p.id}</span>
         <span class="poss-team">${p.team}</span>
         <span class="poss-time">${p.time}</span>
       </div>
-      <div class="poss-events">${evHtml}</div>
+      <div class="poss-events">${placeholderHtml}${evRow}</div>
     </div>`;
   }).join('');
 }
 
-function setFilter(f, btn) {
-  activeFilter = f;
-  document.querySelectorAll('.f-pill').forEach(b => b.classList.remove('on'));
-  btn.classList.add('on');
-  buildQueue();
-}
-
+function setFilter(f) { activeFilter = f; buildQueue(); }
 function filterQ(q, btn) {
   activeQ = q;
   document.querySelectorAll('.q-tog').forEach(b => b.classList.remove('on'));
@@ -668,28 +624,6 @@ function filterQ(q, btn) {
   buildQueue();
 }
 
-/* ── CONTEXT MENU ── */
-let ctxEvtId = null;
-function showCtx(e, evtId, possId) {
-  e.preventDefault();
-  ctxEvtId = evtId;
-  ctxPossId = possId;
-  const m = document.getElementById('ctx-menu');
-  m.style.left = Math.min(e.clientX, window.innerWidth-180)+'px';
-  m.style.top  = Math.min(e.clientY, window.innerHeight-120)+'px';
-  m.classList.add('show');
-}
-document.addEventListener('click', () => document.getElementById('ctx-menu').classList.remove('show'));
-document.addEventListener('contextmenu', e => { if (!e.target.closest('.sc-ev-row')) document.getElementById('ctx-menu').classList.remove('show'); });
-
-function expandPossession() {
-  document.getElementById('ctx-menu').classList.remove('show');
-  if (ctxPossId == null) return;
-  expandedPoss.add(ctxPossId);
-  buildQueue();
-}
-
-/* ── SELECT EVENT ── */
 function selectEvent(evtId) {
   curEvtId = evtId;
   const d = SC_DATA[evtId];
@@ -700,14 +634,12 @@ function selectEvent(evtId) {
   document.getElementById('rating-form').style.display = '';
   document.getElementById('comment-section').style.display = 'flex';
   document.getElementById('inf-table-wrap').style.display = 'block';
-  document.getElementById('rp-desc-box').style.display = 'block';
-  document.getElementById('rp-desc').textContent = `${d.callType} — ${d.player}${d.opponent?' vs '+d.opponent:''} (${d.clock})`;
 
   document.getElementById('inf-tbody').innerHTML = `<tr>
-    <td>${d.infrType}</td><td>${d.player}</td><td>${d.opponent||'—'}</td>
+    <td>${d.infrType}</td><td>${d.player}</td><td>${d.opponent}</td>
     <td>${d.ref}</td><td>${d.loc}</td>
     <td><span class="rating-chip">${d.rating}</span></td>
-    <td>${d.observability}</td>
+    <td>${d.obs}</td>
   </tr>`;
 
   document.getElementById('rf-clock').value = d.clock;
@@ -718,26 +650,29 @@ function selectEvent(evtId) {
     b.classList.toggle('on', b.textContent.trim() === d.loc));
 
   setSelect('rf-infraction-type', d.infrType);
-  updatePlayTypes(d.infrType, d.playType, d.subPlayType);
+  updateInfrType(d.playType, d.subPlayType);
   setSelect('rf-role-select', d.role || '-- select --');
   populatePlayers('rf-player', d.player);
   populatePlayers('rf-opponent', d.opponent);
   setSelect('rf-rating', d.rating);
-  setSelect('rf-observability', d.observability);
+  setSelect('rf-observability', d.obs);
 
-  document.getElementById('chk-called').checked = !!d.flags.called;
-  document.getElementById('chk-ptiw').checked   = !!d.flags.ptiw;
-  document.getElementById('chk-look').checked   = !!d.flags.look;
-  document.getElementById('chk-ogr').checked    = !!d.flags.ogr;
-  document.getElementById('chk-poe').checked    = !!d.flags.poe;
+  document.getElementById('chk-called').checked = !!d.called;
+  document.getElementById('chk-ptiw').checked   = false;
+  document.getElementById('chk-look').checked   = false;
+  document.getElementById('chk-ogr').checked    = false;
+  document.getElementById('chk-poe').checked    = false;
 
   document.getElementById('comment-1p').value = d.comment;
   document.getElementById('sc-notes-ta').value = d.notes || '';
   document.getElementById('comment-2p').value = '';
 
-  orig = {infrType:d.infrType,playType:d.playType,subPlayType:d.subPlayType,
-          role:d.role||'-- select --',rating:d.rating,observability:d.observability,
-          ref:d.ref,loc:d.loc};
+  document.getElementById('ptiw-comment').textContent = 'No PTIW Comment';
+  document.getElementById('oiw-comment').textContent = d.notes || 'No OIW Comment';
+
+  orig = {infrType:d.infrType, playType:d.playType, subPlayType:d.subPlayType,
+          role:d.role||'-- select --', rating:d.rating, observability:d.obs,
+          ref:d.ref, loc:d.loc};
 
   document.querySelectorAll('.sc-changed').forEach(el => el.classList.remove('sc-changed'));
   document.querySelectorAll('.sc-changed-ref').forEach(el => el.classList.remove('sc-changed-ref'));
@@ -753,15 +688,21 @@ function setSelect(id, val) {
 
 function populatePlayers(id, selected) {
   const sel = document.getElementById(id);
-  sel.innerHTML = '<option value="">— none —</option>' + ALL_P.map(p=>`<option${p===selected?' selected':''}>${p}</option>`).join('');
+  sel.innerHTML = ALL_P.map(p=>`<option${p===selected?' selected':''}>${p}</option>`).join('');
 }
 
-function updatePlayTypes(infrType, selPlay, selSub) {
+function updateInfrType(selPlay, selSub) {
+  const infrType = document.getElementById('rf-infraction-type').value;
   const playSel = document.getElementById('rf-play-type');
-  const subSel  = document.getElementById('rf-sub-play-type');
   const types = PLAY_TYPES[infrType]||[];
   playSel.innerHTML = '<option>-- select --</option>'+types.map(t=>`<option${t===selPlay?' selected':''}>${t}</option>`).join('');
-  const subs = SUB_PLAY_TYPES[selPlay]||[];
+  updateSubPlayTypes(selSub);
+}
+
+function updateSubPlayTypes(selSub) {
+  const playType = document.getElementById('rf-play-type').value;
+  const subSel = document.getElementById('rf-sub-play-type');
+  const subs = SUB_PLAY_TYPES[playType]||[];
   subSel.innerHTML = '<option>-- select --</option>'+subs.map(s=>`<option${s===selSub?' selected':''}>${s}</option>`).join('');
 }
 
@@ -796,18 +737,14 @@ function selectLocation(btn) {
 function saveRating() { showToast('2nd check rating saved'); }
 function cancelRating() { if (curEvtId) selectEvent(curEvtId); }
 
-/* ── MODALS (stubs — same pattern as review.html) ── */
-function openChatbot() {
-  showToast('TuckerGPT loading…');
+function angClick(el) {
+  document.querySelectorAll('.ang').forEach(a=>a.classList.remove('on'));
+  el.classList.add('on');
 }
-function openAddToPlaylist() {
-  document.getElementById('ctx-menu').classList.remove('show');
-  showToast('Add to Playlist — coming soon');
-}
-function openSlackModal() {
-  document.getElementById('ctx-menu').classList.remove('show');
-  showToast('Send to Slack — coming soon');
-}
+
+function openChatbot() { showToast('TuckerGPT loading…'); }
+function openAddToPlaylist() { showToast('Add to Playlist — coming soon'); }
+function openSlackModal() { showToast('Send to Slack — coming soon'); }
 function openLeagueOpsModal() { showToast('Send to League Ops — coming soon'); }
 function openCommentLibrary() { showToast('Comment Library — coming soon'); }
 
@@ -820,9 +757,7 @@ function toggleNavDropdown(e){e.stopPropagation();document.getElementById('nav-d
 document.addEventListener('click',()=>document.getElementById('nav-dropdown').classList.remove('open'));
 
 buildQueue();
-// auto-select first event in Q1
-const firstEvt = POSSESSIONS.find(p=>p.q===1)?.evtId;
-if (firstEvt) selectEvent(firstEvt);
+selectEvent('e1');
 </script>
 </body>
 </html>
