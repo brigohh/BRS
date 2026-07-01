@@ -1526,6 +1526,7 @@ function openChatbot() {
 function closeChatbot() {
   document.getElementById('chatbot-window').classList.remove('open');
 }
+let lastPeach = -1;
 const TUCKER_ANSWERABLE = [
   /positioning|guarding position|contact|foul|infraction|play type|rating|nbp|shooting motion|gather|screen|pick|drive|rebound|block|charge|restricted area|legal|illegal|arm|body|defender|offensive|help/i
 ];
@@ -1547,7 +1548,7 @@ function sendChat() {
   setTimeout(() => {
     const botRow = document.createElement('div');
     botRow.className = 'chat-msg-row';
-    const peachN = Math.floor(Math.random() * 5) + 1;
+    let peachN; do { peachN = Math.floor(Math.random() * 5) + 1; } while (peachN === lastPeach); lastPeach = peachN;
     botRow.innerHTML = `<div class="chat-msg-name"><div class="chatbot-avatar"><img src="Logos/TuckerGPT Icon.png"></div> Tucker</div><div class="chat-msg bot" style="padding:6px"><img src="Logos/peaches${peachN}.jpg" style="max-width:100%;max-height:460px;width:auto;border-radius:8px;display:block"></div>`;
     msgs.appendChild(botRow);
     msgs.scrollTop = msgs.scrollHeight;
