@@ -222,7 +222,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   <div class="nav-links">
     <span class="nl" onclick="location='home.html'">HOME</span>
     <span class="nl" onclick="location='published-games.html'">PUBLISHED GAMES</span>
-    <span class="nl" onclick="location='rim.html'">RIM</span>
+    <div class="nav-dropdown" id="rim-dropdown">
+      <span class="nl" onclick="location='rim.html'">RIM</span>
+      <span class="nl" style="padding-left:0;padding-right:6px;font-size:9px;opacity:.6;cursor:pointer" onclick="toggleRimDropdown(event)">▾</span>
+      <div class="nav-dd-menu" id="rim-dd-menu" style="min-width:190px;left:0;right:auto">
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-home" style="margin-right:7px;font-size:12px"></i>RIM Home</span>
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-inbox" style="margin-right:7px;font-size:12px"></i>Interactions</span>
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-messages" style="margin-right:7px;font-size:12px"></i>Threads</span>
+        <span class="nav-dd-item" onclick="location='rim.html'"><i class="ti ti-layout-board" style="margin-right:7px;font-size:12px"></i>Message Board</span>
+        <span class="nav-dd-item" onclick="location='playlists.html'"><i class="ti ti-playlist" style="margin-right:7px;font-size:12px"></i>Playlists</span>
+        <span class="nav-dd-item" onclick="location='assessments.html'"><i class="ti ti-clipboard-check" style="margin-right:7px;font-size:12px"></i>Assessments</span>
+        <span class="nav-dd-item" onclick="location='poe.html'"><i class="ti ti-target" style="margin-right:7px;font-size:12px"></i>Points of Education</span>
+      </div>
+    </div>
     <span class="nl on">RM REVIEW</span>
     <span class="nl">FINAL L2M REVIEW</span>
     <span class="nl">INDEPENDENT REVIEW</span>
@@ -234,7 +246,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       </div>
     </div>
     <span class="nl">MY SCHEDULE</span>
-    <div class="nav-av">TG</div>
+    <div class="nav-av">BN</div>
   </div>
 </div>
 
@@ -446,14 +458,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
             </div>
           </div>
 
-          <div class="cmt-divider">
-            <span class="cmt-revised" id="cmt-revised-hint" style="display:none"><i class="ti ti-arrow-down"></i> revised by second check</span>
-            <button class="cmt-save-btn" onclick="saveRating()"><i class="ti ti-bookmark"></i> Save</button>
-          </div>
-
           <div class="cmt-group">
             <div class="cmt-lbl">Final Comment</div>
-            <div class="cmt-quote editable" id="comment-2p" contenteditable="true" data-placeholder="Enter final comment…" oninput="checkCommentChanged()"></div>
+            <textarea class="comment-ta" id="comment-2p" rows="3" placeholder="Enter final comment…" style="margin-top:0"></textarea>
             <div class="note-bubble note-sc">
               <span class="note-lbl">Second Pass Notes</span>
               <span class="note-text" id="sc-notes-ta" contenteditable="true" data-placeholder="Enter second pass notes…"></span>
@@ -694,7 +701,7 @@ function selectEvent(evtId) {
   document.getElementById('comment-1p').textContent = d.comment;
   document.getElementById('notes-1p-bubble').style.display = d.notes ? '' : 'none';
   document.getElementById('notes-1p').textContent = d.notes || '';
-  document.getElementById('comment-2p').textContent = d.comment;
+  document.getElementById('comment-2p').value = d.comment;
   document.getElementById('sc-notes-ta').textContent = '';
   document.getElementById('cmt-revised-hint').style.display = 'none';
 
@@ -754,11 +761,7 @@ function checkChanged() {
   document.getElementById('sc-overturn-banner').classList.toggle('show', ratingChanged);
 }
 
-function checkCommentChanged() {
-  const orig1p = document.getElementById('comment-1p').textContent.trim();
-  const cur2p  = document.getElementById('comment-2p').textContent.trim();
-  document.getElementById('cmt-revised-hint').style.display = (cur2p !== orig1p) ? '' : 'none';
-}
+function checkCommentChanged() {}
 
 function selectRef(btn) {
   document.querySelectorAll('#ref-btn-group .ref-btn').forEach(b=>b.classList.remove('on','sc-changed-ref'));
@@ -791,7 +794,8 @@ function showToast(msg) {
   setTimeout(()=>t.classList.remove('show'), 2200);
 }
 function toggleNavDropdown(e){e.stopPropagation();document.getElementById('nav-dropdown').classList.toggle('open')}
-document.addEventListener('click',()=>document.getElementById('nav-dropdown').classList.remove('open'));
+function toggleRimDropdown(e){e.stopPropagation();document.getElementById('rim-dropdown').classList.toggle('open')}
+document.addEventListener('click',()=>{document.getElementById('nav-dropdown').classList.remove('open');document.getElementById('rim-dropdown').classList.remove('open')});
 
 buildQueue();
 selectEvent('e1');
