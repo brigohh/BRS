@@ -98,6 +98,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .note-bubble.note-sc{background:#eff6ff;border-color:#bfdbfe;color:#1a3a6b}
 .note-lbl{display:block;font-size:9px;font-weight:700;letter-spacing:.5px;color:#94a3b8;font-style:normal;margin-bottom:3px;text-transform:uppercase}
 .note-bubble.note-sc .note-lbl{color:#93c5fd}
+.cmt-group{display:flex;flex-direction:column}
+.cmt-lbl{font-size:10.5px;font-weight:700;color:#374151;letter-spacing:.3px;text-transform:uppercase;margin-bottom:7px}
+.cmt-quote{border-left:3px solid #1a3a6b;padding:1px 0 1px 12px;font-size:12px;color:#1a3a6b;line-height:1.55}
+.cmt-quote.editable{outline:none;cursor:text;border-radius:0 6px 6px 0;transition:background .12s}
+.cmt-quote.editable:focus{background:#f5f7ff}
+.cmt-quote.editable:empty:before{content:attr(data-placeholder);color:#9ca3af}
+.cmt-divider{display:flex;align-items:center;justify-content:flex-end;gap:10px;padding:9px 0;border-top:1px solid #eceef2;border-bottom:1px solid #eceef2;margin:12px 0}
+.cmt-revised{font-size:10.5px;color:#9ca3af;display:flex;align-items:center;gap:4px}
+.cmt-save-btn{padding:4px 12px;border:1px solid #d8dce3;border-radius:7px;background:#fff;color:#374151;font-size:11px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:4px;transition:background .12s}
+.cmt-save-btn:hover{background:#f6f7fa}
+.note-bubble .note-text{outline:none}
+.note-bubble .note-text:empty:before{content:attr(data-placeholder);opacity:.7}
 .lp-footer{padding:11px;border-top:1px solid #f0f1f4;flex-shrink:0}
 .submit-sc-btn{width:100%;padding:9px;background:#7c3aed;color:#fff;border:none;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.4px;transition:background .15s,box-shadow .15s}
 .submit-sc-btn:hover{background:#6d28d9;box-shadow:0 4px 12px rgba(124,58,237,.3)}
@@ -426,21 +438,26 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
             <button class="tmpl-btn">Head/Face Contact</button>
             <button class="tmpl-btn" style="background:#dbeafe;color:#1e40af;border-color:#93c5fd" onclick="openCommentLibrary()"><i class="ti ti-books" style="font-size:11px"></i> Comment Library</button>
           </div>
-          <div>
-            <div class="comment-lbl" style="margin-bottom:5px">First Pass Comment <span style="font-size:9.5px;color:#9ca3af;font-weight:500">(read-only)</span></div>
-            <textarea class="comment-ta" id="comment-1p" rows="2" readonly style="background:#f9fafb;color:#6b7280;resize:none"></textarea>
+          <div class="cmt-group">
+            <div class="cmt-lbl">First Pass Comment</div>
+            <div class="cmt-quote" id="comment-1p"></div>
+            <div class="note-bubble" id="notes-1p-bubble" style="display:none">
+              <span class="note-lbl">First Pass Notes</span><span id="notes-1p"></span>
+            </div>
           </div>
-          <div>
-            <div class="comment-lbl" style="margin-bottom:5px">First Pass Notes <span style="font-size:9.5px;color:#9ca3af;font-weight:500">(read-only)</span></div>
-            <textarea class="comment-ta" id="notes-1p" rows="2" readonly style="background:#f9fafb;color:#6b7280;resize:none"></textarea>
+
+          <div class="cmt-divider">
+            <span class="cmt-revised" id="cmt-revised-hint" style="display:none"><i class="ti ti-arrow-down"></i> revised by second check</span>
+            <button class="cmt-save-btn" onclick="saveRating()"><i class="ti ti-bookmark"></i> Save</button>
           </div>
-          <div>
-            <div class="comment-lbl" style="margin-bottom:5px">Final Comment</div>
-            <textarea class="comment-ta" id="comment-2p" rows="3" placeholder="Enter final comment…"></textarea>
-          </div>
-          <div>
-            <div class="comment-lbl sc" style="margin-bottom:5px"><i class="ti ti-eye-check" style="font-size:12px"></i> Second Pass Notes <span style="font-size:9.5px;color:#9ca3af;font-weight:500">(internal)</span></div>
-            <textarea class="comment-ta sc-notes-ta" id="sc-notes-ta" rows="3" placeholder="Enter second pass notes…"></textarea>
+
+          <div class="cmt-group">
+            <div class="cmt-lbl">Final Comment</div>
+            <div class="cmt-quote editable" id="comment-2p" contenteditable="true" data-placeholder="Enter final comment…" oninput="checkCommentChanged()"></div>
+            <div class="note-bubble note-sc">
+              <span class="note-lbl">Second Pass Notes</span>
+              <span class="note-text" id="sc-notes-ta" contenteditable="true" data-placeholder="Enter second pass notes…"></span>
+            </div>
           </div>
         </div>
       </div>
@@ -610,12 +627,10 @@ function buildQueue() {
     }
 
     const evLabel = d.called ? d.infrType.toUpperCase() : d.callLabel;
-    const noteHtml = d.notes ? `<div class="note-bubble"><span class="note-lbl">First pass notes</span>${d.notes}</div>` : '';
 
     const evRow = `<div class="ev-row reviewable${p.evtId===curEvtId?' sel':''}" onclick="selectEvent('${p.evtId}')">
       <div class="ev-top${d.called?' whistled':''}">${whistleIcon(d.called)}<span>${d.clock} — ${evLabel}</span></div>
       <div class="ev-chiprow"><span class="chip ${badge.cls}">${badge.label}</span></div>
-      ${noteHtml}
     </div>`;
 
     return `<div class="poss-item">
@@ -676,10 +691,12 @@ function selectEvent(evtId) {
   document.getElementById('chk-ogr').checked    = false;
   document.getElementById('chk-poe').checked    = false;
 
-  document.getElementById('comment-1p').value = d.comment;
-  document.getElementById('notes-1p').value = d.notes || '';
-  document.getElementById('comment-2p').value = '';
-  document.getElementById('sc-notes-ta').value = '';
+  document.getElementById('comment-1p').textContent = d.comment;
+  document.getElementById('notes-1p-bubble').style.display = d.notes ? '' : 'none';
+  document.getElementById('notes-1p').textContent = d.notes || '';
+  document.getElementById('comment-2p').textContent = d.comment;
+  document.getElementById('sc-notes-ta').textContent = '';
+  document.getElementById('cmt-revised-hint').style.display = 'none';
 
   document.getElementById('ptiw-comment').textContent = 'No PTIW Comment';
   document.getElementById('oiw-comment').textContent = 'No OIW Comment';
@@ -735,6 +752,12 @@ function checkChanged() {
   });
   const ratingChanged = orig.rating && cur.rating!==orig.rating && cur.rating && cur.rating!=='-- select --';
   document.getElementById('sc-overturn-banner').classList.toggle('show', ratingChanged);
+}
+
+function checkCommentChanged() {
+  const orig1p = document.getElementById('comment-1p').textContent.trim();
+  const cur2p  = document.getElementById('comment-2p').textContent.trim();
+  document.getElementById('cmt-revised-hint').style.display = (cur2p !== orig1p) ? '' : 'none';
 }
 
 function selectRef(btn) {
