@@ -108,8 +108,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .cmt-revised{font-size:10.5px;color:#9ca3af;display:flex;align-items:center;gap:4px}
 .cmt-save-btn{padding:4px 12px;border:1px solid #d8dce3;border-radius:7px;background:#fff;color:#374151;font-size:11px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:4px;transition:background .12s}
 .cmt-save-btn:hover{background:#f6f7fa}
-.note-bubble .note-text{outline:none}
-.note-bubble .note-text:empty:before{content:attr(data-placeholder);opacity:.7}
+.note-bubble .note-text{outline:none;display:block;min-height:32px}
+.note-bubble .note-text:empty:before{content:attr(data-placeholder);opacity:.7;pointer-events:none}
 .lp-footer{padding:11px;border-top:1px solid #f0f1f4;flex-shrink:0}
 .submit-sc-btn{width:100%;padding:9px;background:#be9cff;color:#fff;border:none;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.4px;transition:background .15s,box-shadow .15s}
 .submit-sc-btn:hover{background:#a87eee;box-shadow:0 4px 12px rgba(124,58,237,.3)}
@@ -164,9 +164,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .comment-section{flex:1;overflow:hidden;padding:14px 16px;display:flex;flex-direction:column;gap:11px}
 .comment-tmpl-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 .tmpl-lbl{font-size:10.5px;font-weight:600;color:#6b7280;white-space:nowrap}
-.tmpl-btn{padding:4px 11px;border:1px solid #d8dce3;border-radius:7px;font-size:11px;cursor:pointer;background:#fff;color:#374151;font-weight:500;display:inline-flex;align-items:center;gap:3px;transition:background .12s}
+.tmpl-btn{padding:0 11px;height:28px;border:1px solid #d8dce3;border-radius:7px;font-size:11px;cursor:pointer;background:#fff;color:#374151;font-weight:500;display:inline-flex;align-items:center;gap:4px;transition:background .12s}
 .tmpl-btn:hover{background:#f6f7fa}
 .tmpl-btn.special{background:#1a3a6b;color:#fff;border-color:#1a3a6b}
+.tucker-avatar{width:15px;height:15px;border-radius:50%;object-fit:cover;flex-shrink:0}
+[contenteditable]{cursor:text}
+textarea{cursor:text}
 .comment-lbl{font-size:10.5px;font-weight:700;color:#374151;letter-spacing:.3px}
 .comment-lbl.sc{color:#be9cff}
 .comment-ta{width:100%;border:1px solid #d8dce3;border-radius:9px;padding:9px 11px;font-size:12px;color:#374151;background:#fff;resize:none;font-family:inherit;line-height:1.5;transition:border-color .12s,box-shadow .12s}
@@ -429,7 +432,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
                 <label class="rf-check"><input type="checkbox" id="chk-poe"> POE</label>
               </div>
               <div style="border-top:1px solid #e5e7eb;margin:4px 0"></div>
-              <button class="tmpl-btn" onclick="openChatbot()" style="width:100%;justify-content:center;gap:4px"><i class="ti ti-whistle" style="font-size:12px"></i> TuckerGPT</button>
+              <button class="tmpl-btn" onclick="openChatbot()" style="width:100%;justify-content:center"><img class="tucker-avatar" src="Logos/TuckerGPT Icon.png" onerror="this.style.display='none'"> TuckerGPT</button>
               <button class="tmpl-btn" style="width:100%;justify-content:center;gap:4px" onclick="openAddToPlaylist()"><i class="ti ti-playlist" style="font-size:12px"></i> Add to Playlist</button>
               <button class="tmpl-btn" style="width:100%;justify-content:center;gap:4px" onclick="openSlackModal()"><i class="ti ti-brand-slack" style="font-size:12px"></i> Send to Slack</button>
               <button class="tmpl-btn" style="width:100%;justify-content:center;gap:4px" onclick="openLeagueOpsModal()"><i class="ti ti-send" style="font-size:12px"></i> Send to League Ops</button>
@@ -636,8 +639,7 @@ function buildQueue() {
     const evLabel = d.called ? d.infrType.toUpperCase() : d.callLabel;
 
     const evRow = `<div class="ev-row reviewable${p.evtId===curEvtId?' sel':''}" onclick="selectEvent('${p.evtId}')">
-      <div class="ev-top${d.called?' whistled':''}">${whistleIcon(d.called)}<span>${d.clock} — ${evLabel}</span></div>
-      <div class="ev-chiprow"><span class="chip ${badge.cls}">${badge.label}</span></div>
+      <div class="ev-top${d.called?' whistled':''}">${whistleIcon(d.called)}<span>${d.clock} — ${evLabel}</span><span class="chip ${badge.cls}" style="margin-left:auto">${badge.label}</span></div>
     </div>`;
 
     return `<div class="poss-item">
