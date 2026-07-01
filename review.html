@@ -54,19 +54,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .s-t{background:#d6f5f1;color:#0d7d72}
 .gh-right{margin-left:auto;display:flex;align-items:center;gap:8px}
 .ncc-counter{border-radius:9px;padding:4px 11px;display:flex;flex-direction:column;align-items:center;gap:1px}
-.ncc-counter.ncc-q{background:#fef8e7;border:1px solid #f5d488}
-.ncc-counter.ncc-game{background:#eaf6ff;border:1px solid #aeddf8}
+.ncc-counter.ncc-q{background:#fcfcd4;border:1px solid #e8e86a}
+.ncc-counter.ncc-game{background:#fcfcd4;border:1px solid #e8e86a}
 .ncc-lbl{font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;white-space:nowrap}
-.ncc-counter.ncc-q .ncc-lbl{color:#92400e}
-.ncc-counter.ncc-game .ncc-lbl{color:#0369a1}
+.ncc-counter.ncc-q .ncc-lbl{color:#5a5a00}
+.ncc-counter.ncc-game .ncc-lbl{color:#5a5a00}
 .ncc-stats{display:flex;gap:6px}
 .ncc-stat{text-align:center;min-width:40px}
 .ncc-n{font-size:14px;font-weight:700;line-height:1}
-.ncc-counter.ncc-q .ncc-n{color:#b45309}
-.ncc-counter.ncc-game .ncc-n{color:#0369a1}
+.ncc-counter.ncc-q .ncc-n{color:#5a5a00}
+.ncc-counter.ncc-game .ncc-n{color:#5a5a00}
 .ncc-sl{font-size:9px;line-height:1.3;white-space:nowrap}
-.ncc-counter.ncc-q .ncc-sl{color:#92400e}
-.ncc-counter.ncc-game .ncc-sl{color:#0369a1}
+.ncc-counter.ncc-q .ncc-sl{color:#5a5a00}
+.ncc-counter.ncc-game .ncc-sl{color:#5a5a00}
 
 /* MAIN LAYOUT */
 .main{flex:1;display:flex;min-height:0;overflow:hidden;padding:14px 32px 0;gap:14px;background:transparent}
@@ -75,7 +75,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 
 /* LEFT PANEL */
 .lp{width:230px;flex-shrink:0;background:#fff;border:1px solid #e9ebf0;border-radius:13px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 1px 3px rgba(17,24,39,.05)}
-.lp-filterbar{padding:9px 11px;border-bottom:1px solid #f0f1f4;display:flex;align-items:center;gap:5px;flex-shrink:0;flex-wrap:wrap}
+.lp-filterbar{padding:9px 11px 7px;border-bottom:1px solid #f0f1f4;display:flex;flex-direction:column;gap:6px;flex-shrink:0}
+.lp-filterbar-top{display:flex;align-items:center;gap:6px}
+.lp-filterbar-qtogs{display:flex;gap:5px}
 .filter-ev-btn{padding:3px 9px;font-size:11px;border:1px solid #d8dce3;border-radius:7px;background:#fff;color:#374151;cursor:pointer;font-weight:500;white-space:nowrap;transition:background .12s}
 .filter-ev-btn:hover{background:#f6f7fa}
 .q-tog{padding:3px 8px;font-size:11px;border:1px solid #d8dce3;border-radius:6px;background:#fff;color:#374151;cursor:pointer;font-weight:600;transition:background .12s}
@@ -171,19 +173,24 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .assist-alert-yes:hover{background:#15306e}
 .assist-alert-no{background:#fff;color:#374151;border:1px solid #d8dce3}
 .assist-alert-no:hover{background:#f6f7fa}
-.rf-save-btn{padding:6px 14px;background:#f7b8d0;color:#7a1f44;border:none;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:4px;transition:background .15s,box-shadow .15s}
-.rf-save-btn:hover{background:#f3a0c0;box-shadow:0 4px 12px rgba(247,184,208,.45)}
+.rf-save-btn{padding:6px 14px;background:#fabfff;color:#5a1870;border:none;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:4px;transition:background .15s,box-shadow .15s}
+.rf-save-btn:hover{background:#f0a8ff;box-shadow:0 4px 12px rgba(250,191,255,.55)}
 .rf-cancel-btn{padding:6px 10px;border:1px solid #d8dce3;border-radius:7px;font-size:11px;color:#374151;background:#fff;cursor:pointer;transition:background .12s}
 .rf-cancel-btn:hover{background:#f6f7fa}
 .comment-section{flex:1;overflow:hidden;padding:14px 16px;display:flex;flex-direction:column;gap:11px}
 .comment-tmpl-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 .tmpl-lbl{font-size:10.5px;font-weight:600;color:#6b7280;white-space:nowrap}
-.tmpl-btn{padding:4px 11px;border:1px solid #d8dce3;border-radius:7px;font-size:11px;cursor:pointer;background:#fff;color:#374151;font-weight:500;display:inline-flex;align-items:center;gap:3px;transition:background .12s}
+.tmpl-btn{padding:0 11px;height:28px;border:1px solid #d8dce3;border-radius:7px;font-size:11px;cursor:pointer;background:#fff;color:#374151;font-weight:500;display:inline-flex;align-items:center;gap:4px;transition:background .12s}
+.tucker-avatar{width:15px;height:15px;border-radius:50%;object-fit:cover;flex-shrink:0}
 .tmpl-btn:hover{background:#f6f7fa}
 .tmpl-btn.special{background:#1a3a6b;color:#fff;border-color:#1a3a6b}
 .comment-lbl{font-size:10.5px;font-weight:700;color:#374151;letter-spacing:.3px}
 .comment-ta{width:100%;border:1px solid #d8dce3;border-radius:9px;padding:9px 11px;font-size:12px;color:#374151;background:#fff;resize:none;font-family:inherit;line-height:1.5;transition:border-color .12s,box-shadow .12s}
 .comment-ta:focus{outline:none;border-color:#1a3a6b;box-shadow:0 0 0 3px rgba(26,58,107,.1)}
+.note-bubble{background:#f8fafc;border:1px solid #dcdcdc;border-radius:11px;padding:9px 13px;margin-top:4px;margin-left:16px;font-size:11px;color:#111827;line-height:1.6;font-style:italic}
+.note-lbl{display:block;font-size:9px;font-weight:700;letter-spacing:.5px;color:#94a3b8;font-style:normal;margin-bottom:3px;text-transform:uppercase}
+.note-text{outline:none;display:block;width:100%}
+.note-text:empty:before{content:attr(data-placeholder);opacity:.6;pointer-events:none}
 
 /* RIGHT PANEL */
 .rp-col{flex:0 0 42%;max-width:42%;display:flex;flex-direction:column;gap:11px;min-height:0}
@@ -369,12 +376,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   <!-- LEFT PANEL -->
   <div class="lp">
     <div class="lp-filterbar">
-      <button class="filter-ev-btn">Filter Events</button>
-      <button class="q-tog on" id="qtog-Q1" onclick="filterQ('Q1',this)">Q1</button>
-      <button class="q-tog" id="qtog-Q2" onclick="filterQ('Q2',this)">Q2</button>
-      <button class="q-tog" id="qtog-Q3" onclick="filterQ('Q3',this)">Q3</button>
-      <button class="q-tog" id="qtog-Q4" onclick="filterQ('Q4',this)">Q4</button>
-      <span class="buf-label">Buffer: <b id="buf-val">0</b></span>
+      <div class="lp-filterbar-top">
+        <button class="filter-ev-btn">Filter Events</button>
+        <span class="buf-label">Buffer: <b id="buf-val">0</b></span>
+      </div>
+      <div class="lp-filterbar-qtogs">
+        <button class="q-tog on" id="qtog-Q1" onclick="filterQ('Q1',this)">Q1</button>
+        <button class="q-tog" id="qtog-Q2" onclick="filterQ('Q2',this)">Q2</button>
+        <button class="q-tog" id="qtog-Q3" onclick="filterQ('Q3',this)">Q3</button>
+        <button class="q-tog" id="qtog-Q4" onclick="filterQ('Q4',this)">Q4</button>
+      </div>
     </div>
     <div class="poss-list" id="poss-list"></div>
     <div class="lp-footer">
@@ -403,7 +414,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
         </div>
         <div class="inf-side-btns">
           <button class="inf-add-btn" onclick="addInfractionRow()">+ INFRACTION</button>
-          <button class="inf-ev-btn">+ EVENT</button>
+          <button class="inf-ev-btn"><i class="ti ti-pencil" style="font-size:11px"></i> Edit Event</button>
         </div>
       </div>
     </div>
@@ -537,10 +548,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
                 <label class="rf-check"><input type="checkbox" id="chk-poe"> POE</label>
               </div>
               <div style="border-top:1px solid #e5e7eb;margin:2px 0"></div>
-              <button class="tmpl-btn" onclick="openChatbot()" style="width:100%;justify-content:center;gap:4px"><i class="ti ti-whistle" style="font-size:12px"></i> TuckerGPT</button>
-              <button class="tmpl-btn" style="width:100%;justify-content:center;gap:4px" onclick="openAddToPlaylist()"><i class="ti ti-playlist" style="font-size:12px"></i> Add to Playlist</button>
-              <button class="tmpl-btn" style="width:100%;justify-content:center;gap:4px" onclick="openSlackModal()"><i class="ti ti-brand-slack" style="font-size:12px"></i> Send to Slack</button>
-              <button class="tmpl-btn" style="width:100%;justify-content:center;gap:4px" onclick="openLeagueOpsModal()"><i class="ti ti-send" style="font-size:12px"></i> Send to League Ops</button>
+              <button class="tmpl-btn" onclick="openChatbot()" style="width:100%;justify-content:center"><img class="tucker-avatar" src="Logos/TuckerGPT Icon.png" onerror="this.style.display='none'"> TuckerGPT</button>
+              <button class="tmpl-btn" style="width:100%;justify-content:center" onclick="openAddToPlaylist()"><i class="ti ti-playlist" style="font-size:12px"></i> Add to Playlist</button>
+              <button class="tmpl-btn" style="width:100%;justify-content:center" onclick="openSlackModal()"><i class="ti ti-brand-slack" style="font-size:12px"></i> Send to Slack</button>
+              <button class="tmpl-btn" style="width:100%;justify-content:center" onclick="openLeagueOpsModal()"><i class="ti ti-send" style="font-size:12px"></i> Send to League Ops</button>
               <div style="display:flex;flex-direction:column;gap:5px;margin-top:auto">
                 <button class="rf-save-btn" onclick="saveRating()" style="width:100%;justify-content:center">Save</button>
                 <button class="rf-cancel-btn" onclick="cancelRating()" style="width:100%;justify-content:center">Cancel</button>
@@ -560,12 +571,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
             <button class="tmpl-btn" style="background:#dbeafe;color:#1e40af;border-color:#93c5fd" onclick="openCommentLibrary()"><i class="ti ti-books" style="font-size:11px"></i> Comment Library</button>
           </div>
           <div>
-            <div class="comment-lbl" style="margin-bottom:5px">Comments:</div>
-            <textarea class="comment-ta" id="comment-ta" rows="3" placeholder="Enter comments here"></textarea>
+            <div class="comment-lbl" style="margin-bottom:5px">FIRST PASS COMMENT</div>
+            <textarea class="comment-ta" id="comment-ta" rows="3" placeholder="Enter comment here"></textarea>
           </div>
           <div>
-            <div class="comment-lbl" style="margin-bottom:5px">Internal Notes:</div>
-            <textarea class="comment-ta" id="notes-ta" rows="2" placeholder="Enter internal notes here"></textarea>
+            <div class="note-bubble">
+              <span class="note-lbl">First Pass Notes</span>
+              <span class="note-text" id="notes-ta" contenteditable="true" data-placeholder="Enter internal notes here…"></span>
+            </div>
           </div>
         </div>
       </div>
@@ -1422,7 +1435,7 @@ function clearRatingForm() {
   document.getElementById('rating-form').style.display = 'none';
   document.getElementById('comment-section').style.display = 'none';
   const ta = document.getElementById('comment-ta'); if (ta) ta.value = '';
-  const notes = document.getElementById('notes-ta'); if (notes) notes.value = '';
+  const notes = document.getElementById('notes-ta'); if (notes) notes.textContent = '';
   ['rf-infraction-type','rf-play-type','rf-sub-play-type','rf-role-select','rf-player','rf-opponent','rf-rating-combined','rf-observability'].forEach(id => {
     const el = document.getElementById(id); if (el) el.selectedIndex = 0;
   });
@@ -1711,7 +1724,7 @@ function sendToSlack() {
     const now = new Date();
     const stamp = `${now.getMonth()+1}/${now.getDate()} ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`;
     const note = `[Sent to ${dest} in Slack on ${stamp}]`;
-    ta.value = ta.value ? ta.value + '\n' + note : note;
+    ta.textContent = ta.textContent ? ta.textContent + '\n' + note : note;
   }
   showToast(`Sent to ${dest} ✓`);
 }
@@ -1809,7 +1822,7 @@ function sendToLeagueOps() {
     const now = new Date();
     const stamp = `${now.getMonth()+1}/${now.getDate()} ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`;
     const note = `[Sent to ${to} (CC: ${LO_CC.join(', ')}) at League Ops on ${stamp}]`;
-    ta.value = ta.value ? ta.value + '\n' + note : note;
+    ta.textContent = ta.textContent ? ta.textContent + '\n' + note : note;
   }
   showToast(`Sent to ${to} ✓`);
 }
