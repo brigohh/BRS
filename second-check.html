@@ -28,7 +28,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .subnav{background:#fff;border-bottom:1px solid #e9ebf0;height:40px;display:flex;padding:0 20px;flex-shrink:0}
 .st{padding:0 14px;font-size:12px;font-weight:500;color:#6b7280;cursor:pointer;display:flex;align-items:center;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:color .15s}
 .st.on{color:#1a3a6b;border-bottom-color:#1a3a6b;font-weight:600}
-.st:hover:not(.on){color:#111827}
+.st:hover:not(.on):not(.disabled){color:#111827}
+.st.disabled{color:#c9ced8;cursor:not-allowed;pointer-events:none}
+/* FILTER DROPDOWN */
+.tb-dd-wrap{position:relative;display:flex;align-items:center}
+.tb-dd-btn{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border:1px solid #d8dce3;border-radius:7px;background:#fff;font-size:11px;font-weight:600;color:#374151;cursor:pointer;white-space:nowrap;transition:background .12s}
+.tb-dd-btn:hover{background:#f1f4fa}
+.tb-dd-btn.active{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
+.tb-dd-menu{display:none;position:absolute;top:calc(100% + 4px);left:0;background:#fff;border:1px solid #e9ebf0;border-radius:9px;box-shadow:0 8px 24px rgba(16,24,48,.15);min-width:140px;z-index:400;padding:4px 0}
+.tb-dd-wrap.open .tb-dd-menu{display:block}
+.tb-dd-item{display:block;padding:8px 14px;font-size:11px;font-weight:500;color:#374151;cursor:pointer;white-space:nowrap;transition:background .12s}
+.tb-dd-item:hover{background:#f1f4fa;color:#1a3a6b}
+.tb-dd-item.on{font-weight:700;color:#1a3a6b;background:#eff6ff}
 /* GAME HEADER */
 .game-hdr{background:#fff;border-bottom:1px solid #e9ebf0;padding:10px 20px;display:flex;align-items:center;gap:14px;flex-shrink:0}
 .gh-title{font-size:13px;font-weight:700;display:flex;align-items:center;gap:4px;flex-wrap:nowrap;white-space:nowrap}
@@ -55,7 +66,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .qb.on,.tb.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
 .tsep{width:1px;height:20px;background:#e5e7eb}
 /* MAIN LAYOUT */
-.main{flex:1;display:grid;grid-template-columns:224px 1fr 600px;min-height:0;overflow:hidden;padding:14px 18px;gap:14px;background:#f3f4f6}
+.main{flex:1;display:grid;grid-template-columns:224px 1fr 42%;min-height:0;overflow:hidden;padding:14px 18px;gap:14px;background:#f3f4f6}
 /* SIDEBAR */
 .sb{background:#fff;border:1px solid #e9ebf0;border-radius:13px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 1px 3px rgba(17,24,39,.05)}
 .sb-prog{padding:11px 13px 10px;border-bottom:1px solid #f3f4f6;flex-shrink:0}
@@ -76,6 +87,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .sb-label{font-size:12px;color:#111827;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
 .sb-flag{font-size:13px;color:#f59e0b;flex-shrink:0;opacity:0}
 .sb-flag.on{opacity:1}
+.sb-ack{font-size:12px;color:#16a34a;flex-shrink:0;opacity:0}
+.sb-ack.on{opacity:1}
 .tier-hdr.hidden{display:none}
 /* CENTER */
 .center{display:flex;flex-direction:column;overflow:hidden;background:#f3f4f6;border-radius:13px;border:1px solid #e9ebf0;box-shadow:0 1px 3px rgba(17,24,39,.05)}
@@ -381,7 +394,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 </div>
 
 <div class="subnav">
-  <span class="st" onclick="location='review.html'">Review</span><span class="st" data-view="ocr" onclick="goSub('ocr',this)">OCR</span><span class="st" data-view="important" onclick="goSub('important',this)">Important Calls</span><span class="st on" data-tab="secondcheck" data-view="secondcheck" onclick="showTab('secondcheck',this)">Second Check</span><span class="st" data-view="ptiw" onclick="goSub('ptiw',this)">PTIW</span><span class="st" data-view="oiw" onclick="showTab('oiw',this)">OIW</span>
+  <span class="st" onclick="location='review.html'">Review (1st Pass)</span>
+  <span class="st" onclick="location='review-2ndcheck.html'">Review (2nd Check)</span>
+  <span class="st disabled">OGR</span>
+  <span class="st disabled">Important Calls</span>
+  <span class="st on" data-tab="secondcheck" data-view="secondcheck" onclick="showTab('secondcheck',this)">Second Check</span>
+  <span class="st" data-view="ptiw" onclick="goSub('ptiw',this)">PTIW</span>
+  <span class="st" data-view="oiw" onclick="showTab('oiw',this)">OIW</span>
 </div>
 
 <div class="game-hdr" id="game-hdr">
@@ -420,15 +439,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   <div class="qb" data-q="Q3" onclick="qf(this)">Q3</div>
   <div class="qb" data-q="Q4" onclick="qf(this)">Q4</div>
   <div class="tsep"></div>
-  <div class="tb on" data-t="all" onclick="tf(this)">All changes</div>
-  <div class="tb" data-t="rating" onclick="tf(this)">Rating</div>
-  <div class="tb" data-t="playtype" onclick="tf(this)">Play type</div>
-  <div class="tb" data-t="official" onclick="tf(this)">Coverage</div>
-  <div class="tb" data-t="comment" onclick="tf(this)">Comment</div>
-  <div class="tb" data-t="ptiw" onclick="tf(this)">PTIW</div>
-  <div class="tb" data-t="other" onclick="tf(this)">Other</div>
+  <div class="tb-dd-wrap" id="tb-dd-wrap">
+    <button class="tb-dd-btn" id="tb-dd-btn" onclick="toggleFilterDd(event)">
+      <span id="tb-dd-label">All changes</span> <i class="ti ti-chevron-down" style="font-size:10px"></i>
+    </button>
+    <div class="tb-dd-menu" id="tb-dd-menu">
+      <div class="tb-dd-item on" data-t="all" onclick="tf_dd(this)">All changes</div>
+      <div class="tb-dd-item" data-t="rating" onclick="tf_dd(this)">Rating</div>
+      <div class="tb-dd-item" data-t="playtype" onclick="tf_dd(this)">Play type</div>
+      <div class="tb-dd-item" data-t="official" onclick="tf_dd(this)">Coverage</div>
+      <div class="tb-dd-item" data-t="comment" onclick="tf_dd(this)">Comment</div>
+      <div class="tb-dd-item" data-t="ptiw" onclick="tf_dd(this)">PTIW</div>
+      <div class="tb-dd-item" data-t="other" onclick="tf_dd(this)">Other</div>
+    </div>
+  </div>
   <div class="tsep"></div>
-  <button class="email-preview-btn" onclick="openAckRollup()"><i class="ti ti-list-check"></i> Acknowledgments</button>
   <button class="email-preview-btn" onclick="openEmailPreview()"><i class="ti ti-mail"></i> Preview notify email</button>
 </div>
 
@@ -1139,7 +1164,8 @@ function buildSidebar() {
       row.dataset.quarter = p.quarter;
       // comment-only plays (no changeTags) get 'comment' tag so the Comment filter shows them
       row.dataset.tags = p.changeTags.length === 0 ? 'comment' : p.changeTags.join(',');
-      row.innerHTML = `<span class="sb-dot" style="background:${TIER_META[tier].color}"></span><div class="sb-info"><div class="sb-time">${p.time} · ${p.seg}</div><div class="sb-label">${sbLabel(p)}</div></div><i class="ti ti-flag sb-flag${flagged.has(p.id)?' on':''}" id="flag-sb-${p.id}"></i>`;
+      const isAcked = acked.has(p.id);
+      row.innerHTML = `<span class="sb-dot" style="background:${TIER_META[tier].color}"></span><div class="sb-info"><div class="sb-time">${p.time} · ${p.seg}</div><div class="sb-label">${sbLabel(p)}</div></div><i class="ti ti-circle-check sb-ack${isAcked?' on':''}" id="ack-sb-${p.id}" title="Acknowledged"></i><i class="ti ti-flag sb-flag${flagged.has(p.id)?' on':''}" id="flag-sb-${p.id}"></i>`;
       row.addEventListener('click', () => selectPlay(p.id, row));
       list.appendChild(row);
     });
@@ -1348,6 +1374,8 @@ function ackOverturn(id) {
   acked.set(id, 'just now');
   const p = PLAYS.find(x => x.id === id);
   if (p && p.id === cur) renderCenter(p);
+  const ackEl = document.getElementById('ack-sb-' + id);
+  if (ackEl) ackEl.classList.add('on');
   toast('Overturn acknowledged');
   updateProgress();
 }
@@ -1448,6 +1476,24 @@ function tf(el) {
   activeT = el.dataset.t;
   applyFilters();
 }
+function tf_dd(el) {
+  document.querySelectorAll('.tb-dd-item').forEach(b => b.classList.remove('on'));
+  el.classList.add('on');
+  activeT = el.dataset.t;
+  document.getElementById('tb-dd-label').textContent = el.textContent.trim();
+  const btn = document.getElementById('tb-dd-btn');
+  btn.classList.toggle('active', activeT !== 'all');
+  document.getElementById('tb-dd-wrap').classList.remove('open');
+  applyFilters();
+}
+function toggleFilterDd(e) {
+  e.stopPropagation();
+  document.getElementById('tb-dd-wrap').classList.toggle('open');
+}
+document.addEventListener('click', () => {
+  const w = document.getElementById('tb-dd-wrap');
+  if (w) w.classList.remove('open');
+});
 
 function openSlack(t) {
   slackType = t;

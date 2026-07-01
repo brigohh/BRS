@@ -37,7 +37,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 /* SUBNAV */
 .subnav{background:#fff;border-bottom:1px solid #e9ebf0;height:40px;display:flex;padding:0 20px;flex-shrink:0}
 .st{padding:0 14px;font-size:12px;font-weight:500;color:#6b7280;cursor:pointer;display:flex;align-items:center;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:color .15s}
-.st.on{color:#7c3aed;border-bottom-color:#7c3aed;font-weight:700}
+.st.on{color:#1a3a6b;border-bottom-color:#1a3a6b;font-weight:700}
 .st:hover:not(.on):not(.disabled){color:#111827}
 .st.disabled{color:#c9ced8;cursor:not-allowed;pointer-events:none}
 
@@ -254,8 +254,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 <div class="subnav">
   <span class="st" onclick="location='review.html'">Review (1st Pass)</span>
   <span class="st on">Review (2nd Check)</span>
-  <span class="st disabled">OGR</span>
-  <span class="st disabled">Important Calls</span>
+  <span class="st disabled" style="color:#c9ced8;cursor:not-allowed;pointer-events:none">OGR</span>
+  <span class="st disabled" style="color:#c9ced8;cursor:not-allowed;pointer-events:none">Important Calls</span>
   <span class="st" onclick="location='second-check.html'">Second Check</span>
   <span class="st" onclick="location='second-check.html?view=ptiw'">PTIW</span>
   <span class="st" onclick="location='second-check.html?view=oiw'">OIW</span>
@@ -703,7 +703,6 @@ function selectEvent(evtId) {
   document.getElementById('notes-1p').textContent = d.notes || '';
   document.getElementById('comment-2p').value = d.comment;
   document.getElementById('sc-notes-ta').textContent = '';
-  document.getElementById('cmt-revised-hint').style.display = 'none';
 
   document.getElementById('ptiw-comment').textContent = 'No PTIW Comment';
   document.getElementById('oiw-comment').textContent = 'No OIW Comment';
