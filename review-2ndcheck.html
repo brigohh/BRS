@@ -274,6 +274,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       <div class="q-row">
         <button class="q-tog on" id="qtog-Q1" onclick="filterQ('Q1',this)">Q1</button>
         <button class="q-tog" id="qtog-Q2" onclick="filterQ('Q2',this)">Q2</button>
+        <button class="q-tog" id="qtog-Q3" onclick="filterQ('Q3',this)">Q3</button>
+        <button class="q-tog" id="qtog-Q4" onclick="filterQ('Q4',this)">Q4</button>
       </div>
     </div>
     <div class="poss-list" id="poss-list"></div>
@@ -422,16 +424,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
             <button class="tmpl-btn" style="background:#dbeafe;color:#1e40af;border-color:#93c5fd" onclick="openCommentLibrary()"><i class="ti ti-books" style="font-size:11px"></i> Comment Library</button>
           </div>
           <div>
-            <div class="comment-lbl" style="margin-bottom:5px">1st Pass Comment <span style="font-size:9.5px;color:#9ca3af;font-weight:500">(read-only)</span></div>
+            <div class="comment-lbl" style="margin-bottom:5px">First Pass Comment <span style="font-size:9.5px;color:#9ca3af;font-weight:500">(read-only)</span></div>
             <textarea class="comment-ta" id="comment-1p" rows="2" readonly style="background:#f9fafb;color:#6b7280;resize:none"></textarea>
+          </div>
+          <div>
+            <div class="comment-lbl" style="margin-bottom:5px">First Pass Notes <span style="font-size:9.5px;color:#9ca3af;font-weight:500">(read-only)</span></div>
+            <textarea class="comment-ta" id="notes-1p" rows="2" readonly style="background:#f9fafb;color:#6b7280;resize:none"></textarea>
           </div>
           <div>
             <div class="comment-lbl" style="margin-bottom:5px">Final Comment</div>
             <textarea class="comment-ta" id="comment-2p" rows="3" placeholder="Enter final comment…"></textarea>
           </div>
           <div>
-            <div class="comment-lbl sc" style="margin-bottom:5px"><i class="ti ti-eye-check" style="font-size:12px"></i> 2nd Check Notes <span style="font-size:9.5px;color:#9ca3af;font-weight:500">(internal)</span></div>
-            <textarea class="comment-ta sc-notes-ta" id="sc-notes-ta" rows="3" placeholder="Internal 2nd check notes — not visible to first-pass reviewer…"></textarea>
+            <div class="comment-lbl sc" style="margin-bottom:5px"><i class="ti ti-eye-check" style="font-size:12px"></i> Second Pass Notes <span style="font-size:9.5px;color:#9ca3af;font-weight:500">(internal)</span></div>
+            <textarea class="comment-ta sc-notes-ta" id="sc-notes-ta" rows="3" placeholder="Internal second pass notes — not visible to first-pass reviewer…"></textarea>
           </div>
         </div>
       </div>
@@ -516,9 +522,9 @@ const SUB_PLAY_TYPES = {
 const SC_DATA = {
   e1:{clock:'09:33.7',callLabel:'REBOUND',   infrType:'Foul: Loose Ball', playType:'Rebound',      subPlayType:'Impede',           role:'Def Player 1 (Primary)', player:'K. Cardoso', opponent:'N. Sabally', ref:'Genesis Perrymond',loc:'Lead', rating:'Judgment - Lean No Infraction', obs:'Observable', called:false, comment:'', notes:"the tempo bench wanted a foul? but I don't think Cardoso did anything illegal here"},
   e2:{clock:'07:44.7',callLabel:'PICK',      infrType:'Foul: Offensive', playType:'Screener',      subPlayType:'Wide Stance',      role:'Off Player 2 (Screener/Cutter)', player:'K. Cardoso', opponent:'K. Rice', ref:'Catherine Chang',loc:'Slot', rating:'Judgment - Lean No Infraction', obs:'Observable', called:false, comment:'', notes:'illegal screen but contact looks quite marginal'},
-  e3:{clock:'06:51.3',callLabel:'REBOUND',   infrType:'Foul: Loose Ball', playType:'Rebound',      subPlayType:'Impede',           role:'Def Player 1 (Primary)', player:'K. Cardoso', opponent:'N. Sabally', ref:'Catherine Chang',loc:'Lead', rating:'No Infraction', obs:'Observable', called:false, comment:'', notes:"bench reaction - think Sabally's arm gets pulled away slightly as Cardoso secures the rebound, but it looks incidental"},
+  e3:{clock:'06:51.3',callLabel:'REBOUND',   infrType:'Foul: Loose Ball', playType:'Rebound',      subPlayType:'Impede',           role:'Def Player 1 (Primary)', player:'K. Cardoso', opponent:'N. Sabally', ref:'Catherine Chang',loc:'Lead', rating:'No Infraction', obs:'Observable', called:false, comment:'', notes:"bench reaction - think Sabally's arm gets pulled away slightly as Carodoso secures the rebound, but it looks incidental"},
   e4:{clock:'06:46.0',callLabel:'DRIVE',     infrType:'Foul: Offensive', playType:'End Of Drive',  subPlayType:'Pass & Crash',     role:'Off Player 1 (Ball Handler)', player:'S. Diggins', opponent:'M. Conde', ref:'Catherine Chang',loc:'Lead', rating:'Infraction', obs:'Observable', called:false, comment:'Diggins (CHI) initiates contact with Conde (TOR), who has established a legal guarding position in Diggins’ path and outside the restricted area prior to Diggins’ upward motion.', notes:'Conde ends up getting dislodged so I put PIN but I think Diggins still is considered to be "going to" Conde\'s space?'},
-  e5:{clock:'03:57.5',callLabel:'SHOT',      infrType:'Foul: Shooting',  playType:'Post Shot',     subPlayType:'Arm Shooting Motion', role:'Def Player 1 (Primary)', player:'T. Key', opponent:'K. Cardoso', ref:'Catherine Chang',loc:'Lead', rating:'No Infraction', obs:'Observable', called:false, comment:"There is no clear or conclusive video evidence to determine if Key (TOR) makes contact with Cardoso's (CHI) arm as Key contests the shot attempt.", notes:'think there might have been some A-B / blocking action here but no angles, so just CC?'},
+  e5:{clock:'03:57.5',callLabel:'SHOT',      infrType:'Foul: Shooting',  playType:'Post Shot',     subPlayType:'Arm Shooting Motion', role:'Def Player 1 (Primary)', player:'T. Key', opponent:'K. Cardoso', ref:'Catherine Chang',loc:'Lead', rating:'No Infraction', obs:'Observable', called:false, comment:"There is no clear or conclusive video evidence to determine if Key (TOR) makes contact with Cardoso's (CH) arm as Key contests the shot attempt.", notes:'think there might have been some A-B / blocking action here but no angles, so just CC?'},
   e6:{clock:'03:03.5',callLabel:'SHOT',      infrType:'Foul: Offensive', playType:'Layup Or Dunk', subPlayType:'Head Contact',     role:'Off Player 1 (Ball Handler)', player:'K. Rice', opponent:'E. Williams', ref:'Catherine Chang',loc:'Lead', rating:'Infraction', obs:'Observable', called:false, comment:'After releasing the shot, Rice’s (TOR) left arm comes down and grabs Williams’ (CHI) shoulder. Subsequently, Rice’s right arm initiates contact with Williams’ head.', notes:''},
   e7:{clock:'02:21.4',callLabel:'SHOOTING FOUL', infrType:'Foul: Shooting', playType:'Driving Shot Attempt', subPlayType:'Arm Shooting Motion', role:'Def Player 1 (Primary)', player:'R. Banham', opponent:'M. Conde', ref:'Catherine Chang',loc:'Lead', rating:'Judgment - Lean No Infraction', obs:'Observable', called:true, comment:"Banham (CHI) lowers their arm slightly and some contact occurs with Conde's (TOR) off-arm during their shooting motion. Conde is able to move through the contact to finish at the rim, and there is judgement regarding the degree and effect of the contact.", notes:"replay at 49:17 on HBP, Banham doesn't get Conde's shooting arm, feel like this could've been a PIN in the NBA?"},
   e8:{clock:'00:53.5',callLabel:'SHOT',      infrType:'Foul: Shooting',  playType:'Driving Shot Attempt', subPlayType:'Body Shooting Motion', role:'Def Player 1 (Primary)', player:'L. Held', opponent:'S. Taylor', ref:'Kevin Fahy',loc:'Slot', rating:'Judgment - Lean Infraction', obs:'Observable', called:false, comment:"Held (TOR) briefly places their arm on Taylor's (CHI) front and some contact occurs during the drive. There is judgement in determining if the contact is more than marginal.", notes:"replay at 52:51 on HBP, contact/effect doesn't look more than marginal?"},
@@ -664,11 +670,12 @@ function selectEvent(evtId) {
   document.getElementById('chk-poe').checked    = false;
 
   document.getElementById('comment-1p').value = d.comment;
-  document.getElementById('sc-notes-ta').value = d.notes || '';
+  document.getElementById('notes-1p').value = d.notes || '';
   document.getElementById('comment-2p').value = '';
+  document.getElementById('sc-notes-ta').value = '';
 
   document.getElementById('ptiw-comment').textContent = 'No PTIW Comment';
-  document.getElementById('oiw-comment').textContent = d.notes || 'No OIW Comment';
+  document.getElementById('oiw-comment').textContent = 'No OIW Comment';
 
   orig = {infrType:d.infrType, playType:d.playType, subPlayType:d.subPlayType,
           role:d.role||'-- select --', rating:d.rating, observability:d.obs,
