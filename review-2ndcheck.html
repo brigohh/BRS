@@ -538,7 +538,7 @@ textarea{cursor:text}
           </div>
           <div class="cp-msgs" id="cp-msgs"></div>
           <div class="cp-input-row">
-            <input class="cp-input" id="cp-input" placeholder="Message Foley…" onkeydown="if(event.key==='Enter')sendCoachingMsg()">
+            <input class="cp-input" id="cp-input" placeholder="Message Bridget…" onkeydown="if(event.key==='Enter')sendCoachingMsg()">
             <button class="cp-send" onclick="sendCoachingMsg()">Send</button>
           </div>
         </div>
@@ -942,17 +942,17 @@ function sendToCoaching() {
   const badge = ratingBadge(d.rating, d.called);
   const evLabel = d.called ? d.infrType.toUpperCase() : d.callLabel;
   const refHtml = `<div class="cp-play-ref"><span class="cp-ref-lbl">Play shared</span><b>${d.clock} — ${evLabel}</b><br>Rating: ${badge.label} · ${d.rating}<br>${d.comment ? '<i style="color:#4b5563">'+d.comment+'</i>' : '<span style="color:#9ca3af;font-style:italic">No comment</span>'}${d.notes ? '<br><span style="color:#7c9cbf;font-size:10px">Notes: '+d.notes+'</span>' : ''}</div>`;
-  appendCoachingMsg('mine', 'Bridget', refHtml, true);
-  const foleyResponses = [
-    'Thanks Bridget, looking at it now.',
-    'I see the contact — agree this one warrants a coaching note.',
-    'Good flag. I\'ll add a comment in the thread.',
-    'Got it, will review the clip and follow up.',
-    'Agreed. Let\'s discuss on the next call.'
+  appendCoachingMsg('mine', 'Foley', refHtml, true);
+  const bridgetResponses = [
+    'Thanks for flagging this, I\'ll take another look.',
+    'Got it — I wasn\'t totally sure on this one either.',
+    'Appreciate the note. I can see what you mean.',
+    'Will keep this in mind going forward.',
+    'Makes sense. I\'ll revisit and update my comment.'
   ];
   setTimeout(() => {
-    const r = foleyResponses[Math.floor(Math.random() * foleyResponses.length)];
-    appendCoachingMsg('theirs', 'Foley', r, false);
+    const r = bridgetResponses[Math.floor(Math.random() * bridgetResponses.length)];
+    appendCoachingMsg('theirs', 'Bridget', r, false);
   }, 1800);
 }
 function openCoaching() {
@@ -975,7 +975,7 @@ function sendCoachingMsg() {
   const msg = inp.value.trim();
   if (!msg) return;
   inp.value = '';
-  appendCoachingMsg('mine', 'Bridget', msg, false);
+  appendCoachingMsg('mine', 'Foley', msg, false);
   const replies = [
     'Got it — noted.',
     'Thanks, I\'ll keep that in mind.',
@@ -984,7 +984,7 @@ function sendCoachingMsg() {
     'Makes sense. Let\'s revisit on the call.'
   ];
   setTimeout(() => {
-    appendCoachingMsg('theirs', 'Foley', replies[Math.floor(Math.random() * replies.length)], false);
+    appendCoachingMsg('theirs', 'Bridget', replies[Math.floor(Math.random() * replies.length)], false);
   }, 1200);
 }
 
