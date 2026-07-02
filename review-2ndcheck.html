@@ -178,7 +178,7 @@ textarea{cursor:text}
 .sc-notes-ta:focus{border-color:#be9cff;box-shadow:0 0 0 3px rgba(124,58,237,.12)}
 
 /* RIGHT PANEL */
-.rp-col{flex:0 0 42%;max-width:42%;display:flex;flex-direction:column;gap:11px;min-height:0}
+.rp-col{flex:0 0 42%;max-width:42%;display:flex;flex-direction:column;gap:11px;min-height:0;position:relative;overflow:hidden}
 .rp{flex-shrink:0;background:#fff;display:flex;flex-direction:column;border:1px solid #e9ebf0;border-radius:13px;overflow:hidden;min-height:0;box-shadow:0 1px 3px rgba(17,24,39,.05)}
 .rp-card{background:#fff;border:1px solid #e9ebf0;border-radius:13px;padding:11px 15px;flex-shrink:0;box-shadow:0 1px 3px rgba(17,24,39,.05)}
 .rp-card-lbl{font-size:10px;color:#9ca3af;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:5px}
@@ -210,6 +210,58 @@ textarea{cursor:text}
 
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:11px 22px;border-radius:11px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:7px;opacity:0;transition:opacity .18s;z-index:60;white-space:nowrap;pointer-events:none;background:#be9cff;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.22)}
 .toast.show{opacity:1}
+
+/* OVERLAY */
+.modal-overlay{position:fixed;inset:0;background:rgba(15,20,35,.4);z-index:200;display:none}
+.modal-overlay.open{display:block}
+
+/* PLAYLIST MODAL */
+.pl-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:320px;background:#fff;border-radius:14px;border:1px solid #e5e7eb;z-index:300;display:none;box-shadow:0 24px 64px rgba(15,20,35,.28)}
+.pl-modal.open{display:block}
+.pl-hd{padding:14px 16px;border-bottom:1px solid #f3f4f6;display:flex;align-items:center;justify-content:space-between}
+.pl-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px}
+.pl-lbl{font-size:11px;font-weight:600;color:#6b7280;letter-spacing:.3px;text-transform:uppercase}
+.pl-opt{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;border:1px solid #e5e7eb;border-radius:9px;cursor:pointer;font-size:13px;color:#111827;font-weight:500;transition:background .12s}
+.pl-opt:hover{background:#f9fafb}
+.pl-opt.selected{background:#eff6ff;border-color:#bfdbfe;color:#1a3a6b}
+.pl-opt-check{font-size:14px;color:#1a3a6b;display:none}
+.pl-opt.selected .pl-opt-check{display:block}
+.pl-new{display:none;gap:6px;flex-direction:row}
+.pl-new.show{display:flex}
+.pl-input{flex:1;padding:7px 10px;border:1px solid #d1d5db;border-radius:9px;font-size:13px;outline:none;transition:box-shadow .15s}
+.pl-input:focus{border-color:#1a3a6b;box-shadow:0 0 0 3px rgba(26,58,107,.1)}
+.pl-create-btn{padding:7px 12px;background:#1a3a6b;color:#fff;border:none;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer}
+.pl-add-new-btn{background:none;border:1px dashed #d1d5db;border-radius:9px;padding:7px 12px;font-size:12px;color:#6b7280;cursor:pointer;display:flex;align-items:center;gap:5px;justify-content:center;transition:border-color .15s}
+.pl-add-new-btn:hover{border-color:#9ca3af;color:#374151}
+.pl-footer{padding:12px 16px;border-top:1px solid #f3f4f6;display:flex;justify-content:flex-end;gap:8px}
+.pl-can{padding:8px 14px;border:1px solid #e5e7eb;border-radius:9px;background:#f9fafb;font-size:13px;cursor:pointer;color:#6b7280}
+.pl-done{padding:8px 18px;background:#1a3a6b;color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer}
+.pl-done:hover{background:#15306e}
+
+/* COACHING PANEL */
+.coaching-panel{position:absolute;top:0;right:0;width:100%;height:100%;background:#fff;border-radius:13px;border:1px solid #e9ebf0;box-shadow:-4px 0 24px rgba(16,24,48,.15);display:flex;flex-direction:column;transform:translateX(105%);transition:transform .28s cubic-bezier(.4,0,.2,1);z-index:100;overflow:hidden}
+.coaching-panel.open{transform:translateX(0)}
+.cp-panel-hdr{background:#1a3a6b;padding:11px 14px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.cp-panel-title{color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;gap:6px}
+.cp-panel-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:16px;cursor:pointer;line-height:1}
+.cp-panel-close:hover{color:#fff}
+.cp-play-card{background:#f0f4ff;border-bottom:1px solid #dbe4f7;padding:10px 14px;flex-shrink:0;font-size:11px;color:#1a3a6b;line-height:1.6}
+.cp-play-card .cp-pc-label{font-size:9px;font-weight:700;letter-spacing:.5px;color:#7c9cbf;text-transform:uppercase;margin-bottom:2px}
+.cp-msgs{flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:10px}
+.cp-msg{display:flex;flex-direction:column;gap:3px;max-width:85%}
+.cp-msg.mine{align-self:flex-end;align-items:flex-end}
+.cp-msg.theirs{align-self:flex-start;align-items:flex-start}
+.cp-msg-name{font-size:9.5px;font-weight:700;color:#9ca3af}
+.cp-bubble{padding:8px 11px;border-radius:11px;font-size:11.5px;line-height:1.5}
+.cp-msg.mine .cp-bubble{background:#1a3a6b;color:#fff;border-bottom-right-radius:3px}
+.cp-msg.theirs .cp-bubble{background:#f3f4f6;color:#111827;border-bottom-left-radius:3px}
+.cp-play-ref{background:#e8edf7;border:1px solid #c7d4ee;border-radius:9px;padding:8px 11px;font-size:10.5px;color:#1a3a6b;line-height:1.55;margin-bottom:2px}
+.cp-play-ref .cp-ref-lbl{font-size:9px;font-weight:700;letter-spacing:.4px;color:#7c9cbf;text-transform:uppercase;display:block;margin-bottom:3px}
+.cp-input-row{display:flex;gap:6px;padding:10px 14px;border-top:1px solid #eceef2;flex-shrink:0;background:#fafbfc}
+.cp-input{flex:1;padding:7px 10px;border:1px solid #d8dce3;border-radius:8px;font-size:11.5px;font-family:inherit;color:#374151;background:#fff;resize:none;outline:none;transition:border-color .12s}
+.cp-input:focus{border-color:#1a3a6b}
+.cp-send{padding:7px 13px;background:#1a3a6b;color:#fff;border:none;border-radius:8px;font-size:11.5px;font-weight:600;cursor:pointer;transition:background .15s}
+.cp-send:hover{background:#15306e}
 </style>
 </head>
 <body>
@@ -432,10 +484,10 @@ textarea{cursor:text}
                 <label class="rf-check"><input type="checkbox" id="chk-poe"> POE</label>
               </div>
               <div style="border-top:1px solid #e5e7eb;margin:4px 0"></div>
-              <button class="tmpl-btn" onclick="openChatbot()" style="width:100%;justify-content:center"><img class="tucker-avatar" src="Logos/TuckerGPT Icon.png" onerror="this.style.display='none'"> TuckerGPT</button>
               <button class="tmpl-btn" style="width:100%;justify-content:center;gap:4px" onclick="openAddToPlaylist()"><i class="ti ti-playlist" style="font-size:12px"></i> Add to Playlist</button>
               <button class="tmpl-btn" style="width:100%;justify-content:center;gap:4px" onclick="openSlackModal()"><i class="ti ti-brand-slack" style="font-size:12px"></i> Send to Slack</button>
               <button class="tmpl-btn" style="width:100%;justify-content:center;gap:4px" onclick="openLeagueOpsModal()"><i class="ti ti-send" style="font-size:12px"></i> Send to League Ops</button>
+              <button class="tmpl-btn" id="coaching-btn" style="width:100%;justify-content:center;gap:4px;background:#1a3a6b;color:#fff;border-color:#1a3a6b" onclick="sendToCoaching()"><i class="ti ti-message-circle" style="font-size:12px"></i> Coaching</button>
               <div style="display:flex;flex-direction:column;gap:5px;margin-top:auto">
                 <button class="rf-save-btn" onclick="saveRating()" style="width:100%;justify-content:center">Save</button>
                 <button class="rf-cancel-btn" onclick="cancelRating()" style="width:100%;justify-content:center">Cancel</button>
@@ -474,6 +526,22 @@ textarea{cursor:text}
 
       <!-- RIGHT PANEL COLUMN -->
       <div class="rp-col">
+        <!-- COACHING PANEL (slides over video) -->
+        <div class="coaching-panel" id="coaching-panel">
+          <div class="cp-panel-hdr">
+            <div class="cp-panel-title"><i class="ti ti-message-circle" style="font-size:14px"></i> Coaching Thread</div>
+            <button class="cp-panel-close" onclick="closeCoaching()">&#10005;</button>
+          </div>
+          <div class="cp-play-card" id="cp-play-card">
+            <div class="cp-pc-label">Current game</div>
+            <div id="cp-game-ref">TOR @ CHI · #1022600050</div>
+          </div>
+          <div class="cp-msgs" id="cp-msgs"></div>
+          <div class="cp-input-row">
+            <input class="cp-input" id="cp-input" placeholder="Message Foley…" onkeydown="if(event.key==='Enter')sendCoachingMsg()">
+            <button class="cp-send" onclick="sendCoachingMsg()">Send</button>
+          </div>
+        </div>
         <div class="rp">
           <div class="vid-area">
             <div class="vid-frame">
@@ -520,6 +588,30 @@ textarea{cursor:text}
 
 </div><!-- /.main -->
 </div><!-- /.page -->
+
+<!-- OVERLAY -->
+<div class="modal-overlay" id="modal-overlay" onclick="closePlModal()"></div>
+
+<!-- PLAYLIST MODAL -->
+<div class="pl-modal" id="pl-modal">
+  <div class="pl-hd">
+    <span style="font-size:13px;font-weight:700;color:#111827">Add to Playlist</span>
+    <button class="cp-panel-close" onclick="closePlModal()">&#10005;</button>
+  </div>
+  <div class="pl-body">
+    <div class="pl-lbl">Your Playlists</div>
+    <div id="pl-options"></div>
+    <div class="pl-new" id="pl-new-row">
+      <input class="pl-input" id="pl-input" placeholder="New playlist name…" onkeydown="if(event.key==='Enter')createPlaylist()">
+      <button class="pl-create-btn" onclick="createPlaylist()">Create</button>
+    </div>
+    <button class="pl-add-new-btn" onclick="toggleNewPlaylist()"><i class="ti ti-plus" style="font-size:11px"></i> New playlist</button>
+  </div>
+  <div class="pl-footer">
+    <button class="pl-can" onclick="closePlModal()">Cancel</button>
+    <button class="pl-done" onclick="confirmPlaylist()">Add to playlist</button>
+  </div>
+</div>
 
 <div class="toast" id="toast"></div>
 
@@ -786,11 +878,115 @@ function angClick(el) {
   el.classList.add('on');
 }
 
-function openChatbot() { showToast('TuckerGPT loading…'); }
-function openAddToPlaylist() { showToast('Add to Playlist — coming soon'); }
 function openSlackModal() { showToast('Send to Slack — coming soon'); }
 function openLeagueOpsModal() { showToast('Send to League Ops — coming soon'); }
 function openCommentLibrary() { showToast('Comment Library — coming soon'); }
+
+/* ── PLAYLIST ── */
+let playlists = ['Blocking Fouls','Shooting Fouls','INC Plays','End of Game'];
+let playlistMap = {};
+function openAddToPlaylist() {
+  const sel = curEvtId ? (playlistMap[curEvtId] || null) : null;
+  const container = document.getElementById('pl-options');
+  container.innerHTML = '';
+  playlists.forEach(name => {
+    const d = document.createElement('div');
+    d.className = 'pl-opt' + (sel === name ? ' selected' : '');
+    d.innerHTML = `<span>${name}</span><i class="ti ti-check pl-opt-check"></i>`;
+    d.onclick = () => {
+      document.querySelectorAll('.pl-opt').forEach(x => x.classList.remove('selected'));
+      d.classList.add('selected');
+    };
+    container.appendChild(d);
+  });
+  document.getElementById('pl-new-row').classList.remove('show');
+  document.getElementById('pl-input').value = '';
+  document.getElementById('pl-modal').classList.add('open');
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closePlModal() {
+  document.getElementById('pl-modal').classList.remove('open');
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+function toggleNewPlaylist() {
+  const row = document.getElementById('pl-new-row');
+  row.classList.toggle('show');
+  if (row.classList.contains('show')) document.getElementById('pl-input').focus();
+}
+function createPlaylist() {
+  const val = document.getElementById('pl-input').value.trim();
+  if (!val) return;
+  if (!playlists.includes(val)) playlists.push(val);
+  document.getElementById('pl-input').value = '';
+  document.getElementById('pl-new-row').classList.remove('show');
+  openAddToPlaylist();
+  setTimeout(() => {
+    const opts = document.querySelectorAll('.pl-opt');
+    opts[opts.length - 1].click();
+  }, 10);
+}
+function confirmPlaylist() {
+  const sel = document.querySelector('.pl-opt.selected');
+  if (!sel) { showToast('Select a playlist first'); return; }
+  if (curEvtId) playlistMap[curEvtId] = sel.querySelector('span').textContent;
+  closePlModal();
+  showToast('Added to ' + sel.querySelector('span').textContent + ' ✓');
+}
+
+/* ── COACHING THREAD ── */
+const coachingMsgs = [];
+function sendToCoaching() {
+  const d = curEvtId ? SC_DATA[curEvtId] : null;
+  openCoaching();
+  if (!d) return;
+  const badge = ratingBadge(d.rating, d.called);
+  const evLabel = d.called ? d.infrType.toUpperCase() : d.callLabel;
+  const refHtml = `<div class="cp-play-ref"><span class="cp-ref-lbl">Play shared</span><b>${d.clock} — ${evLabel}</b><br>Rating: ${badge.label} · ${d.rating}<br>${d.comment ? '<i style="color:#4b5563">'+d.comment+'</i>' : '<span style="color:#9ca3af;font-style:italic">No comment</span>'}${d.notes ? '<br><span style="color:#7c9cbf;font-size:10px">Notes: '+d.notes+'</span>' : ''}</div>`;
+  appendCoachingMsg('mine', 'Bridget', refHtml, true);
+  const foleyResponses = [
+    'Thanks Bridget, looking at it now.',
+    'I see the contact — agree this one warrants a coaching note.',
+    'Good flag. I\'ll add a comment in the thread.',
+    'Got it, will review the clip and follow up.',
+    'Agreed. Let\'s discuss on the next call.'
+  ];
+  setTimeout(() => {
+    const r = foleyResponses[Math.floor(Math.random() * foleyResponses.length)];
+    appendCoachingMsg('theirs', 'Foley', r, false);
+  }, 1800);
+}
+function openCoaching() {
+  document.getElementById('coaching-panel').classList.add('open');
+}
+function closeCoaching() {
+  document.getElementById('coaching-panel').classList.remove('open');
+}
+function appendCoachingMsg(side, name, content, isHtml) {
+  const msgs = document.getElementById('cp-msgs');
+  const div = document.createElement('div');
+  div.className = 'cp-msg ' + side;
+  div.innerHTML = `<div class="cp-msg-name">${name}</div><div class="cp-bubble">${isHtml ? content : escHtml(content)}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function sendCoachingMsg() {
+  const inp = document.getElementById('cp-input');
+  const msg = inp.value.trim();
+  if (!msg) return;
+  inp.value = '';
+  appendCoachingMsg('mine', 'Bridget', msg, false);
+  const replies = [
+    'Got it — noted.',
+    'Thanks, I\'ll keep that in mind.',
+    'Agreed, good observation.',
+    'Will flag this for the debrief.',
+    'Makes sense. Let\'s revisit on the call.'
+  ];
+  setTimeout(() => {
+    appendCoachingMsg('theirs', 'Foley', replies[Math.floor(Math.random() * replies.length)], false);
+  }, 1200);
+}
 
 function showToast(msg) {
   const t = document.getElementById('toast');
