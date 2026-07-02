@@ -1225,6 +1225,7 @@ let selectedInfRow = null;
 let infractionRows = [];
 let currentPoss = null;
 let currentEv = null;
+let coachedEvts = new Set();
 
 function renderQueue() {
   const list = document.getElementById('poss-list');
@@ -1896,7 +1897,6 @@ function sendToLeagueOps() {
 }
 
 /* ── COACHING THREAD ── */
-let coachedEvts = new Set();
 function sendToCoaching() {
   openCoaching();
   if (!currentEv) return;
