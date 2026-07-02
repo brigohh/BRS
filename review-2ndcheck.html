@@ -72,8 +72,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .q-tog.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
 .poss-list{flex:1;overflow-y:auto}
 .poss-item{border-bottom:1px solid #f4f5f7}
-.poss-hdr{padding:8px 11px;display:flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;color:#374151;background:#eef0f4;user-select:none}
-.poss-num{color:#9ca3af;font-size:10.5px;font-weight:600;min-width:16px}
+.poss-hdr{padding:3px 11px;display:flex;align-items:center;gap:5px;font-size:10px;font-weight:600;color:#374151;background:#eef0f4;user-select:none}
+.poss-num{color:#9ca3af;font-size:9px;font-weight:600;min-width:14px}
 .poss-team{color:#1a3a6b;font-weight:700}
 .poss-time{flex:1;color:#374151}
 .poss-events{padding:2px 0}
@@ -333,10 +333,24 @@ textarea{cursor:text}
     <div class="gh-date">Wednesday, May 27, 2026 &nbsp;&middot;&nbsp; 8:00 PM &nbsp;&middot;&nbsp; #1022600050 &nbsp;&middot;&nbsp; 1st Pass: Bridget Ng</div>
   </div>
   <div class="gh-sep"></div>
-  <div class="stats">
-    <div class="stat s-r"><div class="sn">4</div><div class="sl">INC / IC</div></div>
-    <div class="stat s-t"><div class="sn">9</div><div class="sl">PIL / PIN</div></div>
-    <div class="stat s-g"><div class="sn">2</div><div class="sl">CC / CNC</div></div>
+  <div class="stats" style="gap:4px">
+    <div style="display:flex;flex-direction:column;gap:3px">
+      <div style="font-size:8.5px;font-weight:700;letter-spacing:.4px;color:#9ca3af;text-align:center;text-transform:uppercase">Called</div>
+      <div style="display:flex;gap:4px">
+        <div class="stat s-r"><div class="sn">2</div><div class="sl">IC</div></div>
+        <div class="stat s-t"><div class="sn">4</div><div class="sl">PIL</div></div>
+        <div class="stat s-g"><div class="sn">1</div><div class="sl">CC</div></div>
+      </div>
+    </div>
+    <div style="width:1px;background:#e9ebf0;margin:10px 2px"></div>
+    <div style="display:flex;flex-direction:column;gap:3px">
+      <div style="font-size:8.5px;font-weight:700;letter-spacing:.4px;color:#9ca3af;text-align:center;text-transform:uppercase">Non-Called</div>
+      <div style="display:flex;gap:4px">
+        <div class="stat s-r"><div class="sn">2</div><div class="sl">INC</div></div>
+        <div class="stat s-t"><div class="sn">5</div><div class="sl">PIN</div></div>
+        <div class="stat s-g"><div class="sn">1</div><div class="sl">CNC</div></div>
+      </div>
+    </div>
   </div>
   <div class="gh-right">
     <div class="sc-mode-badge"><i class="ti ti-eye-check" style="font-size:11px"></i> &nbsp;Second Check Mode</div>
