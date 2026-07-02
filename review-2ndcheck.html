@@ -689,6 +689,7 @@ let activeQ = 'Q1';
 let activeFilter = 'important';
 let curEvtId = null;
 let orig = {};
+let coachedEvts = new Set();
 
 /* rating + call/no-call -> badge label/class, per spec:
    PIL = Judgment - Lean Infraction
@@ -730,8 +731,9 @@ function buildQueue() {
 
     const evLabel = d.called ? d.infrType.toUpperCase() : d.callLabel;
 
+    const coachIcon = coachedEvts.has(p.evtId) ? '<i class="ti ti-message-circle" style="font-size:11px;color:#1a3a6b;margin-left:5px;flex-shrink:0" title="Sent to coaching"></i>' : '';
     const evRow = `<div class="ev-row reviewable${p.evtId===curEvtId?' sel':''}" onclick="selectEvent('${p.evtId}')">
-      <div class="ev-top${d.called?' whistled':''}">${whistleIcon(d.called)}<span>${d.clock} — ${evLabel}</span><span class="chip ${badge.cls}" style="margin-left:auto">${badge.label}</span></div>
+      <div class="ev-top${d.called?' whistled':''}">${whistleIcon(d.called)}<span>${d.clock} — ${evLabel}</span><span class="chip ${badge.cls}" style="margin-left:auto">${badge.label}</span>${coachIcon}</div>
     </div>`;
 
     return `<div class="poss-item">
@@ -938,6 +940,14 @@ const coachingMsgs = [];
 function sendToCoaching() {
   const d = curEvtId ? SC_DATA[curEvtId] : null;
   openCoaching();
+  if (curEvtId) {
+    coachedEvts.add(curEvtId);
+    buildQueue();
+    const notesEl = document.getElementById('sc-notes-ta');
+    if (notesEl && !notesEl.textContent.trim()) {
+      notesEl.textContent = 'Sent to coaching thread for review.';
+    }
+  }
   if (!d) return;
   const badge = ratingBadge(d.rating, d.called);
   const evLabel = d.called ? d.infrType.toUpperCase() : d.callLabel;
