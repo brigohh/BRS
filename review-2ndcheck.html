@@ -78,10 +78,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .poss-team{color:#1a3a6b;font-weight:700}
 .poss-time{flex:1;color:#374151}
 .poss-events{padding:2px 0}
-.ev-row.poss-ev-plain{padding:4px 12px 4px 21px;font-size:11px;color:#9ca3af;cursor:default;display:flex;align-items:center;gap:3px;line-height:1.3;border-left:3px solid transparent}
-.poss-ev-clock{white-space:nowrap;flex-shrink:0}
-.poss-ev-type{outline:none;border-radius:3px;padding:0 2px;cursor:text;min-width:30px;font-weight:600;color:#6b7280}
-.poss-ev-type:focus{background:#f0f4ff;color:#1a3a6b}
+.ev-row.poss-ev-plain{padding:4px 12px 4px 21px;font-size:11px;color:#9ca3af;cursor:pointer;display:flex;align-items:center;gap:5px;line-height:1.3;border-left:3px solid transparent}
+.ev-row.poss-ev-plain:hover{background:#f5f7ff;color:#374151}
 .ev-row{padding:7px 12px 7px 21px;font-size:11.5px;cursor:default;display:flex;flex-direction:column;gap:3px;line-height:1.3;transition:background .12s;border-left:3px solid transparent}
 .ev-row.reviewable{cursor:pointer}
 .ev-row.reviewable:hover{background:#f5f7ff}
@@ -678,7 +676,7 @@ const SC_DATA = {
   e15:{clock:'00:49.0',callLabel:'DRIVE',    infrType:'Foul: Personal',  playType:'Start Of Drive',subPlayType:'Arm Contact',      role:'Def Player 1 (Primary)', player:'K. Rice', opponent:'S. Diggins', ref:'Kevin Fahy',loc:'Trail', rating:'Judgment - Lean No Infraction', obs:'Observable', called:false, comment:'', notes:"arm hook but Diggins' SQBR didn't seem to be affected much at all"},
 };
 
-const POSS_EVENT_TYPES = ['Dribble','No Dribble','Drive','Pick','Screen','D3','O3','Pass','Transition','Post'];
+const POSS_EVENT_TYPES = ['Dribble','No Dribble','Drive','Pick','Screen','D3','O3','Post'];
 function seededRand(s) { s=Math.imul(s^s>>>16,0x45d9f3b);s=Math.imul(s^s>>>16,0x45d9f3b);return (s^s>>>16)>>>0; }
 function genPossEvents(possId, ratedClock, ratedCallLabel) {
   /* events count DOWN toward ratedClock; ratedCallLabel drives sequencing rules */
@@ -702,8 +700,8 @@ function genPossEvents(possId, ratedClock, ratedCallLabel) {
   }
   return events;
 }
-/* edits to non-rated event types: key = possId+'_'+index, value = string */
-let possEvtEdits = {};
+/* SC_DATA entries added by second-check rating an unrated event */
+let unratedOpened = {}; /* key: possId+'_'+idx → evtId string */
 let expandedPoss = new Set();
 
 const POSSESSIONS = [
@@ -771,15 +769,23 @@ function buildQueue() {
     if (isExpanded) {
       const extras = genPossEvents(p.id, d.clock, d.callLabel);
       expandedHtml = extras.map((ev, idx) => {
-        const key = p.id + '_' + idx;
-        const saved = possEvtEdits[key];
-        const display = (saved !== undefined ? saved : ev.type).toUpperCase();
-        return `<div class="ev-row poss-ev-plain">
+        const uKey = p.id + '_' + idx;
+        const ratedId = unratedOpened[uKey];
+        if (ratedId && SC_DATA[ratedId]) {
+          /* this event has been rated by second check — show as reviewable row */
+          const ud = SC_DATA[ratedId];
+          const ubadge = ratingBadge(ud.rating, ud.called);
+          const uLabel = ud.called ? ud.infrType.toUpperCase() : ud.callLabel;
+          return `<div class="ev-row reviewable${ratedId===curEvtId?' sel':''}" onclick="selectEvent('${ratedId}')">
+            <div class="ev-top${ud.called?' whistled':''}">${whistleIcon(ud.called)}<span>${ud.clock} — ${uLabel}</span><span class="chip ${ubadge.cls}" style="margin-left:auto">${ubadge.label}</span></div>
+          </div>`;
+        }
+        return `<div class="ev-row poss-ev-plain reviewable" onclick="openUnrated(${p.id},${idx},'${ev.clock}','${ev.type}')">
           <i class="ti ti-point-filled" style="font-size:7px;flex-shrink:0;opacity:.5"></i>
-          <span class="poss-ev-clock">${ev.clock} — </span><span class="poss-ev-type" contenteditable="true" data-poss="${p.id}" data-idx="${idx}" onblur="savePossEvt(this)" onclick="event.stopPropagation()" spellcheck="false">${display}</span>
+          <span>${ev.clock} — ${ev.type.toUpperCase()}</span>
         </div>`;
       }).join('');
-      /* if rated event is SHOT, maybe a REBOUND follows (missed if seeded even) */
+      /* if rated event is SHOT, seeded chance of a REBOUND after (missed shot) */
       const lbl = (d.callLabel||'').toUpperCase();
       const missedShot = seededRand(p.id * 7 + 99) % 2 === 0;
       if (lbl === 'SHOT' && missedShot) {
@@ -787,12 +793,22 @@ function buildQueue() {
         const rebSec = mm2 * 60 + sp2 - 1.5;
         const rm = String(Math.floor(rebSec/60)).padStart(2,'0');
         const rs = (rebSec%60).toFixed(1).padStart(4,'0');
+        const rebClock = `${rm}:${rs}`;
         const rebKey = p.id + '_after';
-        const rebDisplay = possEvtEdits[rebKey] !== undefined ? possEvtEdits[rebKey] : 'REBOUND';
-        afterRatedHtml = `<div class="ev-row poss-ev-plain">
-          <i class="ti ti-point-filled" style="font-size:7px;flex-shrink:0;opacity:.5"></i>
-          <span class="poss-ev-clock">${rm}:${rs} — </span><span class="poss-ev-type" contenteditable="true" data-poss="${p.id}" data-idx="after" onblur="savePossEvt(this)" onclick="event.stopPropagation()" spellcheck="false">${rebDisplay}</span>
-        </div>`;
+        const ratedRebId = unratedOpened[rebKey];
+        if (ratedRebId && SC_DATA[ratedRebId]) {
+          const ud = SC_DATA[ratedRebId];
+          const ubadge = ratingBadge(ud.rating, ud.called);
+          const uLabel = ud.called ? ud.infrType.toUpperCase() : ud.callLabel;
+          afterRatedHtml = `<div class="ev-row reviewable${ratedRebId===curEvtId?' sel':''}" onclick="selectEvent('${ratedRebId}')">
+            <div class="ev-top${ud.called?' whistled':''}">${whistleIcon(ud.called)}<span>${ud.clock} — ${uLabel}</span><span class="chip ${ubadge.cls}" style="margin-left:auto">${ubadge.label}</span></div>
+          </div>`;
+        } else {
+          afterRatedHtml = `<div class="ev-row poss-ev-plain reviewable" onclick="openUnrated(${p.id},'after','${rebClock}','Rebound')">
+            <i class="ti ti-point-filled" style="font-size:7px;flex-shrink:0;opacity:.5"></i>
+            <span>${rebClock} — REBOUND</span>
+          </div>`;
+        }
       }
     }
 
@@ -1075,9 +1091,38 @@ function togglePossExpand(possId) {
   else expandedPoss.add(possId);
   buildQueue();
 }
-function savePossEvt(el) {
-  const key = el.dataset.poss + '_' + el.dataset.idx;
-  possEvtEdits[key] = el.textContent.trim().toUpperCase();
+function openUnrated(possId, idx, clock, type) {
+  const uKey = possId + '_' + idx;
+  /* create a new SC_DATA entry for this previously-unrated event */
+  const newId = 'nr_' + uKey;
+  if (!SC_DATA[newId]) {
+    SC_DATA[newId] = {
+      clock, callLabel: type, infrType: '', player: '', opponent: '',
+      ref: '', loc: '', rating: '', obs: 'Observable', called: false,
+      comment: '', notes: '', _unrated: true
+    };
+  }
+  unratedOpened[uKey] = newId;
+  curEvtId = newId;
+  buildQueue();
+  /* open the rating panel */
+  document.getElementById('cp-empty').style.display = 'none';
+  document.getElementById('rating-form').style.display = '';
+  document.getElementById('comment-section').style.display = 'flex';
+  document.getElementById('inf-table-wrap').style.display = 'block';
+  const d = SC_DATA[newId];
+  document.getElementById('inf-tbody').innerHTML = `<tr>
+    <td>${d.infrType||'—'}</td><td>${d.player||'—'}</td><td>${d.opponent||'—'}</td>
+    <td>${d.ref||'—'}</td><td>${d.loc||'—'}</td>
+    <td><span class="rating-chip">${d.rating||'Not yet rated'}</span></td>
+    <td>${d.obs}</td>
+  </tr>`;
+  document.getElementById('rf-clock').value = d.clock;
+  document.querySelectorAll('#ref-btn-group .ref-btn').forEach(b => b.classList.remove('on'));
+  document.querySelectorAll('#loc-btn-group .loc-btn').forEach(b => b.classList.remove('on'));
+  /* pre-fill call label into infraction type selector if possible */
+  const sel = document.getElementById('rf-infraction-type');
+  if (sel) sel.value = '';
 }
 </script>
 </body>
