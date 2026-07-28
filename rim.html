@@ -1006,10 +1006,10 @@ function switchTab(tab){
   const btnD=document.getElementById('tab-btn-dashboard');
   const btnP=document.getElementById('tab-btn-profile');
   if(tab==='dashboard'){
-    dash.style.display='';prof.style.display='none';
+    dash.style.display='block';prof.style.display='none';
     btnD.classList.add('on');btnP.classList.remove('on');
   } else {
-    dash.style.display='none';prof.style.display='';
+    dash.style.display='none';prof.style.display='block';
     btnP.classList.add('on');btnD.classList.remove('on');
   }
 }
