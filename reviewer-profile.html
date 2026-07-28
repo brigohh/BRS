@@ -445,13 +445,12 @@ function drawChart(svgId, pts, labels, color, gradId) {
   const ptStr = xs.map((x,i)=>`${x.toFixed(1)},${ys[i].toFixed(1)}`).join(' ');
   const polyStr = ptStr + ` ${xs[n-1].toFixed(1)},${(tm+plotH).toFixed(1)} ${xs[0].toFixed(1)},${(tm+plotH).toFixed(1)}`;
   const circles = xs.map((x,i)=>`<circle cx="${x.toFixed(1)}" cy="${ys[i].toFixed(1)}" r="3" fill="${color}"/>`).join('');
-  /* at most 5 evenly-spaced x labels */
-  const maxTicks = Math.min(5, labels.length);
+  /* x labels: spread evenly across plot width regardless of data point count */
   let xLabelsStr = '';
-  for(let t=0;t<maxTicks;t++){
-    const idx = Math.round(t/(maxTicks-1||1)*(labels.length-1));
-    const x = lm + (n===1 ? plotW/2 : idx/(n-1)*plotW);
-    xLabelsStr += `<text x="${x.toFixed(1)}" y="${H-4}" font-size="9" fill="#9ca3af" text-anchor="middle">${labels[idx]}</text>`;
+  const nl = labels.length;
+  for(let t=0;t<nl;t++){
+    const x = lm + (nl===1 ? plotW/2 : t/(nl-1)*plotW);
+    xLabelsStr += `<text x="${x.toFixed(1)}" y="${H-4}" font-size="9" fill="#9ca3af" text-anchor="middle">${labels[t]}</text>`;
   }
   const defs = svg.querySelector('defs').outerHTML;
   svg.innerHTML = defs + gridLines + yLabels +
@@ -482,7 +481,7 @@ const DATASETS = {
     kpi:    ['11.4','9.8','1.9','9%','1.3','#3'],
     accPts: [87,89,91,88,90,92,91,89,90,91,93,90,88,91],
     errPts: [13,11,9,12,10,8,9,11,10,9,7,10,12,9],
-    xLabels:['Mar-16','Mar-20','Mar-25','Mar-29','Apr-5','Apr-7','Apr-9','Apr-10','Apr-10','Apr-10','Apr-10','Apr-10','Apr-10','Apr-12'],
+    xLabels:['Mar 16','Mar 20','Mar 25','Mar 29','Apr 5','Apr 9','Apr 12'],
     log: [
       ['Apr-12','MAV @ CHI', 3,2,10,3,0,0,0,0],
       ['Apr-10','ORL @ CHI', 5,1,5,2,0,0,1,1],
@@ -505,7 +504,7 @@ const DATASETS = {
     kpi:    ['13.2','10.8','2.3','12%','1.5','#4'],
     accPts: [85,88,87,90,89,86,88,91,90,87,89,92,88,90],
     errPts: [15,12,13,10,11,14,12,9,10,13,11,8,12,10],
-    xLabels:['Feb','Feb','Feb','Mar','Mar','Mar','Mar','Mar','Mar','Apr','Apr','Apr','Apr','Apr'],
+    xLabels:['Feb 16','Feb 24','Mar 1','Mar 15','Mar 25','Apr 1','Apr 12'],
     log: [
       ['Apr-12','MAV @ CHI', 3,2,10,3,0,0,0,0],
       ['Apr-10','ORL @ CHI', 5,1,5,2,0,0,1,1],
@@ -528,7 +527,7 @@ const DATASETS = {
     kpi:    ['13.5','11.0','2.5','12%','1.6','#4'],
     accPts: [84,86,88,87,90,89,86,88,91,89,87,90,93,91,88,90,87,89,90],
     errPts: [16,14,12,13,10,11,14,12,9,11,13,10,7,9,12,10,13,11,10],
-    xLabels:['Oct','Nov','Nov','Dec','Dec','Jan','Jan','Feb','Feb','Feb','Mar','Mar','Mar','Mar','Mar','Apr','Apr','Apr','Apr'],
+    xLabels:['Oct','Nov','Dec','Jan','Feb','Mar','Apr'],
     log: [
       ['Apr-12','MAV @ CHI', 3,2,10,3,0,0,0,0],
       ['Apr-10','ORL @ CHI', 5,1,5,2,0,0,1,1],
@@ -556,7 +555,7 @@ const DATASETS = {
     kpi:    ['15.2','12.4','3.1','15%','2.1','#6'],
     accPts: [83,85,84,86,85,87,86,88,87,85],
     errPts: [17,15,16,14,15,13,14,12,13,15],
-    xLabels:['Mar-8','Mar-12','Mar-16','Mar-20','Mar-24','Mar-28','Apr-3','Apr-5','Apr-7','Apr-9'],
+    xLabels:['Mar 8','Mar 16','Mar 24','Apr 3','Apr 9'],
     log: [
       ['Apr-09','MIL @ BOS', 10,3,14,4,1,1,0,2],
       ['Apr-07','MIA @ PHI', 12,2,16,3,0,2,1,3],
@@ -573,55 +572,55 @@ const DATASETS = {
   '2023-24': {
     pills:['85%','15%','38','#6'], kpi:['15.2','12.4','3.1','15%','2.1','#6'],
     accPts:[83,85,84,86,85,87,86,88,87,85], errPts:[17,15,16,14,15,13,14,12,13,15],
-    xLabels:['Oct','Nov','Dec','Jan','Feb','Feb','Mar','Mar','Apr','Apr'],
+    xLabels:['Oct','Nov','Dec','Jan','Feb','Mar','Apr'],
     log:[['Apr-07','MIA @ PHI',12,2,16,3,0,2,1,3],['Apr-05','CHI @ TOR',9,1,13,5,0,0,0,0],['Mar-28','LAL @ DEN',14,2,17,4,0,1,0,1],['Mar-20','NYK @ IND',13,1,16,2,0,1,0,1],['Mar-12','UTA @ SAC',11,2,15,3,0,0,0,0]],
   },
   '2022-23': {
     pills:['86%','14%','41','#5'], kpi:['14.8','12.0','2.9','14%','2.0','#5'],
     accPts:[84,86,85,87,86,88,87,89,88,86,85,87], errPts:[16,14,15,13,14,12,13,11,12,14,15,13],
-    xLabels:['Oct','Nov','Nov','Dec','Jan','Jan','Feb','Feb','Mar','Mar','Apr','Apr'],
+    xLabels:['Oct','Nov','Dec','Jan','Feb','Mar','Apr'],
     log:[['Apr-09','GSW @ LAL',11,2,15,3,0,1,0,1],['Apr-06','BOS @ PHI',10,1,14,4,0,0,1,2],['Mar-30','MIL @ CLE',9,2,13,2,1,0,0,1],['Mar-22','DAL @ PHX',12,0,16,2,0,1,0,1],['Mar-14','MIA @ NYK',8,1,12,3,0,0,0,0]],
   },
   '2021-22': {
     pills:['87%','13%','39','#4'], kpi:['14.1','11.5','2.7','13%','1.9','#4'],
     accPts:[85,87,86,89,88,86,88,90,89,87,88,89], errPts:[15,13,14,11,12,14,12,10,11,13,12,11],
-    xLabels:['Oct','Nov','Dec','Dec','Jan','Feb','Feb','Mar','Mar','Mar','Apr','Apr'],
+    xLabels:['Oct','Nov','Dec','Jan','Feb','Mar','Apr'],
     log:[['Apr-10','PHX @ DAL',9,1,13,3,0,0,0,0],['Apr-07','MEM @ GSW',10,2,14,2,1,1,0,2],['Mar-29','BKN @ MIL',8,1,12,4,0,0,1,1],['Mar-21','NYK @ BOS',11,0,15,1,0,1,0,1],['Mar-13','IND @ CLE',7,2,11,2,0,0,0,0]],
   },
   '2020-21': {
     pills:['88%','12%','36','#4'], kpi:['13.8','11.2','2.6','12%','1.8','#4'],
     accPts:[86,88,87,90,89,87,89,91,90,88,89,90], errPts:[14,12,13,10,11,13,11,9,10,12,11,10],
-    xLabels:['Dec','Jan','Jan','Feb','Feb','Mar','Mar','Mar','Apr','Apr','May','May'],
+    xLabels:['Dec','Jan','Feb','Mar','Apr','May'],
     log:[['May-16','PHX @ DEN',8,1,12,2,0,0,0,0],['May-12','BKN @ MIL',10,2,14,3,0,1,1,2],['Apr-30','ATL @ NYK',9,0,13,1,1,0,0,1],['Apr-22','LAL @ GSW',7,1,11,2,0,0,0,0],['Apr-14','UTA @ OKC',6,1,10,2,0,1,0,1]],
   },
   '2019-20': {
     pills:['87%','13%','35','#5'], kpi:['14.3','11.6','2.8','13%','1.9','#5'],
     accPts:[85,87,86,88,87,89,88,86,87,88,90,88], errPts:[15,13,14,12,13,11,12,14,13,12,10,12],
-    xLabels:['Oct','Nov','Dec','Jan','Jan','Feb','Mar','Mar','Jul','Aug','Sep','Oct'],
+    xLabels:['Oct','Dec','Feb','Apr','Jul','Sep'],
     log:[['Oct-10','MIA @ LAL',9,2,13,3,0,1,0,1],['Sep-26','BOS @ HOU',10,1,14,2,0,0,1,1],['Aug-20','MIL @ LAC',11,0,15,4,1,0,0,1],['Jul-31','DEN @ OKC',8,2,12,2,0,1,0,1],['Jan-16','PHX @ GSW',7,1,11,1,0,0,0,0]],
   },
   '2018-19': {
     pills:['86%','14%','40','#5'], kpi:['14.9','12.2','3.0','14%','2.0','#5'],
     accPts:[84,86,85,87,86,88,87,85,86,87,89,87], errPts:[16,14,15,13,14,12,13,15,14,13,11,13],
-    xLabels:['Oct','Nov','Nov','Dec','Jan','Feb','Feb','Mar','Mar','Apr','Apr','Apr'],
+    xLabels:['Oct','Nov','Dec','Jan','Feb','Mar','Apr'],
     log:[['Apr-23','GSW @ HOU',12,2,16,4,0,2,1,3],['Apr-19','POR @ OKC',10,1,14,3,0,0,0,0],['Apr-16','DEN @ SAS',9,2,13,2,1,1,0,2],['Mar-31','NYK @ BKN',8,0,12,1,0,0,0,0],['Mar-24','CLE @ IND',7,1,11,2,0,1,0,1]],
   },
   '2017-18': {
     pills:['85%','15%','37','#6'], kpi:['15.5','12.6','3.2','15%','2.2','#6'],
     accPts:[83,85,84,86,85,87,86,84,85,86,88,86], errPts:[17,15,16,14,15,13,14,16,15,14,12,14],
-    xLabels:['Oct','Nov','Dec','Jan','Jan','Feb','Mar','Mar','Apr','Apr','Apr','Apr'],
+    xLabels:['Oct','Nov','Dec','Jan','Feb','Mar','Apr'],
     log:[['Apr-25','GSW @ SAS',13,3,17,5,1,2,1,3],['Apr-22','HOU @ MIN',11,2,15,4,0,1,0,1],['Apr-19','CLE @ IND',10,1,14,3,0,0,1,1],['Apr-16','PHI @ MIA',9,2,13,2,1,0,0,1],['Apr-13','OKC @ UTA',8,1,12,2,0,1,0,1]],
   },
   '2016-17': {
     pills:['84%','16%','36','#7'], kpi:['16.1','13.0','3.4','16%','2.3','#7'],
     accPts:[82,84,83,85,84,86,85,83,84,85,87,85], errPts:[18,16,17,15,16,14,15,17,16,15,13,15],
-    xLabels:['Oct','Nov','Dec','Jan','Feb','Feb','Mar','Mar','Apr','Apr','Apr','Apr'],
+    xLabels:['Oct','Nov','Dec','Jan','Feb','Mar','Apr'],
     log:[['Apr-23','CLE @ IND',14,3,18,5,1,2,1,3],['Apr-20','GSW @ POR',12,2,16,4,0,1,0,1],['Apr-17','SAS @ MEM',11,1,15,4,0,0,1,2],['Apr-14','BOS @ CHI',10,2,14,3,1,0,0,1],['Apr-11','ATL @ WAS',9,1,13,2,0,1,0,1]],
   },
   '2015-16': {
     pills:['83%','17%','34','#8'], kpi:['16.8','13.5','3.6','17%','2.5','#8'],
     accPts:[81,83,82,84,83,85,84,82,83,84,86,84], errPts:[19,17,18,16,17,15,16,18,17,16,14,16],
-    xLabels:['Oct','Nov','Dec','Jan','Feb','Mar','Mar','Apr','Apr','Apr','Apr','Apr'],
+    xLabels:['Oct','Nov','Dec','Jan','Feb','Mar','Apr'],
     log:[['Apr-24','CLE @ DET',15,4,19,6,1,2,1,3],['Apr-21','GSW @ HOU',13,2,17,5,0,1,0,1],['Apr-18','TOR @ IND',12,2,16,4,1,0,1,2],['Apr-15','BOS @ ATL',11,1,15,3,0,1,0,1],['Apr-12','MIA @ CHA',10,2,14,3,0,0,0,0]],
   },
 };
