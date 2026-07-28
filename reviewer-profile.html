@@ -440,7 +440,7 @@ function drawChart(svgId, pts, labels, color, gradId) {
   for(let val=yMin; val<=yMax+0.01; val+=step){
     const y = tm + plotH - (val-yMin)/(yMax-yMin)*plotH;
     gridLines+=`<line x1="${lm}" y1="${y.toFixed(1)}" x2="${W-rm}" y2="${y.toFixed(1)}" stroke="#f0f1f4" stroke-width="1"/>`;
-    yLabels+=`<text x="${lm-5}" y="${(y+3).toFixed(1)}" font-size="9" fill="#9ca3af" text-anchor="end">${Math.round(val)}${isAcc?'%':''}</text>`;
+    yLabels+=`<text x="${lm-5}" y="${(y+3).toFixed(1)}" font-size="7" fill="#9ca3af" text-anchor="end">${Math.round(val)}${isAcc?'%':''}</text>`;
   }
   const ptStr = xs.map((x,i)=>`${x.toFixed(1)},${ys[i].toFixed(1)}`).join(' ');
   const polyStr = ptStr + ` ${xs[n-1].toFixed(1)},${(tm+plotH).toFixed(1)} ${xs[0].toFixed(1)},${(tm+plotH).toFixed(1)}`;
@@ -450,7 +450,7 @@ function drawChart(svgId, pts, labels, color, gradId) {
   const nl = labels.length;
   for(let t=0;t<nl;t++){
     const x = lm + (nl===1 ? plotW/2 : t/(nl-1)*plotW);
-    xLabelsStr += `<text x="${x.toFixed(1)}" y="${H-4}" font-size="9" fill="#9ca3af" text-anchor="middle">${labels[t]}</text>`;
+    xLabelsStr += `<text x="${x.toFixed(1)}" y="${H-4}" font-size="7" fill="#9ca3af" text-anchor="middle">${labels[t]}</text>`;
   }
   const defsEl = svg.querySelector('defs');
   const defs = defsEl ? defsEl.outerHTML : '';
