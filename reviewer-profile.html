@@ -54,10 +54,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .prof-pill-l{font-size:9px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.4px;margin-top:3px;font-weight:600}
 
 /* DATE CHIPS */
-.date-chips{display:flex;gap:7px;margin-bottom:20px}
-.date-chip{padding:5px 14px;border-radius:20px;font-size:11px;font-weight:600;color:#6b7280;background:#fff;border:1px solid #e5e7eb;cursor:pointer;transition:all .15s}
+.date-chips{display:flex;gap:7px;margin-bottom:20px;align-items:center}
+.date-chip{padding:5px 14px;border-radius:20px;font-size:11px;font-weight:600;color:#6b7280;background:#fff;border:1px solid #e5e7eb;cursor:pointer;transition:all .15s;white-space:nowrap}
 .date-chip.on{background:#1a3a6b;color:#fff;border-color:#1a3a6b}
 .date-chip:hover:not(.on){background:#f0f2f5}
+.season-dropdown{position:relative}
+.season-dd-menu{display:none;position:absolute;top:calc(100% + 6px);left:0;background:#fff;border:1px solid #e5e7eb;border-radius:10px;box-shadow:0 8px 24px rgba(17,24,39,.14);min-width:140px;z-index:200;padding:4px 0}
+.season-dropdown.open .season-dd-menu{display:block}
+.season-dd-item{padding:8px 14px;font-size:11.5px;font-weight:500;color:#374151;cursor:pointer;transition:background .1s;white-space:nowrap}
+.season-dd-item:hover{background:#f3f4f6;color:#1a3a6b}
+.season-dd-item.on{background:#eef2ff;color:#1a3a6b;font-weight:700}
 
 /* SECTION LABEL */
 .sec-lbl{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#9ca3af;margin-bottom:10px}
@@ -217,8 +223,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
     <div class="date-chip" onclick="setChip(this,'last7')">Last 7 Games</div>
     <div class="date-chip" onclick="setChip(this,'last30')">Last 30 Days</div>
     <div class="date-chip" onclick="setChip(this,'last90')">Last 90 Days</div>
-    <div class="date-chip on" onclick="setChip(this,'full')">Full Season</div>
-    <div class="date-chip" onclick="setChip(this,'prev')" style="border-style:dashed">Previous Seasons</div>
+    <div class="date-chip on" id="chip-full" onclick="setChip(this,'full')">Full Season</div>
+    <div class="season-dropdown" id="season-dd">
+      <div class="date-chip" id="chip-prev" onclick="toggleSeasonDd(event)">Previous Seasons ▾</div>
+      <div class="season-dd-menu" id="season-dd-menu">
+        <div class="season-dd-item" onclick="selectSeason('2023-24')">2023–24</div>
+        <div class="season-dd-item" onclick="selectSeason('2022-23')">2022–23</div>
+        <div class="season-dd-item" onclick="selectSeason('2021-22')">2021–22</div>
+        <div class="season-dd-item" onclick="selectSeason('2020-21')">2020–21</div>
+        <div class="season-dd-item" onclick="selectSeason('2019-20')">2019–20</div>
+        <div class="season-dd-item" onclick="selectSeason('2018-19')">2018–19</div>
+        <div class="season-dd-item" onclick="selectSeason('2017-18')">2017–18</div>
+        <div class="season-dd-item" onclick="selectSeason('2016-17')">2016–17</div>
+        <div class="season-dd-item" onclick="selectSeason('2015-16')">2015–16</div>
+      </div>
+    </div>
   </div>
 
   <!-- ROW 1: KPI CARDS -->
@@ -236,90 +255,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   <div class="sec-lbl">Season Trends</div>
   <div class="charts-row">
     <div class="chart-card">
-      <div class="chart-title">Accuracy % Over Season</div>
-      <svg viewBox="0 0 380 150" style="width:100%;height:auto;display:block">
-        <!-- grid lines -->
-        <line x1="40" y1="10" x2="370" y2="10" stroke="#f3f4f6" stroke-width="1"/>
-        <line x1="40" y1="40" x2="370" y2="40" stroke="#f3f4f6" stroke-width="1"/>
-        <line x1="40" y1="70" x2="370" y2="70" stroke="#f3f4f6" stroke-width="1"/>
-        <line x1="40" y1="100" x2="370" y2="100" stroke="#f3f4f6" stroke-width="1"/>
-        <line x1="40" y1="130" x2="370" y2="130" stroke="#f3f4f6" stroke-width="1"/>
-        <!-- y-axis labels: 100 down to 40 -->
-        <text x="34" y="13" font-size="9" fill="#9ca3af" text-anchor="end">100</text>
-        <text x="34" y="43" font-size="9" fill="#9ca3af" text-anchor="end">85</text>
-        <text x="34" y="73" font-size="9" fill="#9ca3af" text-anchor="end">70</text>
-        <text x="34" y="103" font-size="9" fill="#9ca3af" text-anchor="end">55</text>
-        <text x="34" y="133" font-size="9" fill="#9ca3af" text-anchor="end">40</text>
-        <!-- data: Oct:45 Nov:48 Dec:52 Jan:55 Feb:50 Mar:53 Apr:50 -->
-        <!-- map val 40-100 → y 130-10; x evenly spaced 40-370 with 7 pts -->
-        <!-- pts: x=40,95,150,205,260,315,370 -->
-        <!-- y = 130 - (val-40)/(60)*120 -->
-        <!-- Oct:45 → y=120; Nov:48→114; Dec:52→106; Jan:55→100; Feb:50→110; Mar:53→104; Apr:50→110 -->
-        <defs>
-          <linearGradient id="gA" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#1a3a6b" stop-opacity=".18"/>
-            <stop offset="100%" stop-color="#1a3a6b" stop-opacity=".02"/>
-          </linearGradient>
-        </defs>
-        <polygon points="40,120 95,114 150,106 205,100 260,110 315,104 370,110 370,130 40,130" fill="url(#gA)"/>
-        <polyline points="40,120 95,114 150,106 205,100 260,110 315,104 370,110" fill="none" stroke="#1a3a6b" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
-        <circle cx="40" cy="120" r="3.5" fill="#1a3a6b"/>
-        <circle cx="95" cy="114" r="3.5" fill="#1a3a6b"/>
-        <circle cx="150" cy="106" r="3.5" fill="#1a3a6b"/>
-        <circle cx="205" cy="100" r="3.5" fill="#1a3a6b"/>
-        <circle cx="260" cy="110" r="3.5" fill="#1a3a6b"/>
-        <circle cx="315" cy="104" r="3.5" fill="#1a3a6b"/>
-        <circle cx="370" cy="110" r="3.5" fill="#1a3a6b"/>
-        <!-- x labels -->
-        <text x="40"  y="145" font-size="9" fill="#9ca3af" text-anchor="middle">Oct</text>
-        <text x="95"  y="145" font-size="9" fill="#9ca3af" text-anchor="middle">Nov</text>
-        <text x="150" y="145" font-size="9" fill="#9ca3af" text-anchor="middle">Dec</text>
-        <text x="205" y="145" font-size="9" fill="#9ca3af" text-anchor="middle">Jan</text>
-        <text x="260" y="145" font-size="9" fill="#9ca3af" text-anchor="middle">Feb</text>
-        <text x="315" y="145" font-size="9" fill="#9ca3af" text-anchor="middle">Mar</text>
-        <text x="370" y="145" font-size="9" fill="#9ca3af" text-anchor="middle">Apr</text>
+      <div class="chart-title" id="chart-acc-title">Accuracy % — Full Season</div>
+      <svg id="chart-acc" viewBox="0 0 380 150" style="width:100%;height:auto;display:block">
+        <defs><linearGradient id="gA" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a3a6b" stop-opacity=".18"/><stop offset="100%" stop-color="#1a3a6b" stop-opacity=".02"/></linearGradient></defs>
       </svg>
     </div>
     <div class="chart-card">
-      <div class="chart-title">Error Rate Per Game (All Calls)</div>
-      <svg viewBox="0 0 380 150" style="width:100%;height:auto;display:block">
-        <line x1="40" y1="10" x2="370" y2="10" stroke="#f3f4f6" stroke-width="1"/>
-        <line x1="40" y1="40" x2="370" y2="40" stroke="#f3f4f6" stroke-width="1"/>
-        <line x1="40" y1="70" x2="370" y2="70" stroke="#f3f4f6" stroke-width="1"/>
-        <line x1="40" y1="100" x2="370" y2="100" stroke="#f3f4f6" stroke-width="1"/>
-        <line x1="40" y1="130" x2="370" y2="130" stroke="#f3f4f6" stroke-width="1"/>
-        <!-- y-axis labels: 20 down to 8 -->
-        <text x="34" y="13" font-size="9" fill="#9ca3af" text-anchor="end">20</text>
-        <text x="34" y="43" font-size="9" fill="#9ca3af" text-anchor="end">17</text>
-        <text x="34" y="73" font-size="9" fill="#9ca3af" text-anchor="end">14</text>
-        <text x="34" y="103" font-size="9" fill="#9ca3af" text-anchor="end">11</text>
-        <text x="34" y="133" font-size="9" fill="#9ca3af" text-anchor="end">8</text>
-        <!-- data: Oct:16 Nov:15 Dec:14 Jan:13 Feb:14 Mar:13.5 Apr:13.5 -->
-        <!-- map val 8-20 → y 130-10; range=12, scale=120/12=10 -->
-        <!-- y = 130 - (val-8)*10 -->
-        <!-- Oct:16→50; Nov:15→60; Dec:14→70; Jan:13→80; Feb:14→70; Mar:13.5→75; Apr:13.5→75 -->
-        <defs>
-          <linearGradient id="gB" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#c8102e" stop-opacity=".15"/>
-            <stop offset="100%" stop-color="#c8102e" stop-opacity=".02"/>
-          </linearGradient>
-        </defs>
-        <polygon points="40,50 95,60 150,70 205,80 260,70 315,75 370,75 370,130 40,130" fill="url(#gB)"/>
-        <polyline points="40,50 95,60 150,70 205,80 260,70 315,75 370,75" fill="none" stroke="#c8102e" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
-        <circle cx="40" cy="50" r="3.5" fill="#c8102e"/>
-        <circle cx="95" cy="60" r="3.5" fill="#c8102e"/>
-        <circle cx="150" cy="70" r="3.5" fill="#c8102e"/>
-        <circle cx="205" cy="80" r="3.5" fill="#c8102e"/>
-        <circle cx="260" cy="70" r="3.5" fill="#c8102e"/>
-        <circle cx="315" cy="75" r="3.5" fill="#c8102e"/>
-        <circle cx="370" cy="75" r="3.5" fill="#c8102e"/>
-        <text x="40"  y="145" font-size="9" fill="#9ca3af" text-anchor="middle">Oct</text>
-        <text x="95"  y="145" font-size="9" fill="#9ca3af" text-anchor="middle">Nov</text>
-        <text x="150" y="145" font-size="9" fill="#9ca3af" text-anchor="middle">Dec</text>
-        <text x="205" y="145" font-size="9" fill="#9ca3af" text-anchor="middle">Jan</text>
-        <text x="260" y="145" font-size="9" fill="#9ca3af" text-anchor="middle">Feb</text>
-        <text x="315" y="145" font-size="9" fill="#9ca3af" text-anchor="middle">Mar</text>
-        <text x="370" y="145" font-size="9" fill="#9ca3af" text-anchor="middle">Apr</text>
+      <div class="chart-title" id="chart-err-title">Error Rate Per Game — Full Season</div>
+      <svg id="chart-err" viewBox="0 0 380 150" style="width:100%;height:auto;display:block">
+        <defs><linearGradient id="gB" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c8102e" stop-opacity=".15"/><stop offset="100%" stop-color="#c8102e" stop-opacity=".02"/></linearGradient></defs>
       </svg>
     </div>
   </div>
@@ -463,13 +407,60 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 /* ── NAV ── */
 function toggleNavDropdown(e){e.stopPropagation();document.getElementById('nav-dropdown').classList.toggle('open')}
 function toggleRimDropdown(e){e.stopPropagation();document.getElementById('rim-dropdown').classList.toggle('open');document.getElementById('nav-dropdown').classList.remove('open')}
-document.addEventListener('click',()=>{document.getElementById('nav-dropdown').classList.remove('open');document.getElementById('rim-dropdown').classList.remove('open')});
+document.addEventListener('click',(e)=>{
+  document.getElementById('nav-dropdown').classList.remove('open');
+  document.getElementById('rim-dropdown').classList.remove('open');
+  if(!e.target.closest('#season-dd')) document.getElementById('season-dd').classList.remove('open');
+});
+
+/* ── SEASON DROPDOWN ── */
+function toggleSeasonDd(e){e.stopPropagation();document.getElementById('season-dd').classList.toggle('open')}
+function selectSeason(s){
+  document.getElementById('season-dd').classList.remove('open');
+  document.querySelectorAll('.season-dd-item').forEach(i=>i.classList.toggle('on',i.textContent.replace('–','-')===s));
+  document.querySelectorAll('.date-chip').forEach(c=>c.classList.remove('on'));
+  document.getElementById('chip-prev').classList.add('on');
+  document.getElementById('chip-prev').textContent = s + ' ▾';
+  applyDataset(s);
+}
+
+/* ── CHART RENDERER ── */
+function drawChart(svgId, pts, labels, color, gradId, yMin, yMax) {
+  const svg = document.getElementById(svgId);
+  const W=380, H=150, lm=40, rm=10, tm=10, bm=20, plotW=W-lm-rm, plotH=H-tm-bm;
+  const n = pts.length;
+  const xs = pts.map((_,i) => lm + (n===1 ? plotW/2 : i/(n-1)*plotW));
+  const ys = pts.map(v => tm + plotH - (v-yMin)/(yMax-yMin)*plotH);
+  const yTicks = 4;
+  let gridLines='', yLabels='';
+  for(let i=0;i<=yTicks;i++){
+    const y = tm + plotH*(1-i/yTicks);
+    const val = yMin + (yMax-yMin)*(i/yTicks);
+    gridLines+=`<line x1="${lm}" y1="${y}" x2="${W-rm}" y2="${y}" stroke="#f3f4f6" stroke-width="1"/>`;
+    yLabels+=`<text x="${lm-6}" y="${y+3}" font-size="9" fill="#9ca3af" text-anchor="end">${Math.round(val)}${svgId==='chart-acc'?'%':''}</text>`;
+  }
+  const ptStr = xs.map((x,i)=>`${x},${ys[i]}`).join(' ');
+  const polyStr = ptStr + ` ${xs[n-1]},${tm+plotH} ${xs[0]},${tm+plotH}`;
+  const circles = xs.map((x,i)=>`<circle cx="${x}" cy="${ys[i]}" r="3.5" fill="${color}"/>`).join('');
+  const xStep = plotW/(labels.length-1||1);
+  const xLabels = labels.map((l,i)=>{
+    const x = lm + (labels.length===1 ? plotW/2 : i/(labels.length-1)*plotW);
+    return `<text x="${x}" y="${H-2}" font-size="9" fill="#9ca3af" text-anchor="middle">${l}</text>`;
+  }).join('');
+  const defs = svg.querySelector('defs').outerHTML;
+  svg.innerHTML = defs + gridLines + yLabels +
+    `<polygon points="${polyStr}" fill="url(#${gradId})"/>` +
+    `<polyline points="${ptStr}" fill="none" stroke="${color}" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>` +
+    circles + xLabels;
+}
 
 /* ── DATASETS PER DATE RANGE ── */
 const DATASETS = {
   last7: {
     pills:  ['89%','11%','7','#3'],
     kpi:    ['12.1','10.2','2.1','11%','1.4','#3'],
+    accPts: [88,91,87,90,89,92,89], errPts: [12,9,13,10,11,8,11],
+    xLabels:['Apr-5','Apr-6','Apr-7','Apr-9','Apr-10','Apr-10','Apr-12'],
     log: [
       ['Apr-12','MAV @ CHI', 3,2,10,3,0,0,0,0],
       ['Apr-10','ORL @ CHI', 5,1,5,2,0,0,1,1],
@@ -483,6 +474,9 @@ const DATASETS = {
   last30: {
     pills:  ['91%','9%','14','#3'],
     kpi:    ['11.4','9.8','1.9','9%','1.3','#3'],
+    accPts: [87,89,91,88,90,92,91,89,90,91,93,90,88,91],
+    errPts: [13,11,9,12,10,8,9,11,10,9,7,10,12,9],
+    xLabels:['Mar-16','Mar-18','Mar-20','Mar-22','Mar-25','Mar-27','Mar-29','Apr-5','Apr-6','Apr-7','Apr-9','Apr-10','Apr-10','Apr-12'],
     log: [
       ['Apr-12','MAV @ CHI', 3,2,10,3,0,0,0,0],
       ['Apr-10','ORL @ CHI', 5,1,5,2,0,0,1,1],
@@ -503,6 +497,9 @@ const DATASETS = {
   last90: {
     pills:  ['88%','12%','31','#4'],
     kpi:    ['13.2','10.8','2.3','12%','1.5','#4'],
+    accPts: [85,88,87,90,89,86,88,91,90,87,89,92,88,90],
+    errPts: [15,12,13,10,11,14,12,9,10,13,11,8,12,10],
+    xLabels:['Feb-16','Feb-20','Feb-24','Feb-28','Mar-25','Mar-27','Mar-29','Apr-5','Apr-6','Apr-7','Apr-9','Apr-10','Apr-10','Apr-12'],
     log: [
       ['Apr-12','MAV @ CHI', 3,2,10,3,0,0,0,0],
       ['Apr-10','ORL @ CHI', 5,1,5,2,0,0,1,1],
@@ -523,6 +520,9 @@ const DATASETS = {
   full: {
     pills:  ['88%','12%','43','#4'],
     kpi:    ['13.5','11.0','2.5','12%','1.6','#4'],
+    accPts: [84,86,88,87,90,89,86,88,91,89,87,90,93,91,88,90,87,89,90],
+    errPts: [16,14,12,13,10,11,14,12,9,11,13,10,7,9,12,10,13,11,10],
+    xLabels:['Oct','Nov','Nov','Dec','Dec','Jan','Jan','Feb','Feb','Feb','Mar','Mar','Mar','Mar','Mar','Apr','Apr','Apr','Apr'],
     log: [
       ['Apr-12','MAV @ CHI', 3,2,10,3,0,0,0,0],
       ['Apr-10','ORL @ CHI', 5,1,5,2,0,0,1,1],
@@ -548,6 +548,9 @@ const DATASETS = {
   prev: {
     pills:  ['85%','15%','38','#6'],
     kpi:    ['15.2','12.4','3.1','15%','2.1','#6'],
+    accPts: [83,85,84,86,85,87,86,88,87,85],
+    errPts: [17,15,16,14,15,13,14,12,13,15],
+    xLabels:['Mar-8','Mar-12','Mar-16','Mar-20','Mar-24','Mar-28','Apr-3','Apr-5','Apr-7','Apr-9'],
     log: [
       ['Apr-09','MIL @ BOS', 10,3,14,4,1,1,0,2],
       ['Apr-07','MIA @ PHI', 12,2,16,3,0,2,1,3],
@@ -560,6 +563,60 @@ const DATASETS = {
       ['Mar-12','UTA @ SAC', 11,2,15,3,0,0,0,0],
       ['Mar-08','BKN @ CLE', 9,1,13,4,0,1,1,2],
     ],
+  },
+  '2023-24': {
+    pills:['85%','15%','38','#6'], kpi:['15.2','12.4','3.1','15%','2.1','#6'],
+    accPts:[83,85,84,86,85,87,86,88,87,85], errPts:[17,15,16,14,15,13,14,12,13,15],
+    xLabels:['Oct','Nov','Dec','Jan','Feb','Feb','Mar','Mar','Apr','Apr'],
+    log:[['Apr-07','MIA @ PHI',12,2,16,3,0,2,1,3],['Apr-05','CHI @ TOR',9,1,13,5,0,0,0,0],['Mar-28','LAL @ DEN',14,2,17,4,0,1,0,1],['Mar-20','NYK @ IND',13,1,16,2,0,1,0,1],['Mar-12','UTA @ SAC',11,2,15,3,0,0,0,0]],
+  },
+  '2022-23': {
+    pills:['86%','14%','41','#5'], kpi:['14.8','12.0','2.9','14%','2.0','#5'],
+    accPts:[84,86,85,87,86,88,87,89,88,86,85,87], errPts:[16,14,15,13,14,12,13,11,12,14,15,13],
+    xLabels:['Oct','Nov','Nov','Dec','Jan','Jan','Feb','Feb','Mar','Mar','Apr','Apr'],
+    log:[['Apr-09','GSW @ LAL',11,2,15,3,0,1,0,1],['Apr-06','BOS @ PHI',10,1,14,4,0,0,1,2],['Mar-30','MIL @ CLE',9,2,13,2,1,0,0,1],['Mar-22','DAL @ PHX',12,0,16,2,0,1,0,1],['Mar-14','MIA @ NYK',8,1,12,3,0,0,0,0]],
+  },
+  '2021-22': {
+    pills:['87%','13%','39','#4'], kpi:['14.1','11.5','2.7','13%','1.9','#4'],
+    accPts:[85,87,86,89,88,86,88,90,89,87,88,89], errPts:[15,13,14,11,12,14,12,10,11,13,12,11],
+    xLabels:['Oct','Nov','Dec','Dec','Jan','Feb','Feb','Mar','Mar','Mar','Apr','Apr'],
+    log:[['Apr-10','PHX @ DAL',9,1,13,3,0,0,0,0],['Apr-07','MEM @ GSW',10,2,14,2,1,1,0,2],['Mar-29','BKN @ MIL',8,1,12,4,0,0,1,1],['Mar-21','NYK @ BOS',11,0,15,1,0,1,0,1],['Mar-13','IND @ CLE',7,2,11,2,0,0,0,0]],
+  },
+  '2020-21': {
+    pills:['88%','12%','36','#4'], kpi:['13.8','11.2','2.6','12%','1.8','#4'],
+    accPts:[86,88,87,90,89,87,89,91,90,88,89,90], errPts:[14,12,13,10,11,13,11,9,10,12,11,10],
+    xLabels:['Dec','Jan','Jan','Feb','Feb','Mar','Mar','Mar','Apr','Apr','May','May'],
+    log:[['May-16','PHX @ DEN',8,1,12,2,0,0,0,0],['May-12','BKN @ MIL',10,2,14,3,0,1,1,2],['Apr-30','ATL @ NYK',9,0,13,1,1,0,0,1],['Apr-22','LAL @ GSW',7,1,11,2,0,0,0,0],['Apr-14','UTA @ OKC',6,1,10,2,0,1,0,1]],
+  },
+  '2019-20': {
+    pills:['87%','13%','35','#5'], kpi:['14.3','11.6','2.8','13%','1.9','#5'],
+    accPts:[85,87,86,88,87,89,88,86,87,88,90,88], errPts:[15,13,14,12,13,11,12,14,13,12,10,12],
+    xLabels:['Oct','Nov','Dec','Jan','Jan','Feb','Mar','Mar','Jul','Aug','Sep','Oct'],
+    log:[['Oct-10','MIA @ LAL',9,2,13,3,0,1,0,1],['Sep-26','BOS @ HOU',10,1,14,2,0,0,1,1],['Aug-20','MIL @ LAC',11,0,15,4,1,0,0,1],['Jul-31','DEN @ OKC',8,2,12,2,0,1,0,1],['Jan-16','PHX @ GSW',7,1,11,1,0,0,0,0]],
+  },
+  '2018-19': {
+    pills:['86%','14%','40','#5'], kpi:['14.9','12.2','3.0','14%','2.0','#5'],
+    accPts:[84,86,85,87,86,88,87,85,86,87,89,87], errPts:[16,14,15,13,14,12,13,15,14,13,11,13],
+    xLabels:['Oct','Nov','Nov','Dec','Jan','Feb','Feb','Mar','Mar','Apr','Apr','Apr'],
+    log:[['Apr-23','GSW @ HOU',12,2,16,4,0,2,1,3],['Apr-19','POR @ OKC',10,1,14,3,0,0,0,0],['Apr-16','DEN @ SAS',9,2,13,2,1,1,0,2],['Mar-31','NYK @ BKN',8,0,12,1,0,0,0,0],['Mar-24','CLE @ IND',7,1,11,2,0,1,0,1]],
+  },
+  '2017-18': {
+    pills:['85%','15%','37','#6'], kpi:['15.5','12.6','3.2','15%','2.2','#6'],
+    accPts:[83,85,84,86,85,87,86,84,85,86,88,86], errPts:[17,15,16,14,15,13,14,16,15,14,12,14],
+    xLabels:['Oct','Nov','Dec','Jan','Jan','Feb','Mar','Mar','Apr','Apr','Apr','Apr'],
+    log:[['Apr-25','GSW @ SAS',13,3,17,5,1,2,1,3],['Apr-22','HOU @ MIN',11,2,15,4,0,1,0,1],['Apr-19','CLE @ IND',10,1,14,3,0,0,1,1],['Apr-16','PHI @ MIA',9,2,13,2,1,0,0,1],['Apr-13','OKC @ UTA',8,1,12,2,0,1,0,1]],
+  },
+  '2016-17': {
+    pills:['84%','16%','36','#7'], kpi:['16.1','13.0','3.4','16%','2.3','#7'],
+    accPts:[82,84,83,85,84,86,85,83,84,85,87,85], errPts:[18,16,17,15,16,14,15,17,16,15,13,15],
+    xLabels:['Oct','Nov','Dec','Jan','Feb','Feb','Mar','Mar','Apr','Apr','Apr','Apr'],
+    log:[['Apr-23','CLE @ IND',14,3,18,5,1,2,1,3],['Apr-20','GSW @ POR',12,2,16,4,0,1,0,1],['Apr-17','SAS @ MEM',11,1,15,4,0,0,1,2],['Apr-14','BOS @ CHI',10,2,14,3,1,0,0,1],['Apr-11','ATL @ WAS',9,1,13,2,0,1,0,1]],
+  },
+  '2015-16': {
+    pills:['83%','17%','34','#8'], kpi:['16.8','13.5','3.6','17%','2.5','#8'],
+    accPts:[81,83,82,84,83,85,84,82,83,84,86,84], errPts:[19,17,18,16,17,15,16,18,17,16,14,16],
+    xLabels:['Oct','Nov','Dec','Jan','Feb','Mar','Mar','Apr','Apr','Apr','Apr','Apr'],
+    log:[['Apr-24','CLE @ DET',15,4,19,6,1,2,1,3],['Apr-21','GSW @ HOU',13,2,17,5,0,1,0,1],['Apr-18','TOR @ IND',12,2,16,4,1,0,1,2],['Apr-15','BOS @ ATL',11,1,15,3,0,1,0,1],['Apr-12','MIA @ CHA',10,2,14,3,0,0,0,0]],
   },
 };
 
@@ -582,6 +639,9 @@ function applyDataset(range) {
   /* kpi cards */
   const kids = ['k-err','k-inc','k-ic','k-errpct','k-ot','k-rank'];
   kids.forEach((id,i) => document.getElementById(id).textContent = ds.kpi[i]);
+  /* charts */
+  drawChart('chart-acc', ds.accPts, ds.xLabels, '#1a3a6b', 'gA', 78, 96);
+  drawChart('chart-err', ds.errPts, ds.xLabels, '#c8102e', 'gB', 6, 22);
   /* game log */
   logData = [...ds.log];
   sortCol = -1; sortAsc = true;
@@ -640,6 +700,7 @@ function sortLog(col){
   filterLog();
 }
 renderLog(logData);
+applyDataset('full');
 
 /* ── MANAGER NOTES ── */
 const mgrNotes=[];
