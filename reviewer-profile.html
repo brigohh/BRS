@@ -202,57 +202,34 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
     <div class="prof-av">WA</div>
     <div class="prof-info">
       <div class="prof-name">Waheed Ameen</div>
-      <div class="prof-role">Second Pass Reviewer &middot; 4th Year</div>
+      <div class="prof-role">Game Reviewer &middot; 9th Season</div>
     </div>
     <div class="prof-pills">
-      <div class="prof-pill"><div class="prof-pill-n">50%</div><div class="prof-pill-l">Accuracy</div></div>
-      <div class="prof-pill"><div class="prof-pill-n">50%</div><div class="prof-pill-l">Error Rate</div></div>
-      <div class="prof-pill"><div class="prof-pill-n">43</div><div class="prof-pill-l">Games</div></div>
-      <div class="prof-pill"><div class="prof-pill-n">#4</div><div class="prof-pill-l">Rank</div></div>
+      <div class="prof-pill"><div class="prof-pill-n" id="hdr-acc">88%</div><div class="prof-pill-l">Accuracy</div></div>
+      <div class="prof-pill"><div class="prof-pill-n" id="hdr-err">12%</div><div class="prof-pill-l">Error Rate</div></div>
+      <div class="prof-pill"><div class="prof-pill-n" id="hdr-games">43</div><div class="prof-pill-l">Games</div></div>
+      <div class="prof-pill"><div class="prof-pill-n" id="hdr-rank">#4</div><div class="prof-pill-l">Rank</div></div>
     </div>
   </div>
 
   <!-- DATE CHIPS -->
   <div class="date-chips">
-    <div class="date-chip" onclick="setChip(this)">Last 7 Games</div>
-    <div class="date-chip" onclick="setChip(this)">Last 30 Days</div>
-    <div class="date-chip" onclick="setChip(this)">Last 90 Days</div>
-    <div class="date-chip on" onclick="setChip(this)">Full Season</div>
+    <div class="date-chip" onclick="setChip(this,'last7')">Last 7 Games</div>
+    <div class="date-chip" onclick="setChip(this,'last30')">Last 30 Days</div>
+    <div class="date-chip" onclick="setChip(this,'last90')">Last 90 Days</div>
+    <div class="date-chip on" onclick="setChip(this,'full')">Full Season</div>
+    <div class="date-chip" onclick="setChip(this,'prev')" style="border-style:dashed">Previous Seasons</div>
   </div>
 
   <!-- ROW 1: KPI CARDS -->
   <div class="sec-lbl">Key Performance Indicators</div>
   <div class="kpi-row">
-    <div class="kpi-card">
-      <div class="kpi-val">13.5</div>
-      <div class="kpi-lbl">Errors / Game</div>
-      <div class="kpi-sub">All Calls</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-val">11.0</div>
-      <div class="kpi-lbl">INC / Game</div>
-      <div class="kpi-sub">Incorrect No-Call</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-val">2.5</div>
-      <div class="kpi-lbl">IC / Game</div>
-      <div class="kpi-sub">Incorrect Call</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-val">50%</div>
-      <div class="kpi-lbl">Err / Event</div>
-      <div class="kpi-sub">All Calls</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-val">1.6</div>
-      <div class="kpi-lbl">Overturns / Game</div>
-      <div class="kpi-sub">Non-Call OT</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-val" style="color:#1a3a6b">#4</div>
-      <div class="kpi-lbl">Rank</div>
-      <div class="kpi-sub">Among Reviewers</div>
-    </div>
+    <div class="kpi-card"><div class="kpi-val" id="k-err">13.5</div><div class="kpi-lbl">Errors / Game</div><div class="kpi-sub">All Calls</div></div>
+    <div class="kpi-card"><div class="kpi-val" id="k-inc">11.0</div><div class="kpi-lbl">INC / Game</div><div class="kpi-sub">Incorrect No-Call</div></div>
+    <div class="kpi-card"><div class="kpi-val" id="k-ic">2.5</div><div class="kpi-lbl">IC / Game</div><div class="kpi-sub">Incorrect Call</div></div>
+    <div class="kpi-card"><div class="kpi-val" id="k-errpct">12%</div><div class="kpi-lbl">Err / Event</div><div class="kpi-sub">All Calls</div></div>
+    <div class="kpi-card"><div class="kpi-val" id="k-ot">1.6</div><div class="kpi-lbl">Overturns / Game</div><div class="kpi-sub">Non-Call OT</div></div>
+    <div class="kpi-card"><div class="kpi-val" id="k-rank" style="color:#1a3a6b">#4</div><div class="kpi-lbl">Rank</div><div class="kpi-sub">Among Reviewers</div></div>
   </div>
 
   <!-- ROW 2: TREND CHARTS -->
@@ -368,7 +345,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       </table>
     </div>
     <div class="tbl-card">
-      <div class="chart-title" style="margin-bottom:10px">League Rankings</div>
+      <div class="chart-title" style="margin-bottom:10px">Reviewer Rankings</div>
       <table class="data-tbl">
         <thead><tr>
           <th>Category</th><th>Err Rank</th><th>INC</th><th>PINC</th><th>IC</th><th>PIC</th><th>OT</th>
@@ -428,16 +405,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       <thead>
         <tr>
           <th class="sort-btn" onclick="sortLog(0)">Date <span id="s0"></span></th>
-          <th class="sort-btn" style="text-align:left" onclick="sortLog(1)">Result <span id="s1"></span></th>
-          <th class="sort-btn" onclick="sortLog(2)">Game # <span id="s2"></span></th>
-          <th class="sort-btn" onclick="sortLog(3)">INC <span id="s3"></span></th>
-          <th class="sort-btn" onclick="sortLog(4)">PIC <span id="s4"></span></th>
-          <th class="sort-btn" onclick="sortLog(5)">PINC <span id="s5"></span></th>
-          <th class="sort-btn" onclick="sortLog(6)">IC <span id="s6"></span></th>
-          <th class="sort-btn" onclick="sortLog(7)">INF:NI <span id="s7"></span></th>
-          <th class="sort-btn" onclick="sortLog(8)">INF:PI <span id="s8"></span></th>
-          <th class="sort-btn" onclick="sortLog(9)">PI:INF <span id="s9"></span></th>
-          <th class="sort-btn" onclick="sortLog(10)">OT <span id="s10"></span></th>
+          <th class="sort-btn" style="text-align:left" onclick="sortLog(1)">Matchup <span id="s1"></span></th>
+          <th class="sort-btn" onclick="sortLog(2)">INC <span id="s2"></span></th>
+          <th class="sort-btn" onclick="sortLog(3)">PIC <span id="s3"></span></th>
+          <th class="sort-btn" onclick="sortLog(4)">PINC <span id="s4"></span></th>
+          <th class="sort-btn" onclick="sortLog(5)">IC <span id="s5"></span></th>
+          <th class="sort-btn" onclick="sortLog(6)">INF:NI <span id="s6"></span></th>
+          <th class="sort-btn" onclick="sortLog(7)">INF:PI <span id="s7"></span></th>
+          <th class="sort-btn" onclick="sortLog(8)">PI:INF <span id="s8"></span></th>
+          <th class="sort-btn" onclick="sortLog(9)">OT <span id="s9"></span></th>
         </tr>
       </thead>
       <tbody id="log-tbody"></tbody>
@@ -489,8 +465,129 @@ function toggleNavDropdown(e){e.stopPropagation();document.getElementById('nav-d
 function toggleRimDropdown(e){e.stopPropagation();document.getElementById('rim-dropdown').classList.toggle('open');document.getElementById('nav-dropdown').classList.remove('open')}
 document.addEventListener('click',()=>{document.getElementById('nav-dropdown').classList.remove('open');document.getElementById('rim-dropdown').classList.remove('open')});
 
-/* ── DATE CHIPS ── */
-function setChip(el){document.querySelectorAll('.date-chip').forEach(c=>c.classList.remove('on'));el.classList.add('on')}
+/* ── DATASETS PER DATE RANGE ── */
+const DATASETS = {
+  last7: {
+    pills:  ['89%','11%','7','#3'],
+    kpi:    ['12.1','10.2','2.1','11%','1.4','#3'],
+    log: [
+      ['Apr-12','MAV @ CHI', 3,2,10,3,0,0,0,0],
+      ['Apr-10','ORL @ CHI', 5,1,5,2,0,0,1,1],
+      ['Apr-10','POR @ LAC', 8,0,12,1,0,0,0,0],
+      ['Apr-09','TOR @ MIA', 2,1,12,2,0,0,0,0],
+      ['Apr-07','MIN @ IND', 6,1,10,0,0,0,0,0],
+      ['Apr-06','NYK @ ATL', 9,0,13,0,0,0,0,0],
+      ['Apr-05','OKC @ UTA', 7,0,10,2,1,1,0,2],
+    ],
+  },
+  last30: {
+    pills:  ['91%','9%','14','#3'],
+    kpi:    ['11.4','9.8','1.9','9%','1.3','#3'],
+    log: [
+      ['Apr-12','MAV @ CHI', 3,2,10,3,0,0,0,0],
+      ['Apr-10','ORL @ CHI', 5,1,5,2,0,0,1,1],
+      ['Apr-10','POR @ LAC', 8,0,12,1,0,0,0,0],
+      ['Apr-09','TOR @ MIA', 2,1,12,2,0,0,0,0],
+      ['Apr-07','MIN @ IND', 6,1,10,0,0,0,0,0],
+      ['Apr-06','NYK @ ATL', 9,0,13,0,0,0,0,0],
+      ['Apr-05','OKC @ UTA', 7,0,10,2,1,1,0,2],
+      ['Mar-29','GSW @ LAL', 5,1,9,1,0,1,0,1],
+      ['Mar-27','BOS @ NYK', 6,0,11,2,0,0,1,1],
+      ['Mar-25','PHX @ DAL', 4,2,8,0,1,0,0,1],
+      ['Mar-22','CHI @ MIL', 7,1,12,1,0,0,0,0],
+      ['Mar-20','MIA @ BKN', 3,0,10,3,0,0,0,0],
+      ['Mar-18','CLE @ IND', 8,1,14,1,0,1,0,1],
+      ['Mar-16','SAS @ DEN', 5,0,9,2,0,0,0,0],
+    ],
+  },
+  last90: {
+    pills:  ['88%','12%','31','#4'],
+    kpi:    ['13.2','10.8','2.3','12%','1.5','#4'],
+    log: [
+      ['Apr-12','MAV @ CHI', 3,2,10,3,0,0,0,0],
+      ['Apr-10','ORL @ CHI', 5,1,5,2,0,0,1,1],
+      ['Apr-10','POR @ LAC', 8,0,12,1,0,0,0,0],
+      ['Apr-09','TOR @ MIA', 2,1,12,2,0,0,0,0],
+      ['Apr-07','MIN @ IND', 6,1,10,0,0,0,0,0],
+      ['Apr-06','NYK @ ATL', 9,0,13,0,0,0,0,0],
+      ['Apr-05','OKC @ UTA', 7,0,10,2,1,1,0,2],
+      ['Mar-29','GSW @ LAL', 5,1,9,1,0,1,0,1],
+      ['Mar-27','BOS @ NYK', 6,0,11,2,0,0,1,1],
+      ['Mar-25','PHX @ DAL', 4,2,8,0,1,0,0,1],
+      ['Feb-28','HOU @ SAC', 6,1,10,2,0,0,0,0],
+      ['Feb-24','ATL @ ORL', 9,0,12,1,0,0,0,0],
+      ['Feb-20','DET @ CLE', 4,1,11,3,0,1,0,1],
+      ['Feb-16','IND @ BOS', 5,0,9,0,1,0,0,1],
+    ],
+  },
+  full: {
+    pills:  ['88%','12%','43','#4'],
+    kpi:    ['13.5','11.0','2.5','12%','1.6','#4'],
+    log: [
+      ['Apr-12','MAV @ CHI', 3,2,10,3,0,0,0,0],
+      ['Apr-10','ORL @ CHI', 5,1,5,2,0,0,1,1],
+      ['Apr-10','POR @ LAC', 8,0,12,1,0,0,0,0],
+      ['Apr-09','TOR @ MIA', 2,1,12,2,0,0,0,0],
+      ['Apr-07','MIN @ IND', 6,1,10,0,0,0,0,0],
+      ['Apr-06','NYK @ ATL', 9,0,13,0,0,0,0,0],
+      ['Apr-05','OKC @ UTA', 7,0,10,2,1,1,0,2],
+      ['Mar-29','GSW @ LAL', 5,1,9,1,0,1,0,1],
+      ['Mar-27','BOS @ NYK', 6,0,11,2,0,0,1,1],
+      ['Mar-25','PHX @ DAL', 4,2,8,0,1,0,0,1],
+      ['Feb-28','HOU @ SAC', 6,1,10,2,0,0,0,0],
+      ['Feb-24','ATL @ ORL', 9,0,12,1,0,0,0,0],
+      ['Jan-15','LAC @ PHX', 7,1,11,2,0,0,0,0],
+      ['Jan-10','MEM @ NOP', 5,0,9,1,0,1,1,2],
+      ['Dec-22','UTA @ POR', 8,1,13,2,0,0,0,0],
+      ['Dec-08','SAC @ OKC', 4,0,10,1,1,0,0,1],
+      ['Nov-30','LAL @ GSW', 6,1,11,3,0,0,0,0],
+      ['Nov-12','BKN @ PHI', 9,0,12,0,0,0,0,0],
+      ['Oct-28','CHI @ CLE', 5,2,10,2,0,1,0,1],
+    ],
+  },
+  prev: {
+    pills:  ['85%','15%','38','#6'],
+    kpi:    ['15.2','12.4','3.1','15%','2.1','#6'],
+    log: [
+      ['Apr-09','MIL @ BOS', 10,3,14,4,1,1,0,2],
+      ['Apr-07','MIA @ PHI', 12,2,16,3,0,2,1,3],
+      ['Apr-05','CHI @ TOR', 9,1,13,5,0,0,0,0],
+      ['Apr-03','DAL @ HOU', 11,0,15,2,1,0,0,1],
+      ['Mar-28','LAL @ DEN', 14,2,17,4,0,1,0,1],
+      ['Mar-24','PHX @ LAC', 8,3,12,3,0,0,1,1],
+      ['Mar-20','NYK @ IND', 13,1,16,2,0,1,0,1],
+      ['Mar-16','OKC @ MEM', 10,0,14,1,1,0,0,1],
+      ['Mar-12','UTA @ SAC', 11,2,15,3,0,0,0,0],
+      ['Mar-08','BKN @ CLE', 9,1,13,4,0,1,1,2],
+    ],
+  },
+};
+
+let currentRange = 'full';
+
+function setChip(el, range) {
+  document.querySelectorAll('.date-chip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  currentRange = range;
+  applyDataset(range);
+}
+
+function applyDataset(range) {
+  const ds = DATASETS[range];
+  /* header pills */
+  document.getElementById('hdr-acc').textContent   = ds.pills[0];
+  document.getElementById('hdr-err').textContent   = ds.pills[1];
+  document.getElementById('hdr-games').textContent = ds.pills[2];
+  document.getElementById('hdr-rank').textContent  = ds.pills[3];
+  /* kpi cards */
+  const kids = ['k-err','k-inc','k-ic','k-errpct','k-ot','k-rank'];
+  kids.forEach((id,i) => document.getElementById(id).textContent = ds.kpi[i]);
+  /* game log */
+  logData = [...ds.log];
+  sortCol = -1; sortAsc = true;
+  document.querySelectorAll('[id^=s]').forEach(s=>s.textContent='');
+  filterLog();
+}
 
 /* ── SCATTER PLOT ── */
 const SCATTER_DATA = [
@@ -502,12 +599,13 @@ const SCATTER_DATA = [
   {date:'Mar-27', cols:[0,3,0,1]},
   {date:'Mar-25', cols:[1,0,0,0]},
 ];
+const COL_TYPES = ['INF:NI','INF:PI','NI:INF','PI:INF'];
 function buildScatter(){
   const body=document.getElementById('scatter-body');
   body.innerHTML=SCATTER_DATA.map(r=>`
     <div class="scatter-row">
       <div class="scatter-date-lbl">${r.date}</div>
-      ${r.cols.map((n,ci)=>`<div class="scatter-cell">${Array.from({length:n},(_,di)=>`<div class="dot" onclick="openClip('${r.date}','${['INF:NI','INF:PI','NI:INF','PI:INF'][ci]}',${di+1})" title="${r.date} — ${['INF:NI','INF:PI','NI:INF','PI:INF'][ci]}"></div>`).join('')}</div>`).join('')}
+      ${r.cols.map((n,ci)=>`<div class="scatter-cell">${Array.from({length:n},(_,di)=>`<div class="dot" onclick="openClip('${r.date}','${COL_TYPES[ci]}',${di+1})" title="${r.date} — ${COL_TYPES[ci]}"></div>`).join('')}</div>`).join('')}
     </div>`).join('');
 }
 buildScatter();
@@ -521,22 +619,13 @@ function openClip(date,type,n){
 function closeModal(){document.getElementById('clip-modal').classList.remove('open')}
 
 /* ── GAME LOG ── */
-const LOG_DATA = [
-  ['Apr-12','Mavericks over Bulls 149-128',1193,3,2,10,3,0,0,0,0],
-  ['Apr-10','Magic over Bulls 127-103',1177,5,1,5,2,0,0,1,1],
-  ['Apr-10','Trail Blazers over Clippers 116-97',1183,8,0,12,1,0,0,0,0],
-  ['Apr-09','Raptors over Heat 128-114',1165,2,1,12,2,0,0,0,0],
-  ['Apr-07','Timberwolves over Pacers 124-104',1152,6,1,10,0,0,0,0,0],
-  ['Apr-06','Knicks over Hawks 108-105',1143,9,0,13,0,0,0,0,0],
-  ['Apr-05','Thunder over Jazz 146-111',1139,7,0,10,2,1,1,0,2],
-];
-let logData=[...LOG_DATA];
-let sortCol=-1,sortAsc=true;
+let logData = [...DATASETS.full.log];
+let sortCol=-1, sortAsc=true;
 function renderLog(rows){
   document.getElementById('log-tbody').innerHTML=rows.map(r=>`<tr>
-    <td>${r[0]}</td><td style="text-align:left">${r[1]}</td><td>${r[2]}</td>
-    <td>${r[3]}</td><td>${r[4]}</td><td>${r[5]}</td><td>${r[6]}</td>
-    <td>${r[7]}</td><td>${r[8]}</td><td>${r[9]}</td><td>${r[10]}</td>
+    <td>${r[0]}</td><td style="text-align:left;font-weight:600">${r[1]}</td>
+    <td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td><td>${r[5]}</td>
+    <td>${r[6]}</td><td>${r[7]}</td><td>${r[8]}</td><td>${r[9]}</td>
   </tr>`).join('');
 }
 function filterLog(){
@@ -547,10 +636,7 @@ function sortLog(col){
   if(sortCol===col){sortAsc=!sortAsc}else{sortCol=col;sortAsc=true}
   document.querySelectorAll('[id^=s]').forEach(s=>s.textContent='');
   document.getElementById('s'+col).textContent=sortAsc?' ▲':' ▼';
-  logData.sort((a,b)=>{
-    const av=a[col],bv=b[col];
-    return sortAsc?(av>bv?1:av<bv?-1:0):(av<bv?1:av>bv?-1:0);
-  });
+  logData.sort((a,b)=>{const av=a[col],bv=b[col];return sortAsc?(av>bv?1:av<bv?-1:0):(av<bv?1:av>bv?-1:0)});
   filterLog();
 }
 renderLog(logData);
