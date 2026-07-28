@@ -255,13 +255,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   <div class="sec-lbl">Season Trends</div>
   <div class="charts-row">
     <div class="chart-card">
-      <div class="chart-title" id="chart-acc-title">Accuracy % — Full Season</div>
+      <div class="chart-title" id="chart-acc-title">Accuracy %</div>
       <svg id="chart-acc" viewBox="0 0 380 150" style="width:100%;height:auto;display:block">
         <defs><linearGradient id="gA" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a3a6b" stop-opacity=".18"/><stop offset="100%" stop-color="#1a3a6b" stop-opacity=".02"/></linearGradient></defs>
       </svg>
     </div>
     <div class="chart-card">
-      <div class="chart-title" id="chart-err-title">Error Rate Per Game — Full Season</div>
+      <div class="chart-title" id="chart-err-title">Error Rate Per Game</div>
       <svg id="chart-err" viewBox="0 0 380 150" style="width:100%;height:auto;display:block">
         <defs><linearGradient id="gB" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c8102e" stop-opacity=".15"/><stop offset="100%" stop-color="#c8102e" stop-opacity=".02"/></linearGradient></defs>
       </svg>
@@ -442,16 +442,19 @@ function drawChart(svgId, pts, labels, color, gradId, yMin, yMax) {
   const ptStr = xs.map((x,i)=>`${x},${ys[i]}`).join(' ');
   const polyStr = ptStr + ` ${xs[n-1]},${tm+plotH} ${xs[0]},${tm+plotH}`;
   const circles = xs.map((x,i)=>`<circle cx="${x}" cy="${ys[i]}" r="3.5" fill="${color}"/>`).join('');
-  const xStep = plotW/(labels.length-1||1);
-  const xLabels = labels.map((l,i)=>{
-    const x = lm + (labels.length===1 ? plotW/2 : i/(labels.length-1)*plotW);
-    return `<text x="${x}" y="${H-2}" font-size="9" fill="#9ca3af" text-anchor="middle">${l}</text>`;
-  }).join('');
+  /* show at most 5 evenly-spaced x labels */
+  const maxTicks = Math.min(5, labels.length);
+  let xLabelsStr = '';
+  for(let t=0;t<maxTicks;t++){
+    const idx = Math.round(t/(maxTicks-1||1)*(labels.length-1));
+    const x = lm + (n===1 ? plotW/2 : idx/(n-1)*plotW);
+    xLabelsStr += `<text x="${x}" y="${H-2}" font-size="9" fill="#9ca3af" text-anchor="middle">${labels[idx]}</text>`;
+  }
   const defs = svg.querySelector('defs').outerHTML;
   svg.innerHTML = defs + gridLines + yLabels +
     `<polygon points="${polyStr}" fill="url(#${gradId})"/>` +
     `<polyline points="${ptStr}" fill="none" stroke="${color}" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>` +
-    circles + xLabels;
+    circles + xLabelsStr;
 }
 
 /* ── DATASETS PER DATE RANGE ── */
@@ -460,7 +463,7 @@ const DATASETS = {
     pills:  ['89%','11%','7','#3'],
     kpi:    ['12.1','10.2','2.1','11%','1.4','#3'],
     accPts: [88,91,87,90,89,92,89], errPts: [12,9,13,10,11,8,11],
-    xLabels:['Apr-5','Apr-6','Apr-7','Apr-9','Apr-10','Apr-10','Apr-12'],
+    xLabels:['G1','G2','G3','G4','G5','G6','G7'],
     log: [
       ['Apr-12','MAV @ CHI', 3,2,10,3,0,0,0,0],
       ['Apr-10','ORL @ CHI', 5,1,5,2,0,0,1,1],
@@ -476,7 +479,7 @@ const DATASETS = {
     kpi:    ['11.4','9.8','1.9','9%','1.3','#3'],
     accPts: [87,89,91,88,90,92,91,89,90,91,93,90,88,91],
     errPts: [13,11,9,12,10,8,9,11,10,9,7,10,12,9],
-    xLabels:['Mar-16','Mar-18','Mar-20','Mar-22','Mar-25','Mar-27','Mar-29','Apr-5','Apr-6','Apr-7','Apr-9','Apr-10','Apr-10','Apr-12'],
+    xLabels:['Mar-16','Mar-20','Mar-25','Mar-29','Apr-5','Apr-7','Apr-9','Apr-10','Apr-10','Apr-10','Apr-10','Apr-10','Apr-10','Apr-12'],
     log: [
       ['Apr-12','MAV @ CHI', 3,2,10,3,0,0,0,0],
       ['Apr-10','ORL @ CHI', 5,1,5,2,0,0,1,1],
@@ -499,7 +502,7 @@ const DATASETS = {
     kpi:    ['13.2','10.8','2.3','12%','1.5','#4'],
     accPts: [85,88,87,90,89,86,88,91,90,87,89,92,88,90],
     errPts: [15,12,13,10,11,14,12,9,10,13,11,8,12,10],
-    xLabels:['Feb-16','Feb-20','Feb-24','Feb-28','Mar-25','Mar-27','Mar-29','Apr-5','Apr-6','Apr-7','Apr-9','Apr-10','Apr-10','Apr-12'],
+    xLabels:['Feb','Feb','Feb','Mar','Mar','Mar','Mar','Mar','Mar','Apr','Apr','Apr','Apr','Apr'],
     log: [
       ['Apr-12','MAV @ CHI', 3,2,10,3,0,0,0,0],
       ['Apr-10','ORL @ CHI', 5,1,5,2,0,0,1,1],
