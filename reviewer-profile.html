@@ -425,35 +425,41 @@ function selectSeason(s){
 }
 
 /* ── CHART RENDERER ── */
-function drawChart(svgId, pts, labels, color, gradId, yMin, yMax) {
+function drawChart(svgId, pts, labels, color, gradId) {
   const svg = document.getElementById(svgId);
-  const W=380, H=150, lm=40, rm=10, tm=10, bm=20, plotW=W-lm-rm, plotH=H-tm-bm;
+  const isAcc = svgId === 'chart-acc';
+  const W=380, H=150, lm=38, rm=10, tm=12, bm=22, plotW=W-lm-rm, plotH=H-tm-bm;
   const n = pts.length;
+  /* auto nice y bounds: pad by ~15% of range, snap to nearest 5 */
+  const dMin = Math.min(...pts), dMax = Math.max(...pts);
+  const rawPad = Math.max(3, (dMax - dMin) * 0.4);
+  const yMin = Math.floor((dMin - rawPad) / 5) * 5;
+  const yMax = Math.ceil((dMax + rawPad) / 5) * 5;
   const xs = pts.map((_,i) => lm + (n===1 ? plotW/2 : i/(n-1)*plotW));
   const ys = pts.map(v => tm + plotH - (v-yMin)/(yMax-yMin)*plotH);
-  const yTicks = 4;
+  /* y-axis: pick 4 nice round tick values between yMin and yMax */
+  const step = Math.ceil((yMax - yMin) / 4 / 5) * 5;
   let gridLines='', yLabels='';
-  for(let i=0;i<=yTicks;i++){
-    const y = tm + plotH*(1-i/yTicks);
-    const val = yMin + (yMax-yMin)*(i/yTicks);
-    gridLines+=`<line x1="${lm}" y1="${y}" x2="${W-rm}" y2="${y}" stroke="#f3f4f6" stroke-width="1"/>`;
-    yLabels+=`<text x="${lm-6}" y="${y+3}" font-size="9" fill="#9ca3af" text-anchor="end">${Math.round(val)}${svgId==='chart-acc'?'%':''}</text>`;
+  for(let val=yMin; val<=yMax+0.01; val+=step){
+    const y = tm + plotH - (val-yMin)/(yMax-yMin)*plotH;
+    gridLines+=`<line x1="${lm}" y1="${y.toFixed(1)}" x2="${W-rm}" y2="${y.toFixed(1)}" stroke="#f0f1f4" stroke-width="1"/>`;
+    yLabels+=`<text x="${lm-5}" y="${(y+3).toFixed(1)}" font-size="9" fill="#9ca3af" text-anchor="end">${Math.round(val)}${isAcc?'%':''}</text>`;
   }
-  const ptStr = xs.map((x,i)=>`${x},${ys[i]}`).join(' ');
-  const polyStr = ptStr + ` ${xs[n-1]},${tm+plotH} ${xs[0]},${tm+plotH}`;
-  const circles = xs.map((x,i)=>`<circle cx="${x}" cy="${ys[i]}" r="3.5" fill="${color}"/>`).join('');
-  /* show at most 5 evenly-spaced x labels */
+  const ptStr = xs.map((x,i)=>`${x.toFixed(1)},${ys[i].toFixed(1)}`).join(' ');
+  const polyStr = ptStr + ` ${xs[n-1].toFixed(1)},${(tm+plotH).toFixed(1)} ${xs[0].toFixed(1)},${(tm+plotH).toFixed(1)}`;
+  const circles = xs.map((x,i)=>`<circle cx="${x.toFixed(1)}" cy="${ys[i].toFixed(1)}" r="3" fill="${color}"/>`).join('');
+  /* at most 5 evenly-spaced x labels */
   const maxTicks = Math.min(5, labels.length);
   let xLabelsStr = '';
   for(let t=0;t<maxTicks;t++){
     const idx = Math.round(t/(maxTicks-1||1)*(labels.length-1));
     const x = lm + (n===1 ? plotW/2 : idx/(n-1)*plotW);
-    xLabelsStr += `<text x="${x}" y="${H-2}" font-size="9" fill="#9ca3af" text-anchor="middle">${labels[idx]}</text>`;
+    xLabelsStr += `<text x="${x.toFixed(1)}" y="${H-4}" font-size="9" fill="#9ca3af" text-anchor="middle">${labels[idx]}</text>`;
   }
   const defs = svg.querySelector('defs').outerHTML;
   svg.innerHTML = defs + gridLines + yLabels +
     `<polygon points="${polyStr}" fill="url(#${gradId})"/>` +
-    `<polyline points="${ptStr}" fill="none" stroke="${color}" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>` +
+    `<polyline points="${ptStr}" fill="none" stroke="${color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>` +
     circles + xLabelsStr;
 }
 
@@ -643,8 +649,8 @@ function applyDataset(range) {
   const kids = ['k-err','k-inc','k-ic','k-errpct','k-ot','k-rank'];
   kids.forEach((id,i) => document.getElementById(id).textContent = ds.kpi[i]);
   /* charts */
-  drawChart('chart-acc', ds.accPts, ds.xLabels, '#1a3a6b', 'gA', 78, 96);
-  drawChart('chart-err', ds.errPts, ds.xLabels, '#c8102e', 'gB', 6, 22);
+  drawChart('chart-acc', ds.accPts, ds.xLabels, '#1a3a6b', 'gA');
+  drawChart('chart-err', ds.errPts, ds.xLabels, '#c8102e', 'gB');
   /* game log */
   logData = [...ds.log];
   sortCol = -1; sortAsc = true;
