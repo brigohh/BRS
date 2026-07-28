@@ -452,7 +452,8 @@ function drawChart(svgId, pts, labels, color, gradId) {
     const x = lm + (nl===1 ? plotW/2 : t/(nl-1)*plotW);
     xLabelsStr += `<text x="${x.toFixed(1)}" y="${H-4}" font-size="9" fill="#9ca3af" text-anchor="middle">${labels[t]}</text>`;
   }
-  const defs = svg.querySelector('defs').outerHTML;
+  const defsEl = svg.querySelector('defs');
+  const defs = defsEl ? defsEl.outerHTML : '';
   svg.innerHTML = defs + gridLines + yLabels +
     `<polygon points="${polyStr}" fill="url(#${gradId})"/>` +
     `<polyline points="${ptStr}" fill="none" stroke="${color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>` +
@@ -705,7 +706,8 @@ function sortLog(col){
   filterLog();
 }
 renderLog(logData);
-applyDataset('full');
+try { applyDataset('full'); } catch(e) { console.error('applyDataset error:', e); }
+buildScatter();
 
 /* ── MANAGER NOTES ── */
 const mgrNotes=[];
