@@ -29,8 +29,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .nav-dd-item{display:block;padding:9px 16px;font-size:11px;font-weight:500;color:#374151;text-decoration:none;white-space:nowrap;cursor:pointer}
 .nav-dd-item:hover{background:#f0f2f5;color:#1a3a6b}
 
+/* SUBNAV */
+.subnav{background:#fff;border-bottom:1px solid #e9ebf0;height:40px;display:flex;padding:0 24px;flex-shrink:0}
+.st{padding:0 14px;font-size:12px;font-weight:500;color:#6b7280;cursor:pointer;display:flex;align-items:center;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:color .15s;gap:5px}
+.st.on{color:#1a3a6b;border-bottom-color:#1a3a6b;font-weight:700}
+
 /* PAGE */
-.page{flex:1;overflow-y:auto;padding:36px 48px 40px}
+.page{flex:1;overflow:hidden;display:flex;flex-direction:column}
+#tab-dashboard{overflow-y:auto;flex:1;padding:36px 48px 40px}
+#tab-profile{overflow-y:auto;flex:1;padding:28px 48px 40px;display:none}
 
 /* WEEKLY CALENDAR */
 .sched{margin-bottom:32px}
@@ -160,6 +167,101 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .scout-notes-lbl{font-size:9.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:#9ca3af;margin-bottom:7px;flex-shrink:0}
 .scout-notes-txt{font-size:12px;color:#4b5563;line-height:1.6}
 .scout-back .scout-tap{color:#c7cbd3;margin-top:auto;padding-top:6px;flex-shrink:0}
+
+/* ===== PROFILE TAB STYLES ===== */
+.p-card{background:#fff;border:1px solid #e5e7eb;border-radius:13px;padding:18px 20px}
+.p-card-title{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#9ca3af;margin-bottom:14px}
+
+/* Profile header */
+.prof-header{background:#1a3a6b;border-radius:20px;padding:26px 32px;margin-bottom:20px;position:relative;overflow:hidden;box-shadow:0 14px 36px rgba(20,35,70,.28)}
+.prof-header::after{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.10) 0%,rgba(255,255,255,0) 70%)}
+.prof-hdr-inner{display:flex;align-items:center;gap:20px;position:relative;z-index:1}
+.prof-avatar{width:68px;height:68px;border-radius:50%;background:#2d5aa0;border:3px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;color:#fff;flex-shrink:0}
+.prof-name{font-size:22px;font-weight:800;color:#fff;margin-bottom:3px}
+.prof-role{font-size:13px;color:rgba(255,255,255,.72)}
+.prof-pills{margin-left:auto;display:flex;gap:10px;flex-shrink:0}
+.prof-pill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:10px 18px;text-align:center}
+.prof-pill-n{font-size:18px;font-weight:800;color:#fff}
+.prof-pill-l{font-size:9.5px;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.4px;margin-top:2px}
+
+/* Date chips */
+.date-chips{display:flex;gap:8px;margin-bottom:20px}
+.date-chip{padding:6px 14px;border-radius:20px;font-size:11px;font-weight:600;color:#6b7280;background:#fff;border:1px solid #e5e7eb;cursor:pointer;transition:all .15s}
+.date-chip.on{background:#1a3a6b;color:#fff;border-color:#1a3a6b}
+.date-chip:hover:not(.on){background:#f0f2f5;border-color:#d1d5db}
+
+/* KPI row */
+.kpi-row{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:20px}
+.kpi-card{background:#fff;border:1px solid #e5e7eb;border-radius:13px;padding:14px 16px;text-align:center}
+.kpi-val{font-size:22px;font-weight:800;color:#1a3a6b;line-height:1.1}
+.kpi-lbl{font-size:11px;font-weight:700;color:#374151;margin-top:3px}
+.kpi-sub{font-size:9.5px;color:#9ca3af;margin-top:2px}
+
+/* Charts row */
+.charts-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+.chart-card{background:#fff;border:1px solid #e5e7eb;border-radius:13px;padding:18px 20px}
+.chart-title{font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#9ca3af;margin-bottom:12px}
+.chart-svg{width:100%;overflow:visible}
+
+/* Tables row */
+.tables-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+.p-tbl{width:100%;border-collapse:collapse;font-size:12px}
+.p-tbl th{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#9ca3af;padding:6px 8px;text-align:left;border-bottom:1px solid #e5e7eb;white-space:nowrap}
+.p-tbl td{padding:7px 8px;border-bottom:1px solid #f3f4f6;color:#374151;font-size:11.5px}
+.p-tbl tr:last-child td{border-bottom:none}
+.p-tbl tr:nth-child(even) td{background:#f9fafb}
+.p-tbl tr:first-child td,.p-tbl tr:nth-child(even):first-child td{background:transparent}
+.rank-badge{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;font-size:10px;font-weight:700}
+.rank-green{background:#dcfce7;color:#15803d}
+.rank-amber{background:#fef3c7;color:#92400e}
+.rank-red{background:#fee2e2;color:#b91c1c}
+
+/* Row 4 panels */
+.panels-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+.overturn-dot{width:12px;height:12px;border-radius:50%;background:#1a3a6b;cursor:pointer;display:inline-block;transition:transform .15s,box-shadow .15s}
+.overturn-dot:hover{transform:scale(1.3);box-shadow:0 0 0 3px rgba(26,58,107,.25)}
+.scatter-grid{display:grid;grid-template-columns:60px repeat(4,1fr);font-size:10.5px}
+.scatter-hdr{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:#9ca3af;padding:5px 4px;text-align:center;border-bottom:1px solid #e5e7eb}
+.scatter-date{font-size:10.5px;font-weight:600;color:#374151;padding:7px 4px;border-bottom:1px solid #f3f4f6;display:flex;align-items:center}
+.scatter-cell{padding:5px 4px;border-bottom:1px solid #f3f4f6;display:flex;align-items:center;justify-content:center;gap:4px}
+
+/* Game log */
+.gamelog-wrap{background:#fff;border:1px solid #e5e7eb;border-radius:13px;padding:18px 20px;margin-bottom:20px}
+.gamelog-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.gamelog-search{padding:6px 12px;border:1px solid #e5e7eb;border-radius:8px;font-size:12px;width:220px;outline:none;font-family:inherit;color:#111827}
+.gamelog-search:focus{border-color:#1a3a6b}
+.gl-tbl{width:100%;border-collapse:collapse;font-size:12px}
+.gl-tbl th{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#9ca3af;padding:7px 8px;text-align:left;border-bottom:1px solid #e5e7eb;cursor:pointer;white-space:nowrap;user-select:none}
+.gl-tbl th:hover{color:#1a3a6b}
+.gl-tbl td{padding:8px 8px;border-bottom:1px solid #f3f4f6;color:#374151;font-size:11.5px}
+.gl-tbl tr:last-child td{border-bottom:none}
+.gl-tbl tr:nth-child(even) td{background:#f9fafb}
+.sort-ind{font-size:8px;margin-left:3px;opacity:.5}
+.sort-ind.active{opacity:1;color:#1a3a6b}
+
+/* Insights row */
+.insights-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+.insight-item{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid #f3f4f6;font-size:12px;color:#374151}
+.insight-item:last-child{border-bottom:none}
+.insight-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:3px}
+.coaching-item{background:#f0f4ff;border:1px solid #d1daf5;border-radius:9px;padding:10px 13px;font-size:12px;color:#374151;margin-bottom:8px}
+.coaching-note-chip{background:#e8eef9;border-radius:7px;padding:7px 12px;font-size:11.5px;color:#1a3a6b;margin-top:6px;display:flex;align-items:center;gap:8px}
+.mgr-badge{font-size:9px;font-weight:700;background:#fee2e2;color:#b91c1c;border-radius:5px;padding:2px 6px;margin-left:6px}
+.add-note-area{width:100%;border:1px solid #e5e7eb;border-radius:8px;padding:8px 10px;font-size:12px;font-family:inherit;resize:none;margin-top:10px;outline:none;color:#111827}
+.add-note-area:focus{border-color:#1a3a6b}
+.add-note-btn{margin-top:7px;padding:6px 14px;background:#1a3a6b;color:#fff;border:none;border-radius:7px;font-size:11.5px;font-weight:600;cursor:pointer;font-family:inherit}
+.add-note-btn:hover{background:#2d5aa0}
+
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1000;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal-box{background:#fff;border-radius:16px;padding:28px;width:480px;max-width:90vw;box-shadow:0 24px 64px rgba(0,0,0,.2)}
+.modal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.modal-title{font-size:15px;font-weight:700;color:#111827}
+.modal-close{width:28px;height:28px;border-radius:50%;border:1px solid #e5e7eb;background:#f9fafb;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;color:#6b7280}
+.modal-close:hover{background:#fee2e2;border-color:#fca5a5;color:#b91c1c}
+.modal-video{background:#f3f4f6;border-radius:10px;height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#9ca3af;font-size:13px}
+.modal-play-icon{width:44px;height:44px;border-radius:50%;background:#e5e7eb;display:flex;align-items:center;justify-content:center;font-size:18px;color:#6b7280}
 </style>
 </head>
 <body>
@@ -202,7 +304,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   </div>
 </div>
 
+<!-- SUBNAV -->
+<div class="subnav">
+  <div class="st on" id="tab-btn-dashboard" onclick="switchTab('dashboard')">Dashboard</div>
+  <div class="st" id="tab-btn-profile" onclick="switchTab('profile')">🔒 Reviewer Profile</div>
+</div>
+
 <div class="page">
+
+<!-- ====== DASHBOARD TAB ====== -->
+<div id="tab-dashboard">
 
   <!-- HERO -->
   <div class="hero">
@@ -527,12 +638,451 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   </div>
 
 </div>
+<!-- end #tab-dashboard -->
+
+<!-- ====== REVIEWER PROFILE TAB ====== -->
+<div id="tab-profile">
+
+  <!-- Profile Header -->
+  <div class="prof-header">
+    <div class="prof-hdr-inner">
+      <div class="prof-avatar">WA</div>
+      <div>
+        <div class="prof-name">Waheed Ameen</div>
+        <div class="prof-role">Second Pass Reviewer · 4th Year</div>
+      </div>
+      <div class="prof-pills">
+        <div class="prof-pill">
+          <div class="prof-pill-n">50%</div>
+          <div class="prof-pill-l">Accuracy</div>
+        </div>
+        <div class="prof-pill">
+          <div class="prof-pill-n">50%</div>
+          <div class="prof-pill-l">Error Rate</div>
+        </div>
+        <div class="prof-pill">
+          <div class="prof-pill-n">43</div>
+          <div class="prof-pill-l">Games</div>
+        </div>
+        <div class="prof-pill">
+          <div class="prof-pill-n">#4</div>
+          <div class="prof-pill-l">Rank</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Date Range Chips -->
+  <div class="date-chips">
+    <div class="date-chip" onclick="setChip(this)">Last 7 Games</div>
+    <div class="date-chip" onclick="setChip(this)">Last 30 Days</div>
+    <div class="date-chip" onclick="setChip(this)">Last 90 Days</div>
+    <div class="date-chip on" onclick="setChip(this)">Full Season</div>
+  </div>
+
+  <!-- Row 1: KPI Cards -->
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="kpi-val">13.5</div>
+      <div class="kpi-lbl">Errors / Game</div>
+      <div class="kpi-sub">All Calls</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val">11.0</div>
+      <div class="kpi-lbl">INC / Game</div>
+      <div class="kpi-sub">Incorrect No-Call</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val">2.5</div>
+      <div class="kpi-lbl">IC / Game</div>
+      <div class="kpi-sub">Incorrect Call</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val">50%</div>
+      <div class="kpi-lbl">Err / Event</div>
+      <div class="kpi-sub">All Calls</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val">1.6</div>
+      <div class="kpi-lbl">Overturns / Game</div>
+      <div class="kpi-sub">Non-Call OT</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val">#4</div>
+      <div class="kpi-lbl">Rank</div>
+      <div class="kpi-sub">Among Reviewers</div>
+    </div>
+  </div>
+
+  <!-- Row 2: Trend Charts -->
+  <div class="charts-row">
+    <div class="chart-card">
+      <div class="chart-title">Accuracy % Over Season</div>
+      <!-- SVG: width=100% (approx 380), height=160. margin L=44 R=16 T=15 B=30. chart area x:44–370 y:15–130 -->
+      <svg class="chart-svg" viewBox="0 0 390 160" xmlns="http://www.w3.org/2000/svg">
+        <!-- Y axis labels: min=40 max=60 -->
+        <text x="38" y="19" font-size="9" fill="#9ca3af" text-anchor="end">60%</text>
+        <text x="38" y="47" font-size="9" fill="#9ca3af" text-anchor="end">55%</text>
+        <text x="38" y="75" font-size="9" fill="#9ca3af" text-anchor="end">50%</text>
+        <text x="38" y="103" font-size="9" fill="#9ca3af" text-anchor="end">45%</text>
+        <text x="38" y="131" font-size="9" fill="#9ca3af" text-anchor="end">40%</text>
+        <!-- Horizontal gridlines -->
+        <line x1="44" y1="15" x2="374" y2="15" stroke="#f3f4f6" stroke-width="1"/>
+        <line x1="44" y1="43" x2="374" y2="43" stroke="#f3f4f6" stroke-width="1"/>
+        <line x1="44" y1="71" x2="374" y2="71" stroke="#f3f4f6" stroke-width="1"/>
+        <line x1="44" y1="99" x2="374" y2="99" stroke="#f3f4f6" stroke-width="1"/>
+        <line x1="44" y1="127" x2="374" y2="127" stroke="#e5e7eb" stroke-width="1"/>
+        <!-- Data points (scale: y=127-(val-40)*5.6, x spacing: 44,99,154,209,264,319,374) -->
+        <!-- Oct:45→99.8 Nov:48→82.8 Dec:52→60 Jan:55→43 Feb:50→71 Mar:53→54.2 Apr:50→71 -->
+        <polygon points="44,100 99,83 154,60 209,43 264,71 319,54 374,71 374,127 44,127" fill="#1a3a6b" fill-opacity="0.10"/>
+        <polyline points="44,100 99,83 154,60 209,43 264,71 319,54 374,71" fill="none" stroke="#1a3a6b" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+        <!-- Dots -->
+        <circle cx="44" cy="100" r="3.5" fill="#1a3a6b"/>
+        <circle cx="99" cy="83" r="3.5" fill="#1a3a6b"/>
+        <circle cx="154" cy="60" r="3.5" fill="#1a3a6b"/>
+        <circle cx="209" cy="43" r="3.5" fill="#1a3a6b"/>
+        <circle cx="264" cy="71" r="3.5" fill="#1a3a6b"/>
+        <circle cx="319" cy="54" r="3.5" fill="#1a3a6b"/>
+        <circle cx="374" cy="71" r="3.5" fill="#1a3a6b"/>
+        <!-- X axis labels -->
+        <text x="44" y="147" font-size="9" fill="#9ca3af" text-anchor="middle">Oct</text>
+        <text x="99" y="147" font-size="9" fill="#9ca3af" text-anchor="middle">Nov</text>
+        <text x="154" y="147" font-size="9" fill="#9ca3af" text-anchor="middle">Dec</text>
+        <text x="209" y="147" font-size="9" fill="#9ca3af" text-anchor="middle">Jan</text>
+        <text x="264" y="147" font-size="9" fill="#9ca3af" text-anchor="middle">Feb</text>
+        <text x="319" y="147" font-size="9" fill="#9ca3af" text-anchor="middle">Mar</text>
+        <text x="374" y="147" font-size="9" fill="#9ca3af" text-anchor="middle">Apr</text>
+      </svg>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Error Rate Per Game</div>
+      <!-- SVG: min=12 max=17, scale y=127-(val-12)*22.4 -->
+      <!-- Oct:16→37.4 Nov:15→59.8 Dec:14→82.2 Jan:13→104.6 Feb:14→82.2 Mar:13.5→93.4 Apr:13.5→93.4 -->
+      <svg class="chart-svg" viewBox="0 0 390 160" xmlns="http://www.w3.org/2000/svg">
+        <text x="38" y="19" font-size="9" fill="#9ca3af" text-anchor="end">17</text>
+        <text x="38" y="47" font-size="9" fill="#9ca3af" text-anchor="end">16</text>
+        <text x="38" y="75" font-size="9" fill="#9ca3af" text-anchor="end">14</text>
+        <text x="38" y="103" font-size="9" fill="#9ca3af" text-anchor="end">13</text>
+        <text x="38" y="131" font-size="9" fill="#9ca3af" text-anchor="end">12</text>
+        <line x1="44" y1="15" x2="374" y2="15" stroke="#f3f4f6" stroke-width="1"/>
+        <line x1="44" y1="43" x2="374" y2="43" stroke="#f3f4f6" stroke-width="1"/>
+        <line x1="44" y1="71" x2="374" y2="71" stroke="#f3f4f6" stroke-width="1"/>
+        <line x1="44" y1="99" x2="374" y2="99" stroke="#f3f4f6" stroke-width="1"/>
+        <line x1="44" y1="127" x2="374" y2="127" stroke="#e5e7eb" stroke-width="1"/>
+        <polygon points="44,37 99,60 154,82 209,105 264,82 319,93 374,93 374,127 44,127" fill="#c8102e" fill-opacity="0.08"/>
+        <polyline points="44,37 99,60 154,82 209,105 264,82 319,93 374,93" fill="none" stroke="#c8102e" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+        <circle cx="44" cy="37" r="3.5" fill="#c8102e"/>
+        <circle cx="99" cy="60" r="3.5" fill="#c8102e"/>
+        <circle cx="154" cy="82" r="3.5" fill="#c8102e"/>
+        <circle cx="209" cy="105" r="3.5" fill="#c8102e"/>
+        <circle cx="264" cy="82" r="3.5" fill="#c8102e"/>
+        <circle cx="319" cy="93" r="3.5" fill="#c8102e"/>
+        <circle cx="374" cy="93" r="3.5" fill="#c8102e"/>
+        <text x="44" y="147" font-size="9" fill="#9ca3af" text-anchor="middle">Oct</text>
+        <text x="99" y="147" font-size="9" fill="#9ca3af" text-anchor="middle">Nov</text>
+        <text x="154" y="147" font-size="9" fill="#9ca3af" text-anchor="middle">Dec</text>
+        <text x="209" y="147" font-size="9" fill="#9ca3af" text-anchor="middle">Jan</text>
+        <text x="264" y="147" font-size="9" fill="#9ca3af" text-anchor="middle">Feb</text>
+        <text x="319" y="147" font-size="9" fill="#9ca3af" text-anchor="middle">Mar</text>
+        <text x="374" y="147" font-size="9" fill="#9ca3af" text-anchor="middle">Apr</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Row 3: Two tables -->
+  <div class="tables-row">
+    <div class="p-card">
+      <div class="p-card-title">Error Breakdown — Second Pass Per Game Stats</div>
+      <div style="overflow-x:auto">
+        <table class="p-tbl">
+          <thead>
+            <tr>
+              <th>Category</th><th>Err</th><th>INC</th><th>PINC</th><th>PI Lean Y</th><th>PI Lean N</th><th>IC</th><th>PIC</th><th>Err/Ev</th><th>Rated Ev</th><th>OT</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>All Calls</strong></td><td>13.5</td><td>11.0</td><td>11.7</td><td>3.1</td><td>8.6</td><td>2.5</td><td>0.7</td><td>50%</td><td>27.3</td><td>1.6</td></tr>
+            <tr><td>Fouls</td><td>8.7</td><td>7.3</td><td>11.5</td><td>3.0</td><td>8.5</td><td>1.4</td><td>0.7</td><td>41%</td><td>21.4</td><td>1.0</td></tr>
+            <tr><td>Shooting</td><td>4.2</td><td>3.5</td><td>3.9</td><td>1.4</td><td>2.5</td><td>0.6</td><td>0.2</td><td>51%</td><td>8.4</td><td>0.5</td></tr>
+            <tr><td>Non Shoot</td><td>4.6</td><td>3.8</td><td>7.7</td><td>1.7</td><td>6.0</td><td>0.8</td><td>0.5</td><td>35%</td><td>13.0</td><td>0.6</td></tr>
+            <tr><td>Traveling</td><td>1.9</td><td>1.7</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.2</td><td>0.0</td><td>90%</td><td>2.2</td><td>0.5</td></tr>
+            <tr><td>D3</td><td>1.6</td><td>1.6</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>89%</td><td>1.9</td><td>0.1</td></tr>
+            <tr><td>O3</td><td>1.6</td><td>1.6</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>94%</td><td>1.8</td><td>0.1</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="p-card">
+      <div class="p-card-title">League Rankings — Rank Among Reviewers</div>
+      <div style="overflow-x:auto">
+        <table class="p-tbl">
+          <thead>
+            <tr>
+              <th>Category</th><th>Err Rank</th><th>INC</th><th>PINC</th><th>IC</th><th>PIC</th><th>OT</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>All Calls</strong></td><td><span class="rank-badge rank-amber">4</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+            <tr><td>Fouls</td><td><span class="rank-badge rank-amber">6</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+            <tr><td>Shooting</td><td><span class="rank-badge rank-red">8</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+            <tr><td>Non Shoot</td><td><span class="rank-badge rank-amber">4</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+            <tr><td>Traveling</td><td><span class="rank-badge rank-green">3</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+            <tr><td>D3</td><td><span class="rank-badge rank-amber">5</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+            <tr><td>O3</td><td><span class="rank-badge rank-green">2</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 4: Non-Call Overturn Analysis + Playlist -->
+  <div class="panels-row">
+    <div class="p-card">
+      <div class="p-card-title">Non-Call Overturn Analysis</div>
+      <div style="overflow-x:auto">
+        <table class="p-tbl">
+          <thead>
+            <tr>
+              <th>Category</th><th>INF:NI</th><th>INF:PI</th><th>INF:ER</th><th>NI:INF</th><th>PI:INF</th><th>ER:INF</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>All Calls</strong></td><td>0.4</td><td>1.4</td><td>0.6</td><td>0.1</td><td>0.5</td><td>0.3</td></tr>
+            <tr><td>Fouls</td><td>0.2</td><td>1.4</td><td>0.0</td><td>0.0</td><td>0.5</td><td>0.0</td></tr>
+            <tr><td>Shooting</td><td>0.1</td><td>0.6</td><td>0.1</td><td>0.0</td><td>0.3</td><td>0.0</td></tr>
+            <tr><td>Non Shoot</td><td>0.1</td><td>0.8</td><td>0.0</td><td>0.0</td><td>0.2</td><td>0.0</td></tr>
+            <tr><td>Traveling</td><td>0.1</td><td>0.0</td><td>0.2</td><td>0.0</td><td>0.0</td><td>0.5</td></tr>
+            <tr><td>D3</td><td>0.1</td><td>0.0</td><td>0.1</td><td>0.0</td><td>0.0</td><td>0.0</td></tr>
+            <tr><td>O3</td><td>0.1</td><td>0.0</td><td>0.2</td><td>0.0</td><td>0.0</td><td>0.0</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="p-card">
+      <div class="p-card-title">Overturns Playlist</div>
+      <div class="scatter-grid">
+        <div class="scatter-hdr">Date</div>
+        <div class="scatter-hdr">INF:NI</div>
+        <div class="scatter-hdr">INF:PI</div>
+        <div class="scatter-hdr">NI:INF</div>
+        <div class="scatter-hdr">PI:INF</div>
+        <!-- Apr-10 -->
+        <div class="scatter-date">Apr-10</div>
+        <div class="scatter-cell"></div>
+        <div class="scatter-cell"></div>
+        <div class="scatter-cell"></div>
+        <div class="scatter-cell"><span class="overturn-dot" onclick="openModal('Apr-10','PI:INF')"></span></div>
+        <!-- Apr-06 -->
+        <div class="scatter-date">Apr-06</div>
+        <div class="scatter-cell"></div>
+        <div class="scatter-cell"></div>
+        <div class="scatter-cell"></div>
+        <div class="scatter-cell"><span class="overturn-dot" onclick="openModal('Apr-06','PI:INF')"></span></div>
+        <!-- Apr-05 -->
+        <div class="scatter-date">Apr-05</div>
+        <div class="scatter-cell"><span class="overturn-dot" onclick="openModal('Apr-05','INF:NI')"></span></div>
+        <div class="scatter-cell"><span class="overturn-dot" onclick="openModal('Apr-05','INF:PI')"></span></div>
+        <div class="scatter-cell"><span class="overturn-dot" onclick="openModal('Apr-05','NI:INF')"></span></div>
+        <div class="scatter-cell"></div>
+        <!-- Mar-29 -->
+        <div class="scatter-date">Mar-29</div>
+        <div class="scatter-cell"><span class="overturn-dot" onclick="openModal('Mar-29','INF:NI')"></span></div>
+        <div class="scatter-cell"><span class="overturn-dot" onclick="openModal('Mar-29','INF:PI')"></span><span class="overturn-dot" onclick="openModal('Mar-29','INF:PI')" style="margin-left:3px"></span></div>
+        <div class="scatter-cell"></div>
+        <div class="scatter-cell"></div>
+        <!-- Mar-28 -->
+        <div class="scatter-date">Mar-28</div>
+        <div class="scatter-cell"></div>
+        <div class="scatter-cell"><span class="overturn-dot" onclick="openModal('Mar-28','INF:PI')"></span></div>
+        <div class="scatter-cell"><span class="overturn-dot" onclick="openModal('Mar-28','NI:INF')"></span></div>
+        <div class="scatter-cell"></div>
+        <!-- Mar-27 -->
+        <div class="scatter-date">Mar-27</div>
+        <div class="scatter-cell"></div>
+        <div class="scatter-cell"><span class="overturn-dot" onclick="openModal('Mar-27','INF:PI')"></span><span class="overturn-dot" onclick="openModal('Mar-27','INF:PI')" style="margin-left:3px"></span><span class="overturn-dot" onclick="openModal('Mar-27','INF:PI')" style="margin-left:3px"></span></div>
+        <div class="scatter-cell"></div>
+        <div class="scatter-cell"><span class="overturn-dot" onclick="openModal('Mar-27','PI:INF')"></span></div>
+        <!-- Mar-25 -->
+        <div class="scatter-date">Mar-25</div>
+        <div class="scatter-cell"><span class="overturn-dot" onclick="openModal('Mar-25','INF:NI')"></span></div>
+        <div class="scatter-cell"></div>
+        <div class="scatter-cell"></div>
+        <div class="scatter-cell"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 5: Game Log -->
+  <div class="gamelog-wrap">
+    <div class="gamelog-top">
+      <div class="p-card-title" style="margin-bottom:0">Game Log</div>
+      <input class="gamelog-search" type="text" placeholder="Search by team, date…" oninput="filterGameLog(this.value)" id="gamelog-search">
+    </div>
+    <div style="overflow-x:auto">
+      <table class="gl-tbl" id="gamelog-tbl">
+        <thead>
+          <tr>
+            <th onclick="sortGameLog(0)">Date<span class="sort-ind" id="si-0">▲▼</span></th>
+            <th onclick="sortGameLog(1)">Result<span class="sort-ind" id="si-1">▲▼</span></th>
+            <th onclick="sortGameLog(2)">Game #<span class="sort-ind" id="si-2">▲▼</span></th>
+            <th onclick="sortGameLog(3)">INC<span class="sort-ind" id="si-3">▲▼</span></th>
+            <th onclick="sortGameLog(4)">PIC<span class="sort-ind" id="si-4">▲▼</span></th>
+            <th onclick="sortGameLog(5)">PINC<span class="sort-ind" id="si-5">▲▼</span></th>
+            <th onclick="sortGameLog(6)">IC<span class="sort-ind" id="si-6">▲▼</span></th>
+            <th onclick="sortGameLog(7)">INF:NI<span class="sort-ind" id="si-7">▲▼</span></th>
+            <th onclick="sortGameLog(8)">INF:PI<span class="sort-ind" id="si-8">▲▼</span></th>
+            <th onclick="sortGameLog(9)">PI:INF<span class="sort-ind" id="si-9">▲▼</span></th>
+            <th onclick="sortGameLog(10)">OT<span class="sort-ind" id="si-10">▲▼</span></th>
+          </tr>
+        </thead>
+        <tbody id="gamelog-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Row 6: Insights + Areas for Improvement -->
+  <div class="insights-row">
+    <div class="p-card">
+      <div class="p-card-title">Performance Insights</div>
+      <div class="insight-item">
+        <div class="insight-dot" style="background:#f59e0b"></div>
+        <div>Non-Shoot foul error rate (35%) is your strongest category this season.</div>
+      </div>
+      <div class="insight-item">
+        <div class="insight-dot" style="background:#ef4444"></div>
+        <div>Shooting foul INC rate (3.5/game) is above the reviewer average — focus area.</div>
+      </div>
+      <div class="insight-item">
+        <div class="insight-dot" style="background:#22c55e"></div>
+        <div>O3 accuracy (94%) ranks #2 among all reviewers.</div>
+      </div>
+      <div class="insight-item">
+        <div class="insight-dot" style="background:#3b82f6"></div>
+        <div>Overturn rate has been stable over the last 30 days.</div>
+      </div>
+    </div>
+    <div class="p-card">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:14px">
+        <div class="p-card-title" style="margin-bottom:0">Areas for Improvement</div>
+        <span class="mgr-badge">🔒 Manager Only</span>
+      </div>
+      <div class="coaching-item">Shooting foul INC rate — review guarding position mechanics</div>
+      <div class="coaching-item">Non-call overturn trends — INF:PI average (1.4/game) warrants attention</div>
+      <div id="coaching-notes"></div>
+      <textarea class="add-note-area" id="note-textarea" rows="2" placeholder="Add a coaching note for Waheed…"></textarea>
+      <button class="add-note-btn" onclick="addCoachingNote()">Add Note</button>
+    </div>
+  </div>
+
+</div>
+<!-- end #tab-profile -->
+
+</div>
+<!-- end .page -->
+
+<!-- MODAL -->
+<div class="modal-overlay" id="ot-modal" onclick="closeModal(event)">
+  <div class="modal-box">
+    <div class="modal-hdr">
+      <div class="modal-title" id="modal-title">Overturn</div>
+      <div class="modal-close" onclick="closeModalDirect()">✕</div>
+    </div>
+    <div class="modal-video">
+      <div class="modal-play-icon">▶</div>
+      <div>Video clip not available in demo</div>
+    </div>
+  </div>
+</div>
 
 <script>
 function toggleNavDropdown(e){e.stopPropagation();document.getElementById('nav-dropdown').classList.toggle('open')}
 document.addEventListener('click',()=>{document.getElementById('nav-dropdown').classList.remove('open');document.getElementById('rim-dropdown')?.classList.remove('open');});
 function toggleRimDropdown(e){e.stopPropagation();document.getElementById('rim-dropdown').classList.toggle('open');document.getElementById('nav-dropdown').classList.remove('open');}
 
+/* Tab switching */
+function switchTab(tab){
+  const dash=document.getElementById('tab-dashboard');
+  const prof=document.getElementById('tab-profile');
+  const btnD=document.getElementById('tab-btn-dashboard');
+  const btnP=document.getElementById('tab-btn-profile');
+  if(tab==='dashboard'){
+    dash.style.display='';prof.style.display='none';
+    btnD.classList.add('on');btnP.classList.remove('on');
+  } else {
+    dash.style.display='none';prof.style.display='';
+    btnP.classList.add('on');btnD.classList.remove('on');
+  }
+}
+
+/* Date chips */
+function setChip(el){
+  document.querySelectorAll('.date-chip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+}
+
+/* Modal */
+function openModal(date,type){
+  document.getElementById('modal-title').textContent='Overturn — '+date+' '+type;
+  document.getElementById('ot-modal').classList.add('open');
+}
+function closeModal(e){if(e.target===document.getElementById('ot-modal'))closeModalDirect();}
+function closeModalDirect(){document.getElementById('ot-modal').classList.remove('open');}
+
+/* Game log data */
+const GL_DATA=[
+  ['Apr-12','Mavericks over Bulls 149-128',1193,3,2,10,3,0,0,0,0],
+  ['Apr-10','Magic over Bulls 127-103',1177,5,1,5,2,0,0,1,1],
+  ['Apr-10','Trail Blazers over Clippers 116-97',1183,8,0,12,1,0,0,0,0],
+  ['Apr-09','Raptors over Heat 128-114',1165,2,1,12,2,0,0,0,0],
+  ['Apr-07','Timberwolves over Pacers 124-104',1152,6,1,10,0,0,0,0,0],
+  ['Apr-06','Knicks over Hawks 108-105',1143,9,0,13,0,0,0,0,0],
+  ['Apr-05','Thunder over Jazz 146-111',1139,7,0,10,2,1,1,0,2],
+];
+let glSortCol=-1,glSortAsc=true,glFilter='';
+
+function renderGameLog(){
+  let rows=[...GL_DATA];
+  if(glFilter){
+    const q=glFilter.toLowerCase();
+    rows=rows.filter(r=>r[0].toLowerCase().includes(q)||r[1].toLowerCase().includes(q));
+  }
+  if(glSortCol>=0){
+    rows.sort((a,b)=>{
+      const va=a[glSortCol],vb=b[glSortCol];
+      if(typeof va==='string')return glSortAsc?va.localeCompare(vb):vb.localeCompare(va);
+      return glSortAsc?va-vb:vb-va;
+    });
+  }
+  const tbody=document.getElementById('gamelog-body');
+  tbody.innerHTML=rows.map((r,i)=>`<tr>${r.map(v=>`<td>${v}</td>`).join('')}</tr>`).join('');
+}
+
+function sortGameLog(col){
+  if(glSortCol===col){glSortAsc=!glSortAsc;}else{glSortCol=col;glSortAsc=true;}
+  document.querySelectorAll('.sort-ind').forEach((el,i)=>{
+    el.textContent='▲▼';el.classList.remove('active');
+  });
+  const ind=document.getElementById('si-'+col);
+  if(ind){ind.textContent=glSortAsc?'▲':'▼';ind.classList.add('active');}
+  renderGameLog();
+}
+
+function filterGameLog(val){glFilter=val;renderGameLog();}
+
+/* Coaching notes */
+function addCoachingNote(){
+  const ta=document.getElementById('note-textarea');
+  const val=ta.value.trim();
+  if(!val)return;
+  const notes=document.getElementById('coaching-notes');
+  const chip=document.createElement('div');
+  chip.className='coaching-note-chip';
+  chip.textContent=val;
+  notes.appendChild(chip);
+  ta.value='';
+}
+
+/* Month calendar */
 const MONTH_GAMES = {
   2:  { teams:'NYL @ ATL',  bg:'#f3e8ff', col:'#5b21b6' },
   4:  { teams:'LVA @ GSV',  bg:'#e0f2f1', col:'#0f5e57' },
@@ -550,9 +1100,9 @@ const PROJECT_DAYS = new Set([1,3,8,10,12,16,18,22,24,26,29]);
 let monthOpen = false;
 function buildMonthCal() {
   const el = document.getElementById('month-cal');
-  const year = 2026, month = 5; // June (0-indexed)
+  const year = 2026, month = 5;
   const first = new Date(Date.UTC(year, month, 1));
-  const startDow = (first.getUTCDay() + 6) % 7; // Mon=0
+  const startDow = (first.getUTCDay() + 6) % 7;
   const daysInMonth = new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
   const dayNames = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
   let html = dayNames.map(d => `<div class="month-day-name">${d}</div>`).join('');
@@ -582,6 +1132,9 @@ function toggleMonthView() {
   monthEl.classList.toggle('open', monthOpen);
   document.getElementById('sched-expand-label').textContent = monthOpen ? 'View Week' : 'View Full Month';
 }
+
+/* Init */
+renderGameLog();
 </script>
 </body>
 </html>
