@@ -430,8 +430,23 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   </div>
 </div>
 
-<script>
-const STORAGE_KEY = 'brs-comment-library-v5';
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+import { getFirestore, collection, doc, setDoc, deleteDoc, getDocs, onSnapshot, query, orderBy, writeBatch } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC0WgIWYVqvFHzXZSVo_PJA9VW2UcIqkkg",
+  authDomain: "comment-library.firebaseapp.com",
+  projectId: "comment-library",
+  storageBucket: "comment-library.firebasestorage.app",
+  messagingSenderId: "812913785366",
+  appId: "1:812913785366:web:a186fa0785c61cbd7f1337"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const commentsCol = collection(db, 'comments');
+
 const COLL_KEY = 'brs-collection-v1';
 
 const INFRACTION_TYPES = [
@@ -690,21 +705,22 @@ function redactForPreview(text) {
   return text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-// ── Storage ───────────────────────────────────────────────────────────────
+// ── Firestore helpers ─────────────────────────────────────────────────────
 
-function loadComments() {
-  const stored = localStorage.getItem(STORAGE_KEY);
-  if (stored) {
-    try { return JSON.parse(stored); } catch(e) {}
-  }
-  return buildSeedComments();
+function saveComment(comment) {
+  setDoc(doc(commentsCol, comment.id), comment).catch(e => console.error('saveComment', e));
 }
 
-function buildSeedComments() {
+function removeComment(id) {
+  deleteDoc(doc(commentsCol, id)).catch(e => console.error('removeComment', e));
+}
+
+async function seedFirestore() {
   const now = Date.now();
-  const seeded = RAW_SEEDS.map((raw, i) => {
+  const batch = writeBatch(db);
+  RAW_SEEDS.forEach((raw, i) => {
     const cleaned = cleanComment(raw);
-    return {
+    const c = {
       id: 'seed_' + i,
       text: cleaned,
       infractionType: detectInfractionType(cleaned),
@@ -715,26 +731,26 @@ function buildSeedComments() {
       createdAt: now - i * 3600000,
       savedBy: 0
     };
+    batch.set(doc(commentsCol, c.id), c);
   });
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(seeded));
-  return seeded;
+  await batch.commit();
 }
 
-function saveComments() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(allComments));
-}
-
-function resetToDefaults() {
+async function resetToDefaults() {
   if (!confirm('Reset to defaults? All edits, additions, and deletions will be lost.')) return;
-  localStorage.removeItem(STORAGE_KEY);
+  const snap = await getDocs(commentsCol);
+  const batch = writeBatch(db);
+  snap.docs.forEach(d => batch.delete(d.ref));
+  await batch.commit();
   localStorage.removeItem(COLL_KEY);
-  location.reload();
+  collection2 = new Set();
+  await seedFirestore();
 }
 
 // ── State ─────────────────────────────────────────────────────────────────
 
-let allComments = loadComments();
-let filterIT = ''; // sidebar / infraction type
+let allComments = [];
+let filterIT = '';
 let filterPT = '';
 let filterSpt = '';
 let filterIR = '';
@@ -742,12 +758,11 @@ let searchQuery = '';
 let editingId = null;
 let currentView = 'library';
 
-const COLL_KEY2 = COLL_KEY;
-function loadCollection() {
-  try { return new Set(JSON.parse(localStorage.getItem(COLL_KEY2) || '[]')); } catch(e) { return new Set(); }
+function loadCollection2() {
+  try { return new Set(JSON.parse(localStorage.getItem(COLL_KEY) || '[]')); } catch(e) { return new Set(); }
 }
-function saveCollection() { localStorage.setItem(COLL_KEY2, JSON.stringify([...collection])); }
-let collection = loadCollection();
+function saveCollection() { localStorage.setItem(COLL_KEY, JSON.stringify([...collection2])); }
+let collection2 = loadCollection2();
 
 // ── Nav dropdown ─────────────────────────────────────────────────────────
 
@@ -860,7 +875,7 @@ function ratingBadge(ct) {
 
 function renderCard(c) {
   const bodyHtml = renderBold(c.text.replace(/</g,'&lt;').replace(/>/g,'&gt;'));
-  const isSaved = collection.has(c.id);
+  const isSaved = collection2.has(c.id);
   const savedCount = (c.savedBy || 0) + (isSaved ? 1 : 0);
   return `<div class="comment-card" id="card-${c.id}">
     <div class="card-top">
@@ -894,7 +909,7 @@ function renderCards() {
 }
 
 function renderCollection() {
-  const collComments = allComments.filter(c => collection.has(c.id));
+  const collComments = allComments.filter(c => collection2.has(c.id));
   const sectionsEl = document.getElementById('collection-sections');
   const emptyEl = document.getElementById('collection-empty');
   const badge = document.getElementById('coll-badge');
@@ -920,7 +935,7 @@ function render() {
   if (currentView === 'library') renderCards();
   else renderCollection();
   const badge = document.getElementById('coll-badge');
-  const collSize = allComments.filter(c => collection.has(c.id)).length;
+  const collSize = allComments.filter(c => collection2.has(c.id)).length;
   if (collSize > 0) { badge.style.display=''; badge.textContent=collSize; }
   else badge.style.display='none';
 }
@@ -957,8 +972,8 @@ function setView(v) {
 }
 
 function toggleCollection(id) {
-  if (collection.has(id)) collection.delete(id);
-  else collection.add(id);
+  if (collection2.has(id)) collection2.delete(id);
+  else collection2.add(id);
   saveCollection();
   render();
 }
@@ -1034,10 +1049,9 @@ function onSubmitEditorInput() {
 function submitComment() {
   const raw = editorToMarkdown(document.getElementById('submit-editor'));
   if (!raw) return;
-  const cleaned = cleanComment(plainRedact(raw));
   const comment = {
     id: 'user_' + Date.now(),
-    text: cleaned,
+    text: raw.trim(),
     infractionType: document.getElementById('submit-it').value,
     playType: document.getElementById('submit-pt').value,
     subPlayType: document.getElementById('submit-spt').value,
@@ -1046,8 +1060,8 @@ function submitComment() {
     createdAt: Date.now(),
     savedBy: 0
   };
-  allComments.unshift(comment);
-  saveComments(); closeSubmitModal(); render();
+  saveComment(comment);
+  closeSubmitModal();
 }
 
 // ── Edit Modal ────────────────────────────────────────────────────────────
@@ -1071,23 +1085,24 @@ function onEditOverlayClick(e) { if (e.target===document.getElementById('edit-ov
 
 function saveEditComment() {
   if (!editingId) return;
-  const idx = allComments.findIndex(x => x.id === editingId);
-  if (idx === -1) return;
-  allComments[idx] = {
-    ...allComments[idx],
+  const existing = allComments.find(x => x.id === editingId);
+  if (!existing) return;
+  const updated = {
+    ...existing,
     text: editorToMarkdown(document.getElementById('edit-editor')),
     infractionType: document.getElementById('edit-it').value,
     playType: document.getElementById('edit-pt').value,
     subPlayType: document.getElementById('edit-spt').value,
     callType: document.getElementById('edit-ct').value,
   };
-  saveComments(); closeEditModal(); render();
+  saveComment(updated);
+  closeEditModal();
 }
 
 function deleteEditingComment() {
   if (!editingId) return;
-  allComments = allComments.filter(c => c.id !== editingId);
-  saveComments(); closeEditModal(); render();
+  removeComment(editingId);
+  closeEditModal();
 }
 
 // ── Editor helpers ────────────────────────────────────────────────────────
@@ -1123,7 +1138,28 @@ function markdownToEditorHtml(text) {
     .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
 }
 
-render();
+// ── Init Firestore ────────────────────────────────────────────────────────
+
+async function initApp() {
+  const snap = await getDocs(commentsCol);
+  if (snap.empty) await seedFirestore();
+  onSnapshot(query(commentsCol, orderBy('createdAt', 'desc')), snapshot => {
+    allComments = snapshot.docs.map(d => d.data());
+    render();
+  });
+}
+
+initApp();
+
+// ── Expose to window (module scope → HTML onclick) ────────────────────────
+Object.assign(window, {
+  toggleNavDropdown, setSidebarFilter, setView, toggleCollection,
+  clearAllFilters, toggleFd, onSearch,
+  openSubmitModal, closeSubmitModal, onSubmitOverlayClick, onSubmitEditorInput, submitComment,
+  openEditModal, closeEditModal, onEditOverlayClick, saveEditComment, deleteEditingComment,
+  applyEditorBold, handleEditorKeydown, handleEditorPaste,
+  copyCommentById, resetToDefaults, syncModalPlayTypes, syncModalSubPlayTypes
+});
 </script>
 </body>
 </html>
