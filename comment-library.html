@@ -88,7 +88,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .submit-btn{display:flex;align-items:center;gap:6px;background:#1a3a6b;color:#fff;border:none;border-radius:8px;padding:6px 13px;font-size:11.5px;font-weight:600;cursor:pointer;letter-spacing:.2px}
 .submit-btn:hover{background:#15306b}
 .cards-area{padding:16px 24px 32px;flex:1}
-.cards-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;align-items:start}
+.cards-list{columns:2;column-gap:10px}
+.comment-card{break-inside:avoid;margin-bottom:10px}
 
 /* CARDS */
 .comment-card{background:#fff;border:1px solid #e8eaed;border-radius:12px;padding:14px 16px 10px;transition:box-shadow .2s,border-color .2s,transform .15s;position:relative}
@@ -98,11 +99,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .it-badge{font-size:9px;font-weight:700;background:linear-gradient(135deg,#e8edf7,#d5e0f5);color:#1a3a6b;padding:2px 9px;border-radius:20px;white-space:nowrap;letter-spacing:.2px;border:1px solid #c7d2e8}
 .ct-badge{font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap;letter-spacing:.2px}
 .ct-Infraction{background:#fee2e2;color:#991b1b}
-.ct-PI-Lean{background:#ffedd5;color:#9a3412}
+.ct-PI-Lean{background:#fff3cd;color:#92400e}
+.ct-PI-Lean-No{background:#fef9c3;color:#713f12}
 .ct-No-Infraction{background:#dcfce7;color:#166534}
 .ct-Assessment-Error{background:#ede9fe;color:#5b21b6}
 .ct-Unknown{background:#f3f4f6;color:#9ca3af}
-.ct-PI-Lean{background:#fff3cd;color:#92400e}
 .pt-pill{font-size:9px;font-weight:600;background:#f3f4f6;color:#6b7280;padding:2px 7px;border-radius:20px;white-space:nowrap}
 .card-body{font-size:13px;line-height:1.65;color:#374151;margin-bottom:10px;cursor:pointer;padding:4px 0 2px}
 .card-body:hover{color:#1a3a6b}
@@ -341,6 +342,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
         <select class="modal-select" id="submit-ct">
           <option value="Infraction">Infraction</option>
           <option value="PI - Lean">PI - Lean</option>
+          <option value="PI - Lean No">PI - Lean No</option>
           <option value="No Infraction">No Infraction</option>
           <option value="Assessment Error">Assessment Error</option>
         </select>
@@ -414,6 +416,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
         <select class="modal-select" id="edit-ct">
           <option value="Infraction">Infraction</option>
           <option value="PI - Lean">PI - Lean</option>
+          <option value="PI - Lean No">PI - Lean No</option>
           <option value="No Infraction">No Infraction</option>
           <option value="Assessment Error">Assessment Error</option>
         </select>
@@ -428,7 +431,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 </div>
 
 <script>
-const STORAGE_KEY = 'brs-comment-library-v3';
+const STORAGE_KEY = 'brs-comment-library-v4';
 const COLL_KEY = 'brs-collection-v1';
 
 const INFRACTION_TYPES = [
@@ -683,41 +686,68 @@ function plainText(text) {
   return text.replace(/\*\*(.+?)\*\*/g, '$1');
 }
 
+// Keywords that suggest a player is on offense or defense in the surrounding clause
+const OFF_WORDS = /\b(drives?|driving|shooting motion|shot attempt|shoot|shoots?|shot|layup|dunk|dribbles?|dribbling|cuts?|cutting|posts? up|posting|screens?|screening|passes?|passing|gathers?|releases?|finishes?|attempts?|scores?|scoring|step.back|jumps? (?:toward|forward|into)|ball handler|offensive|cutter|screener|ball handler|off.ball)\b/i;
+const DEF_WORDS = /\b(contests?|contesting|blocks?|blocking|reaches? in|guards?|guarding|positions?|positioning|establishes?|closes? out|closing out|defensive|defender|def\b|contests? the|illegal contact to|initiates illegal|makes contact (?:to|with) the ball)\b/i;
+
+function classifyRole(fullText, matchStart, matchEnd) {
+  const window = 120;
+  const before = fullText.substring(Math.max(0, matchStart - window), matchStart);
+  const after = fullText.substring(matchEnd, Math.min(fullText.length, matchEnd + window));
+  const ctx = before + ' ' + after;
+  const offScore = (ctx.match(OFF_WORDS) || []).length;
+  const defScore = (ctx.match(DEF_WORDS) || []).length;
+  if (offScore > defScore) return 'OffensivePlayer';
+  if (defScore > offScore) return 'DefensivePlayer';
+  return null; // ambiguous — use sequential
+}
+
 function plainRedact(text) {
-  const names = new Set();
-  let r = text;
-  r = r.replace(/#\d+\s+([A-Z][A-Za-zÀ-ž'-]+(?:\s+[A-Z][A-Za-zÀ-ž'-]+)?)\s+\([A-Z]{2,4}\)/g, (m, name) => {
-    name.split(/\s+/).filter(n => n.length > 2).forEach(n => names.add(n.replace(/['']/g, '')));
-    return '[Player]';
+  const names = new Map(); // surname → role
+  const PLAYER_RE = /\b([A-Z][A-Za-zÀ-ž'-]+(?:-[A-Za-z]+)?(?:\s+(?:Jr\.|II|III|IV|[A-Z][A-Za-zÀ-ž'-]+))?)(?:'s?)?\s+\([A-Z]{2,4}\)/g;
+  // First pass: collect names and roles
+  let m;
+  while ((m = PLAYER_RE.exec(text)) !== null) {
+    const fullName = m[1];
+    const role = classifyRole(text, m.index, m.index + m[0].length);
+    fullName.split(/\s+/).filter(n => n.length > 2).forEach(n => {
+      const key = n.replace(/['']/g, '');
+      if (!names.has(key)) names.set(key, role);
+    });
+  }
+  // Build replacement tokens per name
+  const seenRoles = { OffensivePlayer: 0, DefensivePlayer: 0 };
+  let seqCounter = 1;
+  const nameToken = new Map();
+  [...names.entries()].forEach(([key, role]) => {
+    if (role === 'OffensivePlayer') {
+      nameToken.set(key, '[OffensivePlayer]');
+    } else if (role === 'DefensivePlayer') {
+      nameToken.set(key, '[DefensivePlayer]');
+    } else {
+      nameToken.set(key, '[Player]');
+    }
   });
-  r = r.replace(/\b([A-Z][A-Za-zÀ-ž'-]+(?:\s+(?:Jr\.|II|III|IV|[A-Z][A-Za-zÀ-ž'-]+))?)(?:'s?)?\s+\([A-Z]{2,4}\)/g, (m, name) => {
-    name.split(/\s+/).filter(n => n.length > 2).forEach(n => names.add(n.replace(/['']/g, '')));
-    return '[Player]';
+  // Second pass: replace
+  let r = text.replace(PLAYER_RE, (match, fullName) => {
+    const parts = fullName.split(/\s+/).filter(n => n.length > 2);
+    const key = parts[parts.length - 1].replace(/['']/g, '');
+    return nameToken.get(key) || '[Player]';
   });
-  names.forEach(name => {
-    if (name.length <= 2) return;
-    const esc = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    r = r.replace(new RegExp(`\\b${esc}(?:'s?)?\\b`, 'g'), '[Player]');
+  // Replace any bare remaining name fragments
+  names.forEach((role, key) => {
+    if (key.length <= 2) return;
+    const esc = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const token = nameToken.get(key) || '[Player]';
+    r = r.replace(new RegExp(`\\b${esc}(?:'s?)?\\b`, 'g'), token);
   });
   return r;
 }
 
 function redactForPreview(text) {
-  const names = new Set();
-  let r = text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  r = r.replace(/#\d+\s+([A-Z][A-Za-zÀ-ž'-]+(?:\s+[A-Z][A-Za-zÀ-ž'-]+)?)\s+\([A-Z]{2,4}\)/g, (m, name) => {
-    name.split(/\s+/).filter(n => n.length > 2).forEach(n => names.add(n.replace(/['']/g, '')));
-    return '<mark>[Player]</mark>';
-  });
-  r = r.replace(/\b([A-Z][A-Za-zÀ-ž'-]+(?:\s+(?:Jr\.|II|III|IV|[A-Z][A-Za-zÀ-ž'-]+))?)(?:'s?)?\s+\([A-Z]{2,4}\)/g, (m, name) => {
-    name.split(/\s+/).filter(n => n.length > 2).forEach(n => names.add(n.replace(/['']/g, '')));
-    return '<mark>[Player]</mark>';
-  });
-  names.forEach(name => {
-    if (name.length <= 2) return;
-    const esc = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    r = r.replace(new RegExp(`\\b${esc}(?:'s?)?\\b`, 'g'), '<mark>[Player]</mark>');
-  });
+  const plain = plainRedact(text);
+  let r = plain.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  r = r.replace(/\[(OffensivePlayer|DefensivePlayer|Player)\]/g, '<mark>[$1]</mark>');
   return r;
 }
 
@@ -853,7 +883,7 @@ function renderFilterBar() {
   const spts = [...new Set(allComments.map(c=>c.subPlayType).filter(Boolean))].sort();
   renderFdMenu('fd-spt-menu', spts, filterSpt, v => { filterSpt = v; renderFilterBar(); renderCards(); });
   // Infraction Rating
-  renderFdMenu('fd-ir-menu', ['Infraction','PI - Lean','No Infraction','Assessment Error'], filterIR, v => { filterIR = v; renderFilterBar(); renderCards(); });
+  renderFdMenu('fd-ir-menu', ['Infraction','PI - Lean','PI - Lean No','No Infraction','Assessment Error'], filterIR, v => { filterIR = v; renderFilterBar(); renderCards(); });
 
   renderFdPill('fd-pt-pills', 'fd-pt', filterPT, () => { filterPT=''; renderFilterBar(); renderCards(); });
   renderFdPill('fd-spt-pills', 'fd-spt', filterSpt, () => { filterSpt=''; renderFilterBar(); renderCards(); });
