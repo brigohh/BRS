@@ -32,15 +32,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .content-wrapper{display:flex;flex:1;overflow:hidden}
 
 /* SIDEBAR */
-.sidebar{width:220px;flex-shrink:0;background:#fff;border-right:1px solid #e5e7eb;display:flex;flex-direction:column;overflow:hidden}
-.sidebar-header{padding:14px 16px 10px;border-bottom:1px solid #f3f4f6;flex-shrink:0}
-.sidebar-title{font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.6px}
-.sidebar-nav{flex:1;overflow-y:auto;padding:6px 0}
-.sidebar-item{display:flex;align-items:center;justify-content:space-between;padding:7px 16px;font-size:12px;color:#374151;cursor:pointer;border-left:3px solid transparent;transition:background .1s,color .1s,border-color .1s;user-select:none}
-.sidebar-item:hover{background:#f5f7fa;color:#1a3a6b}
-.sidebar-item.active{background:#eef2fb;color:#1a3a6b;font-weight:600;border-left-color:#1a3a6b}
-.sidebar-item-count{font-size:10px;color:#9ca3af;font-weight:500;background:#f3f4f6;border-radius:10px;padding:1px 6px;min-width:22px;text-align:center}
-.sidebar-item.active .sidebar-item-count{background:#dde6f7;color:#1a3a6b}
+.sidebar{width:280px;flex-shrink:0;background:#1e2a3b;display:flex;flex-direction:column;overflow:hidden}
+.sidebar-header{padding:16px 18px 12px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0;background:linear-gradient(135deg,#1a3a6b 0%,#1e2a3b 100%)}
+.sidebar-title{font-size:9.5px;font-weight:800;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:1px}
+.sidebar-nav{flex:1;overflow-y:auto;padding:8px 0 16px}
+.sidebar-nav::-webkit-scrollbar{width:4px}
+.sidebar-nav::-webkit-scrollbar-track{background:transparent}
+.sidebar-nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:2px}
+.sidebar-group-label{font-size:9px;font-weight:800;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.8px;padding:12px 18px 4px;margin-top:4px}
+.sidebar-item{display:flex;align-items:center;justify-content:space-between;padding:8px 18px;font-size:13px;color:rgba(255,255,255,.65);cursor:pointer;border-left:3px solid transparent;transition:background .12s,color .12s,border-color .12s;user-select:none;line-height:1.3}
+.sidebar-item:hover{background:rgba(255,255,255,.07);color:rgba(255,255,255,.9)}
+.sidebar-item.active{background:rgba(26,58,107,.5);color:#fff;font-weight:600;border-left-color:#5b8dd9}
+.sidebar-item-count{font-size:10px;color:rgba(255,255,255,.35);font-weight:600;background:rgba(255,255,255,.1);border-radius:10px;padding:1px 7px;min-width:22px;text-align:center;flex-shrink:0}
+.sidebar-item.active .sidebar-item-count{background:rgba(91,141,217,.3);color:#aac4f0}
 
 /* RIGHT SIDE */
 .right-side{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
@@ -77,7 +81,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 
 /* MAIN */
 .main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
-.main-header{padding:12px 24px 10px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;background:#f0f2f5;border-bottom:1px solid #e5e7eb}
+.main-header{padding:12px 24px 10px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;background:#fff;border-bottom:1px solid #e5e7eb;box-shadow:0 1px 4px rgba(0,0,0,.04)}
 .main-header-left{display:flex;align-items:baseline;gap:10px}
 .main-title{font-size:13px;font-weight:700;color:#374151}
 .main-count{font-size:11px;color:#9ca3af;font-weight:500}
@@ -87,11 +91,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .cards-list{display:flex;flex-direction:column;gap:10px}
 
 /* CARDS */
-.comment-card{background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:13px 14px 10px;transition:box-shadow .15s,border-color .15s;position:relative}
-.comment-card:hover{box-shadow:0 2px 10px rgba(0,0,0,.07);border-color:#d1d5db}
+.comment-card{background:#fff;border:1px solid #e8eaed;border-radius:12px;padding:14px 16px 10px;transition:box-shadow .2s,border-color .2s,transform .15s;position:relative}
+.comment-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.08);border-color:#c7d2e8;transform:translateY(-1px)}
 .card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;gap:6px}
 .card-top-left{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
-.it-badge{font-size:9px;font-weight:700;background:#e8edf7;color:#1a3a6b;padding:2px 8px;border-radius:20px;white-space:nowrap;letter-spacing:.2px}
+.it-badge{font-size:9px;font-weight:700;background:linear-gradient(135deg,#e8edf7,#d5e0f5);color:#1a3a6b;padding:2px 9px;border-radius:20px;white-space:nowrap;letter-spacing:.2px;border:1px solid #c7d2e8}
 .ct-badge{font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap;letter-spacing:.2px}
 .ct-Infraction{background:#fee2e2;color:#991b1b}
 .ct-PI-Lean{background:#ffedd5;color:#9a3412}
@@ -294,33 +298,38 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       <div class="modal-row">
         <div class="modal-field">
           <div class="modal-label">Infraction Type</div>
-          <select class="modal-select" id="submit-it">
-            <option value="Personal Foul">Personal Foul</option>
-            <option value="Shooting Foul">Shooting Foul</option>
-            <option value="Loose Ball Foul">Loose Ball Foul</option>
-            <option value="Offensive Foul">Offensive Foul</option>
-            <option value="Take Foul">Take Foul</option>
-            <option value="Block/Charge">Block/Charge</option>
+          <select class="modal-select" id="submit-it" onchange="syncModalPlayTypes('submit')">
+            <option value="Foul: Personal">Foul: Personal</option>
+            <option value="Foul: Shooting">Foul: Shooting</option>
+            <option value="Foul: Loose Ball">Foul: Loose Ball</option>
+            <option value="Foul: Offensive">Foul: Offensive</option>
+            <option value="Foul: Transition Take Foul">Foul: Transition Take Foul</option>
+            <option value="Foul: Away from Play">Foul: Away from Play</option>
+            <option value="Foul: Defense 3 Second">Foul: Defense 3 Second</option>
+            <option value="Foul: Double Technical">Foul: Double Technical</option>
+            <option value="Foul: Non-Unsportsmanlike Tech Flopping">Foul: Non-Unsportsmanlike Tech Flopping</option>
+            <option value="Stoppage: Inadvertent Whistle">Stoppage: Inadvertent Whistle</option>
+            <option value="Stoppage: Out-of-Bounds">Stoppage: Out-of-Bounds</option>
+            <option value="Turnover: Traveling">Turnover: Traveling</option>
+            <option value="Turnover: Out of Bounds">Turnover: Out of Bounds</option>
+            <option value="Turnover: Stepped out of Bounds">Turnover: Stepped out of Bounds</option>
+            <option value="Turnover: Lost Ball Out of Bounds">Turnover: Lost Ball Out of Bounds</option>
+            <option value="Turnover: Out of Bounds – Bad Pass Turn">Turnover: Out of Bounds – Bad Pass Turn</option>
+            <option value="Turnover: 3 Second Violation">Turnover: 3 Second Violation</option>
+            <option value="Turnover: Defensive Goaltending">Turnover: Defensive Goaltending</option>
+            <option value="Turnover: Offensive Goaltending">Turnover: Offensive Goaltending</option>
+            <option value="Violation: Defensive Goaltending">Violation: Defensive Goaltending</option>
             <option value="Assessment Error">Assessment Error</option>
-            <option value="Violation">Violation</option>
-            <option value="Judgment Call">Judgment Call</option>
           </select>
         </div>
         <div class="modal-field">
-          <div class="modal-label">Play Type</div>
-          <select class="modal-select" id="submit-pt">
-            <option value="Drive/Layup">Drive/Layup</option>
-            <option value="Shooting">Shooting</option>
-            <option value="Rebound">Rebound</option>
-            <option value="Screen/Pick">Screen/Pick</option>
-            <option value="Off-Ball">Off-Ball</option>
-            <option value="Perimeter">Perimeter</option>
-            <option value="Transition">Transition</option>
-            <option value="Out of Bounds">Out of Bounds</option>
+          <div class="modal-label">Play Type / Situation</div>
+          <select class="modal-select" id="submit-pt" onchange="syncModalSubPlayTypes('submit')">
+            <option value="">—</option>
           </select>
         </div>
         <div class="modal-field">
-          <div class="modal-label">Sub Play Type</div>
+          <div class="modal-label">Sub Play Type / Contact</div>
           <select class="modal-select" id="submit-spt">
             <option value="">—</option>
           </select>
@@ -362,33 +371,38 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       <div class="modal-row">
         <div class="modal-field">
           <div class="modal-label">Infraction Type</div>
-          <select class="modal-select" id="edit-it">
-            <option value="Personal Foul">Personal Foul</option>
-            <option value="Shooting Foul">Shooting Foul</option>
-            <option value="Loose Ball Foul">Loose Ball Foul</option>
-            <option value="Offensive Foul">Offensive Foul</option>
-            <option value="Take Foul">Take Foul</option>
-            <option value="Block/Charge">Block/Charge</option>
+          <select class="modal-select" id="edit-it" onchange="syncModalPlayTypes('edit')">
+            <option value="Foul: Personal">Foul: Personal</option>
+            <option value="Foul: Shooting">Foul: Shooting</option>
+            <option value="Foul: Loose Ball">Foul: Loose Ball</option>
+            <option value="Foul: Offensive">Foul: Offensive</option>
+            <option value="Foul: Transition Take Foul">Foul: Transition Take Foul</option>
+            <option value="Foul: Away from Play">Foul: Away from Play</option>
+            <option value="Foul: Defense 3 Second">Foul: Defense 3 Second</option>
+            <option value="Foul: Double Technical">Foul: Double Technical</option>
+            <option value="Foul: Non-Unsportsmanlike Tech Flopping">Foul: Non-Unsportsmanlike Tech Flopping</option>
+            <option value="Stoppage: Inadvertent Whistle">Stoppage: Inadvertent Whistle</option>
+            <option value="Stoppage: Out-of-Bounds">Stoppage: Out-of-Bounds</option>
+            <option value="Turnover: Traveling">Turnover: Traveling</option>
+            <option value="Turnover: Out of Bounds">Turnover: Out of Bounds</option>
+            <option value="Turnover: Stepped out of Bounds">Turnover: Stepped out of Bounds</option>
+            <option value="Turnover: Lost Ball Out of Bounds">Turnover: Lost Ball Out of Bounds</option>
+            <option value="Turnover: Out of Bounds – Bad Pass Turn">Turnover: Out of Bounds – Bad Pass Turn</option>
+            <option value="Turnover: 3 Second Violation">Turnover: 3 Second Violation</option>
+            <option value="Turnover: Defensive Goaltending">Turnover: Defensive Goaltending</option>
+            <option value="Turnover: Offensive Goaltending">Turnover: Offensive Goaltending</option>
+            <option value="Violation: Defensive Goaltending">Violation: Defensive Goaltending</option>
             <option value="Assessment Error">Assessment Error</option>
-            <option value="Violation">Violation</option>
-            <option value="Judgment Call">Judgment Call</option>
           </select>
         </div>
         <div class="modal-field">
-          <div class="modal-label">Play Type</div>
-          <select class="modal-select" id="edit-pt">
-            <option value="Drive/Layup">Drive/Layup</option>
-            <option value="Shooting">Shooting</option>
-            <option value="Rebound">Rebound</option>
-            <option value="Screen/Pick">Screen/Pick</option>
-            <option value="Off-Ball">Off-Ball</option>
-            <option value="Perimeter">Perimeter</option>
-            <option value="Transition">Transition</option>
-            <option value="Out of Bounds">Out of Bounds</option>
+          <div class="modal-label">Play Type / Situation</div>
+          <select class="modal-select" id="edit-pt" onchange="syncModalSubPlayTypes('edit')">
+            <option value="">—</option>
           </select>
         </div>
         <div class="modal-field">
-          <div class="modal-label">Sub Play Type</div>
+          <div class="modal-label">Sub Play Type / Contact</div>
           <select class="modal-select" id="edit-spt">
             <option value="">—</option>
           </select>
@@ -413,11 +427,88 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 </div>
 
 <script>
-const STORAGE_KEY = 'brs-comment-library-v1';
+const STORAGE_KEY = 'brs-comment-library-v2';
 const COLL_KEY = 'brs-collection-v1';
 
-const INFRACTION_TYPES = ['Personal Foul','Shooting Foul','Loose Ball Foul','Offensive Foul','Take Foul','Block/Charge','Assessment Error','Violation','Judgment Call'];
-const PLAY_TYPES = ['Drive/Layup','Shooting','Rebound','Screen/Pick','Off-Ball','Perimeter','Transition','Out of Bounds'];
+const INFRACTION_TYPES = [
+  'Foul: Personal','Foul: Shooting','Foul: Loose Ball','Foul: Offensive',
+  'Foul: Transition Take Foul','Foul: Away from Play','Foul: Defense 3 Second',
+  'Foul: Double Technical','Foul: Non-Unsportsmanlike Tech Flopping',
+  'Stoppage: Inadvertent Whistle','Stoppage: Out-of-Bounds',
+  'Turnover: Traveling','Turnover: Out of Bounds','Turnover: Stepped out of Bounds',
+  'Turnover: Lost Ball Out of Bounds','Turnover: Out of Bounds – Bad Pass Turn',
+  'Turnover: 3 Second Violation','Turnover: Defensive Goaltending','Turnover: Offensive Goaltending',
+  'Violation: Defensive Goaltending','Assessment Error'
+];
+
+// Full taxonomy from Excel: IT → situations (Play Type) → sub play types (Contact)
+const TAXONOMY = {
+  'Foul: Personal': {
+    situations: ['Contact - Off-Ball','Contact - On-Ball','During Drive','End Of Drive','Off-Ball','On-Ball','Pick - Primary Defender','Pick - Secondary Defender','Post','Primary Defender','Screen - Primary Defender','Screen - Secondary Defender','Secondary Defender','Start Of Drive','Steal','TTFS - Off Ball','TTFS - On Ball'],
+    contacts: ['Arm Contact','Back Court - During Transition','Block-Charge Situation','Body Contact/Check','Change Possession','Clamp-Lock-Hold','Contact to Arm','Delivers Screener Contact','Dislodge From Position','Engage/Disengage','Freedom Of Movement','Front Court - During Transition','Get To The Pass','Hand/Forearm To Front','Head Contact','Holds Screener/FOM','Impede','Injury Foul','Jersey','Legal Guarding Position','Moves Laterally Into Path','Moving Alongside Path','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Pass','Pass & Crash','Push Play','Transition Opportunity Ended','Trip','Two Hands','W - Three-Quarter Defense','Wrap']
+  },
+  'Foul: Shooting': {
+    situations: ['Driving Shot Attempt','Floater','Jump Shot','Layup Or Dunk','Post Shot','TTFS - Off Ball','TTFS - On Ball'],
+    contacts: ['A -> B Movement','Arm Follow-Through','Arm Shooting Motion','Back Court - During Transition','Block-Charge Situation','Body Follow-Through','Body Shooting Motion','Change Possession','Front Court - During Transition','Head Contact','High-Five','Injury Foul','Landing Area','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Restricted Area','Vertical']
+  },
+  'Foul: Loose Ball': {
+    situations: ['N/A','Non-Rebound','Rebound','TTFS - Off Ball','TTFS - On Ball'],
+    contacts: ['Back Court - During Transition','Change Possession','Clamp-Lock-Hold','Contact to Arm','Dislodge From Position','Engage/Disengage','Front Court - During Transition','Head Contact','Impede','Injury Foul','Jersey','Legal Guarding Position','N/A','Other','Transition Opportunity Ended','Trip']
+  },
+  'Foul: Offensive': {
+    situations: ['Ball Handler','Contact - Off-Ball','Contact - On-Ball','Cutter','Driving Shot Attempt','During Drive','End Of Drive','Floater','Jump Shot','Layup Or Dunk','N/A','Off-Ball','On-Ball','Pick - Ball Handler','Pick - Screener','Post Shot','Screen - Cutter','Screen - Screener','Screener','Start Of Drive','Steal','TTFS - Off Ball','TTFS - On Ball'],
+    contacts: ['Affect Defender Defend The Pass','Affect Defender Defend The Shot','Arms','Back Court - During Transition','Block-Charge Situation','Body Contact/Check','Change Possession','Clamp-Lock-Hold','Clear Space','Contact to Arm','Delay','Deliver/Absorb','Dislodge From Position','Distance','Engage/Disengage','Flail','Freedom Of Movement','Front Court - During Transition','Get To The Pass','Head Contact','Hook','Impede','Initiates Contact','Injury Foul','Jersey','Lead Unnaturally','Legal Guarding Position','N/A','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Pass','Pass & Crash','Push Off','Push Play','Restricted Area','Rolls to Basket','Seal','Transition Opportunity Ended','Trip','Two Hands','W - DHO','W - Three-Quarter Defense','Wide Stance','Wipe Away','Wrap']
+  },
+  'Foul: Transition Take Foul': {
+    situations: ['TTFS - Off Ball','TTFS - On Ball'],
+    contacts: ['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul']
+  },
+  'Foul: Away from Play': {
+    situations: ['Off-Ball'],
+    contacts: ['N/A']
+  },
+  'Foul: Defense 3 Second': {
+    situations: ['Imminently Legal','Legal','Violation'],
+    contacts: ['Actively Guarding','Exit','Fail To Clear','Foot On Line','Longer Than 3 Seconds','Loss Of Control','N/A','Shot','Straddle']
+  },
+  'Foul: Double Technical': { situations: ['N/A'], contacts: ['N/A'] },
+  'Foul: Non-Unsportsmanlike Tech Flopping': { situations: ['N/A'], contacts: ['N/A'] },
+  'Stoppage: Inadvertent Whistle': {
+    situations: ['Coach\'s Challenge','Inadvertent Whistle'],
+    contacts: ['Foul','Goaltending/Basket Interference','N/A','Out of Bounds']
+  },
+  'Stoppage: Out-of-Bounds': {
+    situations: ['Ball Out of Bounds','Player Out of Bounds'],
+    contacts: ['N/A']
+  },
+  'Turnover: Traveling': {
+    situations: ['Gather','Receives Pass','Start Of Dribble','Stationary Movement'],
+    contacts: ['Axis/Moves Pivot Foot','Changes Pivot Foot','First to Touch','Gather And Steps','Hop Step','Jump Stop','Land Two Feet','Other','Pivot Moves Prior to Release','Returns to Ground','Slides Pivot Foot','Spin','Splits Pivot Foot']
+  },
+  'Turnover: Out of Bounds': { situations: ['Ball Out of Bounds','Player Out of Bounds'], contacts: ['N/A'] },
+  'Turnover: Stepped out of Bounds': { situations: ['Ball Out of Bounds','Player Out of Bounds'], contacts: ['N/A'] },
+  'Turnover: Lost Ball Out of Bounds': { situations: ['Ball Out of Bounds','Player Out of Bounds'], contacts: ['N/A'] },
+  'Turnover: Out of Bounds – Bad Pass Turn': { situations: ['Ball Out of Bounds','Player Out of Bounds'], contacts: ['N/A'] },
+  'Turnover: 3 Second Violation': {
+    situations: ['Imminently Legal','Legal','Violation'],
+    contacts: ['Defender Touches Ball','Exit','Fail To Clear','Foot On Line','Longer Than 3 Seconds','Rebound','Receives Ball And Shoots','Receives Ball But Does not Shoot','Shot','Straddle']
+  },
+  'Turnover: Defensive Goaltending': {
+    situations: ['Defensive Goaltending','N/A'],
+    contacts: ['Apex Play','Backboard Play','Ball in the Cylinder','N/A','Other','Vibrate Rim']
+  },
+  'Turnover: Offensive Goaltending': {
+    situations: ['Offensive Goaltending'],
+    contacts: ['Apex Play','Backboard Play','Ball in the Cylinder','Other','Vibrate Rim','Vibrate Rim/Grab Net']
+  },
+  'Violation: Defensive Goaltending': {
+    situations: ['Defensive Goaltending'],
+    contacts: ['Apex Play','Backboard Play','Ball in the Cylinder','Other','Vibrate Rim/Grab Net']
+  },
+  'Assessment Error': { situations: [], contacts: [] }
+};
+
+const PLAY_TYPES = [...new Set(Object.values(TAXONOMY).flatMap(t => t.situations).filter(s => s && s !== 'N/A'))].sort();
 
 // Raw seed comments from GRS_Comments.txt (camera prefixes stripped by cleanComment at runtime)
 const RAW_SEEDS = [
@@ -585,29 +676,31 @@ function cleanComment(text) {
 
 function detectInfractionType(text) {
   const t = text.toLowerCase();
-  if (/should have been assessed instead|should have been (assessed|called) (?:on|to)|a (shooting|defensive|offensive|non-shooting|transition take) foul should have been|an offensive foul should have been|foul should be assessed rather than|a defensive foul should have been called/.test(t)) return 'Assessment Error';
-  if (/transition (scoring opportunity|take foul)|take foul should/.test(t)) return 'Take Foul';
-  if (/out of bounds|possession should have been awarded|possession is awarded incorrectly|last (player )?to touch the ball before.*out of bounds|a jump ball should have been called instead|jump ball is called.*however.*last player/.test(t)) return 'Violation';
-  if (/traveling|palming|kicking the ball|comes to rest in his palm|placing? his hand under the ball/.test(t)) return 'Violation';
-  if (/beats? (?:gobert|him|her|them) to the spot.*legal guarding position|establishes? a legal guarding position outside of the ra/.test(t)) return 'Block/Charge';
-  if (/shooting motion|upward.*shooting|upward motion|shot attempt|contests? the.*shot|release of (?:the )?shot|shot release|prior to.*upward|during.*upward|after the release|contests? (?:chen|bey|taylor|their) driving shot/.test(t)) return 'Shooting Foul';
-  if (/(?:pick|screen(?:ing)?).*(?:delivers?|illegal|impedes?|dislodge|step(?:s)? backwards?|does not provide|does not give)|(?:delivers?|illegal contact).*(?:pick|screen)|set(?:s)? (?:a |the )?(?:pick|screen).*illegal|screening position.*delivers?/.test(t)) return 'Offensive Foul';
-  if (/rebound|loose ball|pursue(?:s)? the rebound/.test(t)) return 'Loose Ball Foul';
-  if (/there is judg(?:e)?ment|there is judgment/.test(t)) return 'Judgment Call';
-  return 'Personal Foul';
+  if (/should have been assessed instead|should have been (?:assessed|called) (?:on|to)|a (?:shooting|defensive|offensive|non-shooting|transition take) foul should have been|an offensive foul should have been|foul should be assessed rather than|a defensive foul should have been called/.test(t)) return 'Assessment Error';
+  if (/transition (?:scoring opportunity|take foul)|take foul should/.test(t)) return 'Foul: Transition Take Foul';
+  if (/traveling|palming|kicking the ball|comes to rest in his palm|placing? his hand under the ball/.test(t)) return 'Turnover: Traveling';
+  if (/out of bounds|possession should have been awarded|possession is awarded incorrectly|last (?:player )?to touch the ball before.*out of bounds|a jump ball should have been called instead|jump ball is called.*however.*last player/.test(t)) return 'Turnover: Out of Bounds';
+  if (/beats? (?:\w+ )+to the spot.*legal guarding position|establishes? a legal guarding position outside of the ra/.test(t)) return 'Foul: Offensive';
+  if (/shooting motion|upward.*shooting|upward motion|shot attempt|contests? the.*shot|release of (?:the )?shot|shot release|prior to.*upward|during.*upward|after the release/.test(t)) return 'Foul: Shooting';
+  if (/(?:pick|screen(?:ing)?).*(?:delivers?|illegal|impedes?|dislodge|step(?:s)? backwards?|does not provide|does not give)|(?:delivers?|illegal contact).*(?:pick|screen)|set(?:s)? (?:a |the )?(?:pick|screen).*illegal|screening position.*delivers?/.test(t)) return 'Foul: Offensive';
+  if (/rebound|loose ball|pursue(?:s)? the rebound/.test(t)) return 'Foul: Loose Ball';
+  return 'Foul: Personal';
 }
 
 function detectPlayType(text) {
   const t = text.toLowerCase();
-  if (/out of bounds|possession should|last to touch the ball|jump ball.*however|jump ball should have been called/.test(t)) return 'Out of Bounds';
-  if (/transition scoring|fast.?break/.test(t)) return 'Transition';
-  if (/\brebound\b|loose ball|pursue.*rebound/.test(t)) return 'Rebound';
-  if (/\bscreen(?:ing)?\b|\bpick\b/.test(t)) return 'Screen/Pick';
+  if (/out of bounds|possession should|last to touch the ball|jump ball.*however|jump ball should have been called/.test(t)) return 'Ball Out of Bounds';
+  if (/transition scoring|fast.?break|transition scoring opportunity/.test(t)) return 'TTFS - On Ball';
+  if (/\brebound\b|pursue.*rebound/.test(t)) return 'Rebound';
+  if (/loose ball/.test(t)) return 'Non-Rebound';
+  if (/\bscreen(?:ing)?\b/.test(t)) return 'Screen - Primary Defender';
+  if (/\bpick\b/.test(t)) return 'Pick - Primary Defender';
   if (/off.ball/.test(t)) return 'Off-Ball';
-  if (/\blayup\b|\bdunk\b|play at the basket|finish at the rim/.test(t)) return 'Drive/Layup';
-  if (/shooting motion|shot attempt|jump shot|upward.*motion|contests? the shot|during.*drive|drives? toward/.test(t)) return 'Shooting';
-  if (/perimeter|dribble hand.off|hand.off/.test(t)) return 'Perimeter';
-  return 'Drive/Layup';
+  if (/\blayup\b|\bdunk\b|play at the basket|finish at the rim/.test(t)) return 'Layup Or Dunk';
+  if (/jump shot/.test(t)) return 'Jump Shot';
+  if (/shooting motion|shot attempt|upward.*motion|contests? the shot|after the release/.test(t)) return 'Driving Shot Attempt';
+  if (/during.*drive|drives? toward/.test(t)) return 'During Drive';
+  return 'Contact - On-Ball';
 }
 
 function detectInfractionRating(text) {
@@ -755,16 +848,31 @@ function filteredComments() {
 
 // ── Sidebar ───────────────────────────────────────────────────────────────
 
+const SIDEBAR_GROUPS = [
+  { label: 'All', items: null },
+  { label: 'Fouls', items: INFRACTION_TYPES.filter(t => t.startsWith('Foul:')) },
+  { label: 'Turnovers', items: INFRACTION_TYPES.filter(t => t.startsWith('Turnover:')) },
+  { label: 'Stoppages', items: INFRACTION_TYPES.filter(t => t.startsWith('Stoppage:')) },
+  { label: 'Violations', items: INFRACTION_TYPES.filter(t => t.startsWith('Violation:')) },
+  { label: 'Other', items: INFRACTION_TYPES.filter(t => !t.startsWith('Foul:') && !t.startsWith('Turnover:') && !t.startsWith('Stoppage:') && !t.startsWith('Violation:')) },
+];
+
 function renderSidebar() {
   const nav = document.getElementById('sidebar-nav');
   const counts = {};
-  allComments.forEach(c => { const k = c.infractionType || 'Personal Foul'; counts[k] = (counts[k]||0)+1; });
+  allComments.forEach(c => { const k = c.infractionType || 'Foul: Personal'; counts[k] = (counts[k]||0)+1; });
   const total = allComments.length;
   let html = `<div class="sidebar-item${!filterIT?' active':''}" onclick="setSidebarFilter('')">All <span class="sidebar-item-count">${total}</span></div>`;
-  INFRACTION_TYPES.forEach(it => {
-    const cnt = counts[it] || 0;
-    if (!cnt) return;
-    html += `<div class="sidebar-item${filterIT===it?' active':''}" onclick="setSidebarFilter('${it.replace(/'/g,"\\'")}')">${it} <span class="sidebar-item-count">${cnt}</span></div>`;
+  SIDEBAR_GROUPS.forEach(group => {
+    if (!group.items) return; // "All" handled above
+    const groupItems = group.items.filter(it => counts[it]);
+    if (!groupItems.length) return;
+    html += `<div class="sidebar-group-label">${group.label}</div>`;
+    groupItems.forEach(it => {
+      const cnt = counts[it] || 0;
+      const label = it.includes(':') ? it.split(':')[1].trim() : it;
+      html += `<div class="sidebar-item${filterIT===it?' active':''}" onclick="setSidebarFilter('${it.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}')">${label} <span class="sidebar-item-count">${cnt}</span></div>`;
+    });
   });
   nav.innerHTML = html;
 }
@@ -781,7 +889,7 @@ function setSidebarFilter(val) {
 function renderFilterBar() {
   // Play Type
   const pts = [...new Set(allComments.map(c=>c.playType).filter(Boolean))].sort();
-  renderFdMenu('fd-pt-menu', PLAY_TYPES.filter(p=>pts.includes(p)), filterPT, v => { filterPT = v; renderFilterBar(); renderCards(); });
+  renderFdMenu('fd-pt-menu', pts, filterPT, v => { filterPT = v; renderFilterBar(); renderCards(); });
   // Sub Play Type
   const spts = [...new Set(allComments.map(c=>c.subPlayType).filter(Boolean))].sort();
   renderFdMenu('fd-spt-menu', spts, filterSpt, v => { filterSpt = v; renderFilterBar(); renderCards(); });
@@ -947,11 +1055,29 @@ function onSearch() { searchQuery = document.getElementById('search-input').valu
 
 let submitDebounce;
 
+function syncModalPlayTypes(prefix) {
+  const it = document.getElementById(prefix+'-it').value;
+  const tax = TAXONOMY[it] || { situations: [], contacts: [] };
+  const ptSel = document.getElementById(prefix+'-pt');
+  const situations = tax.situations.filter(s => s && s !== 'N/A');
+  ptSel.innerHTML = '<option value="">—</option>' + situations.map(s => `<option value="${s}">${s}</option>`).join('');
+  syncModalSubPlayTypes(prefix);
+}
+
+function syncModalSubPlayTypes(prefix) {
+  const it = document.getElementById(prefix+'-it').value;
+  const tax = TAXONOMY[it] || { situations: [], contacts: [] };
+  const sptSel = document.getElementById(prefix+'-spt');
+  const contacts = tax.contacts.filter(c => c && c !== 'N/A');
+  sptSel.innerHTML = '<option value="">—</option>' + contacts.map(c => `<option value="${c}">${c}</option>`).join('');
+}
+
 function openSubmitModal() {
-  document.getElementById('submit-overlay').classList.add('open');
   document.getElementById('submit-editor').innerHTML = '';
   document.getElementById('submit-preview').classList.remove('visible');
   document.getElementById('submit-btn').disabled = true;
+  syncModalPlayTypes('submit');
+  document.getElementById('submit-overlay').classList.add('open');
 }
 
 function closeSubmitModal() { document.getElementById('submit-overlay').classList.remove('open'); }
@@ -968,8 +1094,11 @@ function onSubmitEditorInput() {
     preview.innerHTML = renderBold(redactForPreview(val));
     preview.classList.add('visible');
     const cleaned = cleanComment(plainRedact(val));
-    document.getElementById('submit-it').value = detectInfractionType(cleaned);
+    const detIT = detectInfractionType(cleaned);
+    document.getElementById('submit-it').value = detIT;
+    syncModalPlayTypes('submit');
     document.getElementById('submit-pt').value = detectPlayType(cleaned);
+    syncModalSubPlayTypes('submit');
     document.getElementById('submit-ct').value = detectInfractionRating(cleaned);
   }, 300);
 }
@@ -1000,8 +1129,11 @@ function openEditModal(id) {
   const c = allComments.find(x => x.id === id);
   if (!c) return;
   document.getElementById('edit-editor').innerHTML = markdownToEditorHtml(c.text);
-  document.getElementById('edit-it').value = c.infractionType || 'Personal Foul';
-  document.getElementById('edit-pt').value = c.playType || 'Drive/Layup';
+  document.getElementById('edit-it').value = c.infractionType || 'Foul: Personal';
+  syncModalPlayTypes('edit');
+  document.getElementById('edit-pt').value = c.playType || '';
+  syncModalSubPlayTypes('edit');
+  document.getElementById('edit-spt').value = c.subPlayType || '';
   document.getElementById('edit-ct').value = c.callType || 'No Infraction';
   document.getElementById('edit-overlay').classList.add('open');
 }
