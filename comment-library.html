@@ -431,7 +431,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 </div>
 
 <script>
-const STORAGE_KEY = 'brs-comment-library-v4';
+const STORAGE_KEY = 'brs-comment-library-v5';
 const COLL_KEY = 'brs-collection-v1';
 
 const INFRACTION_TYPES = [
@@ -686,69 +686,8 @@ function plainText(text) {
   return text.replace(/\*\*(.+?)\*\*/g, '$1');
 }
 
-// Keywords that suggest a player is on offense or defense in the surrounding clause
-const OFF_WORDS = /\b(drives?|driving|shooting motion|shot attempt|shoot|shoots?|shot|layup|dunk|dribbles?|dribbling|cuts?|cutting|posts? up|posting|screens?|screening|passes?|passing|gathers?|releases?|finishes?|attempts?|scores?|scoring|step.back|jumps? (?:toward|forward|into)|ball handler|offensive|cutter|screener|ball handler|off.ball)\b/i;
-const DEF_WORDS = /\b(contests?|contesting|blocks?|blocking|reaches? in|guards?|guarding|positions?|positioning|establishes?|closes? out|closing out|defensive|defender|def\b|contests? the|illegal contact to|initiates illegal|makes contact (?:to|with) the ball)\b/i;
-
-function classifyRole(fullText, matchStart, matchEnd) {
-  const window = 120;
-  const before = fullText.substring(Math.max(0, matchStart - window), matchStart);
-  const after = fullText.substring(matchEnd, Math.min(fullText.length, matchEnd + window));
-  const ctx = before + ' ' + after;
-  const offScore = (ctx.match(OFF_WORDS) || []).length;
-  const defScore = (ctx.match(DEF_WORDS) || []).length;
-  if (offScore > defScore) return 'OffensivePlayer';
-  if (defScore > offScore) return 'DefensivePlayer';
-  return null; // ambiguous — use sequential
-}
-
-function plainRedact(text) {
-  const names = new Map(); // surname → role
-  const PLAYER_RE = /\b([A-Z][A-Za-zÀ-ž'-]+(?:-[A-Za-z]+)?(?:\s+(?:Jr\.|II|III|IV|[A-Z][A-Za-zÀ-ž'-]+))?)(?:'s?)?\s+\([A-Z]{2,4}\)/g;
-  // First pass: collect names and roles
-  let m;
-  while ((m = PLAYER_RE.exec(text)) !== null) {
-    const fullName = m[1];
-    const role = classifyRole(text, m.index, m.index + m[0].length);
-    fullName.split(/\s+/).filter(n => n.length > 2).forEach(n => {
-      const key = n.replace(/['']/g, '');
-      if (!names.has(key)) names.set(key, role);
-    });
-  }
-  // Build replacement tokens per name
-  const seenRoles = { OffensivePlayer: 0, DefensivePlayer: 0 };
-  let seqCounter = 1;
-  const nameToken = new Map();
-  [...names.entries()].forEach(([key, role]) => {
-    if (role === 'OffensivePlayer') {
-      nameToken.set(key, '[OffensivePlayer]');
-    } else if (role === 'DefensivePlayer') {
-      nameToken.set(key, '[DefensivePlayer]');
-    } else {
-      nameToken.set(key, '[Player]');
-    }
-  });
-  // Second pass: replace
-  let r = text.replace(PLAYER_RE, (match, fullName) => {
-    const parts = fullName.split(/\s+/).filter(n => n.length > 2);
-    const key = parts[parts.length - 1].replace(/['']/g, '');
-    return nameToken.get(key) || '[Player]';
-  });
-  // Replace any bare remaining name fragments
-  names.forEach((role, key) => {
-    if (key.length <= 2) return;
-    const esc = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const token = nameToken.get(key) || '[Player]';
-    r = r.replace(new RegExp(`\\b${esc}(?:'s?)?\\b`, 'g'), token);
-  });
-  return r;
-}
-
 function redactForPreview(text) {
-  const plain = plainRedact(text);
-  let r = plain.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  r = r.replace(/\[(OffensivePlayer|DefensivePlayer|Player)\]/g, '<mark>[$1]</mark>');
-  return r;
+  return text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
 // ── Storage ───────────────────────────────────────────────────────────────
@@ -765,14 +704,13 @@ function buildSeedComments() {
   const now = Date.now();
   const seeded = RAW_SEEDS.map((raw, i) => {
     const cleaned = cleanComment(raw);
-    const redacted = plainRedact(cleaned);
     return {
       id: 'seed_' + i,
-      text: redacted,
-      infractionType: detectInfractionType(redacted),
-      playType: detectPlayType(redacted),
+      text: cleaned,
+      infractionType: detectInfractionType(cleaned),
+      playType: detectPlayType(cleaned),
       subPlayType: '',
-      callType: detectInfractionRating(redacted),
+      callType: detectInfractionRating(cleaned),
       source: 'seed',
       createdAt: now - i * 3600000,
       savedBy: 0
