@@ -197,6 +197,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .bold-toolbar-btn:hover{background:#e5e7eb}
 .modal-delete{background:none;border:1px solid #fca5a5;border-radius:8px;padding:7px 15px;font-size:12px;font-weight:600;color:#ef4444;cursor:pointer;margin-right:auto}
 .modal-delete:hover{background:#fee2e2}
+.modal-note-row{display:flex;gap:10px;align-items:flex-start}
+.modal-note-input{width:100%;border:1px solid #e5e7eb;border-radius:8px;padding:8px 10px;font-size:12px;line-height:1.5;font-family:inherit;color:#374151;outline:none;background:#fafafa;resize:vertical}
+.modal-note-input:focus{border-color:#1a3a6b;background:#fff}
+.card-note{margin-top:8px;padding:8px 10px;background:#f9fafb;border-left:3px solid #e5e7eb;border-radius:0 6px 6px 0;font-size:11.5px;line-height:1.55;color:#6b7280}
+.card-note-text{color:#374151}
+.card-note-author{font-size:10.5px;font-weight:600;color:#9ca3af;margin-top:3px}
 </style>
 </head>
 <body>
@@ -425,6 +431,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
           <option value="Assessment Error">Assessment Error</option>
         </select>
       </div>
+      <div class="modal-note-row">
+        <div class="modal-field" style="flex:2">
+          <div class="modal-label">Note <span style="font-weight:400;color:#d1d5db">(optional)</span></div>
+          <textarea class="modal-note-input" id="submit-note" placeholder="Add a note about this comment…" rows="2"></textarea>
+        </div>
+        <div class="modal-field" style="flex:1">
+          <div class="modal-label">Your Name</div>
+          <input class="modal-select" type="text" id="submit-author" placeholder="e.g. Bridget N." style="height:auto;padding:7px 10px">
+        </div>
+      </div>
     </div>
     <div class="modal-footer">
       <button class="modal-cancel" onclick="closeSubmitModal()">Cancel</button>
@@ -499,6 +515,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
           <option value="Assessment Error">Assessment Error</option>
         </select>
       </div>
+      <div class="modal-note-row">
+        <div class="modal-field" style="flex:2">
+          <div class="modal-label">Note <span style="font-weight:400;color:#d1d5db">(optional)</span></div>
+          <textarea class="modal-note-input" id="edit-note" placeholder="Add a note about this comment…" rows="2"></textarea>
+        </div>
+        <div class="modal-field" style="flex:1">
+          <div class="modal-label">Your Name</div>
+          <input class="modal-select" type="text" id="edit-author" placeholder="e.g. Bridget N." style="height:auto;padding:7px 10px">
+        </div>
+      </div>
     </div>
     <div class="modal-footer">
       <button class="modal-delete" onclick="deleteEditingComment()"><i class="ti ti-trash" style="font-size:12px"></i> Delete</button>
@@ -527,6 +553,10 @@ const db = getFirestore(app);
 const commentsCol = collection(db, 'comments');
 
 const COLL_KEY = 'brs-collection-v1';
+const AUTHOR_KEY = 'brs-author-name';
+
+function getSavedAuthor() { return localStorage.getItem(AUTHOR_KEY) || ''; }
+function setSavedAuthor(name) { if (name.trim()) localStorage.setItem(AUTHOR_KEY, name.trim()); }
 
 const INFRACTION_TYPES = [
   'Foul: Personal','Foul: Shooting','Foul: Loose Ball','Foul: Offensive',
@@ -972,6 +1002,7 @@ function renderCard(c) {
       </div>
     </div>
     <div class="card-body" onclick="copyCommentById('${c.id}')" title="Click to copy">${bodyHtml}</div>
+    ${c.note ? `<div class="card-note"><div class="card-note-text">${c.note.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>${c.noteAuthor ? `<div class="card-note-author">— ${c.noteAuthor}</div>` : ''}</div>` : ''}
     <div class="card-footer">
       ${savedCount > 0 ? `<span class="saved-by"><i class="ti ti-bookmark"></i> ${savedCount}</span>` : ''}
     </div>
@@ -1103,6 +1134,8 @@ function openSubmitModal() {
   document.getElementById('submit-editor').innerHTML = '';
   document.getElementById('submit-preview').classList.remove('visible');
   document.getElementById('submit-btn').disabled = true;
+  document.getElementById('submit-note').value = '';
+  document.getElementById('submit-author').value = getSavedAuthor();
   syncModalPlayTypes('submit');
   document.getElementById('submit-overlay').classList.add('open');
 }
@@ -1133,6 +1166,8 @@ function onSubmitEditorInput() {
 function submitComment() {
   const raw = editorToMarkdown(document.getElementById('submit-editor'));
   if (!raw) return;
+  const author = document.getElementById('submit-author').value.trim();
+  setSavedAuthor(author);
   const comment = {
     id: 'user_' + Date.now(),
     text: raw.trim(),
@@ -1140,6 +1175,8 @@ function submitComment() {
     playType: document.getElementById('submit-pt').value,
     subPlayType: document.getElementById('submit-spt').value,
     callType: document.getElementById('submit-ct').value,
+    note: document.getElementById('submit-note').value.trim(),
+    noteAuthor: author,
     source: 'submitted',
     createdAt: Date.now(),
     savedBy: 0
@@ -1161,6 +1198,8 @@ function openEditModal(id) {
   syncModalSubPlayTypes('edit');
   document.getElementById('edit-spt').value = c.subPlayType || '';
   document.getElementById('edit-ct').value = c.callType || 'No Infraction';
+  document.getElementById('edit-note').value = c.note || '';
+  document.getElementById('edit-author').value = c.noteAuthor || getSavedAuthor();
   document.getElementById('edit-overlay').classList.add('open');
 }
 
@@ -1171,6 +1210,8 @@ function saveEditComment() {
   if (!editingId) return;
   const existing = allComments.find(x => x.id === editingId);
   if (!existing) return;
+  const author = document.getElementById('edit-author').value.trim();
+  setSavedAuthor(author);
   const updated = {
     ...existing,
     text: editorToMarkdown(document.getElementById('edit-editor')),
@@ -1178,6 +1219,8 @@ function saveEditComment() {
     playType: document.getElementById('edit-pt').value,
     subPlayType: document.getElementById('edit-spt').value,
     callType: document.getElementById('edit-ct').value,
+    note: document.getElementById('edit-note').value.trim(),
+    noteAuthor: author,
   };
   saveComment(updated);
   closeEditModal();
