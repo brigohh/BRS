@@ -164,6 +164,33 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .modal-cancel:hover{background:#f9fafb}
 .modal-submit{background:#1a3a6b;color:#fff;border:none;border-radius:8px;padding:7px 16px;font-size:12px;font-weight:600;cursor:pointer}
 .modal-submit:hover{background:#15306b}
+/* AUTO-COMMENTS */
+.ac-panel{display:flex;flex-direction:column;height:100%;overflow:hidden}
+.ac-filters{display:flex;align-items:flex-end;gap:10px;padding:16px 24px 14px;background:#fff;border-bottom:1px solid #e5e7eb;flex-shrink:0;flex-wrap:wrap}
+.ac-filter-group{display:flex;flex-direction:column;gap:4px;min-width:160px;flex:1}
+.ac-label{font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px}
+.ac-select{border:1px solid #e5e7eb;border-radius:8px;padding:7px 10px;font-size:12px;color:#374151;background:#fff;outline:none;cursor:pointer;width:100%}
+.ac-select:focus{border-color:#1a3a6b}
+.ac-select:not([value=""]):not(:invalid){border-color:#1a3a6b;background:#f0f4ff}
+.ac-clear-btn{align-self:flex-end;background:none;border:1px solid #e5e7eb;border-radius:8px;padding:7px 14px;font-size:11.5px;font-weight:600;color:#9ca3af;cursor:pointer;white-space:nowrap;flex-shrink:0}
+.ac-clear-btn:hover{border-color:#d1d5db;color:#374151}
+.ac-results-header{padding:10px 24px 6px;font-size:11px;color:#9ca3af;font-weight:600;flex-shrink:0}
+.ac-results{flex:1;overflow-y:auto;padding:4px 24px 32px;display:flex;flex-direction:column;gap:8px}
+.ac-empty{text-align:center;padding:60px 20px;color:#9ca3af;font-size:13px}
+.ac-card{background:#fff;border:1px solid #e8eaed;border-radius:12px;padding:14px 16px;cursor:pointer;transition:box-shadow .15s,border-color .15s,transform .15s;position:relative}
+.ac-card:hover{box-shadow:0 4px 14px rgba(0,0,0,.07);border-color:#c7d2e8;transform:translateY(-1px)}
+.ac-card-meta{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-bottom:8px}
+.ac-rating-badge{font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap}
+.ac-rating-Infraction{background:#fee2e2;color:#991b1b}
+.ac-rating-Judgment---Lean-Infraction{background:#fff3cd;color:#92400e}
+.ac-rating-Judgment---Lean-No-Infraction{background:#fef9c3;color:#713f12}
+.ac-rating-No-Infraction{background:#dcfce7;color:#166534}
+.ac-rating-Block-Charge-Assessment{background:#ede9fe;color:#5b21b6}
+.ac-cnc-badge{font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px;background:#f3f4f6;color:#6b7280;white-space:nowrap}
+.ac-cnc-call{background:#dbeafe;color:#1d4ed8}
+.ac-card-text{font-size:13px;line-height:1.65;color:#374151}
+.ac-card-text .ac-placeholder{font-weight:700;color:#1a3a6b;background:#e8edf7;border-radius:3px;padding:0 3px}
+
 .modal-submit:disabled{opacity:.4;cursor:default}
 .bold-toolbar{display:flex;align-items:center;gap:6px;margin-bottom:5px}
 .bold-toolbar-btn{background:#f3f4f6;border:1px solid #e5e7eb;border-radius:6px;padding:3px 9px;font-size:11.5px;font-weight:700;cursor:pointer;color:#374151}
@@ -248,6 +275,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
           <div class="view-toggle">
             <button class="view-tab on" id="tab-library" onclick="setView('library')">Comment Library</button>
             <button class="view-tab" id="tab-collection" onclick="setView('collection')">My Collection <span id="coll-badge" style="display:none;background:#1a3a6b;color:#fff;border-radius:10px;padding:1px 6px;font-size:9px;margin-left:2px"></span></button>
+            <button class="view-tab" id="tab-auto" onclick="setView('auto')">Auto-Comments</button>
           </div>
           <div class="main-count" id="main-count"></div>
         </div>
@@ -267,6 +295,56 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
             <i class="ti ti-bookmark"></i>
             <p>Your collection is empty</p>
             <small>Click the bookmark icon on any comment to save it here</small>
+          </div>
+        </div>
+
+        <!-- AUTO-COMMENTS VIEW -->
+        <div id="view-auto" style="display:none">
+          <div class="ac-panel">
+            <div class="ac-filters">
+              <div class="ac-filter-group">
+                <label class="ac-label">Infraction Type</label>
+                <select class="ac-select" id="ac-it" onchange="acCascadeIT()">
+                  <option value="">— Select —</option>
+                </select>
+              </div>
+              <div class="ac-filter-group">
+                <label class="ac-label">Play Type</label>
+                <select class="ac-select" id="ac-pt" onchange="acCascadePT()">
+                  <option value="">— Select —</option>
+                </select>
+              </div>
+              <div class="ac-filter-group">
+                <label class="ac-label">Sub Play Type</label>
+                <select class="ac-select" id="ac-spt" onchange="acRender()">
+                  <option value="">— Select —</option>
+                </select>
+              </div>
+              <div class="ac-filter-group">
+                <label class="ac-label">Infraction Rating</label>
+                <select class="ac-select" id="ac-rating" onchange="acRender()">
+                  <option value="">— Any —</option>
+                  <option>Infraction</option>
+                  <option>Judgment - Lean Infraction</option>
+                  <option>Judgment - Lean No Infraction</option>
+                  <option>No Infraction</option>
+                  <option>Block Charge Assessment</option>
+                </select>
+              </div>
+              <div class="ac-filter-group">
+                <label class="ac-label">Call / No Call</label>
+                <select class="ac-select" id="ac-cnc" onchange="acRender()">
+                  <option value="">— Any —</option>
+                  <option>Call</option>
+                  <option>No Call</option>
+                </select>
+              </div>
+              <button class="ac-clear-btn" onclick="acClear()">Clear</button>
+            </div>
+            <div class="ac-results-header" id="ac-results-header"></div>
+            <div class="ac-results" id="ac-results">
+              <div class="ac-empty"><i class="ti ti-adjustments-horizontal" style="font-size:32px;display:block;margin-bottom:10px;color:#d1d5db"></i>Select an Infraction Type to get started</div>
+            </div>
           </div>
         </div>
       </div>
@@ -431,6 +509,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 </div>
 
 <script type="module">
+import { AUTO_COMMENTS } from './auto-comments-data.js';
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
 import { getFirestore, collection, doc, setDoc, deleteDoc, getDocs, onSnapshot, query, orderBy, writeBatch } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
@@ -966,9 +1045,14 @@ function setView(v) {
   currentView = v;
   document.getElementById('tab-library').classList.toggle('on', v==='library');
   document.getElementById('tab-collection').classList.toggle('on', v==='collection');
+  document.getElementById('tab-auto').classList.toggle('on', v==='auto');
   document.getElementById('view-library').style.display = v==='library' ? '' : 'none';
   document.getElementById('view-collection').style.display = v==='collection' ? '' : 'none';
-  render();
+  document.getElementById('view-auto').style.display = v==='auto' ? '' : 'none';
+  // Hide sidebar and filter bar when in auto-comments view
+  document.querySelector('.sidebar').style.display = v==='auto' ? 'none' : '';
+  document.querySelector('.filter-bar').style.display = v==='auto' ? 'none' : '';
+  if (v !== 'auto') render();
 }
 
 function toggleCollection(id) {
@@ -1147,9 +1231,105 @@ async function initApp() {
     allComments = snapshot.docs.map(d => d.data());
     render();
   });
+  acPopulateIT();
 }
 
 initApp();
+
+// ── Auto-Comments ─────────────────────────────────────────────────────────
+
+function acFiltered() {
+  const it = document.getElementById('ac-it').value;
+  const pt = document.getElementById('ac-pt').value;
+  const spt = document.getElementById('ac-spt').value;
+  const rating = document.getElementById('ac-rating').value;
+  const cnc = document.getElementById('ac-cnc').value;
+  return AUTO_COMMENTS.filter(r =>
+    (!it || r.it === it) &&
+    (!pt || r.pt === pt) &&
+    (!spt || r.spt === spt) &&
+    (!rating || r.rating === rating) &&
+    (!cnc || r.cnc === cnc)
+  );
+}
+
+function acPopulateIT() {
+  const its = [...new Set(AUTO_COMMENTS.map(r => r.it))].sort();
+  const sel = document.getElementById('ac-it');
+  sel.innerHTML = '<option value="">— Select —</option>' + its.map(v => `<option>${v}</option>`).join('');
+}
+
+function acCascadeIT() {
+  const it = document.getElementById('ac-it').value;
+  const subset = it ? AUTO_COMMENTS.filter(r => r.it === it) : AUTO_COMMENTS;
+  const pts = [...new Set(subset.map(r => r.pt).filter(v => v && v !== 'N/A'))].sort();
+  const ptSel = document.getElementById('ac-pt');
+  ptSel.innerHTML = '<option value="">— Any —</option>' + pts.map(v => `<option>${v}</option>`).join('');
+  document.getElementById('ac-spt').innerHTML = '<option value="">— Any —</option>';
+  acRender();
+}
+
+function acCascadePT() {
+  const it = document.getElementById('ac-it').value;
+  const pt = document.getElementById('ac-pt').value;
+  const subset = AUTO_COMMENTS.filter(r => (!it || r.it === it) && (!pt || r.pt === pt));
+  const spts = [...new Set(subset.map(r => r.spt).filter(v => v && v !== 'N/A'))].sort();
+  const sptSel = document.getElementById('ac-spt');
+  sptSel.innerHTML = '<option value="">— Any —</option>' + spts.map(v => `<option>${v}</option>`).join('');
+  acRender();
+}
+
+function acRender() {
+  const results = acFiltered();
+  const hdr = document.getElementById('ac-results-header');
+  const box = document.getElementById('ac-results');
+  const it = document.getElementById('ac-it').value;
+
+  if (!it) {
+    hdr.textContent = '';
+    box.innerHTML = '<div class="ac-empty"><i class="ti ti-adjustments-horizontal" style="font-size:32px;display:block;margin-bottom:10px;color:#d1d5db"></i>Select an Infraction Type to get started</div>';
+    return;
+  }
+  hdr.textContent = `${results.length} comment${results.length !== 1 ? 's' : ''} match`;
+  if (!results.length) {
+    box.innerHTML = '<div class="ac-empty">No auto-comments match this combination.</div>';
+    return;
+  }
+  box.innerHTML = results.map((r, i) => {
+    const ratingCls = 'ac-rating-' + r.rating.replace(/\s+/g,'-').replace(/[^A-Za-z0-9-]/g,'');
+    const cncCls = r.cnc === 'Call' ? 'ac-cnc-call' : '';
+    const bodyHtml = r.text
+      .replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/\{CP\}/g,'<span class="ac-placeholder">{CP}</span>')
+      .replace(/\{DP\}/g,'<span class="ac-placeholder">{DP}</span>');
+    return `<div class="ac-card" onclick="acCopy(${i})" title="Click to copy">
+      <div class="ac-card-meta">
+        <span class="ac-rating-badge ${ratingCls}">${r.rating}</span>
+        <span class="ac-cnc-badge ${cncCls}">${r.cnc}</span>
+        ${r.pt && r.pt !== 'N/A' ? `<span class="pt-pill">${r.pt}</span>` : ''}
+        ${r.spt && r.spt !== 'N/A' ? `<span class="pt-pill">${r.spt}</span>` : ''}
+      </div>
+      <div class="ac-card-text">${bodyHtml}</div>
+    </div>`;
+  }).join('');
+  // store filtered results for copy
+  window._acResults = results;
+}
+
+function acCopy(i) {
+  const r = (window._acResults || [])[i];
+  if (!r) return;
+  navigator.clipboard.writeText(r.text).then(() => showToast('Copied!'));
+}
+
+function acClear() {
+  document.getElementById('ac-it').value = '';
+  document.getElementById('ac-pt').innerHTML = '<option value="">— Any —</option>';
+  document.getElementById('ac-spt').innerHTML = '<option value="">— Any —</option>';
+  document.getElementById('ac-rating').value = '';
+  document.getElementById('ac-cnc').value = '';
+  acRender();
+}
 
 // ── Expose to window (module scope → HTML onclick) ────────────────────────
 Object.assign(window, {
@@ -1158,7 +1338,8 @@ Object.assign(window, {
   openSubmitModal, closeSubmitModal, onSubmitOverlayClick, onSubmitEditorInput, submitComment,
   openEditModal, closeEditModal, onEditOverlayClick, saveEditComment, deleteEditingComment,
   applyEditorBold, handleEditorKeydown, handleEditorPaste,
-  copyCommentById, resetToDefaults, syncModalPlayTypes, syncModalSubPlayTypes
+  copyCommentById, resetToDefaults, syncModalPlayTypes, syncModalSubPlayTypes,
+  acCascadeIT, acCascadePT, acRender, acCopy, acClear
 });
 </script>
 </body>
