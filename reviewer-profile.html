@@ -214,7 +214,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       <div class="prof-pill"><div class="prof-pill-n" id="hdr-acc">88%</div><div class="prof-pill-l">Accuracy</div></div>
       <div class="prof-pill"><div class="prof-pill-n" id="hdr-err">12%</div><div class="prof-pill-l">Error Rate</div></div>
       <div class="prof-pill"><div class="prof-pill-n" id="hdr-games">43</div><div class="prof-pill-l">Games</div></div>
-      <div class="prof-pill"><div class="prof-pill-n" id="hdr-rank">#4</div><div class="prof-pill-l">Rank</div></div>
     </div>
   </div>
 
@@ -239,17 +238,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 
   <!-- ROW 1: KPI CARDS -->
   <div class="sec-lbl">Key Performance Indicators</div>
-  <div class="kpi-row">
+  <div class="kpi-row" style="grid-template-columns:repeat(5,1fr)">
     <div class="kpi-card"><div class="kpi-val" id="k-err">13.5</div><div class="kpi-lbl">Errors / Game</div><div class="kpi-sub">All Calls</div></div>
     <div class="kpi-card"><div class="kpi-val" id="k-inc">11.0</div><div class="kpi-lbl">INC / Game</div><div class="kpi-sub">Incorrect No-Call</div></div>
     <div class="kpi-card"><div class="kpi-val" id="k-ic">2.5</div><div class="kpi-lbl">IC / Game</div><div class="kpi-sub">Incorrect Call</div></div>
     <div class="kpi-card"><div class="kpi-val" id="k-errpct">12%</div><div class="kpi-lbl">Err / Event</div><div class="kpi-sub">All Calls</div></div>
     <div class="kpi-card"><div class="kpi-val" id="k-ot">1.6</div><div class="kpi-lbl">Overturns / Game</div><div class="kpi-sub">Non-Call OT</div></div>
-    <div class="kpi-card"><div class="kpi-val" id="k-rank" style="color:#1a3a6b">#4</div><div class="kpi-lbl">Rank</div><div class="kpi-sub">Among Reviewers</div></div>
   </div>
 
   <!-- ROW 2: TREND CHARTS -->
   <div class="sec-lbl">Season Trends</div>
+  <div id="trend-text" style="background:#f0f4ff;border:1px solid #bfdbfe;border-radius:10px;padding:10px 16px;margin-bottom:12px;font-size:12px;color:#1e3a5f;line-height:1.6"></div>
   <div class="charts-row">
     <div class="chart-card">
       <div class="chart-title" id="chart-acc-title">Accuracy %</div>
@@ -265,9 +264,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
     </div>
   </div>
 
-  <!-- ROW 3: ERROR BREAKDOWN + LEAGUE RANKINGS -->
-  <div class="sec-lbl">Breakdown &amp; Rankings</div>
-  <div class="tables-row">
+  <!-- ROW 3: ERROR BREAKDOWN -->
+  <div class="sec-lbl">Breakdown</div>
+  <div class="tables-row" style="grid-template-columns:1fr">
     <div class="tbl-card">
       <div class="chart-title" style="margin-bottom:10px">Error Breakdown — Per Game Stats</div>
       <table class="data-tbl">
@@ -282,23 +281,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
           <tr><td>Traveling</td><td>1.9</td><td>1.7</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.2</td><td>0.0</td><td>90%</td><td>2.2</td><td>0.5</td></tr>
           <tr><td>D3</td><td>1.6</td><td>1.6</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>89%</td><td>1.9</td><td>0.1</td></tr>
           <tr><td>O3</td><td>1.6</td><td>1.6</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>94%</td><td>1.8</td><td>0.1</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="tbl-card">
-      <div class="chart-title" style="margin-bottom:10px">Reviewer Rankings</div>
-      <table class="data-tbl">
-        <thead><tr>
-          <th>Category</th><th>Err Rank</th><th>INC</th><th>PINC</th><th>IC</th><th>PIC</th><th>OT</th>
-        </tr></thead>
-        <tbody>
-          <tr><td>All Calls</td><td><span class="rank-badge rank-a">4</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>Fouls</td><td><span class="rank-badge rank-a">6</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>Shooting</td><td><span class="rank-badge rank-r">8</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>Non Shoot</td><td><span class="rank-badge rank-a">4</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>Traveling</td><td><span class="rank-badge rank-g">3</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>D3</td><td><span class="rank-badge rank-a">5</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr><td>O3</td><td><span class="rank-badge rank-g">2</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
         </tbody>
       </table>
     </div>
@@ -365,10 +347,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   <div class="sec-lbl">Performance Summary</div>
   <div class="bottom-row">
     <div class="tbl-card">
-      <div class="chart-title" style="margin-bottom:12px">Performance Insights</div>
+      <div class="chart-title" style="margin-bottom:8px">Performance Insights</div>
+      <div style="display:flex;gap:12px;margin-bottom:12px;padding:7px 10px;background:#f9fafb;border-radius:8px;border:1px solid #e5e7eb">
+        <span style="font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.3px;align-self:center">Rubric:</span>
+        <span style="display:flex;align-items:center;gap:5px;font-size:10.5px;font-weight:600;color:#15803d"><span style="width:8px;height:8px;border-radius:50%;background:#16a34a;display:inline-block"></span>Strong</span>
+        <span style="display:flex;align-items:center;gap:5px;font-size:10.5px;font-weight:600;color:#92400e"><span style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block"></span>Align</span>
+        <span style="display:flex;align-items:center;gap:5px;font-size:10.5px;font-weight:600;color:#b91c1c"><span style="width:8px;height:8px;border-radius:50%;background:#dc2626;display:inline-block"></span>Needs Improvement</span>
+      </div>
       <div class="insight-item yellow"><div class="insight-dot yellow"></div><div>Non-Shoot foul error rate (35%) is your strongest category this season — well below the reviewer average.</div></div>
       <div class="insight-item red"><div class="insight-dot red"></div><div>Shooting foul INC rate (3.5/game) is above the reviewer average — this is a primary focus area.</div></div>
-      <div class="insight-item green"><div class="insight-dot green"></div><div>O3 accuracy (94%) ranks <strong>#2</strong> among all reviewers. D3 (89%) is also strong.</div></div>
+      <div class="insight-item green"><div class="insight-dot green"></div><div>O3 accuracy (94%) and D3 (89%) are both strong categories this season.</div></div>
       <div class="insight-item blue"><div class="insight-dot blue"></div><div>Non-call overturn rate has been stable over the last 30 days. INF:PI (1.4/game) is the highest overturn category.</div></div>
     </div>
     <div class="tbl-card">
@@ -463,8 +451,8 @@ function drawChart(svgId, pts, labels, color, gradId) {
 /* ── DATASETS PER DATE RANGE ── */
 const DATASETS = {
   last7: {
-    pills:  ['89%','11%','7','#3'],
-    kpi:    ['12.1','10.2','2.1','11%','1.4','#3'],
+    pills:  ['89%','11%','7'],
+    kpi:    ['12.1','10.2','2.1','11%','1.4'],
     accPts: [88,91,87,90,89,92,89], errPts: [12,9,13,10,11,8,11],
     xLabels:['G1','G2','G3','G4','G5','G6','G7'],
     log: [
@@ -478,8 +466,8 @@ const DATASETS = {
     ],
   },
   last30: {
-    pills:  ['91%','9%','14','#3'],
-    kpi:    ['11.4','9.8','1.9','9%','1.3','#3'],
+    pills:  ['91%','9%','14'],
+    kpi:    ['11.4','9.8','1.9','9%','1.3'],
     accPts: [87,89,91,88,90,92,91,89,90,91,93,90,88,91],
     errPts: [13,11,9,12,10,8,9,11,10,9,7,10,12,9],
     xLabels:['Mar 16','Mar 20','Mar 25','Mar 29','Apr 5','Apr 9','Apr 12'],
@@ -501,8 +489,8 @@ const DATASETS = {
     ],
   },
   last90: {
-    pills:  ['88%','12%','31','#4'],
-    kpi:    ['13.2','10.8','2.3','12%','1.5','#4'],
+    pills:  ['88%','12%','31'],
+    kpi:    ['13.2','10.8','2.3','12%','1.5'],
     accPts: [85,88,87,90,89,86,88,91,90,87,89,92,88,90],
     errPts: [15,12,13,10,11,14,12,9,10,13,11,8,12,10],
     xLabels:['Feb 16','Feb 24','Mar 1','Mar 15','Mar 25','Apr 1','Apr 12'],
@@ -524,8 +512,8 @@ const DATASETS = {
     ],
   },
   full: {
-    pills:  ['88%','12%','43','#4'],
-    kpi:    ['13.5','11.0','2.5','12%','1.6','#4'],
+    pills:  ['88%','12%','43'],
+    kpi:    ['13.5','11.0','2.5','12%','1.6'],
     accPts: [84,86,88,87,90,89,86,88,91,89,87,90,93,91,88,90,87,89,90],
     errPts: [16,14,12,13,10,11,14,12,9,11,13,10,7,9,12,10,13,11,10],
     xLabels:['Oct','Nov','Dec','Jan','Feb','Mar','Apr'],
@@ -552,8 +540,8 @@ const DATASETS = {
     ],
   },
   prev: {
-    pills:  ['85%','15%','38','#6'],
-    kpi:    ['15.2','12.4','3.1','15%','2.1','#6'],
+    pills:  ['85%','15%','38'],
+    kpi:    ['15.2','12.4','3.1','15%','2.1'],
     accPts: [83,85,84,86,85,87,86,88,87,85],
     errPts: [17,15,16,14,15,13,14,12,13,15],
     xLabels:['Mar 8','Mar 16','Mar 24','Apr 3','Apr 9'],
@@ -571,55 +559,55 @@ const DATASETS = {
     ],
   },
   '2023-24': {
-    pills:['85%','15%','38','#6'], kpi:['15.2','12.4','3.1','15%','2.1','#6'],
+    pills:['85%','15%','38'], kpi:['15.2','12.4','3.1','15%','2.1'],
     accPts:[83,85,84,86,85,87,86,88,87,85], errPts:[17,15,16,14,15,13,14,12,13,15],
     xLabels:['Oct','Nov','Dec','Jan','Feb','Mar','Apr'],
     log:[['Apr-07','MIA @ PHI',12,2,16,3,0,2,1,3],['Apr-05','CHI @ TOR',9,1,13,5,0,0,0,0],['Mar-28','LAL @ DEN',14,2,17,4,0,1,0,1],['Mar-20','NYK @ IND',13,1,16,2,0,1,0,1],['Mar-12','UTA @ SAC',11,2,15,3,0,0,0,0]],
   },
   '2022-23': {
-    pills:['86%','14%','41','#5'], kpi:['14.8','12.0','2.9','14%','2.0','#5'],
+    pills:['86%','14%','41'], kpi:['14.8','12.0','2.9','14%','2.0'],
     accPts:[84,86,85,87,86,88,87,89,88,86,85,87], errPts:[16,14,15,13,14,12,13,11,12,14,15,13],
     xLabels:['Oct','Nov','Dec','Jan','Feb','Mar','Apr'],
     log:[['Apr-09','GSW @ LAL',11,2,15,3,0,1,0,1],['Apr-06','BOS @ PHI',10,1,14,4,0,0,1,2],['Mar-30','MIL @ CLE',9,2,13,2,1,0,0,1],['Mar-22','DAL @ PHX',12,0,16,2,0,1,0,1],['Mar-14','MIA @ NYK',8,1,12,3,0,0,0,0]],
   },
   '2021-22': {
-    pills:['87%','13%','39','#4'], kpi:['14.1','11.5','2.7','13%','1.9','#4'],
+    pills:['87%','13%','39'], kpi:['14.1','11.5','2.7','13%','1.9'],
     accPts:[85,87,86,89,88,86,88,90,89,87,88,89], errPts:[15,13,14,11,12,14,12,10,11,13,12,11],
     xLabels:['Oct','Nov','Dec','Jan','Feb','Mar','Apr'],
     log:[['Apr-10','PHX @ DAL',9,1,13,3,0,0,0,0],['Apr-07','MEM @ GSW',10,2,14,2,1,1,0,2],['Mar-29','BKN @ MIL',8,1,12,4,0,0,1,1],['Mar-21','NYK @ BOS',11,0,15,1,0,1,0,1],['Mar-13','IND @ CLE',7,2,11,2,0,0,0,0]],
   },
   '2020-21': {
-    pills:['88%','12%','36','#4'], kpi:['13.8','11.2','2.6','12%','1.8','#4'],
+    pills:['88%','12%','36'], kpi:['13.8','11.2','2.6','12%','1.8'],
     accPts:[86,88,87,90,89,87,89,91,90,88,89,90], errPts:[14,12,13,10,11,13,11,9,10,12,11,10],
     xLabels:['Dec','Jan','Feb','Mar','Apr','May'],
     log:[['May-16','PHX @ DEN',8,1,12,2,0,0,0,0],['May-12','BKN @ MIL',10,2,14,3,0,1,1,2],['Apr-30','ATL @ NYK',9,0,13,1,1,0,0,1],['Apr-22','LAL @ GSW',7,1,11,2,0,0,0,0],['Apr-14','UTA @ OKC',6,1,10,2,0,1,0,1]],
   },
   '2019-20': {
-    pills:['87%','13%','35','#5'], kpi:['14.3','11.6','2.8','13%','1.9','#5'],
+    pills:['87%','13%','35'], kpi:['14.3','11.6','2.8','13%','1.9'],
     accPts:[85,87,86,88,87,89,88,86,87,88,90,88], errPts:[15,13,14,12,13,11,12,14,13,12,10,12],
     xLabels:['Oct','Dec','Feb','Apr','Jul','Sep'],
     log:[['Oct-10','MIA @ LAL',9,2,13,3,0,1,0,1],['Sep-26','BOS @ HOU',10,1,14,2,0,0,1,1],['Aug-20','MIL @ LAC',11,0,15,4,1,0,0,1],['Jul-31','DEN @ OKC',8,2,12,2,0,1,0,1],['Jan-16','PHX @ GSW',7,1,11,1,0,0,0,0]],
   },
   '2018-19': {
-    pills:['86%','14%','40','#5'], kpi:['14.9','12.2','3.0','14%','2.0','#5'],
+    pills:['86%','14%','40'], kpi:['14.9','12.2','3.0','14%','2.0'],
     accPts:[84,86,85,87,86,88,87,85,86,87,89,87], errPts:[16,14,15,13,14,12,13,15,14,13,11,13],
     xLabels:['Oct','Nov','Dec','Jan','Feb','Mar','Apr'],
     log:[['Apr-23','GSW @ HOU',12,2,16,4,0,2,1,3],['Apr-19','POR @ OKC',10,1,14,3,0,0,0,0],['Apr-16','DEN @ SAS',9,2,13,2,1,1,0,2],['Mar-31','NYK @ BKN',8,0,12,1,0,0,0,0],['Mar-24','CLE @ IND',7,1,11,2,0,1,0,1]],
   },
   '2017-18': {
-    pills:['85%','15%','37','#6'], kpi:['15.5','12.6','3.2','15%','2.2','#6'],
+    pills:['85%','15%','37'], kpi:['15.5','12.6','3.2','15%','2.2'],
     accPts:[83,85,84,86,85,87,86,84,85,86,88,86], errPts:[17,15,16,14,15,13,14,16,15,14,12,14],
     xLabels:['Oct','Nov','Dec','Jan','Feb','Mar','Apr'],
     log:[['Apr-25','GSW @ SAS',13,3,17,5,1,2,1,3],['Apr-22','HOU @ MIN',11,2,15,4,0,1,0,1],['Apr-19','CLE @ IND',10,1,14,3,0,0,1,1],['Apr-16','PHI @ MIA',9,2,13,2,1,0,0,1],['Apr-13','OKC @ UTA',8,1,12,2,0,1,0,1]],
   },
   '2016-17': {
-    pills:['84%','16%','36','#7'], kpi:['16.1','13.0','3.4','16%','2.3','#7'],
+    pills:['84%','16%','36'], kpi:['16.1','13.0','3.4','16%','2.3'],
     accPts:[82,84,83,85,84,86,85,83,84,85,87,85], errPts:[18,16,17,15,16,14,15,17,16,15,13,15],
     xLabels:['Oct','Nov','Dec','Jan','Feb','Mar','Apr'],
     log:[['Apr-23','CLE @ IND',14,3,18,5,1,2,1,3],['Apr-20','GSW @ POR',12,2,16,4,0,1,0,1],['Apr-17','SAS @ MEM',11,1,15,4,0,0,1,2],['Apr-14','BOS @ CHI',10,2,14,3,1,0,0,1],['Apr-11','ATL @ WAS',9,1,13,2,0,1,0,1]],
   },
   '2015-16': {
-    pills:['83%','17%','34','#8'], kpi:['16.8','13.5','3.6','17%','2.5','#8'],
+    pills:['83%','17%','34'], kpi:['16.8','13.5','3.6','17%','2.5'],
     accPts:[81,83,82,84,83,85,84,82,83,84,86,84], errPts:[19,17,18,16,17,15,16,18,17,16,14,16],
     xLabels:['Oct','Nov','Dec','Jan','Feb','Mar','Apr'],
     log:[['Apr-24','CLE @ DET',15,4,19,6,1,2,1,3],['Apr-21','GSW @ HOU',13,2,17,5,0,1,0,1],['Apr-18','TOR @ IND',12,2,16,4,1,0,1,2],['Apr-15','BOS @ ATL',11,1,15,3,0,1,0,1],['Apr-12','MIA @ CHA',10,2,14,3,0,0,0,0]],
@@ -641,9 +629,8 @@ function applyDataset(range) {
   document.getElementById('hdr-acc').textContent   = ds.pills[0];
   document.getElementById('hdr-err').textContent   = ds.pills[1];
   document.getElementById('hdr-games').textContent = ds.pills[2];
-  document.getElementById('hdr-rank').textContent  = ds.pills[3];
   /* kpi cards */
-  const kids = ['k-err','k-inc','k-ic','k-errpct','k-ot','k-rank'];
+  const kids = ['k-err','k-inc','k-ic','k-errpct','k-ot'];
   kids.forEach((id,i) => document.getElementById(id).textContent = ds.kpi[i]);
   /* charts */
   drawChart('chart-acc', ds.accPts, ds.xLabels, '#1a3a6b', 'gA');
@@ -653,6 +640,38 @@ function applyDataset(range) {
   sortCol = -1; sortAsc = true;
   document.querySelectorAll('[id^=s]').forEach(s=>s.textContent='');
   filterLog();
+  computeTrend();
+}
+
+function computeTrend() {
+  const el = document.getElementById('trend-text');
+  if (!logData || logData.length < 2) { el.textContent = ''; return; }
+  const games = logData.slice(0, Math.min(15, logData.length));
+  const n = games.length;
+  const half = Math.floor(n / 2);
+  const recent = games.slice(0, half);
+  const earlier = games.slice(n - half);
+  const avg = (rows, col) => rows.reduce((s,r) => s + Number(r[col]), 0) / rows.length;
+  const metrics = [
+    { label: 'INC', col: 2 },
+    { label: 'IC',  col: 5 },
+    { label: 'OT',  col: 9 },
+  ];
+  const parts = [];
+  for (const m of metrics) {
+    const earlyAvg = avg(earlier, m.col);
+    const recentAvg = avg(recent, m.col);
+    if (earlyAvg === 0) continue;
+    const pct = Math.round(Math.abs(recentAvg - earlyAvg) / earlyAvg * 100);
+    if (pct < 3) continue;
+    const dir = recentAvg > earlyAvg ? 'increased' : 'decreased';
+    parts.push(`${m.label} has ${dir} by ${pct}%`);
+  }
+  if (parts.length === 0) {
+    el.innerHTML = `<strong>📊 Last ${n} games:</strong> Your key metrics are consistent — no significant trends detected.`;
+  } else {
+    el.innerHTML = `<strong>📊 Last ${n} games:</strong> ${parts.join(' · ')}.`;
+  }
 }
 
 /* ── SCATTER PLOT ── */
