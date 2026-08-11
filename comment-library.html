@@ -116,6 +116,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .card-body:hover{color:#1a3a6b}
 .card-body strong{font-weight:700;color:#111827}
 .card-footer{display:flex;align-items:center;justify-content:flex-end;padding-top:8px;border-top:1px solid #f3f4f6;gap:4px}
+.clip-btn{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:600;color:#1a3a6b;background:#eef2ff;border:1px solid #c7d2fe;border-radius:6px;padding:3px 9px;text-decoration:none;transition:background .12s,color .12s;margin-right:auto;white-space:nowrap;cursor:pointer}
+.clip-btn:hover{background:#1a3a6b;color:#fff;border-color:#1a3a6b}
+.clip-btn i{font-size:11px}
 .card-action-btn{background:none;border:none;color:#b0b8c8;cursor:pointer;font-size:15px;padding:4px 7px;transition:color .1s,background .1s;border-radius:5px}
 .card-action-btn:hover{color:#6b7280;background:#f3f4f6}
 .card-action-btn.delete:hover{color:#ef4444}
@@ -426,6 +429,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
           <input class="modal-select" type="text" id="submit-author" placeholder="e.g. Bridget N." style="height:auto;padding:7px 10px">
         </div>
       </div>
+      <div class="modal-field">
+        <div class="modal-label">Clip URL <span style="font-weight:400;color:#d1d5db">(optional)</span></div>
+        <input class="modal-select" type="url" id="submit-clip" placeholder="https://…" style="height:auto;padding:7px 10px">
+      </div>
     </div>
     <div class="modal-footer">
       <button class="modal-cancel" onclick="closeSubmitModal()">Cancel</button>
@@ -487,6 +494,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
           <div class="modal-label">Your Name</div>
           <input class="modal-select" type="text" id="edit-author" placeholder="e.g. Bridget N." style="height:auto;padding:7px 10px">
         </div>
+      </div>
+      <div class="modal-field">
+        <div class="modal-label">Clip URL <span style="font-weight:400;color:#d1d5db">(optional)</span></div>
+        <input class="modal-select" type="url" id="edit-clip" placeholder="https://…" style="height:auto;padding:7px 10px">
       </div>
     </div>
     <div class="modal-footer">
@@ -1157,6 +1168,7 @@ function renderCard(c) {
     <div class="card-body" onclick="copyCommentById('${c.id}')" title="Click to copy">${bodyHtml}</div>
     ${c.note ? `<div class="card-note"><div class="card-note-text">${c.note.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>${c.noteAuthor ? `<div class="card-note-author">— ${c.noteAuthor}</div>` : ''}</div>` : ''}
     <div class="card-footer">
+      ${c.clipUrl ? `<a class="clip-btn" href="${c.clipUrl}" target="_blank" rel="noopener"><i class="ti ti-player-play"></i> Watch Clip</a>` : ''}
       ${savedCount > 0 ? `<span class="saved-by"><i class="ti ti-bookmark"></i> ${savedCount}</span>` : ''}
     </div>
   </div>`;
@@ -1330,6 +1342,7 @@ function submitComment() {
     callType: document.getElementById('submit-ct').value,
     note: document.getElementById('submit-note').value.trim(),
     noteAuthor: author,
+    clipUrl: document.getElementById('submit-clip').value.trim(),
     source: 'submitted',
     createdAt: Date.now(),
     savedBy: 0
@@ -1353,6 +1366,7 @@ function openEditModal(id) {
   document.getElementById('edit-ct').value = c.callType || 'No Infraction';
   document.getElementById('edit-note').value = c.note || '';
   document.getElementById('edit-author').value = c.noteAuthor || getSavedAuthor();
+  document.getElementById('edit-clip').value = c.clipUrl || '';
   document.getElementById('edit-overlay').classList.add('open');
 }
 
@@ -1374,6 +1388,7 @@ function saveEditComment() {
     callType: document.getElementById('edit-ct').value,
     note: document.getElementById('edit-note').value.trim(),
     noteAuthor: author,
+    clipUrl: document.getElementById('edit-clip').value.trim(),
   };
   saveComment(updated);
   closeEditModal();
