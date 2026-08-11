@@ -391,29 +391,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       <div class="modal-row">
         <div class="modal-field">
           <div class="modal-label">Infraction Type</div>
-          <select class="modal-select" id="submit-it" onchange="syncModalPlayTypes('submit')">
-            <option value="Foul: Personal">Foul: Personal</option>
-            <option value="Foul: Shooting">Foul: Shooting</option>
-            <option value="Foul: Loose Ball">Foul: Loose Ball</option>
-            <option value="Foul: Offensive">Foul: Offensive</option>
-            <option value="Foul: Transition Take Foul">Foul: Transition Take Foul</option>
-            <option value="Foul: Away from Play">Foul: Away from Play</option>
-            <option value="Foul: Defense 3 Second">Foul: Defense 3 Second</option>
-            <option value="Foul: Double Technical">Foul: Double Technical</option>
-            <option value="Foul: Non-Unsportsmanlike Tech Flopping">Foul: Non-Unsportsmanlike Tech Flopping</option>
-            <option value="Stoppage: Inadvertent Whistle">Stoppage: Inadvertent Whistle</option>
-            <option value="Stoppage: Out-of-Bounds">Stoppage: Out-of-Bounds</option>
-            <option value="Turnover: Traveling">Turnover: Traveling</option>
-            <option value="Turnover: Out of Bounds">Turnover: Out of Bounds</option>
-            <option value="Turnover: Stepped out of Bounds">Turnover: Stepped out of Bounds</option>
-            <option value="Turnover: Lost Ball Out of Bounds">Turnover: Lost Ball Out of Bounds</option>
-            <option value="Turnover: Out of Bounds – Bad Pass Turn">Turnover: Out of Bounds – Bad Pass Turn</option>
-            <option value="Turnover: 3 Second Violation">Turnover: 3 Second Violation</option>
-            <option value="Turnover: Defensive Goaltending">Turnover: Defensive Goaltending</option>
-            <option value="Turnover: Offensive Goaltending">Turnover: Offensive Goaltending</option>
-            <option value="Violation: Defensive Goaltending">Violation: Defensive Goaltending</option>
-            <option value="Assessment Error">Assessment Error</option>
-          </select>
+          <select class="modal-select" id="submit-it" onchange="syncModalPlayTypes('submit')"></select>
         </div>
         <div class="modal-field">
           <div class="modal-label">Play Type</div>
@@ -475,29 +453,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       <div class="modal-row">
         <div class="modal-field">
           <div class="modal-label">Infraction Type</div>
-          <select class="modal-select" id="edit-it" onchange="syncModalPlayTypes('edit')">
-            <option value="Foul: Personal">Foul: Personal</option>
-            <option value="Foul: Shooting">Foul: Shooting</option>
-            <option value="Foul: Loose Ball">Foul: Loose Ball</option>
-            <option value="Foul: Offensive">Foul: Offensive</option>
-            <option value="Foul: Transition Take Foul">Foul: Transition Take Foul</option>
-            <option value="Foul: Away from Play">Foul: Away from Play</option>
-            <option value="Foul: Defense 3 Second">Foul: Defense 3 Second</option>
-            <option value="Foul: Double Technical">Foul: Double Technical</option>
-            <option value="Foul: Non-Unsportsmanlike Tech Flopping">Foul: Non-Unsportsmanlike Tech Flopping</option>
-            <option value="Stoppage: Inadvertent Whistle">Stoppage: Inadvertent Whistle</option>
-            <option value="Stoppage: Out-of-Bounds">Stoppage: Out-of-Bounds</option>
-            <option value="Turnover: Traveling">Turnover: Traveling</option>
-            <option value="Turnover: Out of Bounds">Turnover: Out of Bounds</option>
-            <option value="Turnover: Stepped out of Bounds">Turnover: Stepped out of Bounds</option>
-            <option value="Turnover: Lost Ball Out of Bounds">Turnover: Lost Ball Out of Bounds</option>
-            <option value="Turnover: Out of Bounds – Bad Pass Turn">Turnover: Out of Bounds – Bad Pass Turn</option>
-            <option value="Turnover: 3 Second Violation">Turnover: 3 Second Violation</option>
-            <option value="Turnover: Defensive Goaltending">Turnover: Defensive Goaltending</option>
-            <option value="Turnover: Offensive Goaltending">Turnover: Offensive Goaltending</option>
-            <option value="Violation: Defensive Goaltending">Violation: Defensive Goaltending</option>
-            <option value="Assessment Error">Assessment Error</option>
-          </select>
+          <select class="modal-select" id="edit-it" onchange="syncModalPlayTypes('edit')"></select>
         </div>
         <div class="modal-field">
           <div class="modal-label">Play Type</div>
@@ -1464,7 +1420,16 @@ function markdownToEditorHtml(text) {
 
 // ── Init Firestore ────────────────────────────────────────────────────────
 
+function populateITSelects() {
+  const opts = INFRACTION_TYPES.map(it => `<option value="${it}">${it}</option>`).join('');
+  ['submit-it','edit-it'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = opts;
+  });
+}
+
 async function initApp() {
+  populateITSelects();
   const snap = await getDocs(commentsCol);
   if (snap.empty) await seedFirestore();
   onSnapshot(query(commentsCol, orderBy('createdAt', 'desc')), snapshot => {
