@@ -45,6 +45,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .sidebar-item.active{background:rgba(26,58,107,.5);color:#fff;font-weight:600;border-left-color:#5b8dd9}
 .sidebar-item-count{font-size:10px;color:rgba(255,255,255,.35);font-weight:600;background:rgba(255,255,255,.1);border-radius:10px;padding:1px 7px;min-width:22px;text-align:center;flex-shrink:0}
 .sidebar-item.active .sidebar-item-count{background:rgba(91,141,217,.3);color:#aac4f0}
+.sidebar-caret{font-size:8px;color:rgba(255,255,255,.4);flex-shrink:0;transition:transform .15s}
+.sidebar-pt-item{display:flex;align-items:center;justify-content:space-between;padding:6px 18px 6px 30px;font-size:11.5px;color:rgba(255,255,255,.5);cursor:pointer;border-left:3px solid transparent;transition:background .1s,color .1s;user-select:none;line-height:1.3}
+.sidebar-pt-item:hover{background:rgba(255,255,255,.05);color:rgba(255,255,255,.8)}
+.sidebar-pt-item.active{background:rgba(26,58,107,.4);color:#c5d8f5;font-weight:600;border-left-color:#4a7bcf}
+.sidebar-spt-item{display:flex;align-items:center;padding:5px 18px 5px 44px;font-size:11px;color:rgba(255,255,255,.38);cursor:pointer;border-left:3px solid transparent;transition:background .1s,color .1s;user-select:none;line-height:1.3}
+.sidebar-spt-item:hover{background:rgba(255,255,255,.04);color:rgba(255,255,255,.65)}
+.sidebar-spt-item.active{background:rgba(26,58,107,.3);color:#a8c4ef;font-weight:600;border-left-color:#3a6bbf}
 
 /* RIGHT SIDE */
 .right-side{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
@@ -559,39 +566,203 @@ function getSavedAuthor() { return localStorage.getItem(AUTHOR_KEY) || ''; }
 function setSavedAuthor(name) { if (name.trim()) localStorage.setItem(AUTHOR_KEY, name.trim()); }
 
 const INFRACTION_TYPES = [
-  'Foul: Personal','Foul: Shooting','Foul: Loose Ball','Foul: Offensive',
-  'Foul: Transition Take Foul','Foul: Away from Play','Foul: Defense 3 Second',
-  'Foul: Double Technical','Foul: Non-Unsportsmanlike Tech Flopping',
+  'Foul: Away from Play','Foul: Defense 3 Second','Foul: Defensive 3 Second',
+  'Foul: Double Technical','Foul: Flagrant Type 1','Foul: Flagrant Type 2',
+  'Foul: Loose Ball','Foul: Non-Unsportsmanlike Tech Flopping','Foul: Offensive',
+  'Foul: Personal','Foul: Shooting','Foul: Technical','Foul: Transition Take Foul',
   'Stoppage: Inadvertent Whistle','Stoppage: Out-of-Bounds',
-  'Turnover: Traveling','Turnover: Out of Bounds','Turnover: Stepped out of Bounds',
-  'Turnover: Lost Ball Out of Bounds','Turnover: Out of Bounds – Bad Pass Turn',
-  'Turnover: 3 Second Violation','Turnover: Defensive Goaltending','Turnover: Offensive Goaltending',
-  'Violation: Defensive Goaltending','Assessment Error'
+  'Turnover: 3 Second Violation','Turnover: 5 Second Inbound','Turnover: 8 Second Violation',
+  'Turnover: Backcourt Turnover','Turnover: Defensive Goaltending','Turnover: Discontinue Dribble',
+  'Turnover: Double Dribble','Turnover: Inbound Turnover','Turnover: Lost Ball Out of Bounds',
+  'Turnover: Offensive Goaltending','Turnover: Out of Bounds','Turnover: Out of Bounds – Bad Pass Turn',
+  'Turnover: Palming','Turnover: Stepped out of Bounds','Turnover: Traveling',
+  'Violation: Defensive Goaltending','Violation: Delay of Game','Violation: Kicked Ball',
+  'Assessment Error'
 ];
 
-// Full taxonomy from Excel: IT → Play Type → [Sub Play Types]
+// Full taxonomy from authoritative hierarchy: IT → Play Type → [Sub Play Types]
 const TAXONOMY = {
-  'Foul: Loose Ball': {'Non-Rebound':['Clamp-Lock-Hold','Contact to Arm','Dislodge From Position','Engage/Disengage','Head Contact','Impede','Jersey','Other','Trip','Legal Guarding Position'],'Rebound':['Clamp-Lock-Hold','Contact to Arm','Dislodge From Position','Engage/Disengage','Head Contact','Impede','Jersey','Other'],'TTFS - Off Ball':['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul','Transition Opportunity Ended'],'TTFS - On Ball':['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul','Transition Opportunity Ended'],'N/A':['N/A']},
-  'Foul: Offensive': {'During Drive':['Block-Charge Situation','Clear Space','Dislodge From Position','Flail','Head Contact','Hook','Initiates Contact','Jersey','Lead Unnaturally','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Pass & Crash','Trip','Wipe Away','NBP: Kick-Out','NBP: Launch Angle'],'End Of Drive':['Block-Charge Situation','Clear Space','Dislodge From Position','Flail','Head Contact','Hook','Initiates Contact','Jersey','Lead Unnaturally','NBP: Kick-Out','NBP: Launch Angle','NBP: Veer Into Defender','Other','Pass & Crash','Trip','Wipe Away','NBP: Off-Arm Contact','NBP: Rip-Through'],'Off-Ball':['Affect Defender Defend The Pass','Affect Defender Defend The Shot','Clamp-Lock-Hold','Dislodge From Position','Engage/Disengage','Head Contact','Hook','Jersey','Other','Pass & Crash','Seal','Trip','W - Three-Quarter Defense','Wrap'],'On-Ball':['Clamp-Lock-Hold','Clear Space','Dislodge From Position','Head Contact','Hook','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Pass & Crash','Trip','Wipe Away','Other'],'Start Of Drive':['Block-Charge Situation','Clear Space','Dislodge From Position','Flail','Head Contact','Hook','Initiates Contact','Jersey','Lead Unnaturally','NBP: Kick-Out','NBP: Launch Angle','NBP: Veer Into Defender','Other','Trip','Wipe Away','NBP: Off-Arm Contact','NBP: Rip-Through','Pass & Crash'],'TTFS - Off Ball':['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul','Transition Opportunity Ended'],'TTFS - On Ball':['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul','Transition Opportunity Ended'],'Ball Handler':['Clear Space','Dislodge From Position','Head Contact','Hook','Jersey','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Trip','Wipe Away'],'Screener':['Arms','Delay','Deliver/Absorb','Distance','Head Contact','Other','Push Off','Rolls to Basket','W - DHO','Wide Stance','Push Play'],'Cutter':['Dislodge From Position','Head Contact','Hook','Jersey','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Push Off','Push Play','Trip','Wipe Away'],'Driving Shot Attempt':['Affect Defender Defend The Shot','Block-Charge Situation','Clear Space','Flail','Head Contact','Hook','Lead Unnaturally','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Restricted Area'],'Floater':['Affect Defender Defend The Shot','Block-Charge Situation','Clear Space','Flail','Head Contact','Hook','Lead Unnaturally','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Restricted Area'],'Jump Shot':['Affect Defender Defend The Shot','Clear Space','Flail','Head Contact','Hook','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other'],'Layup Or Dunk':['Affect Defender Defend The Shot','Block-Charge Situation','Clear Space','Flail','Head Contact','Hook','Lead Unnaturally','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Restricted Area'],'Post Shot':['Affect Defender Defend The Shot','Block-Charge Situation','Clear Space','Flail','Head Contact','Hook','Lead Unnaturally','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Restricted Area'],'N/A':['N/A'],'Contact - Off-Ball':['Affect Defender Defend The Pass','Affect Defender Defend The Shot','Body Contact/Check','Clamp-Lock-Hold','Contact to Arm','Dislodge From Position','Freedom Of Movement','Get To The Pass','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Pass','Seal','Trip','Two Hands','W - Three-Quarter Defense','Wrap'],'Contact - On-Ball':['Affect Defender Defend The Pass','Affect Defender Defend The Shot','Clamp-Lock-Hold','Clear Space','Dislodge From Position','Freedom Of Movement','Head Contact','Hook','Jersey','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Seal','Trip','Wrap'],'Pick - Ball Handler':['Clear Space','Dislodge From Position','Head Contact','Hook','Jersey','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Trip','Wipe Away'],'Pick - Screener':['Arms','Delay','Deliver/Absorb','Distance','Head Contact','Other','Push Off','Push Play','Rolls to Basket','W - DHO','Wide Stance'],'Screen - Cutter':['Dislodge From Position','Head Contact','Hook','Jersey','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Push Off','Push Play','Trip','Wipe Away'],'Screen - Screener':['Arms','Delay','Deliver/Absorb','Distance','Head Contact','Other','Push Off','Push Play','Rolls to Basket','Wide Stance'],'Steal':['Affect Defender Defend The Pass','Clamp-Lock-Hold','Dislodge From Position','Freedom Of Movement','Head Contact','Hook','Jersey','N/A','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Seal']},
-  'Foul: Personal': {'Off-Ball':['Clamp-Lock-Hold','Dislodge From Position','Engage/Disengage','Freedom Of Movement','Get To The Pass','Hand/Forearm To Front','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Trip','Two Hands','W - Three-Quarter Defense','Wrap','Body Contact/Check'],'On-Ball':['Body Contact/Check','Clamp-Lock-Hold','Contact to Arm','Freedom Of Movement','Hand/Forearm To Front','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Pass','Trip','Two Hands','Wrap'],'TTFS - Off Ball':['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul','Transition Opportunity Ended'],'TTFS - On Ball':['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul','Transition Opportunity Ended'],'During Drive':['Arm Contact','Block-Charge Situation','Body Contact/Check','Hand/Forearm To Front','Head Contact','Jersey','Legal Guarding Position','Moves Laterally Into Path','Moving Alongside Path','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Trip','Two Hands'],'End Of Drive':['Arm Contact','Block-Charge Situation','Body Contact/Check','Hand/Forearm To Front','Head Contact','Jersey','Legal Guarding Position','Moves Laterally Into Path','Moving Alongside Path','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Pass','Pass & Crash','Trip','Two Hands'],'Start Of Drive':['Arm Contact','Body Contact/Check','Hand/Forearm To Front','Head Contact','Jersey','Legal Guarding Position','Moves Laterally Into Path','Moving Alongside Path','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Trip','Two Hands','Block-Charge Situation'],'Primary Defender':['Body Contact/Check','Contact to Arm','Delivers Screener Contact','Engage/Disengage','Hand/Forearm To Front','Head Contact','Holds Screener/FOM','Impede','Jersey','Legal Guarding Position','NBP: Veer Into Defender','Other','Push Play','Trip','Two Hands','Wrap','Arm Contact','Get To The Pass','Moves Laterally Into Path','NBP: Rip-Through'],'Secondary Defender':['Contact to Arm','Delivers Screener Contact','Engage/Disengage','Hand/Forearm To Front','Head Contact','Holds Screener/FOM','Impede','Jersey','Legal Guarding Position','NBP: Veer Into Defender','Other','Push Play','Trip','Wrap','Arm Contact','Body Contact/Check','Get To The Pass','Moves Laterally Into Path','NBP: Rip-Through','Two Hands'],'Contact - Off-Ball':['Body Contact/Check','Contact to Arm','Dislodge From Position','Freedom Of Movement','Get To The Pass','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Pass','Trip','Two Hands','W - Three-Quarter Defense','Wrap'],'Contact - On-Ball':['Body Contact/Check','Contact to Arm','Dislodge From Position','Freedom Of Movement','Get To The Pass','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Pass','Trip','Two Hands','Wrap'],'Pick - Primary Defender':['Body Contact/Check','Contact to Arm','Delivers Screener Contact','Engage/Disengage','Hand/Forearm To Front','Head Contact','Holds Screener/FOM','Jersey','Legal Guarding Position','NBP: Veer Into Defender','Other','Push Play','Trip','Two Hands','Wrap'],'Pick - Secondary Defender':['Body Contact/Check','Contact to Arm','Delivers Screener Contact','Engage/Disengage','Hand/Forearm To Front','Head Contact','Holds Screener/FOM','Jersey','Legal Guarding Position','NBP: Veer Into Defender','Other','Push Play','Trip','Two Hands','Wrap'],'Post':['Body Contact/Check','Contact to Arm','Dislodge From Position','Engage/Disengage','Freedom Of Movement','Get To The Pass','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Pass','Trip','Two Hands','W - Three-Quarter Defense','Wrap'],'Screen - Primary Defender':['Contact to Arm','Delivers Screener Contact','Engage/Disengage','Hand/Forearm To Front','Head Contact','Holds Screener/FOM','Impede','Jersey','Legal Guarding Position','NBP: Veer Into Defender','Other','Push Play','Trip','Wrap'],'Screen - Secondary Defender':['Contact to Arm','Delivers Screener Contact','Engage/Disengage','Hand/Forearm To Front','Head Contact','Holds Screener/FOM','Impede','Jersey','Legal Guarding Position','NBP: Veer Into Defender','Other','Push Play','Trip','Wrap'],'Steal':['Arm Contact','Body Contact/Check','Get To The Pass','Hand/Forearm To Front','Head Contact','Legal Guarding Position','Moves Laterally Into Path','NBP: Rip-Through','Other','Trip','Two Hands','Wrap']},
-  'Foul: Transition Take Foul': {'TTFS - Off Ball':['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul'],'TTFS - On Ball':['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul']},
-  'Foul: Defense 3 Second': {'Imminently Legal':['Actively Guarding','Exit','Shot'],'Legal':['Actively Guarding','Exit','Loss Of Control','Shot'],'Violation':['Fail To Clear','Foot On Line','Longer Than 3 Seconds','N/A','Straddle']},
-  'Stoppage: Inadvertent Whistle': {'Coach\'s Challenge':['Foul','Goaltending/Basket Interference','Out of Bounds'],'Inadvertent Whistle':['N/A']},
-  'Stoppage: Out-of-Bounds': {'Ball Out of Bounds':['N/A'],'Player Out of Bounds':['N/A']},
-  'Turnover: Lost Ball Out of Bounds': {'Ball Out of Bounds':['N/A'],'Player Out of Bounds':['N/A']},
-  'Turnover: Out of Bounds': {'Ball Out of Bounds':['N/A'],'Player Out of Bounds':['N/A']},
-  'Turnover: Out of Bounds – Bad Pass Turn': {'Ball Out of Bounds':['N/A'],'Player Out of Bounds':['N/A']},
-  'Turnover: Stepped out of Bounds': {'Ball Out of Bounds':['N/A'],'Player Out of Bounds':['N/A']},
-  'Turnover: Traveling': {'Gather':['Changes Pivot Foot','First to Touch','Gather And Steps','Hop Step','Jump Stop','Other','Returns to Ground','Slides Pivot Foot','Spin'],'Receives Pass':['Gather And Steps','Hop Step','Jump Stop','Land Two Feet','Other'],'Start Of Dribble':['Other','Pivot Moves Prior to Release','Returns to Ground','Spin','Splits Pivot Foot'],'Stationary Movement':['Axis/Moves Pivot Foot','Changes Pivot Foot','First to Touch','Other','Returns to Ground','Spin']},
-  'Turnover: 3 Second Violation': {'Imminently Legal':['Defender Touches Ball','Exit','Shot'],'Legal':['Defender Touches Ball','Exit','Rebound','Receives Ball And Shoots','Shot'],'Violation':['Fail To Clear','Foot On Line','Longer Than 3 Seconds','Receives Ball But Does not Shoot','Straddle']},
-  'Foul: Away from Play': {'Off-Ball':['N/A']},
-  'Foul: Shooting': {'Driving Shot Attempt':['A -> B Movement','Arm Follow-Through','Arm Shooting Motion','Block-Charge Situation','Body Follow-Through','Body Shooting Motion','Head Contact','High-Five','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Restricted Area','Vertical'],'Floater':['A -> B Movement','Arm Follow-Through','Arm Shooting Motion','Block-Charge Situation','Body Follow-Through','Body Shooting Motion','Head Contact','High-Five','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Restricted Area','Vertical'],'Jump Shot':['Arm Follow-Through','Arm Shooting Motion','Body Follow-Through','Body Shooting Motion','Head Contact','High-Five','Landing Area','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Launch Angle','NBP: Rip-Through','Other','Vertical','A -> B Movement'],'Layup Or Dunk':['A -> B Movement','Arm Follow-Through','Arm Shooting Motion','Block-Charge Situation','Body Follow-Through','Body Shooting Motion','Head Contact','High-Five','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Veer Into Defender','Other','Restricted Area','Vertical'],'Post Shot':['A -> B Movement','Arm Follow-Through','Arm Shooting Motion','Block-Charge Situation','Body Follow-Through','Body Shooting Motion','Head Contact','High-Five','Landing Area','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Restricted Area','Vertical'],'TTFS - Off Ball':['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul'],'TTFS - On Ball':['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul']},
-  'Turnover: Offensive Goaltending': {'Offensive Goaltending':['Apex Play','Backboard Play','Ball in the Cylinder','Other','Vibrate Rim/Grab Net','Vibrate Rim']},
-  'Violation: Defensive Goaltending': {'Defensive Goaltending':['Apex Play','Backboard Play','Ball in the Cylinder','Other','Vibrate Rim/Grab Net']},
-  'Foul: Double Technical': {'N/A':['N/A']},
-  'Foul: Non-Unsportsmanlike Tech Flopping': {'N/A':['N/A']},
-  'Turnover: Defensive Goaltending': {'Defensive Goaltending':['Apex Play','Backboard Play','Ball in the Cylinder','Other','Vibrate Rim'],'N/A':['N/A']},
-  'Assessment Error': {}
+  'Foul: Away from Play': {
+    'Off-Ball': ['N/A'],
+    'Take/Intentional Foul': ['Other','Take Foul','Take/Intentional Foul'],
+  },
+  'Foul: Defense 3 Second': {
+    'Competition Committee': ['Enhanced','Fail To Clear','Foot On Line','Straddle'],
+    'Imminently Legal': ['Actively Guarding','Exit','Shot'],
+    'Legal': ['Actively Guarding','Exit','Shot'],
+    'N/A': ['Enhanced','Fail To Clear','Foot On Line','N/A','Straddle'],
+    'Violation': ['Fail To Clear','Foot On Line','Longer Than 3 Seconds','N/A','Straddle'],
+  },
+  'Foul: Defensive 3 Second': {
+    'Imminently Legal': ['Actively Guarding','Exit','Shot'],
+    'Legal': ['Actively Guarding','Exit','Shot'],
+    'Violation': ['Fail To Clear','Foot On Line','Longer Than 3 Seconds','N/A','Straddle'],
+  },
+  'Foul: Double Technical': {'N/A': ['N/A']},
+  'Foul: Flagrant Type 1': {'N/A': ['N/A']},
+  'Foul: Flagrant Type 2': {'N/A': ['N/A']},
+  'Foul: Loose Ball': {
+    'Clamp-Lock-Hold': ['N/A'],
+    'Dislodge-Too Much': ['N/A'],
+    'Engage And Disengage': ['N/A'],
+    'Head Contact': ['N/A'],
+    'Impede': ['N/A'],
+    'Jersey': ['N/A'],
+    'N/A': ['N/A'],
+    'Non-Rebound': ['Clamp-Lock-Hold','Contact to Arm','Dislodge From Position','Engage And Disengage','Engage/Disengage','Freedom Of Movement','Head Contact','Impede','Jersey','Legal Guarding Position','Other','Take/Intentional Foul','Trip'],
+    'Other': ['N/A'],
+    'Rebound': ['Clamp-Lock-Hold','Contact to Arm','Dislodge From Position','Engage And Disengage','Engage/Disengage','Freedom Of Movement','Head Contact','Impede','Jersey','Other','Take/Intentional Foul'],
+    'TTFS - Off Ball': ['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul','Transition Opportunity Ended'],
+    'TTFS - On Ball': ['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul','Transition Opportunity Ended'],
+    'Take/Intentional Foul': ['Other','Take Foul','Take/Intentional Foul'],
+  },
+  'Foul: Non-Unsportsmanlike Tech Flopping': {'N/A': ['N/A']},
+  'Foul: Offensive': {
+    'Ball Handler': ['Clear Space','Dislodge From Position','Head Contact','Hook','Jersey','NBP: Off-Arm Contact','NBP: Veer Into Defender','Trip'],
+    'Contact - Off-Ball': ['Affect Defender Defend The Pass','Affect Defender Defend The Shot','Body Contact/Check','Clamp-Lock-Hold','Contact to Arm','Dislodge From Position','Freedom Of Movement','Get To The Pass','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Pass','Trip'],
+    'Contact - On-Ball': ['Affect Defender Defend The Pass','Affect Defender Defend The Shot','Clamp-Lock-Hold','Clear Space','Dislodge From Position','Freedom Of Movement','Head Contact','Hook','Jersey','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Trip'],
+    'Cutter': ['Dislodge From Position','Head Contact','Hook','Jersey','NBP: Off-Arm Contact','NBP: Veer Into Defender','Push Off','Push Play','Trip'],
+    'Driving Shot Attempt': ['Affect Defender Defend The Shot','Block-Charge Situation','Clear Space','Flail','Head Contact','Hook','Kick-Out','Lead Unnaturally','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Restricted Area','Seek Out Contact'],
+    'During Drive': ['Block-Charge Situation','Clear Space','Dislodge From Position','Dislodges Defender','Dislodges From Position','Flail','Head Contact','Hook','Hooks Defender','Initiates Contact','Jersey','Lead Unnaturally','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Pass & Crash','Seeks Out Contact','Trip','Veers Into Defender'],
+    'End Of Drive': ['Block-Charge Situation','Clear Space','Dislodge From Position','Dislodges From Position','Flail','Head Contact','Hook','Initiates Contact','Jersey','Lead Unnaturally','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Pass & Crash','Trip'],
+    'Floater': ['Affect Defender Defend The Shot','Block-Charge Situation','Clear Space','Flail','Head Contact','Hook','Lead Unnaturally','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Veer Into Defender','Restricted Area'],
+    'Head Contact': ['N/A'],
+    'Jump Shot': ['Affect Defender Defend The Shot','Block-Charge Situation','Clear Space','Flail','Head Contact','Hook','Kick-Out','Lead Unnaturally','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Restricted Area','Seek Out Contact'],
+    'Layup Or Dunk': ['Affect Defender Defend The Shot','Block-Charge Situation','Clear Space','Flail','Head Contact','Hook','Kick-Out','Lead Unnaturally','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Restricted Area','Seek Out Contact'],
+    'Moving Defender': ['Arms Out','Ball Handler','Delivers Contact','Firming Up','Holds Defender/Fom','Legal Picking Position','Legal Screening Position','Other','Wide Stance'],
+    'N/A': ['N/A'],
+    'Not In Path of Defender': ['Arms','Defender Seeks Contact','Delay','Deliver/Absorb','Legs','Other','Push Off','Rolls to Basket','Wide Stance'],
+    'Off-Ball': ['Affect Defender Defend The Pass','Affect Defender Defend The Shot','Clamp-Lock-Hold','Clear Space','Dislodge Defender From Position','Dislodge From Position','Engage And Disengage','Engage/Disengage','Freedom Of Movement','Head Contact','Hook','Jersey','Other','Pass & Crash','Take/Intentional Foul','Trip','Wrap'],
+    'On-Ball': ['Back Down Defender','Clamp-Lock-Hold','Clear Space','Dislodge Defender From Position','Dislodge From Position','Head Contact','Hook','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Pass & Crash','Take/Intentional Foul','Trip'],
+    'Other': ['N/A'],
+    'Other Shot Type': ['Block-Charge Situation','Clear Space','Flail','Hook','Kick-Out','Lead Unnaturally','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Restricted Area','Seek Out Contact'],
+    'Pick': ['Arms','Arms Out','Ball Handler','Clear Space','Defender Seeks Contact','Delay','Deliver/Absorb','Delivers Contact','Distance','Firming Up','Head Contact','Holds Defender/Fom','Hook','Legal Picking Position','Legs','Less Than One Step','N/A','Other','Push Off','Rolls to Basket','Room To Avoid Screen','Wide Stance'],
+    'Pick - Ball Handler': ['Clear Space','Dislodge From Position','Head Contact','Hook','Jersey','NBP: Off-Arm Contact','NBP: Veer Into Defender','Trip'],
+    'Pick - Screener': ['Arms','Deliver/Absorb','Distance','Push Off','Push Play','W - DHO','Wide Stance'],
+    'Post Shot': ['Affect Defender Defend The Shot','Block-Charge Situation','Clear Space','Flail','Head Contact','Hook','Lead Unnaturally','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Restricted Area'],
+    'Screen': ['Arms','Arms Out','Ball Handler','Clear Space','Defender Seeks Contact','Delay','Deliver/Absorb','Delivers Contact','Distance','Firming Up','Head Contact','Holds Defender/Fom','Hook','Legal Screening Position','Legs','Less Than One Step','N/A','Other','Push Off','Rolls to Basket','Room To Avoid Screen','Wide Stance'],
+    'Screen - Cutter': ['Dislodge From Position','Head Contact','Hook','Jersey','NBP: Off-Arm Contact','NBP: Veer Into Defender','Push Off','Push Play','Trip'],
+    'Screen - Screener': ['Arms','Deliver/Absorb','Distance','Push Off','Push Play','Wide Stance'],
+    'Screener': ['Arms','Deliver/Absorb','Distance','Head Contact','Push Off','Push Play','W - DHO','Wide Stance'],
+    'Shot - Other Shot Type': ['Block-Charge Situation','Clear Space','Flail','Hook','Kick-Out','Lead Unnaturally','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Restricted Area','Seek Out Contact'],
+    'Start Of Drive': ['Block-Charge Situation','Clear Space','Dislodge From Position','Dislodges Defender','Dislodges From Position','Flail','Head Contact','Hook','Hooks Defender','Initiates Contact','Jersey','Lead Unnaturally','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Pass & Crash','Trip'],
+    'Steal': ['Affect Defender Defend The Pass','Clamp-Lock-Hold','Dislodge From Position','Freedom Of Movement','Head Contact','Hook','Jersey','Lead Unnaturally','N/A','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other'],
+    'TTFS - Off Ball': ['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul','Transition Opportunity Ended'],
+    'TTFS - On Ball': ['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul','Transition Opportunity Ended'],
+  },
+  'Foul: Personal': {
+    'Contact - Off-Ball': ['Body Contact/Check','Contact to Arm','Dislodge From Position','Freedom Of Movement','Get To The Pass','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Veer Into Defender','Pass','Trip'],
+    'Contact - On-Ball': ['Body Contact/Check','Contact to Arm','Dislodge From Position','Freedom Of Movement','Get To The Pass','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Veer Into Defender','Pass','Trip'],
+    'During Drive': ['Arm Contact','Block-Charge Situation','Body Contact/Check','Hand/Forearm To Front','Head Contact','Jersey','Legal Guarding Position','Moves Laterally Into Path','Moving Alongside Path','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Take/Intentional Foul','Trip','Two Hands'],
+    'End Of Drive': ['Affects Sqbr','Arm Contact','Block-Charge Situation','Body Contact/Check','Hand/Forearm To Front','Head Contact','Jersey','Legal Guarding Position','Maintains Legal Guarding Position','Moves Laterally Into Path','Moving Alongside Path','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Pass','Pass & Crash','Take/Intentional Foul','Trip','Two Hands'],
+    'Head Contact': ['N/A'],
+    'Moving Defender': ['Holds Defender/Fom','Initiates/Delivers Contact'],
+    'N/A': ['Affects Sqbr','N/A'],
+    'Off-Ball': ['Body Contact/Check','Clamp-Lock-Hold','Dislodge From Position','Engage And Disengage','Engage/Disengage','Freedom Of Movement','Get To The Pass','Hand/Forearm To Front','Head Contact','Impede','Impede Cutter','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Take/Intentional Foul','Trip','Two Hands','Wrap'],
+    'On-Ball': ['Back Down Defender','Body Contact/Check','Clamp-Lock-Hold','Contact to Arm','Engage And Disengage','Freedom Of Movement','Hand/Forearm To Front','Head Contact','Impede','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Launch Angle','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Pass','Rip-Through','Take/Intentional Foul','Trip','Two Hands','Wrap'],
+    'Other': ['N/A'],
+    'Pick': ['Engage/Disengage','Head Contact','Holds Defender/Fom','Holds Screener/FOM','Initiates/Delivers Contact','Jersey','Legal Guarding Position','Other','Take Foul','Two Hands','Wrap'],
+    'Pick - Primary Defender': ['Body Contact/Check','Contact to Arm','Delivers Screener Contact','Engage/Disengage','Hand/Forearm To Front','Head Contact','Holds Screener/FOM','Jersey','Legal Guarding Position','NBP: Veer Into Defender','Push Play','Trip'],
+    'Pick - Secondary Defender': ['Body Contact/Check','Contact to Arm','Delivers Screener Contact','Engage/Disengage','Hand/Forearm To Front','Head Contact','Holds Screener/FOM','Jersey','Legal Guarding Position','NBP: Veer Into Defender','Push Play','Trip'],
+    'Post': ['Ability To Pass','Body Contact/Check','Contact to Arm','Dislodge From Position','Engage And Disengage','Engage/Disengage','Freedom Of Movement','Get To The Pass','Head Contact','Impede','Impede Cutter','Jersey','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Pass','Rip-Through','Take/Intentional Foul','Trip','Two Hands','Wrap'],
+    'Primary Defender': ['Arm Contact','Body Contact/Check','Contact to Arm','Delivers Screener Contact','Engage/Disengage','Get To The Pass','Hand/Forearm To Front','Head Contact','Holds Screener/FOM','Impede','Jersey','Legal Guarding Position','Moves Laterally Into Path','NBP: Veer Into Defender','Other','Push Play','Take/Intentional Foul','Trip','Two Hands'],
+    'Screen': ['Engage/Disengage','Head Contact','Holds Defender/Fom','Holds Screener/FOM','Initiates/Delivers Contact','Jersey','Legal Guarding Position','Other','Take Foul','Two Hands','Wrap'],
+    'Screen - Primary Defender': ['Contact to Arm','Delivers Screener Contact','Engage/Disengage','Hand/Forearm To Front','Head Contact','Holds Screener/FOM','Impede','Jersey','Legal Guarding Position','NBP: Veer Into Defender','Push Play','Trip'],
+    'Screen - Secondary Defender': ['Contact to Arm','Delivers Screener Contact','Engage/Disengage','Hand/Forearm To Front','Head Contact','Holds Screener/FOM','Impede','Jersey','Legal Guarding Position','NBP: Veer Into Defender','Push Play','Trip'],
+    'Secondary Defender': ['Arm Contact','Body Contact/Check','Contact to Arm','Delivers Screener Contact','Engage/Disengage','Get To The Pass','Hand/Forearm To Front','Head Contact','Holds Screener/FOM','Impede','Jersey','Legal Guarding Position','Moves Laterally Into Path','NBP: Veer Into Defender','Other','Push Play','Take/Intentional Foul','Trip','Two Hands'],
+    'Start Of Drive': ['Affects Sqbr','Arm Contact','Block-Charge Situation','Body Contact/Check','Hand/Forearm To Front','Head Contact','Jersey','Legal Guarding Position','Maintains Legal Guarding Position','Moves Laterally Into Path','Moving Alongside Path','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Take/Intentional Foul','Trip','Two Hands'],
+    'Steal': ['Affects Sqbr','Arm Contact','Body Contact/Check','Clean','Dislodge','Freedom Of Movement','Get To The Pass','Hand/Forearm To Front','Head Contact','Legal Guarding Position','Moves Laterally Into Path','N/A','Other','Take/Intentional Foul','Trip','Two Hands'],
+    'TTFS - Off Ball': ['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul','Transition Opportunity Ended'],
+    'TTFS - On Ball': ['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul','Transition Opportunity Ended'],
+    'Take/Intentional Foul': ['Other','Take Foul','Take/Intentional Foul'],
+  },
+  'Foul: Shooting': {
+    'Driving Shot Attempt': ['A -> B Movement','Arm Follow-Through','Arm Shooting Motion','Block-Charge Situation','Body Follow-Through','Body Shooting Motion','Drawn Into Air','Head Contact','High-Five','Jumps A-> B','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Veer Into Defender','Other','Restricted Area','Take/Intentional Foul','Vertical','Verticality'],
+    'Floater': ['A -> B Movement','Arm Follow-Through','Arm Shooting Motion','Block-Charge Situation','Body Follow-Through','Body Shooting Motion','Head Contact','High-Five','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Veer Into Defender','Restricted Area','Vertical'],
+    'Jump Shot': ['A -> B Movement','Arm Follow-Through','Arm Shooting Motion','Body Follow-Through','Body Shooting Motion','Draw Into Air','Drawn Into Air','Head Contact','High-Five','Jumps A-> B','Landing Area','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Launch Angle','NBP: Veer Into Defender','Other','Restricted Area','Take/Intentional Foul','Vertical','Verticality'],
+    'Layup Or Dunk': ['A -> B Movement','Arm Follow-Through','Arm Shooting Motion','Block-Charge Situation','Body Follow-Through','Body Shooting Motion','Drawn Into Air','Head Contact','High-Five','Jumps A-> B','Landing Area','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Veer Into Defender','Other','Restricted Area','Take/Intentional Foul','Vertical','Verticality'],
+    'N/A': ['N/A'],
+    'Other Shot Type': ['A -> B Movement','Arm Follow-Through','Arm Shooting Motion','Block-Charge Situation','Body Follow-Through','Body Shooting Motion','Draw Into Air','Drawn Into Air','Head Contact','High-Five','Jumps A-> B','Landing Area','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Veer Into Defender','Other','Restricted Area','Take/Intentional Foul','Vertical','Verticality'],
+    'Post Shot': ['A -> B Movement','Arm Follow-Through','Arm Shooting Motion','Block-Charge Situation','Body Follow-Through','Body Shooting Motion','Head Contact','High-Five','Landing Area','Legal Guarding Position','NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Off-Arm Contact','NBP: Rip-Through','NBP: Veer Into Defender','Other','Restricted Area','Vertical'],
+    'Shot - Other Shot Type': ['NBP: Drawn into Air/Closeout','NBP: Kick-Out','NBP: Veer Into Defender'],
+    'TTFS - Off Ball': ['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul'],
+    'TTFS - On Ball': ['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul'],
+  },
+  'Foul: Technical': {'N/A': ['N/A']},
+  'Foul: Transition Take Foul': {
+    'TTFS - Off Ball': ['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul'],
+    'TTFS - On Ball': ['Back Court - During Transition','Change Possession','Front Court - During Transition','Injury Foul'],
+  },
+  'Stoppage: Inadvertent Whistle': {
+    "Coach's Challenge": ['Foul','Goaltending/Basket Interference','Out of Bounds'],
+    'Inadvertent Whistle': ['N/A'],
+  },
+  'Stoppage: Out-of-Bounds': {
+    'Ball Out of Bounds': ['N/A'],
+    'Player Out of Bounds': ['N/A'],
+  },
+  'Turnover: 3 Second Violation': {
+    'Competition Committee': ['Enhanced','Fail To Clear','Foot On Line','Straddle'],
+    'Imminently Legal': ['Exit','Shot'],
+    'Legal': ['Defender Touches Ball','Exit','Rebound','Receives Ball And Shoots','Shot'],
+    'N/A': ['Enhanced','Fail To Clear','Foot On Line','Straddle'],
+    'Violation': ['Fail To Clear','Foot On Line','Longer Than 3 Seconds','Receives Ball But Does not Shoot','Straddle'],
+  },
+  'Turnover: 5 Second Inbound': {'N/A': ['N/A']},
+  'Turnover: 8 Second Violation': {'N/A': ['N/A']},
+  'Turnover: Backcourt Turnover': {'N/A': ['N/A']},
+  'Turnover: Defensive Goaltending': {
+    'Defensive Goaltending': ['Apex Play','Backboard Play','Ball in the Cylinder','N/A','Other','Vibrate Rim','Vibrate Rim/Grab Net'],
+    'N/A': ['N/A'],
+  },
+  'Turnover: Discontinue Dribble': {'N/A': ['N/A']},
+  'Turnover: Double Dribble': {'N/A': ['N/A']},
+  'Turnover: Inbound Turnover': {'N/A': ['N/A']},
+  'Turnover: Lost Ball Out of Bounds': {
+    'Ball Out of Bounds': ['N/A'],
+    'Player Out of Bounds': ['N/A'],
+  },
+  'Turnover: Offensive Goaltending': {
+    'Apex Play': ['N/A'],
+    'Backboard Play': ['N/A'],
+    'Ball in the Cylinder': ['N/A'],
+    'Offensive Goaltending': ['Apex Play','Backboard Play','Ball in the Cylinder','Other','Vibrate Rim','Vibrate Rim/Grab Net'],
+    'Other': ['N/A'],
+    'Vibrate Rim': ['N/A'],
+  },
+  'Turnover: Out of Bounds': {
+    'Ball Out of Bounds': ['N/A'],
+    'Player Out of Bounds': ['N/A'],
+  },
+  'Turnover: Out of Bounds – Bad Pass Turn': {
+    'Ball Out of Bounds': ['N/A'],
+    'Player Out of Bounds': ['N/A'],
+  },
+  'Turnover: Palming': {'N/A': ['N/A']},
+  'Turnover: Stepped out of Bounds': {
+    'Ball Out of Bounds': ['N/A'],
+    'N/A': ['N/A'],
+    'Player Out of Bounds': ['N/A'],
+  },
+  'Turnover: Traveling': {
+    'Gather': ['Changes Pivot Foot','First to Touch','Gather And Steps','Hop Step','Jump Stop','Other','Returns to Ground','Slides Pivot Foot','Spin'],
+    'Other': ['N/A','No Call'],
+    'Receives Pass': ['Gather And Steps','Hop Step','Jump Stop','Land Two Feet','Other'],
+    'Start Of Dribble': ['Axis','Lifts Pivot Foot','Other','Pivot Moves Prior to Release','Returns to Ground','Shuffles Feet','Slides Pivot Foot','Spin','Splits Pivot Foot'],
+    'Stationary Movement': ['Axis','Axis/Moves Pivot Foot','Changes Pivot Foot','First to Touch','Lifts Pivot Foot','Other','Returns to Ground','Shuffles Feet','Slides Pivot Foot','Spin','Splits Pivot Foot'],
+  },
+  'Violation: Defensive Goaltending': {
+    'Apex Play': ['N/A'],
+    'Backboard Play': ['N/A'],
+    'Ball in the Cylinder': ['N/A'],
+    'Defensive Goaltending': ['Apex Play','Backboard Play','Ball in the Cylinder','Other','Vibrate Rim'],
+    'N/A': ['N/A'],
+    'Other': ['N/A'],
+    'Vibrate Rim': ['N/A'],
+  },
+  'Violation: Delay of Game': {'N/A': ['N/A']},
+  'Violation: Kicked Ball': {'N/A': ['N/A']},
+  'Assessment Error': {},
 };
 
 const PLAY_TYPES = [];
@@ -900,7 +1071,6 @@ function filteredComments() {
 // ── Sidebar ───────────────────────────────────────────────────────────────
 
 const SIDEBAR_GROUPS = [
-  { label: 'All', items: null },
   { label: 'Fouls', items: INFRACTION_TYPES.filter(t => t.startsWith('Foul:')) },
   { label: 'Turnovers', items: INFRACTION_TYPES.filter(t => t.startsWith('Turnover:')) },
   { label: 'Stoppages', items: INFRACTION_TYPES.filter(t => t.startsWith('Stoppage:')) },
@@ -908,31 +1078,110 @@ const SIDEBAR_GROUPS = [
   { label: 'Other', items: INFRACTION_TYPES.filter(t => !t.startsWith('Foul:') && !t.startsWith('Turnover:') && !t.startsWith('Stoppage:') && !t.startsWith('Violation:')) },
 ];
 
+let sidebarOpenIT = '';
+let sidebarOpenPT = '';
+
+function sesc(s) {
+  return s.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+}
+
 function renderSidebar() {
   const nav = document.getElementById('sidebar-nav');
   const counts = {};
   allComments.forEach(c => { const k = c.infractionType || 'Foul: Personal'; counts[k] = (counts[k]||0)+1; });
   const total = allComments.length;
-  let html = `<div class="sidebar-item${!filterIT?' active':''}" onclick="setSidebarFilter('')">All <span class="sidebar-item-count">${total}</span></div>`;
+
+  let html = `<div class="sidebar-item${!filterIT?' active':''}" onclick="setSidebarIT('')">All <span class="sidebar-item-count">${total}</span></div>`;
+
   SIDEBAR_GROUPS.forEach(group => {
-    if (!group.items) return; // "All" handled above
-    const groupItems = group.items.filter(it => counts[it]);
+    const groupItems = group.items.filter(it => counts[it] || Object.keys(TAXONOMY[it]||{}).length);
     if (!groupItems.length) return;
     html += `<div class="sidebar-group-label">${group.label}</div>`;
     groupItems.forEach(it => {
       const cnt = counts[it] || 0;
       const label = it.includes(':') ? it.split(':')[1].trim() : it;
-      html += `<div class="sidebar-item${filterIT===it?' active':''}" onclick="setSidebarFilter('${it.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}')">${label} <span class="sidebar-item-count">${cnt}</span></div>`;
+      const isActiveIT = filterIT === it;
+      const isOpenIT = sidebarOpenIT === it;
+      const pts = Object.keys(TAXONOMY[it] || {});
+      const hasPts = pts.length > 0;
+
+      html += `<div class="sidebar-item${isActiveIT?' active':''}${isOpenIT?' open':''}" onclick="setSidebarIT('${sesc(it)}')"><span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis">${label}</span><span style="display:flex;align-items:center;gap:5px;flex-shrink:0"><span class="sidebar-item-count">${cnt}</span>${hasPts?`<span class="sidebar-caret">${isOpenIT?'▾':'▸'}</span>`:''}</span></div>`;
+
+      if (isOpenIT && hasPts) {
+        pts.forEach(pt => {
+          const isActivePT = isActiveIT && filterPT === pt;
+          const isOpenPT = isOpenIT && sidebarOpenPT === pt;
+          const spts = (TAXONOMY[it][pt] || []).filter(s => s !== 'N/A');
+          const hasSpts = spts.length > 0;
+          html += `<div class="sidebar-pt-item${isActivePT?' active':''}" onclick="setSidebarPT('${sesc(it)}','${sesc(pt)}')"><span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis">${pt}</span>${hasSpts?`<span class="sidebar-caret" style="font-size:7px">${isOpenPT?'▾':'▸'}</span>`:''}</div>`;
+          if (isOpenPT && hasSpts) {
+            spts.forEach(spt => {
+              const isActiveSPT = isActivePT && filterSpt === spt;
+              html += `<div class="sidebar-spt-item${isActiveSPT?' active':''}" onclick="setSidebarSPT('${sesc(it)}','${sesc(pt)}','${sesc(spt)}')">${spt}</div>`;
+            });
+          }
+        });
+      }
     });
   });
   nav.innerHTML = html;
 }
 
-function setSidebarFilter(val) {
-  filterIT = val;
+function setSidebarIT(it) {
+  if (it === '') {
+    sidebarOpenIT = '';
+    sidebarOpenPT = '';
+    filterIT = '';
+    filterPT = '';
+    filterSpt = '';
+  } else if (sidebarOpenIT === it) {
+    sidebarOpenIT = '';
+    sidebarOpenPT = '';
+    filterIT = '';
+    filterPT = '';
+    filterSpt = '';
+  } else {
+    sidebarOpenIT = it;
+    sidebarOpenPT = '';
+    filterIT = it;
+    filterPT = '';
+    filterSpt = '';
+  }
   renderSidebar();
   renderFilterBar();
   renderCards();
+}
+
+function setSidebarPT(it, pt) {
+  if (sidebarOpenIT === it && sidebarOpenPT === pt) {
+    sidebarOpenPT = '';
+    filterPT = '';
+    filterSpt = '';
+  } else {
+    sidebarOpenIT = it;
+    sidebarOpenPT = pt;
+    filterIT = it;
+    filterPT = pt;
+    filterSpt = '';
+  }
+  renderSidebar();
+  renderFilterBar();
+  renderCards();
+}
+
+function setSidebarSPT(it, pt, spt) {
+  sidebarOpenIT = it;
+  sidebarOpenPT = pt;
+  filterIT = it;
+  filterPT = pt;
+  filterSpt = spt;
+  renderSidebar();
+  renderFilterBar();
+  renderCards();
+}
+
+function setSidebarFilter(val) {
+  setSidebarIT(val);
 }
 
 // ── Filter bar ────────────────────────────────────────────────────────────
