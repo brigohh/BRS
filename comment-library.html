@@ -1135,14 +1135,14 @@ function renderFilterBar() {
   const pts = filterIT && TAXONOMY[filterIT]
     ? Object.keys(TAXONOMY[filterIT]).filter(p => p !== 'N/A').sort()
     : [...new Set(allComments.map(c=>c.playType).filter(Boolean))].sort();
-  renderFdMenu('fd-pt-menu', pts, filterPT, v => { filterPT = v; filterSpt = ''; renderFilterBar(); renderCards(); });
+  renderFdMenu('fd-pt-menu', pts, filterPT, '_fdPT');
   // Sub Play Type: cascade from taxonomy when IT+PT selected
   const spts = filterIT && filterPT && TAXONOMY[filterIT] && TAXONOMY[filterIT][filterPT]
     ? TAXONOMY[filterIT][filterPT].filter(s => s !== 'N/A').sort()
     : [...new Set(allComments.map(c=>c.subPlayType).filter(Boolean))].sort();
-  renderFdMenu('fd-spt-menu', spts, filterSpt, v => { filterSpt = v; renderFilterBar(); renderCards(); });
+  renderFdMenu('fd-spt-menu', spts, filterSpt, '_fdSPT');
   // Infraction Rating
-  renderFdMenu('fd-ir-menu', ['Infraction','PI - Lean','PI - Lean No','No Infraction','Assessment Error'], filterIR, v => { filterIR = v; renderFilterBar(); renderCards(); });
+  renderFdMenu('fd-ir-menu', ['Infraction','PI - Lean','PI - Lean No','No Infraction','Assessment Error'], filterIR, '_fdIR');
 
   renderFdPill('fd-pt-pills', 'fd-pt', filterPT, () => { filterPT=''; renderFilterBar(); renderCards(); });
   renderFdPill('fd-spt-pills', 'fd-spt', filterSpt, () => { filterSpt=''; renderFilterBar(); renderCards(); });
@@ -1154,11 +1154,11 @@ function renderFilterBar() {
   pillsRow.classList.toggle('hidden', !(filterPT || filterSpt || filterIR));
 }
 
-function renderFdMenu(menuId, options, currentVal, onSelect) {
+function renderFdMenu(menuId, options, currentVal, handlerName) {
   const el = document.getElementById(menuId);
   if (!options.length) { el.innerHTML = '<div class="fd-option" style="color:#9ca3af;cursor:default">—</div>'; return; }
   el.innerHTML = options.map(o =>
-    `<div class="fd-option${o===currentVal?' selected':''}" onclick="(${onSelect.toString()})('${o.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}')">${o}</div>`
+    `<div class="fd-option${o===currentVal?' selected':''}" onclick="${handlerName}('${o.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}')">${o}</div>`
   ).join('');
 }
 
@@ -1572,6 +1572,10 @@ function acClear() {
 }
 
 // ── Expose to window (module scope → HTML onclick) ────────────────────────
+window._fdPT  = v => { filterPT=v; filterSpt=''; renderFilterBar(); renderCards(); };
+window._fdSPT = v => { filterSpt=v; renderFilterBar(); renderCards(); };
+window._fdIR  = v => { filterIR=v; renderFilterBar(); renderCards(); };
+
 Object.assign(window, {
   toggleNavDropdown, setSidebarFilter, setSidebarIT, setSidebarPT, setSidebarSPT, setView, toggleCollection,
   clearAllFilters, toggleFd, onSearch,
