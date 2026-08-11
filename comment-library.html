@@ -1070,6 +1070,21 @@ function filteredComments() {
 
 // ── Sidebar ───────────────────────────────────────────────────────────────
 
+// These types are hidden from the sidebar unless a comment with that IT exists
+const SIDEBAR_HIDDEN = new Set([
+  'Foul: Defensive 3 Second',
+  'Foul: Flagrant Type 1','Foul: Flagrant Type 2',
+  'Foul: Non-Unsportsmanlike Tech Flopping',
+  'Foul: Technical',
+  'Turnover: 3 Second Violation','Turnover: 5 Second Inbound','Turnover: 8 Second Violation',
+  'Turnover: Defensive Goaltending','Turnover: Discontinue Dribble',
+  'Turnover: Inbound Turnover','Turnover: Lost Ball Out of Bounds',
+  'Turnover: Offensive Goaltending','Turnover: Out of Bounds',
+  'Turnover: Out of Bounds – Bad Pass Turn','Turnover: Palming',
+  'Turnover: Stepped out of Bounds',
+  'Violation: Defensive Goaltending','Violation: Delay of Game',
+]);
+
 const SIDEBAR_GROUPS = [
   { label: 'Fouls', items: INFRACTION_TYPES.filter(t => t.startsWith('Foul:')) },
   { label: 'Turnovers', items: INFRACTION_TYPES.filter(t => t.startsWith('Turnover:')) },
@@ -1094,7 +1109,10 @@ function renderSidebar() {
   let html = `<div class="sidebar-item${!filterIT?' active':''}" onclick="setSidebarIT('')">All <span class="sidebar-item-count">${total}</span></div>`;
 
   SIDEBAR_GROUPS.forEach(group => {
-    const groupItems = group.items.filter(it => counts[it] || Object.keys(TAXONOMY[it]||{}).length);
+    const groupItems = group.items.filter(it => {
+      if (SIDEBAR_HIDDEN.has(it)) return counts[it] > 0;
+      return counts[it] || Object.keys(TAXONOMY[it]||{}).length;
+    });
     if (!groupItems.length) return;
     html += `<div class="sidebar-group-label">${group.label}</div>`;
     groupItems.forEach(it => {
@@ -1625,7 +1643,7 @@ function acClear() {
 
 // ── Expose to window (module scope → HTML onclick) ────────────────────────
 Object.assign(window, {
-  toggleNavDropdown, setSidebarFilter, setView, toggleCollection,
+  toggleNavDropdown, setSidebarFilter, setSidebarIT, setSidebarPT, setSidebarSPT, setView, toggleCollection,
   clearAllFilters, toggleFd, onSearch,
   openSubmitModal, closeSubmitModal, onSubmitOverlayClick, onSubmitEditorInput, submitComment,
   openEditModal, closeEditModal, onEditOverlayClick, saveEditComment, deleteEditingComment,
