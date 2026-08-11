@@ -1093,21 +1093,12 @@ const SIDEBAR_GROUPS = [
   { label: 'Other', items: INFRACTION_TYPES.filter(t => !t.startsWith('Foul:') && !t.startsWith('Turnover:') && !t.startsWith('Stoppage:') && !t.startsWith('Violation:')) },
 ];
 
-let sidebarOpenIT = '';
-let sidebarOpenPT = '';
-
-function sesc(s) {
-  return s.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-}
-
 function renderSidebar() {
   const nav = document.getElementById('sidebar-nav');
   const counts = {};
   allComments.forEach(c => { const k = c.infractionType || 'Foul: Personal'; counts[k] = (counts[k]||0)+1; });
   const total = allComments.length;
-
-  let html = `<div class="sidebar-item${!filterIT?' active':''}" onclick="setSidebarIT('')">All <span class="sidebar-item-count">${total}</span></div>`;
-
+  let html = `<div class="sidebar-item${!filterIT?' active':''}" onclick="setSidebarFilter('')">All <span class="sidebar-item-count">${total}</span></div>`;
   SIDEBAR_GROUPS.forEach(group => {
     const groupItems = group.items.filter(it => {
       if (SIDEBAR_HIDDEN.has(it)) return counts[it] > 0;
@@ -1118,98 +1109,37 @@ function renderSidebar() {
     groupItems.forEach(it => {
       const cnt = counts[it] || 0;
       const label = it.includes(':') ? it.split(':')[1].trim() : it;
-      const isActiveIT = filterIT === it;
-      const isOpenIT = sidebarOpenIT === it;
-      const pts = Object.keys(TAXONOMY[it] || {});
-      const hasPts = pts.length > 0;
-
-      html += `<div class="sidebar-item${isActiveIT?' active':''}${isOpenIT?' open':''}" onclick="setSidebarIT('${sesc(it)}')"><span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis">${label}</span><span style="display:flex;align-items:center;gap:5px;flex-shrink:0"><span class="sidebar-item-count">${cnt}</span>${hasPts?`<span class="sidebar-caret">${isOpenIT?'▾':'▸'}</span>`:''}</span></div>`;
-
-      if (isOpenIT && hasPts) {
-        pts.forEach(pt => {
-          const isActivePT = isActiveIT && filterPT === pt;
-          const isOpenPT = isOpenIT && sidebarOpenPT === pt;
-          const spts = (TAXONOMY[it][pt] || []).filter(s => s !== 'N/A');
-          const hasSpts = spts.length > 0;
-          html += `<div class="sidebar-pt-item${isActivePT?' active':''}" onclick="setSidebarPT('${sesc(it)}','${sesc(pt)}')"><span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis">${pt}</span>${hasSpts?`<span class="sidebar-caret" style="font-size:7px">${isOpenPT?'▾':'▸'}</span>`:''}</div>`;
-          if (isOpenPT && hasSpts) {
-            spts.forEach(spt => {
-              const isActiveSPT = isActivePT && filterSpt === spt;
-              html += `<div class="sidebar-spt-item${isActiveSPT?' active':''}" onclick="setSidebarSPT('${sesc(it)}','${sesc(pt)}','${sesc(spt)}')">${spt}</div>`;
-            });
-          }
-        });
-      }
+      html += `<div class="sidebar-item${filterIT===it?' active':''}" onclick="setSidebarFilter('${it.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}')">${label} <span class="sidebar-item-count">${cnt}</span></div>`;
     });
   });
   nav.innerHTML = html;
 }
 
-function setSidebarIT(it) {
-  if (it === '') {
-    sidebarOpenIT = '';
-    sidebarOpenPT = '';
-    filterIT = '';
-    filterPT = '';
-    filterSpt = '';
-  } else if (sidebarOpenIT === it) {
-    sidebarOpenIT = '';
-    sidebarOpenPT = '';
-    filterIT = '';
-    filterPT = '';
-    filterSpt = '';
-  } else {
-    sidebarOpenIT = it;
-    sidebarOpenPT = '';
-    filterIT = it;
-    filterPT = '';
-    filterSpt = '';
-  }
-  renderSidebar();
-  renderFilterBar();
-  renderCards();
-}
-
-function setSidebarPT(it, pt) {
-  if (sidebarOpenIT === it && sidebarOpenPT === pt) {
-    sidebarOpenPT = '';
-    filterPT = '';
-    filterSpt = '';
-  } else {
-    sidebarOpenIT = it;
-    sidebarOpenPT = pt;
-    filterIT = it;
-    filterPT = pt;
-    filterSpt = '';
-  }
-  renderSidebar();
-  renderFilterBar();
-  renderCards();
-}
-
-function setSidebarSPT(it, pt, spt) {
-  sidebarOpenIT = it;
-  sidebarOpenPT = pt;
-  filterIT = it;
-  filterPT = pt;
-  filterSpt = spt;
-  renderSidebar();
-  renderFilterBar();
-  renderCards();
-}
-
 function setSidebarFilter(val) {
-  setSidebarIT(val);
+  filterIT = val;
+  filterPT = '';
+  filterSpt = '';
+  renderSidebar();
+  renderFilterBar();
+  renderCards();
 }
+
+function setSidebarIT(it) { setSidebarFilter(it); }
+function setSidebarPT() {}
+function setSidebarSPT() {}
 
 // ── Filter bar ────────────────────────────────────────────────────────────
 
 function renderFilterBar() {
-  // Play Type
-  const pts = [...new Set(allComments.map(c=>c.playType).filter(Boolean))].sort();
-  renderFdMenu('fd-pt-menu', pts, filterPT, v => { filterPT = v; renderFilterBar(); renderCards(); });
-  // Sub Play Type
-  const spts = [...new Set(allComments.map(c=>c.subPlayType).filter(Boolean))].sort();
+  // Play Type: cascade from taxonomy when an IT is selected
+  const pts = filterIT && TAXONOMY[filterIT]
+    ? Object.keys(TAXONOMY[filterIT]).filter(p => p !== 'N/A').sort()
+    : [...new Set(allComments.map(c=>c.playType).filter(Boolean))].sort();
+  renderFdMenu('fd-pt-menu', pts, filterPT, v => { filterPT = v; filterSpt = ''; renderFilterBar(); renderCards(); });
+  // Sub Play Type: cascade from taxonomy when IT+PT selected
+  const spts = filterIT && filterPT && TAXONOMY[filterIT] && TAXONOMY[filterIT][filterPT]
+    ? TAXONOMY[filterIT][filterPT].filter(s => s !== 'N/A').sort()
+    : [...new Set(allComments.map(c=>c.subPlayType).filter(Boolean))].sort();
   renderFdMenu('fd-spt-menu', spts, filterSpt, v => { filterSpt = v; renderFilterBar(); renderCards(); });
   // Infraction Rating
   renderFdMenu('fd-ir-menu', ['Infraction','PI - Lean','PI - Lean No','No Infraction','Assessment Error'], filterIR, v => { filterIR = v; renderFilterBar(); renderCards(); });
