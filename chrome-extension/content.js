@@ -28,22 +28,13 @@
   let filterIT = '', filterPT = '', filterSPT = '', filterIR = '';
   let toast, panel, fab, dot;
 
-  // ── Firebase loader (dynamic import via blob URL to avoid CSP issues) ────
-  async function loadFirebase() {
-    const FIREBASE_CDN = 'https://www.gstatic.com/firebasejs/10.12.2/';
-    const [{ initializeApp }, { getFirestore, collection, getDocs }] = await Promise.all([
-      import(FIREBASE_CDN + 'firebase-app.js'),
-      import(FIREBASE_CDN + 'firebase-firestore.js'),
-    ]);
-    const app = initializeApp(FB_CONFIG, 'brs-ext');
-    const db = getFirestore(app);
-    return { db, collection, getDocs };
-  }
-
+  // ── Firebase (loaded via bundled firebase-bundled.js) ───────────────────
   async function fetchComments() {
     setDot('loading');
     try {
-      const { db, collection, getDocs } = await loadFirebase();
+      const { initializeApp, getFirestore, collection, getDocs } = window.FirebaseBundle;
+      const app = initializeApp(FB_CONFIG, 'brs-ext');
+      const db = getFirestore(app);
       const snap = await getDocs(collection(db, 'comments'));
       allComments = snap.docs.map(d => ({ id: d.id, ...d.data() }));
       setDot('synced');
