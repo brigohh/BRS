@@ -578,7 +578,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
                 <label class="rf-check"><input type="checkbox" id="chk-poe"> POE</label>
               </div>
               <div style="border-top:1px solid #e5e7eb;margin:2px 0"></div>
-              <button class="tmpl-btn" onclick="openChatbot()" style="width:100%;justify-content:center">🤖 ReviewerGPT</button>
+              <button class="tmpl-btn" onclick="openChatbot()" style="width:100%;justify-content:center">ReviewerGPT</button>
               <button class="tmpl-btn" style="width:100%;justify-content:center" onclick="openAddToPlaylist()"><i class="ti ti-playlist" style="font-size:12px"></i> Add to Playlist</button>
               <button class="tmpl-btn" style="width:100%;justify-content:center" onclick="openSlackModal()"><i class="ti ti-brand-slack" style="font-size:12px"></i> Send to Slack</button>
               <button class="tmpl-btn" style="width:100%;justify-content:center" onclick="openLeagueOpsModal()"><i class="ti ti-send" style="font-size:12px"></i> Send to League Ops</button>
@@ -699,12 +699,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 </div>
 <div class="chatbot-window" id="chatbot-window">
   <div class="chatbot-hdr">
-    <div class="chatbot-title"><div class="chatbot-avatar">🤖</div> ReviewerGPT</div>
+    <div class="chatbot-title"><div class="chatbot-avatar">R</div> ReviewerGPT</div>
     <button class="chatbot-close" onclick="closeChatbot()">&#10005;</button>
   </div>
   <div class="chatbot-msgs" id="chatbot-msgs">
     <div class="chat-msg-row">
-      <div class="chat-msg-name"><div class="chatbot-avatar">🤖</div> ReviewerGPT</div>
+      <div class="chat-msg-name"><div class="chatbot-avatar">R</div> ReviewerGPT</div>
       <div class="chat-msg bot">How can I help you with this play?</div>
     </div>
   </div>
@@ -1608,10 +1608,10 @@ function sendChat() {
     botRow.className = 'chat-msg-row';
     const knownAnswer = getReviewerAnswer(msg);
     if (knownAnswer) {
-      botRow.innerHTML = `<div class="chat-msg-name"><div class="chatbot-avatar">🤖</div> ReviewerGPT</div><div class="chat-msg bot">${knownAnswer.replace(/</g,'&lt;')}</div>`;
+      botRow.innerHTML = `<div class="chat-msg-name"><div class="chatbot-avatar">R</div> ReviewerGPT</div><div class="chat-msg bot">${knownAnswer.replace(/</g,'&lt;')}</div>`;
     } else {
       let peachN; do { peachN = Math.floor(Math.random() * 10) + 1; } while (peachN === lastPeach); lastPeach = peachN;
-      botRow.innerHTML = `<div class="chat-msg-name"><div class="chatbot-avatar">🤖</div> ReviewerGPT</div><div class="chat-msg bot" style="padding:6px"><img src="Logos/peaches${peachN}.jpg" style="max-width:100%;max-height:460px;width:auto;border-radius:8px;display:block" onload="this.closest('#chatbot-msgs')&&(this.closest('#chatbot-msgs').scrollTop=this.closest('#chatbot-msgs').scrollHeight)"></div>`;
+      botRow.innerHTML = `<div class="chat-msg-name"><div class="chatbot-avatar">R</div> ReviewerGPT</div><div class="chat-msg bot" style="padding:6px"><img src="Logos/peaches${peachN}.jpg" style="max-width:100%;max-height:460px;width:auto;border-radius:8px;display:block" onload="this.closest('#chatbot-msgs')&&(this.closest('#chatbot-msgs').scrollTop=this.closest('#chatbot-msgs').scrollHeight)"></div>`;
     }
     msgs.appendChild(botRow);
     msgs.scrollTop = msgs.scrollHeight;
@@ -1625,7 +1625,7 @@ function tuckerForward(btn, originalMsg) {
   const msgs = document.getElementById('chatbot-msgs');
   const confirmRow = document.createElement('div');
   confirmRow.className = 'chat-msg-row';
-  confirmRow.innerHTML = '<div class="chat-msg-name"><div class="chatbot-avatar">🤖</div> ReviewerGPT</div><div class="chat-msg bot">Forwarded to Tucker Grady on Slack ✓</div>';
+  confirmRow.innerHTML = '<div class="chat-msg-name"><div class="chatbot-avatar">R</div> ReviewerGPT</div><div class="chat-msg bot">Forwarded to Tucker Grady on Slack ✓</div>';
   msgs.appendChild(confirmRow);
   msgs.scrollTop = msgs.scrollHeight;
   showToast('Question forwarded to TuckerHuman ✓');
