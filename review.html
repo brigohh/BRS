@@ -279,7 +279,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .chatbot-window.open{display:flex}
 .chatbot-hdr{background:#16294f;color:#fff;padding:11px 15px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .chatbot-title{font-size:12px;font-weight:700;display:flex;align-items:center;gap:6px}
-.chatbot-avatar{width:24px;height:24px;border-radius:50%;background:#fff;color:#16294f;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;overflow:hidden}
+.chatbot-avatar{width:24px;height:24px;border-radius:50%;background:#1a3a6b;color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;overflow:hidden}
 .chatbot-avatar img{width:100%;height:100%;object-fit:cover}
 .chat-msg-row{display:flex;flex-direction:column;gap:3px;align-self:flex-start;max-width:88%}
 .chat-msg-row.user{align-self:flex-end}
@@ -578,7 +578,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
                 <label class="rf-check"><input type="checkbox" id="chk-poe"> POE</label>
               </div>
               <div style="border-top:1px solid #e5e7eb;margin:2px 0"></div>
-              <button class="tmpl-btn" onclick="openChatbot()" style="width:100%;justify-content:center"><img class="tucker-avatar" src="Logos/TuckerGPT Icon.png" onerror="this.style.display='none'"> TuckerGPT</button>
+              <button class="tmpl-btn" onclick="openChatbot()" style="width:100%;justify-content:center">🤖 ReviewerGPT</button>
               <button class="tmpl-btn" style="width:100%;justify-content:center" onclick="openAddToPlaylist()"><i class="ti ti-playlist" style="font-size:12px"></i> Add to Playlist</button>
               <button class="tmpl-btn" style="width:100%;justify-content:center" onclick="openSlackModal()"><i class="ti ti-brand-slack" style="font-size:12px"></i> Send to Slack</button>
               <button class="tmpl-btn" style="width:100%;justify-content:center" onclick="openLeagueOpsModal()"><i class="ti ti-send" style="font-size:12px"></i> Send to League Ops</button>
@@ -681,7 +681,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 
 <div class="assist-alert-backdrop" id="assist-alert-backdrop"></div>
 <div class="assist-alert" id="assist-alert">
-  <div class="assist-alert-hdr"><i class="ti ti-whistle"></i> TuckerGPT</div>
+  <div class="assist-alert-hdr"><i class="ti ti-whistle"></i> ReviewerGPT</div>
   <div class="assist-alert-body" id="assist-alert-body"></div>
   <div class="assist-alert-btns">
     <button class="assist-alert-yes" onclick="assistAlertYes()">Yes, check and save</button>
@@ -699,12 +699,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 </div>
 <div class="chatbot-window" id="chatbot-window">
   <div class="chatbot-hdr">
-    <div class="chatbot-title"><div class="chatbot-avatar"><img src="Logos/TuckerGPT Icon.png"></div> TuckerGPT</div>
+    <div class="chatbot-title"><div class="chatbot-avatar">🤖</div> ReviewerGPT</div>
     <button class="chatbot-close" onclick="closeChatbot()">&#10005;</button>
   </div>
   <div class="chatbot-msgs" id="chatbot-msgs">
     <div class="chat-msg-row">
-      <div class="chat-msg-name"><div class="chatbot-avatar"><img src="Logos/TuckerGPT Icon.png"></div> Tucker</div>
+      <div class="chat-msg-name"><div class="chatbot-avatar">🤖</div> ReviewerGPT</div>
       <div class="chat-msg bot">How can I help you with this play?</div>
     </div>
   </div>
@@ -1580,6 +1580,18 @@ function canTuckerAnswer(msg) {
   return TUCKER_ANSWERABLE.some(re => re.test(msg));
 }
 
+const REVIEWER_QA = [
+  {
+    match: /primary defender.*strong side drive|strong side drive.*primary defender|responsible.*primary defender.*drive|primary defender.*basket.*strong/i,
+    answer: "If the dribbler beats the primary defender off the dribble, trail is responsible for that defender. If the defender stays attached to the dribbler, lead then becomes responsible for the primary defender."
+  }
+];
+
+function getReviewerAnswer(msg) {
+  const qa = REVIEWER_QA.find(q => q.match.test(msg));
+  return qa ? qa.answer : null;
+}
+
 function sendChat() {
   const input = document.getElementById('chatbot-input');
   const msg = input.value.trim();
@@ -1594,8 +1606,13 @@ function sendChat() {
   setTimeout(() => {
     const botRow = document.createElement('div');
     botRow.className = 'chat-msg-row';
-    let peachN; do { peachN = Math.floor(Math.random() * 10) + 1; } while (peachN === lastPeach); lastPeach = peachN;
-    botRow.innerHTML = `<div class="chat-msg-name"><div class="chatbot-avatar"><img src="Logos/TuckerGPT Icon.png"></div> Tucker</div><div class="chat-msg bot" style="padding:6px"><img src="Logos/peaches${peachN}.jpg" style="max-width:100%;max-height:460px;width:auto;border-radius:8px;display:block" onload="this.closest('#chatbot-msgs')&&(this.closest('#chatbot-msgs').scrollTop=this.closest('#chatbot-msgs').scrollHeight)"></div>`;
+    const knownAnswer = getReviewerAnswer(msg);
+    if (knownAnswer) {
+      botRow.innerHTML = `<div class="chat-msg-name"><div class="chatbot-avatar">🤖</div> ReviewerGPT</div><div class="chat-msg bot">${knownAnswer.replace(/</g,'&lt;')}</div>`;
+    } else {
+      let peachN; do { peachN = Math.floor(Math.random() * 10) + 1; } while (peachN === lastPeach); lastPeach = peachN;
+      botRow.innerHTML = `<div class="chat-msg-name"><div class="chatbot-avatar">🤖</div> ReviewerGPT</div><div class="chat-msg bot" style="padding:6px"><img src="Logos/peaches${peachN}.jpg" style="max-width:100%;max-height:460px;width:auto;border-radius:8px;display:block" onload="this.closest('#chatbot-msgs')&&(this.closest('#chatbot-msgs').scrollTop=this.closest('#chatbot-msgs').scrollHeight)"></div>`;
+    }
     msgs.appendChild(botRow);
     msgs.scrollTop = msgs.scrollHeight;
   }, 600);
@@ -1608,7 +1625,7 @@ function tuckerForward(btn, originalMsg) {
   const msgs = document.getElementById('chatbot-msgs');
   const confirmRow = document.createElement('div');
   confirmRow.className = 'chat-msg-row';
-  confirmRow.innerHTML = '<div class="chat-msg-name"><div class="chatbot-avatar"><img src="Logos/TuckerGPT Icon.png"></div> Tucker</div><div class="chat-msg bot">Forwarded to Tucker Grady on Slack ✓</div>';
+  confirmRow.innerHTML = '<div class="chat-msg-name"><div class="chatbot-avatar">🤖</div> ReviewerGPT</div><div class="chat-msg bot">Forwarded to Tucker Grady on Slack ✓</div>';
   msgs.appendChild(confirmRow);
   msgs.scrollTop = msgs.scrollHeight;
   showToast('Question forwarded to TuckerHuman ✓');
