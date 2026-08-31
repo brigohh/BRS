@@ -66,7 +66,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .qb.on,.tb.on{background:#1a3a6b;border-color:#1a3a6b;color:#fff}
 .tsep{width:1px;height:20px;background:#e5e7eb}
 /* MAIN LAYOUT */
-.main{flex:1;display:grid;grid-template-columns:224px 1fr 42%;min-height:0;overflow:hidden;padding:14px 18px;gap:14px;background:#f3f4f6}
+.main{flex:1;display:grid;grid-template-columns:224px 1fr 34%;min-height:0;overflow:hidden;padding:14px 18px;gap:14px;background:#f3f4f6}
 /* SIDEBAR */
 .sb{background:#fff;border:1px solid #e9ebf0;border-radius:13px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 1px 3px rgba(17,24,39,.05)}
 .sb-prog{padding:11px 13px 10px;border-bottom:1px solid #f3f4f6;flex-shrink:0}
@@ -328,9 +328,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .em-link-btn.alt{background:#fff;border:1px solid #d6dce8;color:#1a3a6b}
 .em-link-btn.report{background:#166534}
 .em-foot{padding:16px 28px;font-size:10.5px;color:#9ca3af;text-align:center;background:#f8f9fb}
-.ack-banner{display:flex;align-items:center;justify-content:space-between;gap:14px;background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:11px 16px;margin:0 0 14px}
+.ack-banner{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:6px 11px;margin:0 0 10px}
 .ack-banner.done{background:#f0fdf4;border-color:#bbf7d0}
-.ack-banner-txt{font-size:12px;color:#991b1b;font-weight:600;display:flex;align-items:center;gap:7px}
+.ack-banner-txt{font-size:10px;color:#991b1b;font-weight:600;display:flex;align-items:center;gap:5px}
 .ack-banner.done .ack-banner-txt{color:#166534}
 .ack-btn{background:#dc2626;color:#fff;border:none;font-size:11.5px;font-weight:700;padding:7px 14px;border-radius:8px;cursor:pointer;flex-shrink:0}
 .ack-btn:hover{background:#b91c1c}
@@ -1245,64 +1245,39 @@ function renderBand3(p) {
   const isSaved = [...collection].some(x => x.id === p.id);
   const hasFinalComment = !!(p.scComment || (p.fpComment && !p.commentChanged));
   const saveBtn = hasFinalComment ? `<button class="add-col-btn${isSaved?' saved':''}" id="add-col-btn-${p.id}" onclick="addToCollection(${p.id})"><i class="ti ti-bookmark"></i> ${isSaved?'Saved':'Save'}</button>` : '';
-
-  let html = '';
-
-  if (!p.fpComment && !p.scComment) {
-    // no comments — still show note bubbles and save button
-    html += `<div style="margin-bottom:10px"><div class="cb-lbl">FIRST PASS COMMENT</div><div class="cb-na">N/A</div>`;
-    if (p.yourNotes) {
-      html += `<div class="note-bubble"><span class="note-lbl">First pass notes</span>${p.yourNotes}</div>`;
-    }
-    html += '</div>';
-    html += `<div><div class="fc-hdr-row"><div class="cb-lbl sc-lbl-c">FINAL COMMENT</div>${saveBtn}</div><div class="cb-na">N/A</div>`;
-    if (p.managerNotes) {
-      html += `<div class="note-bubble note-sc"><span class="note-lbl">Second pass notes</span>${p.managerNotes}</div>`;
-    }
-    html += '</div>';
-    return html;
-  }
-
-  // FIRST PASS COMMENT block
-  if (p.fpComment) {
-    html += `<div style="margin-bottom:10px"><div class="cb-lbl">FIRST PASS COMMENT</div><div class="cb-fp"><div class="cb-text muted">${p.fpComment}</div></div>`;
-    if (p.yourNotes) {
-      html += `<div class="note-bubble"><span class="note-lbl">First pass notes</span>${p.yourNotes}</div>`;
-    }
-    html += '</div>';
-  } else {
-    html += `<div style="margin-bottom:10px"><div class="cb-lbl">FIRST PASS COMMENT</div><div class="cb-na">N/A</div>`;
-    if (p.yourNotes) {
-      html += `<div class="note-bubble"><span class="note-lbl">First pass notes</span>${p.yourNotes}</div>`;
-    }
-    html += '</div>';
-  }
-
-  // connector
   const scDeleted = p.fpComment && !p.scComment && p.commentChanged;
-  if (p.commentChanged && p.scComment) {
-    html += `<div class="rev-connector"><i class="ti ti-arrow-down" style="font-size:12px"></i> revised by second check</div>`;
-  } else if (scDeleted) {
-    html += `<div class="rev-connector"><i class="ti ti-x" style="font-size:12px"></i> removed by final check</div>`;
-  } else if (p.fpComment) {
-    html += `<div class="rev-connector"><i class="ti ti-check" style="font-size:12px"></i> comment unchanged</div>`;
+
+  // Left col: first pass comment + your notes
+  let leftHtml = `<div class="cb-lbl">FIRST PASS COMMENT</div>`;
+  if (p.fpComment) {
+    leftHtml += `<div class="cb-fp"><div class="cb-text muted">${p.fpComment}</div></div>`;
+  } else {
+    leftHtml += `<div class="cb-na">N/A</div>`;
+  }
+  if (p.yourNotes) {
+    leftHtml += `<div class="note-bubble"><span class="note-lbl">First pass notes</span>${p.yourNotes}</div>`;
   }
 
-  // FINAL COMMENT block
-  html += `<div><div class="fc-hdr-row"><div class="cb-lbl sc-lbl-c">FINAL COMMENT</div>${saveBtn}</div>`;
+  // Right col: final comment + manager notes + save
+  let finalComment = '';
   if (p.commentChanged && p.scComment) {
-    html += `<div class="cb-sc"><div class="cb-text">${p.scComment}</div></div>`;
+    finalComment = `<div class="cb-sc"><div class="cb-text">${p.scComment}</div></div>`;
   } else if (!p.fpComment && p.scComment) {
-    html += `<div class="cb-sc"><div class="cb-text">${p.scComment}</div></div>`;
-  } else if (scDeleted || (!p.fpComment && !p.scComment)) {
-    html += `<div class="cb-na">N/A</div>`;
+    finalComment = `<div class="cb-sc"><div class="cb-text">${p.scComment}</div></div>`;
+  } else if (p.fpComment && !p.commentChanged) {
+    finalComment = `<div class="cb-sc"><div class="cb-text">${p.fpComment}</div></div>`;
+  } else {
+    finalComment = `<div class="cb-na">N/A</div>`;
   }
+  let rightHtml = `<div class="fc-hdr-row"><div class="cb-lbl sc-lbl-c">FINAL COMMENT</div>${saveBtn}</div>${finalComment}`;
   if (p.managerNotes) {
-    html += `<div class="note-bubble note-sc"><span class="note-lbl">Second pass notes</span>${p.managerNotes}</div>`;
+    rightHtml += `<div class="note-bubble note-sc"><span class="note-lbl">Second pass notes</span>${p.managerNotes}</div>`;
   }
-  html += '</div>';
 
-  return html;
+  return `<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start">
+    <div>${leftHtml}</div>
+    <div>${rightHtml}</div>
+  </div>`;
 }
 
 function redactComment(text, p) {
