@@ -399,7 +399,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   <span class="st" onclick="location='review-2ndcheck.html'">Review Edits</span>
   <span class="st disabled">OGR</span>
   <span class="st disabled">Important Calls</span>
-  <span class="st on" data-tab="secondcheck" data-view="secondcheck" onclick="showTab('secondcheck',this)">Second Check</span>
+  <span class="st on" data-tab="secondcheck" data-view="secondcheck" onclick="showTab('secondcheck',this)">Review Edits</span>
   <span class="st disabled">PTIW</span>
   <span class="st" data-view="oiw" onclick="showTab('oiw',this)">OIW</span>
 </div>
@@ -817,7 +817,7 @@ const COL = {
   observability: {bg:'#F3F4F6', txt:'#374151', dot:'#9CA3AF'}
 };
 
-const ALL_FIELDS = ['Rating','Infraction type','Play type','Official','Location','Observability'];
+const ALL_FIELDS = ['Rating','Infraction type','Play type','Sub play type','Official','Location','Observability'];
 
 // tier: 'critical' | 'notable' | 'standard' | 'comment'
 // changeTags: array of tag strings for filter matching
@@ -1217,6 +1217,10 @@ function renderBand2(p) {
   p.changes.forEach(c => { changeMap[c.f] = c; });
   let html = '<div class="b2-lbl">CHANGES</div><div class="ch-grid">';
   html += '<div class="ch-col-hdr lbl-hdr"></div><div class="ch-col-hdr">First pass</div><div class="ch-col-hdr sc-hdr">Second check</div>';
+  // Derive sub play type from the sub field (format: "IT · SPT" or "IT · PT → SPT")
+  const subParts = (p.sub || '').split('·');
+  const derivedSPT = subParts.length > 1 ? subParts[subParts.length - 1].trim().split('→').pop().trim() : '—';
+
   ALL_FIELDS.forEach(f => {
     const c = changeMap[f];
     if (c) {
@@ -1227,7 +1231,7 @@ function renderBand2(p) {
       html += `<div class="ch-row-fp">${fpVal}</div>`;
       html += `<div class="ch-row-sc">${scVal}</div>`;
     } else {
-      const val = (p.unchanged && p.unchanged[f]) ? p.unchanged[f] : '—';
+      let val = (p.unchanged && p.unchanged[f]) ? p.unchanged[f] : (f === 'Sub play type' ? derivedSPT : '—');
       html += `<div class="ch-row-lbl ch-row-unch"><span class="ch-field">${f}</span></div>`;
       html += `<div class="ch-row-fp ch-row-unch"><span class="ch-fp-val">${val}</span></div>`;
       html += `<div class="ch-row-sc ch-row-unch"><span class="ch-sc-val">${val}</span></div>`;
