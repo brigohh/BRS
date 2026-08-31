@@ -822,7 +822,7 @@ const COL = {
   observability: {bg:'#F3F4F6', txt:'#374151', dot:'#9CA3AF'}
 };
 
-const ALL_FIELDS = ['Rating','Infraction type','Play type','Sub play type','Official','Location','Observability'];
+const ALL_FIELDS = ['Official','Location','Infraction type','Play type','Sub play type','Player','Opponent','Rating','Observability'];
 
 // tier: 'critical' | 'notable' | 'standard' | 'comment'
 // changeTags: array of tag strings for filter matching
@@ -1237,7 +1237,11 @@ function renderBand2(p) {
       html += `<div class="ch-row-sc">${scVal}</div>`;
     } else {
       if (changesOnly) return;
-      let val = (p.unchanged && p.unchanged[f]) ? p.unchanged[f] : (f === 'Sub play type' ? derivedSPT : '—');
+      let val = (p.unchanged && p.unchanged[f]) ? p.unchanged[f]
+              : f === 'Sub play type' ? derivedSPT
+              : f === 'Player' ? (p.player || '—')
+              : f === 'Opponent' ? (p.opp || '—')
+              : '—';
       html += `<div class="ch-row-lbl ch-row-unch"><span class="ch-field">${f}</span></div>`;
       html += `<div class="ch-row-fp ch-row-unch"><span class="ch-fp-val">${val}</span></div>`;
       html += `<div class="ch-row-sc ch-row-unch"><span class="ch-sc-val">${val}</span></div>`;
